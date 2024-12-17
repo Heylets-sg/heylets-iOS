@@ -1,76 +1,57 @@
+//
+//  Project+Templates.swift
+//  ProjectDescriptionHelpers
+//
+//  Created by 류희재 on 12/17/24.
+//
+
 import ProjectDescription
+import ConfigPlugin
+import EnvPlugin
 
-/// Project helpers are functions that simplify the way you define your project.
-/// Share code to create targets, settings, dependencies,
-/// Create your own conventions, e.g: a func that makes sure all shared targets are "static frameworks"
-/// See https://docs.tuist.io/guides/helpers/
 
-extension Project {
-    /// Helper function to create the Project for this ExampleApp
-    public static func app(name: String, platform: Platform, additionalTargets: [String]) -> Project {
-        var targets = makeAppTargets(name: name,
-                                     platform: platform,
-                                     dependencies: additionalTargets.map { TargetDependency.target(name: $0) })
-        targets += additionalTargets.flatMap({ makeFrameworkTargets(name: $0, platform: platform) })
-        return Project(name: name,
-                       organizationName: "tuist.io",
-                       targets: targets)
-    }
-
-    // MARK: - Private
-
-    /// Helper function to create a framework target and an associated unit test target
-    private static func makeFrameworkTargets(name: String, platform: Platform) -> [Target] {
-        let sources = Target(name: name,
-                platform: platform,
-                product: .framework,
-                bundleId: "io.tuist.\(name)",
-                infoPlist: .default,
-                sources: ["Targets/\(name)/Sources/**"],
-                resources: [],
-                dependencies: [])
-        let tests = Target(name: "\(name)Tests",
-                platform: platform,
-                product: .unitTests,
-                bundleId: "io.tuist.\(name)Tests",
-                infoPlist: .default,
-                sources: ["Targets/\(name)/Tests/**"],
-                resources: [],
-                dependencies: [.target(name: name)])
-        return [sources, tests]
-    }
-
-    /// Helper function to create the application target and the unit test target.
-    private static func makeAppTargets(name: String, platform: Platform, dependencies: [TargetDependency]) -> [Target] {
-        let platform: Platform = platform
-        let infoPlist: [String: Plist.Value] = [
-            "CFBundleShortVersionString": "1.0",
-            "CFBundleVersion": "1",
-"UIMainStoryboardFile": "",
-            "UILaunchStoryboardName": "LaunchScreen"
-            ]
-
-        let mainTarget = Target(
+public extension Project {
+    /// Sumarry: 모듈을 만드는 함수
+    ///
+    /// Discussion/Overview
+    ///
+    /// - Parameters:
+    ///    - name: 프로젝트 이름 (모듈 이름)
+    ///    - targets: 빌드할 타겟의 대상
+    ///    - packages:SPM의 package
+    ///    - internalDependencies: 내부 의존성
+    ///    - externalDependencies: 외부 의존성
+    ///    - interfaceDependencies: 인터페이스 의존성
+    ///    - sources: 소스 파일
+    ///    - hasResourcces: 리소스 파일 포함 여부
+    static func makeModule(
+        name: String,
+        targets: Set<FeatureTarget> = Set([.staticFramework, .unitTest, .demo]),
+        packages: [Package] = [],
+        internalDependencies: [TargetDependency] = [],
+        externalDependencies: [TargetDependency] = [],
+        interfaceDependencies: [TargetDependency] = [],
+        sources: SourceFilesList? = nil,
+        hasResources: Bool = false
+    ) -> Project {
+        let dependencies: [TargetDependency] = internalDependencies + externalDependencies + interfaceDependencies
+        
+        let projectTargets: [Target] = TargetHandler.makeProjectTargets(
             name: name,
-            platform: platform,
-            product: .app,
-            bundleId: "io.tuist.\(name)",
-            infoPlist: .extendingDefault(with: infoPlist),
-            sources: ["Targets/\(name)/Sources/**"],
-            resources: ["Targets/\(name)/Resources/**"],
-            dependencies: dependencies
+            hasResources: hasResources,
+            with: dependencies,
+            targets: targets
         )
-
-        let testTarget = Target(
-            name: "\(name)Tests",
-            platform: platform,
-            product: .unitTests,
-            bundleId: "io.tuist.\(name)Tests",
-            infoPlist: .default,
-            sources: ["Targets/\(name)/Tests/**"],
-            dependencies: [
-                .target(name: "\(name)")
-        ])
-        return [mainTarget, testTarget]
+        let projcetScheme: [Scheme] = SchemeProvider.makeProjectScheme(targets: targets, name: name)
+        
+        return Project(
+            name: name,
+            organizationName: env.workspaceName,
+            packages: packages,
+            settings: .settings(configurations: XCConfig.configurations),
+            targets: projectTargets,
+            schemes: projcetScheme
+        )
     }
 }
+
