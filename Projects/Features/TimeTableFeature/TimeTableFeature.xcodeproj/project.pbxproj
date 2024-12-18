@@ -3,12 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0CAC03371DE4D0ECBA41A37B /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B92CC3F2A9E5AD056ADE393 /* example.swift */; };
 		5A5174D2D7D2A8F8E89E6ABE /* BaseFeatureDependency.framework in Dependencies */ = {isa = PBXBuildFile; fileRef = C00E483A059858CE6553711F /* BaseFeatureDependency.framework */; };
+		D2C7F8082D12C2C20033C6A3 /* TimeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F8072D12C2C20033C6A3 /* TimeTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,10 +38,10 @@
 		545258D5A0F5FA256F1C2DC1 /* QA.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QA.xcconfig; sourceTree = "<group>"; };
 		63868C65784C11A4D8C77C59 /* TimeTableFeature-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TimeTableFeature-Info.plist"; sourceTree = "<group>"; };
 		6D13F4D80BBB66929C082D5D /* PROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PROD.xcconfig; sourceTree = "<group>"; };
-		7B92CC3F2A9E5AD056ADE393 /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = example.swift; sourceTree = "<group>"; };
 		7DBBC70C18F799BE322E653B /* TimeTableFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TimeTableFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B74B3A1A52D8C57ECD798C4 /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
 		C00E483A059858CE6553711F /* BaseFeatureDependency.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseFeatureDependency.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2C7F8072D12C2C20033C6A3 /* TimeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +120,7 @@
 		F1F46C4C3769311843CD38CA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				7B92CC3F2A9E5AD056ADE393 /* example.swift */,
+				D2C7F8072D12C2C20033C6A3 /* TimeTableView.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -156,6 +156,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
 				TargetAttributes = {
+					A557192FDB07C6A06C12851C = {
+						LastSwiftMigration = 1540;
+					};
 				};
 			};
 			buildConfigurationList = 463296E70649AB5FE7572480 /* Build configuration list for PBXProject "TimeTableFeature" */;
@@ -191,7 +194,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0CAC03371DE4D0ECBA41A37B /* example.swift in Sources */,
+				D2C7F8082D12C2C20033C6A3 /* TimeTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +264,7 @@
 		4C1E57EF4166C01E42C90DD2 /* PROD */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -409,6 +413,7 @@
 		CCFC30206E9E447B9F4A282E /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -444,6 +449,7 @@
 		E36FE913B69B59F82C149CA1 /* QA */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
