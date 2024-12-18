@@ -15,7 +15,12 @@ public extension Project {
         "NSAppTransportSecurity": [
             "NSAllowsArbitraryLoads": true
         ],
-        "UIAppFonts": ["NotoSansKR-Medium.ttf", "NotoSansKR-Regular.ttf", "NotoSansKR-SemiBold.ttf"],
+        "UIAppFonts": [
+            "NotoSansKR-Medium.ttf",
+            "NotoSansKR-Regular.ttf",
+            "NotoSansKR-SemiBold.ttf",
+            "NotoSansKR-Bold.ttf"
+        ],
         "UILaunchStoryboardName": "LaunchScreen"
     ]
     
@@ -25,7 +30,12 @@ public extension Project {
         "NSAppTransportSecurity": [
             "NSAllowsArbitraryLoads": true
         ],
-        "UIAppFonts": ["NotoSansKR-Medium.ttf", "NotoSansKR-Regular.ttf", "NotoSansKR-SemiBold.ttf"],
+        "UIAppFonts": [
+            "NotoSansKR-Medium.ttf",
+            "NotoSansKR-Regular.ttf",
+            "NotoSansKR-SemiBold.ttf",
+            "NotoSansKR-Bold.ttf"
+        ],
         "UILaunchStoryboardName": "LaunchScreen"
     ]
 }
