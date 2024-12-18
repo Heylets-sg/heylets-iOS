@@ -12,9 +12,9 @@ struct PasswordField: View {
     @Binding var password: String
     @Binding var showPassword: Bool
     
-    var isRest: Bool
+    let isRest: Bool
     var textFieldState: TextFieldState
-    var colorSystem: HeyTextFieldColorStyle
+    let colorSystem: HeyTextFieldColorStyle
     
     init(
         password: Binding<String>,
@@ -50,12 +50,8 @@ struct PasswordField: View {
                 .heyTextFieldStyle()
             }
             
-            if isRest && textFieldState == .valid {
-                Button {
-                    
-                } label: {
-                    Image(uiImage: textFieldState.rightView!)
-                }
+            if isRest && textFieldState.isValid() {
+                Image(uiImage: textFieldState.image!)
             } else {
                 Button(action: { self.showPassword.toggle() }) {
                     Image(uiImage: showPassword ? .icShow : .icHide)

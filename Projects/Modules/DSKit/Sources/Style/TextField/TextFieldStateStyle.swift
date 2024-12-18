@@ -24,12 +24,16 @@ enum TextFieldState {
         }
     }
     
-    var rightView: UIImage? {
+    var image: UIImage? {
         switch self {
         case .valid:
             return .icSuccess
         default:
             return nil
         }
+    }
+    
+    func isValid() -> Bool {
+        return self == .valid
     }
 }

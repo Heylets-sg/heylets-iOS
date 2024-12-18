@@ -13,7 +13,8 @@ public struct DSKitDemoView: View {
         NavigationStack {
             List {
                 NavigationLink("HeyBottomButton", destination: {heyBottomButton})
-                NavigationLink("HeyTextField", destination: {heyTextField})
+                NavigationLink("HeyPasswordTextField", destination: {passwordTextField})
+                NavigationLink("HeyTextField", destination: {heyTextFieldView})
             }
         }
         
@@ -61,7 +62,7 @@ public struct DSKitDemoView: View {
     
     @State var text = ""
     @State var showPassword = false
-    var heyTextField: some View {
+    var passwordTextField: some View {
         VStack {
             Spacer()
             
@@ -93,6 +94,29 @@ public struct DSKitDemoView: View {
                 isRest: true,
                 textFieldState: .valid
             )
+            
+            Spacer()
+        }
+        .padding(.horizontal, 16)
+        .background(.yellow)
+    }
+    
+    //MARK: - heyTextFieldView
+    
+    var heyTextFieldView: some View {
+        VStack {
+            Spacer()
+            
+            //MARK: Case 1
+            HeyTextField(text: $text, placeHolder: "placeholder")
+            
+            //MARK: Case 2
+            HeyTextField(text: $text, placeHolder: "placeholder", textFieldState: .invalid)
+            HeyTextField(text: $text, placeHolder: "placeholder", textFieldState: .valid)
+            
+            //MARK: Case 3
+            HeyTextField(text: $text, placeHolder: "placeholder", image: .icRepeat)
+            HeyTextField(text: $text, placeHolder: "placeholder", image: .icRepeat, textFieldState: .valid)
             
             Spacer()
         }

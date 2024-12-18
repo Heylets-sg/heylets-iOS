@@ -9,26 +9,58 @@
 import SwiftUI
 
 struct HeyTextField: View {
-    @Binding var password: String
-    @Binding var showPassword: Bool
-    var placeholder: String = "Password"
+    @Binding var text: String
+    let placeHolder: String
+    let image: UIImage?
+    @State var textFieldState: TextFieldState
+    let colorSystem: HeyTextFieldColorStyle
+    let action: () -> Void
+    
+    init(
+        text: Binding<String>,
+        placeHolder: String,
+        image: UIImage? = nil,
+        textFieldState: TextFieldState = .idle,
+        colorSystem: HeyTextFieldColorStyle = .white,
+        action: @escaping () -> Void = {}
+    ) {
+        self._text = text
+        self.placeHolder = placeHolder
+        self.image = image
+        self._textFieldState = State(initialValue: textFieldState)
+        self.colorSystem = colorSystem
+        self.action = action
+    }
+    
     
     var body: some View {
         HStack {
-            if showPassword {
-                TextField(placeholder, text: $password)
-                    .heyTextFieldStyle()
+            TextField(
+                "",
+                text: $text,
+                prompt: Text(placeHolder)
+                    .foregroundColor(.heyGray2)
+            )
+            .heyTextFieldStyle()
+            
+            if let image = textFieldState.image {
+                Image(uiImage: image)
             } else {
-                SecureField(placeholder, text: $password)
-                    .heyTextFieldStyle()
-            }
-            Button(action: { self.showPassword.toggle() }) {
-                Image(systemName: showPassword ? "eye.slash" : "eye")
-                    .foregroundColor(.secondary)
+                if let image = image {
+                    Button(action: self.action) {
+                        Image(uiImage: image)
+                    }
+                }
             }
         }
-        .padding()
-        .background(Capsule().fill(Color.white))
+        .padding(.horizontal, 16)
+        .frame(height: 52)
+        .background(colorSystem.background)
+        .cornerRadius(8)
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(textFieldState.strokeColor, lineWidth: 2)
+        )
     }
 }
 
