@@ -21,6 +21,8 @@
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum DSKitAsset {
   public static let accentColor = DSKitColors(name: "AccentColor")
+  public static let graphicsColor = DSKitImages(name: "graphics_color")
+  public static let graphicsTimetable = DSKitImages(name: "graphics_timetable")
   public static let icAdd = DSKitImages(name: "ic_add")
   public static let icCamera = DSKitImages(name: "ic_camera")
   public static let icClose = DSKitImages(name: "ic_close")
@@ -32,6 +34,9 @@ public enum DSKitAsset {
   public static let icSetting = DSKitImages(name: "ic_setting")
   public static let icShow = DSKitImages(name: "ic_show")
   public static let icSuccess = DSKitImages(name: "ic_success")
+  public static let heyBlack = DSKitColors(name: "heyBlack")
+  public static let heyGray1 = DSKitColors(name: "heyGray1")
+  public static let heyWhite = DSKitColors(name: "heyWhite")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
