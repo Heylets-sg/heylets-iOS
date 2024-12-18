@@ -8,8 +8,9 @@
 
 import SwiftUI
 
-struct DeleteAccountView: View {
-    var body: some View {
+public struct DeleteAccountView: View {
+    public init() {}
+    public var body: some View {
         Text("DeleteAccountView")
     }
 }

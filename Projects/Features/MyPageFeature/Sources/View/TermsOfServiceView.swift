@@ -8,8 +8,9 @@
 
 import SwiftUI
 
-struct TermsOfServiceView: View {
-    var body: some View {
+public struct TermsOfServiceView: View {
+    public init() {}
+    public var body: some View {
         Text("TermsOfServiceView")
     }
 }

@@ -34,12 +34,13 @@ public extension Project {
         sources: SourceFilesList? = nil,
         hasResources: Bool = false
     ) -> Project {
-        let dependencies: [TargetDependency] = internalDependencies + externalDependencies + interfaceDependencies
         
         let projectTargets: [Target] = TargetHandler.makeProjectTargets(
             name: name,
             hasResources: hasResources,
-            with: dependencies,
+            internalDependencies: internalDependencies,
+            externalDependencies: externalDependencies,
+            interfaceDependencies: interfaceDependencies,
             targets: targets
         )
         let projcetScheme: [Scheme] = SchemeProvider.makeProjectScheme(targets: targets, name: name)

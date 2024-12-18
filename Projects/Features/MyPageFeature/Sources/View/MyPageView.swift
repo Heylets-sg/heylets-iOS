@@ -7,9 +7,9 @@
 //
 
 import SwiftUI
-
-struct MyPageView: View {
-    var body: some View {
+public struct MyPageView: View {
+    public init() {}
+    public var body: some View {
         Text("MyPageView")
     }
 }

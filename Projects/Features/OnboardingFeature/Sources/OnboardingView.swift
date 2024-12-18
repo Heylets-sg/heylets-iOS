@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-struct OnboardingView: View {
-    var body: some View {
+public struct OnboardingView: View {
+    public var body: some View {
         Text("OnboardingView")
     }
 }

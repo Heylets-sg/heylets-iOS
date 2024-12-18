@@ -8,8 +8,9 @@
 
 import SwiftUI
 
-struct NotificationSettingView: View {
-    var body: some View {
+public struct NotificationSettingView: View {
+    public init() {}
+    public var body: some View {
         Text("NotificationSettingView")
     }
 }

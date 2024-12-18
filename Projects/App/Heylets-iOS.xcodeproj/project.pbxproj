@@ -8,14 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		051315DAFC8AE52DC8789AD8 /* TuistAssets+HeyletsIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB31286BE001E8357196652 /* TuistAssets+HeyletsIOS.swift */; };
+		1153139375B6AD07C08BFC3F /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538ACFE3C52B9A1BAD705D8 /* DIContainer.swift */; };
 		2004FD5738A871AA690B5979 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6BA02C1730084A2ABD42F8 /* Domain.framework */; };
+		35320AE27709BDEC26A97478 /* BaseFeatureDependency.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9931273567A167B642580301 /* BaseFeatureDependency.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		39FE64E25A7E910D3ABD99DB /* BaseFeatureDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9931273567A167B642580301 /* BaseFeatureDependency.framework */; };
 		43AB96D356AB8624315CCE8E /* Heylets_iOSAPP.swift in Sources */ = {isa = PBXBuildFile; fileRef = F998E62E53F7BBEC97EF4E53 /* Heylets_iOSAPP.swift */; };
 		4F0795E110B5EEFA2F48C3C4 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0768019261E893498AF770C8 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6B1B799D98701C7FEC60DA7B /* MyPageFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36784BBA04A4EAD8B3B751E4 /* MyPageFeature.framework */; };
 		93E253D3B8F29EECC176A8CE /* TuistBundle+HeyletsIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7228BE586B97625F88DAC9 /* TuistBundle+HeyletsIOS.swift */; };
 		9806D0784F3952C77AE9ABFC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51E36201BDB455202A4B9CAD /* Assets.xcassets */; };
-		9A1306DBA276971F0791BF5B /* DSKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C91FC68E23B8EEF6495E7E7E /* DSKit.framework */; };
 		9B55871CD0DBA1836635BA74 /* DSKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C91FC68E23B8EEF6495E7E7E /* DSKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB5C40572E32842B43178ADD /* Domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA6BA02C1730084A2ABD42F8 /* Domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ADA39FE6D5803AFFDFF3C31B /* TimeTableFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F44A38599C673ED3DD09312 /* TimeTableFeature.framework */; };
@@ -33,6 +34,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				35320AE27709BDEC26A97478 /* BaseFeatureDependency.framework in Embed Frameworks */,
 				4F0795E110B5EEFA2F48C3C4 /* Core.framework in Embed Frameworks */,
 				9B55871CD0DBA1836635BA74 /* DSKit.framework in Embed Frameworks */,
 				AB5C40572E32842B43178ADD /* Domain.framework in Embed Frameworks */,
@@ -47,6 +49,7 @@
 		0281953814F5EB9703016F5D /* PROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PROD.xcconfig; sourceTree = "<group>"; };
 		0768019261E893498AF770C8 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		105911479384512D89A46125 /* Heylets_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heylets_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3538ACFE3C52B9A1BAD705D8 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		36784BBA04A4EAD8B3B751E4 /* MyPageFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MyPageFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		51E36201BDB455202A4B9CAD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		839CB2720189EFF4C7E82995 /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
@@ -73,7 +76,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				39FE64E25A7E910D3ABD99DB /* BaseFeatureDependency.framework in Frameworks */,
-				9A1306DBA276971F0791BF5B /* DSKit.framework in Frameworks */,
 				B633746B68F24414EF1B55CC /* Data.framework in Frameworks */,
 				2004FD5738A871AA690B5979 /* Domain.framework in Frameworks */,
 				6B1B799D98701C7FEC60DA7B /* MyPageFeature.framework in Frameworks */,
@@ -146,6 +148,14 @@
 			);
 			sourceTree = "<group>";
 		};
+		6DD9D86024B7931FC4210F7B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				3538ACFE3C52B9A1BAD705D8 /* DIContainer.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		6E5B46108824B47460ABD26A /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +168,7 @@
 		939F8D086F7B37BFE1AA10E3 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				6DD9D86024B7931FC4210F7B /* App */,
 				F998E62E53F7BBEC97EF4E53 /* Heylets_iOSAPP.swift */,
 			);
 			path = Sources;
@@ -255,6 +266,7 @@
 			files = (
 				051315DAFC8AE52DC8789AD8 /* TuistAssets+HeyletsIOS.swift in Sources */,
 				93E253D3B8F29EECC176A8CE /* TuistBundle+HeyletsIOS.swift in Sources */,
+				1153139375B6AD07C08BFC3F /* DIContainer.swift in Sources */,
 				43AB96D356AB8624315CCE8E /* Heylets_iOSAPP.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

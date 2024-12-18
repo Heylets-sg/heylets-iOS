@@ -8,8 +8,9 @@
 
 import SwiftUI
 
-struct PrivacyPolicyView: View {
-    var body: some View {
+public struct PrivacyPolicyView: View {
+    public init() {}
+    public var body: some View {
         Text("PrivacyPolicyView")
     }
 }

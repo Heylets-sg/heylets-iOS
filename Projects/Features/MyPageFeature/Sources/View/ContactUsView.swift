@@ -8,8 +8,9 @@
 
 import SwiftUI
 
-struct ContactUsView: View {
-    var body: some View {
+public struct ContactUsView: View {
+    public init() {}
+    public var body: some View {
         Text("ContactUsView")
     }
 }

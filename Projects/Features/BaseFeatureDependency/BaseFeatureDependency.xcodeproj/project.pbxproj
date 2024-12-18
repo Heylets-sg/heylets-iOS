@@ -269,7 +269,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Heylets-iOS.BaseFeatureDependency";
 				PRODUCT_NAME = BaseFeatureDependency;
 				SDKROOT = iphoneos;
@@ -304,7 +303,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Heylets-iOS.BaseFeatureDependency";
 				PRODUCT_NAME = BaseFeatureDependency;
 				SDKROOT = iphoneos;
@@ -452,7 +450,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Heylets-iOS.BaseFeatureDependency";
 				PRODUCT_NAME = BaseFeatureDependency;
 				SDKROOT = iphoneos;

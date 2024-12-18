@@ -11,8 +11,8 @@ import DependencyPlugin
 
 let project = Project.makeModule(
     name: "TimeTableFeature",
-    targets: [.staticFramework], //, .demo
-    internalDependencies: [
+    targets: [.staticFramework, .interface], //, .demo
+    interfaceDependencies: [
         .Features.BaseFeatureDependency
     ]
 )

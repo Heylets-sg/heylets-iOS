@@ -3,34 +3,36 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B1CC8C5E053E74984045CF00 /* BaseFeatureDependency.framework in Dependencies */ = {isa = PBXBuildFile; fileRef = 4BDB92322CBAADE786892C14 /* BaseFeatureDependency.framework */; };
-		D2C7F80A2D12C2FA0033C6A3 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F8092D12C2FA0033C6A3 /* SplashView.swift */; };
-		D2C7F80C2D12C3080033C6A3 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F80B2D12C3080033C6A3 /* OnboardingView.swift */; };
-		D2C7F8102D12C3320033C6A3 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F80F2D12C3320033C6A3 /* LogInView.swift */; };
-		D2C7F8122D12C3720033C6A3 /* SelectUniversityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F8112D12C3720033C6A3 /* SelectUniversityView.swift */; };
-		D2C7F8142D12C3920033C6A3 /* VerifyEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F8132D12C3920033C6A3 /* VerifyEmailView.swift */; };
-		D2C7F8162D12C3CB0033C6A3 /* EnterSecurityCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F8152D12C3CB0033C6A3 /* EnterSecurityCodeView.swift */; };
-		D2C7F8182D12C3E50033C6A3 /* EnterPersonalInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F8172D12C3E50033C6A3 /* EnterPersonalInfoView.swift */; };
-		D2C7F81A2D12C3FF0033C6A3 /* EnterIdPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F8192D12C3FF0033C6A3 /* EnterIdPasswordView.swift */; };
-		D2C7F81C2D12C4110033C6A3 /* AddProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F81B2D12C4110033C6A3 /* AddProfileView.swift */; };
-		D2C7F81E2D12C45D0033C6A3 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F81D2D12C45D0033C6A3 /* ResetPasswordView.swift */; };
-		D2C7F8202D12C4790033C6A3 /* EnterEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F81F2D12C4790033C6A3 /* EnterEmailView.swift */; };
+		05B172BC1471DE94A8E74809 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D2C38A97F5CB694951E0BE /* LogInView.swift */; };
+		1500B3130F85F6ADD82ABE20 /* EnterSecurityCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01743796E083DED98F64D949 /* EnterSecurityCodeView.swift */; };
+		178635F39DA2205CA61117C0 /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6359FF7F78EAA0EE43A06FFA /* example.swift */; };
+		1FD36C1A2D293B93AC65AFA1 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3A4BCBA598259DBE0AB13 /* SplashView.swift */; };
+		3E2021CD697A27C0A576DBE2 /* BaseFeatureDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BDB92322CBAADE786892C14 /* BaseFeatureDependency.framework */; };
+		4727361868F6488C8D692AE2 /* EnterPersonalInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED48B19B57F2D089BF676629 /* EnterPersonalInfoView.swift */; };
+		594DB40375EEF003CBDFBB22 /* AddProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B6000A026B72B3720D50B7 /* AddProfileView.swift */; };
+		5DD30657346860FD2470AE10 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8CE44B5AE4058D034C58C4 /* OnboardingView.swift */; };
+		7C35DE086EEDB2B4482C2780 /* SelectUniversityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5F65928989200A776F774C /* SelectUniversityView.swift */; };
+		7E3E584BB83342F466D89B2E /* EnterIdPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87696A2321B3F7825DA1983D /* EnterIdPasswordView.swift */; };
+		AE3085403BE9B665FF8815C8 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840EEB3BEE1B85FFD1FA3E93 /* ResetPasswordView.swift */; };
+		CC4F917AF8F5AEA84307A0DF /* EnterEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AB6B956870249EAB289600 /* EnterEmailView.swift */; };
+		E1D68447DD2DCBBF4AC73C82 /* VerifyEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE83B06A14F12D33952906B7 /* VerifyEmailView.swift */; };
+		F02157AA665A42DF29E6335F /* BaseFeatureDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BDB92322CBAADE786892C14 /* BaseFeatureDependency.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D4FD86B5AD15E0B1F7673048 /* Dependencies */ = {
+		0A83A99A1B6C8139C919B678 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
-			dstSubfolderSpec = 16;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
 			files = (
-				B1CC8C5E053E74984045CF00 /* BaseFeatureDependency.framework in Dependencies */,
 			);
-			name = Dependencies;
-			runOnlyForDeploymentPostprocessing = 1;
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EAE738393633AEEB6828B771 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -45,23 +47,26 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01743796E083DED98F64D949 /* EnterSecurityCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterSecurityCodeView.swift; sourceTree = "<group>"; };
 		156B9B43922EF6A5C8DB729B /* QA.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QA.xcconfig; sourceTree = "<group>"; };
+		17B6000A026B72B3720D50B7 /* AddProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileView.swift; sourceTree = "<group>"; };
+		19AB6B956870249EAB289600 /* EnterEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterEmailView.swift; sourceTree = "<group>"; };
 		28F51570D13DB809CB25587F /* OnboardingFeature-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "OnboardingFeature-Info.plist"; sourceTree = "<group>"; };
+		4062EEDCBEFFD4918BB95258 /* OnboardingFeatureInterface-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "OnboardingFeatureInterface-Info.plist"; sourceTree = "<group>"; };
+		49700A1EB5CDEF84F54A296C /* OnboardingFeatureInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OnboardingFeatureInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BDB92322CBAADE786892C14 /* BaseFeatureDependency.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseFeatureDependency.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DDAEC7C7457BC0170E9C67D /* PROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PROD.xcconfig; sourceTree = "<group>"; };
+		6359FF7F78EAA0EE43A06FFA /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = example.swift; sourceTree = "<group>"; };
+		840EEB3BEE1B85FFD1FA3E93 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
+		87696A2321B3F7825DA1983D /* EnterIdPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterIdPasswordView.swift; sourceTree = "<group>"; };
+		93B3A4BCBA598259DBE0AB13 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		A3E3B9F7E5F9316C5AB47231 /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
+		AC8CE44B5AE4058D034C58C4 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		B939FCC920654D4BE37B33D6 /* OnboardingFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OnboardingFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2C7F8092D12C2FA0033C6A3 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
-		D2C7F80B2D12C3080033C6A3 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		D2C7F80F2D12C3320033C6A3 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
-		D2C7F8112D12C3720033C6A3 /* SelectUniversityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUniversityView.swift; sourceTree = "<group>"; };
-		D2C7F8132D12C3920033C6A3 /* VerifyEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailView.swift; sourceTree = "<group>"; };
-		D2C7F8152D12C3CB0033C6A3 /* EnterSecurityCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterSecurityCodeView.swift; sourceTree = "<group>"; };
-		D2C7F8172D12C3E50033C6A3 /* EnterPersonalInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPersonalInfoView.swift; sourceTree = "<group>"; };
-		D2C7F8192D12C3FF0033C6A3 /* EnterIdPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterIdPasswordView.swift; sourceTree = "<group>"; };
-		D2C7F81B2D12C4110033C6A3 /* AddProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileView.swift; sourceTree = "<group>"; };
-		D2C7F81D2D12C45D0033C6A3 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
-		D2C7F81F2D12C4790033C6A3 /* EnterEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterEmailView.swift; sourceTree = "<group>"; };
+		CE83B06A14F12D33952906B7 /* VerifyEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailView.swift; sourceTree = "<group>"; };
+		DA5F65928989200A776F774C /* SelectUniversityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUniversityView.swift; sourceTree = "<group>"; };
+		E8D2C38A97F5CB694951E0BE /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
+		ED48B19B57F2D089BF676629 /* EnterPersonalInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPersonalInfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,12 +74,42 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E2021CD697A27C0A576DBE2 /* BaseFeatureDependency.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		506C66C649C352DCE66F957F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F02157AA665A42DF29E6335F /* BaseFeatureDependency.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0140E3C903DCC893B82EF652 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				17B6000A026B72B3720D50B7 /* AddProfileView.swift */,
+				87696A2321B3F7825DA1983D /* EnterIdPasswordView.swift */,
+				ED48B19B57F2D089BF676629 /* EnterPersonalInfoView.swift */,
+				01743796E083DED98F64D949 /* EnterSecurityCodeView.swift */,
+				DA5F65928989200A776F774C /* SelectUniversityView.swift */,
+				CE83B06A14F12D33952906B7 /* VerifyEmailView.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		2266815C5E24EEF7EAA2F716 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				6359FF7F78EAA0EE43A06FFA /* example.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		23F05B1739C802B6160DD04A /* XCConfig */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,13 +130,31 @@
 			);
 			sourceTree = "<group>";
 		};
+		3C97AA001D9BBD3B43D1AA90 /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				19AB6B956870249EAB289600 /* EnterEmailView.swift */,
+				E8D2C38A97F5CB694951E0BE /* LogInView.swift */,
+				840EEB3BEE1B85FFD1FA3E93 /* ResetPasswordView.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		63BAE3C92A15CB2548815FB2 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				2266815C5E24EEF7EAA2F716 /* Sources */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
 		87F593C03D1911D2F2934795 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D2C7F80E2D12C31E0033C6A3 /* SignUp */,
-				D2C7F80D2D12C3180033C6A3 /* SignIn */,
-				D2C7F8092D12C2FA0033C6A3 /* SplashView.swift */,
-				D2C7F80B2D12C3080033C6A3 /* OnboardingView.swift */,
+				3C97AA001D9BBD3B43D1AA90 /* SignIn */,
+				0140E3C903DCC893B82EF652 /* SignUp */,
+				AC8CE44B5AE4058D034C58C4 /* OnboardingView.swift */,
+				93B3A4BCBA598259DBE0AB13 /* SplashView.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -110,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				28F51570D13DB809CB25587F /* OnboardingFeature-Info.plist */,
+				4062EEDCBEFFD4918BB95258 /* OnboardingFeatureInterface-Info.plist */,
 			);
 			path = InfoPlists;
 			sourceTree = "<group>";
@@ -118,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				CAC7906F2F6DC9BB02B661A9 /* Derived */,
+				63BAE3C92A15CB2548815FB2 /* Interface */,
 				87F593C03D1911D2F2934795 /* Sources */,
 				23F05B1739C802B6160DD04A /* XCConfig */,
 			);
@@ -144,31 +199,9 @@
 			children = (
 				4BDB92322CBAADE786892C14 /* BaseFeatureDependency.framework */,
 				B939FCC920654D4BE37B33D6 /* OnboardingFeature.framework */,
+				49700A1EB5CDEF84F54A296C /* OnboardingFeatureInterface.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		D2C7F80D2D12C3180033C6A3 /* SignIn */ = {
-			isa = PBXGroup;
-			children = (
-				D2C7F80F2D12C3320033C6A3 /* LogInView.swift */,
-				D2C7F81D2D12C45D0033C6A3 /* ResetPasswordView.swift */,
-				D2C7F81F2D12C4790033C6A3 /* EnterEmailView.swift */,
-			);
-			path = SignIn;
-			sourceTree = "<group>";
-		};
-		D2C7F80E2D12C31E0033C6A3 /* SignUp */ = {
-			isa = PBXGroup;
-			children = (
-				D2C7F8112D12C3720033C6A3 /* SelectUniversityView.swift */,
-				D2C7F8132D12C3920033C6A3 /* VerifyEmailView.swift */,
-				D2C7F8152D12C3CB0033C6A3 /* EnterSecurityCodeView.swift */,
-				D2C7F8172D12C3E50033C6A3 /* EnterPersonalInfoView.swift */,
-				D2C7F8192D12C3FF0033C6A3 /* EnterIdPasswordView.swift */,
-				D2C7F81B2D12C4110033C6A3 /* AddProfileView.swift */,
-			);
-			path = SignUp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,7 +215,6 @@
 				EC9CB0076F0751D016F0D63E /* Resources */,
 				EAE738393633AEEB6828B771 /* Embed Frameworks */,
 				328C5F52951D9FF8268B9501 /* Frameworks */,
-				D4FD86B5AD15E0B1F7673048 /* Dependencies */,
 			);
 			buildRules = (
 			);
@@ -191,6 +223,24 @@
 			name = OnboardingFeature;
 			productName = OnboardingFeature;
 			productReference = B939FCC920654D4BE37B33D6 /* OnboardingFeature.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		192C7ACBD5A03867D013EBF3 /* OnboardingFeatureInterface */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A06360AF3CCF01ED458E433 /* Build configuration list for PBXNativeTarget "OnboardingFeatureInterface" */;
+			buildPhases = (
+				05675F786FA43F508D2BE228 /* Sources */,
+				BC15BD108F7B6C29E91ED379 /* Resources */,
+				0A83A99A1B6C8139C919B678 /* Embed Frameworks */,
+				506C66C649C352DCE66F957F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OnboardingFeatureInterface;
+			productName = OnboardingFeatureInterface;
+			productReference = 49700A1EB5CDEF84F54A296C /* OnboardingFeatureInterface.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -202,9 +252,6 @@
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
 				TargetAttributes = {
-					155E57EFC440A9B0889AB3AC = {
-						LastSwiftMigration = 1540;
-					};
 				};
 			};
 			buildConfigurationList = 684EB6572A6E59D03A4226F1 /* Build configuration list for PBXProject "OnboardingFeature" */;
@@ -221,11 +268,19 @@
 			projectRoot = "";
 			targets = (
 				155E57EFC440A9B0889AB3AC /* OnboardingFeature */,
+				192C7ACBD5A03867D013EBF3 /* OnboardingFeatureInterface */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		BC15BD108F7B6C29E91ED379 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EC9CB0076F0751D016F0D63E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -236,21 +291,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		05675F786FA43F508D2BE228 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				178635F39DA2205CA61117C0 /* example.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F128C92AA092BC99C94C726F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2C7F8102D12C3320033C6A3 /* LogInView.swift in Sources */,
-				D2C7F81C2D12C4110033C6A3 /* AddProfileView.swift in Sources */,
-				D2C7F8182D12C3E50033C6A3 /* EnterPersonalInfoView.swift in Sources */,
-				D2C7F80A2D12C2FA0033C6A3 /* SplashView.swift in Sources */,
-				D2C7F8122D12C3720033C6A3 /* SelectUniversityView.swift in Sources */,
-				D2C7F8142D12C3920033C6A3 /* VerifyEmailView.swift in Sources */,
-				D2C7F81A2D12C3FF0033C6A3 /* EnterIdPasswordView.swift in Sources */,
-				D2C7F81E2D12C45D0033C6A3 /* ResetPasswordView.swift in Sources */,
-				D2C7F8202D12C4790033C6A3 /* EnterEmailView.swift in Sources */,
-				D2C7F8162D12C3CB0033C6A3 /* EnterSecurityCodeView.swift in Sources */,
-				D2C7F80C2D12C3080033C6A3 /* OnboardingView.swift in Sources */,
+				5DD30657346860FD2470AE10 /* OnboardingView.swift in Sources */,
+				CC4F917AF8F5AEA84307A0DF /* EnterEmailView.swift in Sources */,
+				05B172BC1471DE94A8E74809 /* LogInView.swift in Sources */,
+				AE3085403BE9B665FF8815C8 /* ResetPasswordView.swift in Sources */,
+				594DB40375EEF003CBDFBB22 /* AddProfileView.swift in Sources */,
+				7E3E584BB83342F466D89B2E /* EnterIdPasswordView.swift in Sources */,
+				4727361868F6488C8D692AE2 /* EnterPersonalInfoView.swift in Sources */,
+				1500B3130F85F6ADD82ABE20 /* EnterSecurityCodeView.swift in Sources */,
+				7C35DE086EEDB2B4482C2780 /* SelectUniversityView.swift in Sources */,
+				E1D68447DD2DCBBF4AC73C82 /* VerifyEmailView.swift in Sources */,
+				1FD36C1A2D293B93AC65AFA1 /* SplashView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,7 +323,6 @@
 		5CF3C55F23A750FC3B60AD77 /* QA */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -350,7 +412,6 @@
 		7D3B688AED98F9E120AB7239 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -503,10 +564,77 @@
 			};
 			name = Development;
 		};
+		CD3633E0577B2E9E9FC3356D /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/OnboardingFeatureInterface-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Heylets-iOS.OnboardingFeatureInterface";
+				PRODUCT_NAME = OnboardingFeatureInterface;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Development;
+		};
+		F6402CFAD7151A6FBC9798C4 /* QA */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/OnboardingFeatureInterface-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Heylets-iOS.OnboardingFeatureInterface";
+				PRODUCT_NAME = OnboardingFeatureInterface;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = QA;
+		};
 		F7DBD47A5D5586EE69580A76 /* PROD */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -538,6 +666,39 @@
 			};
 			name = PROD;
 		};
+		FAD13F92FCEC95411F8DE365 /* PROD */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/OnboardingFeatureInterface-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Heylets-iOS.OnboardingFeatureInterface";
+				PRODUCT_NAME = OnboardingFeatureInterface;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = PROD;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -547,6 +708,16 @@
 				B8B0EDE521BFCD2887EA0BE9 /* Development */,
 				6D40E9B164A997A4E7CC6F6D /* PROD */,
 				89EF6283B77768A7601630BA /* QA */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = PROD;
+		};
+		6A06360AF3CCF01ED458E433 /* Build configuration list for PBXNativeTarget "OnboardingFeatureInterface" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD3633E0577B2E9E9FC3356D /* Development */,
+				FAD13F92FCEC95411F8DE365 /* PROD */,
+				F6402CFAD7151A6FBC9798C4 /* QA */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = PROD;

@@ -8,8 +8,9 @@
 
 import SwiftUI
 
-struct TimeTableView: View {
-    var body: some View {
+public struct TimeTableView: View {
+    public init() {}
+    public var body: some View {
         Text("TimeTableView")
     }
 }
