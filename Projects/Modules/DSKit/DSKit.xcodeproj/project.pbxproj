@@ -24,6 +24,9 @@
 		D2C7F7E62D1287BD0033C6A3 /* HeyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F7E52D1287BD0033C6A3 /* HeyTextField.swift */; };
 		D2C7F7E82D128D160033C6A3 /* TextFieldColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F7E72D128D150033C6A3 /* TextFieldColorStyle.swift */; };
 		D2C7F7EA2D128D4A0033C6A3 /* TextFieldStateStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F7E92D128D4A0033C6A3 /* TextFieldStateStyle.swift */; };
+		D2C7F7EF2D12B0240033C6A3 /* HeyAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F7EE2D12B0240033C6A3 /* HeyAlertView.swift */; };
+		D2C7F7F22D12B2D80033C6A3 /* ButtonColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F7F12D12B2D80033C6A3 /* ButtonColorStyle.swift */; };
+		D2C7F7F42D12B2F90033C6A3 /* AlertButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F7F32D12B2F90033C6A3 /* AlertButtonStyle.swift */; };
 		D789EC023DB76DF6877B8342 /* NotoSansKR-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A942ED829C4F49716C2B019 /* NotoSansKR-SemiBold.ttf */; };
 		DCAFD44D8CE34E077E51E29A /* NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED141780509BCEDEA67610C7 /* NotoSansKR-Bold.ttf */; };
 		EFF289155B85BDFE2602D52F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607C3C3084325E1A40A34843 /* Assets.xcassets */; };
@@ -64,6 +67,9 @@
 		D2C7F7E52D1287BD0033C6A3 /* HeyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeyTextField.swift; sourceTree = "<group>"; };
 		D2C7F7E72D128D150033C6A3 /* TextFieldColorStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldColorStyle.swift; sourceTree = "<group>"; };
 		D2C7F7E92D128D4A0033C6A3 /* TextFieldStateStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStateStyle.swift; sourceTree = "<group>"; };
+		D2C7F7EE2D12B0240033C6A3 /* HeyAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeyAlertView.swift; sourceTree = "<group>"; };
+		D2C7F7F12D12B2D80033C6A3 /* ButtonColorStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonColorStyle.swift; sourceTree = "<group>"; };
+		D2C7F7F32D12B2F90033C6A3 /* AlertButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertButtonStyle.swift; sourceTree = "<group>"; };
 		D572943C422BD6E39CC00D58 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E66D318D9ABA39C16EF21BB8 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		ED141780509BCEDEA67610C7 /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
@@ -121,8 +127,8 @@
 		5478F95876D03D94DF616249 /* Style */ = {
 			isa = PBXGroup;
 			children = (
+				D2C7F7F02D12B17B0033C6A3 /* Button */,
 				D2C7F7EB2D128D680033C6A3 /* TextField */,
-				2ADD09BA10C78CC8DBF474EF /* ButtonStyles.swift */,
 			);
 			path = Style;
 			sourceTree = "<group>";
@@ -192,8 +198,8 @@
 		D2C7F7E22D1282EA0033C6A3 /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				D2C7F7E32D1283000033C6A3 /* PasswordTextField.swift */,
-				D2C7F7E52D1287BD0033C6A3 /* HeyTextField.swift */,
+				D2C7F7ED2D12B0190033C6A3 /* Alert */,
+				D2C7F7EC2D12B00E0033C6A3 /* TextField */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -206,6 +212,33 @@
 				D2C7F7E92D128D4A0033C6A3 /* TextFieldStateStyle.swift */,
 			);
 			path = TextField;
+			sourceTree = "<group>";
+		};
+		D2C7F7EC2D12B00E0033C6A3 /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				D2C7F7E52D1287BD0033C6A3 /* HeyTextField.swift */,
+				D2C7F7E32D1283000033C6A3 /* PasswordTextField.swift */,
+			);
+			path = TextField;
+			sourceTree = "<group>";
+		};
+		D2C7F7ED2D12B0190033C6A3 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				D2C7F7EE2D12B0240033C6A3 /* HeyAlertView.swift */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
+		D2C7F7F02D12B17B0033C6A3 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				2ADD09BA10C78CC8DBF474EF /* ButtonStyles.swift */,
+				D2C7F7F12D12B2D80033C6A3 /* ButtonColorStyle.swift */,
+				D2C7F7F32D12B2F90033C6A3 /* AlertButtonStyle.swift */,
+			);
+			path = Button;
 			sourceTree = "<group>";
 		};
 		E01370C8BF76C3D89D73154B /* Constant */ = {
@@ -300,8 +333,11 @@
 				2119920E047D960DD77D187B /* TuistAssets+DSKit.swift in Sources */,
 				59C0778CC277DC59F72C7B72 /* TuistBundle+DSKit.swift in Sources */,
 				D2C7F7E62D1287BD0033C6A3 /* HeyTextField.swift in Sources */,
+				D2C7F7F22D12B2D80033C6A3 /* ButtonColorStyle.swift in Sources */,
+				D2C7F7F42D12B2F90033C6A3 /* AlertButtonStyle.swift in Sources */,
 				D18D41831EF184DAEA5F9CB4 /* TuistFonts+DSKit.swift in Sources */,
 				0BF7B2416163F640DDEDBCE4 /* Color.swift in Sources */,
+				D2C7F7EF2D12B0240033C6A3 /* HeyAlertView.swift in Sources */,
 				66303E69FEDA67F10E032FF9 /* Font.swift in Sources */,
 				173664020C7976A919C831A9 /* Image.swift in Sources */,
 				32781761389E1300AECA0654 /* DSKitDemoView.swift in Sources */,

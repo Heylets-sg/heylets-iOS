@@ -15,33 +15,6 @@ struct ScaleButtonStyle: ButtonStyle {
     }
 }
 
-struct HeyButtonColorStyle {
-    let background: Color
-    let foreground: Color
-    let disabledBackground: Color
-}
-
-extension HeyButtonColorStyle {
-    static let white = HeyButtonColorStyle(
-        background: .heyWhite,
-        foreground: .heyBlack,
-        disabledBackground: .heyGray4
-    )
-    
-    static let primary = HeyButtonColorStyle(
-        background: .heyMain,
-        foreground: .heyBlack,
-        disabledBackground: .heyGray4
-    )
-    
-    static let black = HeyButtonColorStyle(
-        background: .heyBlack,
-        foreground: .heyWhite,
-        disabledBackground: .heyGray4
-    )
-}
-
-
 struct HeyBottomButtonStyle: ButtonStyle {
     
     @Environment(\.isEnabled) private var isEnabled: Bool

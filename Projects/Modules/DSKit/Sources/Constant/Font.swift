@@ -18,6 +18,7 @@ public extension Font {
     static let semibold_14: Font = .custom("NotoSansKR-Medium", size: 14)
     
     // medium
+    static let medium_18: Font = .custom("NotoSansKR-Medium", size: 18)
     static let medium_16: Font = .custom("NotoSansKR-Medium", size: 16)
     static let medium_14: Font = .custom("NotoSansKR-Medium", size: 14)
     

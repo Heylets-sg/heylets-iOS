@@ -15,6 +15,7 @@ public struct DSKitDemoView: View {
                 NavigationLink("HeyBottomButton", destination: {heyBottomButton})
                 NavigationLink("HeyPasswordTextField", destination: {passwordTextField})
                 NavigationLink("HeyTextField", destination: {heyTextFieldView})
+                NavigationLink("HeyAlertView", destination: {heyAlertView})
             }
         }
         
@@ -117,6 +118,32 @@ public struct DSKitDemoView: View {
             //MARK: Case 3
             HeyTextField(text: $text, placeHolder: "placeholder", image: .icRepeat)
             HeyTextField(text: $text, placeHolder: "placeholder", image: .icRepeat, textFieldState: .valid)
+            
+            Spacer()
+        }
+        .padding(.horizontal, 16)
+        .background(.yellow)
+    }
+    
+    //MARK: - heyAlertView
+    
+    var heyAlertView: some View {
+        VStack {
+            Spacer()
+            
+            //MARK: Case 1
+            HeyAlertView(
+                title: "OneButton",
+                primaryAction: ("확인", .primary, { } )
+            )
+            
+            //MARK: Case 2
+            
+            HeyAlertView(
+                title: "TwoButton",
+                primaryAction: ("확인", .primary, { } ),
+                secondaryAction: ("취소", .error, { } )
+            )
             
             Spacer()
         }
