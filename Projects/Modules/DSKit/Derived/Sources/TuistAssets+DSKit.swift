@@ -21,6 +21,17 @@
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum DSKitAsset {
   public static let accentColor = DSKitColors(name: "AccentColor")
+  public static let icAdd = DSKitImages(name: "ic_add")
+  public static let icCamera = DSKitImages(name: "ic_camera")
+  public static let icClose = DSKitImages(name: "ic_close")
+  public static let icError = DSKitImages(name: "ic_error")
+  public static let icHide = DSKitImages(name: "ic_hide")
+  public static let icMagic = DSKitImages(name: "ic_magic")
+  public static let icRepeat = DSKitImages(name: "ic_repeat")
+  public static let icSchool = DSKitImages(name: "ic_school")
+  public static let icSetting = DSKitImages(name: "ic_setting")
+  public static let icShow = DSKitImages(name: "ic_show")
+  public static let icSuccess = DSKitImages(name: "ic_success")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
@@ -85,6 +96,73 @@ public extension SwiftUI.Color {
   init(asset: DSKitColors) {
     let bundle = DSKitResources.bundle
     self.init(asset.name, bundle: bundle)
+  }
+}
+#endif
+
+public struct DSKitImages {
+  public fileprivate(set) var name: String
+
+  #if os(macOS)
+  public typealias Image = NSImage
+  #elseif os(iOS) || os(tvOS) || os(watchOS)
+  public typealias Image = UIImage
+  #endif
+
+  public var image: Image {
+    let bundle = DSKitResources.bundle
+    #if os(iOS) || os(tvOS)
+    let image = Image(named: name, in: bundle, compatibleWith: nil)
+    #elseif os(macOS)
+    let image = bundle.image(forResource: NSImage.Name(name))
+    #elseif os(watchOS)
+    let image = Image(named: name)
+    #endif
+    guard let result = image else {
+      fatalError("Unable to load image asset named \(name).")
+    }
+    return result
+  }
+
+  #if canImport(SwiftUI)
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+  public var swiftUIImage: SwiftUI.Image {
+    SwiftUI.Image(asset: self)
+  }
+  #endif
+}
+
+public extension DSKitImages.Image {
+  @available(macOS, deprecated,
+    message: "This initializer is unsafe on macOS, please use the DSKitImages.image property")
+  convenience init?(asset: DSKitImages) {
+    #if os(iOS) || os(tvOS)
+    let bundle = DSKitResources.bundle
+    self.init(named: asset.name, in: bundle, compatibleWith: nil)
+    #elseif os(macOS)
+    self.init(named: NSImage.Name(asset.name))
+    #elseif os(watchOS)
+    self.init(named: asset.name)
+    #endif
+  }
+}
+
+#if canImport(SwiftUI)
+@available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+public extension SwiftUI.Image {
+  init(asset: DSKitImages) {
+    let bundle = DSKitResources.bundle
+    self.init(asset.name, bundle: bundle)
+  }
+
+  init(asset: DSKitImages, label: Text) {
+    let bundle = DSKitResources.bundle
+    self.init(asset.name, bundle: bundle, label: label)
+  }
+
+  init(decorative asset: DSKitImages) {
+    let bundle = DSKitResources.bundle
+    self.init(decorative: asset.name, bundle: bundle)
   }
 }
 #endif

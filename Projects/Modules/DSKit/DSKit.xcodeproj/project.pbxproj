@@ -3,14 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2119920E047D960DD77D187B /* TuistAssets+DSKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B83037C1E8B6AB66A60D81 /* TuistAssets+DSKit.swift */; };
-		521D21D25BF028E7E30076B5 /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D548C0A3B19B6B32A6F4B71 /* example.swift */; };
 		58E1C15473AF72E7A640CC27 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D572943C422BD6E39CC00D58 /* Core.framework */; };
 		59C0778CC277DC59F72C7B72 /* TuistBundle+DSKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787DF5C2D7564C43090D2A7 /* TuistBundle+DSKit.swift */; };
+		D2C7F7CB2D1255190033C6A3 /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2C7F7C82D1255190033C6A3 /* NotoSansKR-Regular.ttf */; };
+		D2C7F7CC2D1255190033C6A3 /* NotoSansKR-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2C7F7C92D1255190033C6A3 /* NotoSansKR-SemiBold.ttf */; };
+		D2C7F7CD2D1255190033C6A3 /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2C7F7CA2D1255190033C6A3 /* NotoSansKR-Medium.ttf */; };
+		D2C7F7CF2D1255400033C6A3 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F7CE2D1255400033C6A3 /* Font.swift */; };
+		D2C7F7D12D1257450033C6A3 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F7D02D1257450033C6A3 /* Image.swift */; };
 		EFF289155B85BDFE2602D52F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607C3C3084325E1A40A34843 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -35,8 +39,12 @@
 		607C3C3084325E1A40A34843 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66E75EE3A051A0AFB46A743B /* DSKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "DSKit-Info.plist"; sourceTree = "<group>"; };
 		8787DF5C2D7564C43090D2A7 /* TuistBundle+DSKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistBundle+DSKit.swift"; sourceTree = "<group>"; };
-		8D548C0A3B19B6B32A6F4B71 /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = example.swift; sourceTree = "<group>"; };
 		9D077D9FE6E63B9B344F61EB /* DSKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DSKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2C7F7C82D1255190033C6A3 /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansKR-Regular.ttf"; path = "../../../../../../../Downloads/Noto_Sans_KR/static/NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
+		D2C7F7C92D1255190033C6A3 /* NotoSansKR-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansKR-SemiBold.ttf"; path = "../../../../../../../Downloads/Noto_Sans_KR/static/NotoSansKR-SemiBold.ttf"; sourceTree = "<group>"; };
+		D2C7F7CA2D1255190033C6A3 /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSansKR-Medium.ttf"; path = "../../../../../../../Downloads/Noto_Sans_KR/static/NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
+		D2C7F7CE2D1255400033C6A3 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		D2C7F7D02D1257450033C6A3 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		D572943C422BD6E39CC00D58 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -91,6 +99,7 @@
 		7C6913B677802979315CD7D0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D2C7F7C72D1253C50033C6A3 /* Font */,
 				607C3C3084325E1A40A34843 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -110,7 +119,8 @@
 		AC1D2561E5CD87FA1896E147 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				8D548C0A3B19B6B32A6F4B71 /* example.swift */,
+				D2C7F7CE2D1255400033C6A3 /* Font.swift */,
+				D2C7F7D02D1257450033C6A3 /* Image.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -131,6 +141,16 @@
 				41B92A6BE653E8415B880DD0 /* Frameworks */,
 				096516B04BAC2DDCA8719539 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		D2C7F7C72D1253C50033C6A3 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				D2C7F7CA2D1255190033C6A3 /* NotoSansKR-Medium.ttf */,
+				D2C7F7C82D1255190033C6A3 /* NotoSansKR-Regular.ttf */,
+				D2C7F7C92D1255190033C6A3 /* NotoSansKR-SemiBold.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		FEE400950B2E0758C1EA76D5 /* InfoPlists */ = {
@@ -170,8 +190,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = DB216D1A0D49D9916CF26059 /* Build configuration list for PBXProject "DSKit" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -197,6 +215,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFF289155B85BDFE2602D52F /* Assets.xcassets in Resources */,
+				D2C7F7CD2D1255190033C6A3 /* NotoSansKR-Medium.ttf in Resources */,
+				D2C7F7CC2D1255190033C6A3 /* NotoSansKR-SemiBold.ttf in Resources */,
+				D2C7F7CB2D1255190033C6A3 /* NotoSansKR-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,9 +228,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2C7F7CF2D1255400033C6A3 /* Font.swift in Sources */,
+				D2C7F7D12D1257450033C6A3 /* Image.swift in Sources */,
 				2119920E047D960DD77D187B /* TuistAssets+DSKit.swift in Sources */,
 				59C0778CC277DC59F72C7B72 /* TuistBundle+DSKit.swift in Sources */,
-				521D21D25BF028E7E30076B5 /* example.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

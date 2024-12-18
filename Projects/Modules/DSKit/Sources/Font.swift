@@ -6,4 +6,19 @@
 //  Copyright © 2024 Heylets-iOS. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
+
+public extension Font {
+    
+    // medium
+    static let medium_14: Font = .custom("NotoSansKR-Medium", size: 14)
+    
+    // regular
+    static let regular_14: Font = .custom("NotoSansKR-Regular", size: 14)
+    static let regular_12: Font = .custom("NotoSansKR-Regular", size: 14)
+    
+    // semibold
+    static let semibold_18: Font = .custom("NotoSansKR-SemiBold", size: 18)
+    static let semibold_14: Font = .custom("NotoSansKR-Medium", size: 14)
+    
+}

@@ -12,38 +12,20 @@ import ProjectDescription
 public extension Project {
     static let appInfoPlist: [String: Plist.Value] = [
         "BASE_URL": "$(BASE_URL)",
-        "BGTaskSchedulerPermittedIdentifiers": ["com.HMH.dailyTask"],
-        "CFBundleURLTypes": [
-            [
-                "CFBundleTypeRole": "Editor",
-                "CFBundleURLSchemes": ["kakao$(KAKAO_API_KEY)"]
-            ]
-        ],
-        "KAKAO_API_KEY": "$(KAKAO_API_KEY)",
-        "LSApplicationQueriesSchemes": ["kakaokompassauth", "kakaolink"],
         "NSAppTransportSecurity": [
             "NSAllowsArbitraryLoads": true
         ],
-        "UIAppFonts": ["Pretendard-Regular.otf", "Pretendard-SemiBold.otf", "Pretendard-Medium.otf"],
+        "UIAppFonts": ["NotoSansKR-Medium.ttf", "NotoSansKR-Regular.ttf", "NotoSansKR-SemiBold.ttf"],
         "UILaunchStoryboardName": "LaunchScreen"
     ]
     
     
     static let demoInfoPlist: [String: Plist.Value] = [
         "BASE_URL": "$(BASE_URL)",
-        "BGTaskSchedulerPermittedIdentifiers": ["com.HMH.dailyTask"],
-        "CFBundleURLTypes": [
-            [
-                "CFBundleTypeRole": "Editor",
-                "CFBundleURLSchemes": ["kakao$(KAKAO_API_KEY)"]
-            ]
-        ],
-        "KAKAO_API_KEY": "$(KAKAO_API_KEY)",
-        "LSApplicationQueriesSchemes": ["kakaokompassauth", "kakaolink"],
         "NSAppTransportSecurity": [
             "NSAllowsArbitraryLoads": true
         ],
-        "UIAppFonts": ["Pretendard-Regular.otf", "Pretendard-SemiBold.otf", "Pretendard-Medium.otf"],
+        "UIAppFonts": ["NotoSansKR-Medium.ttf", "NotoSansKR-Regular.ttf", "NotoSansKR-SemiBold.ttf"],
         "UILaunchStoryboardName": "LaunchScreen"
     ]
 }
