@@ -3,12 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		42EAE4EECEF4BD63F6D9CA2B /* BaseFeatureDependency.framework in Dependencies */ = {isa = PBXBuildFile; fileRef = AB70EDD922652179B8A00FA1 /* BaseFeatureDependency.framework */; };
-		82D9BB7FC6D127DB46AA6357 /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C9A4FE805DEC9B373D020E /* example.swift */; };
+		D2C7F7FA2D12C1E80033C6A3 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F7F92D12C1E80033C6A3 /* MyPageView.swift */; };
+		D2C7F7FC2D12C2060033C6A3 /* NotificationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F7FB2D12C2060033C6A3 /* NotificationSettingView.swift */; };
+		D2C7F7FE2D12C21B0033C6A3 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F7FD2D12C21B0033C6A3 /* ChangePasswordView.swift */; };
+		D2C7F8002D12C2320033C6A3 /* ContactUsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F7FF2D12C2320033C6A3 /* ContactUsView.swift */; };
+		D2C7F8022D12C2480033C6A3 /* TermsOfServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F8012D12C2480033C6A3 /* TermsOfServiceView.swift */; };
+		D2C7F8042D12C2640033C6A3 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F8032D12C2640033C6A3 /* PrivacyPolicyView.swift */; };
+		D2C7F8062D12C27D0033C6A3 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7F8052D12C27D0033C6A3 /* DeleteAccountView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,8 +44,14 @@
 		0B50E7DF38555E19E2C074D1 /* MyPageFeature-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MyPageFeature-Info.plist"; sourceTree = "<group>"; };
 		3502F5D5EC0D5885EF2AB68C /* PROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PROD.xcconfig; sourceTree = "<group>"; };
 		56AF3DCBD0A1B2076175F6EB /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
-		77C9A4FE805DEC9B373D020E /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = example.swift; sourceTree = "<group>"; };
 		AB70EDD922652179B8A00FA1 /* BaseFeatureDependency.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseFeatureDependency.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2C7F7F92D12C1E80033C6A3 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		D2C7F7FB2D12C2060033C6A3 /* NotificationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingView.swift; sourceTree = "<group>"; };
+		D2C7F7FD2D12C21B0033C6A3 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		D2C7F7FF2D12C2320033C6A3 /* ContactUsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsView.swift; sourceTree = "<group>"; };
+		D2C7F8012D12C2480033C6A3 /* TermsOfServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceView.swift; sourceTree = "<group>"; };
+		D2C7F8032D12C2640033C6A3 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
+		D2C7F8052D12C27D0033C6A3 /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		EC866FE7BAB55E10ECB26028 /* MyPageFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MyPageFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EECAA5FD01DA8556C6DD5798 /* QA.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QA.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,7 +113,7 @@
 		996C496A05EAF1BC86DB5D4C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				77C9A4FE805DEC9B373D020E /* example.swift */,
+				D2C7F7F82D12C1E00033C6A3 /* View */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -123,6 +135,20 @@
 				90FF8F9D8234A316F8D6249A /* XCConfig */,
 			);
 			name = Project;
+			sourceTree = "<group>";
+		};
+		D2C7F7F82D12C1E00033C6A3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D2C7F7F92D12C1E80033C6A3 /* MyPageView.swift */,
+				D2C7F7FB2D12C2060033C6A3 /* NotificationSettingView.swift */,
+				D2C7F7FD2D12C21B0033C6A3 /* ChangePasswordView.swift */,
+				D2C7F7FF2D12C2320033C6A3 /* ContactUsView.swift */,
+				D2C7F8012D12C2480033C6A3 /* TermsOfServiceView.swift */,
+				D2C7F8032D12C2640033C6A3 /* PrivacyPolicyView.swift */,
+				D2C7F8052D12C27D0033C6A3 /* DeleteAccountView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,6 +182,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
 				TargetAttributes = {
+					165FF0485069FAD6E30D1EF1 = {
+						LastSwiftMigration = 1540;
+					};
 				};
 			};
 			buildConfigurationList = 8D0F546050F4438672B52400 /* Build configuration list for PBXProject "MyPageFeature" */;
@@ -191,7 +220,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82D9BB7FC6D127DB46AA6357 /* example.swift in Sources */,
+				D2C7F8022D12C2480033C6A3 /* TermsOfServiceView.swift in Sources */,
+				D2C7F7FC2D12C2060033C6A3 /* NotificationSettingView.swift in Sources */,
+				D2C7F8002D12C2320033C6A3 /* ContactUsView.swift in Sources */,
+				D2C7F8042D12C2640033C6A3 /* PrivacyPolicyView.swift in Sources */,
+				D2C7F7FE2D12C21B0033C6A3 /* ChangePasswordView.swift in Sources */,
+				D2C7F8062D12C27D0033C6A3 /* DeleteAccountView.swift in Sources */,
+				D2C7F7FA2D12C1E80033C6A3 /* MyPageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +236,7 @@
 		175D38FDD0C794CAA007D43A /* QA */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -356,6 +392,7 @@
 		4EC3B4B001248840EFF0F9A6 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -445,6 +482,7 @@
 		EB9C3B0CCEEF8F9C93D4215D /* PROD */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
