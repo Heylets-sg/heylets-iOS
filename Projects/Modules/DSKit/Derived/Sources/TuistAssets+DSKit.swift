@@ -20,23 +20,39 @@
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum DSKitAsset {
+  public enum Assets {
   public static let accentColor = DSKitColors(name: "AccentColor")
-  public static let graphicsColor = DSKitImages(name: "graphics_color")
-  public static let graphicsTimetable = DSKitImages(name: "graphics_timetable")
-  public static let icAdd = DSKitImages(name: "ic_add")
-  public static let icCamera = DSKitImages(name: "ic_camera")
-  public static let icClose = DSKitImages(name: "ic_close")
-  public static let icError = DSKitImages(name: "ic_error")
-  public static let icHide = DSKitImages(name: "ic_hide")
-  public static let icMagic = DSKitImages(name: "ic_magic")
-  public static let icRepeat = DSKitImages(name: "ic_repeat")
-  public static let icSchool = DSKitImages(name: "ic_school")
-  public static let icSetting = DSKitImages(name: "ic_setting")
-  public static let icShow = DSKitImages(name: "ic_show")
-  public static let icSuccess = DSKitImages(name: "ic_success")
+    public static let graphicsColor = DSKitImages(name: "graphics_color")
+    public static let graphicsTimetable = DSKitImages(name: "graphics_timetable")
+    public static let icAdd = DSKitImages(name: "ic_add")
+    public static let icCamera = DSKitImages(name: "ic_camera")
+    public static let icClose = DSKitImages(name: "ic_close")
+    public static let icError = DSKitImages(name: "ic_error")
+    public static let icHide = DSKitImages(name: "ic_hide")
+    public static let icMagic = DSKitImages(name: "ic_magic")
+    public static let icRepeat = DSKitImages(name: "ic_repeat")
+    public static let icSchool = DSKitImages(name: "ic_school")
+    public static let icSetting = DSKitImages(name: "ic_setting")
+    public static let icShow = DSKitImages(name: "ic_show")
+    public static let icSuccess = DSKitImages(name: "ic_success")
+    public static let heyBlack = DSKitColors(name: "heyBlack")
+    public static let heyGray1 = DSKitColors(name: "heyGray1")
+    public static let heyWhite = DSKitColors(name: "heyWhite")
+  }
+  public enum Colors {
   public static let heyBlack = DSKitColors(name: "heyBlack")
-  public static let heyGray1 = DSKitColors(name: "heyGray1")
-  public static let heyWhite = DSKitColors(name: "heyWhite")
+    public static let heyError = DSKitColors(name: "heyError")
+    public static let heyGray1 = DSKitColors(name: "heyGray1")
+    public static let heyGray2 = DSKitColors(name: "heyGray2")
+    public static let heyGray3 = DSKitColors(name: "heyGray3")
+    public static let heyGray4 = DSKitColors(name: "heyGray4")
+    public static let heyGreen = DSKitColors(name: "heyGreen")
+    public static let heyMain = DSKitColors(name: "heyMain")
+    public static let heySubError = DSKitColors(name: "heySubError")
+    public static let heySubMain = DSKitColors(name: "heySubMain")
+    public static let heySubMain2 = DSKitColors(name: "heySubMain2")
+    public static let heyWhite = DSKitColors(name: "heyWhite")
+  }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
