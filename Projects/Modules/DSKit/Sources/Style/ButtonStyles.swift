@@ -22,9 +22,23 @@ struct HeyButtonColorStyle {
 }
 
 extension HeyButtonColorStyle {
-    static let white = HeyButtonColorStyle(background: .white, foreground: .black, disabledBackground: .gray)
-    static let primary = HeyButtonColorStyle(background: .white, foreground: .black, disabledBackground: .gray)
-    static let gray = HeyButtonColorStyle(background: .white, foreground: .black, disabledBackground: .gray)
+    static let white = HeyButtonColorStyle(
+        background: .heyWhite,
+        foreground: .heyBlack,
+        disabledBackground: .heyGray4
+    )
+    
+    static let primary = HeyButtonColorStyle(
+        background: .heyMain,
+        foreground: .heyBlack,
+        disabledBackground: .heyGray4
+    )
+    
+    static let black = HeyButtonColorStyle(
+        background: .heyBlack,
+        foreground: .heyWhite,
+        disabledBackground: .heyGray4
+    )
 }
 
 

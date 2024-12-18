@@ -7,12 +7,14 @@
 //
 
 import SwiftUI
+import DSKit
 
 @main
 struct Heylets_iOSAPP: App {
     
     var body: some Scene {
         WindowGroup {
+            DSKitDemoView()
         }
     }
 }
