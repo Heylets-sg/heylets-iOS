@@ -21,7 +21,7 @@ struct HeyAlertView: View {
             
             Text(title)
                 .font(.medium_18)
-                .foregroundColor(.heyGray2)
+                .foregroundColor(.heyBlack)
                 .multilineTextAlignment(.center)
             
             Spacer()
