@@ -11,6 +11,7 @@ import BaseFeatureDependency
 import OnboardingFeature
 import TimeTableFeature
 import MyPageFeature
+import SplashFeature
 
 public struct RootView: View {
     public init() {}

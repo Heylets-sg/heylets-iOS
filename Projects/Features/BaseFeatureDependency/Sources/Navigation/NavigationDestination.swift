@@ -6,12 +6,22 @@
 //  Copyright © 2024 Heylets-iOS. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
-public enum NavigationDestination {
-    case mypage
-    case login
-    case resetPasswordView
+public enum NavigationDestination: Hashable {
     case onboarding
-    case timetable
+    
+    //signup
+    case selectUniversity
+    case verifyEmail
+    case enterSecurityCode
+    case enterPersonalInfo
+    case enterIdPassword
+    case addProfile
+    
+    //signin
+    case login
+    case enterEmail
+    case resetPassword
 }
+

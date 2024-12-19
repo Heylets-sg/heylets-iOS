@@ -1,5 +1,5 @@
 //
-//  SplashView.swift
+//  EnterEmailView.swift
 //  OnboardingFeature
 //
 //  Created by 류희재 on 12/18/24.
@@ -9,15 +9,19 @@
 import SwiftUI
 import BaseFeatureDependency
 
-public struct SplashView: View {
-    
+public struct EnterEmailView: View {
     @EnvironmentObject var router: Router
+    var viewModel: EnterEmailViewModel
     
-    public init() {}
+    public init(viewModel: EnterEmailViewModel) {
+        self.viewModel = viewModel
+    }
     
     public var body: some View {
-        VStack {
-            Text("Splash View")
-        }
+        Text("EnterEmailView")
     }
 }
+
+//#Preview {
+//    EnterEmailView()
+//}

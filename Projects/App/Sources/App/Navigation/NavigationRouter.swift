@@ -1,35 +1,36 @@
-////
-////  NavigatationRoutable.swift
-////  BaseFeatureDependency
-////
-////  Created by 류희재 on 12/18/24.
-////  Copyright © 2024 Heylets-iOS. All rights reserved.
-////
 //
-//import Combine
+//  NavigatationRoutable.swift
+//  BaseFeatureDependency
 //
-//import Core
-//import BaseFeatureDependency
+//  Created by 류희재 on 12/18/24.
+//  Copyright © 2024 Heylets-iOS. All rights reserved.
 //
-//final class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
-//  var objectWillChange: ObservableObjectPublisher?
-//
-//  var destinations: [NavigationDestination] = [] {
-//    didSet {
-//      objectWillChange?.send()
-//    }
-//  }
-//
-//  func push(to view: NavigationDestination) {
-//    destinations.append(view)
-//  }
-//
-//  func pop() {
-//    _ = destinations.popLast()
-//  }
-//
-//  func popToRootView() {
-//    destinations = []
-//  }
-//}
-//
+
+import Combine
+
+import Core
+import BaseFeatureDependency
+
+final class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
+    var objectWillChange: ObservableObjectPublisher?
+    
+    var destinations: [NavigationDestination] = [] {
+        didSet {
+            objectWillChange?.send()
+        }
+    }
+    
+    func push(to view: BaseFeatureDependency.NavigationDestination) {
+        destinations.append(view)
+    }
+    
+    func pop() {
+        _ = destinations.popLast()
+    }
+    
+    func popToRootView() {
+        destinations = []
+    }
+}
+
+

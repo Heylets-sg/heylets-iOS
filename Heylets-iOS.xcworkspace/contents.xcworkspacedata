@@ -32,6 +32,9 @@
             location = "group:RootFeature/RootFeature.xcodeproj">
          </FileRef>
          <FileRef
+            location = "group:SplashFeature/SplashFeature.xcodeproj">
+         </FileRef>
+         <FileRef
             location = "group:TimeTableFeature/TimeTableFeature.xcodeproj">
          </FileRef>
       </Group>

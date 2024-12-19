@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		01608EC28836D450D7AE7CD1 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74CD08251D373A6DC84391AB /* Colors.xcassets */; };
 		0BF7B2416163F640DDEDBCE4 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD5FA41170F2D2EF16FE8A /* Color.swift */; };
 		0E4F4EE20643DBDE0F1988A7 /* TextFieldStateStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7607D7EFFE0C6572261F302 /* TextFieldStateStyle.swift */; };
 		10031AB9D177C636A5E5D18E /* AlertButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038E095A8082AD743D15EAB1 /* AlertButtonStyle.swift */; };
@@ -61,7 +60,6 @@
 		5A19FA99EC4DD51472E9AF60 /* HeyAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeyAlertView.swift; sourceTree = "<group>"; };
 		607C3C3084325E1A40A34843 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66E75EE3A051A0AFB46A743B /* DSKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "DSKit-Info.plist"; sourceTree = "<group>"; };
-		74CD08251D373A6DC84391AB /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		7BDD5FA41170F2D2EF16FE8A /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		8787DF5C2D7564C43090D2A7 /* TuistBundle+DSKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistBundle+DSKit.swift"; sourceTree = "<group>"; };
 		93E0F334AA5A3C2458E79FB2 /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
@@ -177,7 +175,6 @@
 			children = (
 				1735FD5BF713F5EE21E017CF /* Font */,
 				607C3C3084325E1A40A34843 /* Assets.xcassets */,
-				74CD08251D373A6DC84391AB /* Colors.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -315,7 +312,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFF289155B85BDFE2602D52F /* Assets.xcassets in Resources */,
-				01608EC28836D450D7AE7CD1 /* Colors.xcassets in Resources */,
 				DCAFD44D8CE34E077E51E29A /* NotoSansKR-Bold.ttf in Resources */,
 				6752536385CAB30A761BFD2B /* NotoSansKR-Medium.ttf in Resources */,
 				B4E08FEBE9704F4849A60721 /* NotoSansKR-Regular.ttf in Resources */,

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -242,6 +242,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = 8D0F546050F4438672B52400 /* Build configuration list for PBXProject "MyPageFeature" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -256,8 +258,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				165FF0485069FAD6E30D1EF1 /* MyPageFeature */,
 				309D06068DD1002D94B61781 /* MyPageFeatureInterface */,
+				165FF0485069FAD6E30D1EF1 /* MyPageFeature */,
 			);
 		};
 /* End PBXProject section */

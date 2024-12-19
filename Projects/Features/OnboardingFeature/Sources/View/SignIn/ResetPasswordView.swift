@@ -7,14 +7,20 @@
 //
 
 import SwiftUI
+import BaseFeatureDependency
 
 public struct ResetPasswordView: View {
-    public init() {}
+    @EnvironmentObject var router: Router
+    var viewModel: ResetPasswordViewModel
+    
+    public init(viewModel: ResetPasswordViewModel) {
+        self.viewModel = viewModel
+    }
     public var body: some View {
         Text("ResetPasswordView")
     }
 }
 
-#Preview {
-    ResetPasswordView()
-}
+//#Preview {
+//    ResetPasswordView()
+//}

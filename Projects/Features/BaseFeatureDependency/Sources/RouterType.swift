@@ -24,66 +24,13 @@ final public class Router: RouterType, ObservableObject {
     public var windowRouter: WindowRoutableType
     
     public init(
-        navigationRouter: NavigationRoutableType = NavigationRouter(),
-        windowRouter: WindowRoutableType = WindowRouter()
+        navigationRouter: NavigationRoutableType,
+        windowRouter: WindowRoutableType
     ) {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
         
         navigationRouter.setObjectWillChange(objectWillChange)
         windowRouter.setObjectWillChange(objectWillChange)
-    }
-}
-
-import Combine
-
-import Core
-//import BaseFeatureDependency
-
-final public class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
-    
-    public init() {}
-    public var objectWillChange: ObservableObjectPublisher?
-    
-    public var destinations: [NavigationDestination] = [] {
-        didSet {
-            objectWillChange?.send()
-        }
-    }
-    
-    public func push(to view: NavigationDestination) {
-        destinations.append(view)
-    }
-    
-    public func pop() {
-        _ = destinations.popLast()
-    }
-    
-    public func popToRootView() {
-        destinations = []
-    }
-    //}
-}
-
-import Foundation
-import Combine
-
-import Core
-import BaseFeatureDependency
-
-final public class WindowRouter: WindowRoutable, ObservableObjectSettable {
-    
-    public init() {}
-    
-    public var objectWillChange: ObservableObjectPublisher?
-    
-    public var destination: WindowDestination = .onboarding {
-        didSet {
-            objectWillChange?.send()
-        }
-    }
-    
-    public func `switch`(to destination: WindowDestination) {
-        self.destination = destination
     }
 }

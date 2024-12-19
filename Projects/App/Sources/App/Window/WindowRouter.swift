@@ -6,23 +6,23 @@
 //  Copyright © 2024 Heylets-iOS. All rights reserved.
 //
 
-//import Foundation
-//import Combine
-//
-//import Core
-//import BaseFeatureDependency
-//
-//final class WindowRouter: WindowRoutable, ObservableObjectSettable {
-//    
-//    var objectWillChange: ObservableObjectPublisher?
-//    
-//    var destination: WindowDestination = .onboarding {
-//        didSet {
-//            objectWillChange?.send()
-//        }
-//    }
-//    
-//    func `switch`(to destination: WindowDestination) {
-//        self.destination = destination
-//    }
-//}
+import Foundation
+import Combine
+
+import Core
+import BaseFeatureDependency
+
+final class WindowRouter: WindowRoutable, ObservableObjectSettable {
+    
+    var objectWillChange: ObservableObjectPublisher?
+    
+    var destination: WindowDestination = .onboarding {
+        didSet {
+            objectWillChange?.send()
+        }
+    }
+    
+    func `switch`(to destination: WindowDestination) {
+        self.destination = destination
+    }
+}

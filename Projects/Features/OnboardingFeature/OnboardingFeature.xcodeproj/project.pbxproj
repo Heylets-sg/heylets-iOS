@@ -3,24 +3,35 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		05B172BC1471DE94A8E74809 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D2C38A97F5CB694951E0BE /* LogInView.swift */; };
-		1500B3130F85F6ADD82ABE20 /* EnterSecurityCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01743796E083DED98F64D949 /* EnterSecurityCodeView.swift */; };
+		10FEE24CDB75F5DD3CD857EE /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC7FBE9D9C5BBBE7D8ACC4F /* OnboardingView.swift */; };
 		178635F39DA2205CA61117C0 /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6359FF7F78EAA0EE43A06FFA /* example.swift */; };
-		1FD36C1A2D293B93AC65AFA1 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3A4BCBA598259DBE0AB13 /* SplashView.swift */; };
-		4727361868F6488C8D692AE2 /* EnterPersonalInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED48B19B57F2D089BF676629 /* EnterPersonalInfoView.swift */; };
-		594DB40375EEF003CBDFBB22 /* AddProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B6000A026B72B3720D50B7 /* AddProfileView.swift */; };
-		5DD30657346860FD2470AE10 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8CE44B5AE4058D034C58C4 /* OnboardingView.swift */; };
-		7C35DE086EEDB2B4482C2780 /* SelectUniversityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5F65928989200A776F774C /* SelectUniversityView.swift */; };
-		7E3E584BB83342F466D89B2E /* EnterIdPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87696A2321B3F7825DA1983D /* EnterIdPasswordView.swift */; };
-		AE3085403BE9B665FF8815C8 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840EEB3BEE1B85FFD1FA3E93 /* ResetPasswordView.swift */; };
+		1DF7FF4CB5003E00E7FDCC5D /* AddProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BC7E37D44ABFF483A268E8 /* AddProfileViewModel.swift */; };
+		1E074B27DA6164E8C519734E /* ResetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952A1A52635838AEBCF8DD3B /* ResetPasswordViewModel.swift */; };
+		211759AE79448C6E888F81C2 /* EnterIdPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA280A61EBDA46DF20F7855B /* EnterIdPasswordView.swift */; };
+		2CFC7D73F02931655BF97750 /* SelectUniversityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3ABFFAFACA4CB1B663EA80 /* SelectUniversityViewModel.swift */; };
+		3B415FD190E579EADE746ABF /* EnterSecurityCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD08C7A6340097484E0EB103 /* EnterSecurityCodeView.swift */; };
+		4117600C618423731651CC87 /* SelectUniversityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E27908BC640CE7CA3019C19 /* SelectUniversityView.swift */; };
+		4AC683C5D11F082B8976FE1F /* VerifyEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2CA45D08E40D694D9F284F /* VerifyEmailViewModel.swift */; };
+		56E048201CF1FA8462A418D1 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03699CBCC2A49D7E5230EBEB /* ResetPasswordView.swift */; };
+		65089AD6A15B4902BA097BCE /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B542869FB17E36262479503 /* LogInView.swift */; };
+		675964FA06FFDA1F623065AC /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAD3327BA0BD3016B519248 /* OnboardingViewModel.swift */; };
+		698F80F11D7394C2EF99613F /* AddProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95D1CD8760D11E0724DB2E7 /* AddProfileView.swift */; };
+		73B0EDADAB029698458EF139 /* EnterPersonalInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE740CAF83BA5264473A7AF /* EnterPersonalInfoViewModel.swift */; };
+		88B2A6B109FE0F1596E234B1 /* EnterPersonalInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039DA3EDB027922EE4D64BD1 /* EnterPersonalInfoView.swift */; };
+		A151A47DF3841837E8BA3180 /* EnterEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA399B266402951E9B084C1C /* EnterEmailViewModel.swift */; };
+		AD6F4A6F53555A679225B718 /* EnterSecurityCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B040D95DB51E05BE8E17095 /* EnterSecurityCodeViewModel.swift */; };
+		B2BAA3E1DE8FA267B33772BA /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E00B22476AD6AFD2E402EB /* LogInViewModel.swift */; };
+		CA7312ABB85567F35903E96B /* EnterEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E33CBDF82818F94A6242A9 /* EnterEmailView.swift */; };
 		CBB66CB81D3CB783194A2943 /* OnboardingFeatureInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49700A1EB5CDEF84F54A296C /* OnboardingFeatureInterface.framework */; };
-		CC4F917AF8F5AEA84307A0DF /* EnterEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AB6B956870249EAB289600 /* EnterEmailView.swift */; };
-		E1D68447DD2DCBBF4AC73C82 /* VerifyEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE83B06A14F12D33952906B7 /* VerifyEmailView.swift */; };
+		D00B053622F1EADA0244C67B /* EnterIdPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE0B5CB712876E6922EE77E /* EnterIdPasswordViewModel.swift */; };
+		D2050F5F2D147ED400BDBC69 /* OnboardingDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2050F5E2D147ED400BDBC69 /* OnboardingDestination.swift */; };
+		D2050F612D147EFD00BDBC69 /* OnboardingNavigationRoutingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2050F602D147EFD00BDBC69 /* OnboardingNavigationRoutingView.swift */; };
 		F02157AA665A42DF29E6335F /* BaseFeatureDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BDB92322CBAADE786892C14 /* BaseFeatureDependency.framework */; };
+		F95B2646188F2A01A3D0E4CC /* VerifyEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94D8929D3714D27D1DEDB03 /* VerifyEmailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,26 +68,37 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		01743796E083DED98F64D949 /* EnterSecurityCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterSecurityCodeView.swift; sourceTree = "<group>"; };
+		03699CBCC2A49D7E5230EBEB /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
+		039DA3EDB027922EE4D64BD1 /* EnterPersonalInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPersonalInfoView.swift; sourceTree = "<group>"; };
+		06E33CBDF82818F94A6242A9 /* EnterEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterEmailView.swift; sourceTree = "<group>"; };
 		156B9B43922EF6A5C8DB729B /* QA.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QA.xcconfig; sourceTree = "<group>"; };
-		17B6000A026B72B3720D50B7 /* AddProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileView.swift; sourceTree = "<group>"; };
-		19AB6B956870249EAB289600 /* EnterEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterEmailView.swift; sourceTree = "<group>"; };
+		1C3ABFFAFACA4CB1B663EA80 /* SelectUniversityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUniversityViewModel.swift; sourceTree = "<group>"; };
 		28F51570D13DB809CB25587F /* OnboardingFeature-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "OnboardingFeature-Info.plist"; sourceTree = "<group>"; };
+		2B542869FB17E36262479503 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
+		3E27908BC640CE7CA3019C19 /* SelectUniversityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUniversityView.swift; sourceTree = "<group>"; };
 		4062EEDCBEFFD4918BB95258 /* OnboardingFeatureInterface-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "OnboardingFeatureInterface-Info.plist"; sourceTree = "<group>"; };
 		49700A1EB5CDEF84F54A296C /* OnboardingFeatureInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OnboardingFeatureInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AAD3327BA0BD3016B519248 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		4BDB92322CBAADE786892C14 /* BaseFeatureDependency.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseFeatureDependency.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DDAEC7C7457BC0170E9C67D /* PROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PROD.xcconfig; sourceTree = "<group>"; };
 		6359FF7F78EAA0EE43A06FFA /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = example.swift; sourceTree = "<group>"; };
-		840EEB3BEE1B85FFD1FA3E93 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
-		87696A2321B3F7825DA1983D /* EnterIdPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterIdPasswordView.swift; sourceTree = "<group>"; };
-		93B3A4BCBA598259DBE0AB13 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		6B040D95DB51E05BE8E17095 /* EnterSecurityCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterSecurityCodeViewModel.swift; sourceTree = "<group>"; };
+		8AE0B5CB712876E6922EE77E /* EnterIdPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterIdPasswordViewModel.swift; sourceTree = "<group>"; };
+		952A1A52635838AEBCF8DD3B /* ResetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewModel.swift; sourceTree = "<group>"; };
+		9DE740CAF83BA5264473A7AF /* EnterPersonalInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPersonalInfoViewModel.swift; sourceTree = "<group>"; };
 		A3E3B9F7E5F9316C5AB47231 /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
-		AC8CE44B5AE4058D034C58C4 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		B939FCC920654D4BE37B33D6 /* OnboardingFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OnboardingFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE83B06A14F12D33952906B7 /* VerifyEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailView.swift; sourceTree = "<group>"; };
-		DA5F65928989200A776F774C /* SelectUniversityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUniversityView.swift; sourceTree = "<group>"; };
-		E8D2C38A97F5CB694951E0BE /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
-		ED48B19B57F2D089BF676629 /* EnterPersonalInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPersonalInfoView.swift; sourceTree = "<group>"; };
+		CA280A61EBDA46DF20F7855B /* EnterIdPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterIdPasswordView.swift; sourceTree = "<group>"; };
+		CD08C7A6340097484E0EB103 /* EnterSecurityCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterSecurityCodeView.swift; sourceTree = "<group>"; };
+		CD2CA45D08E40D694D9F284F /* VerifyEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewModel.swift; sourceTree = "<group>"; };
+		D2050F5E2D147ED400BDBC69 /* OnboardingDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDestination.swift; sourceTree = "<group>"; };
+		D2050F602D147EFD00BDBC69 /* OnboardingNavigationRoutingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingNavigationRoutingView.swift; sourceTree = "<group>"; };
+		D2E00B22476AD6AFD2E402EB /* LogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
+		D94D8929D3714D27D1DEDB03 /* VerifyEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailView.swift; sourceTree = "<group>"; };
+		DA399B266402951E9B084C1C /* EnterEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterEmailViewModel.swift; sourceTree = "<group>"; };
+		E7BC7E37D44ABFF483A268E8 /* AddProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewModel.swift; sourceTree = "<group>"; };
+		E95D1CD8760D11E0724DB2E7 /* AddProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileView.swift; sourceTree = "<group>"; };
+		EBC7FBE9D9C5BBBE7D8ACC4F /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,15 +121,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0140E3C903DCC893B82EF652 /* SignUp */ = {
+		0D6A4C004CFAB952FEAB8F04 /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
-				17B6000A026B72B3720D50B7 /* AddProfileView.swift */,
-				87696A2321B3F7825DA1983D /* EnterIdPasswordView.swift */,
-				ED48B19B57F2D089BF676629 /* EnterPersonalInfoView.swift */,
-				01743796E083DED98F64D949 /* EnterSecurityCodeView.swift */,
-				DA5F65928989200A776F774C /* SelectUniversityView.swift */,
-				CE83B06A14F12D33952906B7 /* VerifyEmailView.swift */,
+				DA399B266402951E9B084C1C /* EnterEmailViewModel.swift */,
+				D2E00B22476AD6AFD2E402EB /* LogInViewModel.swift */,
+				952A1A52635838AEBCF8DD3B /* ResetPasswordViewModel.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		1550C01F24CDA0B25FB1B50B /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				06E33CBDF82818F94A6242A9 /* EnterEmailView.swift */,
+				2B542869FB17E36262479503 /* LogInView.swift */,
+				03699CBCC2A49D7E5230EBEB /* ResetPasswordView.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		210F54283FCFF0320CBF5B17 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				E95D1CD8760D11E0724DB2E7 /* AddProfileView.swift */,
+				CA280A61EBDA46DF20F7855B /* EnterIdPasswordView.swift */,
+				039DA3EDB027922EE4D64BD1 /* EnterPersonalInfoView.swift */,
+				CD08C7A6340097484E0EB103 /* EnterSecurityCodeView.swift */,
+				3E27908BC640CE7CA3019C19 /* SelectUniversityView.swift */,
+				D94D8929D3714D27D1DEDB03 /* VerifyEmailView.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -140,16 +182,6 @@
 			);
 			sourceTree = "<group>";
 		};
-		3C97AA001D9BBD3B43D1AA90 /* SignIn */ = {
-			isa = PBXGroup;
-			children = (
-				19AB6B956870249EAB289600 /* EnterEmailView.swift */,
-				E8D2C38A97F5CB694951E0BE /* LogInView.swift */,
-				840EEB3BEE1B85FFD1FA3E93 /* ResetPasswordView.swift */,
-			);
-			path = SignIn;
-			sourceTree = "<group>";
-		};
 		63BAE3C92A15CB2548815FB2 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,13 +190,24 @@
 			path = Interface;
 			sourceTree = "<group>";
 		};
+		65BCDF63CF0D0B6C8BC904B6 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				E7BC7E37D44ABFF483A268E8 /* AddProfileViewModel.swift */,
+				8AE0B5CB712876E6922EE77E /* EnterIdPasswordViewModel.swift */,
+				9DE740CAF83BA5264473A7AF /* EnterPersonalInfoViewModel.swift */,
+				6B040D95DB51E05BE8E17095 /* EnterSecurityCodeViewModel.swift */,
+				1C3ABFFAFACA4CB1B663EA80 /* SelectUniversityViewModel.swift */,
+				CD2CA45D08E40D694D9F284F /* VerifyEmailViewModel.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		87F593C03D1911D2F2934795 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				3C97AA001D9BBD3B43D1AA90 /* SignIn */,
-				0140E3C903DCC893B82EF652 /* SignUp */,
-				AC8CE44B5AE4058D034C58C4 /* OnboardingView.swift */,
-				93B3A4BCBA598259DBE0AB13 /* SplashView.swift */,
+				CE1551424A3FBA0947EB473B /* View */,
+				BD309724D6EAF8C128BE71DF /* ViewModel */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -196,12 +239,42 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BD309724D6EAF8C128BE71DF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0D6A4C004CFAB952FEAB8F04 /* SignIn */,
+				65BCDF63CF0D0B6C8BC904B6 /* SignUp */,
+				4AAD3327BA0BD3016B519248 /* OnboardingViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		CAC7906F2F6DC9BB02B661A9 /* Derived */ = {
 			isa = PBXGroup;
 			children = (
 				9F701482527056404ED1CC63 /* InfoPlists */,
 			);
 			path = Derived;
+			sourceTree = "<group>";
+		};
+		CE1551424A3FBA0947EB473B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D2050F5D2D147EBC00BDBC69 /* Router */,
+				1550C01F24CDA0B25FB1B50B /* SignIn */,
+				210F54283FCFF0320CBF5B17 /* SignUp */,
+				EBC7FBE9D9C5BBBE7D8ACC4F /* OnboardingView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D2050F5D2D147EBC00BDBC69 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				D2050F5E2D147ED400BDBC69 /* OnboardingDestination.swift */,
+				D2050F602D147EFD00BDBC69 /* OnboardingNavigationRoutingView.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		D2952A44296DE4CF7B1C9466 /* Products */ = {
@@ -262,8 +335,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 684EB6572A6E59D03A4226F1 /* Build configuration list for PBXProject "OnboardingFeature" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -314,17 +385,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DD30657346860FD2470AE10 /* OnboardingView.swift in Sources */,
-				CC4F917AF8F5AEA84307A0DF /* EnterEmailView.swift in Sources */,
-				05B172BC1471DE94A8E74809 /* LogInView.swift in Sources */,
-				AE3085403BE9B665FF8815C8 /* ResetPasswordView.swift in Sources */,
-				594DB40375EEF003CBDFBB22 /* AddProfileView.swift in Sources */,
-				7E3E584BB83342F466D89B2E /* EnterIdPasswordView.swift in Sources */,
-				4727361868F6488C8D692AE2 /* EnterPersonalInfoView.swift in Sources */,
-				1500B3130F85F6ADD82ABE20 /* EnterSecurityCodeView.swift in Sources */,
-				7C35DE086EEDB2B4482C2780 /* SelectUniversityView.swift in Sources */,
-				E1D68447DD2DCBBF4AC73C82 /* VerifyEmailView.swift in Sources */,
-				1FD36C1A2D293B93AC65AFA1 /* SplashView.swift in Sources */,
+				10FEE24CDB75F5DD3CD857EE /* OnboardingView.swift in Sources */,
+				CA7312ABB85567F35903E96B /* EnterEmailView.swift in Sources */,
+				65089AD6A15B4902BA097BCE /* LogInView.swift in Sources */,
+				D2050F5F2D147ED400BDBC69 /* OnboardingDestination.swift in Sources */,
+				56E048201CF1FA8462A418D1 /* ResetPasswordView.swift in Sources */,
+				698F80F11D7394C2EF99613F /* AddProfileView.swift in Sources */,
+				211759AE79448C6E888F81C2 /* EnterIdPasswordView.swift in Sources */,
+				88B2A6B109FE0F1596E234B1 /* EnterPersonalInfoView.swift in Sources */,
+				3B415FD190E579EADE746ABF /* EnterSecurityCodeView.swift in Sources */,
+				4117600C618423731651CC87 /* SelectUniversityView.swift in Sources */,
+				D2050F612D147EFD00BDBC69 /* OnboardingNavigationRoutingView.swift in Sources */,
+				F95B2646188F2A01A3D0E4CC /* VerifyEmailView.swift in Sources */,
+				675964FA06FFDA1F623065AC /* OnboardingViewModel.swift in Sources */,
+				A151A47DF3841837E8BA3180 /* EnterEmailViewModel.swift in Sources */,
+				B2BAA3E1DE8FA267B33772BA /* LogInViewModel.swift in Sources */,
+				1E074B27DA6164E8C519734E /* ResetPasswordViewModel.swift in Sources */,
+				1DF7FF4CB5003E00E7FDCC5D /* AddProfileViewModel.swift in Sources */,
+				D00B053622F1EADA0244C67B /* EnterIdPasswordViewModel.swift in Sources */,
+				73B0EDADAB029698458EF139 /* EnterPersonalInfoViewModel.swift in Sources */,
+				AD6F4A6F53555A679225B718 /* EnterSecurityCodeViewModel.swift in Sources */,
+				2CFC7D73F02931655BF97750 /* SelectUniversityViewModel.swift in Sources */,
+				4AC683C5D11F082B8976FE1F /* VerifyEmailViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

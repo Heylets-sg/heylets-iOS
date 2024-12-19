@@ -11,8 +11,8 @@ import ProjectDescription
 /// 새로운 모듈이나 기능이 추가되더라도 해당 파일만 업데이트하면 되어 유지보수가 용이합니다.
 
 public extension Dep {
-    //TODO: Feature별로 설정해주기
     struct Features {
+        public struct Splash {}
         public struct Onboarding {}
         public struct MyPage {}
         public struct TimeTable {}
@@ -74,8 +74,8 @@ public extension Dep.Features {
 
 //TODO: 폴더별로 분기처리하기 위해서 이런식으로 했다면 하나의 그룹이름만 주입해서 만드는게 좋지않나?
 
-public extension Dep.Features.MyPage {
-    static let group = "MyPage"
+public extension Dep.Features.Splash {
+    static let group = "Splash"
     
     static let Feature = Dep.Features.project(name: "Feature", group: group)
     static let Interface = Dep.Features.project(name: "\(group)FeatureInterface", group: group)
@@ -87,12 +87,23 @@ public extension Dep.Features.Onboarding {
     static let Feature = Dep.Features.project(name: "Feature", group: group)
     static let Interface = Dep.Features.project(name: "\(group)FeatureInterface", group: group)
 }
+
 public extension Dep.Features.TimeTable {
     static let group = "TimeTable"
     
     static let Feature = Dep.Features.project(name: "Feature", group: group)
     static let Interface = Dep.Features.project(name: "\(group)FeatureInterface", group: group)
 }
+
+public extension Dep.Features.MyPage {
+    static let group = "MyPage"
+    
+    static let Feature = Dep.Features.project(name: "Feature", group: group)
+    static let Interface = Dep.Features.project(name: "\(group)FeatureInterface", group: group)
+}
+
+
+
 
 
 

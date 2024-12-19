@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,11 +11,13 @@
 		1153139375B6AD07C08BFC3F /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538ACFE3C52B9A1BAD705D8 /* DIContainer.swift */; };
 		2004FD5738A871AA690B5979 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6BA02C1730084A2ABD42F8 /* Domain.framework */; };
 		24290132A8E731FA49E6774B /* TimeTableFeatureInterface.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 883C949E6E7F8DE77760EA88 /* TimeTableFeatureInterface.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		32B742DDA8F4598C65785AF1 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A82953403CEABA072B77CFF /* NavigationRouter.swift */; };
 		35320AE27709BDEC26A97478 /* BaseFeatureDependency.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9931273567A167B642580301 /* BaseFeatureDependency.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		43AB96D356AB8624315CCE8E /* Heylets_iOSAPP.swift in Sources */ = {isa = PBXBuildFile; fileRef = F998E62E53F7BBEC97EF4E53 /* Heylets_iOSAPP.swift */; };
 		443CC8424E77EEA324F9F25B /* MyPageFeatureInterface.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C0E8DFFA8EFE1A6706F05971 /* MyPageFeatureInterface.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		47F57B585F7BF5B7C3F2430A /* OnboardingFeatureInterface.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87ED2C3F478A73C8FCE90EC3 /* OnboardingFeatureInterface.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F0795E110B5EEFA2F48C3C4 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0768019261E893498AF770C8 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6716840B2539C8742417A550 /* NavigationRoutingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57A82788B7B644242C1100 /* NavigationRoutingView.swift */; };
 		6B1B799D98701C7FEC60DA7B /* MyPageFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36784BBA04A4EAD8B3B751E4 /* MyPageFeature.framework */; };
 		9378191B29FC223A4948B232 /* OnboardingFeatureInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87ED2C3F478A73C8FCE90EC3 /* OnboardingFeatureInterface.framework */; };
 		93E253D3B8F29EECC176A8CE /* TuistBundle+HeyletsIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7228BE586B97625F88DAC9 /* TuistBundle+HeyletsIOS.swift */; };
@@ -23,17 +25,18 @@
 		9806D0784F3952C77AE9ABFC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51E36201BDB455202A4B9CAD /* Assets.xcassets */; };
 		9B55871CD0DBA1836635BA74 /* DSKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C91FC68E23B8EEF6495E7E7E /* DSKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9D6514B46E7E444299AC0C39 /* MyPageFeatureInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0E8DFFA8EFE1A6706F05971 /* MyPageFeatureInterface.framework */; };
+		9FB3A5655100D860816A7104 /* SplashFeatureInterface.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 420CA1A24DBE85ED9CEDDA7F /* SplashFeatureInterface.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A96DB543AAE13FCAF65D3DFA /* SplashFeatureInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 420CA1A24DBE85ED9CEDDA7F /* SplashFeatureInterface.framework */; };
+		AA0B1E2D310E5304F0323E15 /* SplashFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20772695B3C89E101DF3023D /* SplashFeature.framework */; };
+		AA9B5F32953EE476019D8475 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C27B885EE7D8726B976361 /* Router.swift */; };
 		AB5C40572E32842B43178ADD /* Domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA6BA02C1730084A2ABD42F8 /* Domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ADA39FE6D5803AFFDFF3C31B /* TimeTableFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F44A38599C673ED3DD09312 /* TimeTableFeature.framework */; };
 		B633746B68F24414EF1B55CC /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B56292DE8F82F29990E1185B /* Data.framework */; };
 		B65918C2F11F9625D9AEFEE7 /* Networks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5B31903625E4729AB601295 /* Networks.framework */; };
 		CB50EDF6252509C4DB28BD2D /* RootFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D906DC82948F8C75EB54420D /* RootFeature.framework */; };
-		D2B6F0D52D13CDE600346097 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0D42D13CDE500346097 /* NavigationRouter.swift */; };
-		D2B6F0D72D13CE0100346097 /* WindowRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0D62D13CE0100346097 /* WindowRouter.swift */; };
-		D2B6F0E92D13D1A500346097 /* NavigationRoutingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0E82D13D1A500346097 /* NavigationRoutingView.swift */; };
-		D2B6F0EF2D13F7A900346097 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0EE2D13F7A900346097 /* Router.swift */; };
 		E39D1FBB802BE80AFB64E242 /* OnboardingFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD9C2E88B61EC07CE85870E3 /* OnboardingFeature.framework */; };
 		EFA46F9E7482F7955D2075F2 /* ThirdPartyLibs.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA1A3B55A4291C8186209E63 /* ThirdPartyLibs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAEC305B604863B1A72911AA /* WindowRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CE15044AD7EC155011CFBB /* WindowRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,6 +52,7 @@
 				AB5C40572E32842B43178ADD /* Domain.framework in Embed Frameworks */,
 				443CC8424E77EEA324F9F25B /* MyPageFeatureInterface.framework in Embed Frameworks */,
 				47F57B585F7BF5B7C3F2430A /* OnboardingFeatureInterface.framework in Embed Frameworks */,
+				9FB3A5655100D860816A7104 /* SplashFeatureInterface.framework in Embed Frameworks */,
 				EFA46F9E7482F7955D2075F2 /* ThirdPartyLibs.framework in Embed Frameworks */,
 				24290132A8E731FA49E6774B /* TimeTableFeatureInterface.framework in Embed Frameworks */,
 			);
@@ -58,12 +62,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		00CE15044AD7EC155011CFBB /* WindowRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRouter.swift; sourceTree = "<group>"; };
 		0281953814F5EB9703016F5D /* PROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PROD.xcconfig; sourceTree = "<group>"; };
 		0768019261E893498AF770C8 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		105911479384512D89A46125 /* Heylets_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heylets_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		20772695B3C89E101DF3023D /* SplashFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SplashFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3538ACFE3C52B9A1BAD705D8 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		36784BBA04A4EAD8B3B751E4 /* MyPageFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MyPageFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		420CA1A24DBE85ED9CEDDA7F /* SplashFeatureInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SplashFeatureInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C57A82788B7B644242C1100 /* NavigationRoutingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRoutingView.swift; sourceTree = "<group>"; };
 		51E36201BDB455202A4B9CAD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7A82953403CEABA072B77CFF /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
 		839CB2720189EFF4C7E82995 /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
 		87ED2C3F478A73C8FCE90EC3 /* OnboardingFeatureInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OnboardingFeatureInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		883C949E6E7F8DE77760EA88 /* TimeTableFeatureInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TimeTableFeatureInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,15 +80,12 @@
 		8F44A38599C673ED3DD09312 /* TimeTableFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TimeTableFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96F04FDDA3FAA2939110B7F0 /* Heylets-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Heylets-iOS-Info.plist"; sourceTree = "<group>"; };
 		9931273567A167B642580301 /* BaseFeatureDependency.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseFeatureDependency.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5C27B885EE7D8726B976361 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		B56292DE8F82F29990E1185B /* Data.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Data.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA6BA02C1730084A2ABD42F8 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD9C2E88B61EC07CE85870E3 /* OnboardingFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OnboardingFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0E8DFFA8EFE1A6706F05971 /* MyPageFeatureInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MyPageFeatureInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C91FC68E23B8EEF6495E7E7E /* DSKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DSKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2B6F0D42D13CDE500346097 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
-		D2B6F0D62D13CE0100346097 /* WindowRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRouter.swift; sourceTree = "<group>"; };
-		D2B6F0E82D13D1A500346097 /* NavigationRoutingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRoutingView.swift; sourceTree = "<group>"; };
-		D2B6F0EE2D13F7A900346097 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		D906DC82948F8C75EB54420D /* RootFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RootFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA1A3B55A4291C8186209E63 /* ThirdPartyLibs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThirdPartyLibs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5B31903625E4729AB601295 /* Networks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Networks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +108,8 @@
 				E39D1FBB802BE80AFB64E242 /* OnboardingFeature.framework in Frameworks */,
 				9378191B29FC223A4948B232 /* OnboardingFeatureInterface.framework in Frameworks */,
 				CB50EDF6252509C4DB28BD2D /* RootFeature.framework in Frameworks */,
+				AA0B1E2D310E5304F0323E15 /* SplashFeature.framework in Frameworks */,
+				A96DB543AAE13FCAF65D3DFA /* SplashFeatureInterface.framework in Frameworks */,
 				ADA39FE6D5803AFFDFF3C31B /* TimeTableFeature.framework in Frameworks */,
 				94E2E20DE598C3C5B7DB1BEE /* TimeTableFeatureInterface.framework in Frameworks */,
 			);
@@ -156,11 +164,22 @@
 				BD9C2E88B61EC07CE85870E3 /* OnboardingFeature.framework */,
 				87ED2C3F478A73C8FCE90EC3 /* OnboardingFeatureInterface.framework */,
 				D906DC82948F8C75EB54420D /* RootFeature.framework */,
+				20772695B3C89E101DF3023D /* SplashFeature.framework */,
+				420CA1A24DBE85ED9CEDDA7F /* SplashFeatureInterface.framework */,
 				DA1A3B55A4291C8186209E63 /* ThirdPartyLibs.framework */,
 				8F44A38599C673ED3DD09312 /* TimeTableFeature.framework */,
 				883C949E6E7F8DE77760EA88 /* TimeTableFeatureInterface.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		46018FB7624314BF81B17FA0 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				7A82953403CEABA072B77CFF /* NavigationRouter.swift */,
+				4C57A82788B7B644242C1100 /* NavigationRoutingView.swift */,
+			);
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 		4BB2A926A3EEB6FA6075928C = {
@@ -175,10 +194,10 @@
 		6DD9D86024B7931FC4210F7B /* App */ = {
 			isa = PBXGroup;
 			children = (
-				D2B6F0D12D13CDA400346097 /* Window */,
-				D2B6F0D02D13CD9E00346097 /* Navigation */,
+				46018FB7624314BF81B17FA0 /* Navigation */,
+				BDDF8E604CCEC95C4B655F68 /* Window */,
 				3538ACFE3C52B9A1BAD705D8 /* DIContainer.swift */,
-				D2B6F0EE2D13F7A900346097 /* Router.swift */,
+				A5C27B885EE7D8726B976361 /* Router.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -216,19 +235,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D2B6F0D02D13CD9E00346097 /* Navigation */ = {
+		BDDF8E604CCEC95C4B655F68 /* Window */ = {
 			isa = PBXGroup;
 			children = (
-				D2B6F0D42D13CDE500346097 /* NavigationRouter.swift */,
-				D2B6F0E82D13D1A500346097 /* NavigationRoutingView.swift */,
-			);
-			path = Navigation;
-			sourceTree = "<group>";
-		};
-		D2B6F0D12D13CDA400346097 /* Window */ = {
-			isa = PBXGroup;
-			children = (
-				D2B6F0D62D13CE0100346097 /* WindowRouter.swift */,
+				00CE15044AD7EC155011CFBB /* WindowRouter.swift */,
 			);
 			path = Window;
 			sourceTree = "<group>";
@@ -271,6 +281,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = A3E122B0208A3669250D1916 /* Build configuration list for PBXProject "Heylets-iOS" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -306,14 +318,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2B6F0EF2D13F7A900346097 /* Router.swift in Sources */,
-				D2B6F0D72D13CE0100346097 /* WindowRouter.swift in Sources */,
-				D2B6F0E92D13D1A500346097 /* NavigationRoutingView.swift in Sources */,
 				051315DAFC8AE52DC8789AD8 /* TuistAssets+HeyletsIOS.swift in Sources */,
 				93E253D3B8F29EECC176A8CE /* TuistBundle+HeyletsIOS.swift in Sources */,
 				1153139375B6AD07C08BFC3F /* DIContainer.swift in Sources */,
+				32B742DDA8F4598C65785AF1 /* NavigationRouter.swift in Sources */,
+				6716840B2539C8742417A550 /* NavigationRoutingView.swift in Sources */,
+				AA9B5F32953EE476019D8475 /* Router.swift in Sources */,
+				FAEC305B604863B1A72911AA /* WindowRouter.swift in Sources */,
 				43AB96D356AB8624315CCE8E /* Heylets_iOSAPP.swift in Sources */,
-				D2B6F0D52D13CDE600346097 /* NavigationRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

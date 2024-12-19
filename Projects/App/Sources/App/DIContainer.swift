@@ -1,28 +1,28 @@
+////
+////  DIContainer.swift
+////  Heylets-iOS
+////
+////  Created by 류희재 on 12/18/24.
+////  Copyright © 2024 Heylets-iOS. All rights reserved.
+////
 //
-//  DIContainer.swift
-//  Heylets-iOS
+//import Foundation
 //
-//  Created by 류희재 on 12/18/24.
-//  Copyright © 2024 Heylets-iOS. All rights reserved.
+//import Core
+//import BaseFeatureDependency
 //
-
-import Foundation
-
-import Core
-import BaseFeatureDependency
-
-extension DIContainer {
-    static let `default`: DIContainer = {
-        let container = DIContainer()
-        
-        container.register(NavigationRoutableType.self) {
-            return NavigationRouter()
-        }
-        
-        container.register(WindowRoutableType.self) {
-            return WindowRouter()
-        }
-        
-        return container
-    }()
-}
+//extension DIContainer {
+//    static let `default`: DIContainer = {
+//        let container = DIContainer()
+//        
+//        container.register(NavigationRoutableType.self) {
+//            return NavigationRouter()
+//        }
+//        
+//        container.register(WindowRoutableType.self) {
+//            return WindowRouter()
+//        }
+//        
+//        return container
+//    }()
+//}

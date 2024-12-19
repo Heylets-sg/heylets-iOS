@@ -9,8 +9,6 @@
 import Foundation
 import Combine
 
-//public typealias WindowRoutableType = WindowRoutable & ObservableObjectSettable
-
 public protocol WindowRoutable {
     var destination: WindowDestination { get }
     func `switch`(to destination: WindowDestination)

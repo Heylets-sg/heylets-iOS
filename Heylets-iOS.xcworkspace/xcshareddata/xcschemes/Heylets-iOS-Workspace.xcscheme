@@ -182,6 +182,34 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DA38CA6F5F8CBA6D764F94BF"
+               BuildableName = "SplashFeature.framework"
+               BlueprintName = "SplashFeature"
+               ReferencedContainer = "container:Projects/Features/SplashFeature/SplashFeature.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6C2D2783C91E04F25135D220"
+               BuildableName = "SplashFeatureInterface.framework"
+               BlueprintName = "SplashFeatureInterface"
+               ReferencedContainer = "container:Projects/Features/SplashFeature/SplashFeature.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "6B2D0C5E263CA86B1CD4D3ED"
                BuildableName = "ThirdPartyLibs.framework"
                BlueprintName = "ThirdPartyLibs"

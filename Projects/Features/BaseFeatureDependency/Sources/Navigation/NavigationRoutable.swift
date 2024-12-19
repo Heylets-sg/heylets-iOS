@@ -9,12 +9,10 @@
 import Foundation
 import Combine
 
-//public typealias NavigationRoutableType = NavigationRoutable & ObservableObjectSettable
-
 public protocol NavigationRoutable {
-  var destinations: [NavigationDestination] { get set }
-  
-  func push(to view: NavigationDestination)
-  func pop()
-  func popToRootView()
+    var destinations: [NavigationDestination] { get set }
+    
+    func push(to view: NavigationDestination)
+    func pop()
+    func popToRootView()
 }

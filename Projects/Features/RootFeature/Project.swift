@@ -13,8 +13,9 @@ let project = Project.makeModule(
     name: "RootFeature",
     targets: [.staticFramework], //, .demo
     internalDependencies: [
+        .Features.Splash.Feature,
         .Features.Onboarding.Feature,
         .Features.MyPage.Feature,
-        .Features.TimeTable.Feature,
+        .Features.TimeTable.Feature
     ]
 )

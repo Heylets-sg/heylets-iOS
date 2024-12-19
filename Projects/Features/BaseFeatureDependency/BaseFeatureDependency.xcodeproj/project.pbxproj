@@ -3,17 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		31A584B93D6BC5095D882571 /* NavigationRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494C7869B667F696C6A08DE6 /* NavigationRoutable.swift */; };
 		7F674DA55E900A541B2AB598 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC63AB1368DC1675DF4E7BBF /* Domain.framework */; };
-		D2B6F0DC2D13CEF100346097 /* NavigationRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0DB2D13CEF100346097 /* NavigationRoutable.swift */; };
-		D2B6F0E12D13CF5600346097 /* WindowRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0E02D13CF5600346097 /* WindowRoutable.swift */; };
-		D2B6F0E32D13CF6900346097 /* WindowDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0E22D13CF6900346097 /* WindowDestination.swift */; };
-		D2B6F0E52D13D0AD00346097 /* NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0E42D13D0AD00346097 /* NavigationDestination.swift */; };
-		D2B6F0ED2D13F72A00346097 /* RouterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0EC2D13F72A00346097 /* RouterType.swift */; };
+		8515E44C50056C3D9931E831 /* NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F73C20B2B0E89E46814D27E /* NavigationDestination.swift */; };
+		A5CAE447D206E3941D364BFF /* WindowDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54973920B69925DA0A362F6 /* WindowDestination.swift */; };
+		A615C498D6E03CEDE45DE267 /* WindowRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28C4CC5412BDBCC1C6C1B16 /* WindowRoutable.swift */; };
 		D427F692042EBF6300C81147 /* DSKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A97A1B02B1D386254CF6EE3 /* DSKit.framework */; };
+		E2086987D0EE7675DD5FFD4D /* RouterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A07E00F457CB99C001BDD50 /* RouterType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,14 +31,14 @@
 
 /* Begin PBXFileReference section */
 		0A97A1B02B1D386254CF6EE3 /* DSKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DSKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A07E00F457CB99C001BDD50 /* RouterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterType.swift; sourceTree = "<group>"; };
+		1F73C20B2B0E89E46814D27E /* NavigationDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestination.swift; sourceTree = "<group>"; };
 		3C3C4A41C1B1A4459BD5C409 /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
+		494C7869B667F696C6A08DE6 /* NavigationRoutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRoutable.swift; sourceTree = "<group>"; };
 		739CB89CF9F86B4E61147571 /* QA.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QA.xcconfig; sourceTree = "<group>"; };
+		A54973920B69925DA0A362F6 /* WindowDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDestination.swift; sourceTree = "<group>"; };
+		B28C4CC5412BDBCC1C6C1B16 /* WindowRoutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRoutable.swift; sourceTree = "<group>"; };
 		C46BF5BF95304809985EB562 /* PROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PROD.xcconfig; sourceTree = "<group>"; };
-		D2B6F0DB2D13CEF100346097 /* NavigationRoutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRoutable.swift; sourceTree = "<group>"; };
-		D2B6F0E02D13CF5600346097 /* WindowRoutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRoutable.swift; sourceTree = "<group>"; };
-		D2B6F0E22D13CF6900346097 /* WindowDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDestination.swift; sourceTree = "<group>"; };
-		D2B6F0E42D13D0AD00346097 /* NavigationDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestination.swift; sourceTree = "<group>"; };
-		D2B6F0EC2D13F72A00346097 /* RouterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterType.swift; sourceTree = "<group>"; };
 		D99F9A9AD123BE7EF809159C /* BaseFeatureDependency-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "BaseFeatureDependency-Info.plist"; sourceTree = "<group>"; };
 		DC63AB1368DC1675DF4E7BBF /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26442124D0E76ABF59D0690 /* BaseFeatureDependency.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseFeatureDependency.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,6 +76,15 @@
 			path = Derived;
 			sourceTree = "<group>";
 		};
+		141E6BAAE4551659A5E6AA79 /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				A54973920B69925DA0A362F6 /* WindowDestination.swift */,
+				B28C4CC5412BDBCC1C6C1B16 /* WindowRoutable.swift */,
+			);
+			path = Window;
+			sourceTree = "<group>";
+		};
 		5C46FD9FF2D4640252CC40B6 /* Project */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,30 +119,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D2B6F0DA2D13CEE400346097 /* Navigation */ = {
+		CC36484ACFAE254A48DBFBB1 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				D2B6F0DB2D13CEF100346097 /* NavigationRoutable.swift */,
-				D2B6F0E42D13D0AD00346097 /* NavigationDestination.swift */,
+				1F73C20B2B0E89E46814D27E /* NavigationDestination.swift */,
+				494C7869B667F696C6A08DE6 /* NavigationRoutable.swift */,
 			);
 			path = Navigation;
-			sourceTree = "<group>";
-		};
-		D2B6F0DF2D13CF4E00346097 /* Window */ = {
-			isa = PBXGroup;
-			children = (
-				D2B6F0E02D13CF5600346097 /* WindowRoutable.swift */,
-				D2B6F0E22D13CF6900346097 /* WindowDestination.swift */,
-			);
-			path = Window;
 			sourceTree = "<group>";
 		};
 		DC834F91FE3D6614D2F5DA61 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D2B6F0DF2D13CF4E00346097 /* Window */,
-				D2B6F0DA2D13CEE400346097 /* Navigation */,
-				D2B6F0EC2D13F72A00346097 /* RouterType.swift */,
+				CC36484ACFAE254A48DBFBB1 /* Navigation */,
+				141E6BAAE4551659A5E6AA79 /* Window */,
+				1A07E00F457CB99C001BDD50 /* RouterType.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -178,9 +178,6 @@
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
 				TargetAttributes = {
-					78588252DC7CC78786B3F30D = {
-						LastSwiftMigration = 1540;
-					};
 				};
 			};
 			buildConfigurationList = 5799DE9BD014D198283BED30 /* Build configuration list for PBXProject "BaseFeatureDependency" */;
@@ -216,11 +213,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2B6F0E52D13D0AD00346097 /* NavigationDestination.swift in Sources */,
-				D2B6F0E32D13CF6900346097 /* WindowDestination.swift in Sources */,
-				D2B6F0ED2D13F72A00346097 /* RouterType.swift in Sources */,
-				D2B6F0E12D13CF5600346097 /* WindowRoutable.swift in Sources */,
-				D2B6F0DC2D13CEF100346097 /* NavigationRoutable.swift in Sources */,
+				8515E44C50056C3D9931E831 /* NavigationDestination.swift in Sources */,
+				31A584B93D6BC5095D882571 /* NavigationRoutable.swift in Sources */,
+				E2086987D0EE7675DD5FFD4D /* RouterType.swift in Sources */,
+				A5CAE447D206E3941D364BFF /* WindowDestination.swift in Sources */,
+				A615C498D6E03CEDE45DE267 /* WindowRoutable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,7 +287,6 @@
 		52B11C5F6DFBD184CEE73E0E /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -325,7 +321,6 @@
 		688D536898A120C38CC7FC36 /* PROD */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -473,7 +468,6 @@
 		E0EE44CC3ACE6F8A8B0FD13C /* QA */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;

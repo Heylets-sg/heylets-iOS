@@ -24,28 +24,78 @@ struct NavigationRoutingView: View {
     
     var body: some View {
         switch destination {
-        case .mypage:
-            MyPageView()
-                .setHeyNavigation()
-        case .timetable:
-            TimeTableView()
-                .setHeyNavigation()
         case .onboarding:
-            OnboardingView(viewModel: .init(navigationRouter: router.navigationRouter))
-                .setHeyNavigation()
+            OnboardingView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter
+                )
+            )
+            //MARK: SignUp
+            
+        case .selectUniversity:
+            SelectUniversityView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter
+                )
+            )
+        case .verifyEmail:
+            VerifyEmailView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter
+                )
+            )
+        case .enterSecurityCode:
+            EnterSecurityCodeView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter
+                )
+            )
+        case .enterPersonalInfo:
+            EnterSecurityCodeView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter
+                )
+            )
+        case .enterIdPassword:
+            EnterIdPasswordView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter
+                )
+            )
+        case .addProfile:
+            AddProfileView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter
+                )
+            )
+            
+            //MARK: SignIn
+            
         case .login:
-            LogInView()
-        case .resetPasswordView:
-            ResetPasswordView()
+            LogInView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter
+                )
+            )
+        case .enterEmail:
+            EnterEmailView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter
+                )
+            )
+        case .resetPassword:
+            ResetPasswordView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter
+                )
+            )
         }
     }
 }
-
-
 extension View {
     func setHeyNavigation() -> some View {
         self.navigationDestination(for: NavigationDestination.self) { destination in
-            return NavigationRoutingView(destination: destination)
+            NavigationRoutingView(destination: destination)
         }
     }
 }
