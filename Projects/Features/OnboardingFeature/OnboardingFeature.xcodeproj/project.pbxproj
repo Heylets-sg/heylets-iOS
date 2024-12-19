@@ -11,17 +11,27 @@
 		1500B3130F85F6ADD82ABE20 /* EnterSecurityCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01743796E083DED98F64D949 /* EnterSecurityCodeView.swift */; };
 		178635F39DA2205CA61117C0 /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6359FF7F78EAA0EE43A06FFA /* example.swift */; };
 		1FD36C1A2D293B93AC65AFA1 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3A4BCBA598259DBE0AB13 /* SplashView.swift */; };
-		3E2021CD697A27C0A576DBE2 /* BaseFeatureDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BDB92322CBAADE786892C14 /* BaseFeatureDependency.framework */; };
 		4727361868F6488C8D692AE2 /* EnterPersonalInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED48B19B57F2D089BF676629 /* EnterPersonalInfoView.swift */; };
 		594DB40375EEF003CBDFBB22 /* AddProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B6000A026B72B3720D50B7 /* AddProfileView.swift */; };
 		5DD30657346860FD2470AE10 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8CE44B5AE4058D034C58C4 /* OnboardingView.swift */; };
 		7C35DE086EEDB2B4482C2780 /* SelectUniversityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5F65928989200A776F774C /* SelectUniversityView.swift */; };
 		7E3E584BB83342F466D89B2E /* EnterIdPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87696A2321B3F7825DA1983D /* EnterIdPasswordView.swift */; };
 		AE3085403BE9B665FF8815C8 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840EEB3BEE1B85FFD1FA3E93 /* ResetPasswordView.swift */; };
+		CBB66CB81D3CB783194A2943 /* OnboardingFeatureInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49700A1EB5CDEF84F54A296C /* OnboardingFeatureInterface.framework */; };
 		CC4F917AF8F5AEA84307A0DF /* EnterEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AB6B956870249EAB289600 /* EnterEmailView.swift */; };
 		E1D68447DD2DCBBF4AC73C82 /* VerifyEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE83B06A14F12D33952906B7 /* VerifyEmailView.swift */; };
 		F02157AA665A42DF29E6335F /* BaseFeatureDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BDB92322CBAADE786892C14 /* BaseFeatureDependency.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DB99ABF58A07DEA8DEC26A37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E0208637AC48ECEFAC8AB210 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 192C7ACBD5A03867D013EBF3;
+			remoteInfo = OnboardingFeatureInterface;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		0A83A99A1B6C8139C919B678 /* Embed Frameworks */ = {
@@ -74,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E2021CD697A27C0A576DBE2 /* BaseFeatureDependency.framework in Frameworks */,
+				CBB66CB81D3CB783194A2943 /* OnboardingFeatureInterface.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +229,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				59B3069E810A620D3CFDD80F /* PBXTargetDependency */,
 			);
 			name = OnboardingFeature;
 			productName = OnboardingFeature;
@@ -318,6 +329,15 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		59B3069E810A620D3CFDD80F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OnboardingFeatureInterface;
+			target = 192C7ACBD5A03867D013EBF3 /* OnboardingFeatureInterface */;
+			targetProxy = DB99ABF58A07DEA8DEC26A37 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5CF3C55F23A750FC3B60AD77 /* QA */ = {

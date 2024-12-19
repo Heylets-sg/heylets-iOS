@@ -9,9 +9,11 @@
 import SwiftUI
 
 public struct DeleteAccountView: View {
-    public init() {}
     public var body: some View {
-        Text("DeleteAccountView")
+        VStack {
+            Text("DeleteAccountView")
+            Text("DeleteAccountView")
+        }
     }
 }
 

@@ -10,9 +10,13 @@ import SwiftUI
 public struct MyPageView: View {
     public init() {}
     public var body: some View {
-        Text("MyPageView")
+        VStack {
+            Text("MyPageView")
+            Text("MyPageView")
+        }
     }
 }
+    
 
 #Preview {
     MyPageView()

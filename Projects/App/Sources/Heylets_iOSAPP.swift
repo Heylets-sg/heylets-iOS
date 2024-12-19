@@ -9,12 +9,16 @@
 import SwiftUI
 import DSKit
 
+import BaseFeatureDependency
+import OnboardingFeature
+import RootFeature
+
 @main
 struct Heylets_iOSAPP: App {
-    
+    var navigationRouter: NavigationRoutableType = NavigationRouter()
     var body: some Scene {
         WindowGroup {
-            DSKitDemoView()
+            OnboardingView(navigationRouter: <#any NavigationRoutableType#>)
         }
     }
 }

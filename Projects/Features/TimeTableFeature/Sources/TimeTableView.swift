@@ -11,7 +11,9 @@ import SwiftUI
 public struct TimeTableView: View {
     public init() {}
     public var body: some View {
-        Text("TimeTableView")
+        VStack {
+            Text("TimeTableView")
+        }
     }
 }
 

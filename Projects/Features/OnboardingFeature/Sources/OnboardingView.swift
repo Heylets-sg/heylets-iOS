@@ -7,13 +7,26 @@
 //
 
 import SwiftUI
+import BaseFeatureDependency
 
 public struct OnboardingView: View {
+    private var navigationRouter: NavigationRoutableType
+    
+    public init(navigationRouter: NavigationRoutableType) {
+        self.navigationRouter = navigationRouter
+    }
+    
     public var body: some View {
-        Text("OnboardingView")
+        VStack {
+            Button {
+                navigationRouter.push(to: .mypage)
+            } label: {
+                Text("OnboardingView")
+            }
+        }
     }
 }
 
-#Preview {
-    OnboardingView()
-}
+//#Preview {
+//    OnboardingView()
+//}

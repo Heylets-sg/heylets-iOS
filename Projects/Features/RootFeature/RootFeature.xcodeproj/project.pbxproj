@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,8 @@
 		18D24570DADBAB4DE9AF300A /* TimeTableFeature.framework in Dependencies */ = {isa = PBXBuildFile; fileRef = ED67B50E2177CC4F56602A70 /* TimeTableFeature.framework */; };
 		5A115925661ABDD1000DA4BA /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15CA483878C9E7182D925D /* example.swift */; };
 		BAA8202F2FE223EE4272115E /* MyPageFeature.framework in Dependencies */ = {isa = PBXBuildFile; fileRef = F072ADA679F8FFDD2E2DE8F2 /* MyPageFeature.framework */; };
+		D2B6F0BA2D13AFAA00346097 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0B92D13AFAA00346097 /* NavigationRouter.swift */; };
+		D2B6F0BC2D13AFFB00346097 /* NavigationRoutingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0BB2D13AFFB00346097 /* NavigationRoutingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +46,8 @@
 		4CA2784DE73B488B6C77CC16 /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
 		6D822162A6672A10C01DD94E /* PROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PROD.xcconfig; sourceTree = "<group>"; };
 		8DE50A3EEC48A4BFA307AD7E /* QA.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QA.xcconfig; sourceTree = "<group>"; };
+		D2B6F0B92D13AFAA00346097 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
+		D2B6F0BB2D13AFFB00346097 /* NavigationRoutingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRoutingView.swift; sourceTree = "<group>"; };
 		E786D8EC9B2855E98CBADF12 /* RootFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RootFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED67B50E2177CC4F56602A70 /* TimeTableFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TimeTableFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F072ADA679F8FFDD2E2DE8F2 /* MyPageFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MyPageFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +98,7 @@
 		A4DA8866E1F6DE16B776E201 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D2B6F0B82D13AF9A00346097 /* Coordinator */,
 				FF15CA483878C9E7182D925D /* example.swift */,
 			);
 			path = Sources;
@@ -116,6 +121,15 @@
 			);
 			name = XCConfig;
 			path = ../../../XCConfig;
+			sourceTree = "<group>";
+		};
+		D2B6F0B82D13AF9A00346097 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				D2B6F0B92D13AFAA00346097 /* NavigationRouter.swift */,
+				D2B6F0BB2D13AFFB00346097 /* NavigationRoutingView.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		EC6B20F5EBAB6A303DB768A8 /* InfoPlists */ = {
@@ -163,8 +177,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 2B439DE758E0CDAD86F3302A /* Build configuration list for PBXProject "RootFeature" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -199,6 +211,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2B6F0BC2D13AFFB00346097 /* NavigationRoutingView.swift in Sources */,
+				D2B6F0BA2D13AFAA00346097 /* NavigationRouter.swift in Sources */,
 				5A115925661ABDD1000DA4BA /* example.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

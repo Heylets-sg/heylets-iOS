@@ -10,14 +10,19 @@
 		051315DAFC8AE52DC8789AD8 /* TuistAssets+HeyletsIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB31286BE001E8357196652 /* TuistAssets+HeyletsIOS.swift */; };
 		1153139375B6AD07C08BFC3F /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538ACFE3C52B9A1BAD705D8 /* DIContainer.swift */; };
 		2004FD5738A871AA690B5979 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6BA02C1730084A2ABD42F8 /* Domain.framework */; };
+		24290132A8E731FA49E6774B /* TimeTableFeatureInterface.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 883C949E6E7F8DE77760EA88 /* TimeTableFeatureInterface.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		35320AE27709BDEC26A97478 /* BaseFeatureDependency.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9931273567A167B642580301 /* BaseFeatureDependency.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		39FE64E25A7E910D3ABD99DB /* BaseFeatureDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9931273567A167B642580301 /* BaseFeatureDependency.framework */; };
 		43AB96D356AB8624315CCE8E /* Heylets_iOSAPP.swift in Sources */ = {isa = PBXBuildFile; fileRef = F998E62E53F7BBEC97EF4E53 /* Heylets_iOSAPP.swift */; };
+		443CC8424E77EEA324F9F25B /* MyPageFeatureInterface.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C0E8DFFA8EFE1A6706F05971 /* MyPageFeatureInterface.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		47F57B585F7BF5B7C3F2430A /* OnboardingFeatureInterface.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87ED2C3F478A73C8FCE90EC3 /* OnboardingFeatureInterface.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F0795E110B5EEFA2F48C3C4 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0768019261E893498AF770C8 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6B1B799D98701C7FEC60DA7B /* MyPageFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36784BBA04A4EAD8B3B751E4 /* MyPageFeature.framework */; };
+		9378191B29FC223A4948B232 /* OnboardingFeatureInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87ED2C3F478A73C8FCE90EC3 /* OnboardingFeatureInterface.framework */; };
 		93E253D3B8F29EECC176A8CE /* TuistBundle+HeyletsIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7228BE586B97625F88DAC9 /* TuistBundle+HeyletsIOS.swift */; };
+		94E2E20DE598C3C5B7DB1BEE /* TimeTableFeatureInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C949E6E7F8DE77760EA88 /* TimeTableFeatureInterface.framework */; };
 		9806D0784F3952C77AE9ABFC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51E36201BDB455202A4B9CAD /* Assets.xcassets */; };
 		9B55871CD0DBA1836635BA74 /* DSKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C91FC68E23B8EEF6495E7E7E /* DSKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9D6514B46E7E444299AC0C39 /* MyPageFeatureInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0E8DFFA8EFE1A6706F05971 /* MyPageFeatureInterface.framework */; };
 		AB5C40572E32842B43178ADD /* Domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA6BA02C1730084A2ABD42F8 /* Domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ADA39FE6D5803AFFDFF3C31B /* TimeTableFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F44A38599C673ED3DD09312 /* TimeTableFeature.framework */; };
 		B633746B68F24414EF1B55CC /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B56292DE8F82F29990E1185B /* Data.framework */; };
@@ -38,7 +43,10 @@
 				4F0795E110B5EEFA2F48C3C4 /* Core.framework in Embed Frameworks */,
 				9B55871CD0DBA1836635BA74 /* DSKit.framework in Embed Frameworks */,
 				AB5C40572E32842B43178ADD /* Domain.framework in Embed Frameworks */,
+				443CC8424E77EEA324F9F25B /* MyPageFeatureInterface.framework in Embed Frameworks */,
+				47F57B585F7BF5B7C3F2430A /* OnboardingFeatureInterface.framework in Embed Frameworks */,
 				EFA46F9E7482F7955D2075F2 /* ThirdPartyLibs.framework in Embed Frameworks */,
+				24290132A8E731FA49E6774B /* TimeTableFeatureInterface.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,6 +61,8 @@
 		36784BBA04A4EAD8B3B751E4 /* MyPageFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MyPageFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		51E36201BDB455202A4B9CAD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		839CB2720189EFF4C7E82995 /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
+		87ED2C3F478A73C8FCE90EC3 /* OnboardingFeatureInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OnboardingFeatureInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		883C949E6E7F8DE77760EA88 /* TimeTableFeatureInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TimeTableFeatureInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BDBA240190F4538DC0179DD /* QA.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QA.xcconfig; sourceTree = "<group>"; };
 		8F44A38599C673ED3DD09312 /* TimeTableFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TimeTableFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96F04FDDA3FAA2939110B7F0 /* Heylets-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Heylets-iOS-Info.plist"; sourceTree = "<group>"; };
@@ -60,6 +70,7 @@
 		B56292DE8F82F29990E1185B /* Data.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Data.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA6BA02C1730084A2ABD42F8 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD9C2E88B61EC07CE85870E3 /* OnboardingFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OnboardingFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0E8DFFA8EFE1A6706F05971 /* MyPageFeatureInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MyPageFeatureInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C91FC68E23B8EEF6495E7E7E /* DSKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DSKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D906DC82948F8C75EB54420D /* RootFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RootFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA1A3B55A4291C8186209E63 /* ThirdPartyLibs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThirdPartyLibs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,14 +86,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39FE64E25A7E910D3ABD99DB /* BaseFeatureDependency.framework in Frameworks */,
 				B633746B68F24414EF1B55CC /* Data.framework in Frameworks */,
 				2004FD5738A871AA690B5979 /* Domain.framework in Frameworks */,
 				6B1B799D98701C7FEC60DA7B /* MyPageFeature.framework in Frameworks */,
+				9D6514B46E7E444299AC0C39 /* MyPageFeatureInterface.framework in Frameworks */,
 				B65918C2F11F9625D9AEFEE7 /* Networks.framework in Frameworks */,
 				E39D1FBB802BE80AFB64E242 /* OnboardingFeature.framework in Frameworks */,
+				9378191B29FC223A4948B232 /* OnboardingFeatureInterface.framework in Frameworks */,
 				CB50EDF6252509C4DB28BD2D /* RootFeature.framework in Frameworks */,
 				ADA39FE6D5803AFFDFF3C31B /* TimeTableFeature.framework in Frameworks */,
+				94E2E20DE598C3C5B7DB1BEE /* TimeTableFeatureInterface.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,11 +143,14 @@
 				C91FC68E23B8EEF6495E7E7E /* DSKit.framework */,
 				105911479384512D89A46125 /* Heylets_iOS.app */,
 				36784BBA04A4EAD8B3B751E4 /* MyPageFeature.framework */,
+				C0E8DFFA8EFE1A6706F05971 /* MyPageFeatureInterface.framework */,
 				E5B31903625E4729AB601295 /* Networks.framework */,
 				BD9C2E88B61EC07CE85870E3 /* OnboardingFeature.framework */,
+				87ED2C3F478A73C8FCE90EC3 /* OnboardingFeatureInterface.framework */,
 				D906DC82948F8C75EB54420D /* RootFeature.framework */,
 				DA1A3B55A4291C8186209E63 /* ThirdPartyLibs.framework */,
 				8F44A38599C673ED3DD09312 /* TimeTableFeature.framework */,
+				883C949E6E7F8DE77760EA88 /* TimeTableFeatureInterface.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";

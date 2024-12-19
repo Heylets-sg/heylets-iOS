@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,10 +14,20 @@
 		82CC64A6FA21864A718D72E2 /* NotificationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7FAD45B61C832A574AA44 /* NotificationSettingView.swift */; };
 		B10B87C6134D9A2A89F55BD2 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B158465377A9A7240F010 /* ChangePasswordView.swift */; };
 		C686549456DB4474D873E342 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A0E43646641A598CBC326D /* PrivacyPolicyView.swift */; };
-		E2AD5A3EA276BB2A8E56018A /* BaseFeatureDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB70EDD922652179B8A00FA1 /* BaseFeatureDependency.framework */; };
+		E6183220707E452097C20CD6 /* MyPageFeatureInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9735713CE4E956FE5A28AE4 /* MyPageFeatureInterface.framework */; };
 		FC1CECCF93718DB923176896 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461824F96A6E372B1246B7CB /* DeleteAccountView.swift */; };
 		FF06C8A8CBD2B1924828AFDD /* BaseFeatureDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB70EDD922652179B8A00FA1 /* BaseFeatureDependency.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		50120CA1D1F504D9B870CBEB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8565F30DCA2B8A33983B7951 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 309D06068DD1002D94B61781;
+			remoteInfo = MyPageFeatureInterface;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		713F739B2A400BFA075BB15D /* Embed Frameworks */ = {
@@ -74,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2AD5A3EA276BB2A8E56018A /* BaseFeatureDependency.framework in Frameworks */,
+				E6183220707E452097C20CD6 /* MyPageFeatureInterface.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,6 +209,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C6AB81113FDD06156CA87CC9 /* PBXTargetDependency */,
 			);
 			name = MyPageFeature;
 			productName = MyPageFeature;
@@ -231,8 +242,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 8D0F546050F4438672B52400 /* Build configuration list for PBXProject "MyPageFeature" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -294,6 +303,15 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C6AB81113FDD06156CA87CC9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MyPageFeatureInterface;
+			target = 309D06068DD1002D94B61781 /* MyPageFeatureInterface */;
+			targetProxy = 50120CA1D1F504D9B870CBEB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		175D38FDD0C794CAA007D43A /* QA */ = {

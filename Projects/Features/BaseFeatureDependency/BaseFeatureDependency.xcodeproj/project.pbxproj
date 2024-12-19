@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6BEB7AEE4FC3F223B91EBA7C /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5138E1D7A55BE912E908E22C /* example.swift */; };
 		7F674DA55E900A541B2AB598 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC63AB1368DC1675DF4E7BBF /* Domain.framework */; };
+		D2B6F0B52D13AF2400346097 /* NavigationRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0B42D13AF2400346097 /* NavigationRoutable.swift */; };
+		D2B6F0B72D13AF4B00346097 /* NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0B62D13AF4B00346097 /* NavigationDestination.swift */; };
 		D427F692042EBF6300C81147 /* DSKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A97A1B02B1D386254CF6EE3 /* DSKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -28,9 +29,10 @@
 /* Begin PBXFileReference section */
 		0A97A1B02B1D386254CF6EE3 /* DSKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DSKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3C4A41C1B1A4459BD5C409 /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
-		5138E1D7A55BE912E908E22C /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = example.swift; sourceTree = "<group>"; };
 		739CB89CF9F86B4E61147571 /* QA.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QA.xcconfig; sourceTree = "<group>"; };
 		C46BF5BF95304809985EB562 /* PROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PROD.xcconfig; sourceTree = "<group>"; };
+		D2B6F0B42D13AF2400346097 /* NavigationRoutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRoutable.swift; sourceTree = "<group>"; };
+		D2B6F0B62D13AF4B00346097 /* NavigationDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestination.swift; sourceTree = "<group>"; };
 		D99F9A9AD123BE7EF809159C /* BaseFeatureDependency-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "BaseFeatureDependency-Info.plist"; sourceTree = "<group>"; };
 		DC63AB1368DC1675DF4E7BBF /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26442124D0E76ABF59D0690 /* BaseFeatureDependency.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseFeatureDependency.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,10 +104,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D2B6F0A42D131A2000346097 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				D2B6F0B62D13AF4B00346097 /* NavigationDestination.swift */,
+				D2B6F0B42D13AF2400346097 /* NavigationRoutable.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		DC834F91FE3D6614D2F5DA61 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				5138E1D7A55BE912E908E22C /* example.swift */,
+				D2B6F0A42D131A2000346097 /* Coordinator */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -149,8 +160,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 5799DE9BD014D198283BED30 /* Build configuration list for PBXProject "BaseFeatureDependency" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -185,7 +194,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BEB7AEE4FC3F223B91EBA7C /* example.swift in Sources */,
+				D2B6F0B72D13AF4B00346097 /* NavigationDestination.swift in Sources */,
+				D2B6F0B52D13AF2400346097 /* NavigationRoutable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

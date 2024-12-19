@@ -8,10 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		7BA25CAEB76C13C691D14257 /* BaseFeatureDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00E483A059858CE6553711F /* BaseFeatureDependency.framework */; };
+		81C5C7499D9ABC1166BAA177 /* TimeTableFeatureInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4939CCB6473BD917C8BB764 /* TimeTableFeatureInterface.framework */; };
 		9130926220B55EE02B024D62 /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD79E350722F65451AC6B98 /* example.swift */; };
 		C3BCAAA0F5FB252646D5FB49 /* TimeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278A992CE924AA5B9A9CF179 /* TimeTableView.swift */; };
-		F4F42A57704024114A5B22A5 /* BaseFeatureDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00E483A059858CE6553711F /* BaseFeatureDependency.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		27EFEBA747DF029BB72D4696 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E176F1D3759AE6BD8A0A03D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C82AD69D8C41214FAEE828D9;
+			remoteInfo = TimeTableFeatureInterface;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		3BE69B3FA31FC1DF833D9884 /* Embed Frameworks */ = {
@@ -62,7 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4F42A57704024114A5B22A5 /* BaseFeatureDependency.framework in Frameworks */,
+				81C5C7499D9ABC1166BAA177 /* TimeTableFeatureInterface.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +183,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				1E229DAA272D9A94A9FC7A22 /* PBXTargetDependency */,
 			);
 			name = TimeTableFeature;
 			productName = TimeTableFeature;
@@ -221,8 +232,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A557192FDB07C6A06C12851C /* TimeTableFeature */,
 				C82AD69D8C41214FAEE828D9 /* TimeTableFeatureInterface */,
+				A557192FDB07C6A06C12851C /* TimeTableFeature */,
 			);
 		};
 /* End PBXProject section */
@@ -262,6 +273,15 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1E229DAA272D9A94A9FC7A22 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TimeTableFeatureInterface;
+			target = C82AD69D8C41214FAEE828D9 /* TimeTableFeatureInterface */;
+			targetProxy = 27EFEBA747DF029BB72D4696 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		292D03CABB13590464B378D8 /* QA */ = {
