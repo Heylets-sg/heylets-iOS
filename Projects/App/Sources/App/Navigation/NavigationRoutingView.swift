@@ -31,7 +31,12 @@ struct NavigationRoutingView: View {
             TimeTableView()
                 .setHeyNavigation()
         case .onboarding:
-            OnboardingView(viewModel: .init(windowRouter: router.windowRouter))
+            OnboardingView(viewModel: .init(navigationRouter: router.navigationRouter))
+                .setHeyNavigation()
+        case .login:
+            LogInView()
+        case .resetPasswordView:
+            ResetPasswordView()
         }
     }
 }

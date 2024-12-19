@@ -10,6 +10,8 @@ import Foundation
 
 public enum NavigationDestination {
     case mypage
+    case login
+    case resetPasswordView
     case onboarding
     case timetable
 }

@@ -8,12 +8,13 @@
 
 import SwiftUI
 
-struct LogInView: View {
-    var body: some View {
+public struct LogInView: View {
+    public init() {}
+    public var body: some View {
         Text("LogInView")
     }
 }
 
-#Preview {
-    LogInView()
-}
+//#Preview {
+//    LogInView()
+//}

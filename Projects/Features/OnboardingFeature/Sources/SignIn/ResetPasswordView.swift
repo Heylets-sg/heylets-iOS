@@ -8,8 +8,9 @@
 
 import SwiftUI
 
-struct ResetPasswordView: View {
-    var body: some View {
+public struct ResetPasswordView: View {
+    public init() {}
+    public var body: some View {
         Text("ResetPasswordView")
     }
 }

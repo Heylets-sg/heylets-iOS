@@ -24,7 +24,7 @@ public struct RootView: View {
             case .onboarding:
                 OnboardingView(
                     viewModel: OnboardingViewModel(
-                        windowRouter: router.windowRouter
+                        navigationRouter: router.navigationRouter
                     )
                 )
             case .timetable:

@@ -18,11 +18,22 @@ public struct OnboardingView: View {
         self.viewModel = viewModel
     }
     public var body: some View {
-        VStack {
-            Button {
-                viewModel.send(.buttonDidTap)
-            } label: {
-                Text("OnboardingView")
+        NavigationStack(path: $router.navigationRouter.destinations) {
+            VStack {
+                Button {
+                    viewModel.send(.loginButtonDidTap)
+                } label: {
+                    Text("login")
+                }
+                
+                Spacer()
+                    .frame(height: 50)
+                
+                Button {
+                    viewModel.send(.resetButtonDidTap)
+                } label: {
+                    Text("login")
+                }
             }
         }
     }
@@ -38,21 +49,24 @@ public struct OnboardingView: View {
 public class OnboardingViewModel: ObservableObject {
     
     enum Action {
-        case buttonDidTap
+        case loginButtonDidTap
+        case resetButtonDidTap
     }
     
-    public var windowRouter: WindowRoutableType
+    public var navigationRouter: NavigationRoutableType
     
-    public init(windowRouter: WindowRoutableType) {
-        self.windowRouter = windowRouter
-        print(windowRouter.destination)
+    public init(navigationRouter: NavigationRoutableType) {
+        self.navigationRouter = navigationRouter
+        print(navigationRouter.destinations)
     }
     
     func send(_ action: Action) {
         switch action {
-        case .buttonDidTap:
+        case .loginButtonDidTap:
             print("버튼 클릭")
-            windowRouter.switch(to: .splash)
+            navigationRouter.push(to: .login)
+        case .resetButtonDidTap:
+            navigationRouter.push(to: .resetPasswordView)
         }
     }
 }
