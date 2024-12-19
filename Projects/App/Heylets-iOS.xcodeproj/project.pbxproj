@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -28,6 +28,10 @@
 		B633746B68F24414EF1B55CC /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B56292DE8F82F29990E1185B /* Data.framework */; };
 		B65918C2F11F9625D9AEFEE7 /* Networks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5B31903625E4729AB601295 /* Networks.framework */; };
 		CB50EDF6252509C4DB28BD2D /* RootFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D906DC82948F8C75EB54420D /* RootFeature.framework */; };
+		D2B6F0D52D13CDE600346097 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0D42D13CDE500346097 /* NavigationRouter.swift */; };
+		D2B6F0D72D13CE0100346097 /* WindowRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0D62D13CE0100346097 /* WindowRouter.swift */; };
+		D2B6F0E92D13D1A500346097 /* NavigationRoutingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0E82D13D1A500346097 /* NavigationRoutingView.swift */; };
+		D2B6F0EF2D13F7A900346097 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0EE2D13F7A900346097 /* Router.swift */; };
 		E39D1FBB802BE80AFB64E242 /* OnboardingFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD9C2E88B61EC07CE85870E3 /* OnboardingFeature.framework */; };
 		EFA46F9E7482F7955D2075F2 /* ThirdPartyLibs.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA1A3B55A4291C8186209E63 /* ThirdPartyLibs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -72,6 +76,10 @@
 		BD9C2E88B61EC07CE85870E3 /* OnboardingFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OnboardingFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0E8DFFA8EFE1A6706F05971 /* MyPageFeatureInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MyPageFeatureInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C91FC68E23B8EEF6495E7E7E /* DSKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DSKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2B6F0D42D13CDE500346097 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
+		D2B6F0D62D13CE0100346097 /* WindowRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRouter.swift; sourceTree = "<group>"; };
+		D2B6F0E82D13D1A500346097 /* NavigationRoutingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRoutingView.swift; sourceTree = "<group>"; };
+		D2B6F0EE2D13F7A900346097 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		D906DC82948F8C75EB54420D /* RootFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RootFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA1A3B55A4291C8186209E63 /* ThirdPartyLibs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ThirdPartyLibs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5B31903625E4729AB601295 /* Networks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Networks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,7 +175,10 @@
 		6DD9D86024B7931FC4210F7B /* App */ = {
 			isa = PBXGroup;
 			children = (
+				D2B6F0D12D13CDA400346097 /* Window */,
+				D2B6F0D02D13CD9E00346097 /* Navigation */,
 				3538ACFE3C52B9A1BAD705D8 /* DIContainer.swift */,
+				D2B6F0EE2D13F7A900346097 /* Router.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -203,6 +214,23 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D2B6F0D02D13CD9E00346097 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				D2B6F0D42D13CDE500346097 /* NavigationRouter.swift */,
+				D2B6F0E82D13D1A500346097 /* NavigationRoutingView.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		D2B6F0D12D13CDA400346097 /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				D2B6F0D62D13CE0100346097 /* WindowRouter.swift */,
+			);
+			path = Window;
 			sourceTree = "<group>";
 		};
 		F026AD9CE57785632D4D171A /* Derived */ = {
@@ -243,8 +271,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = A3E122B0208A3669250D1916 /* Build configuration list for PBXProject "Heylets-iOS" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -280,10 +306,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2B6F0EF2D13F7A900346097 /* Router.swift in Sources */,
+				D2B6F0D72D13CE0100346097 /* WindowRouter.swift in Sources */,
+				D2B6F0E92D13D1A500346097 /* NavigationRoutingView.swift in Sources */,
 				051315DAFC8AE52DC8789AD8 /* TuistAssets+HeyletsIOS.swift in Sources */,
 				93E253D3B8F29EECC176A8CE /* TuistBundle+HeyletsIOS.swift in Sources */,
 				1153139375B6AD07C08BFC3F /* DIContainer.swift in Sources */,
 				43AB96D356AB8624315CCE8E /* Heylets_iOSAPP.swift in Sources */,
+				D2B6F0D52D13CDE600346097 /* NavigationRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

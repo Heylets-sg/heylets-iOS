@@ -1,39 +1,28 @@
-////
-////  DIContainer.swift
-////  Heylets-iOS
-////
-////  Created by 류희재 on 12/18/24.
-////  Copyright © 2024 Heylets-iOS. All rights reserved.
-////
 //
-//import Foundation
-//import Core
+//  DIContainer.swift
+//  Heylets-iOS
 //
-//typealias NavigationRoutableType = NavigationRoutable & ObservableObjectSettable
-//typealias WindowRoutableType = WindowRoutable & ObservableObjectSettable
+//  Created by 류희재 on 12/18/24.
+//  Copyright © 2024 Heylets-iOS. All rights reserved.
 //
-//final class DIContainer: ObservableObject {
-//    
-////    var service: ServiceType
-//    var navigationRouter: NavigationRoutableType
-//    var windowRouter: WindowRoutableType
-//    
-//    private init(
-////        service: ServiceType,
-//        navigationRouter: NavigationRoutableType = NavigationRouter(),
-//        windowRouter: WindowRoutableType = WindowRouter()
-//    ) {
-////        self.service = service
-//        self.navigationRouter = navigationRouter
-//        self.windowRouter = windowRouter
-//        
-//        navigationRouter.setObjectWillChange(objectWillChange)
-//        windowRouter.setObjectWillChange(objectWillChange)
-//    }
-//}
-//
-//extension DIContainer {
-//    static let `default` = DIContainer()/*service: Service())*/
-//    static let stub = DIContainer()/*service: StubService())*/
-//}
-//
+
+import Foundation
+
+import Core
+import BaseFeatureDependency
+
+extension DIContainer {
+    static let `default`: DIContainer = {
+        let container = DIContainer()
+        
+        container.register(NavigationRoutableType.self) {
+            return NavigationRouter()
+        }
+        
+        container.register(WindowRoutableType.self) {
+            return WindowRouter()
+        }
+        
+        return container
+    }()
+}

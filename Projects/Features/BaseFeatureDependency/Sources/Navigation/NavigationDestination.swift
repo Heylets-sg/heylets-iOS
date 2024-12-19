@@ -1,5 +1,5 @@
 //
-//  Router.swift
+//  NavigationDestination.swift
 //  BaseFeatureDependency
 //
 //  Created by 류희재 on 12/19/24.

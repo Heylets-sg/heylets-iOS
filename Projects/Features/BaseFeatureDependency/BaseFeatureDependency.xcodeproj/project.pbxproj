@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		7F674DA55E900A541B2AB598 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC63AB1368DC1675DF4E7BBF /* Domain.framework */; };
-		D2B6F0B52D13AF2400346097 /* NavigationRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0B42D13AF2400346097 /* NavigationRoutable.swift */; };
-		D2B6F0B72D13AF4B00346097 /* NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0B62D13AF4B00346097 /* NavigationDestination.swift */; };
+		D2B6F0DC2D13CEF100346097 /* NavigationRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0DB2D13CEF100346097 /* NavigationRoutable.swift */; };
+		D2B6F0E12D13CF5600346097 /* WindowRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0E02D13CF5600346097 /* WindowRoutable.swift */; };
+		D2B6F0E32D13CF6900346097 /* WindowDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0E22D13CF6900346097 /* WindowDestination.swift */; };
+		D2B6F0E52D13D0AD00346097 /* NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0E42D13D0AD00346097 /* NavigationDestination.swift */; };
+		D2B6F0ED2D13F72A00346097 /* RouterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B6F0EC2D13F72A00346097 /* RouterType.swift */; };
 		D427F692042EBF6300C81147 /* DSKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A97A1B02B1D386254CF6EE3 /* DSKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,8 +34,11 @@
 		3C3C4A41C1B1A4459BD5C409 /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
 		739CB89CF9F86B4E61147571 /* QA.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QA.xcconfig; sourceTree = "<group>"; };
 		C46BF5BF95304809985EB562 /* PROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PROD.xcconfig; sourceTree = "<group>"; };
-		D2B6F0B42D13AF2400346097 /* NavigationRoutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRoutable.swift; sourceTree = "<group>"; };
-		D2B6F0B62D13AF4B00346097 /* NavigationDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestination.swift; sourceTree = "<group>"; };
+		D2B6F0DB2D13CEF100346097 /* NavigationRoutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRoutable.swift; sourceTree = "<group>"; };
+		D2B6F0E02D13CF5600346097 /* WindowRoutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRoutable.swift; sourceTree = "<group>"; };
+		D2B6F0E22D13CF6900346097 /* WindowDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDestination.swift; sourceTree = "<group>"; };
+		D2B6F0E42D13D0AD00346097 /* NavigationDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestination.swift; sourceTree = "<group>"; };
+		D2B6F0EC2D13F72A00346097 /* RouterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterType.swift; sourceTree = "<group>"; };
 		D99F9A9AD123BE7EF809159C /* BaseFeatureDependency-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "BaseFeatureDependency-Info.plist"; sourceTree = "<group>"; };
 		DC63AB1368DC1675DF4E7BBF /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26442124D0E76ABF59D0690 /* BaseFeatureDependency.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseFeatureDependency.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,19 +110,30 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D2B6F0A42D131A2000346097 /* Coordinator */ = {
+		D2B6F0DA2D13CEE400346097 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				D2B6F0B62D13AF4B00346097 /* NavigationDestination.swift */,
-				D2B6F0B42D13AF2400346097 /* NavigationRoutable.swift */,
+				D2B6F0DB2D13CEF100346097 /* NavigationRoutable.swift */,
+				D2B6F0E42D13D0AD00346097 /* NavigationDestination.swift */,
 			);
-			path = Coordinator;
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		D2B6F0DF2D13CF4E00346097 /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				D2B6F0E02D13CF5600346097 /* WindowRoutable.swift */,
+				D2B6F0E22D13CF6900346097 /* WindowDestination.swift */,
+			);
+			path = Window;
 			sourceTree = "<group>";
 		};
 		DC834F91FE3D6614D2F5DA61 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D2B6F0A42D131A2000346097 /* Coordinator */,
+				D2B6F0DF2D13CF4E00346097 /* Window */,
+				D2B6F0DA2D13CEE400346097 /* Navigation */,
+				D2B6F0EC2D13F72A00346097 /* RouterType.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -160,6 +177,11 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
+				TargetAttributes = {
+					78588252DC7CC78786B3F30D = {
+						LastSwiftMigration = 1540;
+					};
+				};
 			};
 			buildConfigurationList = 5799DE9BD014D198283BED30 /* Build configuration list for PBXProject "BaseFeatureDependency" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -194,8 +216,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2B6F0B72D13AF4B00346097 /* NavigationDestination.swift in Sources */,
-				D2B6F0B52D13AF2400346097 /* NavigationRoutable.swift in Sources */,
+				D2B6F0E52D13D0AD00346097 /* NavigationDestination.swift in Sources */,
+				D2B6F0E32D13CF6900346097 /* WindowDestination.swift in Sources */,
+				D2B6F0ED2D13F72A00346097 /* RouterType.swift in Sources */,
+				D2B6F0E12D13CF5600346097 /* WindowRoutable.swift in Sources */,
+				D2B6F0DC2D13CEF100346097 /* NavigationRoutable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +290,7 @@
 		52B11C5F6DFBD184CEE73E0E /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -299,6 +325,7 @@
 		688D536898A120C38CC7FC36 /* PROD */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -446,6 +473,7 @@
 		E0EE44CC3ACE6F8A8B0FD13C /* QA */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;

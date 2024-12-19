@@ -7,13 +7,17 @@
 //
 
 import SwiftUI
+import BaseFeatureDependency
 
-struct SplashView: View {
-    var body: some View {
-        Text("SplashView")
+public struct SplashView: View {
+    
+    @EnvironmentObject var router: Router
+    
+    public init() {}
+    
+    public var body: some View {
+        VStack {
+            Text("Splash View")
+        }
     }
-}
-
-#Preview {
-    SplashView()
 }
