@@ -13,32 +13,33 @@ import TimeTableFeature
 import MyPageFeature
 import SplashFeature
 
+public class HeyNavigationRouter: ObservableObject {
+    public init() {}
+    let onboarding = OnboardingNavigationRouter()
+}
+
 public struct RootView: View {
     public init() {}
-//    @EnvironmentObject var router: Router
-    @EnvironmentObject var onboardingRouter: OnboardingNavigationRouter
+    @EnvironmentObject var router: Router
+    @EnvironmentObject var navigationRouter: HeyNavigationRouter
     
     public var body: some View {
         Group {
-            OnboardingView(
-                viewModel: OnboardingViewModel(
-                    navigationRouter: onboardingRouter
+            switch router.windowRouter.destination {
+            case .splash:
+                SplashView(viewModel: .init(windowRouter: router.windowRouter))
+            case .onboarding:
+                OnboardingView(
+                    viewModel: OnboardingViewModel(
+                        navigationRouter: navigationRouter.onboarding
+                    )
                 )
-            )
-//            switch router.windowRouter.destination {
-//            case .splash:
-//                SplashView()
-//            case .onboarding:
-//                OnboardingView(
-//                    viewModel: OnboardingViewModel(
-//                        navigationRouter: onboardingRouter.navigationRouter
-//                    )
-//                )
-//            case .timetable:
-//                TimeTableView()
-//            case .mypage:
-//                MyPageView()
-//            }
+                .environmentObject(navigationRouter.onboarding)
+            case .timetable:
+                TimeTableView()
+            case .mypage:
+                MyPageView()
+            }
         }
     }
     

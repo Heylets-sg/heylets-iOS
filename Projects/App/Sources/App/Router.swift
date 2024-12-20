@@ -8,8 +8,9 @@
 
 import Combine
 import BaseFeatureDependency
+import OnboardingFeature
 
 extension Router {
-    static let `default` = Router.init(navigationRouter: NavigationRouter(), windowRouter: WindowRouter())
-    static let stub = Router.init(navigationRouter: NavigationRouter(), windowRouter: WindowRouter())
+    static let `default` = Router.init(windowRouter: WindowRouter())
+//    static let stub = Router.init(navigationRouter: NavigationRouter(), windowRouter: WindowRouter())
 }

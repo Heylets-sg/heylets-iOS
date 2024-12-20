@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2D680C4D6CFDB740DC49DB99 /* BaseFeatureDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD8F411747F4AE39D258A2D /* BaseFeatureDependency.framework */; };
 		A95ADCF9AE8D0C28BD7BD8F2 /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B9477AAFEB6BD166B5FEF /* example.swift */; };
 		C461147611BE31C94214B458 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9799DB55E47E0465DCCC1EB0 /* SplashView.swift */; };
+		D2050F6C2D1510B000BDBC69 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2050F6B2D1510B000BDBC69 /* SplashViewModel.swift */; };
 		EE119E0636DADC4DB1E12EB3 /* SplashFeatureInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7653584BAD81B72F4454519 /* SplashFeatureInterface.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		A127730BE75677E80859FA5D /* SplashFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SplashFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A73B6E01371EED45DBD4695C /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
 		C7653584BAD81B72F4454519 /* SplashFeatureInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SplashFeatureInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2050F6B2D1510B000BDBC69 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		F4C2C437991347572523F9E2 /* QA.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QA.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				9799DB55E47E0465DCCC1EB0 /* SplashView.swift */,
+				D2050F6B2D1510B000BDBC69 /* SplashViewModel.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -216,8 +219,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				ORGANIZATIONNAME = "Heylets-iOS";
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = EDAA5C526BA4C433E0610152 /* Build configuration list for PBXProject "SplashFeature" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -261,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C461147611BE31C94214B458 /* SplashView.swift in Sources */,
+				D2050F6C2D1510B000BDBC69 /* SplashViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

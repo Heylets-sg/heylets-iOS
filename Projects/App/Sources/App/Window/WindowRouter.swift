@@ -16,7 +16,7 @@ final class WindowRouter: WindowRoutable, ObservableObjectSettable {
     
     var objectWillChange: ObservableObjectPublisher?
     
-    var destination: WindowDestination = .onboarding {
+    var destination: WindowDestination = .splash {
         didSet {
             objectWillChange?.send()
         }

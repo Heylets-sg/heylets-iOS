@@ -4,12 +4,19 @@ import BaseFeatureDependency
 public struct SplashView: View {
     
     @EnvironmentObject var router: Router
+    var viewModel: SplashViewModel
     
-    public init() {}
+    public init(viewModel: SplashViewModel) {
+        self.viewModel = viewModel
+    }
     
     public var body: some View {
         VStack {
-            Text("Splash View")
+            Button {
+                viewModel.send(.buttonDidTap)
+            } label: {
+                Text("SignUp")
+            }
         }
     }
 }
