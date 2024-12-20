@@ -15,24 +15,30 @@ import SplashFeature
 
 public struct RootView: View {
     public init() {}
-    @EnvironmentObject var router: Router 
+//    @EnvironmentObject var router: Router
+    @EnvironmentObject var onboardingRouter: OnboardingNavigationRouter
     
     public var body: some View {
         Group {
-            switch router.windowRouter.destination {
-            case .splash:
-                SplashView()
-            case .onboarding:
-                OnboardingView(
-                    viewModel: OnboardingViewModel(
-                        navigationRouter: router.navigationRouter
-                    )
+            OnboardingView(
+                viewModel: OnboardingViewModel(
+                    navigationRouter: onboardingRouter
                 )
-            case .timetable:
-                TimeTableView()
-            case .mypage:
-                MyPageView()
-            }
+            )
+//            switch router.windowRouter.destination {
+//            case .splash:
+//                SplashView()
+//            case .onboarding:
+//                OnboardingView(
+//                    viewModel: OnboardingViewModel(
+//                        navigationRouter: onboardingRouter.navigationRouter
+//                    )
+//                )
+//            case .timetable:
+//                TimeTableView()
+//            case .mypage:
+//                MyPageView()
+//            }
         }
     }
     

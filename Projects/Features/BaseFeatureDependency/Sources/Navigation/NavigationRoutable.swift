@@ -9,6 +9,8 @@
 import Foundation
 import Combine
 
+import Core
+
 public protocol NavigationRoutable {
     var destinations: [NavigationDestination] { get set }
     

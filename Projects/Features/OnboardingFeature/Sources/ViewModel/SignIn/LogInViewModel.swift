@@ -18,9 +18,9 @@ public class LogInViewModel: ObservableObject {
         case forgotPasswordButtonDidTap
     }
     
-    public var navigationRouter: NavigationRoutableType
+    public var navigationRouter: OnboardingNavigationRouter
     
-    public init(navigationRouter: NavigationRoutableType) {
+    public init(navigationRouter: OnboardingNavigationRouter) {
         self.navigationRouter = navigationRouter
         print("loginVIewModel \(navigationRouter.destinations)")
     }

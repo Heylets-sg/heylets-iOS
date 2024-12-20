@@ -10,6 +10,7 @@ import Combine
 
 import Core
 import BaseFeatureDependency
+import OnboardingFeature
 
 final class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
     var objectWillChange: ObservableObjectPublisher?
@@ -20,7 +21,7 @@ final class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
         }
     }
     
-    func push(to view: BaseFeatureDependency.NavigationDestination) {
+    func push(to view: NavigationDestination) {
         destinations.append(view)
     }
     
@@ -32,5 +33,3 @@ final class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
         destinations = []
     }
 }
-
-

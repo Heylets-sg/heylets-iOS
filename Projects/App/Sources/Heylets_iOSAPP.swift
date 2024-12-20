@@ -12,10 +12,12 @@ import DSKit
 import RootFeature
 import Core
 import BaseFeatureDependency
+import OnboardingFeature
 
 @main
 struct Heylets_iOSAPP: App {
-    @StateObject var router = Router.default
+//    @StateObject var router = Router.default
+    @StateObject var router = OnboardingNavigationRouter()
     
     var body: some Scene {
         WindowGroup {

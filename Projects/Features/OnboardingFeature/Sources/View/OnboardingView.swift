@@ -11,7 +11,7 @@ import BaseFeatureDependency
 import Core
 
 public struct OnboardingView: View {
-    @EnvironmentObject var router: Router
+    @EnvironmentObject var onboardingRouter: OnboardingNavigationRouter
     var viewModel: OnboardingViewModel
     
     public init(viewModel: OnboardingViewModel) {
@@ -19,7 +19,7 @@ public struct OnboardingView: View {
     }
     
     public var body: some View {
-        NavigationStack(path: $router.navigationRouter.destinations) {
+        NavigationStack(path: $onboardingRouter.destinations) {
             VStack {
                 Button {
                     viewModel.send(.signUpButtonDidTap)
@@ -36,9 +36,7 @@ public struct OnboardingView: View {
                     Text("SignIn")
                 }
             }
-        }
-        .navigationDestination(for: NavigationDestination.self) { destination in
-            LogInView(viewModel: .init(navigationRouter: router.navigationRouter))
+            .setHeyNavigation()
         }
     }
 }

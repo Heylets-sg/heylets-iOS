@@ -18,9 +18,9 @@ public class OnboardingViewModel: ObservableObject {
         case signUpButtonDidTap
     }
     
-    public var navigationRouter: NavigationRoutableType
+    public var navigationRouter: OnboardingNavigationRoutable
     
-    public init(navigationRouter: NavigationRoutableType) {
+    public init(navigationRouter: OnboardingNavigationRoutable) {
         self.navigationRouter = navigationRouter
         print(navigationRouter.destinations)
     }
@@ -29,8 +29,10 @@ public class OnboardingViewModel: ObservableObject {
         switch action {
         case .signInButtonDidTap:
             navigationRouter.push(to: .login)
+            print(navigationRouter.destinations)
         case .signUpButtonDidTap:
-            navigationRouter.push(to: .selectUniversity)
+            navigationRouter.push(to: .enterEmail)
+            print(navigationRouter.destinations)
         }
     }
 }
