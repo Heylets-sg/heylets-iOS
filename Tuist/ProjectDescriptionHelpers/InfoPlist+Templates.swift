@@ -11,8 +11,7 @@ import EnvPlugin
 
 struct InfoPlistProvider {
     static func forApp(name: String) -> InfoPlist {
-        var infoPlist = name.contains("Demo") ? Project.demoInfoPlist : Project.appInfoPlist
-        
+        let infoPlist = name.contains("Demo") ? Project.demoInfoPlist : Project.appInfoPlist
         return .extendingDefault(with: infoPlist)
         
     }

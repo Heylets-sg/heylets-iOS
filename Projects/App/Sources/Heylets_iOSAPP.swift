@@ -9,12 +9,21 @@
 import SwiftUI
 import DSKit
 
+import RootFeature
+import Core
+import BaseFeatureDependency
+import RootFeature
+
 @main
 struct Heylets_iOSAPP: App {
+    @StateObject var windowRouter = Router.default
+    @StateObject var navigationRouter = HeyNavigationRouter()
     
     var body: some Scene {
         WindowGroup {
-            DSKitDemoView()
+            RootView()
+                .environmentObject(windowRouter)
+                .environmentObject(navigationRouter)
         }
     }
 }

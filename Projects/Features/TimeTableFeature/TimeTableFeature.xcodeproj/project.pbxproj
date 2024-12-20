@@ -7,22 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0CAC03371DE4D0ECBA41A37B /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B92CC3F2A9E5AD056ADE393 /* example.swift */; };
-		5A5174D2D7D2A8F8E89E6ABE /* BaseFeatureDependency.framework in Dependencies */ = {isa = PBXBuildFile; fileRef = C00E483A059858CE6553711F /* BaseFeatureDependency.framework */; };
+		7BA25CAEB76C13C691D14257 /* BaseFeatureDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00E483A059858CE6553711F /* BaseFeatureDependency.framework */; };
+		81C5C7499D9ABC1166BAA177 /* TimeTableFeatureInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4939CCB6473BD917C8BB764 /* TimeTableFeatureInterface.framework */; };
+		9130926220B55EE02B024D62 /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD79E350722F65451AC6B98 /* example.swift */; };
+		C3BCAAA0F5FB252646D5FB49 /* TimeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278A992CE924AA5B9A9CF179 /* TimeTableView.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		04FE2319B986E88236446AAD /* Dependencies */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
-			dstSubfolderSpec = 16;
-			files = (
-				5A5174D2D7D2A8F8E89E6ABE /* BaseFeatureDependency.framework in Dependencies */,
-			);
-			name = Dependencies;
-			runOnlyForDeploymentPostprocessing = 1;
+/* Begin PBXContainerItemProxy section */
+		27EFEBA747DF029BB72D4696 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E176F1D3759AE6BD8A0A03D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C82AD69D8C41214FAEE828D9;
+			remoteInfo = TimeTableFeatureInterface;
 		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
 		3BE69B3FA31FC1DF833D9884 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CDBFA307B1C1674D465986C /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
@@ -35,20 +47,32 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		278A992CE924AA5B9A9CF179 /* TimeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableView.swift; sourceTree = "<group>"; };
 		545258D5A0F5FA256F1C2DC1 /* QA.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = QA.xcconfig; sourceTree = "<group>"; };
 		63868C65784C11A4D8C77C59 /* TimeTableFeature-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TimeTableFeature-Info.plist"; sourceTree = "<group>"; };
 		6D13F4D80BBB66929C082D5D /* PROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PROD.xcconfig; sourceTree = "<group>"; };
-		7B92CC3F2A9E5AD056ADE393 /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = example.swift; sourceTree = "<group>"; };
 		7DBBC70C18F799BE322E653B /* TimeTableFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TimeTableFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DD79E350722F65451AC6B98 /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = example.swift; sourceTree = "<group>"; };
 		8B74B3A1A52D8C57ECD798C4 /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
 		C00E483A059858CE6553711F /* BaseFeatureDependency.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseFeatureDependency.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4939CCB6473BD917C8BB764 /* TimeTableFeatureInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TimeTableFeatureInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E03FC6C53959B869DF3EC69B /* TimeTableFeatureInterface-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TimeTableFeatureInterface-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0765339C9842F6507F003A32 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7BA25CAEB76C13C691D14257 /* BaseFeatureDependency.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5EB8F8561EED08E65829E9F0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81C5C7499D9ABC1166BAA177 /* TimeTableFeatureInterface.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,14 +91,24 @@
 			children = (
 				C00E483A059858CE6553711F /* BaseFeatureDependency.framework */,
 				7DBBC70C18F799BE322E653B /* TimeTableFeature.framework */,
+				C4939CCB6473BD917C8BB764 /* TimeTableFeatureInterface.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4F00C23B6B83ACB0B8D4134A /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				7DD79E350722F65451AC6B98 /* example.swift */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		835AEA1F519844F3B5819419 /* InfoPlists */ = {
 			isa = PBXGroup;
 			children = (
 				63868C65784C11A4D8C77C59 /* TimeTableFeature-Info.plist */,
+				E03FC6C53959B869DF3EC69B /* TimeTableFeatureInterface-Info.plist */,
 			);
 			path = InfoPlists;
 			sourceTree = "<group>";
@@ -96,10 +130,19 @@
 			);
 			sourceTree = "<group>";
 		};
+		90F3681D3642B32DDB15DB51 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				4F00C23B6B83ACB0B8D4134A /* Sources */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
 		A77CBA61B19ADF163202438D /* Project */ = {
 			isa = PBXGroup;
 			children = (
 				8A1A30C74D18BDFA0118183B /* Derived */,
+				90F3681D3642B32DDB15DB51 /* Interface */,
 				F1F46C4C3769311843CD38CA /* Sources */,
 				D1E41A663C4E53F0D6809707 /* XCConfig */,
 			);
@@ -120,7 +163,7 @@
 		F1F46C4C3769311843CD38CA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				7B92CC3F2A9E5AD056ADE393 /* example.swift */,
+				278A992CE924AA5B9A9CF179 /* TimeTableView.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -136,15 +179,33 @@
 				548DDBCD31150313C9BC5E95 /* Resources */,
 				3BE69B3FA31FC1DF833D9884 /* Embed Frameworks */,
 				5EB8F8561EED08E65829E9F0 /* Frameworks */,
-				04FE2319B986E88236446AAD /* Dependencies */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1E229DAA272D9A94A9FC7A22 /* PBXTargetDependency */,
+			);
+			name = TimeTableFeature;
+			productName = TimeTableFeature;
+			productReference = 7DBBC70C18F799BE322E653B /* TimeTableFeature.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C82AD69D8C41214FAEE828D9 /* TimeTableFeatureInterface */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D605B3A8EF36324FED5E9F93 /* Build configuration list for PBXNativeTarget "TimeTableFeatureInterface" */;
+			buildPhases = (
+				99D7AC287F3431D1FF21314A /* Sources */,
+				7B15D8304D1B77D6EC8CBF7E /* Resources */,
+				7CDBFA307B1C1674D465986C /* Embed Frameworks */,
+				0765339C9842F6507F003A32 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = TimeTableFeature;
-			productName = TimeTableFeature;
-			productReference = 7DBBC70C18F799BE322E653B /* TimeTableFeature.framework */;
+			name = TimeTableFeatureInterface;
+			productName = TimeTableFeatureInterface;
+			productReference = C4939CCB6473BD917C8BB764 /* TimeTableFeatureInterface.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -171,6 +232,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				C82AD69D8C41214FAEE828D9 /* TimeTableFeatureInterface */,
 				A557192FDB07C6A06C12851C /* TimeTableFeature */,
 			);
 		};
@@ -184,18 +246,42 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7B15D8304D1B77D6EC8CBF7E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		99D7AC287F3431D1FF21314A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9130926220B55EE02B024D62 /* example.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0E7C909AA339EECC2AF4176 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0CAC03371DE4D0ECBA41A37B /* example.swift in Sources */,
+				C3BCAAA0F5FB252646D5FB49 /* TimeTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1E229DAA272D9A94A9FC7A22 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TimeTableFeatureInterface;
+			target = C82AD69D8C41214FAEE828D9 /* TimeTableFeatureInterface */;
+			targetProxy = 27EFEBA747DF029BB72D4696 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		292D03CABB13590464B378D8 /* QA */ = {
@@ -406,6 +492,74 @@
 			};
 			name = PROD;
 		};
+		8CF5B9B992947704DCC6D510 /* QA */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/TimeTableFeatureInterface-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Heylets-iOS.TimeTableFeatureInterface";
+				PRODUCT_NAME = TimeTableFeatureInterface;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = QA;
+		};
+		917AE837525FF2A3F27C38D7 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/TimeTableFeatureInterface-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Heylets-iOS.TimeTableFeatureInterface";
+				PRODUCT_NAME = TimeTableFeatureInterface;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Development;
+		};
 		CCFC30206E9E447B9F4A282E /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -476,6 +630,39 @@
 			};
 			name = QA;
 		};
+		F37C12EB48235F5900710BB0 /* PROD */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/TimeTableFeatureInterface-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Heylets-iOS.TimeTableFeatureInterface";
+				PRODUCT_NAME = TimeTableFeatureInterface;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = PROD;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -495,6 +682,16 @@
 				CCFC30206E9E447B9F4A282E /* Development */,
 				4C1E57EF4166C01E42C90DD2 /* PROD */,
 				E36FE913B69B59F82C149CA1 /* QA */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = PROD;
+		};
+		D605B3A8EF36324FED5E9F93 /* Build configuration list for PBXNativeTarget "TimeTableFeatureInterface" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				917AE837525FF2A3F27C38D7 /* Development */,
+				F37C12EB48235F5900710BB0 /* PROD */,
+				8CF5B9B992947704DCC6D510 /* QA */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = PROD;

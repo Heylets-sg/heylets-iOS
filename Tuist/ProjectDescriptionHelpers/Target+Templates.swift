@@ -40,29 +40,36 @@ struct TargetHandler {
     static func makeProjectTargets(
         name: String,
         hasResources: Bool,
-        with dependencies: [TargetDependency],
+        internalDependencies: [TargetDependency] = [],
+        externalDependencies: [TargetDependency] = [],
+        interfaceDependencies: [TargetDependency] = [],
         targets: Set<FeatureTarget>
     ) -> [Target] {
         var projectTargets: [Target] = []
+        
         targets.forEach { targetType in
             let target = {
                 switch targetType {
                 case .app:
                     return TargetHandler.makeAppTarget(
                         name: name,
-                        dependencies: dependencies
+                        dependencies: internalDependencies + externalDependencies
                     )
                 case .interface:
                     return TargetHandler.makeInterfaceTarget(
                         name: name,
-                        dependencies: dependencies
+                        dependencies: interfaceDependencies
                     )
                 case .staticFramework, .dynamicFramework:
+                    let deps: [TargetDependency] = targets.contains(.interface)
+                    ? [.target(name: "\(name)Interface")]
+                    : []
+                    
                     return TargetHandler.makeFrameworkTarget(
                         targetType: targetType,
                         name: name,
                         hasResources: hasResources,
-                        dependencies: dependencies
+                        dependencies: deps + internalDependencies + externalDependencies
                     )
                 case .unitTest:
                     return TargetHandler.makeUnitTestTarget(name: name)
@@ -73,6 +80,7 @@ struct TargetHandler {
             
             projectTargets.append(target)
         }
+        
         return projectTargets
     }
 }
@@ -109,7 +117,7 @@ extension TargetHandler {
         return TargetHandler.makeTarget(
             targetType: .demo,
             name: "\(name)Demo",
-            bundleID: "com.hmh.hamyeonham", //"\(env.bundlePrefix).\(name)Demo","com.hmh.hamyeonham.dev",
+            bundleID: "\(env.bundlePrefix).\(name)Demo",
             infoPlist: .extendingDefault(with: Project.demoInfoPlist),
             resources: [.glob(pattern: "Demo/Resources/**", excluding: ["Demo/Resources/dummy.txt"])],
             dependencies: [.target(name:name)]
