@@ -10,33 +10,32 @@ import SwiftUI
 
 struct LoginView: View {
     
-    var body: some View {
+    @State var otpCode: String = ""
+    @State var showPassword: Bool = false
+    
+    public var body: some View {
         OnboardingBaseView(content: {
             Spacer()
                 .frame(height: 8)
             
-            Text("How about a picture of a cute cat?")
+            Text(verbatim: "Enter the 6-digit code we sent to the email:\nj******m@o*****com")
                 .font(.regular_16)
-                .foregroundColor(.heyGray1)
-                .padding(.bottom, 32)
+                .foregroundColor(.heyGray2)
+                .lineLimit(2)
             
-            Button{
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(Color.heyGray4)
-                        .frame(width: 136, height: 136)
-                    
-                    Image(systemName: "camera")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(.black)
-                }
+            Spacer()
+                .frame(height: 88)
+            
+            VStack {
+                SecurityCodeInputView(otpCode: $otpCode)
+                .frame(height: 50)
+                .padding(.bottom, 4)
+                
+                Text("Incorrect security code. Check your code and try again")
+                    .font(.regular_12)
+                    .foregroundColor(.heyError)
             }
-            .padding(.horizontal, 113)
-            
-        }, titleText: "Add profile picture")
+        }, titleText: "Enter Your Security Code")
     }
 }
 

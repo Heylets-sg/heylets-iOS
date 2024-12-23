@@ -7,11 +7,15 @@
 //
 
 import SwiftUI
+
 import BaseFeatureDependency
+import DSKit
 
 public struct EnterSecurityCodeView: View {
     @EnvironmentObject var router: Router
     var viewModel: EnterSecurityCodeViewModel
+    
+    @State var otpCode: String = ""
     
     public init(viewModel: EnterSecurityCodeViewModel) {
         self.viewModel = viewModel
@@ -27,7 +31,8 @@ public struct EnterSecurityCodeView: View {
                 .foregroundColor(.heyGray2)
                 .lineLimit(2)
             
-            //MARK: 텍스트 필드 넣기
+            SecurityCodeInputView(otpCode: $otpCode)
+            .frame(height: 50)
             
         }, titleText: "Enter Your Security Code")
     }

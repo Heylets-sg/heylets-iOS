@@ -47,6 +47,7 @@ public enum DSKitAsset {
   public static let heySubMain = DSKitColors(name: "heySubMain")
   public static let heySubMain2 = DSKitColors(name: "heySubMain2")
   public static let heyWhite = DSKitColors(name: "heyWhite")
+  public static let logo = DSKitImages(name: "logo")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

@@ -41,13 +41,7 @@ public struct EnterIdPasswordView: View {
                 )
                 
                 PasswordField(password: $text, showPassword: $showPassword)
-                
-                HeyTextField(
-                    text: $text,
-                    placeHolder: "Confirm Password",
-                    textFieldState: .idle,
-                    colorSystem: .gray
-                )
+                PasswordField(password: $text, showPassword: $showPassword, placeHolder: "Confirm Password")
             }
             
         }, titleText: "Create your username\nand password")

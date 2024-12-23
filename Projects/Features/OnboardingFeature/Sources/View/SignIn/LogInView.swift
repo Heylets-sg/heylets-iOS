@@ -7,32 +7,87 @@
 //
 
 import SwiftUI
+
 import BaseFeatureDependency
+import DSKit
 
 public struct LogInView: View {
     @EnvironmentObject var router: Router
     var viewModel: LogInViewModel
     
+    @State var text: String = ""
+    @State var showPassword: Bool = false
+    
     public init(viewModel: LogInViewModel) {
         self.viewModel = viewModel
     }
     public var body: some View {
-        VStack {
+        VStack(alignment: .trailing) {
+            Image(uiImage: .logo)
+                .resizable()
+                .frame(height: 56)
+                .padding(.horizontal, 125)
+                .padding(.bottom, 32)
+            
+            HStack {
+                Text("Log In")
+                    .font(.semibold_18)
+                    .foregroundStyle(Color.heyGray1)
+                
+                Spacer()
+                
+                Text("New to Heylets?")
+                    .font(.regular_14)
+                    .foregroundStyle(Color.heyGray1)
+                    .padding(.trailing, 8)
+                
+                Button {
+                    
+                } label: {
+                    Text("Sign Up")
+                        .font(.regular_12)
+                        .foregroundStyle(Color.heyMain)
+                }
+            }
+            .padding(.bottom, 29)
+            
+            HeyTextField(text: $text, placeHolder: "ID")
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.heyGray3, lineWidth: 1)
+                )
+                .padding(.bottom, 21)
+            
+            PasswordField(password: $text, showPassword: $showPassword, colorSystem: .white)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.heyGray3, lineWidth: 1)
+                )
+                .padding(.bottom, 14)
+            
             Button {
-                viewModel.send(.loginButtonDidTap)
+                
             } label: {
-                Text("LogIn")
+                Text("Forgot password?")
+                    .font(.regular_12)
+                    .foregroundStyle(Color.heyGray1)
             }
             
             Spacer()
-                .frame(height: 50)
             
-            Button {
-                viewModel.send(.forgotPasswordButtonDidTap)
-            } label: {
-                Text("forget password")
+            Button("Log In") {
+                // Action
             }
+            .heyBottomButtonStyle()
         }
+        .padding(.top, 106)
+        .padding(.bottom, 65)
+        .padding(.horizontal, 16)
+        .background(Color.heyWhite)
+        .ignoresSafeArea(edges: .vertical)
+        .ignoresSafeArea(.keyboard)
+        .navigationBarBackButtonHidden()
+//        .setOnboardingNavigation()
     }
 }
 

@@ -15,15 +15,18 @@ struct OnboardingBaseView<Content:View>: View {
     let content: Content
     let titleText: String
     let buttonTitle: String
+    let hiddenCloseBtn: Bool
     
     init(
         @ViewBuilder content: () -> Content,
         titleText: String,
-        buttonTitle: String = "Continue"
+        buttonTitle: String = "Continue",
+        hiddenCloseBtn: Bool = true
     ) {
         self.content = content()
         self.titleText = titleText
         self.buttonTitle = buttonTitle
+        self.hiddenCloseBtn = hiddenCloseBtn
     }
     
     var body: some View {
@@ -31,14 +34,27 @@ struct OnboardingBaseView<Content:View>: View {
             
             Spacer()
                 .frame(height: 92)
-            
-            Button {
+            HStack {
+                Button {
+                } label: {
+                    Image(uiImage: .icBack)
+                        .resizable()
+                        .frame(width: 22, height: 18)
+                }
+                .hidden(!hiddenCloseBtn)
                 
-            } label: {
-                Image(uiImage: .icBack)
-                    .resizable()
-                    .frame(width: 22, height: 18)
+                Spacer()
+                
+                Button {
+                } label: {
+                    Image(uiImage: .icClose)
+                        .resizable()
+                        .frame(width: 18, height: 18)
+                }
+                .hidden(hiddenCloseBtn)
+                
             }
+            
             VStack(alignment: .leading) {
                 Text(titleText)
                     .font(.semibold_18)
@@ -53,7 +69,7 @@ struct OnboardingBaseView<Content:View>: View {
                     // Action
                 }
                 .heyBottomButtonStyle()
-                    
+                
             }
             .padding(.top, 36)
             .padding(.bottom, 65)
@@ -63,7 +79,7 @@ struct OnboardingBaseView<Content:View>: View {
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()
-//        .setOnboardingNavigation()
+        //        .setOnboardingNavigation()
     }
 }
 
@@ -73,5 +89,5 @@ struct OnboardingBaseView<Content:View>: View {
             Text("asdf")
         }
     }, titleText: "Enter Your Security Code")
-//        .environmentObject(StubOnboardingNavigationRouter())
+    //        .environmentObject(StubOnboardingNavigationRouter())
 }
