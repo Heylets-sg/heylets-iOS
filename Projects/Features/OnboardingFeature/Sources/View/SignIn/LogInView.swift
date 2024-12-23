@@ -87,7 +87,7 @@ public struct LogInView: View {
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()
-//        .setOnboardingNavigation()
+        .setOnboardingNavigation()
     }
 }
 

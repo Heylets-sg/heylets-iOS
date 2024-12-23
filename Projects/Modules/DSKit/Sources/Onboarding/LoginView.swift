@@ -10,32 +10,60 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @State var otpCode: String = ""
-    @State var showPassword: Bool = false
+    let images: [UIImage] = [.timeTable, .color] // 테스트용 이미지
     
     public var body: some View {
-        OnboardingBaseView(content: {
-            Spacer()
-                .frame(height: 8)
+        ZStack {
+            Color.heyMain.ignoresSafeArea()
             
-            Text(verbatim: "Enter the 6-digit code we sent to the email:\nj******m@o*****com")
-                .font(.regular_16)
-                .foregroundColor(.heyGray2)
-                .lineLimit(2)
-            
-            Spacer()
-                .frame(height: 88)
-            
-            VStack {
-                SecurityCodeInputView(otpCode: $otpCode)
-                .frame(height: 50)
-                .padding(.bottom, 4)
+            VStack(alignment: .leading) {
+                Spacer()
+                    .frame(height: 120)
                 
-                Text("Incorrect security code. Check your code and try again")
-                    .font(.regular_12)
-                    .foregroundColor(.heyError)
+                Text("Add a personal schedule to\nyour school timetable")
+                    .font(.bold_20)
+                    .foregroundColor(.heyWhite)
+                    .lineSpacing(3.5)
+                    .padding(.bottom, 12)
+                    .padding(.leading, 16)
+                    .lineLimit(2)
+                
+                Text("Manage your school-related schedules\nall at once!")
+                    .font(.medium_14)
+                    .foregroundColor(.heyWhite)
+                    .padding(.leading, 16)
+                    .lineLimit(2)
+                
+                Spacer()
+                    .frame(height: 52)
+                
+                CarouselView(pageCount: images.count, visibleEdgeSpace: 0, spacing: 0) { index in
+                    Image(uiImage: images[index])
+                        .resizable()
+                        .scaledToFit()
+                }
+                .frame(height: 353) // 전체 Carousel 뷰의 높이 설정
+                .padding(.horizontal, 0) // 양쪽 여백을 없애기 위해 horizontal padding 0
+                
+                Spacer()
+                
+                VStack {
+                    Button("Sign up") {
+                    }
+                    .heyBottomButtonStyle(.white)
+                    .padding(.bottom, 16)
+                    
+                    Button("Log in") {
+                    }.heyBottomButtonStyle(.black)
+                }
+                .padding(.horizontal, 16)
+                
+                Spacer()
+                    .frame(height: 65)
             }
-        }, titleText: "Enter Your Security Code")
+        }
+        .ignoresSafeArea(edges: .vertical)
+        .navigationBarBackButtonHidden()
     }
 }
 
