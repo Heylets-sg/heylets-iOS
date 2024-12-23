@@ -9,15 +9,19 @@
 import SwiftUI
 
 public extension UIImage {
-    static let icAdd = DSKitImages(name: "ic_add").image
-    static let icCamera = DSKitImages(name: "ic_camera").image
-    static let icClose = DSKitImages(name: "ic_close").image
-    static let icError = DSKitImages(name: "ic_error").image
-    static let icHide = DSKitImages(name: "ic_hide").image
-    static let icMagic = DSKitImages(name: "ic_magic").image
-    static let icRepeat = DSKitImages(name: "ic_repeat").image
-    static let icSchool = DSKitImages(name: "ic_school").image
-    static let icSetting = DSKitImages(name: "ic_setting").image
-    static let icShow = DSKitImages(name: "ic_show").image
-    static let icSuccess = DSKitImages(name: "ic_success").image
+    static let icAdd = DSKitAsset.icAdd.image
+    static let icCamera = DSKitAsset.icCamera.image
+    static let icClose = DSKitAsset.icClose.image
+    static let icError = DSKitAsset.icError.image
+    static let icHide = DSKitAsset.icHide.image
+    static let icMagic = DSKitAsset.icMagic.image
+    static let icRepeat = DSKitAsset.icRepeat.image
+    static let icSchool = DSKitAsset.icSchool.image
+    static let icSetting = DSKitAsset.icSetting.image
+    static let icShow = DSKitAsset.icShow.image
+    static let icSuccess = DSKitAsset.icSuccess.image
+    static let icBack = DSKitAsset.icBack.image
+    
+    static let timeTable = DSKitAsset.graphicsTimeTable.image
+    static let color = DSKitAsset.graphicsColor.image
 }

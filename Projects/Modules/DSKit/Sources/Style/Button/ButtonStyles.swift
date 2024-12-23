@@ -20,9 +20,14 @@ struct HeyBottomButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var isEnabled: Bool
     
     private let colorStyle: HeyButtonColorStyle
+    private let cornerRadius: CGFloat
     
-    init(_ colorStyle: HeyButtonColorStyle) {
+    init(
+        _ colorStyle: HeyButtonColorStyle,
+        cornerRadius: CGFloat
+    ) {
         self.colorStyle = colorStyle
+        self.cornerRadius = cornerRadius
     }
 
     func makeBody(configuration: Self.Configuration) -> some View {
@@ -32,14 +37,14 @@ struct HeyBottomButtonStyle: ButtonStyle {
             .font(.semibold_14)
             .background(isEnabled ? colorStyle.background : colorStyle.disabledBackground)
             .foregroundStyle(colorStyle.foreground)
-            .clipShape(RoundedRectangle(cornerRadius: 28))
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
             .scaleEffect(configuration.isPressed ? 0.95 : 1)
     }
 }
 
 extension View {
-    func heyBottomButtonStyle(_ colorStyle: HeyButtonColorStyle = .white) -> some View {
-        self.buttonStyle(HeyBottomButtonStyle(colorStyle))
+    public func heyBottomButtonStyle(_ colorStyle: HeyButtonColorStyle = .primary, cornerRadius: CGFloat = 28) -> some View {
+        self.buttonStyle(HeyBottomButtonStyle(colorStyle, cornerRadius: cornerRadius))
     }
 }
 

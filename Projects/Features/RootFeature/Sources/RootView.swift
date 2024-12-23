@@ -49,4 +49,3 @@ public struct RootView: View {
         }
     }
 }
-

@@ -18,20 +18,18 @@ public struct EnterSecurityCodeView: View {
     }
     
     public var body: some View {
-        Button {
-            viewModel.send(.backButtonDidTap)
-        } label: {
-            Text("BackButton")
-        }
-        
-        Spacer()
-            .frame(height: 50)
-        
-        Button {
-            viewModel.send(.nextButtonDidTap)
-        } label: {
-            Text("Continue")
-        }
+        OnboardingBaseView(content: {
+            Spacer()
+                .frame(height: 8)
+            
+            Text(verbatim: "Enter the 6-digit code we sent to the email:\nj******m@o*****com")
+                .font(.regular_16)
+                .foregroundColor(.heyGray2)
+                .lineLimit(2)
+            
+            //MARK: 텍스트 필드 넣기
+            
+        }, titleText: "Enter Your Security Code")
     }
 }
 

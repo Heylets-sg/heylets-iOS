@@ -20,31 +20,36 @@ public struct OnboardingView: View {
     
     public var body: some View {
         NavigationStack(path: $onboardingRouter.destinations) {
-            VStack {
-                Button {
-                    viewModel.send(.signUpButtonDidTap)
-                } label: {
-                    Text("SignUp")
+            OnboardingBaseView(content: {
+                VStack {
+                    Button {
+                        viewModel.send(.signUpButtonDidTap)
+                    } label: {
+                        Text("SignUp")
+                    }
+                    
+                    Spacer()
+                        .frame(height: 50)
+                    
+                    Button {
+                        viewModel.send(.signInButtonDidTap)
+                    } label: {
+                        Text("SignIn")
+                    }
                 }
-                
-                Spacer()
-                    .frame(height: 50)
-                
-                Button {
-                    viewModel.send(.signInButtonDidTap)
-                } label: {
-                    Text("SignIn")
-                }
-            }
-            .setHeyNavigation()
+            }, titleText: "")
         }
     }
 }
 
 
 
-//#Preview {
-//    OnboardingView()
-//}
+#Preview {
+    OnboardingView(
+        viewModel: OnboardingViewModel(
+            navigationRouter: OnboardingNavigationRouter()
+        )
+    )
+}
 
 

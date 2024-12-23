@@ -8,30 +8,46 @@
 
 import SwiftUI
 import BaseFeatureDependency
+import DSKit
 
 public struct EnterPersonalInfoView: View {
     @EnvironmentObject var router: Router
     var viewModel: EnterPersonalInfoViewModel
+    
+    @State var text = ""
     
     public init(viewModel: EnterPersonalInfoViewModel) {
         self.viewModel = viewModel
     }
     
     public var body: some View {
-        Button {
-            viewModel.send(.backButtonDidTap)
-        } label: {
-            Text("BackButton")
-        }
-        
-        Spacer()
-            .frame(height: 50)
-        
-        Button {
-            viewModel.send(.nextButtonDidTap)
-        } label: {
-            Text("Continue")
-        }
+        OnboardingBaseView(content: {
+            Spacer()
+                .frame(height: 8)
+            
+            HStack(spacing: 16) {
+                Button("Men") {}
+                .heyBottomButtonStyle(.primary, cornerRadius: 8)
+                
+                Button("Women") {}
+                .heyBottomButtonStyle(.gray, cornerRadius: 8)
+                
+                
+                Button("Others") {}
+                .heyBottomButtonStyle(.gray, cornerRadius: 8)
+            }
+            .padding(.trailing, 62)
+            .padding(.bottom, 20)
+            
+            HeyTextField(
+                text: $text,
+                placeHolder: "2002/03/08",
+                textFieldState: .idle,
+                colorSystem: .gray
+            )
+            .padding(.trailing, 30)
+            
+        }, titleText: "Please check your gender/birth")
     }
 }
 

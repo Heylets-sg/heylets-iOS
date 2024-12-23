@@ -8,33 +8,40 @@
 
 import SwiftUI
 
-struct HeyTextField: View {
+public struct HeyTextField: View {
     @Binding var text: String
     let placeHolder: String
-    let image: UIImage?
+    let leftImage: UIImage?
+    let rightImage: UIImage?
     @State var textFieldState: TextFieldState
     let colorSystem: HeyTextFieldColorStyle
     let action: () -> Void
     
-    init(
+    public init(
         text: Binding<String>,
         placeHolder: String,
-        image: UIImage? = nil,
+        leftImage: UIImage? = nil,
+        rightImage: UIImage? = nil,
         textFieldState: TextFieldState = .idle,
         colorSystem: HeyTextFieldColorStyle = .white,
         action: @escaping () -> Void = {}
     ) {
         self._text = text
         self.placeHolder = placeHolder
-        self.image = image
+        self.leftImage = leftImage
+        self.rightImage = rightImage
         self._textFieldState = State(initialValue: textFieldState)
         self.colorSystem = colorSystem
         self.action = action
     }
     
     
-    var body: some View {
+    public var body: some View {
         HStack {
+            if let image = leftImage {
+                Image(uiImage: image)
+            }
+            
             TextField(
                 "",
                 text: $text,
@@ -46,7 +53,7 @@ struct HeyTextField: View {
             if let image = textFieldState.image {
                 Image(uiImage: image)
             } else {
-                if let image = image {
+                if let image = rightImage {
                     Button(action: self.action) {
                         Image(uiImage: image)
                     }
@@ -59,7 +66,7 @@ struct HeyTextField: View {
         .cornerRadius(8)
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(textFieldState.strokeColor, lineWidth: 2)
+                .stroke(textFieldState.strokeColor, lineWidth: 3)
         )
     }
 }

@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct PasswordField: View {
+public struct PasswordField: View {
     @Binding var password: String
     @Binding var showPassword: Bool
     
@@ -16,12 +16,12 @@ struct PasswordField: View {
     var textFieldState: TextFieldState
     let colorSystem: HeyTextFieldColorStyle
     
-    init(
+    public init(
         password: Binding<String>,
         showPassword: Binding<Bool>,
         isRest: Bool = false,
         textFieldState: TextFieldState = .idle,
-        colorSystem: HeyTextFieldColorStyle = .white
+        colorSystem: HeyTextFieldColorStyle = .gray
     ) {
         self._password = password
         self._showPassword = showPassword
@@ -30,7 +30,7 @@ struct PasswordField: View {
         self.colorSystem = colorSystem
     }
     
-    var body: some View {
+    public var body: some View {
         HStack {
             if !showPassword || isRest  {
                 SecureField(

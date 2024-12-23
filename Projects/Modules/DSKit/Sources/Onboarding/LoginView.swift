@@ -1,22 +1,16 @@
 //
-//  AddProfileVIew.swift
-//  OnboardingFeature
+//  LoginView.swift
+//  DSKit
 //
-//  Created by 류희재 on 12/18/24.
+//  Created by 류희재 on 12/23/24.
 //  Copyright © 2024 Heylets-iOS. All rights reserved.
 //
 
 import SwiftUI
-import BaseFeatureDependency
 
-public struct AddProfileView: View {
-    @EnvironmentObject var router: Router
-    var viewModel: AddProfileViewModel
+struct LoginView: View {
     
-    public init(viewModel: AddProfileViewModel) {
-        self.viewModel = viewModel
-    }
-    public var body: some View {
+    var body: some View {
         OnboardingBaseView(content: {
             Spacer()
                 .frame(height: 8)
@@ -46,6 +40,6 @@ public struct AddProfileView: View {
     }
 }
 
-//#Preview {
-//    AddProfileView()
-//}
+#Preview {
+    LoginView()
+}

@@ -116,8 +116,9 @@ public struct DSKitDemoView: View {
             HeyTextField(text: $text, placeHolder: "placeholder", textFieldState: .valid)
             
             //MARK: Case 3
-            HeyTextField(text: $text, placeHolder: "placeholder", image: .icRepeat)
-            HeyTextField(text: $text, placeHolder: "placeholder", image: .icRepeat, textFieldState: .valid)
+            HeyTextField(text: $text, placeHolder: "placeholder", rightImage: .icRepeat)
+            HeyTextField(text: $text, placeHolder: "placeholder", rightImage: .icRepeat, textFieldState: .valid)
+            HeyTextField(text: $text, placeHolder: "placeholder", leftImage: .icSchool, textFieldState: .valid)
             
             Spacer()
         }

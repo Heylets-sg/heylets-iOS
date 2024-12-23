@@ -7,30 +7,26 @@
 //
 
 import SwiftUI
+
 import BaseFeatureDependency
+import DSKit
 
 public struct SelectUniversityView: View {
     @EnvironmentObject var router: Router
     var viewModel: SelectUniversityViewModel
+    @State var text = ""
     
     public init(viewModel: SelectUniversityViewModel) {
         self.viewModel = viewModel
     }
     public var body: some View {
-        Button {
-            viewModel.send(.backButtonDidTap)
-        } label: {
-            Text("BackButton")
-        }
-        
-        Spacer()
-            .frame(height: 50)
-        
-        Button {
-            viewModel.send(.nextButtonDidTap)
-        } label: {
-            Text("Continue")
-        }
+        OnboardingBaseView(content: {
+            HeyTextField(text: $text, placeHolder: "Select your university", leftImage: .icSchool, textFieldState: .idle)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.heyMain, lineWidth: 2)
+                )            
+        }, titleText: "What school are you attending?")
     }
 }
 
