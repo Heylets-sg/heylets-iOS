@@ -66,7 +66,7 @@ public struct LogInView: View {
                 .padding(.bottom, 14)
             
             Button {
-                
+                viewModel.send(.forgotPasswordButtonDidTap)
             } label: {
                 Text("Forgot password?")
                     .font(.regular_12)
@@ -76,7 +76,7 @@ public struct LogInView: View {
             Spacer()
             
             Button("Log In") {
-                // Action
+                viewModel.send(.loginButtonDidTap)
             }
             .heyBottomButtonStyle()
         }

@@ -34,7 +34,8 @@ public struct EnterSecurityCodeView: View {
             SecurityCodeInputView(otpCode: $otpCode)
             .frame(height: 50)
             
-        }, titleText: "Enter Your Security Code")
+        }, titleText: "Enter Your Security Code",
+                           nextButtonAction: { viewModel.send(.nextButtonDidTap) })
     }
 }
 

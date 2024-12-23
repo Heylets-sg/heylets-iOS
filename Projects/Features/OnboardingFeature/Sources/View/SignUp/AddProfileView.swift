@@ -42,7 +42,8 @@ public struct AddProfileView: View {
             }
             .padding(.horizontal, 113)
             
-        }, titleText: "Add profile picture")
+        }, titleText: "Add profile picture",
+                           nextButtonAction: { viewModel.send(.nextButtonDidTap) })
     }
 }
 

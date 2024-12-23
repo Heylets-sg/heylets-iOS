@@ -37,9 +37,11 @@ public struct EnterEmailView: View {
                 colorSystem: .gray
             )
             
-        }, titleText: "Reset your password", hiddenCloseBtn: false)
+        }, titleText: "Reset your password", hiddenCloseBtn: false,
+                           nextButtonAction: { viewModel.send(.nextButtonDidTap) })
     }
 }
+
 
 //#Preview {
 //    EnterEmailView()

@@ -11,21 +11,26 @@ import DSKit
 
 struct OnboardingBaseView<Content:View>: View {
     
+    @Environment(\.dismiss) var dismiss
+    
     let content: Content
     let titleText: String
     let buttonTitle: String
     let hiddenCloseBtn: Bool
+    let nextButtonAction: () -> Void
     
     init(
         @ViewBuilder content: () -> Content,
         titleText: String,
         buttonTitle: String = "Continue",
-        hiddenCloseBtn: Bool = true
+        hiddenCloseBtn: Bool = true,
+        nextButtonAction: @escaping () -> Void
     ) {
         self.content = content()
         self.titleText = titleText
         self.buttonTitle = buttonTitle
         self.hiddenCloseBtn = hiddenCloseBtn
+        self.nextButtonAction = nextButtonAction
     }
     
     var body: some View {
@@ -35,6 +40,7 @@ struct OnboardingBaseView<Content:View>: View {
                 .frame(height: 92)
             HStack {
                 Button {
+                    dismiss()
                 } label: {
                     Image(uiImage: .icBack)
                         .resizable()
@@ -65,7 +71,7 @@ struct OnboardingBaseView<Content:View>: View {
                 Spacer()
                 
                 Button(buttonTitle) {
-                    // Action
+                    nextButtonAction()
                 }
                 .heyBottomButtonStyle()
                 
@@ -78,7 +84,7 @@ struct OnboardingBaseView<Content:View>: View {
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()
-        .setOnboardingNavigation()
+//        .setOnboardingNavigation()
     }
 }
 

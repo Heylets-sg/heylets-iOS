@@ -44,7 +44,8 @@ public struct EnterIdPasswordView: View {
                 PasswordField(password: $text, showPassword: $showPassword, placeHolder: "Confirm Password")
             }
             
-        }, titleText: "Create your username\nand password")
+        }, titleText: "Create your username\nand password",
+                           nextButtonAction: { viewModel.send(.nextButtonDidTap) })
     }
 }
 

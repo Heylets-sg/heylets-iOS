@@ -25,8 +25,9 @@ public struct SelectUniversityView: View {
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(Color.heyMain, lineWidth: 2)
-                )            
-        }, titleText: "What school are you attending?")
+                )
+        }, titleText: "What school are you attending?",
+                           nextButtonAction: { viewModel.send(.nextButtonDidTap) })
     }
 }
 

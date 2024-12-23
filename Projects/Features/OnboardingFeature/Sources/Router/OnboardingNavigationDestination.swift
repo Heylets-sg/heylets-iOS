@@ -60,7 +60,7 @@ struct OnboardingNavigationRoutingView: View {
                 )
             )
         case .enterPersonalInfo:
-            EnterSecurityCodeView(
+            EnterPersonalInfoView(
                 viewModel: .init(
                     navigationRouter: router
                 )

@@ -47,7 +47,8 @@ public struct EnterPersonalInfoView: View {
             )
             .padding(.trailing, 30)
             
-        }, titleText: "Please check your gender/birth")
+        }, titleText: "Please check your gender/birth",
+                           nextButtonAction: { viewModel.send(.nextButtonDidTap) })
     }
 }
 

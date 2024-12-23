@@ -49,10 +49,11 @@ public struct VerifyEmailView: View {
             )
             .padding(.trailing, 116)
             
-        }, titleText: "Verify with your school email")
+        },
+        titleText: "Verify with your school email",
+        nextButtonAction: { viewModel.send(.nextButtonDidTap) })
     }
 }
-
 //#Preview {
 //    VerifyEmailView()
 //}

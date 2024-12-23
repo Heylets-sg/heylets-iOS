@@ -52,8 +52,8 @@ public struct OnboardingView: View {
                             .resizable()
                             .scaledToFit()
                     }
-                    .frame(height: 353) // 전체 Carousel 뷰의 높이 설정
-                    .padding(.horizontal, 0) // 양쪽 여백을 없애기 위해 horizontal padding 0
+                    .frame(height: 353)
+                    .padding(.horizontal, 0)
                     
                     Spacer()
                     
@@ -74,9 +74,9 @@ public struct OnboardingView: View {
                         .frame(height: 65)
                 }
             }
+            .setOnboardingNavigation()
         }
         .navigationBarBackButtonHidden()
-        .setOnboardingNavigation()
     }
 }
 
