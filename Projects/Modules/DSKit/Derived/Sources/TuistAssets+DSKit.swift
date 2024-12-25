@@ -41,6 +41,7 @@ public enum DSKitAsset {
   public static let heyGray2 = DSKitColors(name: "heyGray2")
   public static let heyGray3 = DSKitColors(name: "heyGray3")
   public static let heyGray4 = DSKitColors(name: "heyGray4")
+  public static let heyGray5 = DSKitColors(name: "heyGray5")
   public static let heyGreen = DSKitColors(name: "heyGreen")
   public static let heyMain = DSKitColors(name: "heyMain")
   public static let heySubError = DSKitColors(name: "heySubError")

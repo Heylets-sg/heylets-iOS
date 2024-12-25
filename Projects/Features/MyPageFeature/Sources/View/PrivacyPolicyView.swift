@@ -11,7 +11,15 @@ import SwiftUI
 public struct PrivacyPolicyView: View {
     public init() {}
     public var body: some View {
-        Text("PrivacyPolicyView")
+        MyPageBaseView(content: {
+            VStack {
+                Spacer()
+                    .frame(height: 42)
+                
+                
+            }
+            
+        }, titleText: "Privacy policy")
     }
 }
 

@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import BaseFeatureDependency
+
 
 public struct MyPageView: View {
     public var body: some View {

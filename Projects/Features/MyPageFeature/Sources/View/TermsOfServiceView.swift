@@ -11,7 +11,15 @@ import SwiftUI
 public struct TermsOfServiceView: View {
     public init() {}
     public var body: some View {
-        Text("TermsOfServiceView")
+        MyPageBaseView(content: {
+            VStack {
+                Spacer()
+                    .frame(height: 42)
+                
+                
+            }
+            
+        }, titleText: "Terms of service")
     }
 }
 
