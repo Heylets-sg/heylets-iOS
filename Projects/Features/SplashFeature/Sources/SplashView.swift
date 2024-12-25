@@ -1,5 +1,7 @@
 import SwiftUI
+
 import BaseFeatureDependency
+import DSKit
 
 public struct SplashView: View {
     
@@ -12,11 +14,21 @@ public struct SplashView: View {
     
     public var body: some View {
         VStack {
-            Button {
-                viewModel.send(.buttonDidTap)
-            } label: {
-                Text("SignUp")
+            Image(uiImage: .logo)
+                .resizable()
+                .frame(height: 74)
+                .padding(.horizontal, 124)
+                .padding(.bottom, 12)
+            
+            Text("School life in My Hands")
+                .font(.semibold_18)
+                .foregroundColor(.heyMain)
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                viewModel.send(.goToOnboarding)
             }
         }
+        .transition(.opacity)
     }
 }

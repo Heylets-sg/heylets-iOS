@@ -17,20 +17,33 @@ public struct AddProfileView: View {
         self.viewModel = viewModel
     }
     public var body: some View {
-        Button {
-            viewModel.send(.backButtonDidTap)
-        } label: {
-            Text("BackButton")
-        }
-        
-        Spacer()
-            .frame(height: 50)
-        
-        Button {
-            viewModel.send(.nextButtonDidTap)
-        } label: {
-            Text("Continue")
-        }
+        OnboardingBaseView(content: {
+            Spacer()
+                .frame(height: 8)
+            
+            Text("How about a picture of a cute cat?")
+                .font(.regular_16)
+                .foregroundColor(.heyGray1)
+                .padding(.bottom, 32)
+            
+            Button{
+            } label: {
+                ZStack {
+                    Circle()
+                        .fill(Color.heyGray4)
+                        .frame(width: 136, height: 136)
+                    
+                    Image(systemName: "camera")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                        .foregroundColor(.black)
+                }
+            }
+            .padding(.horizontal, 113)
+            
+        }, titleText: "Add profile picture",
+                           nextButtonAction: { viewModel.send(.nextButtonDidTap) })
     }
 }
 

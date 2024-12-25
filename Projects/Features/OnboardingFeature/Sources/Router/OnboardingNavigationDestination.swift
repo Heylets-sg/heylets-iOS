@@ -60,7 +60,7 @@ struct OnboardingNavigationRoutingView: View {
                 )
             )
         case .enterPersonalInfo:
-            EnterSecurityCodeView(
+            EnterPersonalInfoView(
                 viewModel: .init(
                     navigationRouter: router
                 )
@@ -102,7 +102,7 @@ struct OnboardingNavigationRoutingView: View {
     }
 }
 extension View {
-    func setHeyNavigation() -> some View {
+    func setOnboardingNavigation() -> some View {
         self.navigationDestination(for: OnboardingNavigationDestination.self) { destination in
             OnboardingNavigationRoutingView(destination: destination)
         }

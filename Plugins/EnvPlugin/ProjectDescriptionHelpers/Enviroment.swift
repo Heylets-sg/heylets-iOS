@@ -19,7 +19,7 @@ public struct ProjectEnvironment {
 //TODO: 추후 환경에 맞게 변경해야 합니다. 다시 한번 체크하기
 public let env = ProjectEnvironment(
     workspaceName: "Heylets-iOS",
-    deploymentTarget: DeploymentTarget.iOS(targetVersion: "16.0", devices: [.iphone]),
+    deploymentTarget: DeploymentTarget.iOS(targetVersion: "17.5", devices: [.iphone]),
     platform: .iOS,
     bundlePrefix: "com.Heylets-iOS"
 )

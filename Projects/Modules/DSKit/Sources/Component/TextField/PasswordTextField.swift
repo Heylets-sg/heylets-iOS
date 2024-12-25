@@ -8,35 +8,38 @@
 
 import SwiftUI
 
-struct PasswordField: View {
+public struct PasswordField: View {
     @Binding var password: String
     @Binding var showPassword: Bool
     
     let isRest: Bool
+    let placeHolder: String
     var textFieldState: TextFieldState
     let colorSystem: HeyTextFieldColorStyle
     
-    init(
+    public init(
         password: Binding<String>,
         showPassword: Binding<Bool>,
+        placeHolder: String = "Password",
         isRest: Bool = false,
         textFieldState: TextFieldState = .idle,
-        colorSystem: HeyTextFieldColorStyle = .white
+        colorSystem: HeyTextFieldColorStyle = .gray
     ) {
         self._password = password
         self._showPassword = showPassword
+        self.placeHolder = placeHolder
         self.isRest = isRest
         self.textFieldState = textFieldState
         self.colorSystem = colorSystem
     }
     
-    var body: some View {
+    public var body: some View {
         HStack {
             if !showPassword || isRest  {
                 SecureField(
                     "",
                     text: $password,
-                    prompt: Text("Password")
+                    prompt: Text(placeHolder)
                         .foregroundColor(.heyGray2)
                 )
                 .heyTextFieldStyle()
@@ -50,9 +53,12 @@ struct PasswordField: View {
                 .heyTextFieldStyle()
             }
             
-            if isRest && textFieldState.isValid() {
-                Image(uiImage: textFieldState.image!)
-            } else {
+            if isRest {
+                if textFieldState.isValid() {
+                    Image(uiImage: textFieldState.image!)
+                }
+            }
+            else {
                 Button(action: { self.showPassword.toggle() }) {
                     Image(uiImage: showPassword ? .icShow : .icHide)
                         .foregroundColor(.secondary)

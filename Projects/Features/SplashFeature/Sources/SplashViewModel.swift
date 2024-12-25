@@ -14,7 +14,7 @@ import BaseFeatureDependency
 public class SplashViewModel: ObservableObject {
     
     enum Action {
-        case buttonDidTap
+        case goToOnboarding
     }
     
     public var windowRouter: WindowRoutable
@@ -25,7 +25,7 @@ public class SplashViewModel: ObservableObject {
     
     func send(_ action: Action) {
         switch action {
-        case .buttonDidTap:
+        case .goToOnboarding:
             windowRouter.switch(to: .onboarding)
         }
     }

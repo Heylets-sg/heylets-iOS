@@ -8,13 +8,14 @@
 
 import SwiftUI
 
-struct HeyTextFieldColorStyle {
+public struct HeyTextFieldColorStyle {
     let background: Color
     let foreground: Color
 }
 
 
 extension HeyTextFieldColorStyle {
-    static let white = HeyTextFieldColorStyle(background: .heyWhite, foreground: .heyBlack)
-    static let heyGray4 = HeyTextFieldColorStyle(background: .heyGray4, foreground: .heyBlack)
+    static public let white = HeyTextFieldColorStyle(background: .heyWhite, foreground: .heyBlack)
+    static public let primary = HeyTextFieldColorStyle(background: .heyWhite, foreground: .heyGray2)
+    static public let gray = HeyTextFieldColorStyle(background: .heyGray4, foreground: .heyBlack)
 }

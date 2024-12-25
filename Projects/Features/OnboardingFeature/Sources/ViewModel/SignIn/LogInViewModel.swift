@@ -28,10 +28,10 @@ public class LogInViewModel: ObservableObject {
     func send(_ action: Action) {
         switch action {
         case .loginButtonDidTap:
-            print("버튼 클릭")
+            print("로그인 버튼 클릭")
 //            navigationRouter.push(to: .login)
         case .forgotPasswordButtonDidTap:
-            print("버튼 클릭")
+            print("버튼클릭")
 //            navigationRouter.push(to: .resetPasswordView)
         }
     }

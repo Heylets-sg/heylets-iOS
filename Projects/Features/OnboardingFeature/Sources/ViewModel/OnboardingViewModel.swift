@@ -31,7 +31,7 @@ public class OnboardingViewModel: ObservableObject {
             navigationRouter.push(to: .login)
             print(navigationRouter.destinations)
         case .signUpButtonDidTap:
-            navigationRouter.push(to: .enterEmail)
+            navigationRouter.push(to: .selectUniversity)
             print(navigationRouter.destinations)
         }
     }

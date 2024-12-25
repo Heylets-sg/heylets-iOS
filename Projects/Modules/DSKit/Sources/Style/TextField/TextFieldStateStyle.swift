@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-enum TextFieldState {
+public enum TextFieldState {
     case idle
     case valid
     case invalid
