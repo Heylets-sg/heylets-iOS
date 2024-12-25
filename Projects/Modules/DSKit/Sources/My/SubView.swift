@@ -10,62 +10,76 @@ import SwiftUI
 
 
 public struct SubView: View {
-    @State var text = ""
-    @State var showPassword = false
+    @State var toggleOn = false
     
     public var body: some View {
         MyPageBaseView(content: {
+            Spacer()
+                .frame(height: 27)
+            
             VStack(alignment: .leading) {
-                Text("Current Password")
-                    .font(.medium_14)
-                    .foregroundColor(.heyGray1)
-                    .padding(.top, 36)
-                
-                HeyTextField(text: $text, placeHolder: "Email")
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.heyGray3, lineWidth: 1)
-                    )
-                    .padding(.top, 8)
-                
-                Spacer()
-                    .frame(height: 32)
-                
-                Text("New password")
-                    .font(.medium_14)
-                    .foregroundColor(.heyGray1)
-                
-                PasswordField(
-                    password: $text,
-                    showPassword: $showPassword,
-                    placeHolder: "New password",
-                    isRest: true,
-                    textFieldState: .idle,
-                    colorSystem: .lightgray
-                )
-                .padding(.top, 8)
-                
-                PasswordField(
-                    password: $text,
-                    showPassword: $showPassword,
-                    placeHolder: "Confirm password",
-                    isRest: true,
-                    textFieldState: .idle,
-                    colorSystem: .lightgray
-                )
-                .padding(.top, 8)
-                
-                Spacer()
-                
-                Button("Change password"){
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Daily briefing")
+                            .font(.semibold_16)
+                            .foregroundColor(.heyGray1)
+                            .lineSpacing(8)
+                            .padding(.bottom, 4)
+                        
+                        Text("ex. There’s two modules today")
+                            .font(.regular_12)
+                            .foregroundColor(.heyGray1)
+                            .lineSpacing(12)
+                            .padding(.bottom, 4)
+                    }
                     
-                }.heyBottomButtonStyle(.primary)
+                    Spacer()
+                    
+                    Toggle("", isOn: $toggleOn)
+                        .toggleStyle(SwitchToggleStyle(tint: Color.heyMain))
+                        .labelsHidden()
+                        .padding(.trailing, 15)
+                    
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 24)
+                .background(Color.heyGray5)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
                 
                 Spacer()
-                    .frame(height: 65)
+                    .frame(height: 20)
+                
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Class")
+                            .font(.semibold_16)
+                            .foregroundColor(.heyGray1)
+                            .lineSpacing(8)
+                            .padding(.bottom, 4)
+                        
+                        Text("ex. There’s two modules today")
+                            .font(.regular_12)
+                            .foregroundColor(.heyGray1)
+                            .lineSpacing(12)
+                            .padding(.bottom, 4)
+                    }
+                    
+                    Spacer()
+                    
+                    Toggle("", isOn: $toggleOn)
+                        .toggleStyle(SwitchToggleStyle(tint: Color.heyMain))
+                        .labelsHidden()
+                        .padding(.trailing, 15)
+                    
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 24)
+                .background(Color.heyGray5)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
             }
             
-        }, titleText: "Change Password")
+            
+        }, titleText: "Notification setting")
     }
 }
 
