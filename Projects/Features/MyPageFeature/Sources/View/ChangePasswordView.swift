@@ -9,9 +9,15 @@
 import SwiftUI
 
 import DSKit
+import BaseFeatureDependency
 
 public struct ChangePasswordView: View {
-    public init() {}
+    @EnvironmentObject var router: Router
+    var viewModel: ChangePasswordViewModel
+    
+    public init(viewModel: ChangePasswordViewModel) {
+        self.viewModel = viewModel
+    }
     @State var text = ""
     @State var showPassword = false
     
@@ -71,6 +77,6 @@ public struct ChangePasswordView: View {
     }
 }
 
-#Preview {
-    ChangePasswordView()
-}
+//#Preview {
+//    ChangePasswordView(viewModel: ChangePasswordViewModel(navigationRouter: StubMyPageNavigationRouter()))
+//}

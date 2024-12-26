@@ -15,40 +15,58 @@ struct MyPageBaseView<Content:View>: View {
     
     let content: Content
     let titleText: String
+    let titleColor: Color
+    let backgroundColor: Color
     
     init(
         @ViewBuilder content: () -> Content,
-        titleText: String
+        titleText: String,
+        titleColor: Color = .heyGray1,
+        backgroundColor: Color = .heyWhite
     ) {
         self.content = content()
         self.titleText = titleText
+        self.titleColor = titleColor
+        self.backgroundColor = backgroundColor
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Spacer()
-                .frame(height: 58)
+        
+        ZStack {
+            backgroundColor.ignoresSafeArea()
             
-            HStack {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(uiImage: .icBack)
-                        .resizable()
-                        .frame(width: 22, height: 18)
+            VStack(alignment: .leading) {
+                Spacer()
+                    .frame(height: 58)
+                
+                HStack {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
+                            .resizable()
+                            .frame(width: 22, height: 18)
+                            .tint(titleColor)
+                    }
+                    
+                    Spacer()
+                    
+                    Text(titleText)
+                        .font(.semibold_18)
+                        .foregroundColor(titleColor)
+                    
+                    Spacer()
                 }
+                
+                content
+                
+                Spacer()
+                
             }
+            .padding(.horizontal, 16)
         }
-        .padding(.horizontal, 16)
-        .background(Color.heyWhite)
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()
-//        .setOnboardingNavigation()
     }
-}
-
-#Preview {
-    MyPageBaseView(content: {}, titleText: "My account")
-//        .environmentObject(StubOnboardingNavigationRouter())
 }

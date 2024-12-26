@@ -9,66 +9,75 @@
 import SwiftUI
 
 import DSKit
+import BaseFeatureDependency
+
 public struct MyPageView: View {
-    public init() {}
+    @EnvironmentObject var myPageRouter: MyPageNavigationRouter
+    var viewModel: MyPageViewModel
+    
+    public init(viewModel: MyPageViewModel) {
+        self.viewModel = viewModel
+    }
     
     public var body: some View {
-        ZStack {
-            Color.heyMain.ignoresSafeArea()
-            
-            VStack(alignment: .leading) {
-                Spacer()
-                    .frame(height: 58)
-                
-                MyPageTopView()
+        NavigationStack(path: $myPageRouter.destinations) {
+            ZStack {
+                Color.heyMain.ignoresSafeArea()
                 
                 VStack {
                     Spacer()
-                        .frame(height:90)
+                        .frame(height: 60)
+                    
+                    MyPageTopView()
                     
                     VStack {
-                        Text("Heidi109 / NUS")
-                            .font(.medium_16)
-                            .foregroundColor(Color.heyBlack)
-                            .padding(.top, 44)
-                            .padding(.bottom, 32)
+                        Spacer()
+                            .frame(height:90)
                         
-                        VStack(spacing: 24) {
-                            AccountView()
+                        VStack {
+                            Text("Heidi109 / NUS")
+                                .font(.medium_16)
+                                .foregroundColor(Color.heyBlack)
+                                .padding(.top, 44)
+                                .padding(.bottom, 32)
                             
-                            SupportView()
-                            
-                            AppSettingView()
-                            
-                            Spacer()
-                            
+                            VStack(spacing: 24) {
+                                AccountView(viewModel: viewModel)
+                                
+                                SupportView(viewModel: viewModel)
+                                
+                                AppSettingView(viewModel: viewModel)
+                                
+                                EtcView(viewModel: viewModel)
+                                
+                                Spacer()
+                                
+                            }
                         }
+                        .padding(.horizontal, 16)
+                        .background(Color.heyWhite)
+                        .cornerRadius(24, corners: [.topLeft, .topRight])
                     }
-                    .padding(.horizontal, 16)
-                    .background(Color.heyWhite)
-                    .cornerRadius(24, corners: [.topLeft, .topRight])
+                    
+                    Spacer()
                 }
                 
-                Spacer()
+                VStack {
+                    Image(uiImage: .icSchool)
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .background(Color.heyWhite)
+                        .clipShape(Circle())
+                        .padding(.top, 125)
+                    
+                    Spacer()
+                }
             }
+            .ignoresSafeArea(edges: .vertical)
+            .ignoresSafeArea(.keyboard)
+            .setMyPageNavigation()
             
-            VStack {
-                Image(uiImage: .icSchool)
-                    .resizable()
-                    .frame(width: 80, height: 80)
-                    .background(Color.heyWhite)
-                    .clipShape(Circle())
-                    .padding(.top, 125)
-                
-                Spacer()
-            }
-            
-                
-                
-                
         }
-        .ignoresSafeArea(edges: .vertical)
-        .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()
     }
 }
@@ -98,6 +107,12 @@ public struct MyPageTopView: View {
 }
 
 public struct AccountView: View {
+    @ObservedObject private var viewModel: MyPageViewModel
+    
+    fileprivate init(viewModel: MyPageViewModel) {
+        self.viewModel = viewModel
+    }
+    
     public var body: some View {
         VStack {
             HStack {
@@ -106,9 +121,13 @@ public struct AccountView: View {
                         .font(.semibold_16)
                         .foregroundColor(.heyGray1)
                     
-                    Text("Change password")
-                        .font(.regular_14)
-                        .foregroundColor(.heyGray1)
+                    Button {
+                        viewModel.send(.changePasswordButtonDidTap)
+                    } label: {
+                        Text("Change password")
+                            .font(.regular_14)
+                            .foregroundColor(.heyGray1)
+                    }
                     
                     Text("Change User ID")
                         .font(.regular_14)
@@ -128,6 +147,12 @@ public struct AccountView: View {
 }
 
 public struct SupportView: View {
+    @ObservedObject private var viewModel: MyPageViewModel
+    
+    fileprivate init(viewModel: MyPageViewModel) {
+        self.viewModel = viewModel
+    }
+    
     public var body: some View {
         VStack {
             HStack {
@@ -136,18 +161,29 @@ public struct SupportView: View {
                         .font(.semibold_16)
                         .foregroundColor(.heyGray1)
                     
-                    Text("Privacy policy")
-                        .font(.regular_14)
-                        .foregroundColor(.heyGray1)
+                    Button {
+                        viewModel.send(.privacyPolicyButtonDidTap)
+                    } label: {
+                        Text("Privacy policy")
+                            .font(.regular_14)
+                            .foregroundColor(.heyGray1)
+                    }
                     
-                    Text("Terms of service")
-                        .font(.regular_14)
-                        .foregroundColor(.heyGray1)
+                    Button {
+                        viewModel.send(.termsOfServiceButtonDidTap)
+                    } label: {
+                        Text("Terms of service")
+                            .font(.regular_14)
+                            .foregroundColor(.heyGray1)
+                    }
                     
-                    Text("Contact us")
-                        .font(.regular_14)
-                        .foregroundColor(.heyGray1)
-                    
+                    Button {
+                        viewModel.send(.contactUsButtonDidTap)
+                    } label: {
+                        Text("Contact us")
+                            .font(.regular_14)
+                            .foregroundColor(.heyGray1)
+                    }
                 }
                 .padding(.leading, 20)
                 .padding(.vertical, 20)
@@ -162,6 +198,12 @@ public struct SupportView: View {
 }
 
 public struct AppSettingView: View {
+    @ObservedObject private var viewModel: MyPageViewModel
+    
+    fileprivate init(viewModel: MyPageViewModel) {
+        self.viewModel = viewModel
+    }
+    
     public var body: some View {
         VStack {
             HStack {
@@ -170,9 +212,13 @@ public struct AppSettingView: View {
                         .font(.semibold_16)
                         .foregroundColor(.heyGray1)
                     
-                    Text("Notification setting")
-                        .font(.regular_14)
-                        .foregroundColor(.heyGray1)
+                    Button {
+                        viewModel.send(.notificationSettingButtonDidTap)
+                    } label: {
+                        Text("Notification setting")
+                            .font(.regular_14)
+                            .foregroundColor(.heyGray1)
+                    }
                 }
                 .padding(.leading, 20)
                 .padding(.vertical, 20)
@@ -186,6 +232,49 @@ public struct AppSettingView: View {
     }
 }
 
-#Preview {
-    MyPageView()
+public struct EtcView: View {
+    @ObservedObject private var viewModel: MyPageViewModel
+    
+    fileprivate init(viewModel: MyPageViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    public var body: some View {
+        VStack {
+            HStack {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Etc")
+                        .font(.semibold_16)
+                        .foregroundColor(.heyGray1)
+                    
+                    Button {
+                        viewModel.send(.deleteAccountButtonDidTap)
+                    } label: {
+                        Text("Delete account")
+                            .font(.regular_14)
+                            .foregroundColor(.heyGray1)
+                    }
+                    
+                    Button {
+                        viewModel.send(.logoutButtonDidTap)
+                    } label: {
+                        Text("Log out")
+                            .font(.regular_14)
+                            .foregroundColor(.heyGray1)
+                    }
+                }
+                .padding(.leading, 20)
+                .padding(.vertical, 20)
+                
+                Spacer()
+            }
+            
+        }
+        .background(Color.heyGray5)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
 }
+
+//#Preview {
+//    MyPageView()
+//}

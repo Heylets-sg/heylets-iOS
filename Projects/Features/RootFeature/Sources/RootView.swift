@@ -16,6 +16,7 @@ import SplashFeature
 public class HeyNavigationRouter: ObservableObject {
     public init() {}
     let onboarding = OnboardingNavigationRouter()
+    let myPage = MyPageNavigationRouter()
 }
 
 public struct RootView: View {
@@ -38,8 +39,14 @@ public struct RootView: View {
             case .timetable:
                 TimeTableView()
             case .mypage:
-                MyPageView()
+                MyPageView(
+                    viewModel: MyPageViewModel(
+                        navigationRouter: navigationRouter.myPage
+                    )
+                )
+                .environmentObject(navigationRouter.myPage)
             }
+            
         }
     }
     

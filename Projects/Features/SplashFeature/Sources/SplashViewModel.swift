@@ -15,6 +15,7 @@ public class SplashViewModel: ObservableObject {
     
     enum Action {
         case goToOnboarding
+        case goToMyPage
     }
     
     public var windowRouter: WindowRoutable
@@ -27,6 +28,8 @@ public class SplashViewModel: ObservableObject {
         switch action {
         case .goToOnboarding:
             windowRouter.switch(to: .onboarding)
+        case .goToMyPage:
+            windowRouter.switch(to: .mypage)
         }
     }
 }

@@ -26,7 +26,7 @@ public struct SplashView: View {
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                viewModel.send(.goToOnboarding)
+                viewModel.send(.goToMyPage)
             }
         }
         .transition(.opacity)

@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+import BaseFeatureDependency
+
 public enum OnboardingNavigationDestination: Hashable {
     case onboarding
     
@@ -24,7 +26,6 @@ public enum OnboardingNavigationDestination: Hashable {
     case enterEmail
     case resetPassword
 }
-import BaseFeatureDependency
 
 struct OnboardingNavigationRoutingView: View {
     
