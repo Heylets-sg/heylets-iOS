@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-import DSKit
-
 public struct NotificationSettingView: View {
     public init() {}
     @State var toggleOn = false

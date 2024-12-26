@@ -27,6 +27,7 @@ public enum DSKitAsset {
   public static let icBack = DSKitImages(name: "ic_back")
   public static let icCamera = DSKitImages(name: "ic_camera")
   public static let icClose = DSKitImages(name: "ic_close")
+  public static let icCopy = DSKitImages(name: "ic_copy")
   public static let icError = DSKitImages(name: "ic_error")
   public static let icHide = DSKitImages(name: "ic_hide")
   public static let icMagic = DSKitImages(name: "ic_magic")

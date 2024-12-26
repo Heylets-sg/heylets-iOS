@@ -10,76 +10,41 @@ import SwiftUI
 
 
 public struct SubView: View {
-    @State var toggleOn = false
-    
     public var body: some View {
         MyPageBaseView(content: {
             Spacer()
-                .frame(height: 27)
+                .frame(height: 36)
             
             VStack(alignment: .leading) {
+                Text("Our email")
+                    .font(.medium_14)
+                    .foregroundColor(.heyGray1)
+                    .lineSpacing(10)
+                    .padding(.bottom, 8)
+                
                 HStack {
-                    VStack(alignment: .leading) {
-                        Text("Daily briefing")
-                            .font(.semibold_16)
-                            .foregroundColor(.heyGray1)
-                            .lineSpacing(8)
-                            .padding(.bottom, 4)
-                        
-                        Text("ex. There’s two modules today")
-                            .font(.regular_12)
-                            .foregroundColor(.heyGray1)
-                            .lineSpacing(12)
-                            .padding(.bottom, 4)
-                    }
+                    Text(verbatim: "jacobkwak1122@gmail.com")
+                        .font(.regular_14)
+                        .foregroundColor(.heyGray1)
                     
                     Spacer()
                     
-                    Toggle("", isOn: $toggleOn)
-                        .toggleStyle(SwitchToggleStyle(tint: Color.heyMain))
-                        .labelsHidden()
-                        .padding(.trailing, 15)
-                    
-                }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 24)
-                .background(Color.heyGray5)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                
-                Spacer()
-                    .frame(height: 20)
-                
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("Class")
-                            .font(.semibold_16)
-                            .foregroundColor(.heyGray1)
-                            .lineSpacing(8)
-                            .padding(.bottom, 4)
+                    Button {
                         
-                        Text("ex. There’s two modules today")
-                            .font(.regular_12)
-                            .foregroundColor(.heyGray1)
-                            .lineSpacing(12)
-                            .padding(.bottom, 4)
+                    } label: {
+                        Image(uiImage: .icCopy)
                     }
-                    
-                    Spacer()
-                    
-                    Toggle("", isOn: $toggleOn)
-                        .toggleStyle(SwitchToggleStyle(tint: Color.heyMain))
-                        .labelsHidden()
-                        .padding(.trailing, 15)
-                    
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 24)
+                .padding(.all, 16)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.heyMain, lineWidth: 3)
+                )
                 .background(Color.heyGray5)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
             }
             
             
-        }, titleText: "Notification setting")
+        }, titleText: "Contact us")
     }
 }
 
