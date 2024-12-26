@@ -18,4 +18,5 @@ extension HeyTextFieldColorStyle {
     static public let white = HeyTextFieldColorStyle(background: .heyWhite, foreground: .heyBlack)
     static public let primary = HeyTextFieldColorStyle(background: .heyWhite, foreground: .heyGray2)
     static public let gray = HeyTextFieldColorStyle(background: .heyGray4, foreground: .heyBlack)
+    static public let lightgray = HeyTextFieldColorStyle(background: .heyGray5, foreground: .heyBlack)
 }
