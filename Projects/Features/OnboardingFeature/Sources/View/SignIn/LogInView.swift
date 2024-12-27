@@ -77,6 +77,7 @@ public struct LogInView: View {
             
             Button("Log In") {
                 viewModel.send(.loginButtonDidTap)
+                router.windowRouter.switch(to: .timetable)
             }
             .heyBottomButtonStyle()
         }
