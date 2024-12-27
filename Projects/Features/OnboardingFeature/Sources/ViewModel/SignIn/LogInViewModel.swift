@@ -22,14 +22,12 @@ public class LogInViewModel: ObservableObject {
     
     public init(navigationRouter: OnboardingNavigationRouter) {
         self.navigationRouter = navigationRouter
-        print("loginVIewModel \(navigationRouter.destinations)")
     }
     
     func send(_ action: Action) {
         switch action {
         case .loginButtonDidTap:
             print("로그인 버튼 클릭")
-//            navigationRouter.push(to: .login)
         case .forgotPasswordButtonDidTap:
             print("버튼클릭")
 //            navigationRouter.push(to: .resetPasswordView)

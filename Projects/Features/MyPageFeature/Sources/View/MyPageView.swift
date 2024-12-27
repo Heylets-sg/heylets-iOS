@@ -12,6 +12,7 @@ import DSKit
 import BaseFeatureDependency
 
 public struct MyPageView: View {
+    @EnvironmentObject var router: Router
     @EnvironmentObject var myPageRouter: MyPageNavigationRouter
     var viewModel: MyPageViewModel
     
@@ -29,6 +30,7 @@ public struct MyPageView: View {
                         .frame(height: 60)
                     
                     MyPageTopView()
+                        .environmentObject(router)
                     
                     VStack {
                         Spacer()
@@ -83,10 +85,11 @@ public struct MyPageView: View {
 }
 
 public struct MyPageTopView: View {
+    @EnvironmentObject var router: Router
     public var body: some View {
         HStack {
             Button {
-                //                        dismiss()
+                router.windowRouter.switch(to: .timetable)
             } label: {
                 Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
                     .resizable()
