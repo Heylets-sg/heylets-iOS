@@ -9,9 +9,11 @@
 import SwiftUI
 
 import DSKit
+import BaseFeatureDependency
 
 public struct TimeTableView: View {
-    public  init() {} 
+    @EnvironmentObject var router: Router
+    public  init() {}
     @State private var canTapped = true // 시간표 누를 수 있도록 하는 flag
     @State private var isShowingModuleDetailInfoView = false
     @State private var isShowingSearchModuleView = false
@@ -35,6 +37,7 @@ public struct TimeTableView: View {
                         isShowingSettingTimeTableView: $isShowingSettingTimeTableView, 
                         isShowingThemeView: $isShowingThemeView
                     )
+                    .environmentObject(router)
                 }
                 
                 Spacer()

@@ -9,8 +9,10 @@
 import SwiftUI
 
 import DSKit
+import BaseFeatureDependency
 
 public struct TopView: View {
+    @EnvironmentObject var router: Router
     @Binding var isShowingSearchModuleView: Bool
     @Binding var isShowingSettingTimeTableView: Bool
     @Binding var isShowingThemeView: Bool
@@ -44,7 +46,6 @@ public struct TopView: View {
                     withAnimation {
                         isShowingSearchModuleView.toggle()
                     }
-                    
                 } label: {
                     Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
                         .resizable()
@@ -53,17 +54,31 @@ public struct TopView: View {
                         .padding(.trailing, 26)
                 }
                 
+                Button {
+                    withAnimation {
+                        isShowingSettingTimeTableView.toggle()
+                    }
+                } label: {
+                    Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .tint(.heyGray6)
+                        .padding(.trailing, 23)
+                }
                 
-                Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .tint(.heyGray6)
-                    .padding(.trailing, 23)
-                
-                Circle()
-                    .frame(width: 31, height: 31)
+                Button {
+                    router.windowRouter.switch(to: .mypage)
+                } label: {
+                    Circle()
+                        .frame(width: 31, height: 31)
+                }
             }
         }
         .padding(.horizontal, 16)
+        .sheet(isPresented: $isShowingSettingTimeTableView) {
+            SettingTimeTableView(isShowingThemeView: $isShowingThemeView)
+                .presentationDetents([.medium, .large, .height(256)])
+                .presentationDragIndicator(.hidden)
+        }
     }
 }
