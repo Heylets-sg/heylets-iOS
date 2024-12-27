@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+import DSKit
+
 public struct DetailModuleInfoView: View {
     @Binding var isShowingModuleDetailInfoView: Bool
     

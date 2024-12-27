@@ -30,4 +30,10 @@ public extension UIImage {
     static let color = DSKitAsset.graphicsColor.image
     
     static let logo = DSKitAsset.logo.image
+    
+    static let theme1 = DSKitAsset.theme1.image
+    static let theme2 = DSKitAsset.theme2.image
+    static let theme3 = DSKitAsset.theme3.image
+    static let theme4 = DSKitAsset.theme4.image
+    static let theme5 = DSKitAsset.theme5.image
 }

@@ -8,17 +8,30 @@
 
 import SwiftUI
 
+
+
 struct TimeTableView: View {
     @State private var isShowingModuleDetailInfoView = false
     @State private var isShowingSearchModuleView = false
+    @State private var isShowingSettingTimeTableView = false
+    @State private var isShowingThemeView = false
     
     var body: some View {
         ZStack {
             VStack(alignment: .leading) {
                 if isShowingSearchModuleView {
-                    ClassSearchTopView(isShowingSearchModuleView: $isShowingSearchModuleView)
+                    ClassSearchTopView(
+                        isShowingSearchModuleView: $isShowingSearchModuleView
+                    )
+                } else if isShowingThemeView {
+                    ThemeTopView(
+                        isShowingThemeView: $isShowingThemeView
+                    )
                 } else {
-                    TopView(isShowingSearchModuleView: $isShowingSearchModuleView)
+                    TopView(
+                        isShowingSearchModuleView: $isShowingSearchModuleView,
+                        isShowingSettingTimeTableView: $isShowingSettingTimeTableView, isShowingThemeView: $isShowingThemeView
+                    )
                 }
                 
                 Spacer()
@@ -42,11 +55,19 @@ struct TimeTableView: View {
                 .zIndex(2)
                 .transition(.move(edge: .bottom))
         }
+        
+        if isShowingThemeView {
+            SettingTimeTableInfoView()
+                .zIndex(2)
+                .transition(.move(edge: .bottom))
+        }
     }
 }
 
 fileprivate struct TopView: View {
     @Binding var isShowingSearchModuleView: Bool
+    @Binding var isShowingSettingTimeTableView: Bool
+    @Binding var isShowingThemeView: Bool
     
     var body: some View {
         HStack {
@@ -77,7 +98,6 @@ fileprivate struct TopView: View {
                     withAnimation {
                         isShowingSearchModuleView.toggle()
                     }
-                    
                 } label: {
                     Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
                         .resizable()
@@ -86,18 +106,28 @@ fileprivate struct TopView: View {
                         .padding(.trailing, 26)
                 }
                 
-                
-                Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .tint(.heyGray6)
-                    .padding(.trailing, 23)
+                Button {
+                    withAnimation {
+                        isShowingSettingTimeTableView.toggle()
+                    }
+                } label: {
+                    Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .tint(.heyGray6)
+                        .padding(.trailing, 23)
+                }
                 
                 Circle()
                     .frame(width: 31, height: 31)
             }
         }
         .padding(.horizontal, 16)
+        .sheet(isPresented: $isShowingSettingTimeTableView) {
+            SettingTimeTableView(isShowingThemeView: $isShowingThemeView)
+                .presentationDetents([.medium, .large, .height(256)])
+                .presentationDragIndicator(.hidden)
+        }
     }
 }
 

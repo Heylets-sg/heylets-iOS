@@ -14,6 +14,7 @@ public struct TimeTableView: View {
     public init() {}
     @State private var isShowingModuleDetailInfoView = false
     @State private var isShowingSearchModuleView = false
+    @State private var isShowingSettingTimeTableView = false
     
     public var body: some View {
         ZStack {
