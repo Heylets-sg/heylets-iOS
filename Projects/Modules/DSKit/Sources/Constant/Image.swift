@@ -22,6 +22,9 @@ public extension UIImage {
     static let icSuccess = DSKitAsset.icSuccess.image
     static let icBack = DSKitAsset.icBack.image
     static let icCopy = DSKitAsset.icCopy.image
+    static let icPencil = DSKitAsset.icPencil.image
+    static let icDown = DSKitAsset.icDown.image
+    static let icPlus = DSKitAsset.icPlus.image
     
     static let timeTable = DSKitAsset.graphicsTimeTable.image
     static let color = DSKitAsset.graphicsColor.image

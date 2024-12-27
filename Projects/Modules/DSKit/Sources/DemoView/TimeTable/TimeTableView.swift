@@ -9,19 +9,43 @@
 import SwiftUI
 
 struct TimeTableView: View {
+    @State private var isShowingClassDetailInfoView = false
+    @State private var isShowingClassSearchView = false
+    
     var body: some View {
-        VStack(alignment: .leading) {
-            TopView()
-            
-            Spacer()
-                .frame(height: 19)
-            
-            MainView()
+        ZStack {
+            VStack(alignment: .leading) {
+                if isShowingClassSearchView {
+                    ClassSearchTopView()
+                } else {
+                    TopView(isShowingClassSearchView: $isShowingClassSearchView)
+                }
+                
+                Spacer()
+                    .frame(height: 19)
+                
+                MainView(isShowingClassDetailInfoView: $isShowingClassDetailInfoView)
+            }
+            .onTapGesture {
+                isShowingClassDetailInfoView = false
+                isShowingClassSearchView = false
+            }
+        }
+        if isShowingClassDetailInfoView {
+            ClassDetailInfoView()
+                .zIndex(2)
+        }
+        
+        if isShowingClassSearchView {
+            ClassSearchView()
+                .zIndex(2)
         }
     }
 }
 
 fileprivate struct TopView: View {
+    @Binding var isShowingClassSearchView: Bool
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -47,11 +71,16 @@ fileprivate struct TopView: View {
             Spacer()
             
             HStack {
-                Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
-                    .resizable()
-                    .frame(width: 16, height: 16)
-                    .tint(.heyGray6)
-                    .padding(.trailing, 26)
+                Button {
+                    isShowingClassSearchView.toggle()
+                } label: {
+                    Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                        .tint(.heyGray6)
+                        .padding(.trailing, 26)
+                }
+                
                 
                 Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
                     .resizable()
@@ -67,7 +96,42 @@ fileprivate struct TopView: View {
     }
 }
 
+public struct ClassSearchTopView: View {
+    public var body: some View {
+        HStack {
+            Button {
+                
+            } label: {
+                Image(uiImage: .icClose)
+                    .resizable()
+                    .frame(width: 16, height: 16)
+            }
+            
+            Spacer()
+            
+            Button {
+                
+            } label: {
+                Image(uiImage: .icPencil)
+                    .resizable()
+                    .frame(width: 16, height: 16)
+                    .padding(.trailing, 28)
+            }
+            
+            Button {
+                
+            } label: {
+                Image(uiImage: .icPlus)
+                    .resizable()
+                    .frame(width: 16, height: 16)
+            }
+        }
+        .padding(.horizontal, 16)
+    }
+}
+
 fileprivate struct MainView: View {
+    @Binding var isShowingClassDetailInfoView: Bool
     
     var body: some View {
         ScrollView(.horizontal) {
@@ -82,7 +146,7 @@ fileprivate struct MainView: View {
                     HourListView()
                         .padding(.top, 10)
                     
-                    TimeTableGridView()
+                    TimeTableGridView(isShowingClassDetailInfoView: $isShowingClassDetailInfoView)
                 }
             }
             .scrollIndicators(.hidden)
@@ -94,6 +158,8 @@ fileprivate struct MainView: View {
 
 
 fileprivate struct TimeTableGridView: View {
+    @Binding var isShowingClassDetailInfoView: Bool
+    
     let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sta", "Sun"]
     let timeSlots = Array(9...24) // 9시부터 7시(19)까지
     let schedule = [
@@ -127,27 +193,30 @@ fileprivate struct TimeTableGridView: View {
                             if let slot = schedule.first(where: {
                                 $0.day == day && hour >= $0.startHour && hour < $0.endHour
                             }) {
-                                ZStack {
-                                    Color.heySubMain
-                                    
-                                    if hour == slot.startHour {
+                                Button {
+                                    print("버튼이 눌렸습니다ㅁㄴㅇㄹㅁㄴㅇㄹㄴㅁㅇ!!!")
+                                    isShowingClassDetailInfoView.toggle()
+                                } label: {
+                                    ZStack {
+                                        Color.heySubMain
                                         
-                                        VStack(alignment: .leading) {
+                                        if hour == slot.startHour {
                                             
-                                            // 강의 시작 시간에만 텍스트 표시
-                                            Text(slot.title)
-                                                .font(.medium_12)
-                                                .multilineTextAlignment(.center)
-                                            Text(slot.location)
-                                                .font(.regular_10)
-                                                .foregroundColor(.gray)
-                                            Spacer()
+                                            VStack(alignment: .leading) {
+                                                
+                                                // 강의 시작 시간에만 텍스트 표시
+                                                Text(slot.title)
+                                                    .font(.medium_12)
+                                                    .multilineTextAlignment(.center)
+                                                Text(slot.location)
+                                                    .font(.regular_10)
+                                                    .foregroundColor(.gray)
+                                                Spacer()
+                                            }
+                                            
                                         }
-                                        
-                                        
                                     }
                                 }
-                                
                                 .background(Color.blue.opacity(0.2))
                             }
                         }
