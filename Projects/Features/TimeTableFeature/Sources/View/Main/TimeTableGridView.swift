@@ -9,6 +9,7 @@
 import SwiftUI
 
 public struct TimeTableGridView: View {
+    @Binding var canTapped: Bool
     @Binding var isShowingModuleDetailInfoView: Bool
     
     let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sta", "Sun"]
@@ -70,6 +71,7 @@ public struct TimeTableGridView: View {
                                         }
                                     }
                                 }
+                                .disabled(!canTapped)
                                 .background(Color.blue.opacity(0.2))
                             }
                         }

@@ -9,6 +9,7 @@
 import SwiftUI
 
 public struct MainView: View {
+    @Binding var canTapped: Bool
     @Binding var isShowingModuleDetailInfoView: Bool
     
     public var body: some View {
@@ -24,7 +25,10 @@ public struct MainView: View {
                     HourListView()
                         .padding(.top, 10)
                     
-                    TimeTableGridView(isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView)
+                    TimeTableGridView(
+                        canTapped: $canTapped,
+                        isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView
+                    )
                 }
             }
             .scrollIndicators(.hidden)

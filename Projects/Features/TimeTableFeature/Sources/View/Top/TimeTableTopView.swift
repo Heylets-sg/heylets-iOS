@@ -12,6 +12,8 @@ import DSKit
 
 public struct TopView: View {
     @Binding var isShowingSearchModuleView: Bool
+    @Binding var isShowingSettingTimeTableView: Bool
+    @Binding var isShowingThemeView: Bool
     
     public var body: some View {
         HStack {

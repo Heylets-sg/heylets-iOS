@@ -11,6 +11,7 @@ import SwiftUI
 
 
 struct TimeTableView: View {
+    @State private var canTapped = true // 시간표 누를 수 있도록 하는 flag
     @State private var isShowingModuleDetailInfoView = false
     @State private var isShowingSearchModuleView = false
     @State private var isShowingSettingTimeTableView = false
@@ -37,7 +38,10 @@ struct TimeTableView: View {
                 Spacer()
                     .frame(height: 19)
                 
-                MainView(isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView)
+                MainView(
+                    canTapped: $canTapped, //이걸로 일단 관리하자!
+                    isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView
+                )
             }
             .onTapGesture {
                 isShowingModuleDetailInfoView = false
@@ -181,6 +185,7 @@ public struct ClassSearchTopView: View {
 }
 
 fileprivate struct MainView: View {
+    @Binding var canTapped: Bool
     @Binding var isShowingModuleDetailInfoView: Bool
     
     var body: some View {
@@ -196,7 +201,7 @@ fileprivate struct MainView: View {
                     HourListView()
                         .padding(.top, 10)
                     
-                    TimeTableGridView(isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView)
+                    TimeTableGridView(canTapped: $canTapped, isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView)
                 }
             }
             .scrollIndicators(.hidden)
@@ -208,6 +213,7 @@ fileprivate struct MainView: View {
 
 
 fileprivate struct TimeTableGridView: View {
+    @Binding var canTapped: Bool
     @Binding var isShowingModuleDetailInfoView: Bool
     
     let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sta", "Sun"]
@@ -269,6 +275,7 @@ fileprivate struct TimeTableGridView: View {
                                         }
                                     }
                                 }
+                                .disabled(!canTapped)
                                 .background(Color.blue.opacity(0.2))
                             }
                         }
