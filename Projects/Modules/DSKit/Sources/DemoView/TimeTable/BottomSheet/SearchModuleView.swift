@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct ClassSearchView: View {
+public struct SearchModuleView: View {
     var classList = ["","","","","","","","","",""]
     public var body: some View {
         VStack {
@@ -89,5 +89,5 @@ fileprivate struct ClassSearchListCellView: View {
     }
 }
 #Preview {
-    ClassSearchView()
+    SearchModuleView()
 }

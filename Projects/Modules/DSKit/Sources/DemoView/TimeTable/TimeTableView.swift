@@ -9,42 +9,44 @@
 import SwiftUI
 
 struct TimeTableView: View {
-    @State private var isShowingClassDetailInfoView = false
-    @State private var isShowingClassSearchView = false
+    @State private var isShowingModuleDetailInfoView = false
+    @State private var isShowingSearchModuleView = false
     
     var body: some View {
         ZStack {
             VStack(alignment: .leading) {
-                if isShowingClassSearchView {
-                    ClassSearchTopView()
+                if isShowingSearchModuleView {
+                    ClassSearchTopView(isShowingSearchModuleView: $isShowingSearchModuleView)
                 } else {
-                    TopView(isShowingClassSearchView: $isShowingClassSearchView)
+                    TopView(isShowingSearchModuleView: $isShowingSearchModuleView)
                 }
                 
                 Spacer()
                     .frame(height: 19)
                 
-                MainView(isShowingClassDetailInfoView: $isShowingClassDetailInfoView)
+                MainView(isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView)
             }
             .onTapGesture {
-                isShowingClassDetailInfoView = false
-                isShowingClassSearchView = false
+                isShowingModuleDetailInfoView = false
+                isShowingSearchModuleView = false
             }
         }
-        if isShowingClassDetailInfoView {
-            ClassDetailInfoView()
+        if isShowingModuleDetailInfoView {
+            DetailModuleInfoView(isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView)
                 .zIndex(2)
+                .transition(.move(edge: .bottom))
         }
         
-        if isShowingClassSearchView {
-            ClassSearchView()
+        if isShowingSearchModuleView {
+            SearchModuleView()
                 .zIndex(2)
+                .transition(.move(edge: .bottom))
         }
     }
 }
 
 fileprivate struct TopView: View {
-    @Binding var isShowingClassSearchView: Bool
+    @Binding var isShowingSearchModuleView: Bool
     
     var body: some View {
         HStack {
@@ -72,7 +74,10 @@ fileprivate struct TopView: View {
             
             HStack {
                 Button {
-                    isShowingClassSearchView.toggle()
+                    withAnimation {
+                        isShowingSearchModuleView.toggle()
+                    }
+                    
                 } label: {
                     Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
                         .resizable()
@@ -97,10 +102,15 @@ fileprivate struct TopView: View {
 }
 
 public struct ClassSearchTopView: View {
+    @Binding var isShowingSearchModuleView: Bool
+    @State private var isShowingAddModuleView = false
+    
     public var body: some View {
         HStack {
             Button {
-                
+                withAnimation {
+                    isShowingSearchModuleView = false
+                }
             } label: {
                 Image(uiImage: .icClose)
                     .resizable()
@@ -110,7 +120,9 @@ public struct ClassSearchTopView: View {
             Spacer()
             
             Button {
-                
+                withAnimation {
+                    isShowingAddModuleView.toggle()
+                }
             } label: {
                 Image(uiImage: .icPencil)
                     .resizable()
@@ -119,7 +131,10 @@ public struct ClassSearchTopView: View {
             }
             
             Button {
-                
+                withAnimation {
+                    //TODO: 모듈 추가 비즈니스 로직 추가
+                    isShowingSearchModuleView = false
+                }
             } label: {
                 Image(uiImage: .icPlus)
                     .resizable()
@@ -127,11 +142,16 @@ public struct ClassSearchTopView: View {
             }
         }
         .padding(.horizontal, 16)
+        .sheet(isPresented: $isShowingAddModuleView) {
+            AddModuleView()
+                .presentationDetents([.medium, .large, .height(506)])
+                .presentationDragIndicator(.hidden)
+        }
     }
 }
 
 fileprivate struct MainView: View {
-    @Binding var isShowingClassDetailInfoView: Bool
+    @Binding var isShowingModuleDetailInfoView: Bool
     
     var body: some View {
         ScrollView(.horizontal) {
@@ -146,7 +166,7 @@ fileprivate struct MainView: View {
                     HourListView()
                         .padding(.top, 10)
                     
-                    TimeTableGridView(isShowingClassDetailInfoView: $isShowingClassDetailInfoView)
+                    TimeTableGridView(isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView)
                 }
             }
             .scrollIndicators(.hidden)
@@ -158,7 +178,7 @@ fileprivate struct MainView: View {
 
 
 fileprivate struct TimeTableGridView: View {
-    @Binding var isShowingClassDetailInfoView: Bool
+    @Binding var isShowingModuleDetailInfoView: Bool
     
     let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sta", "Sun"]
     let timeSlots = Array(9...24) // 9시부터 7시(19)까지
@@ -194,8 +214,10 @@ fileprivate struct TimeTableGridView: View {
                                 $0.day == day && hour >= $0.startHour && hour < $0.endHour
                             }) {
                                 Button {
-                                    print("버튼이 눌렸습니다ㅁㄴㅇㄹㅁㄴㅇㄹㄴㅁㅇ!!!")
-                                    isShowingClassDetailInfoView.toggle()
+                                    withAnimation {
+                                        isShowingModuleDetailInfoView.toggle()
+                                    }
+                                    
                                 } label: {
                                     ZStack {
                                         Color.heySubMain

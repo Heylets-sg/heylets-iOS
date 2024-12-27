@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct ClassAddView: View {
+public struct AddModuleView: View {
     @State var text = ""
     public var body: some View {
         
@@ -52,7 +52,6 @@ public struct ClassAddView: View {
                             .font(.regular_14)
                             .foregroundColor(.heyGray2)
                     )
-                    .padding(.bottom, 16)
                     
                     Divider()
                         .foregroundColor(.heyGray2)
@@ -66,7 +65,6 @@ public struct ClassAddView: View {
                             .font(.regular_14)
                             .foregroundColor(.heyGray2)
                     )
-                    .padding(.bottom, 16)
                     
                     Divider()
                         .foregroundColor(.heyGray2)
@@ -80,20 +78,17 @@ public struct ClassAddView: View {
                             .font(.regular_14)
                             .foregroundColor(.heyGray2)
                     )
-                    .padding(.bottom, 16)
                     
                     Divider()
                         .foregroundColor(.heyGray2)
                 }
             }
-            
-            
-            
+            Spacer()
         }
         .padding(.horizontal, 16)
     }
 }
 
 #Preview {
-    ClassAddView()
+    AddModuleView()
 }

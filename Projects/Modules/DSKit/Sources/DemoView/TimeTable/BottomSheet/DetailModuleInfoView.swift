@@ -8,7 +8,9 @@
 
 import SwiftUI
 
-public struct ClassDetailInfoView: View {
+public struct DetailModuleInfoView: View {
+    @Binding var isShowingModuleDetailInfoView: Bool
+    
     public var body: some View {
         
         VStack(alignment: .leading) {
@@ -51,7 +53,9 @@ public struct ClassDetailInfoView: View {
                 Spacer()
                 
                 Button  {
-                    
+                    withAnimation {
+                        isShowingModuleDetailInfoView.toggle()
+                    }
                 } label: {
                     VStack {
                         Text("Delete")
@@ -74,6 +78,6 @@ public struct ClassDetailInfoView: View {
     }
 }
 
-#Preview {
-    ClassDetailInfoView()
-}
+//#Preview {
+//    DetailModuleInfoView(isShowingModuleDetailInfoView: true)
+//}
