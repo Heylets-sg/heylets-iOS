@@ -11,9 +11,20 @@ import SwiftUI
 import DSKit
 import BaseFeatureDependency
 
+enum TimeTableViewType {
+    case main
+    case detail
+    case search
+    case setting
+    case theme
+}
+
 public struct TimeTableView: View {
-    @EnvironmentObject var router: Router
+    //    @EnvironmentObject var router: Router
+    @State private var viewType: TimeTableViewType = .main
     public  init() {}
+    
+    
     @State private var canTapped = true // 시간표 누를 수 있도록 하는 flag
     @State private var isShowingModuleDetailInfoView = false
     @State private var isShowingSearchModuleView = false
@@ -23,52 +34,45 @@ public struct TimeTableView: View {
     public var body: some View {
         ZStack {
             VStack(alignment: .leading) {
-                if isShowingSearchModuleView {
-                    SearchModuleTopView(
-                        isShowingSearchModuleView: $isShowingSearchModuleView
-                    )
-                } else if isShowingThemeView {
-                    ThemeTopView(
-                        isShowingThemeView: $isShowingThemeView
-                    )
-                } else {
-                    TopView(
-                        isShowingSearchModuleView: $isShowingSearchModuleView,
-                        isShowingSettingTimeTableView: $isShowingSettingTimeTableView, 
-                        isShowingThemeView: $isShowingThemeView
-                    )
-                    .environmentObject(router)
+                
+                switch viewType {
+                case .search:
+                    SearchModuleTopView(viewType: $viewType)
+                case .theme:
+                    ThemeTopView(viewType: $viewType)
+                default:
+                    TopView(viewType: $viewType)
+                    //                    .environmentObject(router)
                 }
                 
                 Spacer()
                     .frame(height: 19)
                 
-                MainView(
-                    canTapped: $canTapped, //이걸로 일단 관리하자!
-                    isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView
-                )
+                MainView(viewType: $viewType)
             }
             .onTapGesture {
-                isShowingModuleDetailInfoView = false
-                isShowingSearchModuleView = false
+                withAnimation {
+                    viewType = .main
+                }
             }
         }
-        if isShowingModuleDetailInfoView {
-            DetailModuleInfoView(isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView)
-                .zIndex(2)
-                .transition(.move(edge: .bottom))
-        }
         
-        if isShowingSearchModuleView {
+        switch viewType {
+        case .search:
             SearchModuleView()
-                .zIndex(2)
-                .transition(.move(edge: .bottom))
-        }
-        
-        if isShowingThemeView {
+                .bottomSheetTransition()
+        case .theme:
             SettingTimeTableInfoView()
-                .zIndex(2)
-                .transition(.move(edge: .bottom))
+                .bottomSheetTransition()
+        case .detail:
+            DetailModuleInfoView(viewType: $viewType)
+                .bottomSheetTransition()
+        default:
+            EmptyView()
         }
     }
+}
+
+#Preview {
+    TimeTableView()
 }

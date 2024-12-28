@@ -8,10 +8,8 @@
 
 import SwiftUI
 
-import DSKit
-
 public struct DetailModuleInfoView: View {
-    @Binding var isShowingModuleDetailInfoView: Bool
+    @Binding var viewType: TimeTableViewType
     
     public var body: some View {
         
@@ -56,7 +54,7 @@ public struct DetailModuleInfoView: View {
                 
                 Button  {
                     withAnimation {
-                        isShowingModuleDetailInfoView.toggle()
+                        viewType = .main
                     }
                 } label: {
                     VStack {

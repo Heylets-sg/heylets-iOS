@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+import DSKit
+
 public struct SearchModuleView: View {
     var classList = ["","","","","","","","","",""]
     public var body: some View {
