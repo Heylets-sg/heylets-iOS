@@ -36,3 +36,11 @@ public struct RoundedCorner: Shape {
         return Path(path.cgPath)
     }
 }
+
+// 바텀시트
+extension View {
+    public func bottomSheetTransition() -> some View {
+        self.zIndex(2)
+            .transition(.move(edge: .bottom))
+    }
+}

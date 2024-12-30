@@ -80,6 +80,16 @@ public struct MyPageView: View {
             .setMyPageNavigation()
             
         }
+        .heyAlert(
+            isPresented: viewModel.logOutAlertViewIsPresented,
+            title: "Are you sure you want\nto logout?",
+            primaryButton: ("Close", .gray, {
+                viewModel.logOutAlertViewIsPresented = false
+            }),
+            secondaryButton: ("Ok", .primary, {
+                //로그아웃 로직 처림
+            })
+        )
         .navigationBarBackButtonHidden()
     }
 }

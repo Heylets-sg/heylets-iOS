@@ -8,8 +8,14 @@
 
 import SwiftUI
 
+import DSKit
+
 public struct SearchModuleView: View {
-    var classList = ["","","","","","","","","",""]
+    @Binding var viewType: TimeTableViewType
+    @Binding var reportMissingModuleAlertIsPresented: Bool
+    @Binding var inValidregisterModuleIsPresented: Bool
+    
+    var classList: [String] = ["","","","","","","","","",""]
     public var body: some View {
         VStack {
             Spacer()
@@ -18,13 +24,45 @@ public struct SearchModuleView: View {
             ClassSearchBarView()
                 .padding(.bottom, 28)
             
-            ScrollView {
-                ForEach(classList, id: \.self) { _ in
-                    ClassSearchListCellView()
-                        .padding(.bottom, 24)
+            if classList.isEmpty {
+                Text("We couldn’t find a match for\n‘Career and Enterpreneurial’.")
+                    .font(.regular_16)
+                    .foregroundColor(.heyGray2)
+                    .padding(.bottom, 20)
+                
+                Button {
+                    reportMissingModuleAlertIsPresented = true
+                } label: {
+                    HStack {
+                        Text("Report Missing Modules")
+                            .font(.regular_14)
+                            .foregroundColor(.heyGray2)
+                        
+                        Image(uiImage: .icNext)
+                            .resizable()
+                            .frame(width: 4, height: 9)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 7)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.heyGray3, lineWidth: 1)
+                    )
                 }
+                
+                Spacer()
+                
+            } else {
+                ScrollView {
+                    ForEach(classList, id: \.self) { _ in
+                        ClassSearchListCellView(inValidregisterModuleIsPresented: $inValidregisterModuleIsPresented, viewType: $viewType)
+                            .padding(.bottom, 24)
+                    }
+                }
+                .scrollIndicators(.hidden)
             }
-            .scrollIndicators(.hidden)
+            
+            
         }
         .padding(.horizontal, 16)
         .cornerRadius(12, corners: [.topLeft, .topRight])
@@ -69,6 +107,9 @@ fileprivate struct ClassSearchBarView: View {
 
 fileprivate struct ClassSearchListCellView: View {
     @State var text = ""
+    @Binding var inValidregisterModuleIsPresented: Bool
+    @Binding var viewType: TimeTableViewType
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("ML0004 Career and Entrepreneurial Development")
@@ -86,8 +127,12 @@ fileprivate struct ClassSearchListCellView: View {
                 .foregroundColor(.heyGray3)
         }
         .padding(.trailing, 87)
+        .onTapGesture {
+            viewType = .main
+            inValidregisterModuleIsPresented = true
+        }
     }
 }
-#Preview {
-    SearchModuleView()
-}
+//#Preview {
+//    SearchModuleView()
+//}

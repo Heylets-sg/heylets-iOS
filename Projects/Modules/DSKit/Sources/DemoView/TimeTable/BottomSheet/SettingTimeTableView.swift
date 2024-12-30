@@ -2,62 +2,71 @@ import SwiftUI
 import DSKit
 
 struct SettingTimeTableView: View {
-    @Binding var isShowingThemeView: Bool
+    @Binding var viewType: TimeTableViewType
+    @Binding var settingAlertType: DemoTimeTableSettingAlertType?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 25) {
-            if !isShowingThemeView {
-                Spacer()
-                    .frame(height: 32)
-                
-                Button {
-                    withAnimation {
-                        isShowingThemeView.toggle()
-                    }
-                } label: {
-                    Text("Theme")
-                        .font(.medium_14)
-                        .foregroundColor(.heyGray1)
+            
+            Spacer()
+                .frame(height: 32)
+            
+            Button {
+                withAnimation {
+                    viewType = .theme
                 }
-                
-                Button {
-                    // Timetable name action
-                } label: {
-                    Text("Timetable name")
-                        .font(.medium_14)
-                        .foregroundColor(.heyGray1)
-                }
-                
-                Button {
-                    // Share URL action
-                } label: {
-                    Text("Share URL")
-                        .font(.medium_14)
-                        .foregroundColor(.heyGray1)
-                }
-                
-                Button {
-                    // Save image action
-                } label: {
-                    Text("Save image")
-                        .font(.medium_14)
-                        .foregroundColor(.heyGray1)
-                }
-                
-                Button {
-                    // Remove all action
-                } label: {
-                    Text("Remove all")
-                        .font(.medium_14)
-                        .foregroundColor(.heyGray1)
-                }
-                
-                Spacer()
+            } label: {
+                Text("Theme")
+                    .font(.medium_14)
+                    .foregroundColor(.heyGray1)
             }
+            
+            Button {
+                settingAlertType = .editTimeTableName
+                viewType = .main
+            } label: {
+                Text("Timetable name")
+                    .font(.medium_14)
+                    .foregroundColor(.heyGray1)
+            }
+            
+            Button {
+                settingAlertType = .shareURL
+                viewType = .main
+            } label: {
+                Text("Share URL")
+                    .font(.medium_14)
+                    .foregroundColor(.heyGray1)
+            }
+            
+            Button {
+                settingAlertType = .saveImage
+                viewType = .main
+            } label: {
+                Text("Save image")
+                    .font(.medium_14)
+                    .foregroundColor(.heyGray1)
+            }
+            
+            Button {
+                settingAlertType = .removeTimeTable
+                viewType = .main
+            } label: {
+                Text("Remove all")
+                    .font(.medium_14)
+                    .foregroundColor(.heyGray1)
+            }
+            
+            Spacer()
         }
         .padding(.leading, 32)
-        .padding(.trailing, 247)
+        .padding(.trailing, 220)
         .cornerRadius(12, corners: [.topLeft, .topRight])
-        .animation(.easeInOut, value: isShowingThemeView)   
+        .animation(.easeInOut, value: viewType)
+        .onDisappear {
+            if viewType == .setting {
+                viewType = .main
+            }
+        }
     }
 }

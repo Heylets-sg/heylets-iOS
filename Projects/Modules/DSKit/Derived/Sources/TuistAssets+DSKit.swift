@@ -32,6 +32,7 @@ public enum DSKitAsset {
   public static let icError = DSKitImages(name: "ic_error")
   public static let icHide = DSKitImages(name: "ic_hide")
   public static let icMagic = DSKitImages(name: "ic_magic")
+  public static let icNext = DSKitImages(name: "ic_next")
   public static let icPencil = DSKitImages(name: "ic_pencil")
   public static let icPlus = DSKitImages(name: "ic_plus")
   public static let icRepeat = DSKitImages(name: "ic_repeat")

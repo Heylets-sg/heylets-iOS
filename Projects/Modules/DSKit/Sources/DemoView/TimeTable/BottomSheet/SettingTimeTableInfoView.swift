@@ -111,8 +111,8 @@ struct ModuleSelectionView: View {
     }
 }
 
-struct SettingTimeTableInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingTimeTableInfoView()
-    }
-}
+//struct SettingTimeTableInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SettingTimeTableInfoView()
+//    }
+//}

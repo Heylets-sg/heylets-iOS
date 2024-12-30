@@ -1,328 +1,116 @@
 //
 //  TimeTableView.swift
-//  DSKit
+//  TimeTableFeature
 //
-//  Created by 류희재 on 12/26/24.
+//  Created by 류희재 on 12/27/24.
 //  Copyright © 2024 Heylets-iOS. All rights reserved.
 //
 
 import SwiftUI
 
+import DSKit
+//import BaseFeatureDependency
 
+enum TimeTableViewType {
+    case main
+    case detail
+    case search
+    case setting
+    case theme
+}
 
-struct TimeTableView: View {
-    @State private var canTapped = true // 시간표 누를 수 있도록 하는 flag
+public struct TimeTableView: View {
+    //    @EnvironmentObject var router: Router
+    @State private var viewType: TimeTableViewType = .main
+    @State private var settingAlertType: DemoTimeTableSettingAlertType? = nil
+    @State var deleteModuleAlertIsPresented: Bool = false
+    @State var inValidregisterModuleIsPresented: Bool = false
+    @State var reportMissingModuleAlertIsPresented: Bool = false
+    public  init() {}
+    
+    
     @State private var isShowingModuleDetailInfoView = false
     @State private var isShowingSearchModuleView = false
     @State private var isShowingSettingTimeTableView = false
     @State private var isShowingThemeView = false
     
-    var body: some View {
+    public var body: some View {
         ZStack {
             VStack(alignment: .leading) {
-                if isShowingSearchModuleView {
-                    ClassSearchTopView(
-                        isShowingSearchModuleView: $isShowingSearchModuleView
-                    )
-                } else if isShowingThemeView {
-                    ThemeTopView(
-                        isShowingThemeView: $isShowingThemeView
-                    )
-                } else {
-                    TopView(
-                        isShowingSearchModuleView: $isShowingSearchModuleView,
-                        isShowingSettingTimeTableView: $isShowingSettingTimeTableView, isShowingThemeView: $isShowingThemeView
-                    )
+                
+                switch viewType {
+                case .search:
+                    SearchModuleTopView(viewType: $viewType)
+                case .theme:
+                    ThemeTopView(viewType: $viewType)
+                default:
+                    TopView(viewType: $viewType, settingAlertType: $settingAlertType)
+                    //                    .environmentObject(router)
                 }
                 
                 Spacer()
                     .frame(height: 19)
                 
-                MainView(
-                    canTapped: $canTapped, //이걸로 일단 관리하자!
-                    isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView
-                )
+                MainView(viewType: $viewType)
             }
             .onTapGesture {
-                isShowingModuleDetailInfoView = false
-                isShowingSearchModuleView = false
+                withAnimation {
+                    viewType = .main
+                }
+            }
+            .heyAlert(
+                isPresented: inValidregisterModuleIsPresented,
+                title: "해당 이유가 있겠죠 -> 비즈니스 로직 처리",
+                primaryButton: ("Close", .gray, {
+                    inValidregisterModuleIsPresented = false
+                    viewType = .search
+                })
+            )
+            .heyAlert(
+                isPresented: deleteModuleAlertIsPresented,
+                title: "Delete module?",
+                primaryButton: ("Delete", .error, {
+                    //삭제 비즈니스 로직 추가
+                    deleteModuleAlertIsPresented = false
+                }),
+                secondaryButton: ("Close", .gray, {
+                    deleteModuleAlertIsPresented = false
+                })
+            )
+//            .heySettingTimeTableAlert(settingAlertType, closeBtnAction: {
+//                settingAlertType = nil
+//            })
+            
+            .sheet(isPresented: $reportMissingModuleAlertIsPresented) {
+                ReportMissingModuleView(reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented)
+                    .transition(.move(edge: .trailing))
+                    .presentationDetents([.height(802)])
+                    .presentationDragIndicator(.visible)
             }
         }
-        if isShowingModuleDetailInfoView {
-            DetailModuleInfoView(isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView)
-                .zIndex(2)
-                .transition(.move(edge: .bottom))
-        }
         
-        if isShowingSearchModuleView {
-            SearchModuleView()
-                .zIndex(2)
-                .transition(.move(edge: .bottom))
-        }
-        
-        if isShowingThemeView {
+        switch viewType {
+        case .search:
+            SearchModuleView(
+                viewType: $viewType, 
+                reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented,
+                inValidregisterModuleIsPresented: $inValidregisterModuleIsPresented
+            )
+            .bottomSheetTransition()
+        case .theme:
             SettingTimeTableInfoView()
-                .zIndex(2)
-                .transition(.move(edge: .bottom))
+                .bottomSheetTransition()
+        case .detail:
+            DetailModuleInfoView(
+                viewType: $viewType,
+                deleteModuleAlertIsPresented: $deleteModuleAlertIsPresented
+            )
+            .bottomSheetTransition()
+        default:
+            EmptyView()
         }
     }
 }
-
-fileprivate struct TopView: View {
-    @Binding var isShowingSearchModuleView: Bool
-    @Binding var isShowingSettingTimeTableView: Bool
-    @Binding var isShowingThemeView: Bool
-    
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("NUS")
-                        .font(.bold_8)
-                        .foregroundColor(.heyGray6)
-                        .padding(.horizontal, 5)
-                        .padding(.vertical, 2)
-                        .background(Color.heyDarkBlue)
-                    
-                    Text("AY2025/2026 sem1")
-                        .font(.medium_12)
-                        .foregroundColor(.heyGray2) //색상 확인
-                }
-                .padding(.bottom, 11)
-                
-                Text("A+++")
-                    .font(.semibold_18)
-                    .foregroundColor(.heyGray2) //색상 확인
-            }
-            
-            Spacer()
-            
-            HStack {
-                Button {
-                    withAnimation {
-                        isShowingSearchModuleView.toggle()
-                    }
-                } label: {
-                    Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                        .tint(.heyGray6)
-                        .padding(.trailing, 26)
-                }
-                
-                Button {
-                    withAnimation {
-                        isShowingSettingTimeTableView.toggle()
-                    }
-                } label: {
-                    Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .tint(.heyGray6)
-                        .padding(.trailing, 23)
-                }
-                
-                Circle()
-                    .frame(width: 31, height: 31)
-            }
-        }
-        .padding(.horizontal, 16)
-        .sheet(isPresented: $isShowingSettingTimeTableView) {
-            SettingTimeTableView(isShowingThemeView: $isShowingThemeView)
-                .presentationDetents([.medium, .large, .height(256)])
-                .presentationDragIndicator(.hidden)
-        }
-    }
-}
-
-public struct ClassSearchTopView: View {
-    @Binding var isShowingSearchModuleView: Bool
-    @State private var isShowingAddModuleView = false
-    
-    public var body: some View {
-        HStack {
-            Button {
-                withAnimation {
-                    isShowingSearchModuleView = false
-                }
-            } label: {
-                Image(uiImage: .icClose)
-                    .resizable()
-                    .frame(width: 16, height: 16)
-            }
-            
-            Spacer()
-            
-            Button {
-                withAnimation {
-                    isShowingAddModuleView.toggle()
-                }
-            } label: {
-                Image(uiImage: .icPencil)
-                    .resizable()
-                    .frame(width: 16, height: 16)
-                    .padding(.trailing, 28)
-            }
-            
-            Button {
-                withAnimation {
-                    //TODO: 모듈 추가 비즈니스 로직 추가
-                    isShowingSearchModuleView = false
-                }
-            } label: {
-                Image(uiImage: .icPlus)
-                    .resizable()
-                    .frame(width: 16, height: 16)
-            }
-        }
-        .padding(.horizontal, 16)
-        .sheet(isPresented: $isShowingAddModuleView) {
-            AddModuleView()
-                .presentationDetents([.medium, .large, .height(506)])
-                .presentationDragIndicator(.hidden)
-        }
-    }
-}
-
-fileprivate struct MainView: View {
-    @Binding var canTapped: Bool
-    @Binding var isShowingModuleDetailInfoView: Bool
-    
-    var body: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                WeeklyListView()
-                    .padding(.bottom, 16)
-                    .padding(.leading, 30)
-            }
-            
-            ScrollView() {
-                HStack(alignment: .top) {
-                    HourListView()
-                        .padding(.top, 10)
-                    
-                    TimeTableGridView(canTapped: $canTapped, isShowingModuleDetailInfoView: $isShowingModuleDetailInfoView)
-                }
-            }
-            .scrollIndicators(.hidden)
-            .border(Color.heyGray6, width: 1)
-        }
-        .scrollIndicators(.hidden)
-    }
-}
-
-
-fileprivate struct TimeTableGridView: View {
-    @Binding var canTapped: Bool
-    @Binding var isShowingModuleDetailInfoView: Bool
-    
-    let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sta", "Sun"]
-    let timeSlots = Array(9...24) // 9시부터 7시(19)까지
-    let schedule = [
-        (day: "Mon", startHour: 9, endHour: 10, title: "MA5031", location: "SOE CR BI-2"),
-        (day: "Mon", startHour: 11, endHour: 17, title: "MA5031", location: "SOE CR BI-2"),
-        (day: "Wed", startHour: 10, endHour: 12, title: "MA5031", location: "SOE CR BI-2")
-    ]
-    
-    var body: some View {
-        Grid(horizontalSpacing: 1, verticalSpacing: 1) {
-            GridRow {
-                ForEach(days, id: \.self) { _ in
-                    Rectangle()
-                        .fill(.clear)
-                        .stroke(Color.heyGray6, lineWidth: 0.5)
-                        .frame(width: 73, height: 21)
-                }
-            }
-            
-            ForEach(timeSlots, id: \.self) { hour in
-                GridRow(alignment: .top) {
-                    ForEach(days, id: \.self) { day in
-                        
-                        ZStack {
-                            Rectangle()
-                                .fill(.clear)
-                                .stroke(Color.heyGray6, lineWidth: 0.5)
-                            
-                            
-                            // 강의 슬롯 색칠
-                            if let slot = schedule.first(where: {
-                                $0.day == day && hour >= $0.startHour && hour < $0.endHour
-                            }) {
-                                Button {
-                                    withAnimation {
-                                        isShowingModuleDetailInfoView.toggle()
-                                    }
-                                    
-                                } label: {
-                                    ZStack {
-                                        Color.heySubMain
-                                        
-                                        if hour == slot.startHour {
-                                            
-                                            VStack(alignment: .leading) {
-                                                
-                                                // 강의 시작 시간에만 텍스트 표시
-                                                Text(slot.title)
-                                                    .font(.medium_12)
-                                                    .multilineTextAlignment(.center)
-                                                Text(slot.location)
-                                                    .font(.regular_10)
-                                                    .foregroundColor(.gray)
-                                                Spacer()
-                                            }
-                                            
-                                        }
-                                    }
-                                }
-                                .disabled(!canTapped)
-                                .background(Color.blue.opacity(0.2))
-                            }
-                        }
-                        .frame(width: 73, height: 52)
-                    }
-                    
-                    
-                }
-            }
-        }
-    }
-}
-public struct WeeklyListView: View {
-    var weekList = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sta", "Sun"]
-    public var body: some View {
-        HStack(spacing: 55) {
-            ForEach(weekList, id: \.self) { day in
-                WeeklyListCellView(day)
-            }
-        }
-        
-    }
-}
-
-fileprivate struct WeeklyListCellView: View {
-    public let day: String
-    public init(_ day: String) {
-        self.day = day
-    }
-    var body: some View {
-        HStack {
-            
-            
-            Text(day)
-                .font(.semibold_12)
-                .foregroundColor(.heyGray1)
-            
-            
-        }
-        
-        //            .padding(.horizontal, 8)
-        //            .padding(.vertical, 5)
-        //            .background(Color.heyGray3) //색상 확인하기
-        //            .clipShape(RoundedRectangle(cornerRadius: 4))
-    }
-}
-
 
 #Preview {
     TimeTableView()

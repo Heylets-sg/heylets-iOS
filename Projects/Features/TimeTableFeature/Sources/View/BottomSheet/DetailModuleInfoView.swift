@@ -8,10 +8,9 @@
 
 import SwiftUI
 
-import DSKit
-
 public struct DetailModuleInfoView: View {
-    @Binding var isShowingModuleDetailInfoView: Bool
+    @Binding var viewType: TimeTableViewType
+    @Binding var deleteModuleAlertIsPresented: Bool
     
     public var body: some View {
         
@@ -54,10 +53,9 @@ public struct DetailModuleInfoView: View {
             HStack {
                 Spacer()
                 
-                Button  {
-                    withAnimation {
-                        isShowingModuleDetailInfoView.toggle()
-                    }
+                Button {
+                    viewType = .main
+                    deleteModuleAlertIsPresented.toggle()
                 } label: {
                     VStack {
                         Text("Delete")

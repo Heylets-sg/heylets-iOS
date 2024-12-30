@@ -14,7 +14,7 @@ struct Theme: Hashable {
 }
 
 struct ThemeTopView: View {
-    @Binding var isShowingThemeView: Bool
+    @Binding var viewType: TimeTableViewType
     
     let themeList: [Theme] = [
         .init(image: .theme1, name: "theme1"),
@@ -29,7 +29,7 @@ struct ThemeTopView: View {
             HStack {
                 Button {
                     withAnimation {
-                        isShowingThemeView.toggle()
+                        viewType = .main
                     }
                 } label: {
                     Image(uiImage: .icClose)

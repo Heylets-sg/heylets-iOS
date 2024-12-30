@@ -25,6 +25,7 @@ public extension UIImage {
     static let icPencil = DSKitAsset.icPencil.image
     static let icDown = DSKitAsset.icDown.image
     static let icPlus = DSKitAsset.icPlus.image
+    static let icNext = DSKitAsset.icNext.image
     
     static let timeTable = DSKitAsset.graphicsTimeTable.image
     static let color = DSKitAsset.graphicsColor.image
