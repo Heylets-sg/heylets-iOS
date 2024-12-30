@@ -57,7 +57,7 @@ struct HeyAlertView: View {
 
 
 extension View {
-    func heyAlert(
+    public func heyAlert(
         isPresented: Bool,
         title: String,
         primaryButton: (String, HeyButtonColorStyle, () -> Void),
@@ -73,7 +73,7 @@ extension View {
                         primaryAction: primaryButton,
                         secondaryAction: secondaryButton
                     )
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, 44)
                     .shadow(radius: 10)
                 }
                 .ignoresSafeArea()

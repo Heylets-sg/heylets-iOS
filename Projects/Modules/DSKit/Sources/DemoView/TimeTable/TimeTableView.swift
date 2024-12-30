@@ -22,6 +22,7 @@ enum TimeTableViewType {
 public struct TimeTableView: View {
     //    @EnvironmentObject var router: Router
     @State private var viewType: TimeTableViewType = .main
+    @State var deleteModuleAlertIsPresented: Bool = false
     public  init() {}
     
     
@@ -55,6 +56,17 @@ public struct TimeTableView: View {
                     viewType = .main
                 }
             }
+            .heyAlert(
+                isPresented: deleteModuleAlertIsPresented,
+                title: "Delete module?",
+                primaryButton: ("Delete", .error, {
+                    //삭제 비즈니스 로직 추가
+                    deleteModuleAlertIsPresented = false
+                }),
+                secondaryButton: ("Close", .gray, {
+                    deleteModuleAlertIsPresented = false
+                })
+            )
         }
         
         switch viewType {
@@ -65,7 +77,10 @@ public struct TimeTableView: View {
             SettingTimeTableInfoView()
                 .bottomSheetTransition()
         case .detail:
-            DetailModuleInfoView(viewType: $viewType)
+            DetailModuleInfoView(
+                viewType: $viewType,
+                deleteModuleAlertIsPresented: $deleteModuleAlertIsPresented
+            )
                 .bottomSheetTransition()
         default:
             EmptyView()
