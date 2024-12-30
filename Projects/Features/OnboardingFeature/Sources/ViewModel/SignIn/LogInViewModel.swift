@@ -21,11 +21,12 @@ public class LogInViewModel: ObservableObject {
     }
     
     struct State {
-        var id: String = ""
-        var password: String = ""
+        var loginButtonEnabled = false
     }
     
     @Published var state = State()
+    @Published var id: String = ""
+    @Published var password: String = ""
     private let cancelBag = CancelBag()
     
     public var navigationRouter: OnboardingNavigationRouter
@@ -37,11 +38,14 @@ public class LogInViewModel: ObservableObject {
     ) {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
+        
+        observe()
     }
     
     func send(_ action: Action) {
         switch action {
         case .loginButtonDidTap:
+            //TODO: 비밀번호, ID 유효성 처리
             //TODO: 로그인 API 연결
             windowRouter.switch(to: .timetable)
         case .forgotPasswordButtonDidTap:
@@ -49,6 +53,18 @@ public class LogInViewModel: ObservableObject {
         case .signUpButtonDidTap:
             navigationRouter.push(to: .selectUniversity)
         }
+    }
+    
+    func observe() {
+        print(id, id.isEmpty)
+        print(password, password.isEmpty)
+        weak var owner = self
+        guard let owner else { return }
+        
+        Publishers.CombineLatest($id, $password)
+            .map { !$0.isEmpty && !$1.isEmpty }
+            .assign(to: \.state.loginButtonEnabled, on: owner)
+            .store(in: cancelBag)
     }
 }
 

@@ -37,4 +37,7 @@ public extension UIImage {
     static let theme3 = DSKitAsset.theme3.image
     static let theme4 = DSKitAsset.theme4.image
     static let theme5 = DSKitAsset.theme5.image
+    
+    static let nus = DSKitAsset.uniNus.image
+    static let ntu = DSKitAsset.uniNtu.image
 }

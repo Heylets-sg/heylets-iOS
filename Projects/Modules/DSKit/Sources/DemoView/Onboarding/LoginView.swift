@@ -1,72 +1,114 @@
+////
+////  SelectUniversityView.swift
+////  OnboardingFeature
+////
+////  Created by 류희재 on 12/18/24.
+////  Copyright © 2024 Heylets-iOS. All rights reserved.
+////
 //
-//  LoginView.swift
-//  DSKit
+//import SwiftUI
 //
-//  Created by 류희재 on 12/23/24.
-//  Copyright © 2024 Heylets-iOS. All rights reserved.
+//import BaseFeatureDependency
+//import DSKit
 //
-
-import SwiftUI
-
-struct LoginView: View {
-    
-    let images: [UIImage] = [.timeTable, .color] // 테스트용 이미지
-    
-    public var body: some View {
-        ZStack {
-            Color.heyMain.ignoresSafeArea()
-            
-            VStack(alignment: .leading) {
-                Spacer()
-                    .frame(height: 120)
-                
-                Text("Add a personal schedule to\nyour school timetable")
-                    .font(.bold_20)
-                    .foregroundColor(.heyWhite)
-                    .lineSpacing(3.5)
-                    .padding(.bottom, 12)
-                    .padding(.leading, 16)
-                    .lineLimit(2)
-                
-                Text("Manage your school-related schedules\nall at once!")
-                    .font(.medium_14)
-                    .foregroundColor(.heyWhite)
-                    .padding(.leading, 16)
-                    .lineLimit(2)
-                
-                Spacer()
-                    .frame(height: 52)
-                
-                CarouselView(pageCount: images.count, visibleEdgeSpace: 0, spacing: 0) { index in
-                    Image(uiImage: images[index])
-                        .resizable()
-                        .scaledToFit()
-                }
-                .frame(height: 353) // 전체 Carousel 뷰의 높이 설정
-                .padding(.horizontal, 0) // 양쪽 여백을 없애기 위해 horizontal padding 0
-                
-                Spacer()
-                
-                VStack {
-                    Button("Sign up") {
-                    }
-                    .heyBottomButtonStyle(.white)
-                    .padding(.bottom, 16)
-                    
-                    Button("Log in") {
-                    }.heyBottomButtonStyle(.black)
-                }
-                .padding(.horizontal, 16)
-                
-                Spacer()
-                    .frame(height: 65)
-            }
-        }
-        .ignoresSafeArea(edges: .vertical)
-        .navigationBarBackButtonHidden()
-    }
-}
-
-#Preview {
-    LoginView()
-}
+//import SwiftUI
+//
+//import DSKit
+//
+//enum UniversityInfo: String {
+//    case NUS
+//    case NTU
+//    
+//    var icon: UIImage {
+//        switch self {
+//        case .NUS:
+//            return .nus
+//        case .NTU:
+//            return .ntu
+//        }
+//    }
+//}
+//
+//
+//public struct SelectUniversityView: View {
+//    @EnvironmentObject var router: Router
+////    var viewModel: SelectUniversityViewModel
+//    
+//    @State private var searchText: String = ""
+//    @State private var universityItems: [UniversityInfo] = [.NTU, .NUS]
+//    @State private var selectedUniversity: UniversityInfo? = nil
+//    
+//    var filteredItems: [UniversityInfo] {
+//        if searchText.isEmpty {
+//            return []
+//        } else {
+//            return universityItems.filter { $0.rawValue.localizedCaseInsensitiveContains(searchText) }
+//        }
+//    }
+//    
+//    
+////    public init(viewModel: SelectUniversityViewModel) {
+////        self.viewModel = viewModel
+////    }
+//    public var body: some View {
+//        OnboardingBaseView(
+//            content: {
+//                VStack {
+//                    HeyTextField(
+//                        text: $searchText,
+//                        placeHolder: "Select your university",
+//                        leftImage: .icSchool,
+//                        textFieldState: .idle
+//                    )
+//                    .autocapitalization(.none)
+//                    .disableAutocorrection(true)
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 8)
+//                            .stroke(Color.heyMain, lineWidth: 2)
+//                    )
+//                    
+//                    List(filteredItems, id: \.self) { university in
+//                        SelectUniversityListCellView(university, isSelected: university == selectedUniversity)
+//                            .onTapGesture {
+//                                selectedUniversity = university
+//                            }
+//                    }
+//                    .scrollContentBackground(.hidden)
+//                    .background(Color.white)
+//                }
+//            }, titleText: "What school are you attending?",
+//            nextButtonAction: { viewModel.send(.nextButtonDidTap) })
+//    }
+//}
+//
+//fileprivate struct SelectUniversityListCellView: View {
+//    private let university: UniversityInfo
+//    private let isSelected: Bool
+//    
+//    init(_ university: UniversityInfo, isSelected: Bool) {
+//        self.university = university
+//        self.isSelected = isSelected
+//    }
+//    
+//    var body: some View {
+//        HStack {
+//            Image(uiImage: university.icon)
+//                .resizable()
+//                .frame(width: 24, height: 24)
+//                .padding(.leading, 16)
+//            
+//            Text(university.rawValue)
+//                .font(.regular_14)
+//                .foregroundColor(.heyGray1)
+//                .padding(.leading, 12)
+//            
+//            Spacer()
+//        }
+//        .padding(.vertical, 10)
+//        .background(isSelected ? Color.heyMain.opacity(0.3) : Color.heyGray5.opacity(0.2))
+//        .cornerRadius(8)
+//    }
+//}
+////#Preview {
+////    SelectUniversityView()
+////}

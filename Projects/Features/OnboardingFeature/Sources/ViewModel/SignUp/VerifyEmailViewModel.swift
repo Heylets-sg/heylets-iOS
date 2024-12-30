@@ -18,10 +18,14 @@ public class VerifyEmailViewModel: ObservableObject {
     }
     
     public var navigationRouter: OnboardingNavigationRouter
+    public var user: User
     
-    public init(navigationRouter: OnboardingNavigationRouter) {
+    public init(
+        navigationRouter: OnboardingNavigationRouter,
+        user: User
+    ) {
         self.navigationRouter = navigationRouter
-        print(navigationRouter.destinations)
+        self.user = user
     }
     
     func send(_ action: Action) {

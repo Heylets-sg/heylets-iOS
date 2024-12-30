@@ -49,7 +49,7 @@ public struct LogInView: View {
             .padding(.bottom, 29)
             
             HeyTextField(
-                text: $viewModel.state.id,
+                text: $viewModel.id,
                 placeHolder: "ID"
             )
             .overlay(
@@ -59,7 +59,7 @@ public struct LogInView: View {
             .padding(.bottom, 21)
             
             PasswordField(
-                password: $viewModel.state.password,
+                password: $viewModel.password,
                 showPassword: $showPassword, colorSystem: .white
             )
             .overlay(
@@ -81,6 +81,7 @@ public struct LogInView: View {
             Button("Log In") {
                 viewModel.send(.loginButtonDidTap)
             }
+            .disabled(!viewModel.state.loginButtonEnabled)
             .heyBottomButtonStyle()
         }
         .padding(.top, 106)
