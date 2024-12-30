@@ -11,9 +11,11 @@ import SwiftUI
 import DSKit
 
 public struct SearchModuleView: View {
+    @Binding var viewType: TimeTableViewType
     @Binding var reportMissingModuleAlertIsPresented: Bool
+    @Binding var inValidregisterModuleIsPresented: Bool
     
-    var classList: [String] = []
+    var classList: [String] = ["","","","","","","","","",""]
     public var body: some View {
         VStack {
             Spacer()
@@ -53,7 +55,7 @@ public struct SearchModuleView: View {
             } else {
                 ScrollView {
                     ForEach(classList, id: \.self) { _ in
-                        ClassSearchListCellView()
+                        ClassSearchListCellView(inValidregisterModuleIsPresented: $inValidregisterModuleIsPresented, viewType: $viewType)
                             .padding(.bottom, 24)
                     }
                 }
@@ -105,6 +107,9 @@ fileprivate struct ClassSearchBarView: View {
 
 fileprivate struct ClassSearchListCellView: View {
     @State var text = ""
+    @Binding var inValidregisterModuleIsPresented: Bool
+    @Binding var viewType: TimeTableViewType
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("ML0004 Career and Entrepreneurial Development")
@@ -122,6 +127,10 @@ fileprivate struct ClassSearchListCellView: View {
                 .foregroundColor(.heyGray3)
         }
         .padding(.trailing, 87)
+        .onTapGesture {
+            viewType = .main
+            inValidregisterModuleIsPresented = true
+        }
     }
 }
 //#Preview {

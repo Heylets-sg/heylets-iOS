@@ -19,10 +19,20 @@ enum TimeTableViewType {
     case theme
 }
 
+public enum TimeTableSettingAlertType {
+    case editTimeTableName
+    case shareURL
+    case saveImage
+    case removeTimeTable
+}
+
 public struct TimeTableView: View {
     //    @EnvironmentObject var router: Router
     @State private var viewType: TimeTableViewType = .main
+    @State private var settingAlertType: TimeTableSettingAlertType? = nil
     @State var deleteModuleAlertIsPresented: Bool = false
+    @State var inValidregisterModuleIsPresented: Bool = false
+    @State var reportMissingModuleAlertIsPresented: Bool = false
     public  init() {}
     
     
@@ -42,7 +52,7 @@ public struct TimeTableView: View {
                 case .theme:
                     ThemeTopView(viewType: $viewType)
                 default:
-                    TopView(viewType: $viewType)
+                    TopView(viewType: $viewType, settingAlertType: $settingAlertType)
                     //                    .environmentObject(router)
                 }
                 
@@ -57,6 +67,14 @@ public struct TimeTableView: View {
                 }
             }
             .heyAlert(
+                isPresented: inValidregisterModuleIsPresented,
+                title: "해당 이유가 있겠죠 -> 비즈니스 로직 처리",
+                primaryButton: ("Close", .gray, {
+                    inValidregisterModuleIsPresented = false
+                    viewType = .search
+                })
+            )
+            .heyAlert(
                 isPresented: deleteModuleAlertIsPresented,
                 title: "Delete module?",
                 primaryButton: ("Delete", .error, {
@@ -67,12 +85,26 @@ public struct TimeTableView: View {
                     deleteModuleAlertIsPresented = false
                 })
             )
+            .heySettingTimeTableAlert(settingAlertType, closeBtnAction: {
+                settingAlertType = nil
+            })
+            
+            .sheet(isPresented: $reportMissingModuleAlertIsPresented) {
+                ReportMissingModuleView(reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented)
+                    .transition(.move(edge: .trailing))
+                    .presentationDetents([.height(802)])
+                    .presentationDragIndicator(.visible)
+            }
         }
         
         switch viewType {
         case .search:
-            SearchModuleView()
-                .bottomSheetTransition()
+            SearchModuleView(
+                viewType: $viewType,
+                reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented,
+                inValidregisterModuleIsPresented: $inValidregisterModuleIsPresented
+            )
+            .bottomSheetTransition()
         case .theme:
             SettingTimeTableInfoView()
                 .bottomSheetTransition()
@@ -81,7 +113,7 @@ public struct TimeTableView: View {
                 viewType: $viewType,
                 deleteModuleAlertIsPresented: $deleteModuleAlertIsPresented
             )
-                .bottomSheetTransition()
+            .bottomSheetTransition()
         default:
             EmptyView()
         }
@@ -90,4 +122,65 @@ public struct TimeTableView: View {
 
 #Preview {
     TimeTableView()
+}
+
+public extension View {
+    func heySettingTimeTableAlert(
+        _ type: TimeTableSettingAlertType?,
+        closeBtnAction: @escaping () -> Void
+    ) -> some View {
+        self.overlay {
+            if let type = type {
+                ZStack {
+                    Color.black.opacity(0.5)
+                    
+                    Group {
+                        switch type {
+                        case .editTimeTableName:
+                            HeyAlertView(
+                                title: "Enter name",
+                                isEditedName: true,
+                                primaryAction: ("Close", .gray, closeBtnAction),
+                                secondaryAction: ("Ok", .primary, {})
+                            )
+                        case .shareURL:
+                            Text("URL copied to clipboard")
+                                .font(.medium_18)
+                                .foregroundColor(.heyGray1)
+                                .padding(.horizontal, 24)
+                                .padding(.vertical, 24)
+                                .background(Color.heyWhite)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .onAppear {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                        withAnimation {
+                                            closeBtnAction()
+                                        }
+                                    }
+                                }
+                        case .saveImage:
+                            HeyAlertView(
+                                title: "The timetable has been\nsaved as an image.",
+                                isEditedName: false,
+                                primaryAction: ("Ok", .gray, closeBtnAction)
+                            )
+                        case .removeTimeTable:
+                            HeyAlertView(
+                                title: "The timetable has been\nsaved as an image.",
+                                isEditedName: false,
+                                primaryAction: ("Delete", .primary, {}),
+                                secondaryAction: ("Close", .gray, closeBtnAction)
+                            )
+                        }
+                    }
+                    .padding(.horizontal, 44)
+                    .shadow(radius: 10)
+                }
+                .ignoresSafeArea()
+            } else {
+                EmptyView()
+            }
+        }
+    }
+
 }

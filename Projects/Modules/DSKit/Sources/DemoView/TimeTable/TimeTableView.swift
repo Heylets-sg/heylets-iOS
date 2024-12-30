@@ -22,7 +22,9 @@ enum TimeTableViewType {
 public struct TimeTableView: View {
     //    @EnvironmentObject var router: Router
     @State private var viewType: TimeTableViewType = .main
+    @State private var settingAlertType: DemoTimeTableSettingAlertType? = nil
     @State var deleteModuleAlertIsPresented: Bool = false
+    @State var inValidregisterModuleIsPresented: Bool = false
     @State var reportMissingModuleAlertIsPresented: Bool = false
     public  init() {}
     
@@ -43,7 +45,7 @@ public struct TimeTableView: View {
                 case .theme:
                     ThemeTopView(viewType: $viewType)
                 default:
-                    TopView(viewType: $viewType)
+                    TopView(viewType: $viewType, settingAlertType: $settingAlertType)
                     //                    .environmentObject(router)
                 }
                 
@@ -58,6 +60,14 @@ public struct TimeTableView: View {
                 }
             }
             .heyAlert(
+                isPresented: inValidregisterModuleIsPresented,
+                title: "해당 이유가 있겠죠 -> 비즈니스 로직 처리",
+                primaryButton: ("Close", .gray, {
+                    inValidregisterModuleIsPresented = false
+                    viewType = .search
+                })
+            )
+            .heyAlert(
                 isPresented: deleteModuleAlertIsPresented,
                 title: "Delete module?",
                 primaryButton: ("Delete", .error, {
@@ -68,6 +78,10 @@ public struct TimeTableView: View {
                     deleteModuleAlertIsPresented = false
                 })
             )
+//            .heySettingTimeTableAlert(settingAlertType, closeBtnAction: {
+//                settingAlertType = nil
+//            })
+            
             .sheet(isPresented: $reportMissingModuleAlertIsPresented) {
                 ReportMissingModuleView(reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented)
                     .transition(.move(edge: .trailing))
@@ -79,7 +93,9 @@ public struct TimeTableView: View {
         switch viewType {
         case .search:
             SearchModuleView(
-                reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented
+                viewType: $viewType, 
+                reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented,
+                inValidregisterModuleIsPresented: $inValidregisterModuleIsPresented
             )
             .bottomSheetTransition()
         case .theme:

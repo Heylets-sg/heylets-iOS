@@ -14,6 +14,7 @@ import BaseFeatureDependency
 public struct TopView: View {
     @EnvironmentObject var router: Router
     @Binding var viewType: TimeTableViewType
+    @Binding var settingAlertType: TimeTableSettingAlertType?
     
     public var body: some View {
         HStack {
@@ -74,9 +75,10 @@ public struct TopView: View {
         }
         .padding(.horizontal, 16)
         .sheet(isPresented: .constant(viewType == .setting)) {
-            SettingTimeTableView(viewType: $viewType)
+            SettingTimeTableView(viewType: $viewType, settingAlertType: $settingAlertType)
                 .presentationDetents([.medium, .large, .height(256)])
                 .presentationDragIndicator(.hidden)
         }
     }
 }
+

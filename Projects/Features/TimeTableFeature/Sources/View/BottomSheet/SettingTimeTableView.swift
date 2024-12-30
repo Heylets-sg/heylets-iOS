@@ -3,6 +3,7 @@ import DSKit
 
 struct SettingTimeTableView: View {
     @Binding var viewType: TimeTableViewType
+    @Binding var settingAlertType: TimeTableSettingAlertType?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 25) {
@@ -21,7 +22,8 @@ struct SettingTimeTableView: View {
             }
             
             Button {
-                // Timetable name action
+                settingAlertType = .editTimeTableName
+                viewType = .main
             } label: {
                 Text("Timetable name")
                     .font(.medium_14)
@@ -29,7 +31,8 @@ struct SettingTimeTableView: View {
             }
             
             Button {
-                // Share URL action
+                settingAlertType = .shareURL
+                viewType = .main
             } label: {
                 Text("Share URL")
                     .font(.medium_14)
@@ -37,7 +40,8 @@ struct SettingTimeTableView: View {
             }
             
             Button {
-                // Save image action
+                settingAlertType = .saveImage
+                viewType = .main
             } label: {
                 Text("Save image")
                     .font(.medium_14)
@@ -45,7 +49,8 @@ struct SettingTimeTableView: View {
             }
             
             Button {
-                // Remove all action
+                settingAlertType = .removeTimeTable
+                viewType = .main
             } label: {
                 Text("Remove all")
                     .font(.medium_14)
