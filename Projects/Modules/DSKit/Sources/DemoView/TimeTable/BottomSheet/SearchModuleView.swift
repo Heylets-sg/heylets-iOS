@@ -11,7 +11,9 @@ import SwiftUI
 import DSKit
 
 public struct SearchModuleView: View {
-    var classList = ["","","","","","","","","",""]
+    @Binding var reportMissingModuleAlertIsPresented: Bool
+    
+    var classList: [String] = []
     public var body: some View {
         VStack {
             Spacer()
@@ -20,13 +22,45 @@ public struct SearchModuleView: View {
             ClassSearchBarView()
                 .padding(.bottom, 28)
             
-            ScrollView {
-                ForEach(classList, id: \.self) { _ in
-                    ClassSearchListCellView()
-                        .padding(.bottom, 24)
+            if classList.isEmpty {
+                Text("We couldn’t find a match for\n‘Career and Enterpreneurial’.")
+                    .font(.regular_16)
+                    .foregroundColor(.heyGray2)
+                    .padding(.bottom, 20)
+                
+                Button {
+                    reportMissingModuleAlertIsPresented = true
+                } label: {
+                    HStack {
+                        Text("Report Missing Modules")
+                            .font(.regular_14)
+                            .foregroundColor(.heyGray2)
+                        
+                        Image(uiImage: .icNext)
+                            .resizable()
+                            .frame(width: 4, height: 9)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 7)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.heyGray3, lineWidth: 1)
+                    )
                 }
+                
+                Spacer()
+                
+            } else {
+                ScrollView {
+                    ForEach(classList, id: \.self) { _ in
+                        ClassSearchListCellView()
+                            .padding(.bottom, 24)
+                    }
+                }
+                .scrollIndicators(.hidden)
             }
-            .scrollIndicators(.hidden)
+            
+            
         }
         .padding(.horizontal, 16)
         .cornerRadius(12, corners: [.topLeft, .topRight])
@@ -90,6 +124,6 @@ fileprivate struct ClassSearchListCellView: View {
         .padding(.trailing, 87)
     }
 }
-#Preview {
-    SearchModuleView()
-}
+//#Preview {
+//    SearchModuleView()
+//}

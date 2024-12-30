@@ -9,7 +9,7 @@
 import SwiftUI
 
 import DSKit
-import BaseFeatureDependency
+//import BaseFeatureDependency
 
 enum TimeTableViewType {
     case main
@@ -23,6 +23,7 @@ public struct TimeTableView: View {
     //    @EnvironmentObject var router: Router
     @State private var viewType: TimeTableViewType = .main
     @State var deleteModuleAlertIsPresented: Bool = false
+    @State var reportMissingModuleAlertIsPresented: Bool = false
     public  init() {}
     
     
@@ -67,12 +68,20 @@ public struct TimeTableView: View {
                     deleteModuleAlertIsPresented = false
                 })
             )
+            .sheet(isPresented: $reportMissingModuleAlertIsPresented) {
+                ReportMissingModuleView(reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented)
+                    .transition(.move(edge: .trailing))
+                    .presentationDetents([.height(802)])
+                    .presentationDragIndicator(.visible)
+            }
         }
         
         switch viewType {
         case .search:
-            SearchModuleView()
-                .bottomSheetTransition()
+            SearchModuleView(
+                reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented
+            )
+            .bottomSheetTransition()
         case .theme:
             SettingTimeTableInfoView()
                 .bottomSheetTransition()
@@ -81,7 +90,7 @@ public struct TimeTableView: View {
                 viewType: $viewType,
                 deleteModuleAlertIsPresented: $deleteModuleAlertIsPresented
             )
-                .bottomSheetTransition()
+            .bottomSheetTransition()
         default:
             EmptyView()
         }

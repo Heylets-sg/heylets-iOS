@@ -9,10 +9,10 @@
 import SwiftUI
 
 import DSKit
-import BaseFeatureDependency
+//import BaseFeatureDependency
 
 public struct TopView: View {
-    @EnvironmentObject var router: Router
+//    @EnvironmentObject var router: Router
     @Binding var viewType: TimeTableViewType
     
     public var body: some View {
@@ -65,7 +65,7 @@ public struct TopView: View {
                 }
                 
                 Button {
-                    router.windowRouter.switch(to: .mypage)
+//                    router.windowRouter.switch(to: .mypage)
                 } label: {
                     Circle()
                         .frame(width: 31, height: 31)

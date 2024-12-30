@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct ReportMissingModuleView: View {
+    @Binding var reportMissingModuleAlertIsPresented: Bool
     @State var text = ""
     var body: some View {
         VStack(alignment: .leading) {
@@ -30,7 +31,7 @@ struct ReportMissingModuleView: View {
             Spacer()
             
             Button("Report") {
-                
+                reportMissingModuleAlertIsPresented = false
             }.heyBottomButtonStyle()
             
             Spacer()
@@ -41,6 +42,6 @@ struct ReportMissingModuleView: View {
     }
 }
 
-#Preview {
-    ReportMissingModuleView()
-}
+//#Preview {
+//    ReportMissingModuleView()
+//}
