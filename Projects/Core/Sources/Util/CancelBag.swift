@@ -8,7 +8,7 @@
 
 import Combine
 
-open class CancelBag {
+public class CancelBag {
     public var subscriptions = Set<AnyCancellable>()
     
     public func cancel() {

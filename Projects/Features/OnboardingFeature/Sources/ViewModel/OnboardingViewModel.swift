@@ -22,17 +22,14 @@ public class OnboardingViewModel: ObservableObject {
     
     public init(navigationRouter: OnboardingNavigationRoutable) {
         self.navigationRouter = navigationRouter
-        print(navigationRouter.destinations)
     }
     
     func send(_ action: Action) {
         switch action {
         case .signInButtonDidTap:
             navigationRouter.push(to: .login)
-            print(navigationRouter.destinations)
         case .signUpButtonDidTap:
             navigationRouter.push(to: .selectUniversity)
-            print(navigationRouter.destinations)
         }
     }
 }

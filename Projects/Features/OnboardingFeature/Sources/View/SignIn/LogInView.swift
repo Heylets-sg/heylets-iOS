@@ -13,14 +13,11 @@ import DSKit
 
 public struct LogInView: View {
     @EnvironmentObject var router: Router
-    var viewModel: LogInViewModel
+    @StateObject var viewModel: LogInViewModel
     
-    @State var text: String = ""
     @State var showPassword: Bool = false
     
-    public init(viewModel: LogInViewModel) {
-        self.viewModel = viewModel
-    }
+    
     public var body: some View {
         VStack(alignment: .trailing) {
             Image(uiImage: .logo)
@@ -42,7 +39,7 @@ public struct LogInView: View {
                     .padding(.trailing, 8)
                 
                 Button {
-                    
+                    viewModel.send(.signUpButtonDidTap)
                 } label: {
                     Text("Sign Up")
                         .font(.regular_12)
@@ -51,19 +48,25 @@ public struct LogInView: View {
             }
             .padding(.bottom, 29)
             
-            HeyTextField(text: $text, placeHolder: "ID")
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.heyGray3, lineWidth: 1)
-                )
-                .padding(.bottom, 21)
+            HeyTextField(
+                text: $viewModel.state.id,
+                placeHolder: "ID"
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.heyGray3, lineWidth: 1)
+            )
+            .padding(.bottom, 21)
             
-            PasswordField(password: $text, showPassword: $showPassword, colorSystem: .white)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.heyGray3, lineWidth: 1)
-                )
-                .padding(.bottom, 14)
+            PasswordField(
+                password: $viewModel.state.password,
+                showPassword: $showPassword, colorSystem: .white
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.heyGray3, lineWidth: 1)
+            )
+            .padding(.bottom, 14)
             
             Button {
                 viewModel.send(.forgotPasswordButtonDidTap)
@@ -77,7 +80,6 @@ public struct LogInView: View {
             
             Button("Log In") {
                 viewModel.send(.loginButtonDidTap)
-                router.windowRouter.switch(to: .timetable)
             }
             .heyBottomButtonStyle()
         }

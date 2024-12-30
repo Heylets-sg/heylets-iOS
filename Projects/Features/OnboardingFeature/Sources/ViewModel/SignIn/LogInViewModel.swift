@@ -10,27 +10,44 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Core
 
 public class LogInViewModel: ObservableObject {
     
     enum Action {
         case loginButtonDidTap
         case forgotPasswordButtonDidTap
+        case signUpButtonDidTap
     }
     
-    public var navigationRouter: OnboardingNavigationRouter
+    struct State {
+        var id: String = ""
+        var password: String = ""
+    }
     
-    public init(navigationRouter: OnboardingNavigationRouter) {
+    @Published var state = State()
+    private let cancelBag = CancelBag()
+    
+    public var navigationRouter: OnboardingNavigationRouter
+    public var windowRouter: WindowRoutableType
+    
+    public init(
+        navigationRouter: OnboardingNavigationRouter,
+        windowRouter: WindowRoutableType
+    ) {
         self.navigationRouter = navigationRouter
+        self.windowRouter = windowRouter
     }
     
     func send(_ action: Action) {
         switch action {
         case .loginButtonDidTap:
-            print("로그인 버튼 클릭")
+            //TODO: 로그인 API 연결
+            windowRouter.switch(to: .timetable)
         case .forgotPasswordButtonDidTap:
-            print("버튼클릭")
-//            navigationRouter.push(to: .resetPasswordView)
+            navigationRouter.push(to: .enterEmail)
+        case .signUpButtonDidTap:
+            navigationRouter.push(to: .selectUniversity)
         }
     }
 }
