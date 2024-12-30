@@ -15,6 +15,7 @@ public class ChangePasswordViewModel: ObservableObject {
     enum Action {
         case backButtonDidTap
         case nextButtonDidTap
+        case changePasswordButtonDidTap
     }
     
     public var navigationRouter: MyPageNavigationRouter
@@ -25,6 +26,13 @@ public class ChangePasswordViewModel: ObservableObject {
     }
     
     func send(_ action: Action) {
-
+        switch action {
+        case .backButtonDidTap:
+            break
+        case .nextButtonDidTap:
+            break
+        case .changePasswordButtonDidTap:
+            navigationRouter.pop()
+        }
     }
 }

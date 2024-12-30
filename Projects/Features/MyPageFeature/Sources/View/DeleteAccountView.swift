@@ -12,6 +12,8 @@ import DSKit
 
 public struct DeleteAccountView: View {
     @State var text = ""
+    @State var deleteAccountAlertViewIsPresented: Bool = false
+    @State var inValidPasswordAlertViewIsPresented: Bool = false
     public var body: some View {
         MyPageBaseView(content: {
             VStack(alignment: .leading) {
@@ -30,13 +32,29 @@ public struct DeleteAccountView: View {
                 Spacer()
                 
                 Button("Delete account"){
-                    
+                    deleteAccountAlertViewIsPresented = true
                 }.heyBottomButtonStyle(.primary)
                 
                 Spacer()
                     .frame(height: 65)
             }
-            
+            .heyAlert(
+                isPresented: deleteAccountAlertViewIsPresented,
+                title: "Are you sure you want\nto delete account?",
+                primaryButton: ("Close", .gray, {
+                    deleteAccountAlertViewIsPresented = false
+                }),
+                secondaryButton: ("Ok", .primary, {
+                    //회원탈퇴 로직 구현
+                })
+            )
+            .heyAlert(
+                isPresented: inValidPasswordAlertViewIsPresented,
+                title: "The password is not correct.\nplease try again.",
+                primaryButton: ("Ok", .gray, {
+                    inValidPasswordAlertViewIsPresented = false
+                })
+            )
         }, titleText: "Delete account")
     }
 }

@@ -14,6 +14,7 @@ import BaseFeatureDependency
 public struct ChangePasswordView: View {
     @EnvironmentObject var router: Router
     var viewModel: ChangePasswordViewModel
+    @State var changePasswordAlertViewIsPresented: Bool = false
     
     public init(viewModel: ChangePasswordViewModel) {
         self.viewModel = viewModel
@@ -66,15 +67,22 @@ public struct ChangePasswordView: View {
                 Spacer()
                 
                 Button("Change password"){
-                    
+                    changePasswordAlertViewIsPresented = true
                 }.heyBottomButtonStyle(.primary)
                 
                 Spacer()
                     .frame(height: 65)
             }
-            
         }, titleText: "Change Password")
+        .heyAlert(
+            isPresented: changePasswordAlertViewIsPresented,
+            title: "The password has been\nsuccessfully changed.\nPlease log in again",
+            primaryButton: ("Ok", .gray, {
+                viewModel.send(.changePasswordButtonDidTap)
+            })
+        )
     }
+
 }
 
 //#Preview {

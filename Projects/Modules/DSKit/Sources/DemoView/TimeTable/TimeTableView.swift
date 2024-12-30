@@ -29,7 +29,6 @@ public struct TimeTableView: View {
     public  init() {}
     
     
-    @State private var canTapped = true // 시간표 누를 수 있도록 하는 flag
     @State private var isShowingModuleDetailInfoView = false
     @State private var isShowingSearchModuleView = false
     @State private var isShowingSettingTimeTableView = false

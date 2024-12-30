@@ -12,6 +12,8 @@ import Combine
 import BaseFeatureDependency
 
 public class MyPageViewModel: ObservableObject {
+    var logOutAlertViewIsPresented: Bool = false
+    
     enum Action {
         case changePasswordButtonDidTap
         case privacyPolicyButtonDidTap
@@ -44,7 +46,7 @@ public class MyPageViewModel: ObservableObject {
         case .deleteAccountButtonDidTap:
             navigationRouter.push(to: .deleteAccount)
         case .logoutButtonDidTap:
-            print("로그아웃 버튼 눌림")
+            logOutAlertViewIsPresented = true
         }
 
     }

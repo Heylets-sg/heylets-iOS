@@ -27,20 +27,14 @@ public enum TimeTableSettingAlertType {
 }
 
 public struct TimeTableView: View {
-    //    @EnvironmentObject var router: Router
+    @EnvironmentObject var router: Router
     @State private var viewType: TimeTableViewType = .main
     @State private var settingAlertType: TimeTableSettingAlertType? = nil
     @State var deleteModuleAlertIsPresented: Bool = false
     @State var inValidregisterModuleIsPresented: Bool = false
     @State var reportMissingModuleAlertIsPresented: Bool = false
     public  init() {}
-    
-    
-    @State private var canTapped = true // 시간표 누를 수 있도록 하는 flag
-    @State private var isShowingModuleDetailInfoView = false
-    @State private var isShowingSearchModuleView = false
-    @State private var isShowingSettingTimeTableView = false
-    @State private var isShowingThemeView = false
+
     
     public var body: some View {
         ZStack {
@@ -53,7 +47,7 @@ public struct TimeTableView: View {
                     ThemeTopView(viewType: $viewType)
                 default:
                     TopView(viewType: $viewType, settingAlertType: $settingAlertType)
-                    //                    .environmentObject(router)
+                        .environmentObject(router)
                 }
                 
                 Spacer()
