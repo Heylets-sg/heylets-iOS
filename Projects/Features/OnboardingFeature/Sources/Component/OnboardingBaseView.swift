@@ -12,6 +12,7 @@ import DSKit
 struct OnboardingBaseView<Content:View>: View {
     
     @Environment(\.dismiss) var dismiss
+//    let isEnabled: Bool 
     
     let content: Content
     let titleText: String

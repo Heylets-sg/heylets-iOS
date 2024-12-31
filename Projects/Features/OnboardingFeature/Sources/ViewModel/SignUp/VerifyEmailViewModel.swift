@@ -10,15 +10,29 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Core
 
 public class VerifyEmailViewModel: ObservableObject {
+    struct State {
+        var domainListViewIsVisible = false
+        var continueButtonEnabled = false
+    }
+    
     enum Action {
         case backButtonDidTap
         case nextButtonDidTap
+        case domainListButtonDidTap
+        case selectDomain
     }
     
     public var navigationRouter: OnboardingNavigationRouter
     public var user: User
+    
+    @Published var state = State()
+    private let cancelBag = CancelBag()
+    
+    @Published var email: String = ""
+    @Published var domain: String = ""
     
     public init(
         navigationRouter: OnboardingNavigationRouter,
@@ -34,5 +48,10 @@ public class VerifyEmailViewModel: ObservableObject {
             navigationRouter.pop()
         case .nextButtonDidTap:
             navigationRouter.push(to: .enterSecurityCode)
+        case .domainListButtonDidTap:
+            state.domainListViewIsVisible.toggle()
+            print(state.domainListViewIsVisible)
+        case .selectDomain:
+            state.domainListViewIsVisible = false
         }
     }}

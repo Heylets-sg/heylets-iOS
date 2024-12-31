@@ -12,7 +12,6 @@ import BaseFeatureDependency
 import Core
 
 public class SelectUniversityViewModel: ObservableObject {
-    // MARK: - Nested Types
     struct State {
         var continueButtonEnabled = false
     }
@@ -41,6 +40,8 @@ public class SelectUniversityViewModel: ObservableObject {
     // MARK: - Init
     public init(navigationRouter: OnboardingNavigationRouter) {
         self.navigationRouter = navigationRouter
+        
+        observe()
     }
     
     // MARK: - Methods
@@ -56,5 +57,12 @@ public class SelectUniversityViewModel: ObservableObject {
             selectedUniversity = university
             state.continueButtonEnabled = true
         }
+    }
+    
+    private func observe() {
+        $selectedUniversity
+            .map { $0 != nil }
+            .assign(to: \.state.continueButtonEnabled, on: self)
+            .store(in: cancelBag)
     }
 }

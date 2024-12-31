@@ -88,7 +88,9 @@ public struct SelectUniversityView: View {
                     }
                 }
             }, titleText: "What school are you attending?",
-            nextButtonAction: { viewModel.send(.nextButtonDidTap) }
+            nextButtonAction: { viewModel.send(.nextButtonDidTap)
+//            isEnabled: viewModel.state.continueButtonEnabled
+            }
         )
     }
 }
