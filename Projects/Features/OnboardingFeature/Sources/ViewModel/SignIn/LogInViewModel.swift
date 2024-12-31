@@ -56,8 +56,6 @@ public class LogInViewModel: ObservableObject {
     }
     
     func observe() {
-        print(id, id.isEmpty)
-        print(password, password.isEmpty)
         weak var owner = self
         guard let owner else { return }
         

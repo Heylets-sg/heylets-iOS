@@ -14,7 +14,6 @@ import DSKit
 public struct VerifyEmailView: View {
     @EnvironmentObject var router: Router
     @ObservedObject var viewModel: VerifyEmailViewModel
-    @State var text = ""
     
     public init(viewModel: VerifyEmailViewModel) {
         self.viewModel = viewModel
@@ -27,7 +26,7 @@ public struct VerifyEmailView: View {
             
             HStack {
                 HeyTextField(
-                    text: $text,
+                    text: $viewModel.localPart,
                     placeHolder: "Enter your school email",
                     textFieldState: .idle,
                     colorSystem: .gray
@@ -43,12 +42,12 @@ public struct VerifyEmailView: View {
             
             HStack {
                 HeyTextField(
-                    text: $text,
-                    placeHolder: "Enter your school email",
+                    text: $viewModel.domain,
+                    placeHolder: "Click DownList Button",
                     textFieldState: .idle,
                     colorSystem: .gray
                 )
-                .padding(.trailing, 32)
+                .padding(.trailing, 16)
                 
                 Button {
                     viewModel.send(.domainListButtonDidTap)
@@ -61,11 +60,11 @@ public struct VerifyEmailView: View {
             }
             .background(Color.heyGray4)
             .clipShape(RoundedRectangle(cornerRadius: 8))
-            .padding(.trailing, 132)
+            .padding(.trailing, 116)
             
-            EmailDomainListView()
+            EmailDomainListView(viewModel: viewModel)
                 .frame(height: 250)
-                .padding(.trailing, 132)
+                .padding(.trailing, 116)
                 .hidden(!viewModel.state.domainListViewIsVisible)
             
             
@@ -75,6 +74,11 @@ public struct VerifyEmailView: View {
 }
 
 fileprivate struct EmailDomainListView: View {
+    private var viewModel: VerifyEmailViewModel
+    
+    init(viewModel: VerifyEmailViewModel) {
+        self.viewModel = viewModel
+    }
     var domainList: [String] = [
         "u.nus.edu",
         "e.ntu.edu.sg",
@@ -94,7 +98,7 @@ fileprivate struct EmailDomainListView: View {
                 ForEach(domainList, id: \.self) { domain in
                     EmailDomainListCellView(domain)
                         .onTapGesture {
-                            
+                            viewModel.send(.selectDomain(domain))
                         }
                 }
             }

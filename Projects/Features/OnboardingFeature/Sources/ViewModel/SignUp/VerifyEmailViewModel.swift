@@ -22,7 +22,7 @@ public class VerifyEmailViewModel: ObservableObject {
         case backButtonDidTap
         case nextButtonDidTap
         case domainListButtonDidTap
-        case selectDomain
+        case selectDomain(String)
     }
     
     public var navigationRouter: OnboardingNavigationRouter
@@ -31,8 +31,9 @@ public class VerifyEmailViewModel: ObservableObject {
     @Published var state = State()
     private let cancelBag = CancelBag()
     
-    @Published var email: String = ""
+    @Published var localPart: String = ""
     @Published var domain: String = ""
+    @Published var email: String = ""
     
     public init(
         navigationRouter: OnboardingNavigationRouter,
@@ -40,6 +41,8 @@ public class VerifyEmailViewModel: ObservableObject {
     ) {
         self.navigationRouter = navigationRouter
         self.user = user
+        
+        observe()
     }
     
     func send(_ action: Action) {
@@ -47,11 +50,29 @@ public class VerifyEmailViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            navigationRouter.push(to: .enterSecurityCode)
+            user.email = email
+            navigationRouter.push(to: .enterSecurityCode(user))
         case .domainListButtonDidTap:
             state.domainListViewIsVisible.toggle()
-            print(state.domainListViewIsVisible)
-        case .selectDomain:
+        case .selectDomain(let domain):
             state.domainListViewIsVisible = false
+            self.domain = domain
         }
-    }}
+    }
+    
+    private func observe() {
+        weak var owner = self
+        guard let owner else { return }
+        
+        Publishers.CombineLatest($localPart, $domain)
+            .filter { !$0.isEmpty && !$1.isEmpty }
+            .map { 
+                print("\($0)@\($1)")
+                return "\($0)@\($1)"
+            }
+            .assign(to: \.email, on: owner)
+            .store(in: cancelBag)
+        
+        //TODO: email 여부에 따라서 ContinueButtonEnable 처리
+    }
+}
