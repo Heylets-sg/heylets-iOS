@@ -7,19 +7,47 @@
 //
 
 import SwiftUI
+
 import BaseFeatureDependency
+import DSKit
 
 public struct ResetPasswordView: View {
     @EnvironmentObject var router: Router
-    var viewModel: ResetPasswordViewModel
+    @ObservedObject var viewModel: ResetPasswordViewModel
     
     public init(viewModel: ResetPasswordViewModel) {
         self.viewModel = viewModel
     }
+    
     public var body: some View {
-        Text("ResetPasswordView")
+        OnboardingBaseView(content: {
+            Spacer()
+                .frame(height: 8)
+            
+            Text("Resetting your password will log you out on all\ndevices.")
+                .font(.regular_16)
+                .foregroundColor(.heyGray1)
+                .padding(.bottom, 32)
+            
+            VStack(spacing: 32) {
+                SecurityPasswordField(
+                    password: $viewModel.password,
+                    textFieldState: $viewModel.state.passwordIsValid
+                )
+                
+                SecurityPasswordField(
+                    password: $viewModel.checkPassword,
+                    placeHolder: "Confirm Password",
+                    textFieldState: $viewModel.state.checkPasswordIsValid
+                )
+            }
+            
+        }, titleText: "Reset your password", nextButtonAction: { 
+            viewModel.send(.gotoLoginView)
+        })
     }
 }
+
 
 //#Preview {
 //    ResetPasswordView()

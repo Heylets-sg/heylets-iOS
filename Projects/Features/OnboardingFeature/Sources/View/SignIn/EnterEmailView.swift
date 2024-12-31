@@ -33,7 +33,6 @@ public struct EnterEmailView: View {
             HeyTextField(
                 text: $text,
                 placeHolder: "Email",
-//                textFieldState: .idle,
                 colorSystem: .gray
             )
             

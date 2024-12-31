@@ -22,16 +22,17 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     }
     
     public var navigationRouter: OnboardingNavigationRouter
-    private var user: User
+    private var user: User?
     @Published var state = State()
     
     public init(
         navigationRouter: OnboardingNavigationRouter,
-        user: User
+        user: User?,
+        email: String
     ) {
         self.navigationRouter = navigationRouter
         self.user = user
-        self.state.hiddenEmail = user.email.maskedEmail()
+        self.state.hiddenEmail = email.maskedEmail()
     }
     
     func send(_ action: Action) {
@@ -40,7 +41,11 @@ public class EnterSecurityCodeViewModel: ObservableObject {
             navigationRouter.pop()
         case .nextButtonDidTap:
             //TODO: 인증번호 확인 API 연결
-            navigationRouter.push(to: .enterPersonalInfo(user))
+            if let user = user {
+                navigationRouter.push(to: .enterPersonalInfo(user))
+            } else {
+                navigationRouter.push(to: .resetPassword)
+            }
         }
     }
 }

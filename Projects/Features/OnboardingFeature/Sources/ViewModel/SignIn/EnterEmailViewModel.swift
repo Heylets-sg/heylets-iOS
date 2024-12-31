@@ -29,8 +29,7 @@ public class EnterEmailViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            break
-//            navigationRouter.push(to: .enterSecurityCode)
+            navigationRouter.push(to: .enterSecurityCode(nil, ""))
         }
     }
 }
