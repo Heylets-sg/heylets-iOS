@@ -1,0 +1,39 @@
+//
+//  String+.swift
+//  Core
+//
+//  Created by 류희재 on 12/31/24.
+//  Copyright © 2024 Heylets-iOS. All rights reserved.
+//
+
+import Foundation
+
+import Foundation
+
+extension String {
+    public func maskedEmail() -> String {
+        let components = self.split(separator: "@")
+        guard components.count == 2 else { return self } // 유효한 이메일 형식이 아니면 그대로 반환
+        
+        let localPart = String(components[0]) // 로컬파트
+        let domainPart = String(components[1]) // 도메인
+        
+        // 로컬파트와 도메인을 각각 마스킹
+        let maskedLocalPart = localPart.masked()
+        let maskedDomainPart = domainPart.masked()
+        
+        return "\(maskedLocalPart)@\(maskedDomainPart)"
+    }
+    
+    /// 문자열의 첫 번째와 마지막 문자를 제외한 부분을 *로 마스킹합니다.
+    private func masked() -> String {
+        guard self.count > 2 else { return self } // 길이가 2 이하라면 그대로 반환
+        
+        let first = self.prefix(1) // 첫 번째 문자
+        let last = self.suffix(3)
+        let middle = String(repeating: "*", count: self.count - 2) // 중간 문자들을 별로 대체
+        
+        return "\(first)\(middle)\(last)"
+    }
+}
+

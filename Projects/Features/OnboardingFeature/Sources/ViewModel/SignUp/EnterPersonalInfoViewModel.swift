@@ -12,16 +12,24 @@ import Combine
 import BaseFeatureDependency
 
 public class EnterPersonalInfoViewModel: ObservableObject {
+    struct State {
+    }
+    
     enum Action {
         case backButtonDidTap
         case nextButtonDidTap
     }
     
     public var navigationRouter: OnboardingNavigationRouter
+    private var user: User
+    @Published var state = State()
     
-    public init(navigationRouter: OnboardingNavigationRouter) {
+    public init(
+        navigationRouter: OnboardingNavigationRouter,
+        user: User
+    ) {
         self.navigationRouter = navigationRouter
-        print(navigationRouter.destinations)
+        self.user = user
     }
     
     func send(_ action: Action) {

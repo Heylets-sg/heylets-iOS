@@ -13,7 +13,7 @@ import DSKit
 
 public struct EnterSecurityCodeView: View {
     @EnvironmentObject var router: Router
-    var viewModel: EnterSecurityCodeViewModel
+    @ObservedObject var viewModel: EnterSecurityCodeViewModel
     
     @State var otpCode: String = ""
     
@@ -26,16 +26,19 @@ public struct EnterSecurityCodeView: View {
             Spacer()
                 .frame(height: 8)
             
-            Text(verbatim: "Enter the 6-digit code we sent to the email:\nj******m@o*****com")
+            Text(verbatim: "Enter the 6-digit code we sent to the email:\n\(viewModel.state.hiddenEmail)")
                 .font(.regular_16)
                 .foregroundColor(.heyGray2)
                 .lineLimit(2)
             
+            Spacer()
+                .frame(height: 88)
+            
             SecurityCodeInputView(otpCode: $otpCode)
             .frame(height: 50)
             
-        }, titleText: "Enter Your Security Code",
-                           nextButtonAction: { viewModel.send(.nextButtonDidTap) })
+        }, titleText: "Enter Your Security Code", nextButtonAction: { viewModel.send(.nextButtonDidTap)
+        })
     }
 }
 

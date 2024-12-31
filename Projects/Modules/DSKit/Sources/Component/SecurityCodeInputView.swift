@@ -27,7 +27,14 @@ public struct SecurityCodeInputView: View {
                     .foregroundColor(.clear)
                     .multilineTextAlignment(.center)
                     .keyboardType(.numberPad)
-                    .onReceive(Just(otpCode)) { _ in limitText(6) }
+                    .onReceive(Just(otpCode)) { _ in
+                        if otpCode.count >= 6 {
+                            otpCode = String(otpCode.prefix(6))
+                            
+                            //hide 키보드
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }
+                    }
                     .focused($focusedField, equals: .field)
                     .task {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5)
@@ -65,6 +72,7 @@ public struct SecurityCodeInputView: View {
     private func limitText(_ upper: Int) {
         if otpCode.count > upper {
             otpCode = String(otpCode.prefix(upper))
+            
         }
     }
 }

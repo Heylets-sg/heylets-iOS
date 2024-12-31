@@ -12,6 +12,10 @@ import Combine
 import BaseFeatureDependency
 
 public class EnterSecurityCodeViewModel: ObservableObject {
+    struct State {
+        var hiddenEmail: String = ""
+    }
+    
     enum Action {
         case backButtonDidTap
         case nextButtonDidTap
@@ -19,6 +23,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     
     public var navigationRouter: OnboardingNavigationRouter
     private var user: User
+    @Published var state = State()
     
     public init(
         navigationRouter: OnboardingNavigationRouter,
@@ -26,6 +31,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     ) {
         self.navigationRouter = navigationRouter
         self.user = user
+        self.state.hiddenEmail = user.email.maskedEmail()
     }
     
     func send(_ action: Action) {
@@ -33,7 +39,8 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            navigationRouter.push(to: .enterPersonalInfo)
+            //TODO: 인증번호 확인 API 연결
+            navigationRouter.push(to: .enterPersonalInfo(user))
         }
     }
 }
