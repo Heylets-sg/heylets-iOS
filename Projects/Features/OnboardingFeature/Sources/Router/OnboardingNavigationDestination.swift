@@ -18,8 +18,8 @@ public enum OnboardingNavigationDestination: Hashable {
     case verifyEmail(User)
     case enterSecurityCode(User)
     case enterPersonalInfo(User)
-    case enterIdPassword
-    case addProfile
+    case enterIdPassword(User)
+    case addProfile(User)
     
     //signin
     case login
@@ -70,16 +70,18 @@ struct OnboardingNavigationRoutingView: View {
                     user: user
                 )
             )
-        case .enterIdPassword:
+        case .enterIdPassword(let user):
             EnterIdPasswordView(
                 viewModel: .init(
-                    navigationRouter: navigationRouter
+                    navigationRouter: navigationRouter,
+                    user: user
                 )
             )
-        case .addProfile:
+        case .addProfile(let user):
             AddProfileView(
                 viewModel: .init(
-                    navigationRouter: navigationRouter
+                    navigationRouter: navigationRouter,
+                    user: user
                 )
             )
             

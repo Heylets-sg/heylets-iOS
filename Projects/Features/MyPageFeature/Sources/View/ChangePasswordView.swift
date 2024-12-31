@@ -48,8 +48,7 @@ public struct ChangePasswordView: View {
                     password: $text,
                     showPassword: $showPassword,
                     placeHolder: "New password",
-                    isRest: true,
-                    textFieldState: .idle,
+//                    textFieldState: .idle,
                     colorSystem: .lightgray
                 )
                 .padding(.top, 8)
@@ -58,8 +57,7 @@ public struct ChangePasswordView: View {
                     password: $text,
                     showPassword: $showPassword,
                     placeHolder: "Confirm password",
-                    isRest: true,
-                    textFieldState: .idle,
+//                    textFieldState: .idle,
                     colorSystem: .lightgray
                 )
                 .padding(.top, 8)

@@ -76,24 +76,21 @@ public struct DSKitDemoView: View {
             //MARK: Case 2
             PasswordField(
                 password: $text,
-                showPassword: $showPassword,
-                isRest: true
+                showPassword: $showPassword
             )
             
             //MARK: Case 3
             PasswordField(
                 password: $text,
-                showPassword: $showPassword,
-                isRest: true,
-                textFieldState: .invalid
+                showPassword: $showPassword
+//                textFieldState: .invalid
             )
             
             //MARK: Case 4
             PasswordField(
                 password: $text,
-                showPassword: $showPassword,
-                isRest: true,
-                textFieldState: .valid
+                showPassword: $showPassword
+//                textFieldState: .valid
             )
             
             Spacer()
@@ -112,13 +109,13 @@ public struct DSKitDemoView: View {
             HeyTextField(text: $text, placeHolder: "placeholder")
             
             //MARK: Case 2
-            HeyTextField(text: $text, placeHolder: "placeholder", textFieldState: .invalid)
-            HeyTextField(text: $text, placeHolder: "placeholder", textFieldState: .valid)
+//            HeyTextField(text: $text, placeHolder: "placeholder", textFieldState: .invalid)
+//            HeyTextField(text: $text, placeHolder: "placeholder", textFieldState: .valid)
             
             //MARK: Case 3
             HeyTextField(text: $text, placeHolder: "placeholder", rightImage: .icRepeat)
-            HeyTextField(text: $text, placeHolder: "placeholder", rightImage: .icRepeat, textFieldState: .valid)
-            HeyTextField(text: $text, placeHolder: "placeholder", leftImage: .icSchool, textFieldState: .valid)
+//            HeyTextField(text: $text, placeHolder: "placeholder", rightImage: .icRepeat, textFieldState: .valid)
+//            HeyTextField(text: $text, placeHolder: "placeholder", leftImage: .icSchool, textFieldState: .valid)
             
             Spacer()
         }

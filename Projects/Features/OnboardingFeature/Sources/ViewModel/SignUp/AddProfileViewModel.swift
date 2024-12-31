@@ -10,18 +10,29 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Core
 
 public class AddProfileViewModel: ObservableObject {
+    struct State {
+    }
+    
     enum Action {
         case backButtonDidTap
         case nextButtonDidTap
     }
     
     public var navigationRouter: OnboardingNavigationRouter
+    private var user: User
+    private let cancelBag = CancelBag()
     
-    public init(navigationRouter: OnboardingNavigationRouter) {
+    @Published var state = State()
+    
+    public init(
+        navigationRouter: OnboardingNavigationRouter,
+        user: User
+    ) {
         self.navigationRouter = navigationRouter
-        print(navigationRouter.destinations)
+        self.user = user
     }
     
     func send(_ action: Action) {

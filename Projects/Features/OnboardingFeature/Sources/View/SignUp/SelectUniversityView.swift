@@ -60,8 +60,7 @@ public struct SelectUniversityView: View {
                     HeyTextField(
                         text: $searchText,
                         placeHolder: "Select your university",
-                        leftImage: .icSchool,
-                        textFieldState: .idle
+                        leftImage: .icSchool
                     )
                     .autocapitalization(.none)
                     .disableAutocorrection(true)

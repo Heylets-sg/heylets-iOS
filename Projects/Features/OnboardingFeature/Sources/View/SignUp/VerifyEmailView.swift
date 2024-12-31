@@ -28,7 +28,7 @@ public struct VerifyEmailView: View {
                 HeyTextField(
                     text: $viewModel.localPart,
                     placeHolder: "Enter your school email",
-                    textFieldState: .idle,
+//                    textFieldState: .idle,
                     colorSystem: .gray
                 )
                 .padding(.trailing, 12)
@@ -44,7 +44,7 @@ public struct VerifyEmailView: View {
                 HeyTextField(
                     text: $viewModel.domain,
                     placeHolder: "Click DownList Button",
-                    textFieldState: .idle,
+//                    textFieldState: .idle,
                     colorSystem: .gray
                 )
                 .padding(.trailing, 16)

@@ -30,7 +30,7 @@ public class SelectUniversityViewModel: ObservableObject {
         password: "",
         university: "",
         gender: "",
-        birth: ""
+        birth: Date()
     )
     
     @Published var state = State()

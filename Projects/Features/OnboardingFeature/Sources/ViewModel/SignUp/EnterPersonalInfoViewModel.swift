@@ -62,7 +62,7 @@ public class EnterPersonalInfoViewModel: ObservableObject {
             //TODO: DTO 타입보고 변경할지 말지 결정하기
             user.gender = gender.rawValue
             user.birth = birth
-            navigationRouter.push(to: .enterIdPassword)
+            navigationRouter.push(to: .enterIdPassword(user))
         case .genderButtonDidTap(let gender):
             self.gender = gender
         case .birthDayDidChange(let date):

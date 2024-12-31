@@ -35,5 +35,21 @@ extension String {
         
         return "\(first)\(middle)\(last)"
     }
+    
+    // 닉네임 유효성 검사 함수
+    public func isValidNickname() -> Bool {
+        // 정규식을 사용하여 닉네임 검사
+        let regex = "^(?!.*\\b(admin|root|system)\\b)[a-zA-Z0-9]{2,20}$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
+        return predicate.evaluate(with: self)
+    }
+    
+    // 비밀번호 유효성 검사 함수
+    public func isValidPassword() -> Bool {
+        // 정규식을 사용하여 비밀번호 검사
+        let regex = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>])[a-zA-Z\\d!@#$%^&*(),.?\":{}|<>]{8,}$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
+        return predicate.evaluate(with: self)
+    }
 }
 
