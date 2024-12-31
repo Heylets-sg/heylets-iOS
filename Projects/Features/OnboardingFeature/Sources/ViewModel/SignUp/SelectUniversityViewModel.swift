@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import BaseFeatureDependency
+import Core
 
 public class SelectUniversityViewModel: ObservableObject {
     // MARK: - Nested Types
@@ -34,19 +35,12 @@ public class SelectUniversityViewModel: ObservableObject {
     )
     
     @Published var state = State()
-    @Published var searchText: String = "" {
-        didSet {
-            updateFilteredItems()
-        }
-    }
-    @Published var filteredItems: [UniversityInfo] = [.NTU, .NUS]
+    private let cancelBag = CancelBag()
     @Published var selectedUniversity: String? = nil
-    private var allUniversityItems: [UniversityInfo] = [.NTU, .NUS]
     
     // MARK: - Init
     public init(navigationRouter: OnboardingNavigationRouter) {
         self.navigationRouter = navigationRouter
-        updateFilteredItems()
     }
     
     // MARK: - Methods
@@ -60,19 +54,7 @@ public class SelectUniversityViewModel: ObservableObject {
             navigationRouter.push(to: .verifyEmail(user))
         case .selectUniversity(let university):
             selectedUniversity = university
-            searchText = university
-            filteredItems = []
             state.continueButtonEnabled = true
-        }
-    }
-    
-    private func updateFilteredItems() {
-        if searchText.isEmpty {
-            filteredItems = []
-        } else {
-            filteredItems = allUniversityItems.filter {
-                $0.rawValue.localizedCaseInsensitiveContains(searchText)
-            }
         }
     }
 }

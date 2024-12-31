@@ -32,7 +32,22 @@ enum UniversityInfo: String {
 
 public struct SelectUniversityView: View {
     @EnvironmentObject var router: Router
-    @ObservedObject var viewModel: SelectUniversityViewModel
+    var viewModel: SelectUniversityViewModel
+    
+    @State private var searchText: String = ""
+    @State private var selectedUniversity: UniversityInfo?
+    
+    private let allUniversityItems: [UniversityInfo] = [.NTU, .NUS]
+    
+    private var filteredItems: [UniversityInfo] {
+        if searchText.isEmpty || selectedUniversity != nil {
+            return []
+        } else {
+            return allUniversityItems.filter {
+                $0.rawValue.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+    }
     
     public init(viewModel: SelectUniversityViewModel) {
         self.viewModel = viewModel
@@ -43,7 +58,7 @@ public struct SelectUniversityView: View {
             content: {
                 VStack {
                     HeyTextField(
-                        text: $viewModel.searchText,
+                        text: $searchText,
                         placeHolder: "Select your university",
                         leftImage: .icSchool,
                         textFieldState: .idle
@@ -54,20 +69,22 @@ public struct SelectUniversityView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.heyMain, lineWidth: 2)
                     )
+                    
                     ScrollView {
                         VStack(spacing: 0) {
-                            ForEach(viewModel.filteredItems, id: \.self) { university in
+                            ForEach(filteredItems, id: \.self) { university in
                                 SelectUniversityListCellView(
                                     university,
-                                    isSelected: university.rawValue == viewModel.selectedUniversity
+                                    isSelected: university == selectedUniversity
                                 )
                                 .onTapGesture {
+                                    selectedUniversity = university
+                                    searchText = university.rawValue
                                     viewModel.send(.selectUniversity(university.rawValue))
                                 }
                             }
                         }
                         .cornerRadius(8)
-                        
                     }
                 }
             }, titleText: "What school are you attending?",
@@ -75,6 +92,7 @@ public struct SelectUniversityView: View {
         )
     }
 }
+
 
 fileprivate struct SelectUniversityListCellView: View {
     private let university: UniversityInfo
