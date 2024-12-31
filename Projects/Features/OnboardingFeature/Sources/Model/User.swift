@@ -13,6 +13,6 @@ public struct User: Hashable {
     var email: String
     var password: String
     var university: String
-    var sex: String
-    var birth: String
+    var gender: String
+    var birth: Date
 }

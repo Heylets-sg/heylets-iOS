@@ -29,7 +29,7 @@ public class SelectUniversityViewModel: ObservableObject {
         email: "",
         password: "",
         university: "",
-        sex: "",
+        gender: "",
         birth: ""
     )
     
