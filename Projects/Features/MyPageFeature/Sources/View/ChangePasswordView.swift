@@ -13,14 +13,11 @@ import BaseFeatureDependency
 
 public struct ChangePasswordView: View {
     @EnvironmentObject var router: Router
-    var viewModel: ChangePasswordViewModel
-    @State var changePasswordAlertViewIsPresented: Bool = false
+    @ObservedObject var viewModel: ChangePasswordViewModel
     
     public init(viewModel: ChangePasswordViewModel) {
         self.viewModel = viewModel
     }
-    @State var text = ""
-    @State var showPassword = false
     
     public var body: some View {
         MyPageBaseView(content: {
@@ -30,12 +27,15 @@ public struct ChangePasswordView: View {
                     .foregroundColor(.heyGray1)
                     .padding(.top, 36)
                 
-                HeyTextField(text: $text, placeHolder: "Email")
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.heyGray3, lineWidth: 1)
-                    )
-                    .padding(.top, 8)
+                HeyTextField(
+                    text: $viewModel.newPassword,
+                    placeHolder: "Current Password"
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.heyGray3, lineWidth: 1)
+                )
+                .padding(.top, 8)
                 
                 Spacer()
                     .frame(height: 32)
@@ -44,20 +44,16 @@ public struct ChangePasswordView: View {
                     .font(.medium_14)
                     .foregroundColor(.heyGray1)
                 
-                PasswordField(
-                    password: $text,
-                    showPassword: $showPassword,
+                SecurityPasswordField(
+                    password: $viewModel.newPassword,
                     placeHolder: "New password",
-//                    textFieldState: .idle,
                     colorSystem: .lightgray
                 )
                 .padding(.top, 8)
                 
-                PasswordField(
-                    password: $text,
-                    showPassword: $showPassword,
+                SecurityPasswordField(
+                    password: $viewModel.checkPassword,
                     placeHolder: "Confirm password",
-//                    textFieldState: .idle,
                     colorSystem: .lightgray
                 )
                 .padding(.top, 8)
@@ -65,7 +61,7 @@ public struct ChangePasswordView: View {
                 Spacer()
                 
                 Button("Change password"){
-                    changePasswordAlertViewIsPresented = true
+                    viewModel.send(.changePasswordButtonDidTap)
                 }.heyBottomButtonStyle(.primary)
                 
                 Spacer()
@@ -73,14 +69,14 @@ public struct ChangePasswordView: View {
             }
         }, titleText: "Change Password")
         .heyAlert(
-            isPresented: changePasswordAlertViewIsPresented,
+            isPresented: viewModel.state.changePasswordAlertViewIsPresented,
             title: "The password has been\nsuccessfully changed.\nPlease log in again",
             primaryButton: ("Ok", .gray, {
                 viewModel.send(.changePasswordButtonDidTap)
             })
         )
     }
-
+    
 }
 
 //#Preview {

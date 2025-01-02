@@ -42,7 +42,7 @@ struct MyPageNavigationRoutingView: View {
         case .contactUs:
             ContactUsView()
         case .notificationSetting:
-            NotificationSettingView()
+            NotificationSettingView(viewModel: .init(navigationRouter: router))
         case .deleteAccount:
             DeleteAccountView()
         }

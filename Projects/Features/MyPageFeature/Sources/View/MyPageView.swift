@@ -23,7 +23,7 @@ public struct MyPageView: View {
     public var body: some View {
         NavigationStack(path: $myPageRouter.destinations) {
             ZStack {
-                Color.heyMain.ignoresSafeArea()
+                Color.heyMain
                 
                 VStack {
                     Spacer()
@@ -43,18 +43,21 @@ public struct MyPageView: View {
                                 .padding(.top, 44)
                                 .padding(.bottom, 32)
                             
-                            VStack(spacing: 24) {
-                                AccountView(viewModel: viewModel)
+                            ScrollView {
+                                VStack(spacing: 24) {
+                                    AccountView(viewModel: viewModel)
+                                    
+                                    SupportView(viewModel: viewModel)
+                                    
+                                    AppSettingView(viewModel: viewModel)
+                                    
+                                    EtcView(viewModel: viewModel)
+                                }
                                 
-                                SupportView(viewModel: viewModel)
-                                
-                                AppSettingView(viewModel: viewModel)
-                                
-                                EtcView(viewModel: viewModel)
                                 
                                 Spacer()
-                                
                             }
+                            .scrollIndicators(.hidden)
                         }
                         .padding(.horizontal, 16)
                         .background(Color.heyWhite)
