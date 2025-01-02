@@ -9,8 +9,12 @@
 import SwiftUI
 
 public struct NotificationSettingView: View {
-    public init() {}
-    @State var toggleOn = false
+    
+    @ObservedObject var viewModel: NotificationSettingViewModel
+    
+    public init(viewModel: NotificationSettingViewModel) {
+        self.viewModel = viewModel
+    }
     
     public var body: some View {
         MyPageBaseView(content: {
@@ -35,7 +39,7 @@ public struct NotificationSettingView: View {
                     
                     Spacer()
                     
-                    Toggle("", isOn: $toggleOn)
+                    Toggle("", isOn: $viewModel.state.dailyBriefingToggleOn)
                         .toggleStyle(SwitchToggleStyle(tint: Color.heyMain))
                         .labelsHidden()
                         .padding(.trailing, 15)
@@ -66,7 +70,7 @@ public struct NotificationSettingView: View {
                     
                     Spacer()
                     
-                    Toggle("", isOn: $toggleOn)
+                    Toggle("", isOn: $viewModel.state.classToggleOn)
                         .toggleStyle(SwitchToggleStyle(tint: Color.heyMain))
                         .labelsHidden()
                         .padding(.trailing, 15)
@@ -83,6 +87,6 @@ public struct NotificationSettingView: View {
     }
 }
 
-#Preview {
-    NotificationSettingView()
-}
+//#Preview {
+//    NotificationSettingView()
+//}
