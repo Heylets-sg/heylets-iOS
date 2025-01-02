@@ -32,7 +32,7 @@ public struct ContactUsView: View {
                     Spacer()
                     
                     Button {
-                        
+                        UIPasteboard.general.string = "jacobkwak1122@gmail.com"
                     } label: {
                         Image(uiImage: .icCopy)
                     }
