@@ -10,18 +10,33 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Core
+import UIKit
+import _PhotosUI_SwiftUI
 
 public class AddProfileViewModel: ObservableObject {
+    struct State {
+    }
+    
     enum Action {
         case backButtonDidTap
         case nextButtonDidTap
+        case profileImageDidChange(PhotosPickerItem?)
     }
     
     public var navigationRouter: OnboardingNavigationRouter
+    private var user: User
+    private let cancelBag = CancelBag()
     
-    public init(navigationRouter: OnboardingNavigationRouter) {
+    @Published var state = State()
+    @Published var profileImage: UIImage? = nil
+    
+    public init(
+        navigationRouter: OnboardingNavigationRouter,
+        user: User
+    ) {
         self.navigationRouter = navigationRouter
-        print(navigationRouter.destinations)
+        self.user = user
     }
     
     func send(_ action: Action) {
@@ -29,7 +44,25 @@ public class AddProfileViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
+            user.profileImage = profileImage
             navigationRouter.popToRootView()
+        case .profileImageDidChange(let newPhoto):
+            guard let newPhoto else { return }
+
+            newPhoto.loadTransferable(type: Data.self) { result in
+                switch result {
+                case .success(let data):
+                    if let data = data, let newImage = UIImage(data: data) {
+                        DispatchQueue.main.async {
+                            self.profileImage = newImage
+                        }
+                    }
+                case .failure:
+                    DispatchQueue.main.async {
+//                        isPresentedError = true
+                    }
+                }
+            }
         }
     }
 }

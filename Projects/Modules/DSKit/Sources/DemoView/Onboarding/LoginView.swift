@@ -1,72 +1,109 @@
 //
-//  LoginView.swift
-//  DSKit
+//  AddProfileVIew.swift
+//  OnboardingFeature
 //
-//  Created by 류희재 on 12/23/24.
+//  Created by 류희재 on 12/18/24.
 //  Copyright © 2024 Heylets-iOS. All rights reserved.
 //
 
 import SwiftUI
+//import BaseFeatureDependency
 
-struct LoginView: View {
-    
-    let images: [UIImage] = [.timeTable, .color] // 테스트용 이미지
-    
+public struct AddProfileView: View {
+    //    @EnvironmentObject var router: Router
+    @State private var selectedImage: UIImage? // 선택된 이미지를 저장
+    @State private var isPresentedError: Bool = false // 에러 발생 여부
+    //    var viewModel: AddProfileViewModel
+    //
+    //    public init(viewModel: AddProfileViewModel) {
+    //        self.viewModel = viewModel
+    //    }
     public var body: some View {
-        ZStack {
-            Color.heyMain.ignoresSafeArea()
+        OnboardingBaseView(content: {
+            Spacer()
+                .frame(height: 8)
             
-            VStack(alignment: .leading) {
-                Spacer()
-                    .frame(height: 120)
+            Text("How about a picture of a cute cat?")
+                .font(.regular_16)
+                .foregroundColor(.heyGray1)
+                .padding(.bottom, 32)
+            
+            GreenPhotoPicker(
+                selectedImage: $selectedImage
+            ) {
+                Image(uiImage: selectedImage ?? .icPencil)
+                    .resizable()
+                    .frame(width: 136, height: 136)
+                    .background(Color.heyGray4)
+                    .clipShape(Circle())
                 
-                Text("Add a personal schedule to\nyour school timetable")
-                    .font(.bold_20)
-                    .foregroundColor(.heyWhite)
-                    .lineSpacing(3.5)
-                    .padding(.bottom, 12)
-                    .padding(.leading, 16)
-                    .lineLimit(2)
-                
-                Text("Manage your school-related schedules\nall at once!")
-                    .font(.medium_14)
-                    .foregroundColor(.heyWhite)
-                    .padding(.leading, 16)
-                    .lineLimit(2)
-                
-                Spacer()
-                    .frame(height: 52)
-                
-                CarouselView(pageCount: images.count, visibleEdgeSpace: 0, spacing: 0) { index in
-                    Image(uiImage: images[index])
-                        .resizable()
-                        .scaledToFit()
-                }
-                .frame(height: 353) // 전체 Carousel 뷰의 높이 설정
-                .padding(.horizontal, 0) // 양쪽 여백을 없애기 위해 horizontal padding 0
-                
-                Spacer()
-                
-                VStack {
-                    Button("Sign up") {
-                    }
-                    .heyBottomButtonStyle(.white)
-                    .padding(.bottom, 16)
-                    
-                    Button("Log in") {
-                    }.heyBottomButtonStyle(.black)
-                }
-                .padding(.horizontal, 16)
-                
-                Spacer()
-                    .frame(height: 65)
             }
-        }
-        .ignoresSafeArea(edges: .vertical)
-        .navigationBarBackButtonHidden()
+            .padding(.horizontal, 113)
+            
+        }, titleText: "Add profile picture")
     }
 }
 
 #Preview {
-    LoginView()
+    AddProfileView()
 }
+
+import PhotosUI
+import SwiftUI
+
+public struct GreenPhotoPicker<Content: View>: View {
+    @State private var selectedPhoto: PhotosPickerItem? // 단일 선택을 위해 변경
+    @Binding private var selectedImage: UIImage? // UIImage도 단일로 변경
+    @Binding private var isPresentedError: Bool
+    private let matching: PHPickerFilter
+    private let content: () -> Content
+    
+    public init(
+        selectedImage: Binding<UIImage?>,
+        isPresentedError: Binding<Bool> = .constant(false),
+        matching: PHPickerFilter = .images,
+        content: @escaping () -> Content
+    ) {
+        self._selectedImage = selectedImage
+        self._isPresentedError = isPresentedError
+        self.matching = matching
+        self.content = content
+    }
+    
+    public var body: some View {
+        PhotosPicker(
+            selection: $selectedPhoto, // 단일 선택을 위한 변경
+            matching: matching
+        ) {
+            content()
+        }
+        .onChange(of: selectedPhoto) { newValue in
+            print(newValue)
+            handleSelectedPhoto(newValue)
+        }
+    }
+    
+    
+    private func handleSelectedPhoto(_ newPhoto: PhotosPickerItem?) {
+        guard let newPhoto = newPhoto else { return }
+        
+        newPhoto.loadTransferable(type: Data.self) { result in
+            switch result {
+            case .success(let data):
+                if let data = data, let newImage = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        selectedImage = newImage // 선택된 이미지만 업데이트
+                    }
+                }
+            case .failure:
+                DispatchQueue.main.async {
+                    isPresentedError = true
+                }
+            }
+        }
+        
+        selectedPhoto = nil // 선택 완료 후 상태 초기화
+    }
+}
+
+

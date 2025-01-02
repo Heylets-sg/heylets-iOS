@@ -10,18 +10,39 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Core
 
 public class VerifyEmailViewModel: ObservableObject {
+    struct State {
+        var domainListViewIsVisible = false
+        var continueButtonIsEnabled = false
+    }
+    
     enum Action {
         case backButtonDidTap
         case nextButtonDidTap
+        case domainListButtonDidTap
+        case selectDomain(String)
     }
     
     public var navigationRouter: OnboardingNavigationRouter
+    public var user: User
     
-    public init(navigationRouter: OnboardingNavigationRouter) {
+    @Published var state = State()
+    private let cancelBag = CancelBag()
+    
+    @Published var localPart: String = ""
+    @Published var domain: String = ""
+    @Published var email: String = ""
+    
+    public init(
+        navigationRouter: OnboardingNavigationRouter,
+        user: User
+    ) {
         self.navigationRouter = navigationRouter
-        print(navigationRouter.destinations)
+        self.user = user
+        
+        observe()
     }
     
     func send(_ action: Action) {
@@ -29,6 +50,29 @@ public class VerifyEmailViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            navigationRouter.push(to: .enterSecurityCode)
+            user.email = email
+            navigationRouter.push(to: .enterSecurityCode(user, user.email))
+        case .domainListButtonDidTap:
+            state.domainListViewIsVisible.toggle()
+        case .selectDomain(let domain):
+            state.domainListViewIsVisible = false
+            self.domain = domain
         }
-    }}
+    }
+    
+    private func observe() {
+        weak var owner = self
+        guard let owner else { return }
+        
+        Publishers.CombineLatest($localPart, $domain)
+            .filter { !$0.isEmpty && !$1.isEmpty }
+            .map { "\($0)@\($1)" }
+            .assign(to: \.email, on: owner)
+            .store(in: cancelBag)
+        
+        Publishers.CombineLatest($localPart, $domain)
+            .map { !$0.isEmpty && !$1.isEmpty }
+            .assign(to: \.state.continueButtonIsEnabled, on: owner)
+            .store(in: cancelBag)
+    }
+}

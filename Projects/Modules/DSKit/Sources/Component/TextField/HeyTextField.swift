@@ -13,7 +13,7 @@ public struct HeyTextField: View {
     let placeHolder: String
     let leftImage: UIImage?
     let rightImage: UIImage?
-    @State var textFieldState: TextFieldState
+    @Binding var textFieldState: TextFieldState
     let colorSystem: HeyTextFieldColorStyle
     let action: () -> Void
     
@@ -22,7 +22,7 @@ public struct HeyTextField: View {
         placeHolder: String,
         leftImage: UIImage? = nil,
         rightImage: UIImage? = nil,
-        textFieldState: TextFieldState = .idle,
+        textFieldState: Binding<TextFieldState> = .constant(.idle),
         colorSystem: HeyTextFieldColorStyle = .white,
         action: @escaping () -> Void = {}
     ) {
@@ -30,7 +30,7 @@ public struct HeyTextField: View {
         self.placeHolder = placeHolder
         self.leftImage = leftImage
         self.rightImage = rightImage
-        self._textFieldState = State(initialValue: textFieldState)
+        self._textFieldState = textFieldState
         self.colorSystem = colorSystem
         self.action = action
     }
@@ -66,7 +66,7 @@ public struct HeyTextField: View {
         .cornerRadius(8)
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(textFieldState.strokeColor, lineWidth: 3)
+                .stroke(textFieldState.strokeColor, lineWidth: 2)
         )
     }
 }

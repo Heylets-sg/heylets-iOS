@@ -15,11 +15,11 @@ public enum OnboardingNavigationDestination: Hashable {
     
     //signup
     case selectUniversity
-    case verifyEmail
-    case enterSecurityCode
-    case enterPersonalInfo
-    case enterIdPassword
-    case addProfile
+    case verifyEmail(User)
+    case enterSecurityCode(User?, String)
+    case enterPersonalInfo(User)
+    case enterIdPassword(User)
+    case addProfile(User)
     
     //signin
     case login
@@ -29,7 +29,8 @@ public enum OnboardingNavigationDestination: Hashable {
 
 struct OnboardingNavigationRoutingView: View {
     
-    @EnvironmentObject var router: OnboardingNavigationRouter
+    @EnvironmentObject var navigationRouter: OnboardingNavigationRouter
+    @EnvironmentObject var router: Router
     @State var destination: OnboardingNavigationDestination
     
     var body: some View {
@@ -37,7 +38,7 @@ struct OnboardingNavigationRoutingView: View {
         case .onboarding:
             OnboardingView(
                 viewModel: .init(
-                    navigationRouter: router
+                    navigationRouter: navigationRouter
                 )
             )
             //MARK: SignUp
@@ -45,37 +46,43 @@ struct OnboardingNavigationRoutingView: View {
         case .selectUniversity:
             SelectUniversityView(
                 viewModel: .init(
-                    navigationRouter: router
+                    navigationRouter: navigationRouter
                 )
             )
-        case .verifyEmail:
+        case .verifyEmail(let user):
             VerifyEmailView(
                 viewModel: .init(
-                    navigationRouter: router
+                    navigationRouter: navigationRouter,
+                    user: user
                 )
             )
-        case .enterSecurityCode:
+        case .enterSecurityCode(let user, let email):
             EnterSecurityCodeView(
                 viewModel: .init(
-                    navigationRouter: router
+                    navigationRouter: navigationRouter,
+                    user: user, 
+                    email: email
                 )
             )
-        case .enterPersonalInfo:
+        case .enterPersonalInfo(let user):
             EnterPersonalInfoView(
                 viewModel: .init(
-                    navigationRouter: router
+                    navigationRouter: navigationRouter,
+                    user: user
                 )
             )
-        case .enterIdPassword:
+        case .enterIdPassword(let user):
             EnterIdPasswordView(
                 viewModel: .init(
-                    navigationRouter: router
+                    navigationRouter: navigationRouter,
+                    user: user
                 )
             )
-        case .addProfile:
+        case .addProfile(let user):
             AddProfileView(
                 viewModel: .init(
-                    navigationRouter: router
+                    navigationRouter: navigationRouter,
+                    user: user
                 )
             )
             
@@ -84,19 +91,20 @@ struct OnboardingNavigationRoutingView: View {
         case .login:
             LogInView(
                 viewModel: .init(
-                    navigationRouter: router
+                    navigationRouter: navigationRouter, 
+                    windowRouter: router.windowRouter
                 )
             )
         case .enterEmail:
             EnterEmailView(
                 viewModel: .init(
-                    navigationRouter: router
+                    navigationRouter: navigationRouter
                 )
             )
         case .resetPassword:
             ResetPasswordView(
                 viewModel: .init(
-                    navigationRouter: router
+                    navigationRouter: navigationRouter
                 )
             )
         }

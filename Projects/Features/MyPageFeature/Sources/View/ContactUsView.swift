@@ -40,7 +40,7 @@ public struct ContactUsView: View {
                 .padding(.all, 16)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.heyMain, lineWidth: 3)
+                        .stroke(Color.heyMain, lineWidth: 2)
                 )
                 .background(Color.heyGray5)
             }

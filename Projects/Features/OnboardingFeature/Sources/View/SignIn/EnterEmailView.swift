@@ -13,8 +13,7 @@ import DSKit
 
 public struct EnterEmailView: View {
     @EnvironmentObject var router: Router
-    var viewModel: EnterEmailViewModel
-    @State var text: String = ""
+    @ObservedObject var viewModel: EnterEmailViewModel
     
     public init(viewModel: EnterEmailViewModel) {
         self.viewModel = viewModel
@@ -31,14 +30,16 @@ public struct EnterEmailView: View {
                 .padding(.bottom, 32)
             
             HeyTextField(
-                text: $text,
+                text: $viewModel.email,
                 placeHolder: "Email",
-                textFieldState: .idle,
+                textFieldState: $viewModel.state.emailIsValid,
                 colorSystem: .gray
             )
             
-        }, titleText: "Reset your password", hiddenCloseBtn: false,
-                           nextButtonAction: { viewModel.send(.nextButtonDidTap) })
+        }, titleText: "Reset your password", 
+           nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
+           hiddenCloseBtn: false,
+           nextButtonAction: { viewModel.send(.nextButtonDidTap)})
     }
 }
 

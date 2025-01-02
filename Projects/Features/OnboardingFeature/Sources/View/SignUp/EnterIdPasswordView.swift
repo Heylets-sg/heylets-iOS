@@ -13,9 +13,8 @@ import DSKit
 
 public struct EnterIdPasswordView: View {
     @EnvironmentObject var router: Router
-    var viewModel: EnterIdPasswordViewModel
+    @ObservedObject var viewModel: EnterIdPasswordViewModel
     
-    @State var text = ""
     @State var showPassword = false
     
     public init(viewModel: EnterIdPasswordViewModel) {
@@ -33,19 +32,28 @@ public struct EnterIdPasswordView: View {
             
             VStack(spacing: 32) {
                 HeyTextField(
-                    text: $text,
+                    text: $viewModel.nickName,
                     placeHolder: "username",
                     rightImage: .icRepeat,
-                    textFieldState: .idle,
+                    textFieldState: $viewModel.state.nickNameIsValid,
                     colorSystem: .gray
                 )
                 
-                PasswordField(password: $text, showPassword: $showPassword)
-                PasswordField(password: $text, showPassword: $showPassword, placeHolder: "Confirm Password")
+                PasswordField(
+                    password: $viewModel.password,
+                    showPassword: $showPassword,
+                    textFieldState: $viewModel.state.passwordIsValid
+                )
+                
+                SecurityPasswordField(
+                    password: $viewModel.checkPassword,
+                    placeHolder: "Confirm Password",
+                    textFieldState: $viewModel.state.checkPasswordIsValid
+                )
             }
             
-        }, titleText: "Create your username\nand password",
-                           nextButtonAction: { viewModel.send(.nextButtonDidTap) })
+        }, titleText: "Create your username\nand password", nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled, nextButtonAction: { viewModel.send(.nextButtonDidTap)
+        })
     }
 }
 
