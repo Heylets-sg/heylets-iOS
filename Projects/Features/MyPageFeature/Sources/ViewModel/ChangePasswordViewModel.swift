@@ -15,7 +15,7 @@ import Core
 
 public class ChangePasswordViewModel: ObservableObject {
     struct State {
-        var passwordIsValid: TextFieldState = .idle
+        var newPasswordIsValid: TextFieldState = .idle
         var checkPasswordIsValid: TextFieldState = .idle
         var changePasswordButtonIsEnabled: Bool = false
         var changePasswordAlertViewIsPresented: Bool = false
@@ -63,7 +63,7 @@ public class ChangePasswordViewModel: ObservableObject {
         
         $newPassword
             .map { $0.isEmpty ? .idle : ($0.isValidPassword() ? .valid : .invalid) }
-            .assign(to: \.state.passwordIsValid, on: owner)
+            .assign(to: \.state.newPasswordIsValid, on: owner)
             .store(in: cancelBag)
         
         $checkPassword
@@ -73,7 +73,7 @@ public class ChangePasswordViewModel: ObservableObject {
         
         Publishers.CombineLatest3($currentPassword, $newPassword, $checkPassword)
             .map { _ in
-                owner.state.passwordIsValid == .valid &&
+                owner.state.newPasswordIsValid == .valid &&
                 owner.state.checkPasswordIsValid == .valid &&
                 !owner.currentPassword.isEmpty
             }

@@ -41,7 +41,8 @@ public struct RootView: View {
             case .mypage:
                 MyPageView(
                     viewModel: MyPageViewModel(
-                        navigationRouter: navigationRouter.myPage
+                        navigationRouter: navigationRouter.myPage,
+                        windowRouter: router.windowRouter
                     )
                 )
                 .environmentObject(navigationRouter.myPage)

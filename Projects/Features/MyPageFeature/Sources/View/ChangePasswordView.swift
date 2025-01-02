@@ -28,7 +28,7 @@ public struct ChangePasswordView: View {
                     .padding(.top, 36)
                 
                 HeyTextField(
-                    text: $viewModel.newPassword,
+                    text: $viewModel.currentPassword,
                     placeHolder: "Current Password"
                 )
                 .overlay(
@@ -46,7 +46,8 @@ public struct ChangePasswordView: View {
                 
                 SecurityPasswordField(
                     password: $viewModel.newPassword,
-                    placeHolder: "New password",
+                    placeHolder: "New password", 
+                    textFieldState: $viewModel.state.newPasswordIsValid,
                     colorSystem: .lightgray
                 )
                 .padding(.top, 8)
@@ -54,6 +55,7 @@ public struct ChangePasswordView: View {
                 SecurityPasswordField(
                     password: $viewModel.checkPassword,
                     placeHolder: "Confirm password",
+                    textFieldState: $viewModel.state.checkPasswordIsValid,
                     colorSystem: .lightgray
                 )
                 .padding(.top, 8)
@@ -62,7 +64,9 @@ public struct ChangePasswordView: View {
                 
                 Button("Change password"){
                     viewModel.send(.changePasswordButtonDidTap)
-                }.heyBottomButtonStyle(.primary)
+                }
+                .disabled(!viewModel.state.changePasswordButtonIsEnabled)
+                .heyBottomButtonStyle(.primary)
                 
                 Spacer()
                     .frame(height: 65)
