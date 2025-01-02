@@ -44,3 +44,9 @@ extension View {
             .transition(.move(edge: .bottom))
     }
 }
+
+extension View {
+    public func endTextEditing() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}

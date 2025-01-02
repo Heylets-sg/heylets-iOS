@@ -69,7 +69,6 @@ struct OnboardingBaseView<Content:View>: View {
                     // Action
                 }
                 .heyBottomButtonStyle()
-                
             }
             .padding(.top, 36)
             .padding(.bottom, 65)
@@ -79,7 +78,6 @@ struct OnboardingBaseView<Content:View>: View {
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()
-        //        .setOnboardingNavigation()
     }
 }
 
@@ -89,5 +87,4 @@ struct OnboardingBaseView<Content:View>: View {
             Text("asdf")
         }
     }, titleText: "Enter Your Security Code")
-    //        .environmentObject(StubOnboardingNavigationRouter())
 }

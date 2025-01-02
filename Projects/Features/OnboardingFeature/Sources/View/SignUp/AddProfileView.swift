@@ -7,11 +7,13 @@
 //
 
 import SwiftUI
+import PhotosUI
+
 import BaseFeatureDependency
 
 public struct AddProfileView: View {
     @EnvironmentObject var router: Router
-    var viewModel: AddProfileViewModel
+    @ObservedObject var viewModel: AddProfileViewModel
     
     public init(viewModel: AddProfileViewModel) {
         self.viewModel = viewModel
@@ -26,26 +28,48 @@ public struct AddProfileView: View {
                 .foregroundColor(.heyGray1)
                 .padding(.bottom, 32)
             
-            Button{
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(Color.heyGray4)
-                        .frame(width: 136, height: 136)
-                    
-                    Image(systemName: "camera")
+            HStack {
+                Spacer()
+                HeyPhotoPicker(viewModel: viewModel) {
+                    Image(uiImage: viewModel.profileImage ?? .icPencil)
                         .resizable()
-                        .scaledToFit()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(.black)
+                        .frame(width: 136, height: 136)
+                        .background(Color.heyGray4)
+                        .clipShape(Circle())
                 }
+                Spacer()
             }
-            .padding(.horizontal, 113)
+            .frame(maxWidth: .infinity)
+            
             
         }, titleText: "Add profile picture", nextButtonAction: { viewModel.send(.nextButtonDidTap) })
     }
 }
 
-//#Preview {
-//    AddProfileView()
-//}
+public struct HeyPhotoPicker<Content: View>: View {
+    @State private var selectedPhoto: PhotosPickerItem?
+    private var viewModel: AddProfileViewModel
+    private let matching: PHPickerFilter = .images
+    private let content: () -> Content
+    
+    public init(
+        viewModel: AddProfileViewModel,
+        content: @escaping () -> Content
+    ) {
+        self.viewModel = viewModel
+        self.content = content
+    }
+    
+    public var body: some View {
+        PhotosPicker(
+            selection: $selectedPhoto,
+            matching: matching
+        ) {
+            content()
+        }
+        .onChange(of: selectedPhoto) { newValue in
+            viewModel.send(.profileImageDidChange(newValue))
+            selectedPhoto = nil
+        }
+    }
+}

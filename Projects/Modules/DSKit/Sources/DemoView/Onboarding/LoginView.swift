@@ -1,5 +1,5 @@
 //
-//  EnterPersonalInfoView.swift
+//  AddProfileVIew.swift
 //  OnboardingFeature
 //
 //  Created by 류희재 on 12/18/24.
@@ -8,154 +8,102 @@
 
 import SwiftUI
 //import BaseFeatureDependency
-//import DSKit
 
-public struct EnterPersonalInfoView: View {
+public struct AddProfileView: View {
     //    @EnvironmentObject var router: Router
-    @ObservedObject var viewModel: EnterPersonalInfoViewModel
-    var genderList: [Gender] = [.men, .women, .others]
-    
-    @State var date = Date()
-    
-    public init(viewModel: EnterPersonalInfoViewModel) {
-        self.viewModel = viewModel
-    }
-    
+    @State private var selectedImage: UIImage? // 선택된 이미지를 저장
+    @State private var isPresentedError: Bool = false // 에러 발생 여부
+    //    var viewModel: AddProfileViewModel
+    //
+    //    public init(viewModel: AddProfileViewModel) {
+    //        self.viewModel = viewModel
+    //    }
     public var body: some View {
         OnboardingBaseView(content: {
             Spacer()
                 .frame(height: 8)
             
-            HStack(spacing: 16) {
-                ForEach(genderList, id: \.self) { gender in
-                    GenderButton(
-                        title: gender.title,
-                        isSelected: gender == viewModel.gender,
-                        action: { viewModel.send(.genderButtonDidTap(gender)) }
-                    )
-                }
+            Text("How about a picture of a cute cat?")
+                .font(.regular_16)
+                .foregroundColor(.heyGray1)
+                .padding(.bottom, 32)
+            
+            GreenPhotoPicker(
+                selectedImage: $selectedImage
+            ) {
+                Image(uiImage: selectedImage ?? .icPencil)
+                    .resizable()
+                    .frame(width: 136, height: 136)
+                    .background(Color.heyGray4)
+                    .clipShape(Circle())
+                
             }
-            .padding(.trailing, 62)
-            .padding(.bottom, 20)
+            .padding(.horizontal, 113)
             
-            VStack(alignment: .leading) {
-                ZStack {
-                    // 배경색을 원하는 색으로 설정
-                    Color.blue.opacity(0.2)
-                        .cornerRadius(10) // 배경을 둥글게 만들기
-
-                    DatePicker(
-                        "",
-                        selection: $viewModel.birth,
-                        displayedComponents: [.date]
-                    )
-                    .onChange(of: viewModel.birth) { date in
-                        viewModel.send(.birthDayDidChange(date))
-                    }
-                    .labelsHidden()
-                }
-                .frame(height: 44) // 원하는 높이 설정
-                .padding()
-            }
-            
-            
-        }, titleText: "Please check your gender/birth")
+        }, titleText: "Add profile picture")
     }
 }
 
-fileprivate struct GenderButton: View {
-    let title: String
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            Text(title)
-                .frame(height: 56)
-                .frame(maxWidth: .infinity)
-                .font(.semibold_14)
-                .background(isSelected ? Color.heyMain : Color.heyGray4)
-                .foregroundStyle(Color.heyBlack)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-        }
-    }
-}
 #Preview {
-    EnterPersonalInfoView(viewModel: EnterPersonalInfoViewModel())
+    AddProfileView()
 }
 
+import PhotosUI
+import SwiftUI
 
-//
-//  EnterPersonalInfoViewModel.swift
-//  OnboardingFeature
-//
-//  Created by 류희재 on 12/19/24.
-//  Copyright © 2024 Heylets-iOS. All rights reserved.
-//
-
-import Foundation
-import Combine
-
-//import BaseFeatureDependency
-
-enum Gender {
-    case men
-    case women
-    case others
+public struct GreenPhotoPicker<Content: View>: View {
+    @State private var selectedPhoto: PhotosPickerItem? // 단일 선택을 위해 변경
+    @Binding private var selectedImage: UIImage? // UIImage도 단일로 변경
+    @Binding private var isPresentedError: Bool
+    private let matching: PHPickerFilter
+    private let content: () -> Content
     
-    var title: String {
-        switch self {
-        case .men:
-            return "Men"
-        case .women:
-            return "Women"
-        case .others:
-            return "Others"
+    public init(
+        selectedImage: Binding<UIImage?>,
+        isPresentedError: Binding<Bool> = .constant(false),
+        matching: PHPickerFilter = .images,
+        content: @escaping () -> Content
+    ) {
+        self._selectedImage = selectedImage
+        self._isPresentedError = isPresentedError
+        self.matching = matching
+        self.content = content
+    }
+    
+    public var body: some View {
+        PhotosPicker(
+            selection: $selectedPhoto, // 단일 선택을 위한 변경
+            matching: matching
+        ) {
+            content()
+        }
+        .onChange(of: selectedPhoto) { newValue in
+            print(newValue)
+            handleSelectedPhoto(newValue)
         }
     }
+    
+    
+    private func handleSelectedPhoto(_ newPhoto: PhotosPickerItem?) {
+        guard let newPhoto = newPhoto else { return }
+        
+        newPhoto.loadTransferable(type: Data.self) { result in
+            switch result {
+            case .success(let data):
+                if let data = data, let newImage = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        selectedImage = newImage // 선택된 이미지만 업데이트
+                    }
+                }
+            case .failure:
+                DispatchQueue.main.async {
+                    isPresentedError = true
+                }
+            }
+        }
+        
+        selectedPhoto = nil // 선택 완료 후 상태 초기화
+    }
 }
 
-public class EnterPersonalInfoViewModel: ObservableObject {
-    struct State {
-    }
-    
-    enum Action {
-        case backButtonDidTap
-        case nextButtonDidTap
-        case genderButtonDidTap(Gender)
-        case birthDayDidChange(Date)
-    }
-    
-    //    public var navigationRouter: OnboardingNavigationRouter
-    //    private var user: User
-    
-    @Published var state = State()
-    @Published var gender: Gender = .men
-    @Published var birth: Date = Date()
-    
-    //    public init(
-    ////        navigationRouter: OnboardingNavigationRouter,
-    ////        user: User
-    //    ) {
-    //        self.navigationRouter = navigationRouter
-    //        self.user = user
-    //    }
-    
-    func send(_ action: Action) {
-        switch action {
-        case .backButtonDidTap:
-            break
-            //navigationRouter.pop()
-        case .nextButtonDidTap:
-            break
-            //            navigationRouter.push(to: .enterIdPassword)
-        case .genderButtonDidTap(let gender):
-            self.gender = gender
-        case .birthDayDidChange(let date):
-            self.birth = date
-        }
-    }
-}
 

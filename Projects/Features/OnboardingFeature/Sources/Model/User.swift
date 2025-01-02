@@ -6,7 +6,7 @@
 //  Copyright © 2024 Heylets-iOS. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public struct User: Hashable {
     var nickName: String
@@ -15,4 +15,5 @@ public struct User: Hashable {
     var university: String
     var gender: String
     var birth: Date
+    var profileImage: UIImage?
 }
