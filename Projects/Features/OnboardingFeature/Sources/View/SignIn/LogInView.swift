@@ -81,7 +81,7 @@ public struct LogInView: View {
             Button("Log In") {
                 viewModel.send(.loginButtonDidTap)
             }
-            .disabled(!viewModel.state.loginButtonEnabled)
+//            .disabled(!viewModel.state.loginButtonEnabled)
             .heyBottomButtonStyle()
         }
         .padding(.top, 106)

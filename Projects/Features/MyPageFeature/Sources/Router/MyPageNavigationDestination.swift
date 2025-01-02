@@ -26,15 +26,25 @@ public enum MyPageNavigationDestination: Hashable {
 
 struct MyPageNavigationRoutingView: View {
     
-    @EnvironmentObject var router: MyPageNavigationRouter
+    @EnvironmentObject var navigationRouter: MyPageNavigationRouter
+    @EnvironmentObject var router: Router
     @State var destination: MyPageNavigationDestination
     
     var body: some View {
         switch destination {
         case .myPage:
-            MyPageView(viewModel: .init(navigationRouter: router))
+            MyPageView(
+                viewModel: .init(
+                    navigationRouter: navigationRouter,
+                    windowRouter: router.windowRouter
+                )
+            )
         case .changePassword:
-            ChangePasswordView(viewModel: .init(navigationRouter: router))
+            ChangePasswordView(
+                viewModel: .init(
+                    navigationRouter: navigationRouter
+                )
+            )
         case .privacyPolicy:
             PrivacyPolicyView()
         case .termsOfService:
@@ -42,9 +52,18 @@ struct MyPageNavigationRoutingView: View {
         case .contactUs:
             ContactUsView()
         case .notificationSetting:
-            NotificationSettingView()
+            NotificationSettingView(
+                viewModel: .init(
+                    navigationRouter: navigationRouter
+                )
+            )
         case .deleteAccount:
-            DeleteAccountView()
+            DeleteAccountView(
+                viewModel: .init(
+                    navigationRouter: navigationRouter,
+                    windowRouter: router.windowRouter
+                )
+            )
         }
     }
 }

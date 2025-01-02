@@ -9,11 +9,16 @@
 import SwiftUI
 
 import DSKit
+import BaseFeatureDependency
 
 public struct DeleteAccountView: View {
-    @State var text = ""
-    @State var deleteAccountAlertViewIsPresented: Bool = false
-    @State var inValidPasswordAlertViewIsPresented: Bool = false
+    @EnvironmentObject var router: Router
+    @ObservedObject var viewModel: DeleteAccountViewModel
+    
+    public init(viewModel: DeleteAccountViewModel) {
+        self.viewModel = viewModel
+    }
+    
     public var body: some View {
         MyPageBaseView(content: {
             VStack(alignment: .leading) {
@@ -22,43 +27,46 @@ public struct DeleteAccountView: View {
                     .foregroundColor(.heyGray1)
                     .padding(.top, 36)
                 
-                HeyTextField(text: $text, placeHolder: "Account password")
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.heyGray3, lineWidth: 1)
-                    )
-                    .padding(.top, 8)
+                HeyTextField(
+                    text: $viewModel.password,
+                    placeHolder: "Account password"
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.heyGray3, lineWidth: 1)
+                )
+                .padding(.top, 8)
                 
                 Spacer()
                 
                 Button("Delete account"){
-                    deleteAccountAlertViewIsPresented = true
+                    viewModel.send(.deleteAccountButtonDidTap)
                 }.heyBottomButtonStyle(.primary)
                 
                 Spacer()
                     .frame(height: 65)
             }
-            .heyAlert(
-                isPresented: deleteAccountAlertViewIsPresented,
-                title: "Are you sure you want\nto delete account?",
-                primaryButton: ("Close", .gray, {
-                    deleteAccountAlertViewIsPresented = false
-                }),
-                secondaryButton: ("Ok", .primary, {
-                    //회원탈퇴 로직 구현
-                })
-            )
-            .heyAlert(
-                isPresented: inValidPasswordAlertViewIsPresented,
-                title: "The password is not correct.\nplease try again.",
-                primaryButton: ("Ok", .gray, {
-                    inValidPasswordAlertViewIsPresented = false
-                })
-            )
         }, titleText: "Delete account")
+        .heyAlert(
+            isPresented: viewModel.state.deleteAccountAlertViewIsPresented,
+            title: "Are you sure you want\nto delete account?",
+            primaryButton: ("Close", .gray, {
+                viewModel.send(.dismissDeleteAccountAlertView)
+            }),
+            secondaryButton: ("Ok", .primary, {
+                viewModel.send(.deleteAccount)
+            })
+        )
+        .heyAlert(
+            isPresented: viewModel.state.inValidPasswordAlertViewIsPresented,
+            title: "The password is not correct.\nplease try again.",
+            primaryButton: ("Ok", .gray, {
+                viewModel.send(.dismissInValidPasswordAlertView)
+            })
+        )
     }
 }
-
-#Preview {
-    DeleteAccountView()
-}
+//
+//#Preview {
+//    DeleteAccountView()
+//}

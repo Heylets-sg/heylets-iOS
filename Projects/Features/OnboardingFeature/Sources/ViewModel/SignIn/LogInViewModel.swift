@@ -21,7 +21,7 @@ public class LogInViewModel: ObservableObject {
     }
     
     struct State {
-        var loginButtonEnabled = false
+        var loginButtonEnabled = true
     }
     
     @Published var state = State()

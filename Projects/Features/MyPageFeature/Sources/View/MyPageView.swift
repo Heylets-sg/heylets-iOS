@@ -14,7 +14,7 @@ import BaseFeatureDependency
 public struct MyPageView: View {
     @EnvironmentObject var router: Router
     @EnvironmentObject var myPageRouter: MyPageNavigationRouter
-    var viewModel: MyPageViewModel
+    @ObservedObject var viewModel: MyPageViewModel
     
     public init(viewModel: MyPageViewModel) {
         self.viewModel = viewModel
@@ -23,7 +23,7 @@ public struct MyPageView: View {
     public var body: some View {
         NavigationStack(path: $myPageRouter.destinations) {
             ZStack {
-                Color.heyMain.ignoresSafeArea()
+                Color.heyMain
                 
                 VStack {
                     Spacer()
@@ -43,18 +43,21 @@ public struct MyPageView: View {
                                 .padding(.top, 44)
                                 .padding(.bottom, 32)
                             
-                            VStack(spacing: 24) {
-                                AccountView(viewModel: viewModel)
+                            ScrollView {
+                                VStack(spacing: 24) {
+                                    AccountView(viewModel: viewModel)
+                                    
+                                    SupportView(viewModel: viewModel)
+                                    
+                                    AppSettingView(viewModel: viewModel)
+                                    
+                                    EtcView(viewModel: viewModel)
+                                }
                                 
-                                SupportView(viewModel: viewModel)
-                                
-                                AppSettingView(viewModel: viewModel)
-                                
-                                EtcView(viewModel: viewModel)
                                 
                                 Spacer()
-                                
                             }
+                            .scrollIndicators(.hidden)
                         }
                         .padding(.horizontal, 16)
                         .background(Color.heyWhite)
@@ -78,19 +81,18 @@ public struct MyPageView: View {
             .ignoresSafeArea(edges: .vertical)
             .ignoresSafeArea(.keyboard)
             .setMyPageNavigation()
-            
         }
+        .navigationBarBackButtonHidden()
         .heyAlert(
-            isPresented: viewModel.logOutAlertViewIsPresented,
+            isPresented: viewModel.state.logoutAlertViewIsPresented,
             title: "Are you sure you want\nto logout?",
             primaryButton: ("Close", .gray, {
-                viewModel.logOutAlertViewIsPresented = false
+                viewModel.send(.dismissLogoutAlertView)
             }),
             secondaryButton: ("Ok", .primary, {
-                //로그아웃 로직 처림
+                viewModel.send(.logout)
             })
         )
-        .navigationBarBackButtonHidden()
     }
 }
 
