@@ -15,8 +15,6 @@ public struct EnterSecurityCodeView: View {
     @EnvironmentObject var router: Router
     @ObservedObject var viewModel: EnterSecurityCodeViewModel
     
-    @State var otpCode: String = ""
-    
     public init(viewModel: EnterSecurityCodeViewModel) {
         self.viewModel = viewModel
     }
@@ -34,10 +32,10 @@ public struct EnterSecurityCodeView: View {
             Spacer()
                 .frame(height: 88)
             
-            SecurityCodeInputView(otpCode: $otpCode)
+            SecurityCodeInputView(otpCode: $viewModel.otpCode)
             .frame(height: 50)
             
-        }, titleText: "Enter Your Security Code", nextButtonAction: { viewModel.send(.nextButtonDidTap)
+        }, titleText: "Enter Your Security Code", nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled, nextButtonAction: { viewModel.send(.nextButtonDidTap)
         })
     }
 }

@@ -16,6 +16,7 @@ import Core
 public class EnterEmailViewModel: ObservableObject {
     struct State {
         var emailIsValid: TextFieldState = .idle
+        var continueButtonIsEnabled: Bool = false
     }
     
     enum Action {
@@ -51,10 +52,11 @@ public class EnterEmailViewModel: ObservableObject {
         
         $email
             .map { $0.isEmpty ? .idle : ($0.isValidEmail() ? .valid : .invalid) }
-            .assign(to: \.state.emailIsValid, on: owner)
+            .sink {
+                owner.state.emailIsValid = $0
+                owner.state.continueButtonIsEnabled = $0 == .valid
+            }
             .store(in: cancelBag)
-        
-        //TODO: email 빈칸 아니면 따라서 ContinueButtonEnable 처리
     }
 }
 

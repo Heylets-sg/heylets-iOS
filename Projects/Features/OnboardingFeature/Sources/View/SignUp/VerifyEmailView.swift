@@ -28,7 +28,6 @@ public struct VerifyEmailView: View {
                 HeyTextField(
                     text: $viewModel.localPart,
                     placeHolder: "Enter your school email",
-//                    textFieldState: .idle,
                     colorSystem: .gray
                 )
                 .padding(.trailing, 12)
@@ -44,7 +43,6 @@ public struct VerifyEmailView: View {
                 HeyTextField(
                     text: $viewModel.domain,
                     placeHolder: "Click DownList Button",
-//                    textFieldState: .idle,
                     colorSystem: .gray
                 )
                 .padding(.trailing, 16)
@@ -68,7 +66,7 @@ public struct VerifyEmailView: View {
                 .hidden(!viewModel.state.domainListViewIsVisible)
             
             
-        },titleText: "Verify with your school email", nextButtonAction: { viewModel.send(.nextButtonDidTap)
+        },titleText: "Verify with your school email",nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled, nextButtonAction: { viewModel.send(.nextButtonDidTap)
         })
     }
 }

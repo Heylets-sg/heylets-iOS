@@ -15,7 +15,6 @@ public struct EnterIdPasswordView: View {
     @EnvironmentObject var router: Router
     @ObservedObject var viewModel: EnterIdPasswordViewModel
     
-    @State var text = ""
     @State var showPassword = false
     
     public init(viewModel: EnterIdPasswordViewModel) {
@@ -53,7 +52,7 @@ public struct EnterIdPasswordView: View {
                 )
             }
             
-        }, titleText: "Create your username\nand password", nextButtonAction: { viewModel.send(.nextButtonDidTap)
+        }, titleText: "Create your username\nand password", nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled, nextButtonAction: { viewModel.send(.nextButtonDidTap)
         })
     }
 }

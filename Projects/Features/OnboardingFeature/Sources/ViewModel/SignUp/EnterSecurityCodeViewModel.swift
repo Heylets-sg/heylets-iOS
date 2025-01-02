@@ -10,10 +10,12 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Core
 
 public class EnterSecurityCodeViewModel: ObservableObject {
     struct State {
         var hiddenEmail: String = ""
+        var continueButtonIsEnabled: Bool = false
     }
     
     enum Action {
@@ -23,7 +25,10 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     
     public var navigationRouter: OnboardingNavigationRouter
     private var user: User?
+    
     @Published var state = State()
+    @Published var otpCode: String = ""
+    private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: OnboardingNavigationRouter,
@@ -33,6 +38,8 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         self.navigationRouter = navigationRouter
         self.user = user
         self.state.hiddenEmail = email.maskedEmail()
+        
+        observe()
     }
     
     func send(_ action: Action) {
@@ -47,6 +54,16 @@ public class EnterSecurityCodeViewModel: ObservableObject {
                 navigationRouter.push(to: .resetPassword)
             }
         }
+    }
+    
+    private func observe() {
+        weak var owner = self
+        guard let owner else { return }
+        
+        $otpCode
+            .map { $0.count >= 6 }
+            .assign(to: \.state.continueButtonIsEnabled, on: owner)
+            .store(in: cancelBag)
     }
 }
 

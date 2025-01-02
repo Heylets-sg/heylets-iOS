@@ -31,7 +31,7 @@ public struct AddProfileView: View {
             HStack {
                 Spacer()
                 HeyPhotoPicker(viewModel: viewModel) {
-                    Image(uiImage: viewModel.profileImage ?? .icPencil)
+                    Image(uiImage: viewModel.profileImage ?? .icCamera)
                         .resizable()
                         .frame(width: 136, height: 136)
                         .background(Color.heyGray4)

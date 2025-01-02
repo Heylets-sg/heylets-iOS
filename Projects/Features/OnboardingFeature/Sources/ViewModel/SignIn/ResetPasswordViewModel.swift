@@ -17,6 +17,7 @@ public class ResetPasswordViewModel: ObservableObject {
     struct State {
         var passwordIsValid: TextFieldState = .idle
         var checkPasswordIsValid: TextFieldState = .idle
+        var continueButtonIsEnabled: Bool = false
     }
     
     enum Action {
@@ -61,7 +62,13 @@ public class ResetPasswordViewModel: ObservableObject {
             .assign(to: \.state.checkPasswordIsValid, on: owner)
             .store(in: cancelBag)
         
-        //TODO: passwordIsValid, checkPasswordIsValid 전부 valid 일때 다음 버튼 활성화
+        Publishers.CombineLatest($password, $checkPassword)
+            .map { _ in
+                owner.state.passwordIsValid == .valid &&
+                owner.state.checkPasswordIsValid == .valid
+            }
+            .assign(to: \.state.continueButtonIsEnabled, on: owner)
+            .store(in: cancelBag)
         
     }
 }

@@ -42,9 +42,10 @@ public struct ResetPasswordView: View {
                 )
             }
             
-        }, titleText: "Reset your password", hiddenCloseBtn: false, nextButtonAction: { 
-            viewModel.send(.gotoLoginView)
-        })
+        }, titleText: "Reset your password",
+           nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
+           hiddenCloseBtn: false,
+           nextButtonAction: { viewModel.send(.gotoLoginView) })
     }
 }
 

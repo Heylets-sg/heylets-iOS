@@ -11,43 +11,9 @@ import SwiftUI
 import BaseFeatureDependency
 import DSKit
 
-import SwiftUI
-
-import DSKit
-
-enum UniversityInfo: String {
-    case NUS
-    case NTU
-    
-    var icon: UIImage {
-        switch self {
-        case .NUS:
-            return .nus
-        case .NTU:
-            return .ntu
-        }
-    }
-}
-
-
 public struct SelectUniversityView: View {
     @EnvironmentObject var router: Router
-    var viewModel: SelectUniversityViewModel
-    
-    @State private var searchText: String = ""
-    @State private var selectedUniversity: UniversityInfo?
-    
-    private let allUniversityItems: [UniversityInfo] = [.NTU, .NUS]
-    
-    private var filteredItems: [UniversityInfo] {
-        if searchText.isEmpty || selectedUniversity != nil {
-            return []
-        } else {
-            return allUniversityItems.filter {
-                $0.rawValue.localizedCaseInsensitiveContains(searchText)
-            }
-        }
-    }
+    @ObservedObject var viewModel: SelectUniversityViewModel
     
     public init(viewModel: SelectUniversityViewModel) {
         self.viewModel = viewModel
@@ -58,7 +24,7 @@ public struct SelectUniversityView: View {
             content: {
                 VStack {
                     HeyTextField(
-                        text: $searchText,
+                        text: $viewModel.searchText,
                         placeHolder: "Select your university",
                         leftImage: .icSchool
                     )
@@ -71,22 +37,20 @@ public struct SelectUniversityView: View {
                     
                     ScrollView {
                         VStack(spacing: 0) {
-                            ForEach(filteredItems, id: \.self) { university in
+                            ForEach(viewModel.state.filteredItems, id: \.self) { university in
                                 SelectUniversityListCellView(
                                     university,
-                                    isSelected: university == selectedUniversity
+                                    isSelected: university == viewModel.university
                                 )
                                 .onTapGesture {
-                                    selectedUniversity = university
-                                    searchText = university.rawValue
-                                    viewModel.send(.selectUniversity(university.rawValue))
+                                    viewModel.send(.selectUniversity(university))
                                 }
                             }
                         }
                         .cornerRadius(8)
                     }
                 }
-            }, titleText: "What school are you attending?",
+            }, titleText: "What school are you attending?",nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
             nextButtonAction: { viewModel.send(.nextButtonDidTap)
 //            isEnabled: viewModel.state.continueButtonEnabled
             }

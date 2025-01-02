@@ -15,7 +15,7 @@ import Core
 public class VerifyEmailViewModel: ObservableObject {
     struct State {
         var domainListViewIsVisible = false
-        var continueButtonEnabled = false
+        var continueButtonIsEnabled = false
     }
     
     enum Action {
@@ -66,13 +66,13 @@ public class VerifyEmailViewModel: ObservableObject {
         
         Publishers.CombineLatest($localPart, $domain)
             .filter { !$0.isEmpty && !$1.isEmpty }
-            .map { 
-                print("\($0)@\($1)")
-                return "\($0)@\($1)"
-            }
+            .map { "\($0)@\($1)" }
             .assign(to: \.email, on: owner)
             .store(in: cancelBag)
         
-        //TODO: email 여부에 따라서 ContinueButtonEnable 처리
+        Publishers.CombineLatest($localPart, $domain)
+            .map { !$0.isEmpty && !$1.isEmpty }
+            .assign(to: \.state.continueButtonIsEnabled, on: owner)
+            .store(in: cancelBag)
     }
 }

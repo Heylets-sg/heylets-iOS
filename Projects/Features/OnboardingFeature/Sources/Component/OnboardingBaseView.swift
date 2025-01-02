@@ -12,17 +12,19 @@ import DSKit
 struct OnboardingBaseView<Content:View>: View {
     
     @Environment(\.dismiss) var dismiss
-//    let isEnabled: Bool 
+    
     
     let content: Content
     let titleText: String
     let buttonTitle: String
     let hiddenCloseBtn: Bool
+    let nextButtonIsEnabled: Bool
     let nextButtonAction: () -> Void
     
     init(
         @ViewBuilder content: () -> Content,
         titleText: String,
+        nextButtonIsEnabled: Bool = true,
         buttonTitle: String = "Continue",
         hiddenCloseBtn: Bool = true,
         nextButtonAction: @escaping () -> Void
@@ -31,6 +33,7 @@ struct OnboardingBaseView<Content:View>: View {
         self.titleText = titleText
         self.buttonTitle = buttonTitle
         self.hiddenCloseBtn = hiddenCloseBtn
+        self.nextButtonIsEnabled = nextButtonIsEnabled
         self.nextButtonAction = nextButtonAction
     }
     
@@ -74,6 +77,7 @@ struct OnboardingBaseView<Content:View>: View {
                 Button(buttonTitle) {
                     nextButtonAction()
                 }
+                .disabled(!nextButtonIsEnabled)
                 .heyBottomButtonStyle()
                 
             }
@@ -85,7 +89,6 @@ struct OnboardingBaseView<Content:View>: View {
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()
-//        .setOnboardingNavigation()
     }
 }
 

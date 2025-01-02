@@ -18,6 +18,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
         var nickNameIsValid: TextFieldState = .idle
         var passwordIsValid: TextFieldState = .idle
         var checkPasswordIsValid: TextFieldState = .idle
+        var continueButtonIsEnabled: Bool = false
     }
     
     enum Action {
@@ -78,8 +79,14 @@ public class EnterIdPasswordViewModel: ObservableObject {
             .assign(to: \.state.checkPasswordIsValid, on: owner)
             .store(in: cancelBag)
         
-        //TODO: nickNameIsValid, passwordIsValid, checkPasswordIsValid 전부 valid 일때 다음 버튼 활성화
-        
+        Publishers.CombineLatest3($nickName, $password, $checkPassword)
+            .map { _ in
+                owner.state.nickNameIsValid == .valid &&
+                owner.state.passwordIsValid == .valid &&
+                owner.state.checkPasswordIsValid == .valid
+            }
+            .assign(to: \.state.continueButtonIsEnabled, on: owner)
+            .store(in: cancelBag)
     }
 }
 
