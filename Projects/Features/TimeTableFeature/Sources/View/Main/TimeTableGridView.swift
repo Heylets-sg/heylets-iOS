@@ -10,82 +10,81 @@ import SwiftUI
 
 public struct TimeTableGridView: View {
     @Binding var viewType: TimeTableViewType
-    
-    let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sta", "Sun"]
-    let timeSlots = Array(9...24) // 9시부터 7시(19)까지
-    let schedule = [
-        (day: "Mon", startHour: 9, endHour: 10, title: "MA5031", location: "SOE CR BI-2"),
-        (day: "Mon", startHour: 11, endHour: 17, title: "MA5031", location: "SOE CR BI-2"),
-        (day: "Wed", startHour: 10, endHour: 12, title: "MA5031", location: "SOE CR BI-2")
-    ]
+    @ObservedObject var viewModel: TimeTableGridViewModel
+    var hourList = Array(9...24)
     
     public var body: some View {
         Grid(horizontalSpacing: 1, verticalSpacing: 1) {
-            GridRow {
-                ForEach(days, id: \.self) { _ in
-                    Rectangle()
-                        .fill(Color.clear) // 내부를 투명하게 설정
-                        .overlay(
-                            Rectangle()
-                                .stroke(Color.heyGray6, lineWidth: 0.5) // 외곽선을 설정
-                        )
-                        .frame(width: 73, height: 21)
-                }
-            }
+            createHeaderRow()
             
-            ForEach(timeSlots, id: \.self) { hour in
-                GridRow(alignment: .top) {
-                    ForEach(days, id: \.self) { day in
-                        
-                        ZStack {
-                            Rectangle()
-                                .fill(Color.clear) // 내부를 투명하게 설정
-                                .overlay(
-                                    Rectangle()
-                                        .stroke(Color.heyGray6, lineWidth: 0.5) // 외곽선을 설정
-                                )
-                            
-                            
-                            // 강의 슬롯 색칠
-                            if let slot = schedule.first(where: {
-                                $0.day == day && hour >= $0.startHour && hour < $0.endHour
-                            }) {
-                                Button {
-                                    withAnimation {
-                                        viewType = .detail
-                                    }
-                                    
-                                } label: {
-                                    ZStack {
-                                        Color.heySubMain
-                                        
-                                        if hour == slot.startHour {
-                                            
-                                            VStack(alignment: .leading) {
-                                                
-                                                // 강의 시작 시간에만 텍스트 표시
-                                                Text(slot.title)
-                                                    .font(.medium_12)
-                                                    .multilineTextAlignment(.center)
-                                                Text(slot.location)
-                                                    .font(.regular_10)
-                                                    .foregroundColor(.gray)
-                                                Spacer()
-                                            }
-                                            
-                                        }
-                                    }
-                                }
-                                .disabled(!(viewType == .main))
-                                .background(Color.blue.opacity(0.2))
-                            }
-                        }
-                        .frame(width: 73, height: 52)
-                    }
-                    
-                    
-                }
+            ForEach(hourList, id: \.self) { hour in
+                createGridRow(for: hour)
             }
         }
+        .onAppear {
+            viewModel.send(.onAppear)
+        }
+    }
+    
+    @ViewBuilder
+    private func createHeaderRow() -> some View {
+        GridRow {
+            ForEach(viewModel.weekList, id: \.self) { _ in
+                Rectangle()
+                    .fill(Color.clear)
+                    .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
+                    .frame(width: 73, height: 21)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func createGridRow(for hour: Int) -> some View {
+        GridRow(alignment: .top) {
+            ForEach(viewModel.weekList, id: \.self) { day in
+                createGridCell(for: hour, day: day)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func createGridCell(for hour: Int, day: Week) -> some View {
+        ZStack {
+            Rectangle()
+                .fill(Color.clear)
+                .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
+            
+            if let slot = getSlot(for: hour, day: day) {
+                Button {
+                    withAnimation {
+                        viewType = .detail
+                    }
+                } label: {
+                    ZStack {
+                        Color.heySubMain.opacity(0.5)
+                        if hour == slot.schedule.startHour {
+                            VStack(alignment: .leading) {
+                                Text(slot.name)
+                                    .font(.medium_12)
+                                    .multilineTextAlignment(.center)
+                                Text(slot.schedule.location)
+                                    .font(.regular_10)
+                                    .foregroundColor(.gray)
+                                Spacer()
+                            }
+                        }
+                    }
+                }
+                .disabled(!(viewType == .main))
+                .background(Color.blue.opacity(0.2))
+            }
+        }
+        .frame(width: 73, height: 52)
+    }
+    
+    private func getSlot(for hour: Int, day: Week) -> TimeTableCellInfo? {
+        guard day.index < viewModel.state.timeTable.count,
+              hour - 9 < viewModel.state.timeTable[day.index].count else { return nil }
+        return viewModel.state.timeTable[day.index][hour - 9]
     }
 }

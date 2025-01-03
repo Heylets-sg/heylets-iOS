@@ -1,8 +1,8 @@
 //
-//  DetailModuleInfoViewModel.swift
+//  TimeTableMainViewModel.swift
 //  TimeTableFeatureInterface
 //
-//  Created by 류희재 on 1/2/25.
+//  Created by 류희재 on 1/3/25.
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
@@ -13,18 +13,19 @@ import BaseFeatureDependency
 import DSKit
 import Core
 
-public class DetailModuleInfoViewModel: ObservableObject {
+public class TimeTableMainViewModel: ObservableObject {
     struct State {
-       
+        
     }
     
     enum Action {
+        case onAppear
     }
     
     @Published var state = State()
+    @Published var weekList: [Week] = Week.dayOfWeek
+    @Published var timeTableCellList: [TimeTableCellInfo] = [.stub1, .stub2].createTimeTableCellList()
     
-    //TODO: 시간표 상세조희 서버통신으로 이 값 업데이트
-    var moduleInfo: LectureInfo = .stub
     private let cancelBag = CancelBag()
     
     public init() {
@@ -34,7 +35,8 @@ public class DetailModuleInfoViewModel: ObservableObject {
     
     func send(_ action: Action) {
         switch action {
-        
+        case .onAppear:
+            break
         }
     }
     
@@ -44,3 +46,5 @@ public class DetailModuleInfoViewModel: ObservableObject {
         
     }
 }
+
+

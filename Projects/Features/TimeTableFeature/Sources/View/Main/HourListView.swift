@@ -11,7 +11,8 @@ import SwiftUI
 import DSKit
 
 public struct HourListView: View {
-    var hourList = [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    let hourList = [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    
     public var body: some View {
         VStack(spacing: 40) {
             ForEach(hourList, id: \.self) { hour in

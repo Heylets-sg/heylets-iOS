@@ -9,11 +9,15 @@
 import SwiftUI
 
 public struct WeeklyListView: View {
-    var weekList = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sta", "Sun"]
+    var weekList: [Week]
+    
+    init(_ weekList: [Week]) {
+        self.weekList = weekList
+    }
     public var body: some View {
         HStack(spacing: 55) {
             ForEach(weekList, id: \.self) { day in
-                WeeklyListCellView(day)
+                WeeklyListCellView(day.rawValue)
             }
         }
         

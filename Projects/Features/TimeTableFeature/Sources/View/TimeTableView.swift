@@ -53,7 +53,7 @@ public struct TimeTableView: View {
                 Spacer()
                     .frame(height: 19)
                 
-                MainView(viewType: $viewType)
+                MainView(viewType: $viewType, viewModel: .init())
             }
             .onTapGesture {
                 withAnimation {

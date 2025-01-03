@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ModuleInfo {
+struct LectureInfo {
     var code: String
     var name: String
     var schedule: [ScheduleInfo]
@@ -26,7 +26,7 @@ struct ModuleInfo {
             if schedule.allSatisfy({$0.location == schedule.first!.location}) {
                 return location
             } else {
-                let days = schedule.map { $0.day }.joined(separator: ", ")
+                let days = schedule.map { $0.day.rawValue }.joined(separator: ", ")
                 return "\(location)(\(days))"
             }
         }
@@ -34,9 +34,14 @@ struct ModuleInfo {
     }
 }
 
-struct ScheduleInfo {
-    var day: String
-    var startTime: String
-    var endTime: String
-    var location: String
+extension LectureInfo {
+    static var stub: Self {
+        .init(
+            code: "EE3101",
+            name: "ENGINEERING ELECTROMAGNETICS",
+            schedule: [.stub2_1, .stub2_2], 
+            professor: "TUT-EE04",
+            unit: 2
+        )
+    }
 }
