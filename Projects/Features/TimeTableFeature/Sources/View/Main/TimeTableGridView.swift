@@ -54,32 +54,62 @@ public struct TimeTableGridView: View {
                 .fill(Color.clear)
                 .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
             
-            if let slot = getSlot(for: hour, day: day) {
+            // 슬롯이 존재할 경우 셀 그리기
+            if let cell = getSlot(for: hour, day: day) {
                 Button {
                     withAnimation {
                         viewType = .detail
                     }
                 } label: {
                     ZStack {
-                        Color.heySubMain.opacity(0.5)
-                        if hour == slot.schedule.startHour {
+                        VStack {
+                            if hour == cell.schedule.startHour {
+                                Spacer()
+                                Color.heySubMain.opacity(0.5)
+                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                    .clipped()
+                            } else if hour == cell.schedule.endHour {
+                                // 종료 시간일 때 위로 배치
+                                Color.heySubMain.opacity(0.5)
+                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                    .clipped()
+                                Spacer()
+                            } else {
+                                Color.heySubMain.opacity(0.5)
+                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                    .clipped()
+                            }
+                        }
+
+                        // 시간 시작에만 텍스트 보여주기
+                        if hour == cell.schedule.startHour {
                             VStack(alignment: .leading) {
-                                Text(slot.name)
+                                Text(cell.name)
                                     .font(.medium_12)
                                     .multilineTextAlignment(.center)
-                                Text(slot.schedule.location)
+                                Text(cell.schedule.location)
                                     .font(.regular_10)
                                     .foregroundColor(.gray)
                                 Spacer()
                             }
+                            .padding(.top, getCellHeight(for: cell, hour: hour))
                         }
                     }
                 }
                 .disabled(!(viewType == .main))
-                .background(Color.blue.opacity(0.2))
             }
         }
         .frame(width: 73, height: 52)
+    }
+    
+    private func getCellHeight(for cell: TimeTableCellInfo, hour: Int) -> CGFloat {
+        var baseHeight: CGFloat = 52 // 기본 셀 높이
+        if let colorRatio = cell.slot[hour-9] {
+            baseHeight *= CGFloat(colorRatio)
+        } else {
+            print(hour)
+        }
+        return baseHeight
     }
     
     private func getSlot(for hour: Int, day: Week) -> TimeTableCellInfo? {
@@ -87,4 +117,5 @@ public struct TimeTableGridView: View {
               hour - 9 < viewModel.state.timeTable[day.index].count else { return nil }
         return viewModel.state.timeTable[day.index][hour - 9]
     }
+    
 }

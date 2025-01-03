@@ -24,6 +24,10 @@ struct ScheduleInfo {
     var endTime: String {
         return "\(endHour):\(endMinute)"
     }
+    
+//    var ratio: Double {
+//        
+//    }
 }
 
 extension ScheduleInfo {

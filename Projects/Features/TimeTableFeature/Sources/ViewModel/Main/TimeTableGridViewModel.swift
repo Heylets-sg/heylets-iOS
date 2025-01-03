@@ -49,69 +49,10 @@ public class TimeTableGridViewModel: ObservableObject {
     
     private func setTimeTable() {
         state.timeTable = Array(repeating: Array(repeating: nil, count: 16), count: weekList.count)
-        
         for cell in timeTableCellList {
-            let dayIndex = cell.schedule.day.index
-            let startHour = cell.schedule.startHour - 9
-            let endHour = cell.schedule.endHour - 9
-            
-            for h in startHour..<endHour {
-                state.timeTable[dayIndex][h] = cell
+            for s in cell.slot {
+                state.timeTable[cell.schedule.day.index][s.key] = cell
             }
         }
     }
 }
-
-
-//public class TimeTableGridViewModel: ObservableObject {
-//    struct State {
-//        
-//    }
-//    
-//    enum Action {
-//        case onAppear
-//    }
-//    
-//    @Published var state = State()
-//    @Published var timeTableCellList: [TimeTableCellInfo] = [.stub1,.stub2].createTimeTableCellList()
-//    
-//    private let cancelBag = CancelBag()
-//    
-//    public init() {
-//        
-//        observe()
-//    }
-//    
-//    func send(_ action: Action) {
-//        switch action {
-//        case .onAppear:
-//            break
-//        }
-//    }
-//    
-//    private func observe() {
-//        weak var owner = self
-//        guard let owner else { return }
-//        
-//    }
-//    
-//    private func setTimeTable() {
-//        var timeTableCellList: [TimeTableCellInfo] = [.stub1,.stub2].createTimeTableCellList()
-//        
-//        var timeTable: [[TimeTableCellInfo?]] = Array(repeating: Array(repeating: nil, count: 16), count: 7)
-//        
-//        for cell in timeTableCellList {
-//            //요일 인덱스로 위치 설정
-//            let dayIndex = cell.schedule.day.index
-//            let startHour = cell.schedule.startHour-9
-//            let endHour = cell.schedule.endHour-9
-//            
-//            for h in endHour...startHour {
-//                timeTable[dayIndex][h] = cell
-//            }
-//            
-//        }
-//        
-//    }
-//}
-//
