@@ -11,12 +11,23 @@ import SwiftUI
 public struct DetailModuleInfoView: View {
     @Binding var viewType: TimeTableViewType
     @Binding var deleteModuleAlertIsPresented: Bool
+    @ObservedObject var viewModel: DetailModuleInfoViewModel
+    
+    init(
+        viewType: Binding<TimeTableViewType>,
+        deleteModuleAlertIsPresented: Binding<Bool>,
+        viewModel: DetailModuleInfoViewModel
+    ) {
+        self._viewType = viewType
+        self._deleteModuleAlertIsPresented = deleteModuleAlertIsPresented
+        self.viewModel = viewModel
+    }
     
     public var body: some View {
         
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
-                Text("ML0004")
+                Text(viewModel.moduleInfo.code)
                     .font(.semibold_14)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 3)
@@ -24,30 +35,35 @@ public struct DetailModuleInfoView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 4))
                 
                 
-                Text("Career and Entrepreneurial\nDevelopment")
+                Text(viewModel.moduleInfo.name)
                     .font(.semibold_18)
                     .foregroundColor(.heyGray1)
-                    .padding(.bottom, 16)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top, 12)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(.leading, 25)
             .padding(.trailing, 120)
+            .padding(.leading, 25)
             
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Mon 12:00 - 13:00, Thu 9:00 - 10:00")
+            Spacer()
+                .frame(height: 16)
+            
+            VStack(alignment: .leading, spacing: 7) {
+                Text(viewModel.moduleInfo.allscheduleTime)
                     .font(.regular_14)
-                    .foregroundColor(Color.heyGray3)
+                    .foregroundColor(.heyGray2)
                 
-                Text("To Be Announced")
+                Text(viewModel.moduleInfo.professor ?? "To Be Announced")
                     .font(.regular_14)
-                    .foregroundColor(Color.heyGray3)
+                    .foregroundColor(.heyGray2)
                 
-                Text("SOE CR B1-2 / 2 unit")
+                Text("\(viewModel.moduleInfo.location) / \(viewModel.moduleInfo.unit) unit")
                     .font(.regular_14)
-                    .foregroundColor(Color.heyGray3)
+                    .foregroundColor(.heyGray2)
                 
             }
             .padding(.leading, 25)
-            .padding(.trailing, 120)
             .padding(.bottom, 47)
             
             HStack {
@@ -60,10 +76,11 @@ public struct DetailModuleInfoView: View {
                     VStack {
                         Text("Delete")
                             .font(.regular_14)
-                            .foregroundColor(.heyGray3)
+                            .foregroundColor(.heyGray2)
                         
                         Divider()
                             .frame(width: 43)
+                            .foregroundColor(.heyGray2)
                     }
                 }
                 Spacer()

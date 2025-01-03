@@ -105,7 +105,7 @@ public struct TimeTableView: View {
         case .detail:
             DetailModuleInfoView(
                 viewType: $viewType,
-                deleteModuleAlertIsPresented: $deleteModuleAlertIsPresented
+                deleteModuleAlertIsPresented: $deleteModuleAlertIsPresented, viewModel: .init()
             )
             .bottomSheetTransition()
         default:
