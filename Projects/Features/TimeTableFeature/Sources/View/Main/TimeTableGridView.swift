@@ -10,82 +10,111 @@ import SwiftUI
 
 public struct TimeTableGridView: View {
     @Binding var viewType: TimeTableViewType
-    
-    let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sta", "Sun"]
-    let timeSlots = Array(9...24) // 9시부터 7시(19)까지
-    let schedule = [
-        (day: "Mon", startHour: 9, endHour: 10, title: "MA5031", location: "SOE CR BI-2"),
-        (day: "Mon", startHour: 11, endHour: 17, title: "MA5031", location: "SOE CR BI-2"),
-        (day: "Wed", startHour: 10, endHour: 12, title: "MA5031", location: "SOE CR BI-2")
-    ]
+    @ObservedObject var viewModel: TimeTableGridViewModel
+    var hourList = Array(9...24)
     
     public var body: some View {
         Grid(horizontalSpacing: 1, verticalSpacing: 1) {
-            GridRow {
-                ForEach(days, id: \.self) { _ in
-                    Rectangle()
-                        .fill(Color.clear) // 내부를 투명하게 설정
-                        .overlay(
-                            Rectangle()
-                                .stroke(Color.heyGray6, lineWidth: 0.5) // 외곽선을 설정
-                        )
-                        .frame(width: 73, height: 21)
-                }
-            }
+            createHeaderRow()
             
-            ForEach(timeSlots, id: \.self) { hour in
-                GridRow(alignment: .top) {
-                    ForEach(days, id: \.self) { day in
-                        
-                        ZStack {
-                            Rectangle()
-                                .fill(Color.clear) // 내부를 투명하게 설정
-                                .overlay(
-                                    Rectangle()
-                                        .stroke(Color.heyGray6, lineWidth: 0.5) // 외곽선을 설정
-                                )
-                            
-                            
-                            // 강의 슬롯 색칠
-                            if let slot = schedule.first(where: {
-                                $0.day == day && hour >= $0.startHour && hour < $0.endHour
-                            }) {
-                                Button {
-                                    withAnimation {
-                                        viewType = .detail
-                                    }
-                                    
-                                } label: {
-                                    ZStack {
-                                        Color.heySubMain
-                                        
-                                        if hour == slot.startHour {
-                                            
-                                            VStack(alignment: .leading) {
-                                                
-                                                // 강의 시작 시간에만 텍스트 표시
-                                                Text(slot.title)
-                                                    .font(.medium_12)
-                                                    .multilineTextAlignment(.center)
-                                                Text(slot.location)
-                                                    .font(.regular_10)
-                                                    .foregroundColor(.gray)
-                                                Spacer()
-                                            }
-                                            
-                                        }
-                                    }
-                                }
-                                .disabled(!(viewType == .main))
-                                .background(Color.blue.opacity(0.2))
-                            }
-                        }
-                        .frame(width: 73, height: 52)
-                    }
-                    
-                    
-                }
+            ForEach(hourList, id: \.self) { hour in
+                createGridRow(for: hour)
+            }
+        }
+        .onAppear {
+            viewModel.send(.onAppear)
+        }
+    }
+    
+    @ViewBuilder
+    private func createHeaderRow() -> some View {
+        GridRow {
+            ForEach(viewModel.weekList, id: \.self) { _ in
+                Rectangle()
+                    .fill(Color.clear)
+                    .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
+                    .frame(width: 73, height: 21)
             }
         }
     }
+    
+    @ViewBuilder
+    private func createGridRow(for hour: Int) -> some View {
+        GridRow(alignment: .top) {
+            ForEach(viewModel.weekList, id: \.self) { day in
+                createGridCell(for: hour, day: day)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func createGridCell(for hour: Int, day: Week) -> some View {
+        ZStack {
+            Rectangle()
+                .fill(Color.clear)
+                .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
+            
+            if let cell = getSlot(for: hour, day: day) {
+                Button {
+                    withAnimation {
+                        viewType = .detail
+                    }
+                } label: {
+                    ZStack {
+                        VStack {
+                            if hour == cell.schedule.startHour {
+                                Spacer()
+                                Color.heySubMain.opacity(0.5)
+                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                    .clipped()
+                            } else if hour == cell.schedule.endHour {
+                                // 종료 시간일 때 위로 배치
+                                Color.heySubMain.opacity(0.5)
+                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                    .clipped()
+                                Spacer()
+                            } else {
+                                Color.heySubMain.opacity(0.5)
+                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                    .clipped()
+                            }
+                        }
+
+                        // 시간 시작에만 텍스트 보여주기
+                        if hour == cell.schedule.startHour {
+                            VStack(alignment: .leading) {
+                                Spacer()
+                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                Text(cell.name)
+                                    .font(.medium_12)
+                                    .multilineTextAlignment(.center)
+                                Text(cell.schedule.location)
+                                    .font(.regular_10)
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                    }
+                }
+                .disabled(!(viewType == .main))
+            }
+        }
+        .frame(width: 73, height: 52)
+    }
+    
+    private func getCellHeight(for cell: TimeTableCellInfo, hour: Int) -> CGFloat {
+        var baseHeight: CGFloat = 52 // 기본 셀 높이
+        if let colorRatio = cell.slot[hour-9] {
+            baseHeight *= CGFloat(colorRatio)
+        } else {
+            print(hour)
+        }
+        return baseHeight
+    }
+    
+    private func getSlot(for hour: Int, day: Week) -> TimeTableCellInfo? {
+        guard day.index < viewModel.state.timeTable.count,
+              hour - 9 < viewModel.state.timeTable[day.index].count else { return nil }
+        return viewModel.state.timeTable[day.index][hour - 9]
+    }
+    
 }

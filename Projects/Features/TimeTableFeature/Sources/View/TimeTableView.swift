@@ -53,7 +53,7 @@ public struct TimeTableView: View {
                 Spacer()
                     .frame(height: 19)
                 
-                MainView(viewType: $viewType)
+                MainView(viewType: $viewType, viewModel: .init())
             }
             .onTapGesture {
                 withAnimation {
@@ -105,7 +105,7 @@ public struct TimeTableView: View {
         case .detail:
             DetailModuleInfoView(
                 viewType: $viewType,
-                deleteModuleAlertIsPresented: $deleteModuleAlertIsPresented
+                deleteModuleAlertIsPresented: $deleteModuleAlertIsPresented, viewModel: .init()
             )
             .bottomSheetTransition()
         default:
