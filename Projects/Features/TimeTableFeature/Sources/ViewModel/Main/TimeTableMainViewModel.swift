@@ -23,7 +23,7 @@ public class TimeTableMainViewModel: ObservableObject {
     }
     
     @Published var state = State()
-    @Published var weekList: [Week] = Week.dayOfWeek
+    @Published var weekList: [Week] = []
     @Published var timeTableCellList: [TimeTableCellInfo] = [.stub1, .stub2].createTimeTableCellList()
     
     private let cancelBag = CancelBag()
@@ -36,7 +36,17 @@ public class TimeTableMainViewModel: ObservableObject {
     func send(_ action: Action) {
         switch action {
         case .onAppear:
-            break
+            weekList = Week.weekDay
+            for cell in timeTableCellList {
+                if cell.schedule.day == .Sun {
+                    weekList = Week.dayOfWeek
+                    break
+                }
+                if cell.schedule.day == .Sat && !weekList.contains(.Sat) {
+                    weekList.append(.Sat)
+                }
+            }
+            print("weekList: \(weekList)")
         }
     }
     

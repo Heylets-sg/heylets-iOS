@@ -93,4 +93,22 @@ extension SectionInfo {
             professor: "LEC/STUDIO-LE",
             scheduleList: [.stub2_1, .stub2_2])
     }
+    
+    static var stub3: Self {
+        .init(
+            id: 11215,
+            code: "PH1105(Sat)",
+            name: "OPTICS, VIBRATIONS & WAVES",
+            professor: "LEC/STUDIO-LE",
+            scheduleList: [.stub3])
+    }
+    
+    static var stub4: Self {
+        .init(
+            id: 11216,
+            code: "PH1105(Sun)",
+            name: "OPTICS, VIBRATIONS & WAVES",
+            professor: "LEC/STUDIO-LE",
+            scheduleList: [.stub4])
+    }
 }

@@ -25,9 +25,13 @@ struct ScheduleInfo {
         return "\(endHour):\(endMinute)"
     }
     
-//    var ratio: Double {
-//        
-//    }
+    var isSaturday: Bool {
+        return day == .Sat
+    }
+    
+    var isSunday: Bool {
+        return day == .Sun
+    }
 }
 
 extension ScheduleInfo {
@@ -59,6 +63,30 @@ extension ScheduleInfo {
         .init(
             id: 2,
             day: .Mon,
+            startHour: 9,
+            startMinute: 30,
+            endHour: 11,
+            endMinute: 20,
+            location: "SPMS-TR+6"
+        )
+    }
+    
+    static var stub3: Self {
+        .init(
+            id: 2,
+            day: .Sat,
+            startHour: 9,
+            startMinute: 30,
+            endHour: 11,
+            endMinute: 20,
+            location: "SPMS-TR+6"
+        )
+    }
+    
+    static var stub4: Self {
+        .init(
+            id: 2,
+            day: .Sun,
             startHour: 9,
             startMinute: 30,
             endHour: 11,

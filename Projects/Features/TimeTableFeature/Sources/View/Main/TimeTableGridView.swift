@@ -54,7 +54,6 @@ public struct TimeTableGridView: View {
                 .fill(Color.clear)
                 .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
             
-            // 슬롯이 존재할 경우 셀 그리기
             if let cell = getSlot(for: hour, day: day) {
                 Button {
                     withAnimation {
@@ -84,15 +83,15 @@ public struct TimeTableGridView: View {
                         // 시간 시작에만 텍스트 보여주기
                         if hour == cell.schedule.startHour {
                             VStack(alignment: .leading) {
+                                Spacer()
+                                    .frame(height: getCellHeight(for: cell, hour: hour))
                                 Text(cell.name)
                                     .font(.medium_12)
                                     .multilineTextAlignment(.center)
                                 Text(cell.schedule.location)
                                     .font(.regular_10)
                                     .foregroundColor(.gray)
-                                Spacer()
                             }
-                            .padding(.top, getCellHeight(for: cell, hour: hour))
                         }
                     }
                 }

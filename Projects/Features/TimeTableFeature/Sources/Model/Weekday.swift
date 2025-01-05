@@ -36,6 +36,6 @@ enum Week: String, CaseIterable, Hashable {
         }
     }
     
-    static let weekdayList: [Week] = [.Mon, .Tue, .Wed, .Thu, .Fri]
+    static let weekDay: [Week] = [.Mon, .Tue, .Wed, .Thu, .Fri]
     static let dayOfWeek: [Week] = Week.allCases
 }

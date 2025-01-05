@@ -23,8 +23,12 @@ public class TimeTableGridViewModel: ObservableObject {
     }
     
     @Published var state = State()
+    @Published var weekList: [Week] {
+        didSet {
+            setTimeTable()
+        }
+    }
     @Published var timeTableCellList: [TimeTableCellInfo]
-    @Published var weekList: [Week]
     
     private let cancelBag = CancelBag()
     
@@ -50,8 +54,10 @@ public class TimeTableGridViewModel: ObservableObject {
     private func setTimeTable() {
         state.timeTable = Array(repeating: Array(repeating: nil, count: 16), count: weekList.count)
         for cell in timeTableCellList {
-            for s in cell.slot {
-                state.timeTable[cell.schedule.day.index][s.key] = cell
+            if let weekIndex = weekList.firstIndex(of: cell.schedule.day) {
+                for s in cell.slot {
+                    state.timeTable[weekIndex][s.key] = cell
+                }
             }
         }
     }

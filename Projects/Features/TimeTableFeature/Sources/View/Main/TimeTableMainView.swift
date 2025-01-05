@@ -46,6 +46,10 @@ public struct MainView: View {
             .scrollIndicators(.hidden)
             .border(Color.heyGray6, width: 1)
         }
+        .onAppear {
+            viewModel.send(.onAppear)
+            gridViewModel.weekList = viewModel.weekList
+        }
         .scrollIndicators(.hidden)
     }
 }
