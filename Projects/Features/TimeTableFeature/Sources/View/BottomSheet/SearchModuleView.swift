@@ -11,11 +11,8 @@ import SwiftUI
 import DSKit
 
 public struct SearchModuleView: View {
-    @Binding var viewType: TimeTableViewType
-    @Binding var reportMissingModuleAlertIsPresented: Bool
-    @Binding var inValidregisterModuleIsPresented: Bool
+    @ObservedObject var viewModel: SearchModuleViewModel
     
-    var classList: [String] = ["","","","","","","","","",""]
     public var body: some View {
         VStack {
             Spacer()
@@ -24,14 +21,14 @@ public struct SearchModuleView: View {
             ClassSearchBarView()
                 .padding(.bottom, 28)
             
-            if classList.isEmpty {
+            if viewModel.lectureList.isEmpty {
                 Text("We couldn’t find a match for\n‘Career and Enterpreneurial’.")
                     .font(.regular_16)
                     .foregroundColor(.heyGray2)
                     .padding(.bottom, 20)
                 
                 Button {
-                    reportMissingModuleAlertIsPresented = true
+                    viewModel.send(.reportMissingButtonDidTap)
                 } label: {
                     HStack {
                         Text("Report Missing Modules")
@@ -54,8 +51,11 @@ public struct SearchModuleView: View {
                 
             } else {
                 ScrollView {
-                    ForEach(classList, id: \.self) { _ in
-                        ClassSearchListCellView(inValidregisterModuleIsPresented: $inValidregisterModuleIsPresented, viewType: $viewType)
+                    ForEach($viewModel.lectureList, id: \.self) { lecture in
+                        ClassSearchListCellView(lecture: lecture)
+                            .onTapGesture {
+                                viewModel.send(.lectureCellDidTap)
+                            }
                             .padding(.bottom, 24)
                     }
                 }
@@ -107,29 +107,27 @@ fileprivate struct ClassSearchBarView: View {
 
 fileprivate struct ClassSearchListCellView: View {
     @State var text = ""
-    @Binding var inValidregisterModuleIsPresented: Bool
-    @Binding var viewType: TimeTableViewType
+    @Binding var lecture: LectureInfo
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("ML0004 Career and Entrepreneurial Development")
+            Text("\(lecture.code) \(lecture.name)")
                 .font(.medium_14)
                 .foregroundColor(.heyGray1)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.bottom, 6)
+                .padding(.trailing, 87)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
-            Text("Mon 12:00 - 13:00, Thu 9:00 - 10:00")
+            Text(lecture.allscheduleTime)
                 .font(.regular_12)
                 .foregroundColor(.heyGray3)
                 .padding(.bottom, 2)
             
-            Text("TBA / SOE CR B1-2(T), SOE CR B1-2(M) / 2 unit")
+            Text("\(lecture.professor ?? "TO BE ") / \(lecture.location) / \(lecture.unit) unit")
                 .font(.regular_12)
                 .foregroundColor(.heyGray3)
-        }
-        .padding(.trailing, 87)
-        .onTapGesture {
-            viewType = .main
-            inValidregisterModuleIsPresented = true
         }
     }
 }

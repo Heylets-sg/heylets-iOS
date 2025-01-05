@@ -37,7 +37,7 @@ public struct RootView: View {
                 )
                 .environmentObject(navigationRouter.onboarding)
             case .timetable:
-                TimeTableView()
+                TimeTableView(viewModel: .init())
             case .mypage:
                 MyPageView(
                     viewModel: MyPageViewModel(

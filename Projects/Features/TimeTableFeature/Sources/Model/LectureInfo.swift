@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LectureInfo {
+struct LectureInfo: Hashable {
     var code: String
     var name: String
     var schedule: [ScheduleInfo]
