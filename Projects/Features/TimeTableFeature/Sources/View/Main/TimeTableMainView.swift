@@ -12,7 +12,10 @@ public struct MainView: View {
     @Binding var viewType: TimeTableViewType
     @StateObject var viewModel: TimeTableMainViewModel
     
-    init(viewType: Binding<TimeTableViewType>, viewModel: TimeTableMainViewModel) {
+    init(
+        viewType: Binding<TimeTableViewType>,
+        viewModel: TimeTableMainViewModel
+    ) {
         self._viewType = viewType
         self._viewModel = StateObject(wrappedValue: viewModel)
     }

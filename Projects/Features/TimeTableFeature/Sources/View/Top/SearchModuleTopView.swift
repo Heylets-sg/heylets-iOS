@@ -10,8 +10,9 @@ import SwiftUI
 
 public struct SearchModuleTopView: View {
     @Binding var viewType: TimeTableViewType
+    @Binding var isShowingAddCustomModuleView: Bool
     @ObservedObject var viewModel: SearchModuleViewModel
-    @State private var isShowingAddModuleView = false
+    @ObservedObject var addCustomViewModel: AddCustomModuleViewModel
     
     public var body: some View {
         HStack {
@@ -29,7 +30,8 @@ public struct SearchModuleTopView: View {
             
             Button {
                 withAnimation {
-                    isShowingAddModuleView.toggle()
+                    viewType = .addCustom
+                    isShowingAddCustomModuleView = true
                 }
             } label: {
                 Image(uiImage: .icPencil)
@@ -40,9 +42,7 @@ public struct SearchModuleTopView: View {
             
             Button {
                 withAnimation {
-                    //TODO: 모듈 추가 비즈니스 로직 추가
                     viewModel.send(.addLectureButtonDidTap)
-//                    viewType = .main
                 }
             } label: {
                 Image(uiImage: .icPlus)
@@ -51,10 +51,10 @@ public struct SearchModuleTopView: View {
             }
         }
         .padding(.horizontal, 16)
-        .sheet(isPresented: $isShowingAddModuleView) {
-            AddCustomeModuleView()
-                .presentationDetents([.medium, .large, .height(506)])
-                .presentationDragIndicator(.hidden)
-        }
+//        .sheet(isPresented: $viewModel.state.isShowingAddCustomModuleView) {
+//            AddCustomModuleView(viewModel: addCustomViewModel)
+//                .presentationDetents([.medium, .large, .height(506)])
+//                .presentationDragIndicator(.hidden)
+//        }
     }
 }

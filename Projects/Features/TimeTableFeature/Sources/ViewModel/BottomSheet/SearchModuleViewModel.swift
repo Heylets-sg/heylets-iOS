@@ -16,6 +16,7 @@ import Core
 
 public class SearchModuleViewModel: ObservableObject {
     struct State {
+//        var isShowingAddCustomModuleView = false
         var filteredItems: [LectureInfo] = []
         var selectedLecture: LectureInfo? = nil
     }
@@ -26,10 +27,10 @@ public class SearchModuleViewModel: ObservableObject {
         case searchButtonDidTap
         case clearButtonDidTap
         case addLectureButtonDidTap
+//        case addCustomModuleButtonDidTap
     }
     
     @Published var state = State()
-    @Published var viewType: TimeTableViewType = .main
     var addLectureClosure: ((LectureInfo) -> Void)?
     @Published var lectureList: [LectureInfo] = [
         .timetable_stub1,
@@ -74,6 +75,8 @@ public class SearchModuleViewModel: ObservableObject {
         case .addLectureButtonDidTap:
             guard let lecture = state.selectedLecture, let addLecture = addLectureClosure else { return }
             addLecture(lecture)
+//        case .addCustomModuleButtonDidTap:
+//            state.isShowingAddCustomModuleView.toggle()
         }
     }
     

@@ -22,6 +22,7 @@ public class TimeTableViewModel: ObservableObject {
         var deleteModuleAlertIsPresented: Bool = false
         var inValidregisterModuleIsPresented: InValidRegisterModelType = (false, "")
         var reportMissingModuleAlertIsPresented: Bool = false
+        var isShowingAddCustomModuleView = false
     }
     
     enum Action {

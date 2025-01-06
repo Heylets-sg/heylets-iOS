@@ -17,6 +17,7 @@ enum TimeTableViewType {
     case search
     case setting
     case theme
+    case addCustom
 }
 
 public enum TimeTableSettingAlertType {
@@ -30,13 +31,16 @@ public struct TimeTableView: View {
     @EnvironmentObject var router: Router
     @ObservedObject var viewModel: TimeTableViewModel
     @ObservedObject var searchModuleViewModel: SearchModuleViewModel
+    @ObservedObject var addCustomModuleViewModel: AddCustomModuleViewModel
     
     public init(
         viewModel: TimeTableViewModel,
-        searchModuleViewModel: SearchModuleViewModel
+        searchModuleViewModel: SearchModuleViewModel,
+        addCustomModuleViewModel: AddCustomModuleViewModel
     ) {
         self.viewModel = viewModel
         self.searchModuleViewModel = searchModuleViewModel
+        self.addCustomModuleViewModel = addCustomModuleViewModel
     }
     
     public var body: some View {
@@ -45,11 +49,18 @@ public struct TimeTableView: View {
                 switch viewModel.viewType {
                 case .search:
                     SearchModuleTopView(
-                        viewType: $viewModel.viewType,
-                        viewModel: searchModuleViewModel
+                        viewType: $viewModel.viewType, 
+                        isShowingAddCustomModuleView: $viewModel.state.isShowingAddCustomModuleView,
+                        viewModel: searchModuleViewModel,
+                        addCustomViewModel: addCustomModuleViewModel
                     )
                 case .theme:
                     ThemeTopView(viewType: $viewModel.viewType)
+                case .addCustom:
+                    AddCustomModuleTopView(
+                        viewType: $viewModel.viewType,
+                        viewModel: addCustomModuleViewModel
+                    )
                 default:
                     TopView(
                         timeTableInfo: $viewModel.timeTableInfo, 
@@ -112,7 +123,8 @@ public struct TimeTableView: View {
         switch viewModel.viewType {
         case .search:
             SearchModuleView(
-                viewType: $viewModel.viewType, reportMissingModuleAlertIsPresented: $viewModel.state.reportMissingModuleAlertIsPresented,
+                viewType: $viewModel.viewType, 
+                reportMissingModuleAlertIsPresented: $viewModel.state.reportMissingModuleAlertIsPresented,
                 viewModel: searchModuleViewModel
             )
             .bottomSheetTransition()
@@ -124,6 +136,9 @@ public struct TimeTableView: View {
                 viewType: $viewModel.viewType,
                 deleteModuleAlertIsPresented: $viewModel.state.deleteModuleAlertIsPresented, viewModel: .init()
             )
+            .bottomSheetTransition()
+        case .addCustom:
+            AddCustomModuleView(viewModel: addCustomModuleViewModel)
             .bottomSheetTransition()
         default:
             EmptyView()

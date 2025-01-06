@@ -8,30 +8,8 @@
 
 import SwiftUI
 
-public struct AddCustomeModuleView: View {
-    let dayofWeeks = Week.dayOfWeek
-    let timeList = [
-        "09:00 - 10:00",
-        "10:00 - 11:00",
-        "11:00 - 12:00",
-        "12:00 - 13:00",
-        "13:00 - 14:00",
-        "14:00 - 15:00",
-        "15:00 - 16:00",
-        "16:00 - 17:00",
-        "17:00 - 18:00",
-        "18:00 - 19:00",
-        "19:00 - 20:00",
-        "20:00 - 21:00",
-        "21:00 - 22:00",
-        "22:00 - 23:00",
-        "23:00 - 24:00"
-    ]
-    @State private var weekPickerIsHidden = true
-    @State private var timePickerIsHidden = true
-    @State private var text = ""
-    @State private var day = "Mon"
-    @State private var time = "09:00 - 10:00"
+public struct AddCustomModuleView: View {
+    @ObservedObject var viewModel: AddCustomModuleViewModel
     
     public var body: some View {
         VStack(alignment: .leading) {
@@ -40,11 +18,10 @@ public struct AddCustomeModuleView: View {
             
             HStack(spacing: 6) {
                 Button {
-                    self.weekPickerIsHidden.toggle()
-                    self.timePickerIsHidden = true
+                    viewModel.send(.weekPickerButtonDidTap)
                 } label: {
                     HStack {
-                        Text(day)
+                        Text(viewModel.day)
                             .font(.regular_14)
                             .foregroundColor(.heyGray1)
                             .padding(.trailing, 6)
@@ -56,11 +33,10 @@ public struct AddCustomeModuleView: View {
                 }
                 
                 Button {
-                    self.weekPickerIsHidden = true
-                    self.timePickerIsHidden.toggle()
+                    viewModel.send(.timePickerButtonDidTap)
                 } label: {
                     HStack {
-                        Text(time)
+                        Text(viewModel.time)
                             .font(.regular_14)
                             .foregroundColor(.heyGray1)
                             .padding(.trailing, 6)
@@ -76,7 +52,7 @@ public struct AddCustomeModuleView: View {
                 VStack {
                     TextField(
                         "",
-                        text: $text,
+                        text: $viewModel.schedule,
                         prompt: Text("Schedule")
                             .font(.regular_14)
                             .foregroundColor(.heyGray2)
@@ -89,7 +65,7 @@ public struct AddCustomeModuleView: View {
                 VStack {
                     TextField(
                         "",
-                        text: $text,
+                        text: $viewModel.location,
                         prompt: Text("Location(option)")
                             .font(.regular_14)
                             .foregroundColor(.heyGray2)
@@ -102,7 +78,7 @@ public struct AddCustomeModuleView: View {
                 VStack {
                     TextField(
                         "",
-                        text: $text,
+                        text: $viewModel.professor,
                         prompt: Text("Professor(option)")
                             .font(.regular_14)
                             .foregroundColor(.heyGray2)
@@ -114,9 +90,9 @@ public struct AddCustomeModuleView: View {
             }
             Spacer()
             
-            if !weekPickerIsHidden {
-                Picker("", selection: $day) {
-                    ForEach(dayofWeeks, id: \.self) { day in
+            if !viewModel.state.weekPickerIsHidden {
+                Picker("", selection: $viewModel.day) {
+                    ForEach(viewModel.dayofWeeks, id: \.self) { day in
                         Text(day.rawValue).tag(day.rawValue)
                     }
                 }
@@ -126,9 +102,9 @@ public struct AddCustomeModuleView: View {
                 .padding()
             }
             
-            if !timePickerIsHidden {
-                Picker("", selection: $time) {
-                    ForEach(timeList, id: \.self) { time in
+            if !viewModel.state.timePickerIsHidden {
+                Picker("", selection: $viewModel.time) {
+                    ForEach(viewModel.timeList, id: \.self) { time in
                         Text(time).tag(time)
                     }
                 }
