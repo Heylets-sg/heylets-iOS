@@ -13,7 +13,7 @@ import DSKit
 
 public struct SearchModuleView: View {
     @Binding var viewType: TimeTableViewType
-    @Binding var inValidregisterModuleIsPresented: InValidRegisterModelType
+    @Binding var reportMissingModuleAlertIsPresented: Bool
     @ObservedObject var viewModel: SearchModuleViewModel
     
     public var body: some View {
@@ -25,14 +25,14 @@ public struct SearchModuleView: View {
                 .padding(.bottom, 28)
                 .padding(.horizontal, 16)
             
-            if viewModel.lectureList.isEmpty {
+            if viewModel.state.filteredItems.isEmpty {
                 Text("We couldn’t find a match for\n‘Career and Enterpreneurial’.")
                     .font(.regular_16)
                     .foregroundColor(.heyGray2)
                     .padding(.bottom, 20)
                 
                 Button {
-                    viewModel.send(.reportMissingButtonDidTap)
+                    reportMissingModuleAlertIsPresented = true
                 } label: {
                     HStack {
                         Text("Report Missing Modules")
@@ -60,7 +60,6 @@ public struct SearchModuleView: View {
                             isSelected: viewModel.state.selectedLecture == lecture,
                             lecture: lecture
                         ) {
-//                            viewType = .main
                             viewModel.send(.lectureCellDidTap(lecture))
                         }
                         .padding(.bottom, 16)
@@ -134,7 +133,7 @@ fileprivate struct ClassSearchListCellView: View {
                 .foregroundColor(.heyGray3)
                 .padding(.bottom, 2)
             
-            Text("\(lecture.professor ?? "TO BE ") / \(lecture.location) / \(lecture.unit) unit")
+            Text("\(lecture.professor ?? "TO BE ") / \(lecture.location) / \(lecture.unit!) unit")
                 .font(.regular_12)
                 .foregroundColor(.heyGray3)
         }

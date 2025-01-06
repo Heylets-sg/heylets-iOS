@@ -22,12 +22,11 @@ public class TimeTableViewModel: ObservableObject {
         var deleteModuleAlertIsPresented: Bool = false
         var inValidregisterModuleIsPresented: InValidRegisterModelType = (false, "")
         var reportMissingModuleAlertIsPresented: Bool = false
-        var isAlreadyExisted: Bool = false
     }
     
     enum Action {
         case deleteModule
-        case checkLectureAlreadyExist(LectureInfo)
+        case addLecture(LectureInfo)
         case deleteModuleAlertCloseButtonDidTap
         case inValidregisterModuleAlertCloseButtonDidTap
         case settingAlertDismiss
@@ -60,12 +59,13 @@ public class TimeTableViewModel: ObservableObject {
             state.inValidregisterModuleIsPresented = (false, "")
         case .settingAlertDismiss:
             state.settingAlertType = nil
-        case .checkLectureAlreadyExist(let lecture):
+        case .addLecture(let lecture):
             if lectureList.contains(where: { $0 == lecture }) {
                 viewType = .main
                 state.inValidregisterModuleIsPresented = (true, "This module is already exist")
+            } else {
+                //TODO: 정규 강의 추가 API 호출
             }
-            state.isAlreadyExisted = lectureList.contains(where: { $0 == lecture })
         }
     }
     

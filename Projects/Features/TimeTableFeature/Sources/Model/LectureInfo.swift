@@ -165,7 +165,8 @@ extension LectureInfo {
             code: "PH1105",
             name: "OPTICS, VIBRATIONS & WAVES",
             schedule: [.stub2_1, .stub2_2],
-            professor: "LEC/STUDIO-LE"
+            professor: "LEC/STUDIO-LE",
+            unit: 2
         )
     }
     

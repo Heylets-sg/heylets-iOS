@@ -74,9 +74,8 @@ public struct TimeTableView: View {
                 }
             }
             .onAppear {
-                searchModuleViewModel.isLectureInTimeTable = { lecture in
-                    viewModel.send(.checkLectureAlreadyExist(lecture))
-                    return viewModel.state.isAlreadyExisted
+                searchModuleViewModel.addLectureClosure = { lecture in
+                    viewModel.send(.addLecture(lecture))
                 }
             }
             .heyAlert(
@@ -112,8 +111,7 @@ public struct TimeTableView: View {
         switch viewModel.viewType {
         case .search:
             SearchModuleView(
-                viewType: $viewModel.viewType,
-                inValidregisterModuleIsPresented: $viewModel.state.inValidregisterModuleIsPresented,
+                viewType: $viewModel.viewType, reportMissingModuleAlertIsPresented: $viewModel.state.reportMissingModuleAlertIsPresented,
                 viewModel: searchModuleViewModel
             )
             .bottomSheetTransition()

@@ -10,7 +10,8 @@ import SwiftUI
 
 public struct TimeTableGridView: View {
     @Binding var viewType: TimeTableViewType
-    @ObservedObject var viewModel: TimeTableGridViewModel
+    @Binding var weekList: [Week]
+    @Binding var timeTable: [[TimeTableCellInfo?]]
     var hourList = Array(9...24)
     
     public var body: some View {
@@ -22,14 +23,13 @@ public struct TimeTableGridView: View {
             }
         }
         .onAppear {
-            viewModel.send(.onAppear)
         }
     }
     
     @ViewBuilder
     private func createHeaderRow() -> some View {
         GridRow {
-            ForEach(viewModel.weekList, id: \.self) { _ in
+            ForEach(weekList, id: \.self) { _ in
                 Rectangle()
                     .fill(Color.clear)
                     .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
@@ -41,7 +41,7 @@ public struct TimeTableGridView: View {
     @ViewBuilder
     private func createGridRow(for hour: Int) -> some View {
         GridRow(alignment: .top) {
-            ForEach(viewModel.weekList, id: \.self) { day in
+            ForEach(weekList, id: \.self) { day in
                 createGridCell(for: hour, day: day)
             }
         }
@@ -54,7 +54,11 @@ public struct TimeTableGridView: View {
                 .fill(Color.clear)
                 .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
             
-            if let cell = getSlot(for: hour, day: day) {
+            if let cell = getSlot(
+                timeTable: timeTable,
+                for: hour,
+                day: day
+            ) {
                 Button {
                     withAnimation {
                         viewType = .detail
@@ -111,10 +115,10 @@ public struct TimeTableGridView: View {
         return baseHeight
     }
     
-    private func getSlot(for hour: Int, day: Week) -> TimeTableCellInfo? {
-        guard day.index < viewModel.state.timeTable.count,
-              hour - 9 < viewModel.state.timeTable[day.index].count else { return nil }
-        return viewModel.state.timeTable[day.index][hour - 9]
+    private func getSlot(timeTable: [[TimeTableCellInfo?]], for hour: Int, day: Week) -> TimeTableCellInfo? {
+        guard day.index < timeTable.count,
+              hour - 9 < timeTable[day.index].count else { return nil }
+        return timeTable[day.index][hour - 9]
     }
     
 }

@@ -11,17 +11,10 @@ import SwiftUI
 public struct MainView: View {
     @Binding var viewType: TimeTableViewType
     @StateObject var viewModel: TimeTableMainViewModel
-    @StateObject var gridViewModel: TimeTableGridViewModel
     
     init(viewType: Binding<TimeTableViewType>, viewModel: TimeTableMainViewModel) {
         self._viewType = viewType
         self._viewModel = StateObject(wrappedValue: viewModel)
-        self._gridViewModel = StateObject(
-            wrappedValue: TimeTableGridViewModel(
-                timeTableCellList: viewModel.timeTableCellList,
-                weekList: viewModel.weekList
-            )
-        )
     }
     
     public var body: some View {
@@ -39,7 +32,8 @@ public struct MainView: View {
                     
                     TimeTableGridView(
                         viewType: $viewType, 
-                        viewModel: gridViewModel
+                        weekList: $viewModel.weekList,
+                        timeTable: $viewModel.state.timeTable
                     )
                 }
             }
@@ -48,7 +42,6 @@ public struct MainView: View {
         }
         .onAppear {
             viewModel.send(.onAppear)
-            gridViewModel.weekList = viewModel.weekList
         }
         .scrollIndicators(.hidden)
     }
