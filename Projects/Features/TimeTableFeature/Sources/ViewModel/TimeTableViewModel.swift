@@ -40,6 +40,12 @@ public class TimeTableViewModel: ObservableObject {
         .timetable_stub3,
         .timetable_stub4
     ]
+    @Published var timeTableInfo: TimeTableInfo = TimeTableInfo(
+        id: 1,
+        name: "",
+        semester: "",
+        academicYear: ""
+    )
     private let cancelBag = CancelBag()
     
     public init() {

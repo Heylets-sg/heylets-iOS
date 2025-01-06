@@ -52,6 +52,7 @@ public struct TimeTableView: View {
                     ThemeTopView(viewType: $viewModel.viewType)
                 default:
                     TopView(
+                        timeTableInfo: $viewModel.timeTableInfo, 
                         viewType: $viewModel.viewType,
                         settingAlertType: $viewModel.state.settingAlertType
                     )

@@ -13,6 +13,7 @@ import BaseFeatureDependency
 
 public struct TopView: View {
     @EnvironmentObject var router: Router
+    @Binding var timeTableInfo: TimeTableInfo
     @Binding var viewType: TimeTableViewType
     @Binding var settingAlertType: TimeTableSettingAlertType?
     
@@ -33,7 +34,7 @@ public struct TopView: View {
                 }
                 .padding(.bottom, 11)
                 
-                Text("A+++")
+                Text(timeTableInfo.name)
                     .font(.semibold_18)
                     .foregroundColor(.heyGray2) //색상 확인
             }
