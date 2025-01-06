@@ -18,8 +18,8 @@ public struct SearchModuleView: View {
             Spacer()
                 .frame(height: 27)
             
-            ClassSearchBarView()
-                .padding(.bottom, 28)
+            ClassSearchBarView(viewModel: viewModel)
+            .padding(.bottom, 28)
             
             if viewModel.lectureList.isEmpty {
                 Text("We couldn’t find a match for\n‘Career and Enterpreneurial’.")
@@ -51,7 +51,7 @@ public struct SearchModuleView: View {
                 
             } else {
                 ScrollView {
-                    ForEach($viewModel.lectureList, id: \.self) { lecture in
+                    ForEach($viewModel.state.filteredItems, id: \.self) { lecture in
                         ClassSearchListCellView(lecture: lecture)
                             .onTapGesture {
                                 viewModel.send(.lectureCellDidTap)
@@ -71,23 +71,27 @@ public struct SearchModuleView: View {
 }
 
 fileprivate struct ClassSearchBarView: View {
-    @State var text = ""
+    @ObservedObject var viewModel: SearchModuleViewModel
+    
     var body: some View {
         HStack {
             Text("name/code:")
                 .font(.regular_12)
                 .foregroundColor(.heyGray2)
             
-            TextField(text: $text, label: {
+            TextField(text: $viewModel.searchText, label: {
                 
             })
             .font(.medium_12)
             .foregroundColor(.heyMain)
+            .onSubmit {
+                viewModel.send(.searchButtonDidTap)
+            }
             
             Spacer()
             
             Button {
-                
+                viewModel.send(.clearButtonDidTap)
             } label: {
                 Image(uiImage: .icClose.withRenderingMode(.alwaysTemplate))
                     .resizable()

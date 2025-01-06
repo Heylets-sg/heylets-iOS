@@ -14,11 +14,13 @@ import BaseFeatureDependency
 import DSKit
 import Core
 
+typealias InValidRegisterModelType = (Bool, String)
+
 public class TimeTableViewModel: ObservableObject {
     struct State {
         var settingAlertType: TimeTableSettingAlertType? = nil
         var deleteModuleAlertIsPresented: Bool = false
-        var inValidregisterModuleIsPresented: Bool = false
+        var inValidregisterModuleIsPresented: InValidRegisterModelType = (false, "")
         var reportMissingModuleAlertIsPresented: Bool = false
     }
     
@@ -30,14 +32,7 @@ public class TimeTableViewModel: ObservableObject {
     }
     
     @Published var state = State()
-//    @Binding var viewType: TimeTableViewType
     private let cancelBag = CancelBag()
-    
-//    init(viewType: Binding<TimeTableViewType>) {
-//        self._viewType = viewType
-//        
-//        observe()
-//    }
     
     public init() {
         
@@ -52,7 +47,7 @@ public class TimeTableViewModel: ObservableObject {
         case .deleteModuleAlertCloseButtonDidTap:
             state.deleteModuleAlertIsPresented = false
         case .inValidregisterModuleAlertCloseButtonDidTap:
-            state.inValidregisterModuleIsPresented = false
+            state.inValidregisterModuleIsPresented = (false, "")
         case .settingAlertDismiss:
             state.settingAlertType = nil
         }

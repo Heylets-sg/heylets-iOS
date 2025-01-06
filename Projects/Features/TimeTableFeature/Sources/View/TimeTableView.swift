@@ -29,12 +29,11 @@ public enum TimeTableSettingAlertType {
 public struct TimeTableView: View {
     @EnvironmentObject var router: Router
     @ObservedObject var viewModel: TimeTableViewModel
-    @State private var viewType: TimeTableViewType = .main
+    @State var viewType: TimeTableViewType = .main
     
     public init(viewModel: TimeTableViewModel) {
         self.viewModel = viewModel
     }
-    
     
     public var body: some View {
         ZStack {
@@ -63,11 +62,11 @@ public struct TimeTableView: View {
                 }
             }
             .heyAlert(
-                isPresented: viewModel.state.inValidregisterModuleIsPresented,
-                title: "해당 이유가 있겠죠 -> 비즈니스 로직 처리",
+                isPresented: viewModel.state.inValidregisterModuleIsPresented.0,
+                title: viewModel.state.inValidregisterModuleIsPresented.1,
                 primaryButton: ("Close", .gray, {
-                    viewModel.send(.inValidregisterModuleAlertCloseButtonDidTap)
                     viewType = .search
+                    viewModel.send(.inValidregisterModuleAlertCloseButtonDidTap)
                 })
             )
             .heyAlert(
@@ -96,7 +95,10 @@ public struct TimeTableView: View {
         switch viewType {
         case .search:
             SearchModuleView(
-                viewModel: .init(viewType: $viewType)
+                viewModel: .init(
+                    viewType: $viewType,
+                    inValidregisterModuleIsPresented: $viewModel.state.inValidregisterModuleIsPresented
+                )
             )
             .bottomSheetTransition()
         case .theme:
