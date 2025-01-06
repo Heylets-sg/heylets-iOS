@@ -29,23 +29,30 @@ public enum TimeTableSettingAlertType {
 public struct TimeTableView: View {
     @EnvironmentObject var router: Router
     @ObservedObject var viewModel: TimeTableViewModel
-    @State var viewType: TimeTableViewType = .main
+    @ObservedObject var searchModuleViewModel: SearchModuleViewModel
     
-    public init(viewModel: TimeTableViewModel) {
+    public init(
+        viewModel: TimeTableViewModel,
+        searchModuleViewModel: SearchModuleViewModel
+    ) {
         self.viewModel = viewModel
+        self.searchModuleViewModel = searchModuleViewModel
     }
     
     public var body: some View {
         ZStack {
             VStack(alignment: .leading) {
-                switch viewType {
+                switch viewModel.viewType {
                 case .search:
-                    SearchModuleTopView(viewType: $viewType)
+                    SearchModuleTopView(
+                        viewType: $viewModel.viewType,
+                        viewModel: searchModuleViewModel
+                    )
                 case .theme:
-                    ThemeTopView(viewType: $viewType)
+                    ThemeTopView(viewType: $viewModel.viewType)
                 default:
                     TopView(
-                        viewType: $viewType,
+                        viewType: $viewModel.viewType,
                         settingAlertType: $viewModel.state.settingAlertType
                     )
                     .environmentObject(router)
@@ -54,18 +61,28 @@ public struct TimeTableView: View {
                 Spacer()
                     .frame(height: 19)
                 
-                MainView(viewType: $viewType, viewModel: .init())
+                MainView(
+                    viewType: $viewModel.viewType,
+                    viewModel: .init(
+                        lectureList: viewModel.lectureList
+                    )
+                )
             }
             .onTapGesture {
                 withAnimation {
-                    viewType = .main
+                    viewModel.viewType = .main
+                }
+            }
+            .onAppear {
+                searchModuleViewModel.isLectureInTimeTable = { lecture in
+                    viewModel.send(.checkLectureAlreadyExist(lecture))
+                    return viewModel.state.isAlreadyExisted
                 }
             }
             .heyAlert(
                 isPresented: viewModel.state.inValidregisterModuleIsPresented.0,
                 title: viewModel.state.inValidregisterModuleIsPresented.1,
                 primaryButton: ("Close", .gray, {
-                    viewType = .search
                     viewModel.send(.inValidregisterModuleAlertCloseButtonDidTap)
                 })
             )
@@ -92,13 +109,12 @@ public struct TimeTableView: View {
             }
         }
         
-        switch viewType {
+        switch viewModel.viewType {
         case .search:
             SearchModuleView(
-                viewModel: .init(
-                    viewType: $viewType,
-                    inValidregisterModuleIsPresented: $viewModel.state.inValidregisterModuleIsPresented
-                )
+                viewType: $viewModel.viewType,
+                inValidregisterModuleIsPresented: $viewModel.state.inValidregisterModuleIsPresented,
+                viewModel: searchModuleViewModel
             )
             .bottomSheetTransition()
         case .theme:
@@ -106,7 +122,7 @@ public struct TimeTableView: View {
                 .bottomSheetTransition()
         case .detail:
             DetailModuleInfoView(
-                viewType: $viewType,
+                viewType: $viewModel.viewType,
                 deleteModuleAlertIsPresented: $viewModel.state.deleteModuleAlertIsPresented, viewModel: .init()
             )
             .bottomSheetTransition()

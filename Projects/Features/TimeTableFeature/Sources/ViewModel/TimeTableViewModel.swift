@@ -22,16 +22,25 @@ public class TimeTableViewModel: ObservableObject {
         var deleteModuleAlertIsPresented: Bool = false
         var inValidregisterModuleIsPresented: InValidRegisterModelType = (false, "")
         var reportMissingModuleAlertIsPresented: Bool = false
+        var isAlreadyExisted: Bool = false
     }
     
     enum Action {
         case deleteModule
+        case checkLectureAlreadyExist(LectureInfo)
         case deleteModuleAlertCloseButtonDidTap
         case inValidregisterModuleAlertCloseButtonDidTap
         case settingAlertDismiss
     }
     
     @Published var state = State()
+    @Published var viewType: TimeTableViewType = .main
+    @Published var lectureList: [LectureInfo] = [
+        .timetable_stub1,
+        .timetable_stub2,
+        .timetable_stub3,
+        .timetable_stub4
+    ]
     private let cancelBag = CancelBag()
     
     public init() {
@@ -47,9 +56,16 @@ public class TimeTableViewModel: ObservableObject {
         case .deleteModuleAlertCloseButtonDidTap:
             state.deleteModuleAlertIsPresented = false
         case .inValidregisterModuleAlertCloseButtonDidTap:
+            viewType = .search
             state.inValidregisterModuleIsPresented = (false, "")
         case .settingAlertDismiss:
             state.settingAlertType = nil
+        case .checkLectureAlreadyExist(let lecture):
+            if lectureList.contains(where: { $0 == lecture }) {
+                viewType = .main
+                state.inValidregisterModuleIsPresented = (true, "This module is already exist")
+            }
+            state.isAlreadyExisted = lectureList.contains(where: { $0 == lecture })
         }
     }
     

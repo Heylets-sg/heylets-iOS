@@ -24,11 +24,12 @@ public class TimeTableMainViewModel: ObservableObject {
     
     @Published var state = State()
     @Published var weekList: [Week] = []
-    @Published var timeTableCellList: [TimeTableCellInfo] = [.stub1, .stub2].createTimeTableCellList()
+    @Published var timeTableCellList: [TimeTableCellInfo]
     
     private let cancelBag = CancelBag()
     
-    public init() {
+    init(lectureList: [LectureInfo]) {
+        self.timeTableCellList = lectureList.createTimeTableCellList()
         
         observe()
     }
@@ -46,7 +47,6 @@ public class TimeTableMainViewModel: ObservableObject {
                     weekList.append(.Sat)
                 }
             }
-            print("weekList: \(weekList)")
         }
     }
     

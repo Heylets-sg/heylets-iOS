@@ -10,6 +10,7 @@ import SwiftUI
 
 public struct SearchModuleTopView: View {
     @Binding var viewType: TimeTableViewType
+    @ObservedObject var viewModel: SearchModuleViewModel
     @State private var isShowingAddModuleView = false
     
     public var body: some View {
@@ -40,7 +41,8 @@ public struct SearchModuleTopView: View {
             Button {
                 withAnimation {
                     //TODO: 모듈 추가 비즈니스 로직 추가
-                    viewType = .main
+                    viewModel.send(.addLectureButtonDidTap)
+//                    viewType = .main
                 }
             } label: {
                 Image(uiImage: .icPlus)

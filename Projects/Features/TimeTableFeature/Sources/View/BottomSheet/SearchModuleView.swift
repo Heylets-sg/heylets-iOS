@@ -8,9 +8,12 @@
 
 import SwiftUI
 
+
 import DSKit
 
 public struct SearchModuleView: View {
+    @Binding var viewType: TimeTableViewType
+    @Binding var inValidregisterModuleIsPresented: InValidRegisterModelType
     @ObservedObject var viewModel: SearchModuleViewModel
     
     public var body: some View {
@@ -19,7 +22,8 @@ public struct SearchModuleView: View {
                 .frame(height: 27)
             
             ClassSearchBarView(viewModel: viewModel)
-            .padding(.bottom, 28)
+                .padding(.bottom, 28)
+                .padding(.horizontal, 16)
             
             if viewModel.lectureList.isEmpty {
                 Text("We couldn’t find a match for\n‘Career and Enterpreneurial’.")
@@ -51,20 +55,20 @@ public struct SearchModuleView: View {
                 
             } else {
                 ScrollView {
-                    ForEach($viewModel.state.filteredItems, id: \.self) { lecture in
-                        ClassSearchListCellView(lecture: lecture)
-                            .onTapGesture {
-                                viewModel.send(.lectureCellDidTap)
-                            }
-                            .padding(.bottom, 24)
+                    ForEach(viewModel.state.filteredItems, id: \.self) { lecture in
+                        ClassSearchListCellView(
+                            isSelected: viewModel.state.selectedLecture == lecture,
+                            lecture: lecture
+                        ) {
+//                            viewType = .main
+                            viewModel.send(.lectureCellDidTap(lecture))
+                        }
+                        .padding(.bottom, 16)
                     }
                 }
                 .scrollIndicators(.hidden)
             }
-            
-            
         }
-        .padding(.horizontal, 16)
         .cornerRadius(12, corners: [.topLeft, .topRight])
         
     }
@@ -110,8 +114,9 @@ fileprivate struct ClassSearchBarView: View {
 }
 
 fileprivate struct ClassSearchListCellView: View {
-    @State var text = ""
-    @Binding var lecture: LectureInfo
+    var isSelected: Bool
+    var lecture: LectureInfo
+    var cellDidTap: () -> Void
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -132,6 +137,12 @@ fileprivate struct ClassSearchListCellView: View {
             Text("\(lecture.professor ?? "TO BE ") / \(lecture.location) / \(lecture.unit) unit")
                 .font(.regular_12)
                 .foregroundColor(.heyGray3)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(isSelected ? Color.heyMain : Color.clear)
+        .onTapGesture {
+            cellDidTap()
         }
     }
 }
