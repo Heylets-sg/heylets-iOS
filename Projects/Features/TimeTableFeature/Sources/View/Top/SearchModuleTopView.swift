@@ -52,7 +52,7 @@ public struct SearchModuleTopView: View {
         }
         .padding(.horizontal, 16)
         .sheet(isPresented: $isShowingAddModuleView) {
-            AddModuleView()
+            AddCustomeModuleView()
                 .presentationDetents([.medium, .large, .height(506)])
                 .presentationDragIndicator(.hidden)
         }
