@@ -7,22 +7,51 @@
 //
 
 import SwiftUI
+import DSKit
 
 struct Theme: Hashable {
-    var image: UIImage
+    var colorList: [String]
     var name: String
 }
+
+extension Theme {
+    static var 라일락: Self {
+        Theme(
+            colorList: ["#F9F2F7", "#F9E2F9", "#FCD3F9", "#EBC9F9"],
+            name: "LILAC")
+    }
+    
+    static var 오트: Self {
+        Theme(
+            colorList: ["#F6F5F1", "#EEEAE2", "#E4E0DB", "#C8C2BD"],
+            name: "OAT")
+    }
+    
+    static var 에버그린: Self {
+        Theme(
+            colorList: ["#E5EEED", "#C9D5D1", "#ACC3BD", "#6E918D"],
+            name: "EVERGREEN")
+    }
+    
+    static var 베이비블루: Self {
+        Theme(
+            colorList: ["#F7FBFC", "#D6E6F2", "#B9D7EA", "#A2C7DE"],
+            name: "BABY_BLUE")
+    }
+    
+    static var 베이지: Self {
+        Theme(
+            colorList: ["#EEEBE6", "#E3D8CA", "#E8D9C6", "#CDB199"],
+            name: "BEIGE")
+    }
+    
+}
+
 
 struct ThemeTopView: View {
     @Binding var viewType: TimeTableViewType
     
-    let themeList: [Theme] = [
-        .init(image: .theme1, name: "theme1"),
-        .init(image: .theme2, name: "theme2"),
-        .init(image: .theme3, name: "theme3"),
-        .init(image: .theme4, name: "theme4"),
-        .init(image: .theme5, name: "theme5")
-    ]
+    let themeList: [Theme] = [.라일락, .오트, .에버그린, .베이비블루, .베이지]
     
     var body: some View {
         VStack {
@@ -83,8 +112,7 @@ fileprivate struct ThemeListCellView: View {
                 
             } label: {
                 VStack {
-                    Image(uiImage: theme.image)
-                        .resizable()
+                    QuarterCircleView(colorList: theme.colorList)
                         .frame(width: 56, height: 56)
                         .padding(.bottom, 6)
                     
@@ -97,6 +125,52 @@ fileprivate struct ThemeListCellView: View {
     }
 }
 
-//#Preview {
-//    ThemeTopView()
-//}
+struct QuarterCircleView: View {
+    var colorList: [String]
+    init(colorList: [String]) {
+        self.colorList = colorList
+    }
+    var body: some View {
+        ZStack {
+            // 첫 번째 1/4 (위쪽)
+            QuarterCircle(color: colorList[0], startAngle: 0, endAngle: 90)
+            
+            // 두 번째 1/4 (오른쪽)
+            QuarterCircle(color: colorList[1], startAngle: 90, endAngle: 180)
+            
+            // 세 번째 1/4 (아래쪽)
+            QuarterCircle(color: colorList[2], startAngle: 180, endAngle: 270)
+            
+            // 네 번째 1/4 (왼쪽)
+            QuarterCircle(color: colorList[3], startAngle: 270, endAngle: 360)
+            
+            // 세로 선
+            Rectangle()
+                .fill(Color.white)
+                .frame(width: 2)
+                .offset(x: 0) // 중심에 위치하도록 설정
+
+            // 가로 선
+            Rectangle()
+                .fill(Color.white)
+                .frame(height: 2)
+                .offset(y: 0) // 중심에 위치하도록 설정
+        }
+    }
+}
+
+struct QuarterCircle: View {
+    var color: String
+    var startAngle: Double
+    var endAngle: Double
+    
+    var body: some View {
+        Path { path in
+            let center = CGPoint(x: 28, y: 28)
+            let radius: CGFloat = 28
+            path.move(to: center)
+            path.addArc(center: center, radius: radius, startAngle: .degrees(startAngle), endAngle: .degrees(endAngle), clockwise: false)
+        }
+        .fill(Color(hex: color))
+    }
+}
