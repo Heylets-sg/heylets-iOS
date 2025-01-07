@@ -32,16 +32,19 @@ public struct TimeTableView: View {
     @ObservedObject var viewModel: TimeTableViewModel
     @ObservedObject var searchModuleViewModel: SearchModuleViewModel
     @ObservedObject var addCustomModuleViewModel: AddCustomModuleViewModel
+    @ObservedObject var themeViewModel: ThemeViewModel
     
     public init(
         viewModel: TimeTableViewModel,
         searchModuleViewModel: SearchModuleViewModel,
         addCustomModuleViewModel: AddCustomModuleViewModel,
-        settingTimeTableViewModel: SettingTimeTableViewModel
+        settingTimeTableViewModel: SettingTimeTableViewModel,
+        themeViewModel: ThemeViewModel
     ) {
         self.viewModel = viewModel
         self.searchModuleViewModel = searchModuleViewModel
         self.addCustomModuleViewModel = addCustomModuleViewModel
+        self.themeViewModel = themeViewModel
     }
     
     public var body: some View {
@@ -56,7 +59,10 @@ public struct TimeTableView: View {
                         addCustomViewModel: addCustomModuleViewModel
                     )
                 case .theme:
-                    ThemeTopView(viewType: $viewModel.viewType)
+                    ThemeTopView(
+                        viewType: $viewModel.viewType, 
+                        viewModel: themeViewModel
+                    )
                 case .addCustom:
                     AddCustomModuleTopView(
                         viewType: $viewModel.viewType,
@@ -130,7 +136,7 @@ public struct TimeTableView: View {
             )
             .bottomSheetTransition()
         case .theme:
-            SettingTimeTableInfoView()
+            SettingTimeTableInfoView(viewModel: themeViewModel)
                 .bottomSheetTransition()
         case .detail:
             DetailModuleInfoView(

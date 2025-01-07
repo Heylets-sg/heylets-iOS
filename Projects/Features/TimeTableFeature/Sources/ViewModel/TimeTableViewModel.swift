@@ -31,8 +31,6 @@ public class TimeTableViewModel: ObservableObject {
         case addLecture(LectureInfo)
         case deleteModuleAlertCloseButtonDidTap
         case inValidregisterModuleAlertCloseButtonDidTap
-        
-        
     }
     
     enum SettingAction {

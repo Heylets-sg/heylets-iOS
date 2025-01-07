@@ -41,7 +41,8 @@ public struct RootView: View {
                     viewModel: .init(),
                     searchModuleViewModel: .init(),
                     addCustomModuleViewModel: .init(),
-                    settingTimeTableViewModel: .init()
+                    settingTimeTableViewModel: .init(),
+                    themeViewModel: .init()
                 )
             case .mypage:
                 MyPageView(
