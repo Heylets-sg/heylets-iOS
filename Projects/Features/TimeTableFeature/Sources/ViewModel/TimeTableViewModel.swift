@@ -45,8 +45,9 @@ public class TimeTableViewModel: ObservableObject {
         id: 1,
         name: "",
         semester: "",
-        academicYear: ""
+        academicYear: 2024
     )
+//    @Published var userInfo: User
     private let cancelBag = CancelBag()
     
     public init() {

@@ -21,14 +21,14 @@ public struct TopView: View {
         HStack {
             VStack(alignment: .leading) {
                 HStack {
-                    Text("NUS")
+                    Text("NUS") //TODO: 여기 API 통신 이후 User에서 학교 빼오기
                         .font(.bold_8)
                         .foregroundColor(.heyGray6)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 2)
                         .background(Color.heyDarkBlue)
                     
-                    Text("AY2025/2026 sem1")
+                    Text(timeTableInfo.fullSemester)
                         .font(.medium_12)
                         .foregroundColor(.heyGray2) //색상 확인
                 }

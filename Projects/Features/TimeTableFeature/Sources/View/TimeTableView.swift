@@ -75,9 +75,7 @@ public struct TimeTableView: View {
                 
                 MainView(
                     viewType: $viewModel.viewType,
-                    viewModel: .init(
-                        lectureList: viewModel.lectureList
-                    )
+                    viewModel: .init(lectureList: viewModel.lectureList)
                 )
             }
             .onTapGesture {
@@ -204,5 +202,4 @@ public extension View {
             }
         }
     }
-    
 }
