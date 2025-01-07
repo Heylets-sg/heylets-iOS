@@ -17,6 +17,7 @@ enum TimeTableViewType {
     case search
     case setting
     case theme
+    case addCustom
 }
 
 public enum TimeTableSettingAlertType {
@@ -28,75 +29,101 @@ public enum TimeTableSettingAlertType {
 
 public struct TimeTableView: View {
     @EnvironmentObject var router: Router
-    @State private var viewType: TimeTableViewType = .main
-    @State private var settingAlertType: TimeTableSettingAlertType? = nil
-    @State var deleteModuleAlertIsPresented: Bool = false
-    @State var inValidregisterModuleIsPresented: Bool = false
-    @State var reportMissingModuleAlertIsPresented: Bool = false
-    public  init() {}
-
+    @ObservedObject var viewModel: TimeTableViewModel
+    @ObservedObject var searchModuleViewModel: SearchModuleViewModel
+    @ObservedObject var addCustomModuleViewModel: AddCustomModuleViewModel
+    
+    public init(
+        viewModel: TimeTableViewModel,
+        searchModuleViewModel: SearchModuleViewModel,
+        addCustomModuleViewModel: AddCustomModuleViewModel
+    ) {
+        self.viewModel = viewModel
+        self.searchModuleViewModel = searchModuleViewModel
+        self.addCustomModuleViewModel = addCustomModuleViewModel
+    }
     
     public var body: some View {
         ZStack {
             VStack(alignment: .leading) {
-                
-                switch viewType {
+                switch viewModel.viewType {
                 case .search:
-                    SearchModuleTopView(viewType: $viewType)
+                    SearchModuleTopView(
+                        viewType: $viewModel.viewType, 
+                        isShowingAddCustomModuleView: $viewModel.state.isShowingAddCustomModuleView,
+                        viewModel: searchModuleViewModel,
+                        addCustomViewModel: addCustomModuleViewModel
+                    )
                 case .theme:
-                    ThemeTopView(viewType: $viewType)
+                    ThemeTopView(viewType: $viewModel.viewType)
+                case .addCustom:
+                    AddCustomModuleTopView(
+                        viewType: $viewModel.viewType,
+                        viewModel: addCustomModuleViewModel
+                    )
                 default:
-                    TopView(viewType: $viewType, settingAlertType: $settingAlertType)
-                        .environmentObject(router)
+                    TopView(
+                        timeTableInfo: $viewModel.timeTableInfo, 
+                        viewType: $viewModel.viewType,
+                        settingAlertType: $viewModel.state.settingAlertType
+                    )
+                    .environmentObject(router)
                 }
                 
                 Spacer()
                     .frame(height: 19)
                 
-                MainView(viewType: $viewType, viewModel: .init())
+                MainView(
+                    viewType: $viewModel.viewType,
+                    viewModel: .init(lectureList: viewModel.lectureList)
+                )
             }
             .onTapGesture {
                 withAnimation {
-                    viewType = .main
+                    viewModel.viewType = .main
+                }
+            }
+            .onAppear {
+                searchModuleViewModel.addLectureClosure = { lecture in
+                    viewModel.send(.addLecture(lecture))
                 }
             }
             .heyAlert(
-                isPresented: inValidregisterModuleIsPresented,
-                title: "해당 이유가 있겠죠 -> 비즈니스 로직 처리",
+                isPresented: viewModel.state.inValidregisterModuleIsPresented.0,
+                title: viewModel.state.inValidregisterModuleIsPresented.1,
                 primaryButton: ("Close", .gray, {
-                    inValidregisterModuleIsPresented = false
-                    viewType = .search
+                    viewModel.send(.inValidregisterModuleAlertCloseButtonDidTap)
                 })
             )
             .heyAlert(
-                isPresented: deleteModuleAlertIsPresented,
+                isPresented: viewModel.state.deleteModuleAlertIsPresented,
                 title: "Delete module?",
                 primaryButton: ("Delete", .error, {
-                    //삭제 비즈니스 로직 추가
-                    deleteModuleAlertIsPresented = false
+                    viewModel.send(.deleteModule)
                 }),
                 secondaryButton: ("Close", .gray, {
-                    deleteModuleAlertIsPresented = false
+                    viewModel.send(.deleteModuleAlertCloseButtonDidTap)
                 })
             )
-            .heySettingTimeTableAlert(settingAlertType, closeBtnAction: {
-                settingAlertType = nil
+            .heySettingTimeTableAlert(viewModel.state.settingAlertType, closeBtnAction: {
+                viewModel.send(.settingAlertDismiss)
             })
-            
-            .sheet(isPresented: $reportMissingModuleAlertIsPresented) {
-                ReportMissingModuleView(reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented)
-                    .transition(.move(edge: .trailing))
-                    .presentationDetents([.height(802)])
-                    .presentationDragIndicator(.visible)
+            .sheet(isPresented: $viewModel.state.reportMissingModuleAlertIsPresented) {
+                ReportMissingModuleView(
+                    reportMissingModuleAlertIsPresented: $viewModel.state.reportMissingModuleAlertIsPresented
+                )
+                .transition(.move(edge: .trailing))
+                .presentationDetents([.height(802)])
+                .presentationDragIndicator(.visible)
             }
         }
         
-        switch viewType {
+        switch viewModel.viewType {
         case .search:
             SearchModuleView(
-                viewType: $viewType,
-                reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented,
-                inValidregisterModuleIsPresented: $inValidregisterModuleIsPresented
+                viewType: $viewModel.viewType, 
+                reportMissingModuleAlertIsPresented: $viewModel.state.reportMissingModuleAlertIsPresented,
+                viewModel: searchModuleViewModel
             )
             .bottomSheetTransition()
         case .theme:
@@ -104,18 +131,17 @@ public struct TimeTableView: View {
                 .bottomSheetTransition()
         case .detail:
             DetailModuleInfoView(
-                viewType: $viewType,
-                deleteModuleAlertIsPresented: $deleteModuleAlertIsPresented, viewModel: .init()
+                viewType: $viewModel.viewType,
+                deleteModuleAlertIsPresented: $viewModel.state.deleteModuleAlertIsPresented, viewModel: .init()
             )
+            .bottomSheetTransition()
+        case .addCustom:
+            AddCustomModuleView(viewModel: addCustomModuleViewModel)
             .bottomSheetTransition()
         default:
             EmptyView()
         }
     }
-}
-
-#Preview {
-    TimeTableView()
 }
 
 public extension View {
@@ -176,5 +202,4 @@ public extension View {
             }
         }
     }
-
 }

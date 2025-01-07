@@ -8,23 +8,24 @@
 
 import SwiftUI
 
+
 import DSKit
 
 public struct SearchModuleView: View {
     @Binding var viewType: TimeTableViewType
     @Binding var reportMissingModuleAlertIsPresented: Bool
-    @Binding var inValidregisterModuleIsPresented: Bool
+    @ObservedObject var viewModel: SearchModuleViewModel
     
-    var classList: [String] = ["","","","","","","","","",""]
     public var body: some View {
         VStack {
             Spacer()
                 .frame(height: 27)
             
-            ClassSearchBarView()
+            ClassSearchBarView(viewModel: viewModel)
                 .padding(.bottom, 28)
+                .padding(.horizontal, 16)
             
-            if classList.isEmpty {
+            if viewModel.state.filteredItems.isEmpty {
                 Text("We couldn’t find a match for\n‘Career and Enterpreneurial’.")
                     .font(.regular_16)
                     .foregroundColor(.heyGray2)
@@ -54,40 +55,46 @@ public struct SearchModuleView: View {
                 
             } else {
                 ScrollView {
-                    ForEach(classList, id: \.self) { _ in
-                        ClassSearchListCellView(inValidregisterModuleIsPresented: $inValidregisterModuleIsPresented, viewType: $viewType)
-                            .padding(.bottom, 24)
+                    ForEach(viewModel.state.filteredItems, id: \.self) { lecture in
+                        ClassSearchListCellView(
+                            isSelected: viewModel.state.selectedLecture == lecture,
+                            lecture: lecture
+                        ) {
+                            viewModel.send(.lectureCellDidTap(lecture))
+                        }
+                        .padding(.bottom, 16)
                     }
                 }
                 .scrollIndicators(.hidden)
             }
-            
-            
         }
-        .padding(.horizontal, 16)
         .cornerRadius(12, corners: [.topLeft, .topRight])
         
     }
 }
 
 fileprivate struct ClassSearchBarView: View {
-    @State var text = ""
+    @ObservedObject var viewModel: SearchModuleViewModel
+    
     var body: some View {
         HStack {
             Text("name/code:")
                 .font(.regular_12)
                 .foregroundColor(.heyGray2)
             
-            TextField(text: $text, label: {
+            TextField(text: $viewModel.searchText, label: {
                 
             })
             .font(.medium_12)
             .foregroundColor(.heyMain)
+            .onSubmit {
+                viewModel.send(.searchButtonDidTap)
+            }
             
             Spacer()
             
             Button {
-                
+                viewModel.send(.clearButtonDidTap)
             } label: {
                 Image(uiImage: .icClose.withRenderingMode(.alwaysTemplate))
                     .resizable()
@@ -106,30 +113,35 @@ fileprivate struct ClassSearchBarView: View {
 }
 
 fileprivate struct ClassSearchListCellView: View {
-    @State var text = ""
-    @Binding var inValidregisterModuleIsPresented: Bool
-    @Binding var viewType: TimeTableViewType
+    var isSelected: Bool
+    var lecture: LectureInfo
+    var cellDidTap: () -> Void
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("ML0004 Career and Entrepreneurial Development")
+            Text("\(lecture.code) \(lecture.name)")
                 .font(.medium_14)
                 .foregroundColor(.heyGray1)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.bottom, 6)
+                .padding(.trailing, 87)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
-            Text("Mon 12:00 - 13:00, Thu 9:00 - 10:00")
+            Text(lecture.allscheduleTime)
                 .font(.regular_12)
                 .foregroundColor(.heyGray3)
                 .padding(.bottom, 2)
             
-            Text("TBA / SOE CR B1-2(T), SOE CR B1-2(M) / 2 unit")
+            Text("\(lecture.professor ?? "TO BE ") / \(lecture.location) / \(lecture.unit!) unit")
                 .font(.regular_12)
                 .foregroundColor(.heyGray3)
         }
-        .padding(.trailing, 87)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(isSelected ? Color.heyMain : Color.clear)
         .onTapGesture {
-            viewType = .main
-            inValidregisterModuleIsPresented = true
+            cellDidTap()
         }
     }
 }

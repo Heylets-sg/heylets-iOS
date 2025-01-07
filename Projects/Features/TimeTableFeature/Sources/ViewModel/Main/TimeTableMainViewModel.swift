@@ -15,7 +15,7 @@ import Core
 
 public class TimeTableMainViewModel: ObservableObject {
     struct State {
-        
+        var timeTable: [[TimeTableCellInfo?]] = Array(repeating: Array(repeating: nil, count: 16), count: 5)
     }
     
     enum Action {
@@ -24,11 +24,12 @@ public class TimeTableMainViewModel: ObservableObject {
     
     @Published var state = State()
     @Published var weekList: [Week] = []
-    @Published var timeTableCellList: [TimeTableCellInfo] = [.stub1, .stub2].createTimeTableCellList()
+    @Published var timeTableCellList: [TimeTableCellInfo]
     
     private let cancelBag = CancelBag()
     
-    public init() {
+    init(lectureList: [LectureInfo]) {
+        self.timeTableCellList = lectureList.createTimeTableCellList()
         
         observe()
     }
@@ -46,7 +47,18 @@ public class TimeTableMainViewModel: ObservableObject {
                     weekList.append(.Sat)
                 }
             }
-            print("weekList: \(weekList)")
+            setTimeTable()
+        }
+    }
+    
+    private func setTimeTable() {
+        state.timeTable = Array(repeating: Array(repeating: nil, count: 16), count: weekList.count)
+        for cell in timeTableCellList {
+            if let weekIndex = weekList.firstIndex(of: cell.schedule.day) {
+                for s in cell.slot {
+                    state.timeTable[weekIndex][s.key] = cell
+                }
+            }
         }
     }
     
