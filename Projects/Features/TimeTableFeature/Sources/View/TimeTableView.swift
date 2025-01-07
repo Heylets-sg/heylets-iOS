@@ -36,7 +36,8 @@ public struct TimeTableView: View {
     public init(
         viewModel: TimeTableViewModel,
         searchModuleViewModel: SearchModuleViewModel,
-        addCustomModuleViewModel: AddCustomModuleViewModel
+        addCustomModuleViewModel: AddCustomModuleViewModel,
+        settingTimeTableViewModel: SettingTimeTableViewModel
     ) {
         self.viewModel = viewModel
         self.searchModuleViewModel = searchModuleViewModel
@@ -105,9 +106,11 @@ public struct TimeTableView: View {
                     viewModel.send(.deleteModuleAlertCloseButtonDidTap)
                 })
             )
-            .heySettingTimeTableAlert(viewModel.state.settingAlertType, closeBtnAction: {
-                viewModel.send(.settingAlertDismiss)
-            })
+            //TODO: heySetting
+            .heySettingTimeTableAlert(
+                viewModel: viewModel,
+                timeTableName: $viewModel.state.timeTableName
+            )
             .sheet(isPresented: $viewModel.state.reportMissingModuleAlertIsPresented) {
                 ReportMissingModuleView(
                     reportMissingModuleAlertIsPresented: $viewModel.state.reportMissingModuleAlertIsPresented
@@ -146,23 +149,27 @@ public struct TimeTableView: View {
 
 public extension View {
     func heySettingTimeTableAlert(
-        _ type: TimeTableSettingAlertType?,
-        closeBtnAction: @escaping () -> Void
+        viewModel: TimeTableViewModel,
+        timeTableName: Binding<String>
     ) -> some View {
         self.overlay {
-            if let type = type {
+            if let type = viewModel.state.settingAlertType {
                 ZStack {
                     Color.black.opacity(0.5)
                     
                     Group {
                         switch type {
                         case .editTimeTableName:
-                            HeyAlertView(
+                            HeyAlertEnterNameView(
                                 title: "Enter name",
-                                isEditedName: true,
-                                primaryAction: ("Close", .gray, closeBtnAction),
-                                secondaryAction: ("Ok", .primary, {})
+                                text: timeTableName,
+                                primaryAction: ("Close", .gray, { viewModel.send(.settingAlertDismiss)
+                                }),
+                                secondaryAction: ("Ok", .primary, {
+                                    viewModel.send(.editTimeTableName)
+                                })
                             )
+                            
                         case .shareURL:
                             Text("URL copied to clipboard")
                                 .font(.medium_18)
@@ -174,22 +181,24 @@ public extension View {
                                 .onAppear {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                         withAnimation {
-                                            closeBtnAction()
+                                            viewModel.send(.shareURL)
                                         }
                                     }
                                 }
                         case .saveImage:
                             HeyAlertView(
                                 title: "The timetable has been\nsaved as an image.",
-                                isEditedName: false,
-                                primaryAction: ("Ok", .gray, closeBtnAction)
+                                primaryAction: ("Ok", .gray, {viewModel.send(.settingAlertDismiss)
+                                })
                             )
                         case .removeTimeTable:
                             HeyAlertView(
                                 title: "The timetable has been\nsaved as an image.",
-                                isEditedName: false,
-                                primaryAction: ("Delete", .primary, {}),
-                                secondaryAction: ("Close", .gray, closeBtnAction)
+                                primaryAction: ("Delete", .primary, {
+                                    viewModel.send(.deleteTimeTable)
+                                }),
+                                secondaryAction: ("Close", .gray, {viewModel.send(.settingAlertDismiss)
+                                })
                             )
                         }
                     }

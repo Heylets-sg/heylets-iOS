@@ -23,6 +23,7 @@ public class TimeTableViewModel: ObservableObject {
         var inValidregisterModuleIsPresented: InValidRegisterModelType = (false, "")
         var reportMissingModuleAlertIsPresented: Bool = false
         var isShowingAddCustomModuleView = false
+        var timeTableName: String = ""
     }
     
     enum Action {
@@ -30,7 +31,15 @@ public class TimeTableViewModel: ObservableObject {
         case addLecture(LectureInfo)
         case deleteModuleAlertCloseButtonDidTap
         case inValidregisterModuleAlertCloseButtonDidTap
+        
+        
+    }
+    
+    enum SettingAction {
         case settingAlertDismiss
+        case editTimeTableName
+        case deleteTimeTable
+        case shareURL
     }
     
     @Published var state = State()
@@ -47,7 +56,7 @@ public class TimeTableViewModel: ObservableObject {
         semester: "sem 1",
         academicYear: 2024
     )
-//    @Published var userInfo: User
+    //    @Published var userInfo: User
     private let cancelBag = CancelBag()
     
     public init() {
@@ -65,8 +74,6 @@ public class TimeTableViewModel: ObservableObject {
         case .inValidregisterModuleAlertCloseButtonDidTap:
             viewType = .search
             state.inValidregisterModuleIsPresented = (false, "")
-        case .settingAlertDismiss:
-            state.settingAlertType = nil
         case .addLecture(let lecture):
             if lectureList.contains(where: { $0 == lecture }) {
                 viewType = .main
@@ -77,9 +84,33 @@ public class TimeTableViewModel: ObservableObject {
         }
     }
     
+    func send(_ action: SettingAction) {
+        switch action {
+        case .deleteTimeTable:
+            //TODO: 시간표 삭제 API 호출
+            //성공하면 settingAlertType = nil
+            print("시간표 삭제 API 호출")
+            state.settingAlertType = nil
+            
+        case .shareURL:
+            //TODO: 시간표 URL 복사 -> 근데 URL 어디서 나옴?
+            state.settingAlertType = nil
+            
+        case .settingAlertDismiss:
+            state.settingAlertType = nil
+            
+        case .editTimeTableName:
+            //TODO: 시간표 이름 변경 API 호출 with timeTableName
+            print("시간표 이름 변경 메소드 호출: \(state.timeTableName)")
+            state.settingAlertType = nil
+        }
+    }
+    
     private func observe() {
         weak var owner = self
         guard let owner else { return }
         
     }
 }
+
+

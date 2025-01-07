@@ -11,22 +11,17 @@ import SwiftUI
 public struct HeyAlertView: View {
     public init(
         title: String,
-        isEditedName: Bool = false,
-        text: String = "",
-        primaryAction: (title: String, colorSystem: HeyButtonColorStyle, action: () -> Void),
-        secondaryAction: (title: String, colorSystem: HeyButtonColorStyle, action: () -> Void)? = nil) {
+        primaryAction: HeyAlertButtonType,
+        secondaryAction: HeyAlertButtonType? = nil
+    ) {
             self.title = title
-            self.isEditedName = isEditedName
-            self.text = text
             self.primaryAction = primaryAction
             self.secondaryAction = secondaryAction
         }
     
     var title: String
-    var isEditedName: Bool
-    @State var text = ""
-    var primaryAction: (title: String, colorSystem: HeyButtonColorStyle, action: () -> Void)
-    var secondaryAction: (title: String, colorSystem: HeyButtonColorStyle, action: () -> Void)?
+    var primaryAction: HeyAlertButtonType
+    var secondaryAction: HeyAlertButtonType?
     
     
     public var body: some View {
@@ -39,19 +34,6 @@ public struct HeyAlertView: View {
                 .multilineTextAlignment(.center)
             
             Spacer()
-            
-            if isEditedName {
-                TextField(text: $text, label: {
-                    
-                })
-                .font(.medium_12)
-                .foregroundColor(.heyGray1)
-                .frame(height: 51)
-                .background(Color.heyGray3)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.bottom, 26)
-                
-            }
             
             HStack {
                 Button(primaryAction.title) {
@@ -74,18 +56,11 @@ public struct HeyAlertView: View {
                 .frame(height: 24)
         }
         .padding(.horizontal, 24)
-        .frame(height: isEditedName ? 213: 154)
+        .frame(height: 154)
         .frame(maxWidth: .infinity)
         .background(Color.heyWhite)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
-}
-
-public enum DemoTimeTableSettingAlertType {
-    case editTimeTableName
-    case shareURL
-    case saveImage
-    case removeTimeTable
 }
 
 extension View {
@@ -93,8 +68,8 @@ extension View {
         isPresented: Bool,
         title: String,
         isEditedName: Bool = false,
-        primaryButton: (String, HeyButtonColorStyle, () -> Void),
-        secondaryButton: (String, HeyButtonColorStyle, () -> Void)? = nil
+        primaryButton: HeyAlertButtonType,
+        secondaryButton: HeyAlertButtonType? = nil
     ) -> some View {
         self.overlay {
             if isPresented {
@@ -103,7 +78,6 @@ extension View {
                     
                     HeyAlertView(
                         title: title,
-                        isEditedName: isEditedName,
                         primaryAction: primaryButton,
                         secondaryAction: secondaryButton
                     )
@@ -118,5 +92,10 @@ extension View {
 }
 
 
-
+public enum DemoTimeTableSettingAlertType {
+    case editTimeTableName
+    case shareURL
+    case saveImage
+    case removeTimeTable
+}
 

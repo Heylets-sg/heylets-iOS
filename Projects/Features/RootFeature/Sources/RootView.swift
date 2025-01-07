@@ -40,7 +40,8 @@ public struct RootView: View {
                 TimeTableView(
                     viewModel: .init(),
                     searchModuleViewModel: .init(),
-                    addCustomModuleViewModel: .init()
+                    addCustomModuleViewModel: .init(),
+                    settingTimeTableViewModel: .init()
                 )
             case .mypage:
                 MyPageView(
