@@ -43,8 +43,8 @@ public class TimeTableViewModel: ObservableObject {
     ]
     @Published var timeTableInfo: TimeTableInfo = TimeTableInfo(
         id: 1,
-        name: "",
-        semester: "",
+        name: "A+++",
+        semester: "sem 1",
         academicYear: 2024
     )
 //    @Published var userInfo: User
