@@ -36,12 +36,16 @@ struct ThemeTopView: View {
                 Spacer()
                 
                 Button {
+                    viewModel.send(.saveButtonDidTap)
+                    //성공하면
+                    withAnimation {
+                        viewType = .main
+                    }
                     
                 } label: {
                     Text("Save")
                         .font(.medium_16)
                         .foregroundColor(.heyGray1)
-                    
                 }
             }
             .padding(.horizontal, 16)

@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct TimeTableCellInfo {
+public struct TimeTableCellInfo {
     var id: Int?
     var code: String
     var name: String

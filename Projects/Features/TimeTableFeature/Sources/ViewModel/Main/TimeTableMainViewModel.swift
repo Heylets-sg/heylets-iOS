@@ -12,6 +12,7 @@ import Combine
 import BaseFeatureDependency
 import DSKit
 import Core
+import UIKit
 
 public class TimeTableMainViewModel: ObservableObject {
     struct State {
@@ -32,6 +33,7 @@ public class TimeTableMainViewModel: ObservableObject {
         self.timeTableCellList = lectureList.createTimeTableCellList()
         
         observe()
+        setTimeTable()
     }
     
     func send(_ action: Action) {
