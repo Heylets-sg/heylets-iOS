@@ -21,7 +21,13 @@ public extension Project {
             "NotoSansKR-SemiBold.ttf",
             "NotoSansKR-Bold.ttf"
         ],
-        "UILaunchStoryboardName": "LaunchScreen"
+        "UILaunchStoryboardName": "LaunchScreen",
+        // Photo library usage description
+        "NSPhotoLibraryUsageDescription": "This app requires access to the photo library to select and upload photos.",
+        // Notification usage description
+        "UIUserNotificationUsageDescription": "The app requests permission to send notifications.",
+        // Camera usage description
+        "NSCameraUsageDescription": "This app requires access to the camera to take and upload photos."
     ]
     
     
