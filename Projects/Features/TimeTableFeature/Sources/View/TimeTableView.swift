@@ -58,7 +58,8 @@ public struct TimeTableView: View {
                 
                 MainView(
                     viewType: $viewType,
-                    viewModel: .init(lectureList: viewModel.lectureList)
+                    weekList: $viewModel.weekList,
+                    timeTable: $viewModel.timeTable
                 )
             }
             .onTapGesture {
@@ -67,6 +68,7 @@ public struct TimeTableView: View {
                 }
             }
             .onAppear {
+                viewModel.send(.onAppear)
                 searchModuleViewModel.addLectureClosure = { lecture in
                     viewType = .main
                     viewModel.send(.addLecture(lecture))

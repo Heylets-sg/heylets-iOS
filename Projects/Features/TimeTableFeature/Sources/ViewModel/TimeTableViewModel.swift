@@ -27,6 +27,7 @@ public class TimeTableViewModel: ObservableObject {
     }
     
     enum Action {
+        case onAppear
         case deleteModule
         case addLecture(LectureInfo)
         case deleteModuleAlertCloseButtonDidTap
@@ -42,6 +43,7 @@ public class TimeTableViewModel: ObservableObject {
     }
     
     @Published var state = State()
+    //TODO: lectureList -> timeTableCellList -> weekList, timaTable 컴바인으로 서버통신하면서 연결
     @Published var lectureList: [LectureInfo] = [
         .timetable_stub1,
         .timetable_stub2,
@@ -55,16 +57,24 @@ public class TimeTableViewModel: ObservableObject {
         academicYear: 2024
     )
     private let cancelBag = CancelBag()
+    @Published private var timeTableCellList: [TimeTableCellInfo] = []
     
-    var weekList = Week.weekDay
+    @Published var weekList: [Week] = Week.weekDay
+    @Published var timeTable: [[TimeTableCellInfo?]] = []
+    
     
     public init() {
         
         observe()
+        self.timeTableCellList = lectureList.createTimeTableCellList()
+        
     }
     
     func send(_ action: Action) {
         switch action {
+        case .onAppear:
+            configWeekList()
+            configTimeTable()
         case .deleteModule:
             //TODO: 삭제 API 호출
             state.deleteModuleAlertIsPresented = false
@@ -84,11 +94,9 @@ public class TimeTableViewModel: ObservableObject {
     func send(_ action: SettingAction) {
         switch action {
         case .saveImage:
-            let result = setTimeTable()
-            
             let mainView = MainCaptureContentView(
-                weekList: result.0,
-                timeTable: result.1
+                weekList: weekList,
+                timeTable: timeTable
             )
             let image = mainView.captureAsImage()
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
@@ -119,8 +127,7 @@ public class TimeTableViewModel: ObservableObject {
         
     }
     
-    private func setTimeTable() -> ([Week], [[TimeTableCellInfo?]]) {
-        let timeTableCellList = lectureList.createTimeTableCellList()
+    private func configWeekList() {
         for cell in timeTableCellList {
             if cell.schedule.day == .Sun {
                 weekList = Week.dayOfWeek
@@ -130,8 +137,10 @@ public class TimeTableViewModel: ObservableObject {
                 weekList.append(.Sat)
             }
         }
-        
-        
+        self.weekList = weekList
+    }
+    
+    private func configTimeTable() {
         var timeTable: [[TimeTableCellInfo?]] = Array(repeating: Array(repeating: nil, count: 16), count: weekList.count)
         for cell in timeTableCellList {
             if let weekIndex = weekList.firstIndex(of: cell.schedule.day) {
@@ -140,8 +149,7 @@ public class TimeTableViewModel: ObservableObject {
                 }
             }
         }
-        
-        return (weekList, timeTable)
+        self.timeTable = timeTable
     }
 }
 
