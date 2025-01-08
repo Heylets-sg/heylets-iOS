@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum APIPath {
+public enum Paths {
     private static let basePath = "/api/v1" // 공통 경로
     
     //MARK: Auth
@@ -22,7 +22,7 @@ public enum APIPath {
     static let logout = "api/v1/auth/logout"
     static let login = "api/v1/auth/login"
     static let verifyEmail = "api/v1/auth/email/verify"
-    static let requestEmail = "api/v1/auth/email/verification"
+    static let requestVerifyEmail = "api/v1/auth/email/verification"
     
     //MARK: Lecture
     

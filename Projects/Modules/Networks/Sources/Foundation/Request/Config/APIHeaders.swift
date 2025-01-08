@@ -19,8 +19,15 @@ public struct APIHeaders {
     static let timezone = "Time-Zone"
     static let TIMEZONE = "Asia/Seoul"
     
-    static let os = "OS"
     static let iOS = "iOS"
+    
+    static let deviceID = "Device-Id"
+    static let dieviceModel = "Device-Model"
+    static let osVersion = "OS-Version"
+    static let appVersion = "App-Version"
+    static let xPlatform = "X-Platform"
+    static let pushToken = "Push-Token"
+    
     
     static var accessToken: String {
         return "Bearer " /*+ (UserManager.shared.accessToken)*/
@@ -39,61 +46,5 @@ public struct APIHeaders {
 }
 
 public extension APIHeaders {
-    static var noTokenHeader: Dictionary<String,String> {
-        [contentType: applicationJSON]
-    }
-    
-    static var hasSocialTokenHeader: [String:String] {
-        return [
-            contentType: applicationJSON,
-            auth: appleAccessToken
-        ]
-    }
-    
-    static var hasTokenHeader: [String:String] {
-        return [
-            contentType: applicationJSON,
-            auth: accessToken
-        ]
-    }
-    
-    static var hasTokenWithTimeZoneHeader: [String:String] {
-        return [
-            contentType: applicationJSON,
-            auth: accessToken,
-            timezone: TIMEZONE
-        ]
-    }
-    
-    static var hasTokenWithOSHeader: [String:String] {
-        return [
-            contentType: applicationJSON,
-            auth: accessToken,
-            os: iOS
-        ]
-    }
-    
-    static var hasTokenWithAllHeader: [String: String] {
-        return [
-            contentType: applicationJSON,
-            auth: accessToken,
-            os: iOS,
-            timezone: TIMEZONE
-        ]
-    }
-    
-    static var hasAccessTokenHeader: [String: String] {
-        return [
-            contentType: applicationJSON,
-            auth: accessToken
-        ]
-    }
-    
-    static var hasRefreshTokenHeader: [String: String] {
-        return [
-            contentType: applicationJSON,
-            auth: refreshToken
-        ]
-    }
 }
 
