@@ -1,0 +1,29 @@
+//
+//  Heylets_iOSAPP.swift
+//  Heylets-iOS
+//
+//  Created by 류희재 on 12/18/24.
+//  Copyright © 2024 Heylets-iOS. All rights reserved.
+//
+
+import SwiftUI
+import DSKit
+
+import RootFeature
+import Core
+import BaseFeatureDependency
+import RootFeature
+
+@main
+struct Heylets_iOSAPP: App {
+    @StateObject var windowRouter = Router.default
+    @StateObject var navigationRouter = HeyNavigationRouter()
+    
+    var body: some Scene {
+        WindowGroup {
+            RootView()
+                .environmentObject(windowRouter)
+                .environmentObject(navigationRouter)
+        }
+    }
+}

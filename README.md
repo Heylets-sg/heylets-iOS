@@ -1,2 +1,2 @@
 # heylets-iOS
-heelers iOS Repo입니다!
+heylets iOS Repo입니다!
