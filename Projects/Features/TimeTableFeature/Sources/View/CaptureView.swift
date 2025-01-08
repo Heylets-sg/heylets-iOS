@@ -8,23 +8,6 @@
 
 import SwiftUI
 
-public struct MainCaptureView: View {
-    @StateObject var viewModel: TimeTableMainViewModel
-    
-    init(viewModel: TimeTableMainViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel)
-    }
-    
-    public var body: some View {
-        MainCaptureContentView(
-            weekList: viewModel.weekList,
-            timeTable: viewModel.state.timeTable)
-            .onAppear {
-                viewModel.send(.onAppear)
-            }
-    }
-}
-
 struct MainCaptureContentView: View {
     var weekList: [Week]
     var timeTable: [[TimeTableCellInfo?]]
