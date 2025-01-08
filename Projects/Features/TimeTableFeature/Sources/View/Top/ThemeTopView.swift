@@ -8,21 +8,11 @@
 
 import SwiftUI
 
-struct Theme: Hashable {
-    var image: UIImage
-    var name: String
-}
+import DSKit
 
 struct ThemeTopView: View {
     @Binding var viewType: TimeTableViewType
-    
-    let themeList: [Theme] = [
-        .init(image: .theme1, name: "theme1"),
-        .init(image: .theme2, name: "theme2"),
-        .init(image: .theme3, name: "theme3"),
-        .init(image: .theme4, name: "theme4"),
-        .init(image: .theme5, name: "theme5")
-    ]
+    @ObservedObject var viewModel: ThemeViewModel
     
     var body: some View {
         VStack {
@@ -46,12 +36,16 @@ struct ThemeTopView: View {
                 Spacer()
                 
                 Button {
+                    viewModel.send(.saveButtonDidTap)
+                    //성공하면
+                    withAnimation {
+                        viewType = .main
+                    }
                     
                 } label: {
                     Text("Save")
                         .font(.medium_16)
                         .foregroundColor(.heyGray1)
-                    
                 }
             }
             .padding(.horizontal, 16)
@@ -59,7 +53,7 @@ struct ThemeTopView: View {
             
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(themeList, id: \.self) { theme in
+                    ForEach(viewModel.themeList, id: \.self) { theme in
                         ThemeListCellView(theme)
                             .padding(.trailing, 20)
                     }
@@ -83,8 +77,7 @@ fileprivate struct ThemeListCellView: View {
                 
             } label: {
                 VStack {
-                    Image(uiImage: theme.image)
-                        .resizable()
+                    QuarterCircleView(theme.colorList)
                         .frame(width: 56, height: 56)
                         .padding(.bottom, 6)
                     
@@ -97,6 +90,52 @@ fileprivate struct ThemeListCellView: View {
     }
 }
 
-//#Preview {
-//    ThemeTopView()
-//}
+struct QuarterCircleView: View {
+    var colorList: [String]
+    init(_ colorList: [String]) {
+        self.colorList = colorList
+    }
+    var body: some View {
+        ZStack {
+            // 첫 번째 1/4 (위쪽)
+            QuarterCircle(color: colorList[0], startAngle: 0, endAngle: 90)
+            
+            // 두 번째 1/4 (오른쪽)
+            QuarterCircle(color: colorList[1], startAngle: 90, endAngle: 180)
+            
+            // 세 번째 1/4 (아래쪽)
+            QuarterCircle(color: colorList[2], startAngle: 180, endAngle: 270)
+            
+            // 네 번째 1/4 (왼쪽)
+            QuarterCircle(color: colorList[3], startAngle: 270, endAngle: 360)
+            
+            // 세로 선
+            Rectangle()
+                .fill(Color.white)
+                .frame(width: 2)
+                .offset(x: 0) // 중심에 위치하도록 설정
+
+            // 가로 선
+            Rectangle()
+                .fill(Color.white)
+                .frame(height: 2)
+                .offset(y: 0) // 중심에 위치하도록 설정
+        }
+    }
+}
+
+struct QuarterCircle: View {
+    var color: String
+    var startAngle: Double
+    var endAngle: Double
+    
+    var body: some View {
+        Path { path in
+            let center = CGPoint(x: 28, y: 28)
+            let radius: CGFloat = 28
+            path.move(to: center)
+            path.addArc(center: center, radius: radius, startAngle: .degrees(startAngle), endAngle: .degrees(endAngle), clockwise: false)
+        }
+        .fill(Color(hex: color))
+    }
+}

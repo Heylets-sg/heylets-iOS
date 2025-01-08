@@ -1,0 +1,178 @@
+//
+//  CaptureView.swift
+//  TimeTableFeature
+//
+//  Created by 류희재 on 1/8/25.
+//  Copyright © 2025 Heylets-iOS. All rights reserved.
+//
+
+import SwiftUI
+
+public struct MainCaptureView: View {
+    @StateObject var viewModel: TimeTableMainViewModel
+    
+    init(viewModel: TimeTableMainViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
+    public var body: some View {
+        MainCaptureContentView(
+            weekList: viewModel.weekList,
+            timeTable: viewModel.state.timeTable)
+            .onAppear {
+                viewModel.send(.onAppear)
+            }
+    }
+}
+
+struct MainCaptureContentView: View {
+    var weekList: [Week]
+    var timeTable: [[TimeTableCellInfo?]]
+    
+    init(weekList: [Week], timeTable: [[TimeTableCellInfo?]]) {
+        self.weekList = weekList
+        self.timeTable = timeTable
+    }
+    
+    var body: some View {
+        ScrollView(.horizontal) {
+            HStack {
+                WeeklyListView(weekList)
+                    .padding(.bottom, 16)
+                    .padding(.leading, 30)
+            }
+            
+            ScrollView() {
+                HStack(alignment: .top) {
+                    HourListView()
+                        .padding(.top, 10)
+                    
+                    TimeTableGridCaptureView(
+                        weekList: weekList,
+                        timeTable: timeTable
+                    )
+                }
+            }
+            .scrollIndicators(.hidden)
+            .border(Color.heyGray6, width: 1)
+        }
+        .scrollIndicators(.hidden)
+    }
+}
+
+
+import SwiftUI
+
+public struct TimeTableGridCaptureView: View {
+    var weekList: [Week]
+    var timeTable: [[TimeTableCellInfo?]]
+    var hourList = Array(9...24)
+    
+    public var body: some View {
+        Grid(horizontalSpacing: 1, verticalSpacing: 1) {
+            createHeaderRow()
+            
+            ForEach(hourList, id: \.self) { hour in
+                createGridRow(for: hour)
+            }
+        }
+        .onAppear {
+        }
+    }
+    
+    @ViewBuilder
+    private func createHeaderRow() -> some View {
+        GridRow {
+            ForEach(weekList, id: \.self) { _ in
+                Rectangle()
+                    .fill(Color.clear)
+                    .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
+                    .frame(width: 73, height: 21)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func createGridRow(for hour: Int) -> some View {
+        GridRow(alignment: .top) {
+            ForEach(weekList, id: \.self) { day in
+                createGridCell(for: hour, day: day)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func createGridCell(for hour: Int, day: Week) -> some View {
+        ZStack {
+            Rectangle()
+                .fill(Color.clear)
+                .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
+            
+            if let cell = getSlot(
+                timeTable: timeTable,
+                for: hour,
+                day: day
+            ) {
+                Button {
+//                    withAnimation {
+//                        viewType = .detail
+//                    }
+                } label: {
+                    ZStack {
+                        VStack {
+                            if hour == cell.schedule.startHour {
+                                Spacer()
+                                Color.heySubMain.opacity(0.5)
+                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                    .clipped()
+                            } else if hour == cell.schedule.endHour {
+                                // 종료 시간일 때 위로 배치
+                                Color.heySubMain.opacity(0.5)
+                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                    .clipped()
+                                Spacer()
+                            } else {
+                                Color.heySubMain.opacity(0.5)
+                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                    .clipped()
+                            }
+                        }
+
+                        // 시간 시작에만 텍스트 보여주기
+                        if hour == cell.schedule.startHour {
+                            VStack(alignment: .leading) {
+                                Spacer()
+                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                Text(cell.name)
+                                    .font(.medium_12)
+                                    .multilineTextAlignment(.center)
+                                Text(cell.schedule.location)
+                                    .font(.regular_10)
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                    }
+                }
+//                .disabled(!(viewType == .main))
+            }
+        }
+        .frame(width: 73, height: 52)
+    }
+    
+    private func getCellHeight(for cell: TimeTableCellInfo, hour: Int) -> CGFloat {
+        var baseHeight: CGFloat = 52 // 기본 셀 높이
+        if let colorRatio = cell.slot[hour-9] {
+            baseHeight *= CGFloat(colorRatio)
+        } else {
+            print(hour)
+        }
+        return baseHeight
+    }
+    
+    private func getSlot(timeTable: [[TimeTableCellInfo?]], for hour: Int, day: Week) -> TimeTableCellInfo? {
+        guard day.index < timeTable.count,
+              hour - 9 < timeTable[day.index].count else { return nil }
+        return timeTable[day.index][hour - 9]
+    }
+    
+}

@@ -10,20 +10,22 @@ import SwiftUI
 
 public struct MainView: View {
     @Binding var viewType: TimeTableViewType
-    @StateObject var viewModel: TimeTableMainViewModel
+    @Binding var weekList: [Week]
+    @Binding var timeTable: [[TimeTableCellInfo?]]
     
     init(
         viewType: Binding<TimeTableViewType>,
-        viewModel: TimeTableMainViewModel
+        weekList: Binding<[Week]>, timeTable: Binding<[[TimeTableCellInfo?]]>
     ) {
         self._viewType = viewType
-        self._viewModel = StateObject(wrappedValue: viewModel)
+        self._weekList = weekList
+        self._timeTable = timeTable
     }
     
     public var body: some View {
         ScrollView(.horizontal) {
             HStack {
-                WeeklyListView(viewModel.weekList)
+                WeeklyListView($weekList.wrappedValue)
                     .padding(.bottom, 16)
                     .padding(.leading, 30)
             }
@@ -34,21 +36,16 @@ public struct MainView: View {
                         .padding(.top, 10)
                     
                     TimeTableGridView(
-                        viewType: $viewType, 
-                        weekList: $viewModel.weekList,
-                        timeTable: $viewModel.state.timeTable
+                        viewType: $viewType,
+                        weekList: $weekList,
+                        timeTable: $timeTable
                     )
                 }
             }
             .scrollIndicators(.hidden)
             .border(Color.heyGray6, width: 1)
         }
-        .onAppear {
-            viewModel.send(.onAppear)
-        }
         .scrollIndicators(.hidden)
     }
 }
-//#Preview {
-//    TimeTableMainView()
-//}
+

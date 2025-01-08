@@ -76,9 +76,12 @@ public struct TopView: View {
         }
         .padding(.horizontal, 16)
         .sheet(isPresented: .constant(viewType == .setting)) {
-            SettingTimeTableView(viewType: $viewType, settingAlertType: $settingAlertType)
-                .presentationDetents([.medium, .large, .height(256)])
-                .presentationDragIndicator(.hidden)
+            SettingTimeTableView(
+                viewType: $viewType,
+                settingAlertType: $settingAlertType
+            )
+            .presentationDetents([.medium, .large, .height(256)])
+            .presentationDragIndicator(.hidden)
         }
     }
 }

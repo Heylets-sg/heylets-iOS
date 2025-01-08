@@ -132,7 +132,6 @@ public struct DSKitDemoView: View {
             //MARK: Case 1
             HeyAlertView(
                 title: "OneButton",
-                isEditedName: false,
                 primaryAction: ("확인", .primary, { } )
             )
             
@@ -140,7 +139,6 @@ public struct DSKitDemoView: View {
             
             HeyAlertView(
                 title: "TwoButton",
-                isEditedName: false,
                 primaryAction: ("확인", .primary, { } ),
                 secondaryAction: ("취소", .error, { } )
             )

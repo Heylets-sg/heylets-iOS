@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct SettingTimeTableInfoView: View {
-    @State private var isShowingSelectInfoView: Bool = false
+    
+    @ObservedObject var viewModel: ThemeViewModel
     
     var body: some View {
         VStack {
@@ -16,9 +17,9 @@ struct SettingTimeTableInfoView: View {
                 Spacer()
                 
                 Button {
-                    isShowingSelectInfoView.toggle()  // 버튼 클릭 시 선택 뷰 토글
+                    viewModel.send(.selectDisplayTypeButtonDidTap)
                 } label: {
-                    Text("Module code, Class room, Professor")
+                    Text(viewModel.displayType)
                         .font(.regular_12)
                         .foregroundColor(.heyGray2)
                 }
@@ -29,9 +30,9 @@ struct SettingTimeTableInfoView: View {
             
             Spacer()
         }
-        .sheet(isPresented: $isShowingSelectInfoView) {
-            ModuleSelectionView(isShowingSelectInfoView: $isShowingSelectInfoView)
-                .background(TransparentBackground()) // 투명한 배경을 추가
+        .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
+            SelectDisplayModuleView(viewModel: viewModel)
+                .background(.clear) // 투명한 배경을 추가
                 .transition(.move(edge: .bottom))
                 .presentationDetents([.medium, .large, .height(400)])
                 .presentationDragIndicator(.hidden)
@@ -39,22 +40,12 @@ struct SettingTimeTableInfoView: View {
     }
 }
 
-// 배경을 투명하게 설정하는 뷰
-struct TransparentBackground: View {
-    var body: some View {
-        Color.clear
-            .edgesIgnoringSafeArea(.all)
+struct SelectDisplayModuleView: View {
+    private var viewModel: ThemeViewModel
+    
+    init(viewModel: ThemeViewModel) {
+        self.viewModel = viewModel
     }
-}
-
-struct ModuleSelectionView: View {
-    @Binding var isShowingSelectInfoView: Bool
-    private let options = [
-        "module code",
-        "module code, class room",
-        "module code, class room, professor",
-        "module code, professor"
-    ]
     
     var body: some View {
         ZStack {
@@ -62,7 +53,7 @@ struct ModuleSelectionView: View {
             
             VStack {
                 VStack(spacing: 0) {
-                    ForEach(options, id: \.self) { option in
+                    ForEach(viewModel.options, id: \.self) { option in
                         VStack {
                             HStack {
                                 Spacer()
@@ -75,7 +66,7 @@ struct ModuleSelectionView: View {
                             .padding(.vertical, 18)
                             .onTapGesture {
                                 withAnimation {
-                                    isShowingSelectInfoView.toggle()
+                                    viewModel.send(.selectDisplayType(option))
                                 }
                             }
                             
@@ -90,7 +81,7 @@ struct ModuleSelectionView: View {
                     .frame(height: 20)
 
                 Button {
-                    isShowingSelectInfoView.toggle()  // 선택 후 뷰 닫기
+                    viewModel.send(.reportButtonDidTap)
                 } label: {
                     Text("Report")
                         .font(.headline)
@@ -108,11 +99,5 @@ struct ModuleSelectionView: View {
             .background(Color.clear)
             .cornerRadius(12)
         }
-    }
-}
-
-struct SettingTimeTableInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingTimeTableInfoView()
     }
 }
