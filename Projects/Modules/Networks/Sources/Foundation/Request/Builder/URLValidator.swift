@@ -9,7 +9,7 @@
 import Foundation
 
 public struct URLValidator {
-    public static func validateURL(_ urlString: String) -> Result<URL, HMHNetworkError.RequestError.URLValidationError> {
+    public static func validateURL(_ urlString: String) -> Result<URL, HeyNetworkError.RequestError.URLValidationError> {
         if urlString.isEmpty {
             return .failure(.emptyurlString)
         }

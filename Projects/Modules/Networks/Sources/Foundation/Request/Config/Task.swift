@@ -16,7 +16,7 @@ public enum Task {
 }
 
 extension Task {
-    public func buildRequest(baseURL: URL, method: HTTPMethod, headers: [String: String]?) -> AnyPublisher<URLRequest, HMHNetworkError.RequestError> {
+    public func buildRequest(baseURL: URL, method: HTTPMethod, headers: [String: String]?) -> AnyPublisher<URLRequest, HeyNetworkError.RequestError> {
         var request = URLRequest(url: baseURL)
         request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = headers
@@ -24,7 +24,7 @@ extension Task {
         switch self {
         case .requestPlain:
             return Just(request)
-                .setFailureType(to: HMHNetworkError.RequestError.self)
+                .setFailureType(to: HeyNetworkError.RequestError.self)
                 .eraseToAnyPublisher()
                 
         case .requestParameters(let parameters, let urlEncoder):

@@ -13,7 +13,7 @@ public struct NetworkLogHandler {
     static func responseDecodingError<T: Decodable>(
         data: Data,
         decodingType: T.Type,
-        error: HMHNetworkError.DecodeError
+        error: HeyNetworkError.DecodeError
     ) {
         let jsonString = String(data: data, encoding: .utf8) ?? "Invalid Data"
         
@@ -37,7 +37,7 @@ public struct NetworkLogHandler {
         
     }
     
-    static func tokenIntercepterRetryError(error: HMHNetworkError) {
+    static func tokenIntercepterRetryError(error: HeyNetworkError) {
         print("""
             ========================= ❌ Retry Error ==========================
             ❗️ Error Type: \(error.description)
@@ -71,7 +71,7 @@ extension NetworkLogHandler {
     
     static func NoResponseError(
         _ endpoint: URLRequestTargetType,
-        error: HMHNetworkError.ResponseError
+        error: HeyNetworkError.ResponseError
     ) {
         print("""
             ======================== 📤 네트워크 응답시 발생한 에러입니다 📤========================
@@ -82,7 +82,7 @@ extension NetworkLogHandler {
     
     static func invalidReponseError(
         response: NetworkResponse,
-        error: HMHNetworkError.ResponseError
+        error: HeyNetworkError.ResponseError
     ) {
         print("""
             ======================== 📤 네트워크 응답시 발생한 에러입니다 📤========================
@@ -135,7 +135,7 @@ extension NetworkLogHandler {
     
     static func requestInvalidURLError(
         _ endpoint: any URLRequestTargetType,
-        result error: HMHNetworkError.RequestError.URLValidationError
+        result error: HeyNetworkError.RequestError.URLValidationError
     ) {
         let url = endpoint.url + (endpoint.path ?? "")
         let method = endpoint.method
@@ -157,7 +157,7 @@ extension NetworkLogHandler {
     static func requestParameterEncodingError(
         _ request: URLRequest,
         _ parameter: Any? = nil,
-        error: HMHNetworkError.RequestError.ParameterEncodingError
+        error: HeyNetworkError.RequestError.ParameterEncodingError
     ) {
         let url = request.url?.absoluteString ?? "없음"
         let method = request.httpMethod ?? "없음"

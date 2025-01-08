@@ -6,7 +6,7 @@
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
-extension HMHNetworkError {
+extension HeyNetworkError {
     public enum RequestError: Error, Equatable {
         case parameterEncodingFailed(ParameterEncodingError) // 인코딩시 생기는 에러
         case invalidURL(URLValidationError) // url이 유효하지 않을때

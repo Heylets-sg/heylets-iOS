@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension HMHNetworkError {
+extension HeyNetworkError {
     public enum ResponseError: Error, Equatable {
         case cancelled
         case unhandled
@@ -33,7 +33,7 @@ extension HMHNetworkError {
     }
 }
 
-extension HMHNetworkError.ResponseError {
+extension HeyNetworkError.ResponseError {
     public func invalidStatusCodeMessage() -> String? {
         if case let .invalidStatusCode(_, message) = self {
             return message

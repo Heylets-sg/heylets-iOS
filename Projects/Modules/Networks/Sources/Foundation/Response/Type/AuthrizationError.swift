@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension HMHNetworkError {
+extension HeyNetworkError {
     public enum AuthrizationError: Error, Equatable {
         case kakaoLoginError
         case appleLoginError
@@ -24,7 +24,7 @@ extension HMHNetworkError {
     }
 }
 
-extension HMHNetworkError.AuthrizationError {
+extension HeyNetworkError.AuthrizationError {
     public func authrizationErrorMessage() -> String {
         return description
     }

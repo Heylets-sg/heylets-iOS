@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension HMHNetworkError {
+extension HeyNetworkError {
     public enum DecodeError: Error, Equatable {
         case decodingFailed
         case dataIsNil

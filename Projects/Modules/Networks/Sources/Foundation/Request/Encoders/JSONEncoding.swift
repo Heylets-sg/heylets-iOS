@@ -10,13 +10,13 @@ import Foundation
 import Combine
 
 public protocol JSONEncodingType {
-    func encode(_ request: URLRequest, with parameters: Encodable) -> AnyPublisher<URLRequest, HMHNetworkError.RequestError.ParameterEncodingError>
+    func encode(_ request: URLRequest, with parameters: Encodable) -> AnyPublisher<URLRequest, HeyNetworkError.RequestError.ParameterEncodingError>
 }
 
 public struct JSONEncoding: JSONEncodingType {
     public init() {}
     
-    public func encode(_ request: URLRequest, with parameters: Encodable) -> AnyPublisher<URLRequest, HMHNetworkError.RequestError.ParameterEncodingError> {
+    public func encode(_ request: URLRequest, with parameters: Encodable) -> AnyPublisher<URLRequest, HeyNetworkError.RequestError.ParameterEncodingError> {
         
         return Just(request)
             .tryMap { request in
@@ -27,10 +27,10 @@ public struct JSONEncoding: JSONEncodingType {
                     modifiedRequest.httpBody = data
                     return modifiedRequest
                 } catch {
-                    throw HMHNetworkError.RequestError.ParameterEncodingError.jsonEncodingFailed
+                    throw HeyNetworkError.RequestError.ParameterEncodingError.jsonEncodingFailed
                 }
             }
-            .mapError { _ in HMHNetworkError.RequestError.ParameterEncodingError.unknownErr }
+            .mapError { _ in HeyNetworkError.RequestError.ParameterEncodingError.unknownErr }
             .eraseToAnyPublisher()
     }
 }

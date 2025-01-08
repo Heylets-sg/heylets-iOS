@@ -17,33 +17,33 @@ class TokenInterceptor {
     let cancelBag = CancelBag()
     
     static let shared = TokenInterceptor(
-        service: ReissueAPIService()
+//        service: ReissueAPIService()
     )
     
-    private let service: ReissueAPIService
+//    private let service: ReissueAPIService
+//    
+//    private init(service: ReissueAPIService) {
+//        self.service = service
+//    }
     
-    private init(service: ReissueAPIService) {
-        self.service = service
-    }
     
-    
-    func adapt(_ request: URLRequest) -> AnyPublisher<URLRequest, HMHNetworkError> {
+    func adapt(_ request: URLRequest) -> AnyPublisher<URLRequest, HeyNetworkError> {
         return Just(request)
-            .setFailureType(to: HMHNetworkError.self)
+            .setFailureType(to: HeyNetworkError.self)
             .eraseToAnyPublisher()
     }
     
     
-    func retry(for session: URLSession) -> AnyPublisher<TokenResult, HMHNetworkError> {
-        NetworkLogHandler.tokenIntercepterRetryLogging(retryCnt: retryCnt)
-        self.retryCnt += 1
-        if retryCnt > retryLimit {
-            let error = ErrorHandler.handleRetryLimitExceeded()
-            retryCnt = 0
-            return Fail(error: error).eraseToAnyPublisher()
-        } else {
-            return service.tokenRefresh()
-        }
-    }
+//    func retry(for session: URLSession) -> AnyPublisher<TokenResult, HeyNetworkError> {
+//        NetworkLogHandler.tokenIntercepterRetryLogging(retryCnt: retryCnt)
+//        self.retryCnt += 1
+//        if retryCnt > retryLimit {
+//            let error = ErrorHandler.handleRetryLimitExceeded()
+//            retryCnt = 0
+//            return Fail(error: error).eraseToAnyPublisher()
+//        } else {
+//            return service.tokenRefresh()
+//        }
+//    }
 }
 

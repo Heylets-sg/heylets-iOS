@@ -8,7 +8,7 @@
 
 import Foundation
 
-@frozen public enum HMHNetworkError: Error, Equatable, LocalizedError {
+@frozen public enum HeyNetworkError: Error, Equatable, LocalizedError {
     case invalidRequest(RequestError)
     case invalidResponse(ResponseError)
     case decodingFailed(DecodeError)

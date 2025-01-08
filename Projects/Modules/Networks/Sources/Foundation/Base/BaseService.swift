@@ -24,7 +24,7 @@ public final class BaseService<Target: URLRequestTargetType> {
     }()
     
     
-    func requestWithResult<T: Decodable>(_ target: API) -> AnyPublisher<T, HMHNetworkError> {
+    func requestWithResult<T: Decodable>(_ target: API) -> AnyPublisher<T, HeyNetworkError> {
         return fetchResponse(with: target)
             .flatMap { response in
                 self.validate(response: response, target: target)
@@ -38,14 +38,14 @@ public final class BaseService<Target: URLRequestTargetType> {
             .eraseToAnyPublisher()
     }
     
-    func requestWithNoResult(_ target: API) -> AnyPublisher<Void, HMHNetworkError> {
+    func requestWithNoResult(_ target: API) -> AnyPublisher<Void, HeyNetworkError> {
         return fetchResponse(with: target)
             .flatMap { response in
                 self.validate(response: response, target: target)
                     .map { _ in response.data! }
                     .mapError { $0 }
             }
-            .flatMap { data -> AnyPublisher<VoidResult, HMHNetworkError> in
+            .flatMap { data -> AnyPublisher<VoidResult, HeyNetworkError> in
                 self.decode(data: data)
                     .mapError { ErrorHandler.handleDecodingError(data: data, decodingType: VoidResult.self, error: $0) }
                     .eraseToAnyPublisher()
@@ -57,21 +57,21 @@ public final class BaseService<Target: URLRequestTargetType> {
 extension BaseService {
     
     // dataTask 네트워크 요청 수행
-    private func performDataTask(with urlRequest: URLRequest) -> AnyPublisher<NetworkResponse, HMHNetworkError.ResponseError> {
+    private func performDataTask(with urlRequest: URLRequest) -> AnyPublisher<NetworkResponse, HeyNetworkError.ResponseError> {
         return session.dataTaskPublisher(for: urlRequest)
             .tryMap { data, response in
                 guard let httpResponse = response as? HTTPURLResponse else {
-                    throw HMHNetworkError.ResponseError.unhandled
+                    throw HeyNetworkError.ResponseError.unhandled
                 }
                 return NetworkResponse(data: data, response: httpResponse, error: nil)
             }
-            .mapError { $0 as! HMHNetworkError.ResponseError }
+            .mapError { $0 as! HeyNetworkError.ResponseError }
             .eraseToAnyPublisher()
     }
     
     
     /// 네트워크 응답 처리 메소드
-    private func fetchResponse(with target: API) -> AnyPublisher<NetworkResponse, HMHNetworkError> {
+    private func fetchResponse(with target: API) -> AnyPublisher<NetworkResponse, HeyNetworkError> {
         return RequestHandler.createURLRequest(for: target)
             .map { $0 }
             .handleEvents(receiveOutput: { NetworkLogHandler.requestLogging($0) })
@@ -85,11 +85,11 @@ extension BaseService {
     
     
     /// 응답 유효성 검사 메서드
-    private func validate(response: NetworkResponse, target: API) -> AnyPublisher<Void, HMHNetworkError> {
+    private func validate(response: NetworkResponse, target: API) -> AnyPublisher<Void, HeyNetworkError> {
         guard response.response.isValidateStatus() else {
             // 401 인증 오류 발생 시 토큰 갱신 후 재요청
             if response.response.unAuthorized() {
-                return refreshTokenAndRetry(for: target)
+//                return refreshTokenAndRetry(for: target)
                 
             }
             // 기타 오류 발생 시 에러 반환
@@ -98,12 +98,12 @@ extension BaseService {
         }
         
         return Just(())
-            .setFailureType(to: HMHNetworkError.self)
+            .setFailureType(to: HeyNetworkError.self)
             .eraseToAnyPublisher()
     }
     
     /// 디코딩 메소드
-    private func decode<T: Decodable>(data: Data) -> AnyPublisher<T, HMHNetworkError.DecodeError> {
+    private func decode<T: Decodable>(data: Data) -> AnyPublisher<T, HeyNetworkError.DecodeError> {
         return Just(data)
             .decode(type: GenericResponse<T>.self, decoder: JSONDecoder())
             .mapError { _ in .decodingFailed }
@@ -111,24 +111,24 @@ extension BaseService {
             .eraseToAnyPublisher()
     }
     
-    private func refreshTokenAndRetry(for target: API) -> AnyPublisher<Void, HMHNetworkError> {
-        return TokenInterceptor.shared.retry(for: session)
-            .flatMap { tokenResult -> AnyPublisher<Void, HMHNetworkError> in
-                UserManager.shared.accessToken = tokenResult.accessToken
-                UserManager.shared.refreshToken = tokenResult.refreshToken
-                return self.fetchResponse(with: target)
-                    .flatMap { newResponse in
-                        self.validate(response: newResponse, target: target)
-                    }
-                    .eraseToAnyPublisher()
-            }
-            .catch { error -> AnyPublisher<Void, HMHNetworkError> in
-                UserManager.shared.accessToken = ""
-                UserManager.shared.refreshToken = ""
-                return Fail(error: error).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
+//    private func refreshTokenAndRetry(for target: API) -> AnyPublisher<Void, HeyNetworkError> {
+//        return TokenInterceptor.shared.retry(for: session)
+//            .flatMap { tokenResult -> AnyPublisher<Void, HeyNetworkError> in
+////                UserManager.shared.accessToken = tokenResult.accessToken
+////                UserManager.shared.refreshToken = tokenResult.refreshToken
+//                return self.fetchResponse(with: target)
+//                    .flatMap { newResponse in
+//                        self.validate(response: newResponse, target: target)
+//                    }
+//                    .eraseToAnyPublisher()
+//            }
+//            .catch { error -> AnyPublisher<Void, HeyNetworkError> in
+////                UserManager.shared.accessToken = ""
+////                UserManager.shared.refreshToken = ""
+//                return Fail(error: error).eraseToAnyPublisher()
+//            }
+//            .eraseToAnyPublisher()
+//    }
     
 }
 

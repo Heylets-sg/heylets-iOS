@@ -17,11 +17,11 @@ public protocol URLRequestTargetType {
     var task: Task { get }
     var isWithInterceptor: Bool { get }
     
-    func asURLRequest() -> AnyPublisher<URLRequest, HMHNetworkError.RequestError>
+    func asURLRequest() -> AnyPublisher<URLRequest, HeyNetworkError.RequestError>
 }
 
 extension URLRequestTargetType {
-    public func asURLRequest() -> AnyPublisher<URLRequest, HMHNetworkError.RequestError> {
+    public func asURLRequest() -> AnyPublisher<URLRequest, HeyNetworkError.RequestError> {
         var finalURL = self.url
 
         if let path = self.path {
