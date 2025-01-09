@@ -6,4 +6,16 @@
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
-import Foundation
+//import Foundation
+//import Combine
+//
+//import Domain
+//import Networks
+//
+//public struct ThemeRepository: ThemeRepositoryType {
+//    private let themeService: ThemeServiceType
+//    
+//    public init(themeService: ThemeServiceType) {
+//        self.themeService = themeService
+//    }
+//}

@@ -30,7 +30,7 @@ public class TimeTableViewModel: ObservableObject {
     enum Action {
         case onAppear
         case deleteModule
-        case addLecture(LectureInfo)
+        case addLecture(SectionInfo)
         case deleteModuleAlertCloseButtonDidTap
         case inValidregisterModuleAlertCloseButtonDidTap
     }
@@ -45,7 +45,7 @@ public class TimeTableViewModel: ObservableObject {
     
     @Published var state = State()
     //TODO: lectureList -> timeTableCellList -> weekList, timaTable 컴바인으로 서버통신하면서 연결
-    @Published var lectureList: [LectureInfo] = [
+    @Published var lectureList: [SectionInfo] = [
         .timetable_stub1,
         .timetable_stub2,
         .timetable_stub3,

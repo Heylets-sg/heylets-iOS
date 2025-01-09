@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct SectionResult: Decodable {
-    let sectionCode: String
-    let professor: String
-    let courseCode: String?
-    let courseName: String?
-    let schedules: [SchedulesResult]
+public struct SectionResult: Decodable {
+    public let sectionCode: String
+    public let professor: String
+    public let courseCode: String?
+    public let courseName: String?
+    public let schedules: [SchedulesResult]
 }

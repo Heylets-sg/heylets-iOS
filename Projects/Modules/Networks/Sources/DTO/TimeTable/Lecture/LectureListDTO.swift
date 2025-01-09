@@ -9,7 +9,7 @@
 import Foundation
 
 public struct LectureListResult: Decodable {
-    let content: [LectureInfoResult]
+    public let content: [LectureInfoResult]
     let pageable: PageableResult
     let last: Bool
     let totalElements, totalPages: Int
@@ -19,17 +19,17 @@ public struct LectureListResult: Decodable {
     let empty: Bool
 }
 
-struct LectureInfoResult: Decodable {
-    let lectureId: Int
-    let courseCode: String
-    let courseName: String
-    let sections: [SectionResult]
-    let credit: Int
-    let courseLevel: Int?
-    let termId: Int
-    let academicYear: String
-    let semester: String
-    let keywordScore: Int
+public struct LectureInfoResult: Decodable {
+    public let lectureId: Int
+    public let courseCode: String
+    public let courseName: String
+    public let sections: [SectionResult]
+    public let credit: Int
+    public let courseLevel: Int?
+    public let termId: Int
+    public let academicYear: String
+    public let semester: String
+    public let keywordScore: Int
 }
 
 struct PageableResult: Decodable {

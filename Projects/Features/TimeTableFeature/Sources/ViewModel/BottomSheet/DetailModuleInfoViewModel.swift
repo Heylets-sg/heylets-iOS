@@ -25,7 +25,7 @@ public class DetailModuleInfoViewModel: ObservableObject {
     @Published var state = State()
     
     //TODO: 시간표 상세조희 서버통신으로 이 값 업데이트
-    public var moduleInfo: LectureInfo = .search_stub
+    public var moduleInfo: SectionInfo = .search_stub
     private let cancelBag = CancelBag()
     
     public init() {

@@ -9,7 +9,7 @@
 import Foundation
 
 public struct TimeTableCellInfo {
-    public var id: Int?
+    public var id: String?
     public var code: String
     public var name: String
     public var professor: String

@@ -9,7 +9,7 @@
 import Foundation
 
 public struct ScheduleInfo: Hashable {
-    public var id: Int
+    public var id: Int?
     public var day: Week
     public var startHour: Int
     public var startMinute: Int
@@ -31,6 +31,24 @@ public struct ScheduleInfo: Hashable {
     
     var isSunday: Bool {
         return day == .Sun
+    }
+    
+    public init(
+        id: Int? = nil,
+        day: Week,
+        startHour: Int,
+        startMinute: Int,
+        endHour: Int,
+        endMinute: Int,
+        location: String
+    ) {
+        self.id = id
+        self.day = day
+        self.startHour = startHour
+        self.startMinute = startMinute
+        self.endHour = endHour
+        self.endMinute = endMinute
+        self.location = location
     }
 }
 

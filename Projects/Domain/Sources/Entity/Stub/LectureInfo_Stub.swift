@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension LectureInfo {
+extension SectionInfo {
     static public var search_stub: Self {
         .init(
             code: "EE3100",
@@ -110,10 +110,10 @@ extension LectureInfo {
     }
 }
 
-extension LectureInfo {
+extension SectionInfo {
     static public var timetable_stub1: Self {
         .init(
-            id: 11214,
+            id: "11214",
             code: "PH1105",
             name: "OPTICS, VIBRATIONS & WAVES",
             schedule: [.stub2_1, .stub2_2],
@@ -124,7 +124,7 @@ extension LectureInfo {
     
     static public var timetable_stub2: Self {
         .init(
-            id: 11914,
+            id: "11914",
             code: "EE3103",
             name: "ENGINEERING ELECTROMAGNETICS",
             schedule: [.stub1],
@@ -134,7 +134,7 @@ extension LectureInfo {
     
     static public var timetable_stub3: Self {
         .init(
-            id: 11215,
+            id: "11215",
             code: "PH1105(Sat)",
             name: "OPTICS, VIBRATIONS & WAVES",
             schedule: [.stub3],
@@ -144,7 +144,7 @@ extension LectureInfo {
     
     static public var timetable_stub4: Self {
         .init(
-            id: 11216,
+            id: "11216",
             code: "PH1105(Sun)",
             name: "OPTICS, VIBRATIONS & WAVES",
             schedule: [.stub4],

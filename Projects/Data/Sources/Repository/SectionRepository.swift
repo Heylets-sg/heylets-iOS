@@ -6,4 +6,16 @@
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
-import Foundation
+//import Foundation
+//import Combine
+//
+//import Domain
+//import Networks
+//
+//public struct SectionRepository: SectionRepositoryType {
+//    private let sectionService: SectionServiceType
+//    
+//    public init(sectionService: SectionServiceType) {
+//        self.sectionService = sectionService
+//    }
+//}

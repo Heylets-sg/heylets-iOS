@@ -9,14 +9,14 @@
 import Foundation
 
 public struct LectureDetailResult: Decodable {
-    let courseCode: String
-    let courseName: String
-    let unit: Int
-    let department: String
-    let termId: Int
-    let academicYear: String
-    let semester: String
-    let sections: [SectionResult]
+    public let courseCode: String
+    public let courseName: String
+    public let unit: Int
+    public let department: String
+    public let termId: Int
+    public let academicYear: String
+    public let semester: String
+    public let sections: [SectionResult]
     let reviewStats: ReviewStateResult
     let reviews: ReviewsResult
 }
