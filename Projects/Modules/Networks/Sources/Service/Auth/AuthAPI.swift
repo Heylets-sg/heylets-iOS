@@ -12,15 +12,15 @@ import Domain
 
 public enum AuthAPI {
     case checkUserName(String)
-    case refreshToken
-    case signUp
-    case resetPassword
-    case verifyResetPassword
-    case requestResetPassword
+//    case refreshToken
+//    case signUp
+    case resetPassword(ResetPasswordRequest)
+    case verifyResetPassword(VerifyOTPCodeRequest)
+    case requestResetPassword(RequestOTPCodeRequest)
     case logout
-    case login
-    case verifyEmail
-    case requestVerifyEmail
+    case login(SignInRequest)
+    case verifyEmail(VerifyOTPCodeRequest)
+    case requestVerifyEmail(RequestOTPCodeRequest)
 }
 
 extension AuthAPI: BaseAPI {
@@ -32,10 +32,10 @@ extension AuthAPI: BaseAPI {
         switch self {
         case .checkUserName:
             Paths.checkUserName
-        case .refreshToken:
-            Paths.refreshToken
-        case .signUp:
-            Paths.signUp
+//        case .refreshToken:
+//            Paths.refreshToken
+//        case .signUp:
+//            Paths.signUp
         case .resetPassword:
             Paths.resetPassword
         case .verifyResetPassword:
@@ -57,10 +57,10 @@ extension AuthAPI: BaseAPI {
         switch self {
         case .checkUserName:
             return .get
-        case .refreshToken:
-            return .post
-        case .signUp:
-            return .post
+//        case .refreshToken:
+//            return .post
+//        case .signUp:
+//            return .post
         case .resetPassword:
             return .post
         case .verifyResetPassword:
@@ -82,31 +82,29 @@ extension AuthAPI: BaseAPI {
         switch self {
         case .checkUserName(let name):
             return .requestParameters(["username": name])
-        case .refreshToken:
-            <#code#>
-        case .signUp:
-            <#code#>
-        case .resetPassword:
-            <#code#>
-        case .verifyResetPassword:
-            <#code#>
-        case .requestResetPassword:
-            <#code#>
+//        case .refreshToken:
+//            <#code#>
+//        case .signUp:
+//            <#code#>
+        case .resetPassword(let request):
+            return .requestJSONEncodable(request)
+        case .verifyResetPassword(let request):
+            return .requestJSONEncodable(request)
+        case .requestResetPassword(let request):
+            return .requestJSONEncodable(request)
         case .logout:
-            <#code#>
-        case .login:
-            <#code#>
-        case .verifyEmail:
-            <#code#>
-        case .requestVerifyEmail:
-            <#code#>
+            return .requestPlain
+        case .login(let request):
+            return .requestJSONEncodable(request)
+        case .verifyEmail(let request):
+            return .requestJSONEncodable(request)
+        case .requestVerifyEmail(let request):
+            return .requestJSONEncodable(request)
         }
     }
     
     public var headers: [String : String]? {
-        switch self {
-            
-        }
+        return APIHeaders.defaultHeader
     }
 }
 

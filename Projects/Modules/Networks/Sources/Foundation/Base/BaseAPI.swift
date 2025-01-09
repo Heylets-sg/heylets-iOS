@@ -16,6 +16,6 @@ extension BaseAPI {
     }
     
     public var headers: [String: String]? {
-        return APIHeaders.noTokenHeader
+        return APIHeaders.defaultHeader
     }
 }

@@ -16,17 +16,20 @@ public struct APIHeaders {
     
     static let auth = "Authorization"
     
-    static let timezone = "Time-Zone"
-    static let TIMEZONE = "Asia/Seoul"
+    static let deviceID_key = "Device-Id"
+    static let deviceID_value = "ex) 1234abcd5678efgh"
     
-    static let iOS = "iOS"
+    static let deviceModel_key = "Device-Model"
+    static let deviceModel_value = "ex) SM-S918N"
     
-    static let deviceID = "Device-Id"
-    static let dieviceModel = "Device-Model"
-    static let osVersion = "OS-Version"
-    static let appVersion = "App-Version"
+    static let osVersion_key = "OS-Version"
+    static let osVersion_value = "ex) 13"
+    
+    static let appVersion_key = "App-Version"
+    static let appVersion_value = "ex) 1.0.0"
+    
     static let xPlatform = "X-Platform"
-    static let pushToken = "Push-Token"
+    static let iOS = "IOS"
     
     
     static var accessToken: String {
@@ -46,5 +49,15 @@ public struct APIHeaders {
 }
 
 public extension APIHeaders {
+    static var defaultHeader: [String:String] {
+        return [
+            contentType: applicationJSON,
+            deviceID_key: deviceID_value,
+            deviceModel_key: deviceModel_value,
+            osVersion_key: osVersion_value,
+            appVersion_key: appVersion_value,
+            xPlatform: iOS,
+        ]
+    }
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ResetPasswordRequest: Encodable {
+public struct ResetPasswordRequest: Encodable {
     let email: String
     let newPassword: String
 }

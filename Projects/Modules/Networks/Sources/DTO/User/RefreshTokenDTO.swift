@@ -13,10 +13,3 @@ struct RefreshTokenRequest: Encodable {
     let devide_id: String
     let x_platform: String
 }
-
-struct RefreshTokenResult: Decodable {
-    let access_token: String
-    let refresh_token: String
-    let token_type: String
-    let expires_in: Int
-}

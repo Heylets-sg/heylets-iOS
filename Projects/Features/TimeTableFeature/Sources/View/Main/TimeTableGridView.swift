@@ -15,7 +15,7 @@ public struct TimeTableGridView: View {
     var hourList = Array(9...24)
     
     public var body: some View {
-        Grid(horizontalSpacing: 1, verticalSpacing: 1) {
+        Grid(horizontalSpacing: 0, verticalSpacing: 0) {
             createHeaderRow()
             
             ForEach(hourList, id: \.self) { hour in

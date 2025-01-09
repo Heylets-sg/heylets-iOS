@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct RequestOTPCodeRequest: Encodable {
+public struct RequestOTPCodeRequest: Encodable {
     let email: String
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct VerifyOTPCodeRequest {
+public struct VerifyOTPCodeRequest: Encodable {
     let email: String
     let code: Int
 }
