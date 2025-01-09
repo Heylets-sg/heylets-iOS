@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LectureDetailResult: Decodable {
+public struct LectureDetailResult: Decodable {
     let courseCode: String
     let courseName: String
     let unit: Int
@@ -20,10 +20,6 @@ struct LectureDetailResult: Decodable {
     let reviewStats: ReviewStateResult
     let reviews: ReviewsResult
 }
-
-
-
-
 
 struct ReviewStateResult: Decodable {
     let totalRevies: Int
