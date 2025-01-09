@@ -29,5 +29,4 @@ extension ThemeService: ThemeServiceType {
     public func getPreviewTheme() -> NetworkDecodableResponse<ThemePreviewResult> {
         requestWithResult(.getPreviewTheme)
     }
-    
 }

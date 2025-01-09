@@ -11,5 +11,7 @@ import Foundation
 struct SectionResult: Decodable {
     let sectionCode: String
     let professor: String
+    let courseCode: String?
+    let courseName: String?
     let schedules: [SchedulesResult]
 }
