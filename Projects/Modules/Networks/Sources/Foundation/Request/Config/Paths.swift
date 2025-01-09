@@ -39,6 +39,9 @@ public enum Paths {
     
     //MARK: Sections
     
+    static let deleteAllSection = "/api/v1/timetables/{tableId}/sections"
+    static let deleteLectureSection = "/api/v1/timetables/{tableId}/sections/{sectionId}"
+    static let addLectureSection = "/api/v1/timetables/{tableId}/sections"
     
     //MARK: Theme
     

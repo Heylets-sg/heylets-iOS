@@ -11,6 +11,9 @@ import Foundation
 import Domain
 
 public enum SectionAPI {
+    case deleteAllSection(String)
+    case deleteLectureSection(String, String)
+    case addLectureSection(String, AddSectionRequest)
 }
 
 extension SectionAPI: BaseAPI {
@@ -20,15 +23,38 @@ extension SectionAPI: BaseAPI {
     
     public var path: String? {
         switch self {
+        case .deleteAllSection(let tableId):
+            return Paths.deleteAllSection
+                .replacingOccurrences(of: "{tableId}", with: tableId)
+        case .deleteLectureSection(let tableId, let sectionId):
+            return Paths.deleteLectureSection
+                .replacingOccurrences(of: "{tableId}", with: tableId)
+                .replacingOccurrences(of: "{sectionId}", with: sectionId)
+        case .addLectureSection(let tableId, _):
+            return Paths.addLectureSection
+                .replacingOccurrences(of: "{tableId}", with: tableId)
         }
     }
     
     public var method: HTTPMethod {
-        return .get
+        switch self {
+        case .deleteAllSection:
+            return .delete
+        case .deleteLectureSection:
+            return .delete
+        case .addLectureSection:
+            return .post
+        }
     }
     
     public var task: Task {
         switch self {
+        case .deleteAllSection:
+            return .requestPlain
+        case .deleteLectureSection:
+            return .requestPlain
+        case .addLectureSection(_, let request):
+            return .requestJSONEncodable(request)
         }
     }
     

@@ -21,18 +21,9 @@ struct LectureDetailResult: Decodable {
     let reviews: ReviewsResult
 }
 
-struct SectionResult: Decodable {
-    let sectionCode: String
-    let professor: String
-    let schedules: [SchedulesResult]
-}
 
-struct SchedulesResult: Decodable {
-    let classDay: String
-    let startTime: String
-    let endTime: String
-    let location: String
-}
+
+
 
 struct ReviewStateResult: Decodable {
     let totalRevies: Int
