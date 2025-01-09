@@ -7,3 +7,12 @@
 //
 
 import Foundation
+import Combine
+
+public protocol ThemeRepositoryType {
+    func getThemeDetailInfo(
+        _ themeName: String
+    ) -> AnyPublisher<ThemeColorInfo, Error>
+    
+    func getThemeList() -> AnyPublisher<[Theme], Error>
+}
