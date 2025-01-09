@@ -52,7 +52,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            user.nickName = nickName
+            user.profile.nickName = nickName
             user.password = password
             navigationRouter.push(to: .addProfile(user))
         case .checkIDAvailabilityButtonDidTap:

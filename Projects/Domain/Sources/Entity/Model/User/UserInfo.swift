@@ -10,29 +10,39 @@ import Foundation
 import UIKit
 
 public struct UserInfo: Hashable {
-    public var nickName: String
     public var email: String
     public var password: String
-    public var university: String
     public var gender: String
     public var birth: Date
-    public var profileImage: UIImage?
+    public var profile: ProfileInfo
+    
+    public init(
+        email: String,
+        password: String,
+        gender: String,
+        birth: Date,
+        profile: ProfileInfo
+    ) {
+        self.email = email
+        self.password = password
+        self.gender = gender
+        self.birth = birth
+        self.profile = profile
+    }
+}
+
+public struct ProfileInfo: Hashable {
+    public var nickName: String
+    public var university: String
+    public var image: UIImage?
     
     public init(
         nickName: String,
-        email: String,
-        password: String,
         university: String,
-        gender: String,
-        birth: Date,
-        profileImage: UIImage? = nil
+        image: UIImage? = nil
     ) {
         self.nickName = nickName
-        self.email = email
-        self.password = password
         self.university = university
-        self.gender = gender
-        self.birth = birth
-        self.profileImage = profileImage
+        self.image = image
     }
 }

@@ -41,13 +41,15 @@ public class SelectUniversityViewModel: ObservableObject {
     
     // MARK: - Properties
     public var navigationRouter: OnboardingNavigationRouter
-    public var user = UserInfo(
-        nickName: "",
+    public var user: UserInfo = .init(
         email: "",
         password: "",
-        university: "",
         gender: "",
-        birth: Date()
+        birth: Date(),
+        profile: .init(
+            nickName: "",
+            university: ""
+        )
     )
     
     @Published var state = State()
@@ -71,7 +73,7 @@ public class SelectUniversityViewModel: ObservableObject {
             navigationRouter.pop()
         case .nextButtonDidTap:
             guard let university = university else { return }
-            user.university = university.rawValue
+            user.profile.university = university.rawValue
             navigationRouter.push(to: .verifyEmail(user))
         case .selectUniversity(let university):
             self.university = university

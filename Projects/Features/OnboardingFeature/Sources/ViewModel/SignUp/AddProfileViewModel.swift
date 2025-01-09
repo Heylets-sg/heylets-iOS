@@ -45,7 +45,7 @@ public class AddProfileViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            user.profileImage = profileImage
+            user.profile.image = profileImage
             navigationRouter.popToRootView()
         case .profileImageDidChange(let newPhoto):
             guard let newPhoto else { return }
