@@ -7,3 +7,29 @@
 //
 
 import Foundation
+import Combine
+
+public protocol ScheduleRepositoryType {
+    func deleteLectureModule(
+        _ tableId: String,
+        _ scheduleId: String
+    ) -> AnyPublisher<Void, Error>
+    
+    func patchCustomModule(
+        _ tableId: String,
+        scheduleId: String,
+        _ customModuleInfo: CustomModuleInfo
+    ) -> AnyPublisher<CustomModuleInfo, Error>
+    
+    func addLecture(
+        _ tableId: String,
+        _ scheduleId: Int,
+        _ memo: String
+    ) -> AnyPublisher<ModuleInfo, Error>
+    
+    func addCustomModule(
+        _ tableId: String,
+        _ customModuleInfo: CustomModuleInfo
+    ) -> AnyPublisher<CustomModuleInfo, Error>
+}
+
