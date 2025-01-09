@@ -1,8 +1,8 @@
 //
 //  Weekday.swift
-//  TimeTableFeatureInterface
+//  Domain
 //
-//  Created by 류희재 on 1/3/25.
+//  Created by 류희재 on 1/9/25.
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
@@ -17,7 +17,7 @@ public enum Week: String, CaseIterable, Hashable {
     case Sat
     case Sun
     
-    var index: Int {
+    public var index: Int {
         switch self {
         case .Mon:
             return 0
@@ -36,6 +36,7 @@ public enum Week: String, CaseIterable, Hashable {
         }
     }
     
-    static let weekDay: [Week] = [.Mon, .Tue, .Wed, .Thu, .Fri]
-    static let dayOfWeek: [Week] = Week.allCases
+    public static let weekDay: [Week] = [.Mon, .Tue, .Wed, .Thu, .Fri]
+    public static let dayOfWeek: [Week] = Week.allCases
 }
+

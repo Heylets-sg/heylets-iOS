@@ -10,6 +10,7 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Domain
 import Core
 
 public class VerifyEmailViewModel: ObservableObject {
@@ -26,7 +27,7 @@ public class VerifyEmailViewModel: ObservableObject {
     }
     
     public var navigationRouter: OnboardingNavigationRouter
-    public var user: User
+    public var user: UserInfo
     
     @Published var state = State()
     private let cancelBag = CancelBag()
@@ -37,7 +38,7 @@ public class VerifyEmailViewModel: ObservableObject {
     
     public init(
         navigationRouter: OnboardingNavigationRouter,
-        user: User
+        user: UserInfo
     ) {
         self.navigationRouter = navigationRouter
         self.user = user

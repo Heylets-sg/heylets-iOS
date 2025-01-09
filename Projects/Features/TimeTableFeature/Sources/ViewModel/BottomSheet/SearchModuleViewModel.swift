@@ -11,6 +11,7 @@ import Combine
 import SwiftUI
 
 import BaseFeatureDependency
+import Domain
 import DSKit
 import Core
 

@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+import Domain
+
 public struct WeeklyListView: View {
     var weekList: [Week]
     

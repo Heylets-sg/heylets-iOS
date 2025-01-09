@@ -1,22 +1,21 @@
 //
-//  SectionInfo.swift
-//  TimeTableFeatureInterface
+//  TableCellInfo.swift
+//  Domain
 //
-//  Created by 류희재 on 1/3/25.
+//  Created by 류희재 on 1/9/25.
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
 import Foundation
 
-
 public struct TimeTableCellInfo {
-    var id: Int?
-    var code: String
-    var name: String
-    var professor: String
-    var schedule: ScheduleInfo
+    public var id: Int?
+    public var code: String
+    public var name: String
+    public var professor: String
+    public var schedule: ScheduleInfo
     
-    var slot: [Int: Double] {
+    public var slot: [Int: Double] {
         var slotDict: [Int: Double] = [:]
         
         let startHour = schedule.startHour

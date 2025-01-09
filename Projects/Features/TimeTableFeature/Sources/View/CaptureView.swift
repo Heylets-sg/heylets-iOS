@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+import Domain
+
 struct MainCaptureContentView: View {
     var weekList: [Week]
     var timeTable: [[TimeTableCellInfo?]]

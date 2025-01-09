@@ -8,8 +8,9 @@
 
 import SwiftUI
 
-
+import Domain
 import DSKit
+
 
 public struct SearchModuleView: View {
     @Binding var viewType: TimeTableViewType

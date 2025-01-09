@@ -1,38 +1,12 @@
 //
-//  SceduleInfo.swift
-//  TimeTableFeatureInterface
+//  ScheduleInfo_Stub.swift
+//  Domain
 //
-//  Created by 류희재 on 1/3/25.
+//  Created by 류희재 on 1/9/25.
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
 import Foundation
-
-struct ScheduleInfo: Hashable {
-    var id: Int
-    var day: Week
-    var startHour: Int
-    var startMinute: Int
-    var endHour: Int
-    var endMinute: Int
-    var location: String
-    
-    var startTime: String {
-        return "\(startHour):\(startMinute)"
-    }
-    
-    var endTime: String {
-        return "\(endHour):\(endMinute)"
-    }
-    
-    var isSaturday: Bool {
-        return day == .Sat
-    }
-    
-    var isSunday: Bool {
-        return day == .Sun
-    }
-}
 
 extension ScheduleInfo {
     static var stub1: Self {

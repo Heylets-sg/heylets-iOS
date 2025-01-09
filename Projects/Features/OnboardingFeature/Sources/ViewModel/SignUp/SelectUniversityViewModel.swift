@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 import BaseFeatureDependency
+import Domain
 import Core
 
 enum UniversityInfo: String {
@@ -40,7 +41,7 @@ public class SelectUniversityViewModel: ObservableObject {
     
     // MARK: - Properties
     public var navigationRouter: OnboardingNavigationRouter
-    public var user = User(
+    public var user = UserInfo(
         nickName: "",
         email: "",
         password: "",
