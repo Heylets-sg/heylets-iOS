@@ -12,7 +12,7 @@ public struct RequestOTPCodeRequest: Encodable {
     let email: String
 }
 
-struct RequestOTPCodeResult: Decodable {
+public struct RequestOTPCodeResult: Decodable {
     let email: String
     let expiresIn: Int
     let nextRetryAt: String

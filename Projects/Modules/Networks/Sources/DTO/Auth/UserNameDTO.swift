@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserNameResult: Decodable {
+public struct UserNameResult: Decodable {
     let available: Bool
     let message: String
 }

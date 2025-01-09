@@ -58,7 +58,7 @@ public enum Paths {
     
     //MARK: My
     
-    static let deleteProfile = "/api/v1/users/profile/me/profile-image"
+    static let deleteProfileImg = "/api/v1/users/profile/me/profile-image"
     static let getProfile = "/api/v1/users/profile/me"
     static let patchNickName = "/api/v1/users/profile/me/nickname"
     static let patchAcademicInfo = "/api/v1/users/profile/me/academic-info"
