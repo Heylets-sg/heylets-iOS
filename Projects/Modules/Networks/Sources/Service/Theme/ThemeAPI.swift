@@ -11,6 +11,8 @@ import Foundation
 import Domain
 
 public enum ThemeAPI {
+    case getThemeDetailInfo(String)
+    case getPreviewTheme
 }
 
 extension ThemeAPI: BaseAPI {
@@ -20,6 +22,11 @@ extension ThemeAPI: BaseAPI {
     
     public var path: String? {
         switch self {
+        case .getThemeDetailInfo(let themeName):
+            return Paths.getThemeDetailInfo
+                .replacingOccurrences(of: "{themeName}", with: themeName)
+        case .getPreviewTheme:
+            return Paths.getPreviewTheme
         }
     }
     
@@ -28,17 +35,10 @@ extension ThemeAPI: BaseAPI {
     }
     
     public var task: Task {
-        switch self {
-        }
+        return .requestPlain
     }
     
     public var headers: [String : String]? {
         return APIHeaders.defaultHeader
     }
 }
-
-
-
-
-
-
