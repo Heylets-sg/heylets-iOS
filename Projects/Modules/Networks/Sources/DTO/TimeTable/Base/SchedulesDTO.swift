@@ -9,8 +9,10 @@
 import Foundation
 
 struct SchedulesResult: Decodable {
+    let scheduleId: Int?
     let classDay: String
     let startTime: String
     let endTime: String
     let location: String
+    let professor: String?
 }

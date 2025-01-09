@@ -12,9 +12,9 @@ import Domain
 
 public enum ScheduleAPI {
     case deleteLectureModule(String, String)
-    case patchCustomModule(String, String, CustomModuleRequest)
+    case patchCustomModule(String, String, CustomModuleDTO)
     case addLecture(String, AddLectureRequest)
-    case addCustomLecture(String, CustomModuleRequest)
+    case addCustomLecture(String, CustomModuleDTO)
 }
 
 extension ScheduleAPI: BaseAPI {

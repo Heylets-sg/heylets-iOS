@@ -8,7 +8,8 @@
 
 import Foundation
 
-public struct CustomModuleRequest: Encodable {
+public struct CustomModuleDTO: Codable {
+    let scheduleId: Int?
     let title: String
     let location: String
     let professor: String
@@ -22,16 +23,4 @@ public struct AddLectureRequest: Encodable {
     let scheduleId: Int
     let memo: String
 }
-
-public struct ModuleResult: Decodable {
-    let scheduleId: Int
-    let title: String
-    let location: String
-    let professor: String
-    let day: String
-    let startTime: String
-    let endTime: String
-    let memo: String
-}
-
 
