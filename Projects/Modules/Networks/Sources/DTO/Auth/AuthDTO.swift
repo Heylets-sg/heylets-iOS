@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AuthResult: Decodable {
+public struct AuthResult: Decodable {
     let access_token: String
     let refresh_token: String
     let token_type: String

@@ -7,3 +7,41 @@
 //
 
 import Foundation
+import Combine
+
+public typealias LectureService = BaseService<LectureAPI>
+
+public protocol LectureServiceType {
+    func getLectureDetailInfo(
+        _ lectureId: Int
+    ) -> NetworkDecodableResponse<LectureDetailResult>
+    
+    func getLectureList() -> NetworkDecodableResponse<LectureListResult>
+    
+    func getLectureListWithKeyword(
+        _ keyword: String
+    ) -> NetworkDecodableResponse<LectureListResult>
+}
+
+extension LectureService: LectureServiceType {
+    public func getLectureDetailInfo(
+        _ lectureId: Int
+    ) -> AnyPublisher<LectureDetailResult, HeyNetworkError> {
+        requestWithResult(.getLectureDetailInfo(lectureId))
+    }
+    
+    public func getLectureList() -> AnyPublisher<LectureListResult, HeyNetworkError> {
+        requestWithResult(.getLectureList)
+    }
+    
+    public func getLectureListWithKeyword(
+        _ keyword: String
+    ) -> AnyPublisher<LectureListResult, HeyNetworkError> {
+        requestWithResult(.getLectureListWithKeyword(keyword))
+    }
+}
+
+//public struct StubAuthService: AuthServiceType {
+//
+//}
+

@@ -39,6 +39,9 @@ public enum Paths {
     
     //MARK: Sections
     
+    static let deleteAllSection = "/api/v1/timetables/{tableId}/sections"
+    static let deleteLectureSection = "/api/v1/timetables/{tableId}/sections/{sectionId}"
+    static let addLectureSection = "/api/v1/timetables/{tableId}/sections"
     
     //MARK: Theme
     
@@ -55,7 +58,7 @@ public enum Paths {
     
     //MARK: My
     
-    static let deleteProfile = "/api/v1/users/profile/me/profile-image"
+    static let deleteProfileImg = "/api/v1/users/profile/me/profile-image"
     static let getProfile = "/api/v1/users/profile/me"
     static let patchNickName = "/api/v1/users/profile/me/nickname"
     static let patchAcademicInfo = "/api/v1/users/profile/me/academic-info"

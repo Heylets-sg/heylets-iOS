@@ -7,3 +7,26 @@
 //
 
 import Foundation
+import Combine
+
+public typealias ThemeService = BaseService<ThemeAPI>
+
+public protocol ThemeServiceType {
+    func getThemeDetailInfo(
+        _ themeName: String
+    ) -> NetworkDecodableResponse<ThemeDetailInfoResult>
+    
+    func getPreviewTheme() -> NetworkDecodableResponse<ThemePreviewResult>
+}
+
+extension ThemeService: ThemeServiceType {
+    public func getThemeDetailInfo(
+        _ themeName: String
+    ) -> NetworkDecodableResponse<ThemeDetailInfoResult> {
+        requestWithResult(.getThemeDetailInfo(themeName))
+    }
+    
+    public func getPreviewTheme() -> NetworkDecodableResponse<ThemePreviewResult> {
+        requestWithResult(.getPreviewTheme)
+    }
+}
