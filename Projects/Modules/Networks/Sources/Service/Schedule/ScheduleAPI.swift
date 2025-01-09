@@ -7,3 +7,71 @@
 //
 
 import Foundation
+
+import Domain
+
+public enum ScheduleAPI {
+    case deleteLectureModule(String, String)
+    case patchCustomModule(String, String, CustomModuleRequest)
+    case addLecture(String, AddLectureRequest)
+    case addCustomLecture(String, CustomModuleRequest)
+}
+
+extension ScheduleAPI: BaseAPI {
+    public var isWithInterceptor: Bool {
+        return false
+    }
+    
+    public var path: String? {
+        switch self {
+        case .deleteLectureModule(let tableId, let scheduleId):
+            return Paths.deleteLectureModule
+                .replacingOccurrences(of: "{tableId}", with: tableId)
+                .replacingOccurrences(of: "{scheduleId}", with: scheduleId)
+        case .patchCustomModule(let tableId, let scheduleId, _):
+            return Paths.patchCustomModule
+                .replacingOccurrences(of: "{tableId}", with: tableId)
+                .replacingOccurrences(of: "{scheduleId}", with: scheduleId)
+        case .addLecture(let tableId, _):
+            return Paths.addLectureModule
+                .replacingOccurrences(of: "{tableId}", with: tableId)
+        case .addCustomLecture(let tableId, _):
+            return Paths.addLectureModule
+                .replacingOccurrences(of: "{tableId}", with: tableId)
+        }
+    }
+    
+    public var method: HTTPMethod {
+        switch self {
+        case .deleteLectureModule:
+            return .delete
+        case .patchCustomModule:
+            return .patch
+        case .addLecture:
+            return .post
+        case .addCustomLecture:
+            return .post
+        }
+    }
+    
+    public var task: Task {
+        switch self {
+        case .deleteLectureModule:
+            return .requestPlain
+        case .patchCustomModule(_, _, let request):
+            return .requestJSONEncodable(request)
+        case .addLecture(_, let request):
+            return .requestJSONEncodable(request)
+        case .addCustomLecture(_, let request):
+            return .requestJSONEncodable(request)
+        }
+    }
+    
+    public var headers: [String : String]? {
+        return APIHeaders.defaultHeader
+    }
+}
+
+
+
+

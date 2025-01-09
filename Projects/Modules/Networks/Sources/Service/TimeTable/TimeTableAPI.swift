@@ -7,3 +7,39 @@
 //
 
 import Foundation
+
+import Domain
+
+public enum TimeTableAPI {
+}
+
+extension TimeTableAPI: BaseAPI {
+    public var isWithInterceptor: Bool {
+        return false
+    }
+    
+    public var path: String? {
+        switch self {
+        }
+    }
+    
+    public var method: HTTPMethod {
+        return .get
+    }
+    
+    public var task: Task {
+        switch self {
+        }
+    }
+    
+    public var headers: [String : String]? {
+        return APIHeaders.defaultHeader
+    }
+}
+
+
+
+
+
+
+
