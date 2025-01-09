@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DeleteAllSectionResult: Decodable {
+public struct DeleteAllSectionResult: Decodable {
     let totalDeletedSchedules: Int
     let totalDeletedSections: Int
 }

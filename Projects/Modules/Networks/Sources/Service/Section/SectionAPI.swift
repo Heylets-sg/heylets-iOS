@@ -12,8 +12,8 @@ import Domain
 
 public enum SectionAPI {
     case deleteAllSection(String)
-    case deleteLectureSection(String, String)
-    case addLectureSection(String, AddSectionRequest)
+    case deleteSection(String, String)
+    case addSection(String, AddSectionRequest)
 }
 
 extension SectionAPI: BaseAPI {
@@ -26,11 +26,11 @@ extension SectionAPI: BaseAPI {
         case .deleteAllSection(let tableId):
             return Paths.deleteAllSection
                 .replacingOccurrences(of: "{tableId}", with: tableId)
-        case .deleteLectureSection(let tableId, let sectionId):
+        case .deleteSection(let tableId, let sectionId):
             return Paths.deleteLectureSection
                 .replacingOccurrences(of: "{tableId}", with: tableId)
                 .replacingOccurrences(of: "{sectionId}", with: sectionId)
-        case .addLectureSection(let tableId, _):
+        case .addSection(let tableId, _):
             return Paths.addLectureSection
                 .replacingOccurrences(of: "{tableId}", with: tableId)
         }
@@ -40,9 +40,9 @@ extension SectionAPI: BaseAPI {
         switch self {
         case .deleteAllSection:
             return .delete
-        case .deleteLectureSection:
+        case .deleteSection:
             return .delete
-        case .addLectureSection:
+        case .addSection:
             return .post
         }
     }
@@ -51,9 +51,9 @@ extension SectionAPI: BaseAPI {
         switch self {
         case .deleteAllSection:
             return .requestPlain
-        case .deleteLectureSection:
+        case .deleteSection:
             return .requestPlain
-        case .addLectureSection(_, let request):
+        case .addSection(_, let request):
             return .requestJSONEncodable(request)
         }
     }

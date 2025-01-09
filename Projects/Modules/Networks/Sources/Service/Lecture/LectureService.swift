@@ -12,13 +12,21 @@ import Combine
 public typealias LectureService = BaseService<LectureAPI>
 
 public protocol LectureServiceType {
-    func getLectureDetailInfo(_ lectureId: Int) -> AnyPublisher<LectureDetailResult, HeyNetworkError>
-    func getLectureList() -> AnyPublisher<LectureListResult, HeyNetworkError>
-    func getLectureListWithKeyword(_ keyword: String) -> AnyPublisher<LectureListResult, HeyNetworkError>
+    func getLectureDetailInfo(
+        _ lectureId: Int
+    ) -> NetworkDecodableResponse<LectureDetailResult>
+    
+    func getLectureList() -> NetworkDecodableResponse<LectureListResult>
+    
+    func getLectureListWithKeyword(
+        _ keyword: String
+    ) -> NetworkDecodableResponse<LectureListResult>
 }
 
 extension LectureService: LectureServiceType {
-    public func getLectureDetailInfo(_ lectureId: Int) -> AnyPublisher<LectureDetailResult, HeyNetworkError> {
+    public func getLectureDetailInfo(
+        _ lectureId: Int
+    ) -> AnyPublisher<LectureDetailResult, HeyNetworkError> {
         requestWithResult(.getLectureDetailInfo(lectureId))
     }
     
@@ -26,7 +34,9 @@ extension LectureService: LectureServiceType {
         requestWithResult(.getLectureList)
     }
     
-    public func getLectureListWithKeyword(_ keyword: String) -> AnyPublisher<LectureListResult, HeyNetworkError> {
+    public func getLectureListWithKeyword(
+        _ keyword: String
+    ) -> AnyPublisher<LectureListResult, HeyNetworkError> {
         requestWithResult(.getLectureListWithKeyword(keyword))
     }
 }

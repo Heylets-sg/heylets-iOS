@@ -18,7 +18,8 @@ public struct LectureListResult: Decodable {
     let size, number, numberOfElements: Int
     let empty: Bool
 }
- struct LectureInfoResult: Decodable {
+
+struct LectureInfoResult: Decodable {
     let lectureId: Int
     let courseCode: String
     let courseName: String

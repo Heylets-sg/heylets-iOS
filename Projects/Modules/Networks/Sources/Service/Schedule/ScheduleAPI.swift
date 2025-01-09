@@ -11,10 +11,10 @@ import Foundation
 import Domain
 
 public enum ScheduleAPI {
-    case deleteLectureModule(String, String)
-    case patchCustomModule(String, String, CustomModuleDTO)
-    case addLecture(String, AddLectureRequest)
-    case addCustomLecture(String, CustomModuleDTO)
+    case deleteModule(String, String)
+    case patchCustomModule(String, String, CustomModuleRequest)
+    case addModule(String, AddLectureRequest)
+    case addCustomModule(String, CustomModuleRequest)
 }
 
 extension ScheduleAPI: BaseAPI {
@@ -24,7 +24,7 @@ extension ScheduleAPI: BaseAPI {
     
     public var path: String? {
         switch self {
-        case .deleteLectureModule(let tableId, let scheduleId):
+        case .deleteModule(let tableId, let scheduleId):
             return Paths.deleteLectureModule
                 .replacingOccurrences(of: "{tableId}", with: tableId)
                 .replacingOccurrences(of: "{scheduleId}", with: scheduleId)
@@ -32,10 +32,10 @@ extension ScheduleAPI: BaseAPI {
             return Paths.patchCustomModule
                 .replacingOccurrences(of: "{tableId}", with: tableId)
                 .replacingOccurrences(of: "{scheduleId}", with: scheduleId)
-        case .addLecture(let tableId, _):
+        case .addModule(let tableId, _):
             return Paths.addLectureModule
                 .replacingOccurrences(of: "{tableId}", with: tableId)
-        case .addCustomLecture(let tableId, _):
+        case .addCustomModule(let tableId, _):
             return Paths.addLectureModule
                 .replacingOccurrences(of: "{tableId}", with: tableId)
         }
@@ -43,26 +43,26 @@ extension ScheduleAPI: BaseAPI {
     
     public var method: HTTPMethod {
         switch self {
-        case .deleteLectureModule:
+        case .deleteModule:
             return .delete
         case .patchCustomModule:
             return .patch
-        case .addLecture:
+        case .addModule:
             return .post
-        case .addCustomLecture:
+        case .addCustomModule:
             return .post
         }
     }
     
     public var task: Task {
         switch self {
-        case .deleteLectureModule:
+        case .deleteModule:
             return .requestPlain
         case .patchCustomModule(_, _, let request):
             return .requestJSONEncodable(request)
-        case .addLecture(_, let request):
+        case .addModule(_, let request):
             return .requestJSONEncodable(request)
-        case .addCustomLecture(_, let request):
+        case .addCustomModule(_, let request):
             return .requestJSONEncodable(request)
         }
     }

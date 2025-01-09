@@ -7,3 +7,13 @@
 //
 
 import Foundation
+import Combine
+
+public typealias UserService = BaseService<UserAPI>
+
+public protocol UserServiceType {
+
+}
+
+extension UserService: UserServiceType {
+}

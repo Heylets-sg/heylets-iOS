@@ -7,3 +7,13 @@
 //
 
 import Foundation
+import Combine
+
+public typealias TimeTableService = BaseService<TimeTableAPI>
+
+public protocol TimeTableServiceType {
+
+}
+
+extension TimeTableService: TimeTableServiceType {
+}

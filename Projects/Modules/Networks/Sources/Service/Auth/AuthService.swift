@@ -12,30 +12,59 @@ import Combine
 public typealias AuthService = BaseService<AuthAPI>
 
 public protocol AuthServiceType {
-    func checkUserName(_ name: String) -> AnyPublisher<UserNameResult, HeyNetworkError>
-    func resetPassword(_ request: ResetPasswordRequest) -> AnyPublisher<AuthResult, HeyNetworkError>
-    func verifyResetPassword(_ request: VerifyOTPCodeRequest) -> AnyPublisher<Void, HeyNetworkError>
-    func requestResetPassword(_ request: RequestOTPCodeRequest) -> AnyPublisher<RequestOTPCodeResult, HeyNetworkError>
-    func logout() -> AnyPublisher<Void, HeyNetworkError>
-    func login(_ request: SignInRequest) -> AnyPublisher<AuthResult, HeyNetworkError>
-    func verifyEmail(_ request: VerifyOTPCodeRequest) -> AnyPublisher<Void,HeyNetworkError>
-    func requestVerifyEmail(_ request: RequestOTPCodeRequest) -> AnyPublisher<RequestOTPCodeResult, HeyNetworkError>
+    func checkUserName(
+        _ name: String
+    ) -> NetworkDecodableResponse<UserNameResult>
+    
+    func resetPassword(
+        _ request: ResetPasswordRequest
+    ) -> NetworkDecodableResponse<AuthResult>
+    
+    func verifyResetPassword(
+        _ request: VerifyOTPCodeRequest
+    ) -> NetworkVoidResponse
+    
+    func requestResetPassword(
+        _ request: RequestOTPCodeRequest
+    ) -> NetworkDecodableResponse<RequestOTPCodeResult>
+    
+    func logout() -> NetworkVoidResponse
+    
+    func login(
+        _ request: SignInRequest
+    ) -> NetworkDecodableResponse<AuthResult>
+    
+    func verifyEmail(
+        _ request: VerifyOTPCodeRequest
+    ) -> NetworkVoidResponse
+    
+    func requestVerifyEmail(
+        _ request: RequestOTPCodeRequest
+    ) -> NetworkDecodableResponse<RequestOTPCodeResult>
 }
 
 extension AuthService: AuthServiceType {
-    public func checkUserName(_ name: String) -> AnyPublisher<UserNameResult, HeyNetworkError> {
+    public func checkUserName(
+        _ name: String
+    ) -> AnyPublisher<UserNameResult, HeyNetworkError> {
         requestWithResult(.checkUserName(name))
     }
     
-    public func resetPassword(_ request: ResetPasswordRequest) -> AnyPublisher<AuthResult, HeyNetworkError> {
+    public func resetPassword(
+        _ request: ResetPasswordRequest
+    ) -> AnyPublisher<AuthResult, HeyNetworkError> {
         requestWithResult(.resetPassword(request))
     }
     
-    public func verifyResetPassword(_ request: VerifyOTPCodeRequest) -> AnyPublisher<Void, HeyNetworkError> {
+    public func verifyResetPassword(
+        _ request: VerifyOTPCodeRequest
+    ) -> AnyPublisher<Void, HeyNetworkError> {
         requestWithNoResult(.verifyResetPassword(request))
     }
     
-    public func requestResetPassword(_ request: RequestOTPCodeRequest) -> AnyPublisher<RequestOTPCodeResult, HeyNetworkError> {
+    public func requestResetPassword(
+        _ request: RequestOTPCodeRequest
+    ) -> AnyPublisher<RequestOTPCodeResult, HeyNetworkError> {
         requestWithResult(.requestResetPassword(request))
     }
     
@@ -43,15 +72,21 @@ extension AuthService: AuthServiceType {
         requestWithNoResult(.logout)
     }
     
-    public func login(_ request: SignInRequest) -> AnyPublisher<AuthResult, HeyNetworkError> {
+    public func login(
+        _ request: SignInRequest
+    ) -> AnyPublisher<AuthResult, HeyNetworkError> {
         requestWithResult(.login(request))
     }
     
-    public func verifyEmail(_ request: VerifyOTPCodeRequest) -> AnyPublisher<Void,HeyNetworkError> {
+    public func verifyEmail(
+        _ request: VerifyOTPCodeRequest
+    ) -> NetworkVoidResponse {
         requestWithNoResult(.verifyEmail(request))
     }
     
-    public func requestVerifyEmail(_ request: RequestOTPCodeRequest) -> AnyPublisher<RequestOTPCodeResult, HeyNetworkError> {
+    public func requestVerifyEmail(
+        _ request: RequestOTPCodeRequest
+    ) -> AnyPublisher<RequestOTPCodeResult, HeyNetworkError> {
         requestWithResult(.requestVerifyEmail(request))
     }
 }
