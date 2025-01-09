@@ -21,3 +21,9 @@ public struct AcademicDTO: Codable {
 public struct profileImgResult: Decodable {
     let imageUrl: String
 }
+
+public struct MyProfileResult: Decodable {
+    let nickname: String
+    let university: String
+    let profileImageUrl: String
+}
