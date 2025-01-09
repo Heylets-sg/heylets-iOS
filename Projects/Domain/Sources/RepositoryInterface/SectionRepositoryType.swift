@@ -7,3 +7,22 @@
 //
 
 import Foundation
+import Combine
+
+public protocol SectionRepositoryType {
+    func deleteAllSection(
+        _ tableId: String
+    ) -> AnyPublisher<Void, Error>
+    
+    func deleteSection(
+        _ tableId: String,
+        _ sectionId: String
+    ) -> AnyPublisher<Void, Error>
+    
+    //추가하자마자 전체 API 불러올 생각이어서 일단 Void
+    func addSection(
+        _ tableId: String,
+        _ sectionId: Int,
+        _ memo: String
+    ) -> AnyPublisher<Void, Error>
+}
