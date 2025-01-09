@@ -11,4 +11,9 @@ import Foundation
 public struct VerifyOTPCodeRequest: Encodable {
     let email: String
     let code: Int
+    
+    public init(_ email: String, _ code: Int) {
+        self.email = email
+        self.code = code
+    }
 }

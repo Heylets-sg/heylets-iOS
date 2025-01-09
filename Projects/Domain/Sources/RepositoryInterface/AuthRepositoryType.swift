@@ -21,7 +21,7 @@ public protocol AuthRepositoryType {
     
     func verifyResetPassword(
         _ email: String,
-        _ otpCode: String
+        _ otpCode: Int
     ) -> AnyPublisher<Void, Error>
     
     func requestResetPassword(
@@ -37,7 +37,7 @@ public protocol AuthRepositoryType {
     
     func verifyEmail(
         _ email: String,
-        _ otpCode: String
+        _ otpCode: Int
     ) -> AnyPublisher<Void, Error>
     
     func requestVerifyEmail(

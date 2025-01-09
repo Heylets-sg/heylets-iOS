@@ -9,8 +9,8 @@
 import Foundation
 
 public struct AuthResult: Decodable {
-    let access_token: String
-    let refresh_token: String
+    public let access_token: String
+    public let refresh_token: String
     let token_type: String
     let expires_in: Int
 }

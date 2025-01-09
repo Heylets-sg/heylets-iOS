@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+import Domain
+import Networks
+
+extension AuthResult {
+    func toEntity() -> Auth {
+        .init(
+            accessToken: access_token,
+            refreshToken: refresh_token
+        )
+    }
+}

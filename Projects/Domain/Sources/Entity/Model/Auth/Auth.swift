@@ -9,8 +9,16 @@
 import Foundation
 
 public struct Auth {
-    let access_token: String
-    let refresh_token: String
-    let token_type: String
-    let expires_in: Int
+    let accessToken: String
+    let refreshToken: String
+//    let token_type: String
+//    let expires_in: Int
+    
+    public init(
+        accessToken: String,
+        refreshToken: String
+    ) {
+        self.accessToken = accessToken
+        self.refreshToken = refreshToken
+    }
 }
