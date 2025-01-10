@@ -9,10 +9,10 @@
 import Foundation
 
 public struct TimeTableDetailInfoDTO: Decodable {
-    let tableId: Int
-    let tableName: String
-    let semester: String
-    let acadmicYear: Int
+    public let tableId: Int
+    public let tableName: String
+    public let semester: String
+    public let acadmicYear: Int
     let isFavorite: Bool
     let status: String
     let color: String

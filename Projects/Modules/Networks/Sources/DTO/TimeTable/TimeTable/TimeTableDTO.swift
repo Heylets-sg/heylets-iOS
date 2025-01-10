@@ -9,24 +9,38 @@
 import Foundation
 
 public struct TimeTableListResult: Decodable {
-    let tables: [TimeTableInfoResult]
+    public let tables: [TimeTableInfoResult]
 }
 
 public struct TimeTableEditNameRequest: Encodable {
     let tableName: String
+    
+    public init(_ tableName: String) {
+        self.tableName = tableName
+    }
 }
 
 public struct AddTimeTableRequest: Encodable {
     let tableName: String
     let semester: String
     let academicYear: Int
+    
+    public init(
+        _ tableName: String,
+        _ semester: String,
+        _ academicYear: Int
+    ) {
+        self.tableName = tableName
+        self.semester = semester
+        self.academicYear = academicYear
+    }
 }
 
 public struct TimeTableInfoResult: Decodable {
-    let tableId: Int
-    let tableName: String
-    let semester: String
-    let acadmicYear: Int
+    public let tableId: Int
+    public let tableName: String
+    public let semester: String
+    public let acadmicYear: Int
     let isFavorite: Bool
     let status: String
     let sections: [SectionResult]
