@@ -1,14 +1,14 @@
 //
-//  CustomModuleInfo.swift
-//  Domain
+//  CustomModuleResult.swift
+//  Networks
 //
-//  Created by 류희재 on 1/9/25.
+//  Created by 류희재 on 1/10/25.
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
 import Foundation
 
-public struct CustomModuleInfo {
+public struct CustomModuleResult: Decodable {
     public let scheduleId: Int
     public let title: String
     public let location: String
@@ -38,3 +38,4 @@ public struct CustomModuleInfo {
         self.memo = memo
     }
 }
+

@@ -17,7 +17,7 @@ public protocol ScheduleRepositoryType {
     
     func patchCustomModule(
         _ tableId: String,
-        scheduleId: String,
+        _ scheduleId: String,
         _ customModuleInfo: CustomModuleInfo
     ) -> AnyPublisher<CustomModuleInfo, Error>
     

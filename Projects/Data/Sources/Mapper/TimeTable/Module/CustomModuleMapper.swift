@@ -1,0 +1,41 @@
+//
+//  CustomModuleMapper.swift
+//  Data
+//
+//  Created by 류희재 on 1/10/25.
+//  Copyright © 2025 Heylets-iOS. All rights reserved.
+//
+
+import Foundation
+
+import Domain
+import Networks
+
+extension CustomModuleResult {
+    func toEntity() -> CustomModuleInfo {
+        .init(
+            scheduleId: scheduleId,
+            title: title,
+            location: location,
+            professor: professor,
+            classDay: classDay,
+            startTime: startTime,
+            endTime: endTime,
+            memo: memo
+        )
+    }
+}
+
+extension CustomModuleInfo {
+    func toDTO() -> CustomModuleRequest {
+        .init(
+            title: title,
+            location: location,
+            professor: professor,
+            day: classDay,
+            startTime: startTime,
+            endTime: endTime,
+            memo: memo
+        )
+    }
+}

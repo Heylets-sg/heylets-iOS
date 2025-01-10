@@ -17,4 +17,24 @@ public struct ModuleInfo {
     let classDay: String
     let startTime: String
     let endTime: String
+    
+    public init(
+        scheduleId: Int,
+        courseCode: String,
+        sectionCode: String,
+        location: String,
+        professor: String,
+        classDay: String,
+        startTime: String,
+        endTime: String
+    ) {
+        self.scheduleId = scheduleId
+        self.courseCode = courseCode
+        self.sectionCode = sectionCode
+        self.location = location
+        self.professor = professor
+        self.classDay = classDay
+        self.startTime = startTime
+        self.endTime = endTime
+    }
 }
