@@ -11,4 +11,12 @@ import Foundation
 public struct SignInRequest: Encodable {
     let email: String
     let password: String
+    
+    public init(
+        _ email: String,
+        _ password: String
+    ) {
+        self.email = email
+        self.password = password
+    }
 }

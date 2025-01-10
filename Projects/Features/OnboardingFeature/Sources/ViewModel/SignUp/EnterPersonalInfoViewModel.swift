@@ -10,6 +10,7 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Domain
 
 enum Gender: String {
     case men = "M"
@@ -40,7 +41,7 @@ public class EnterPersonalInfoViewModel: ObservableObject {
     }
     
     public var navigationRouter: OnboardingNavigationRouter
-    private var user: User
+    private var user: UserInfo
     
     @Published var state = State()
     @Published var gender: Gender = .men
@@ -48,7 +49,7 @@ public class EnterPersonalInfoViewModel: ObservableObject {
     
     public init(
         navigationRouter: OnboardingNavigationRouter,
-        user: User
+        user: UserInfo
     ) {
         self.navigationRouter = navigationRouter
         self.user = user

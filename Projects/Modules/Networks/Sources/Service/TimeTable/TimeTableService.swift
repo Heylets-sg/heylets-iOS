@@ -25,7 +25,7 @@ public protocol TimeTableServiceType {
         _ tableId: String
     ) -> NetworkDecodableResponse<TimeTableDetailInfoDTO>
     
-    func patchTable(
+    func patchTableName(
         _ tableId: String,
         _ request: TimeTableEditNameRequest
     ) -> NetworkDecodableResponse<TimeTableInfoResult>
@@ -33,7 +33,6 @@ public protocol TimeTableServiceType {
     func postTable(
         _ request: AddTimeTableRequest
     ) -> NetworkDecodableResponse<TimeTableInfoResult>
-
 }
 
 extension TimeTableService: TimeTableServiceType {
@@ -56,7 +55,7 @@ extension TimeTableService: TimeTableServiceType {
         requestWithResult(.getTableDetailInfo(tableId))
     }
     
-    public func patchTable(
+    public func patchTableName(
         _ tableId: String,
         _ request: TimeTableEditNameRequest
     ) -> NetworkDecodableResponse<TimeTableInfoResult> {

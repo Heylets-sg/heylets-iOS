@@ -10,6 +10,7 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Domain
 import Core
 
 public class EnterSecurityCodeViewModel: ObservableObject {
@@ -24,7 +25,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     }
     
     public var navigationRouter: OnboardingNavigationRouter
-    private var user: User?
+    private var user: UserInfo?
     
     @Published var state = State()
     @Published var otpCode: String = ""
@@ -32,7 +33,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     
     public init(
         navigationRouter: OnboardingNavigationRouter,
-        user: User?,
+        user: UserInfo?,
         email: String
     ) {
         self.navigationRouter = navigationRouter

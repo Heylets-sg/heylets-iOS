@@ -9,17 +9,18 @@
 import SwiftUI
 
 import BaseFeatureDependency
+import Domain
 
 public enum OnboardingNavigationDestination: Hashable {
     case onboarding
     
     //signup
     case selectUniversity
-    case verifyEmail(User)
-    case enterSecurityCode(User?, String)
-    case enterPersonalInfo(User)
-    case enterIdPassword(User)
-    case addProfile(User)
+    case verifyEmail(UserInfo)
+    case enterSecurityCode(UserInfo?, String)
+    case enterPersonalInfo(UserInfo)
+    case enterIdPassword(UserInfo)
+    case addProfile(UserInfo)
     
     //signin
     case login

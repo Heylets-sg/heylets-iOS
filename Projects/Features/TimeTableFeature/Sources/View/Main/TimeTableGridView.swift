@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+import Domain
+
 public struct TimeTableGridView: View {
     @Binding var viewType: TimeTableViewType
     @Binding var weekList: [Week]

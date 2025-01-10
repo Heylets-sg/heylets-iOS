@@ -8,8 +8,9 @@
 
 import SwiftUI
 
-
+import Domain
 import DSKit
+
 
 public struct SearchModuleView: View {
     @Binding var viewType: TimeTableViewType
@@ -114,7 +115,7 @@ fileprivate struct ClassSearchBarView: View {
 
 fileprivate struct ClassSearchListCellView: View {
     var isSelected: Bool
-    var lecture: LectureInfo
+    var lecture: SectionInfo
     var cellDidTap: () -> Void
     
     var body: some View {

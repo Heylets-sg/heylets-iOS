@@ -16,7 +16,7 @@ public protocol ThemeServiceType {
         _ themeName: String
     ) -> NetworkDecodableResponse<ThemeDetailInfoResult>
     
-    func getPreviewTheme() -> NetworkDecodableResponse<ThemePreviewResult>
+    func getThemeList() -> NetworkDecodableResponse<ThemePreviewResult>
 }
 
 extension ThemeService: ThemeServiceType {
@@ -26,7 +26,7 @@ extension ThemeService: ThemeServiceType {
         requestWithResult(.getThemeDetailInfo(themeName))
     }
     
-    public func getPreviewTheme() -> NetworkDecodableResponse<ThemePreviewResult> {
+    public func getThemeList() -> NetworkDecodableResponse<ThemePreviewResult> {
         requestWithResult(.getPreviewTheme)
     }
 }

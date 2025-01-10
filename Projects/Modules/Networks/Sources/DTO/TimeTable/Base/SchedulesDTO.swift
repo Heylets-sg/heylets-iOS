@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct SchedulesResult: Decodable {
-    let scheduleId: Int?
-    let classDay: String
-    let startTime: String
-    let endTime: String
-    let location: String
-    let professor: String?
+public struct SchedulesResult: Decodable {
+    public let scheduleId: Int?
+    public let classDay: String
+    public let startTime: String
+    public let endTime: String
+    public let location: String
+    public let professor: String?
 }

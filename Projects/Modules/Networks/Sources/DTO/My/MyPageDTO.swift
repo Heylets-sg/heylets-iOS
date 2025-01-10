@@ -10,12 +10,26 @@ import Foundation
 
 public struct EditNameRequest: Encodable {
     let nickName: String
+    
+    public init(_ nickName: String) {
+        self.nickName = nickName
+    }
 }
 
 public struct AcademicDTO: Codable {
     let matriculationYear: Int
     let academicYear: Int
     let studentId: String
+    
+    public init(
+        _ matriculationYear: Int,
+        _ academicYear: Int,
+        _ studentId: String
+    ) {
+        self.matriculationYear = matriculationYear
+        self.academicYear = academicYear
+        self.studentId = studentId
+    }
 }
 
 public struct profileImgResult: Decodable {
@@ -23,7 +37,7 @@ public struct profileImgResult: Decodable {
 }
 
 public struct MyProfileResult: Decodable {
-    let nickname: String
-    let university: String
-    let profileImageUrl: String
+    public let nickname: String
+    public let university: String
+    public let profileImageUrl: String
 }

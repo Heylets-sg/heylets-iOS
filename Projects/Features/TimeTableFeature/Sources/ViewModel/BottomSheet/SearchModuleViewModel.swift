@@ -11,19 +11,20 @@ import Combine
 import SwiftUI
 
 import BaseFeatureDependency
+import Domain
 import DSKit
 import Core
 
 public class SearchModuleViewModel: ObservableObject {
     struct State {
 //        var isShowingAddCustomModuleView = false
-        var filteredItems: [LectureInfo] = []
-        var selectedLecture: LectureInfo? = nil
+        var filteredItems: [SectionInfo] = []
+        var selectedLecture: SectionInfo? = nil
     }
     
     enum Action {
         case onAppear
-        case lectureCellDidTap(LectureInfo)
+        case lectureCellDidTap(SectionInfo)
         case searchButtonDidTap
         case clearButtonDidTap
         case addLectureButtonDidTap
@@ -31,8 +32,8 @@ public class SearchModuleViewModel: ObservableObject {
     }
     
     @Published var state = State()
-    var addLectureClosure: ((LectureInfo) -> Void)?
-    @Published var lectureList: [LectureInfo] = [
+    var addLectureClosure: ((SectionInfo) -> Void)?
+    @Published var lectureList: [SectionInfo] = [
         .timetable_stub1,
         .search_stub,
         .search_stub1,

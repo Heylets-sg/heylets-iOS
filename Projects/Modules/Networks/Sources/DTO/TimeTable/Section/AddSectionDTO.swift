@@ -11,4 +11,12 @@ import Foundation
 public struct AddSectionRequest: Encodable {
     let sectionId: Int
     let memo: String
+    
+    public init(
+        _ sectionId: Int,
+        _ memo: String
+    ) {
+        self.sectionId = sectionId
+        self.memo = memo
+    }
 }

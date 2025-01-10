@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+import Domain
 import DSKit
 
 struct ThemeTopView: View {

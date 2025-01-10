@@ -9,11 +9,11 @@
 import Foundation
 
 public struct ThemePreviewResult: Decodable {
-    let themes: [ThemeResult]
+    public let themes: [ThemeResult]
 }
 
 public struct ThemeResult: Decodable {
-    let name: String
+    public let name: String
     let description: String
-    let previewColors: [String]
+    public let previewColors: [String]
 }

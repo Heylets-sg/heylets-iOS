@@ -11,6 +11,7 @@ import Combine
 
 import BaseFeatureDependency
 import DSKit
+import Domain
 import Core
 
 public class EnterIdPasswordViewModel: ObservableObject {
@@ -28,7 +29,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
     }
     
     public var navigationRouter: OnboardingNavigationRouter
-    private var user: User
+    private var user: UserInfo
     private let cancelBag = CancelBag()
     
     @Published var state = State()
@@ -38,7 +39,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
     
     public init(
         navigationRouter: OnboardingNavigationRouter,
-        user: User
+        user: UserInfo
     ) {
         self.navigationRouter = navigationRouter
         self.user = user
@@ -51,7 +52,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            user.nickName = nickName
+            user.profile.nickName = nickName
             user.password = password
             navigationRouter.push(to: .addProfile(user))
         case .checkIDAvailabilityButtonDidTap:

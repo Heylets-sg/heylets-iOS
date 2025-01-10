@@ -9,6 +9,6 @@
 import Foundation
 
 public struct UserNameResult: Decodable {
-    let available: Bool
+    public let available: Bool
     let message: String
 }

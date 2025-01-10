@@ -11,4 +11,12 @@ import Foundation
 public struct ResetPasswordRequest: Encodable {
     let email: String
     let newPassword: String
+    
+    public init(
+        _ email: String,
+        _ newPassword: String
+    ) {
+        self.email = email
+        self.newPassword = newPassword
+    }
 }

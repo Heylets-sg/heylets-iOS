@@ -30,7 +30,7 @@ public protocol AuthServiceType {
     
     func logout() -> NetworkVoidResponse
     
-    func login(
+    func logIn(
         _ request: SignInRequest
     ) -> NetworkDecodableResponse<AuthResult>
     
@@ -72,7 +72,7 @@ extension AuthService: AuthServiceType {
         requestWithNoResult(.logout)
     }
     
-    public func login(
+    public func logIn(
         _ request: SignInRequest
     ) -> AnyPublisher<AuthResult, HeyNetworkError> {
         requestWithResult(.login(request))

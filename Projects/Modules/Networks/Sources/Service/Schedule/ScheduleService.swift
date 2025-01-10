@@ -19,9 +19,9 @@ public protocol ScheduleServiceType {
     
     func patchCustomModule(
         _ tableId: String,
-        scheduleId: String, 
+        _ scheduleId: String,
         _ request: CustomModuleRequest
-    ) -> NetworkDecodableResponse<ModuleResult>
+    ) -> NetworkDecodableResponse<CustomModuleResult>
     
     func addLecture(
         _ tableId: String,
@@ -31,7 +31,7 @@ public protocol ScheduleServiceType {
     func addCustomModule(
         _ tableId: String,
         _ request: CustomModuleRequest
-    ) -> NetworkDecodableResponse<ModuleResult>
+    ) -> NetworkDecodableResponse<CustomModuleResult>
 }
 
 extension ScheduleService: ScheduleServiceType {
@@ -44,9 +44,9 @@ extension ScheduleService: ScheduleServiceType {
     
     public func patchCustomModule(
         _ tableId: String,
-        scheduleId: String,
+        _ scheduleId: String,
         _ request: CustomModuleRequest
-    ) -> NetworkDecodableResponse<ModuleResult> {
+    ) -> NetworkDecodableResponse<CustomModuleResult> {
         requestWithResult(.patchCustomModule(tableId, scheduleId, request))
     }
     
@@ -60,7 +60,7 @@ extension ScheduleService: ScheduleServiceType {
     public func addCustomModule(
         _ tableId: String,
         _ request: CustomModuleRequest
-    ) -> NetworkDecodableResponse<ModuleResult> {
+    ) -> NetworkDecodableResponse<CustomModuleResult> {
         requestWithResult(.addCustomModule(tableId, request))
     }
 }
