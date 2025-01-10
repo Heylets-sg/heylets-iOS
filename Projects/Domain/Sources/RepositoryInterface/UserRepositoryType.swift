@@ -17,9 +17,9 @@ public protocol UserRepositoryType {
     ) -> AnyPublisher<Void, Error>
     
     //TODO: 이거 안 쓸거 같아서 일단 구현 ㄴㄴ
-    func patchAcademicInfo(
-        _ matriculationYear: Int,
-        _ academicYear: Int,
-        _ studentId: String
-    )
+//    func patchAcademicInfo(
+//        _ matriculationYear: Int,
+//        _ academicYear: Int,
+//        _ studentId: String
+//    )
 }
