@@ -15,4 +15,20 @@ public struct ThemeColorInfo {
     let dayColor: String
     let defaultColor: String
     let specialColor: [String]
+    
+    public init(
+        name: String,
+        core: [String],
+        gradient: [String],
+        dayColor: String,
+        defaultColor: String,
+        specialColor: [String]
+    ) {
+        self.name = name
+        self.core = core
+        self.gradient = gradient
+        self.dayColor = dayColor
+        self.defaultColor = defaultColor
+        self.specialColor = specialColor
+    }
 }
