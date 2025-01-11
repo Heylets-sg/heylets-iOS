@@ -15,7 +15,7 @@ public enum UserAPI {
     case getProfile
     case patchNickName(EditNameRequest)
     case patchAcademicInfo(AcademicDTO)
-//    case postProfileImg
+    case postProfileImg(profileImgRequest)
 }
 
 extension UserAPI: BaseAPI {
@@ -33,8 +33,8 @@ extension UserAPI: BaseAPI {
             return Paths.patchNickName
         case .patchAcademicInfo:
             return Paths.patchAcademicInfo
-//        case .postProfileImg:
-//            return Paths.postProfileImg
+        case .postProfileImg:
+            return Paths.postProfileImg
         }
     }
     
@@ -48,8 +48,8 @@ extension UserAPI: BaseAPI {
             return .patch
         case .patchAcademicInfo:
             return .patch
-//        case .postProfileImg:
-//            return .post
+        case .postProfileImg:
+            return .post
         }
     }
     
@@ -63,8 +63,9 @@ extension UserAPI: BaseAPI {
             return .requestJSONEncodable(request)
         case .patchAcademicInfo(let request):
             return .requestJSONEncodable(request)
-//        case .postProfileImg:
-//            <#code#>
+        case .postProfileImg(let request):
+            let multipartData = MultipartFormDataHandler.createMultipartData(from: request)
+            return .uploadMultipartFormData(multipartData)
         }
     }
     
