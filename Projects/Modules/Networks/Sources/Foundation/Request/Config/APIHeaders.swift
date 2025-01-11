@@ -13,7 +13,9 @@ import Core
 public struct APIHeaders {
     static let contentType = "Content-Type"
     static let applicationJSON = "application/json"
-    static let multiPart = "multipart/form-data"
+    static let multiPartFormData = "multipart/form-data; boundary=\("boundary")" //boundary 값 넣어줘야함
+    
+    
     
     static let auth = "Authorization"
     
@@ -63,7 +65,7 @@ public extension APIHeaders {
     
     static var multipartHeader: [String:String] {
         return [
-            contentType: multiPart,
+            contentType: multiPartFormData,
             deviceID_key: deviceID_value,
             deviceModel_key: deviceModel_value,
             osVersion_key: osVersion_value,
