@@ -36,6 +36,7 @@ public class MultipartBodyBuilder: MultipartBodyBuilderType {
     }
     
     /// 멀티파트 데이터 본문을 반환하는 Publisher
+    /// 멀티파트 데이터 본문을 반환하는 Publisher
     private func createMultipartBody(
         multipartData: [MultipartFormData],
         boundary: String
@@ -48,14 +49,17 @@ public class MultipartBodyBuilder: MultipartBodyBuilderType {
                 for part in data {
                     body.append("--\(boundary)\r\n".data(using: .utf8)!)
                     
-                    if let filename = part.filename, let mimeType = part.mimeType {
-                        body.append("Content-Disposition: form-data; name=\"\(part.name)\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
+                    switch part {
+                    case .text(let name, let value):
+                        body.append("Content-Disposition: form-data; name=\"\(name)\"\r\n\r\n".data(using: .utf8)!)
+                        body.append(value.data(using: .utf8)!)
+                        
+                    case .file(let name, let filename, let mimeType, let fileData):
+                        body.append("Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
                         body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
-                    } else {
-                        body.append("Content-Disposition: form-data; name=\"\(part.name)\"\r\n\r\n".data(using: .utf8)!)
+                        body.append(fileData)
                     }
                     
-                    body.append(part.data)
                     body.append("\r\n".data(using: .utf8)!)
                 }
                 
