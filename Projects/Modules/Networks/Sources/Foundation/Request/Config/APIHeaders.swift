@@ -13,6 +13,7 @@ import Core
 public struct APIHeaders {
     static let contentType = "Content-Type"
     static let applicationJSON = "application/json"
+    static let multiPart = "multipart/form-data"
     
     static let auth = "Authorization"
     
@@ -52,6 +53,17 @@ public extension APIHeaders {
     static var defaultHeader: [String:String] {
         return [
             contentType: applicationJSON,
+            deviceID_key: deviceID_value,
+            deviceModel_key: deviceModel_value,
+            osVersion_key: osVersion_value,
+            appVersion_key: appVersion_value,
+            xPlatform: iOS,
+        ]
+    }
+    
+    static var multipartHeader: [String:String] {
+        return [
+            contentType: multiPart,
             deviceID_key: deviceID_value,
             deviceModel_key: deviceModel_value,
             osVersion_key: osVersion_value,

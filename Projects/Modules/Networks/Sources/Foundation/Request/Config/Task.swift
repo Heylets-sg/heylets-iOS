@@ -13,6 +13,7 @@ public enum Task {
     case requestPlain
     case requestParameters(Parameters, urlencoder: URLEncodingType = URLEncoding())
     case requestJSONEncodable(Encodable, jsonencoder: JSONEncodingType = JSONEncoding())
+//    case uploadMultipartFormData(Encodable, )
 }
 
 extension Task {
