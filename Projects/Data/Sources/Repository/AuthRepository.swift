@@ -28,10 +28,9 @@ public struct AuthRepository: AuthRepositoryType {
     }
     
     public func resetPassword(
-        _ email: String,
         _ newPassword: String
     ) -> AnyPublisher<Auth, Error> {
-        let request: ResetPasswordRequest = .init(email, newPassword)
+        let request: ResetPasswordRequest = .init(UserDefaultsManager.getEmail(), newPassword)
         return authService.resetPassword(request)
             .map { $0.toEntity() }
             .mapToGeneralError()

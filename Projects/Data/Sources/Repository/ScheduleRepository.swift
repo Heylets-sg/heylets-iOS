@@ -64,6 +64,5 @@ public struct ScheduleRepository: ScheduleRepositoryType {
         )
         .map { $0.toEntity() }
         .mapToGeneralError()
-        
     }
 }

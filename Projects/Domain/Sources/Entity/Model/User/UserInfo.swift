@@ -37,8 +37,8 @@ public struct ProfileInfo: Hashable {
     public var image: UIImage?
     
     public init(
-        nickName: String,
-        university: String,
+        nickName: String = "",
+        university: String = "",
         image: UIImage? = nil
     ) {
         self.nickName = nickName

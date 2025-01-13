@@ -15,7 +15,6 @@ public protocol AuthRepositoryType {
     ) -> AnyPublisher<Bool, Error>
     
     func resetPassword(
-        _ email: String,
         _ newPassword: String
     ) -> AnyPublisher<Auth, Error>
     
