@@ -41,7 +41,7 @@ public class EnterPersonalInfoViewModel: ObservableObject {
     }
     
     public var navigationRouter: NavigationRoutableType
-    private var user: UserInfo
+    private var user: User
     
     @Published var state = State()
     @Published var gender: Gender = .men
@@ -49,7 +49,7 @@ public class EnterPersonalInfoViewModel: ObservableObject {
     
     public init(
         navigationRouter: NavigationRoutableType,
-        user: UserInfo
+        user: User
     ) {
         self.navigationRouter = navigationRouter
         self.user = user

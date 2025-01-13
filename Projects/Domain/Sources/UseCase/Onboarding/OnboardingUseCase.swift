@@ -1,48 +1,154 @@
-////
-////  OnboardingUseCase.swift
-////  Domain
-////
-////  Created by 류희재 on 1/13/25.
-////  Copyright © 2025 Heylets-iOS. All rights reserved.
-////
 //
-//import Foundation
-//import Combine
+//  OnboardingUseCase.swift
+//  Domain
 //
-//import Core
+//  Created by 류희재 on 1/13/25.
+//  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
-//final public class OnboardingUseCase: OnboardingUseCaseType {
-//    public var userInfo: UserInfo
-//    
-//    public var verifyEmailFailed: PassthroughSubject<String, Never>
-//    
-//    public var checkUserNameFailed: PassthroughSubject<String, Never>
-//    
-//    public var signUpFailed: PassthroughSubject<String, Never>
-//    
-//    public var resetPasswordFailed: PassthroughSubject<String, Never>
-//    
-//    public func logIn(_ email: String, _ password: String) -> AnyPublisher<Auth, any Error> {
-//        <#code#>
-//    }
-//    
-//    public func requestEmailVerifyCode(_ type: VerifyCodeType) -> AnyPublisher<Void, any Error> {
-//        <#code#>
-//    }
-//    
-//    public func verifyEmail(_ type: VerifyCodeType, _ email: String) -> AnyPublisher<Void, any Error> {
-//        <#code#>
-//    }
-//    
-//    public func checkUserName(_ userName: String) -> AnyPublisher<Void, any Error> {
-//        <#code#>
-//    }
-//    
-//    public func makeAccount() -> AnyPublisher<Void, any Error> {
-//        <#code#>
-//    }
-//    
-//    public func resetPassword(_ email: String, _ newPassword: String) -> AnyPublisher<Void, any Error> {
-//        <#code#>
-//    }
-//    
+
+import Foundation
+import Combine
+
+import Core
+
+final public class OnboardingUseCase: OnboardingUseCaseType {
+    private let authRepository: AuthRepositoryType
+    private var cancelBag = CancelBag()
+    
+    public init(authRepository: AuthRepositoryType) {
+        self.authRepository = authRepository
+    }
+    
+    public var userInfo = User(
+        email: "",
+        password: "",
+        gender: "",
+        birth: Date(),
+        profile: .init(
+            nickName: "",
+            university: "",
+            image: nil
+        )
+    )
+    public var loginFailed = PassthroughSubject<String, Never>()
+    public var requestOTPCodeFailed = PassthroughSubject<String, Never>()
+    public var verifyOTPCodeFailed = PassthroughSubject<String, Never>()
+    public var checkUserNameFailed = PassthroughSubject<String, Never>()
+    public var signUpFailed = PassthroughSubject<String, Never>()
+    public var resetPasswordFailed = PassthroughSubject<String, Never>()
+    
+    public func logIn(
+        _ email: String,
+        _ password: String
+    ) -> AnyPublisher<Void, Never> {
+        authRepository.logIn(email, password)
+            .handleEvents(receiveOutput: { token in
+                UserDefaultsManager.setToken(token)
+            })
+            .map { _ in }
+            .catch { [weak self] _ in
+                self?.loginFailed.send("Login Failed")
+                return Just(()).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func signUp() -> AnyPublisher<Void, Never> {
+        authRepository.signUp(userInfo)
+            .handleEvents(receiveOutput: { token in
+                UserDefaultsManager.setToken(token)
+            })
+            .map { _ in }
+            .catch { [weak self] _ in
+                self?.loginFailed.send("SignUp Failed")
+                return Just(()).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func requestEmailVerifyCode(
+        _ type: VerifyCodeType
+    ) -> AnyPublisher<Void, Never> {
+        switch type {
+        case .email:
+            authRepository.requestVerifyEmail(
+                UserDefaultsManager.getEmail()
+            )
+            .map { _ in }
+            .catch { [weak self] _ in
+                self?.requestOTPCodeFailed.send("request OTPCode Failed (Email)")
+                return Just(()).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+            
+        case .resetPassword:
+            authRepository.requestResetPassword(
+                UserDefaultsManager.getEmail()
+            )
+            .map { _ in }
+            .catch { [weak self] _ in
+                self?.requestOTPCodeFailed.send("request OTPCode Failed (password")
+                return Just(()).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+        }
+    }
+    
+    public func verifyEmail(
+        _ type: VerifyCodeType,
+        _ otpCode: Int,
+        _ email: String
+    ) -> AnyPublisher<Void, Never> {
+        switch type {
+        case .email:
+            authRepository.verifyEmail(
+                UserDefaultsManager.getEmail(),
+                otpCode
+            )
+            .map { _ in }
+            .catch { [weak self] _ in
+                self?.verifyOTPCodeFailed.send("request OTPCode Failed (Email)")
+                return Just(()).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+        case .resetPassword:
+            authRepository.verifyResetPassword(
+                UserDefaultsManager.getEmail(),
+                otpCode
+            )
+            .map { _ in }
+            .catch { [weak self] _ in
+                self?.verifyOTPCodeFailed.send("request OTPCode Failed (password")
+                return Just(()).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+        }
+    }
+    
+    public func checkUserName(
+        _ userName: String
+    ) -> AnyPublisher<Void, Never> {
+        authRepository.checkUserName(userName)
+            .map { _ in }
+            .catch { [weak self] _ in
+                self?.checkUserNameFailed.send("잘못된 형식의 이름입니다")
+                return Just(()).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func resetPassword(
+        _ newPassword: String
+    ) -> AnyPublisher<Void, Never> {
+        authRepository.resetPassword(
+            UserDefaultsManager.getEmail(),
+            newPassword
+        )
+        .map { _ in }
+        .catch { [weak self] _ in
+            self?.resetPasswordFailed.send("resetPasswordFailed")
+            return Just(()).eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
+    }
+}

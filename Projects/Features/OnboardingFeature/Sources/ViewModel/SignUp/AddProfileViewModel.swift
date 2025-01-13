@@ -26,7 +26,7 @@ public class AddProfileViewModel: ObservableObject {
     }
     
     public var navigationRouter: NavigationRoutableType
-    private var user: UserInfo
+    private var user: User
     private let cancelBag = CancelBag()
     
     @Published var state = State()
@@ -34,7 +34,7 @@ public class AddProfileViewModel: ObservableObject {
     
     public init(
         navigationRouter: NavigationRoutableType,
-        user: UserInfo
+        user: User
     ) {
         self.navigationRouter = navigationRouter
         self.user = user
@@ -45,7 +45,7 @@ public class AddProfileViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            user.profile.image = profileImage
+            user.profile.image = profileImage?.jpegData(compressionQuality: 1.0)
             navigationRouter.popToRootView()
         case .profileImageDidChange(let newPhoto):
             guard let newPhoto else { return }

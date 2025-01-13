@@ -25,7 +25,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     }
     
     public var navigationRouter: NavigationRoutableType
-    private var user: UserInfo?
+    private var user: User?
     
     @Published var state = State()
     @Published var otpCode: String = ""
@@ -33,7 +33,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     
     public init(
         navigationRouter: NavigationRoutableType,
-        user: UserInfo?,
+        user: User?,
         email: String
     ) {
         self.navigationRouter = navigationRouter

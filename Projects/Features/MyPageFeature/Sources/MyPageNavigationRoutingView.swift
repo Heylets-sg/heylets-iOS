@@ -29,7 +29,10 @@ struct MyPageNavigationRoutingView: View {
             )
         case .changePassword:
             ChangePasswordView(
-                viewModel: .init(navigationRouter: router.navigationRouter)
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    useCase: useCase.myPageUseCase
+                )
             )
         case .privacyPolicy:
             PrivacyPolicyView()

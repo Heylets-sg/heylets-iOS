@@ -57,8 +57,11 @@ final public class MyPageUseCase: MyPageUseCaseType {
                     self?.passwordFailed.send(passwordError)
                 }
             })
-            .flatMap {  newPassword in
-                self.authRepository.resetPassword(newPassword)
+            .flatMap { newPassword in
+                self.authRepository.resetPassword(
+                    UserDefaultsManager.getEmail(),
+                    newPassword
+                )
             }
             .asVoid()
             .catch { [weak self] error in

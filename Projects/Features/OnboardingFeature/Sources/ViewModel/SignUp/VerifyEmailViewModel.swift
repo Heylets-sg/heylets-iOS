@@ -27,7 +27,7 @@ public class VerifyEmailViewModel: ObservableObject {
     }
     
     public var navigationRouter: NavigationRoutableType
-    public var user: UserInfo
+    public var user: User
     
     @Published var state = State()
     private let cancelBag = CancelBag()
@@ -38,7 +38,7 @@ public class VerifyEmailViewModel: ObservableObject {
     
     public init(
         navigationRouter: NavigationRoutableType,
-        user: UserInfo
+        user: User
     ) {
         self.navigationRouter = navigationRouter
         self.user = user

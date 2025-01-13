@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public struct UserInfo: Hashable {
+public struct User: Hashable {
     public var email: String
     public var password: String
     public var gender: String
@@ -34,12 +34,12 @@ public struct UserInfo: Hashable {
 public struct ProfileInfo: Hashable {
     public var nickName: String
     public var university: String
-    public var image: UIImage?
+    public var image: Data?
     
     public init(
         nickName: String = "",
         university: String = "",
-        image: UIImage? = nil
+        image: Data? = nil
     ) {
         self.nickName = nickName
         self.university = university

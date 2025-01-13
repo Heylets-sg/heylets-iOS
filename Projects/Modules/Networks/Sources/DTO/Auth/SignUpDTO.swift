@@ -16,4 +16,22 @@ public struct SignUpRequest: Encodable {
     let sex: String
     let birth: Int
     let profileImg: Data?
+    
+    public init(
+        nickname: String,
+        email: String,
+        password: String,
+        university: String,
+        sex: String,
+        birth: Int,
+        profileImg: Data?
+    ) {
+        self.nickname = nickname
+        self.email = email
+        self.password = password
+        self.university = university
+        self.sex = sex
+        self.birth = birth
+        self.profileImg = profileImg
+    }
 }

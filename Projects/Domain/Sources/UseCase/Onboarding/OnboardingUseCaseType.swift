@@ -17,9 +17,11 @@ public enum VerifyCodeType {
 }
 
 public protocol OnboardingUseCaseType {
-    var userInfo: UserInfo { get }
+    var userInfo: User { get }
     
-    var verifyEmailFailed: PassthroughSubject<String, Never> { get }
+    var loginFailed: PassthroughSubject<String, Never> { get }
+    var requestOTPCodeFailed: PassthroughSubject<String, Never> { get }
+    var verifyOTPCodeFailed: PassthroughSubject<String, Never> { get }
     var checkUserNameFailed: PassthroughSubject<String, Never> { get }
     var signUpFailed: PassthroughSubject<String, Never> { get }
     var resetPasswordFailed: PassthroughSubject<String, Never> { get }
@@ -27,18 +29,29 @@ public protocol OnboardingUseCaseType {
     func logIn(
         _ email: String,
         _ password: String
-    ) -> AnyPublisher<Auth, Error>
+    ) -> AnyPublisher<Void, Never>
+    
+    func signUp() -> AnyPublisher<Void, Never>
     
     // 이메일 인증코드 요청 & 인증코드
-    func requestEmailVerifyCode(_ type: VerifyCodeType) -> AnyPublisher<Void, Error>
-    func verifyEmail(_ type: VerifyCodeType, _ email: String) -> AnyPublisher<Void, Error>
+    func requestEmailVerifyCode(
+        _ type: VerifyCodeType
+    ) -> AnyPublisher<Void, Never>
     
-    // SignUp
-    func checkUserName(_ userName: String) -> AnyPublisher<Void, Error>
-    func makeAccount() -> AnyPublisher<Void, Error>
+    func verifyEmail(
+        _ type: VerifyCodeType,
+        _ otpCode: Int,
+        _ email: String
+    ) -> AnyPublisher<Void, Never>
+    
+    // checkUserName
+    func checkUserName(
+        _ userName: String
+    ) -> AnyPublisher<Void, Never>
     
     // ResetPassword
     
-    func resetPassword(_ email: String, _ newPassword: String) -> AnyPublisher<Void, Error>
-    
+    func resetPassword(
+        _ newPassword: String
+    ) -> AnyPublisher<Void, Never>
 }

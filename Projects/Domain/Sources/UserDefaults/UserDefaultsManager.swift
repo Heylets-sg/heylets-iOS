@@ -39,12 +39,10 @@ public struct UserDefaultsManager {
 extension UserDefaultsManager {
     static public func getEmail() -> String { return email }
     
-//    static func setUserInfo(_ data: UserInfo) {
-//        let name = data.name ?? "이름없음"
-//        let phoneLast = data.phone?.suffix(4) ?? "번호없음"
-//        let nameWithPhone = name + "_" + phoneLast
-//        UserDefaultsManager.userNameAndPhoneLast = nameWithPhone
-//    }
+    static func setToken(_ authInfo: Auth) {
+        UserDefaultsManager.heyAccessToken = authInfo.accessToken
+        UserDefaultsManager.heyRefreshToken = authInfo.refreshToken
+    }
 //
 //    static func reset() {
 //

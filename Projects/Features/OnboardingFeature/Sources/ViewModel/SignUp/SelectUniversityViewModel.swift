@@ -41,7 +41,7 @@ public class SelectUniversityViewModel: ObservableObject {
     
     // MARK: - Properties
     public var navigationRouter: NavigationRoutableType
-    public var user: UserInfo = .init(
+    public var user: User = .init(
         email: "",
         password: "",
         gender: "",

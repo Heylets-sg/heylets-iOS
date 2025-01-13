@@ -36,7 +36,7 @@ public struct MyPageView: View {
                             .frame(height:90)
                         
                         VStack {
-                            Text("Heidi109 / NUS")
+                            Text("\(viewModel.state.profileInfo.nickName) / \(viewModel.state.profileInfo.university)")
                                 .font(.medium_16)
                                 .foregroundColor(Color.heyBlack)
                                 .padding(.top, 44)
@@ -102,6 +102,7 @@ public struct MyPageTopView: View {
             Button {
                 router.windowRouter.switch(to: .timetable)
             } label: {
+                //TODO: 킹피셔로 바로 가져오기
                 Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
                     .resizable()
                     .frame(width: 22, height: 18)

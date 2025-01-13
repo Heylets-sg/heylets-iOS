@@ -16,9 +16,12 @@ import Core
 public class MyPageViewModel: ObservableObject {
     struct State {
         var logoutAlertViewIsPresented: Bool = false
+        var profileInfo: ProfileInfo = .init()
     }
     
     enum Action {
+        case onAppear
+        
         case changePasswordButtonDidTap
         case privacyPolicyButtonDidTap
         case termsOfServiceButtonDidTap
@@ -50,6 +53,12 @@ public class MyPageViewModel: ObservableObject {
     
     func send(_ action: Action) {
         switch action {
+        case .onAppear:
+            useCase.getProfile()
+                .sink(receiveValue: { [weak self] profile in
+                    self?.state.profileInfo = profile
+                }).store(in: cancelBag)
+            
         case .changePasswordButtonDidTap:
             navigationRouter.push(to: .changePassword)
         case .privacyPolicyButtonDidTap:

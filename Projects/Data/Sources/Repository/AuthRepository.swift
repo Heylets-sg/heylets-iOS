@@ -27,10 +27,20 @@ public struct AuthRepository: AuthRepositoryType {
             .mapToGeneralError()
     }
     
+    public func signUp(
+        _ user: User
+    ) -> AnyPublisher<Auth, Error> {
+        let request = user.toDTO()
+        return authService.signUp(request)
+            .map { $0.toEntity() }
+            .mapToGeneralError()
+    }
+    
     public func resetPassword(
+        _ email: String,
         _ newPassword: String
     ) -> AnyPublisher<Auth, Error> {
-        let request: ResetPasswordRequest = .init(UserDefaultsManager.getEmail(), newPassword)
+        let request: ResetPasswordRequest = .init(email, newPassword)
         return authService.resetPassword(request)
             .map { $0.toEntity() }
             .mapToGeneralError()

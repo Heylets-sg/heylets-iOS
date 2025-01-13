@@ -33,7 +33,5 @@ public protocol MyPageUseCaseType {
     func deleteAccount(
         _ password: String
     ) -> AnyPublisher<Void, Never>
-    
-    // 현재 비번과 같은지 확인
     // AuthRepository 회원탈퇴 API
 }

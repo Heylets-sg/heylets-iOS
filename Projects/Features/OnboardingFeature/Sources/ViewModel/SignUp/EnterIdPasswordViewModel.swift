@@ -29,7 +29,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
     }
     
     public var navigationRouter: NavigationRoutableType
-    private var user: UserInfo
+    private var user: User
     private let cancelBag = CancelBag()
     
     @Published var state = State()
@@ -39,7 +39,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
     
     public init(
         navigationRouter: NavigationRoutableType,
-        user: UserInfo
+        user: User
     ) {
         self.navigationRouter = navigationRouter
         self.user = user

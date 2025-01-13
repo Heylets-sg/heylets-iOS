@@ -16,6 +16,10 @@ public protocol AuthServiceType {
         _ name: String
     ) -> NetworkDecodableResponse<UserNameResult>
     
+    func signUp(
+        _ request: SignUpRequest
+    ) -> NetworkDecodableResponse<AuthResult>
+    
     func resetPassword(
         _ request: ResetPasswordRequest
     ) -> NetworkDecodableResponse<AuthResult>
@@ -48,6 +52,12 @@ extension AuthService: AuthServiceType {
         _ name: String
     ) -> AnyPublisher<UserNameResult, HeyNetworkError> {
         requestWithResult(.checkUserName(name))
+    }
+    
+    public func signUp(
+        _ request: SignUpRequest
+    ) -> NetworkDecodableResponse<AuthResult> {
+        requestWithResult(.signUp(request))
     }
     
     public func resetPassword(
