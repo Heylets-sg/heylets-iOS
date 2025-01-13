@@ -40,18 +40,16 @@ public class SelectUniversityViewModel: ObservableObject {
     }
     
     // MARK: - Properties
-    public var navigationRouter: NavigationRoutableType
-    
-    @Published var state = State()
-    private let cancelBag = CancelBag()
-    
-    private var useCase: OnboardingUseCaseType
-    
     
     private let allUniversityItems: [UniversityInfo] = [.NTU, .NUS]
     @Published var searchText = ""
     @Published var university: UniversityInfo? = nil
     
+    @Published var state = State()
+    public var navigationRouter: NavigationRoutableType
+    private var useCase: OnboardingUseCaseType
+    private let cancelBag = CancelBag()
+
     // MARK: - Init
     public init(
         navigationRouter: NavigationRoutableType,

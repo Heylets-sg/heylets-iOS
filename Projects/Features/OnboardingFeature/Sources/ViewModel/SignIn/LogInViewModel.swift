@@ -10,6 +10,7 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Domain
 import Core
 
 public class LogInViewModel: ObservableObject {
@@ -24,20 +25,23 @@ public class LogInViewModel: ObservableObject {
         var loginButtonEnabled = true
     }
     
-    @Published var state = State()
     @Published var id: String = ""
     @Published var password: String = ""
-    private let cancelBag = CancelBag()
     
+    @Published var state = State()
     public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType
+    private var useCase: OnboardingUseCaseType
+    private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: NavigationRoutableType,
-        windowRouter: WindowRoutableType
+        windowRouter: WindowRoutableType,
+        useCase: OnboardingUseCaseType
     ) {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
+        self.useCase = useCase
         
         observe()
     }
@@ -46,8 +50,12 @@ public class LogInViewModel: ObservableObject {
         switch action {
         case .loginButtonDidTap:
             //TODO: 비밀번호, ID 유효성 처리
-            //TODO: 로그인 API 연결
-            windowRouter.switch(to: .timetable)
+            useCase.logIn(id, password)
+                .sink(receiveValue: { [weak self] _ in
+                    self?.windowRouter.switch(to: .timetable)
+                })
+                .store(in: cancelBag)
+            
         case .forgotPasswordButtonDidTap:
             navigationRouter.push(to: .enterEmail)
         case .signUpButtonDidTap:

@@ -26,15 +26,14 @@ public class VerifyEmailViewModel: ObservableObject {
         case selectDomain(String)
     }
     
-    public var navigationRouter: NavigationRoutableType
-    
-    @Published var state = State()
-    private let cancelBag = CancelBag()
-    private var useCase: OnboardingUseCaseType
-    
     @Published var localPart: String = ""
     @Published var domain: String = ""
     @Published var email: String = ""
+    
+    @Published var state = State()
+    public var navigationRouter: NavigationRoutableType
+    private var useCase: OnboardingUseCaseType
+    private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: NavigationRoutableType,
@@ -43,6 +42,7 @@ public class VerifyEmailViewModel: ObservableObject {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
         dump(useCase.userInfo)
+        
         observe()
     }
     

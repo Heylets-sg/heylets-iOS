@@ -96,8 +96,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     
     public func verifyEmail(
         _ type: VerifyCodeType,
-        _ otpCode: Int,
-        _ email: String
+        _ otpCode: Int
     ) -> AnyPublisher<Void, Never> {
         switch type {
         case .email:
@@ -111,9 +110,9 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
                 return Just(()).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
-        case .resetPassword:
+        case .resetPassword(let email):
             authRepository.verifyResetPassword(
-                UserDefaultsManager.getEmail(),
+                email,
                 otpCode
             )
             .map { _ in }

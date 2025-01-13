@@ -69,16 +69,22 @@ struct OnboardingNavigationRoutingView: View {
             LogInView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    windowRouter: router.windowRouter
+                    windowRouter: router.windowRouter, 
+                    useCase: useCase.onboardingUseCase
                 )
             )
         case .enterEmail:
             EnterEmailView(
-                viewModel: .init(navigationRouter: router.navigationRouter)
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter, useCase: useCase.onboardingUseCase
+                )
             )
         case .resetPassword:
             ResetPasswordView(
-                viewModel: .init(navigationRouter: router.navigationRouter)
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    useCase: useCase.onboardingUseCase
+                )
             )
             
         default:

@@ -58,8 +58,12 @@ public class EnterIdPasswordViewModel: ObservableObject {
             useCase.userInfo.password = password
             navigationRouter.push(to: .addProfile)
         case .checkIDAvailabilityButtonDidTap:
-            //TODO: 아이디 중복 확인하는 API 연결
-            break
+            useCase.checkUserName(nickName)
+                .sink(receiveValue: { [weak self] _ in
+                    //TODO: 한번 더 확인
+                    self?.state.nickNameIsValid = .idle
+                })
+                .store(in: cancelBag)
         }
     }
     

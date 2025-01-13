@@ -11,6 +11,7 @@ import Combine
 
 import BaseFeatureDependency
 import DSKit
+import Domain
 import Core
 
 public class ResetPasswordViewModel: ObservableObject {
@@ -25,17 +26,20 @@ public class ResetPasswordViewModel: ObservableObject {
         case gotoLoginView
     }
     
-    public var navigationRouter: NavigationRoutableType
-    private let cancelBag = CancelBag()
-    
-    @Published var state = State()
     @Published var password = ""
     @Published var checkPassword = ""
     
-    public init(navigationRouter: NavigationRoutableType) {
+    @Published var state = State()
+    public var navigationRouter: NavigationRoutableType
+    private var useCase: OnboardingUseCaseType
+    private let cancelBag = CancelBag()
+    
+    public init(
+        navigationRouter: NavigationRoutableType,
+        useCase: OnboardingUseCaseType
+    ) {
         self.navigationRouter = navigationRouter
-        
-        observe()
+        self.useCase = useCase
     }
     
     func send(_ action: Action) {
@@ -43,8 +47,11 @@ public class ResetPasswordViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .gotoLoginView:
-            //TODO: 비밀번호 Reset API 구현
-            navigationRouter.popToRootView()
+            useCase.resetPassword(password)
+                .sink(receiveValue: { [weak self] _ in
+                    self?.navigationRouter.popToRootView()
+                })
+                .store(in: cancelBag)
         }
     }
     
