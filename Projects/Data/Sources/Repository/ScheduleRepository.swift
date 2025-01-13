@@ -15,8 +15,8 @@ import Networks
 public struct ScheduleRepository: ScheduleRepositoryType {
     private let service: ScheduleServiceType
     
-    public init(sevice: ScheduleServiceType) {
-        self.service = sevice
+    public init(service: ScheduleServiceType) {
+        self.service = service
     }
     
     public func deleteLectureModule(

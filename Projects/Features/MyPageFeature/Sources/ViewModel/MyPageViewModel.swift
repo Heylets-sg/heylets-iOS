@@ -33,16 +33,16 @@ public class MyPageViewModel: ObservableObject {
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType
-//    private let useCase: MyPageUseCaseType
+    private let useCase: MyPageUseCaseType
     
     public init(
         navigationRouter: NavigationRoutableType,
-        windowRouter: WindowRoutableType
-//        useCase: MyPageUseCaseType
+        windowRouter: WindowRoutableType,
+        useCase: MyPageUseCaseType
     ) {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
-//        self.useCase = useCase
+        self.useCase = useCase
     }
     
     func send(_ action: Action) {

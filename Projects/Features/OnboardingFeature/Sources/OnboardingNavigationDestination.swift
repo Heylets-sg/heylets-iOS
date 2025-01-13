@@ -10,7 +10,7 @@ import Core
 import Networks
 
 struct OnboardingNavigationRoutingView: View {
-    @EnvironmentObject var container: DIContainer
+    @EnvironmentObject var router: Router
     @State var destination: NavigationDestination
     
     var body: some View {
@@ -19,23 +19,23 @@ struct OnboardingNavigationRoutingView: View {
         // Onboarding Feature
         case .onboarding:
             OnboardingView(
-                viewModel: .init(navigationRouter: container.navigationRouter)
+                viewModel: .init(navigationRouter: router.navigationRouter)
             )
         case .selectUniversity:
             SelectUniversityView(
-                viewModel: .init(navigationRouter: container.navigationRouter)
+                viewModel: .init(navigationRouter: router.navigationRouter)
             )
         case .verifyEmail(let user):
             VerifyEmailView(
                 viewModel: .init(
-                    navigationRouter: container.navigationRouter,
+                    navigationRouter: router.navigationRouter,
                     user: user
                 )
             )
         case .enterSecurityCode(let user, let email):
             EnterSecurityCodeView(
                 viewModel: .init(
-                    navigationRouter: container.navigationRouter,
+                    navigationRouter: router.navigationRouter,
                     user: user,
                     email: email
                 )
@@ -43,38 +43,38 @@ struct OnboardingNavigationRoutingView: View {
         case .enterPersonalInfo(let user):
             EnterPersonalInfoView(
                 viewModel: .init(
-                    navigationRouter: container.navigationRouter,
+                    navigationRouter: router.navigationRouter,
                     user: user
                 )
             )
         case .enterIdPassword(let user):
             EnterIdPasswordView(
                 viewModel: .init(
-                    navigationRouter: container.navigationRouter,
+                    navigationRouter: router.navigationRouter,
                     user: user
                 )
             )
         case .addProfile(let user):
             AddProfileView(
                 viewModel: .init(
-                    navigationRouter: container.navigationRouter,
+                    navigationRouter: router.navigationRouter,
                     user: user
                 )
             )
         case .login:
             LogInView(
                 viewModel: .init(
-                    navigationRouter: container.navigationRouter,
-                    windowRouter: container.windowRouter
+                    navigationRouter: router.navigationRouter,
+                    windowRouter: router.windowRouter
                 )
             )
         case .enterEmail:
             EnterEmailView(
-                viewModel: .init(navigationRouter: container.navigationRouter)
+                viewModel: .init(navigationRouter: router.navigationRouter)
             )
         case .resetPassword:
             ResetPasswordView(
-                viewModel: .init(navigationRouter: container.navigationRouter)
+                viewModel: .init(navigationRouter: router.navigationRouter)
             )
             
         default:

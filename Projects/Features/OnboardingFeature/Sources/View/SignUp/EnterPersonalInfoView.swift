@@ -11,7 +11,7 @@ import BaseFeatureDependency
 //import DSKit
 
 public struct EnterPersonalInfoView: View {
-    @EnvironmentObject var container: DIContainer
+    @EnvironmentObject var container: Router
     @ObservedObject var viewModel: EnterPersonalInfoViewModel
     var genderList: [Gender] = [.men, .women, .others]
     

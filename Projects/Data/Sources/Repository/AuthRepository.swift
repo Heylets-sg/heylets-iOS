@@ -13,7 +13,7 @@ import Domain
 import Networks
 
 public struct AuthRepository: AuthRepositoryType {
-    private let authService: AuthServiceType
+    public let authService: AuthServiceType
     
     public init(authService: AuthServiceType) {
         self.authService = authService

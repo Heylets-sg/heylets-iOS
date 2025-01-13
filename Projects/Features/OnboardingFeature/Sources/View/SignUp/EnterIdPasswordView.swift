@@ -12,7 +12,7 @@ import BaseFeatureDependency
 import DSKit
 
 public struct EnterIdPasswordView: View {
-    @EnvironmentObject var container: DIContainer
+    @EnvironmentObject var container: Router
     @ObservedObject var viewModel: EnterIdPasswordViewModel
     
     @State var showPassword = false

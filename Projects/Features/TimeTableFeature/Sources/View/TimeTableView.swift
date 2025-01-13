@@ -28,7 +28,7 @@ public enum TimeTableSettingAlertType {
 }
 
 public struct TimeTableView: View {
-    @EnvironmentObject var container: DIContainer
+    @EnvironmentObject var container: Router
     @State var viewType: TimeTableViewType = .main
     @ObservedObject var viewModel: TimeTableViewModel
     @ObservedObject var searchModuleViewModel: SearchModuleViewModel

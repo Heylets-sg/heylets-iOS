@@ -12,22 +12,24 @@ import OnboardingFeature
 import TimeTableFeature
 import MyPageFeature
 import SplashFeature
+import Domain
 
 public struct RootView: View {
     public init() {}
-    @EnvironmentObject var container: DIContainer
+    @EnvironmentObject var router: Router
+    @EnvironmentObject var useCase: HeyUseCase
 
     public var body: some View {
         Group {
-            switch container.windowRouter.destination {
+            switch router.windowRouter.destination {
             case .splash:
                 SplashView(
-                    viewModel: .init(windowRouter: container.windowRouter)
+                    viewModel: .init(windowRouter: router.windowRouter)
                 )
             case .onboarding:
                 OnboardingView(
                     viewModel: OnboardingViewModel(
-                        navigationRouter: container.navigationRouter
+                        navigationRouter: router.navigationRouter
                     )
                 )
             case .timetable:
@@ -41,8 +43,9 @@ public struct RootView: View {
             case .mypage:
                 MyPageView(
                     viewModel: MyPageViewModel(
-                        navigationRouter: container.navigationRouter,
-                        windowRouter: container.windowRouter
+                        navigationRouter: router.navigationRouter,
+                        windowRouter: router.windowRouter,
+                        useCase: useCase.myPageUseCase
                     )
                 )
             }

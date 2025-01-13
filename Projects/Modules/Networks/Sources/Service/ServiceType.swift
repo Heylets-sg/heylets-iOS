@@ -6,7 +6,7 @@
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
-protocol ServiceType {
+public protocol ServiceType {
 //    var appService: AppServiceType { get }
     var authService: AuthServiceType { get }
     var timeTableService: TimeTableServiceType { get }
@@ -18,15 +18,16 @@ protocol ServiceType {
     
 }
 
-final class Service: ServiceType {
+final public class HeyService: ServiceType {
+    public init() {}
 //    var appService: AppServiceType = AppService()
-    var authService: AuthServiceType = AuthService()
-    var timeTableService: TimeTableServiceType = TimeTableService()
-    var themeService: ThemeServiceType = ThemeService()
-    var sectionService: SectionServiceType = SectionService()
-    var scheduleService: ScheduleServiceType = ScheduleService()
-    var lectureService: LectureServiceType = LectureService()
-    var userService: UserServiceType = UserService()
+    public var authService: AuthServiceType = AuthService()
+    public var timeTableService: TimeTableServiceType = TimeTableService()
+    public var themeService: ThemeServiceType = ThemeService()
+    public var sectionService: SectionServiceType = SectionService()
+    public var scheduleService: ScheduleServiceType = ScheduleService()
+    public var lectureService: LectureServiceType = LectureService()
+    public var userService: UserServiceType = UserService()
     
 }
 

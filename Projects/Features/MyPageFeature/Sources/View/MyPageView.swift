@@ -12,7 +12,7 @@ import DSKit
 import BaseFeatureDependency
 
 public struct MyPageView: View {
-    @EnvironmentObject var container: DIContainer
+    @EnvironmentObject var container: Router
     @ObservedObject var viewModel: MyPageViewModel
     
     public init(viewModel: MyPageViewModel) {
@@ -96,7 +96,7 @@ public struct MyPageView: View {
 }
 
 public struct MyPageTopView: View {
-    @EnvironmentObject var router: DIContainer
+    @EnvironmentObject var router: Router
     public var body: some View {
         HStack {
             Button {

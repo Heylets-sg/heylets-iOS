@@ -10,25 +10,26 @@ import SwiftUI
 
 import Core
 import BaseFeatureDependency
+import Domain
 
 struct MyPageNavigationRoutingView: View {
-    @EnvironmentObject var container: DIContainer
+    @EnvironmentObject var router: Router
+    @EnvironmentObject var useCase: HeyUseCase
     @State var destination: NavigationDestination
     
     var body: some View {
         switch destination {
-            
-            // MyPage Feature
         case .myPage:
             MyPageView(
                 viewModel: .init(
-                    navigationRouter: container.navigationRouter,
-                    windowRouter: container.windowRouter
+                    navigationRouter: router.navigationRouter,
+                    windowRouter: router.windowRouter,
+                    useCase: useCase.myPageUseCase
                 )
             )
         case .changePassword:
             ChangePasswordView(
-                viewModel: .init(navigationRouter: container.navigationRouter)
+                viewModel: .init(navigationRouter: router.navigationRouter)
             )
         case .privacyPolicy:
             PrivacyPolicyView()
@@ -38,13 +39,13 @@ struct MyPageNavigationRoutingView: View {
             ContactUsView()
         case .notificationSetting:
             NotificationSettingView(
-                viewModel: .init(navigationRouter: container.navigationRouter)
+                viewModel: .init(navigationRouter: router.navigationRouter)
             )
         case .deleteAccount:
             DeleteAccountView(
                 viewModel: .init(
-                    navigationRouter: container.navigationRouter,
-                    windowRouter: container.windowRouter
+                    navigationRouter: router.navigationRouter,
+                    windowRouter: router.windowRouter
                 )
             )
         default:

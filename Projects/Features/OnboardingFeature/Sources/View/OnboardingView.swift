@@ -12,7 +12,7 @@ import Core
 import DSKit
 
 public struct OnboardingView: View {
-    @EnvironmentObject var container: DIContainer
+    @EnvironmentObject var container: Router
     var viewModel: OnboardingViewModel
     
     let images: [UIImage] = [.timeTable, .color]

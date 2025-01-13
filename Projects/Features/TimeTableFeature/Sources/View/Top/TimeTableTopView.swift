@@ -13,7 +13,7 @@ import DSKit
 import BaseFeatureDependency
 
 public struct TopView: View {
-    @EnvironmentObject var container: DIContainer
+    @EnvironmentObject var container: Router
     @Binding var timeTableInfo: TimeTableInfo
     @Binding var viewType: TimeTableViewType
     @Binding var settingAlertType: TimeTableSettingAlertType?
