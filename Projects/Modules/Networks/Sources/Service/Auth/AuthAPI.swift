@@ -13,7 +13,7 @@ import Domain
 public enum AuthAPI {
     case checkUserName(String)
 //    case refreshToken
-//    case signUp
+    case signUp(SignUpRequest, String)
     case resetPassword(ResetPasswordRequest)
     case verifyResetPassword(VerifyOTPCodeRequest)
     case requestResetPassword(RequestOTPCodeRequest)
@@ -34,8 +34,8 @@ extension AuthAPI: BaseAPI {
             Paths.checkUserName
 //        case .refreshToken:
 //            Paths.refreshToken
-//        case .signUp:
-//            Paths.signUp
+        case .signUp:
+            Paths.signUp
         case .resetPassword:
             Paths.resetPassword
         case .verifyResetPassword:
@@ -59,8 +59,8 @@ extension AuthAPI: BaseAPI {
             return .get
 //        case .refreshToken:
 //            return .post
-//        case .signUp:
-//            return .post
+        case .signUp:
+            return .post
         case .resetPassword:
             return .post
         case .verifyResetPassword:
@@ -84,8 +84,9 @@ extension AuthAPI: BaseAPI {
             return .requestParameters(["username": name])
 //        case .refreshToken:
 //            <#code#>
-//        case .signUp:
-//            <#code#>
+        case .signUp(let request, let boundary):
+            let multipartData = MultipartFormDataHandler.createMultipartData(from: request)
+            return .uploadMultipartFormData(multipartData)
         case .resetPassword(let request):
             return .requestJSONEncodable(request)
         case .verifyResetPassword(let request):

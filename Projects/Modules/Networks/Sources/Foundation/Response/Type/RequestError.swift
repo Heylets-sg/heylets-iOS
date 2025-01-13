@@ -11,6 +11,7 @@ extension HeyNetworkError {
         case parameterEncodingFailed(ParameterEncodingError) // 인코딩시 생기는 에러
         case invalidURL(URLValidationError) // url이 유효하지 않을때
         case unknownErr // 그 외 예기치 못한 에러
+        case multipartFailed
         
         var description: String {
             switch self {
@@ -20,6 +21,8 @@ extension HeyNetworkError {
                 return urlValidationError.description
             case .unknownErr:
                 return "요청 시 발생한 알 수 없는 에러입니다."
+            case .multipartFailed:
+                return "멀티파트 에러입니다"
             }
         }
         

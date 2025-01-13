@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct SignUpRequest: Encodable {
+public struct SignUpRequest: Encodable {
     let nickname: String
     let email: String
     let password: String
     let university: String
     let sex: String
     let birth: Int
-    //profileImg
+    let profileImg: Data?
 }
