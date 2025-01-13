@@ -2,15 +2,15 @@ import Foundation
 import SwiftUI
 
 import BaseFeatureDependency
-import MyPageFeature
 import OnboardingFeature
-import TimeTableFeature
+import Domain
 
 import Core
 import Networks
 
 struct OnboardingNavigationRoutingView: View {
     @EnvironmentObject var router: Router
+    @EnvironmentObject var useCase: HeyUseCase
     @State var destination: NavigationDestination
     
     var body: some View {
@@ -23,42 +23,46 @@ struct OnboardingNavigationRoutingView: View {
             )
         case .selectUniversity:
             SelectUniversityView(
-                viewModel: .init(navigationRouter: router.navigationRouter)
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    useCase: useCase.onboardingUseCase
+                    
+                )
             )
-        case .verifyEmail(let user):
+        case .verifyEmail:
             VerifyEmailView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    user: user
+                    useCase: useCase.onboardingUseCase
                 )
             )
-        case .enterSecurityCode(let user, let email):
+        case .enterSecurityCode(let type):
             EnterSecurityCodeView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    user: user,
-                    email: email
+                    useCase: useCase.onboardingUseCase, 
+                    type: type
                 )
             )
-        case .enterPersonalInfo(let user):
+        case .enterPersonalInfo:
             EnterPersonalInfoView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    user: user
+                    useCase: useCase.onboardingUseCase
                 )
             )
-        case .enterIdPassword(let user):
+        case .enterIdPassword:
             EnterIdPasswordView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    user: user
+                    useCase: useCase.onboardingUseCase
                 )
             )
-        case .addProfile(let user):
+        case .addProfile:
             AddProfileView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    user: user
+                    useCase: useCase.onboardingUseCase
                 )
             )
         case .login:

@@ -26,18 +26,20 @@ public class AddProfileViewModel: ObservableObject {
     }
     
     public var navigationRouter: NavigationRoutableType
-    private var user: User
     private let cancelBag = CancelBag()
     
     @Published var state = State()
     @Published var profileImage: UIImage? = nil
     
+    private var useCase: OnboardingUseCaseType
+    
     public init(
         navigationRouter: NavigationRoutableType,
-        user: User
+        useCase: OnboardingUseCaseType
     ) {
         self.navigationRouter = navigationRouter
-        self.user = user
+        self.useCase = useCase
+        dump(useCase.userInfo)
     }
     
     func send(_ action: Action) {
@@ -45,7 +47,7 @@ public class AddProfileViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            user.profile.image = profileImage?.jpegData(compressionQuality: 1.0)
+            useCase.userInfo.profile.image = profileImage?.jpegData(compressionQuality: 1.0)
             navigationRouter.popToRootView()
         case .profileImageDidChange(let newPhoto):
             guard let newPhoto else { return }

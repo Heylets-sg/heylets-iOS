@@ -27,10 +27,10 @@ public class VerifyEmailViewModel: ObservableObject {
     }
     
     public var navigationRouter: NavigationRoutableType
-    public var user: User
     
     @Published var state = State()
     private let cancelBag = CancelBag()
+    private var useCase: OnboardingUseCaseType
     
     @Published var localPart: String = ""
     @Published var domain: String = ""
@@ -38,11 +38,11 @@ public class VerifyEmailViewModel: ObservableObject {
     
     public init(
         navigationRouter: NavigationRoutableType,
-        user: User
+        useCase: OnboardingUseCaseType
     ) {
         self.navigationRouter = navigationRouter
-        self.user = user
-        
+        self.useCase = useCase
+        dump(useCase.userInfo)
         observe()
     }
     
@@ -51,8 +51,8 @@ public class VerifyEmailViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            user.email = email
-            navigationRouter.push(to: .enterSecurityCode(user, user.email))
+            useCase.userInfo.email = email
+            navigationRouter.push(to: .enterSecurityCode(.email))
         case .domainListButtonDidTap:
             state.domainListViewIsVisible.toggle()
         case .selectDomain(let domain):

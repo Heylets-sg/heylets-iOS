@@ -25,20 +25,24 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     }
     
     public var navigationRouter: NavigationRoutableType
-    private var user: User?
     
     @Published var state = State()
     @Published var otpCode: String = ""
+    private var type: VerifyCodeType
     private let cancelBag = CancelBag()
+    
+    private var useCase: OnboardingUseCaseType
     
     public init(
         navigationRouter: NavigationRoutableType,
-        user: User?,
-        email: String
+        useCase: OnboardingUseCaseType,
+        type: VerifyCodeType
     ) {
         self.navigationRouter = navigationRouter
-        self.user = user
-        self.state.hiddenEmail = email.maskedEmail()
+        self.useCase = useCase
+        self.type = type
+        self.state.hiddenEmail = useCase.userInfo.email.maskedEmail()
+        dump(useCase.userInfo)
         
         observe()
     }
@@ -49,9 +53,10 @@ public class EnterSecurityCodeViewModel: ObservableObject {
             navigationRouter.pop()
         case .nextButtonDidTap:
             //TODO: 인증번호 확인 API 연결
-            if let user = user {
-                navigationRouter.push(to: .enterPersonalInfo(user))
-            } else {
+            switch type {
+            case .email:
+                navigationRouter.push(to: .enterPersonalInfo)
+            case .resetPassword:
                 navigationRouter.push(to: .resetPassword)
             }
         }

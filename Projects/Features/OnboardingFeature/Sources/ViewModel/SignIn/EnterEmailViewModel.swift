@@ -42,7 +42,7 @@ public class EnterEmailViewModel: ObservableObject {
         case .gotoLoginView:
             navigationRouter.popToRootView()
         case .nextButtonDidTap:
-            navigationRouter.push(to: .enterSecurityCode(nil, email))
+            navigationRouter.push(to: .enterSecurityCode(.resetPassword))
         }
     }
     

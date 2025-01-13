@@ -9,18 +9,26 @@
 import Foundation
 
 public protocol UseCaseType {
-    var myPageUseCase: MyPageUseCaseType { get}
+    var myPageUseCase: MyPageUseCaseType { get }
+    var onboardingUseCase: OnboardingUseCaseType { get }
 }
 
 public final class HeyUseCase: UseCaseType & ObservableObject {
     var repository: RepositoryType
+    
     public var myPageUseCase: MyPageUseCaseType
+    public var onboardingUseCase: OnboardingUseCaseType
     
     public init(repository: RepositoryType) {
         self.repository = repository
         
         myPageUseCase = MyPageUseCase(
             userRepository: repository.userRepository,
-            authRepository: repository.authRepository)
+            authRepository: repository.authRepository
+        )
+        
+        onboardingUseCase = OnboardingUseCase(
+            authRepository: repository.authRepository
+        )
     }
 }

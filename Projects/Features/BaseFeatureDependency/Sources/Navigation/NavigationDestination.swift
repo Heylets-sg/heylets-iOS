@@ -23,11 +23,11 @@ public enum NavigationDestination: Hashable {
     // Onboarding destinations
     case onboarding
     case selectUniversity
-    case verifyEmail(User)
-    case enterSecurityCode(User?, String)
-    case enterPersonalInfo(User)
-    case enterIdPassword(User)
-    case addProfile(User)
+    case verifyEmail
+    case enterSecurityCode(VerifyCodeType)
+    case enterPersonalInfo
+    case enterIdPassword
+    case addProfile
     case login
     case enterEmail
     case resetPassword

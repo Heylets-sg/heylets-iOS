@@ -29,7 +29,6 @@ public class EnterIdPasswordViewModel: ObservableObject {
     }
     
     public var navigationRouter: NavigationRoutableType
-    private var user: User
     private let cancelBag = CancelBag()
     
     @Published var state = State()
@@ -37,12 +36,15 @@ public class EnterIdPasswordViewModel: ObservableObject {
     @Published var password = ""
     @Published var checkPassword = ""
     
+    private var useCase: OnboardingUseCaseType
+    
     public init(
         navigationRouter: NavigationRoutableType,
-        user: User
+        useCase: OnboardingUseCaseType
     ) {
         self.navigationRouter = navigationRouter
-        self.user = user
+        self.useCase = useCase
+        dump(useCase.userInfo)
         
         observe()
     }
@@ -52,9 +54,9 @@ public class EnterIdPasswordViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            user.profile.nickName = nickName
-            user.password = password
-            navigationRouter.push(to: .addProfile(user))
+            useCase.userInfo.profile.nickName = nickName
+            useCase.userInfo.password = password
+            navigationRouter.push(to: .addProfile)
         case .checkIDAvailabilityButtonDidTap:
             //TODO: 아이디 중복 확인하는 API 연결
             break

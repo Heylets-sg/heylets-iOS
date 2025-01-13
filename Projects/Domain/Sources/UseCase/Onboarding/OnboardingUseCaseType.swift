@@ -17,7 +17,7 @@ public enum VerifyCodeType {
 }
 
 public protocol OnboardingUseCaseType {
-    var userInfo: User { get }
+    var userInfo: User { get set }
     
     var loginFailed: PassthroughSubject<String, Never> { get }
     var requestOTPCodeFailed: PassthroughSubject<String, Never> { get }
