@@ -11,6 +11,7 @@ import Combine
 
 import BaseFeatureDependency
 import Domain
+import Core
 
 public class MyPageViewModel: ObservableObject {
     struct State {
@@ -45,6 +46,8 @@ public class MyPageViewModel: ObservableObject {
         self.useCase = useCase
     }
     
+    private let cancelBag = CancelBag()
+    
     func send(_ action: Action) {
         switch action {
         case .changePasswordButtonDidTap:
@@ -59,15 +62,20 @@ public class MyPageViewModel: ObservableObject {
             navigationRouter.push(to: .notificationSetting)
         case .deleteAccountButtonDidTap:
             navigationRouter.push(to: .deleteAccount)
-        
+            
         case .logoutButtonDidTap:
             state.logoutAlertViewIsPresented = true
         case .logout:
             //TODO: 로그아웃 API
-            windowRouter.switch(to: .onboarding)
+            useCase.logout()
+                .sink(receiveValue: { [weak self] _ in
+                    self?.windowRouter.switch(to: .onboarding)
+                }).store(in: cancelBag)
+            
+            
         case .dismissLogoutAlertView:
             state.logoutAlertViewIsPresented = false
         }
-
+        
     }
 }

@@ -68,6 +68,7 @@ public struct TopView: View {
                 }
                 
                 Button {
+                    container.navigationRouter.destinations = []
                     container.windowRouter.switch(to: .mypage)
                 } label: {
                     Circle()
