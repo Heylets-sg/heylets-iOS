@@ -13,29 +13,23 @@ import TimeTableFeature
 import MyPageFeature
 import SplashFeature
 
-public class HeyNavigationRouter: ObservableObject {
-    public init() {}
-    let onboarding = OnboardingNavigationRouter()
-    let myPage = MyPageNavigationRouter()
-}
-
 public struct RootView: View {
     public init() {}
-    @EnvironmentObject var router: Router
-    @EnvironmentObject var navigationRouter: HeyNavigationRouter
-    
+    @EnvironmentObject var container: DIContainer
+
     public var body: some View {
         Group {
-            switch router.windowRouter.destination {
+            switch container.windowRouter.destination {
             case .splash:
-                SplashView(viewModel: .init(windowRouter: router.windowRouter))
+                SplashView(
+                    viewModel: .init(windowRouter: container.windowRouter)
+                )
             case .onboarding:
                 OnboardingView(
                     viewModel: OnboardingViewModel(
-                        navigationRouter: navigationRouter.onboarding
+                        navigationRouter: container.navigationRouter
                     )
                 )
-                .environmentObject(navigationRouter.onboarding)
             case .timetable:
                 TimeTableView(
                     viewModel: .init(),
@@ -47,11 +41,10 @@ public struct RootView: View {
             case .mypage:
                 MyPageView(
                     viewModel: MyPageViewModel(
-                        navigationRouter: navigationRouter.myPage,
-                        windowRouter: router.windowRouter
+                        navigationRouter: container.navigationRouter,
+                        windowRouter: container.windowRouter
                     )
                 )
-                .environmentObject(navigationRouter.myPage)
             }
             
         }

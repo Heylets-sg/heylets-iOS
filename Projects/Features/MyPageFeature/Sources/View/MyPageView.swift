@@ -12,8 +12,7 @@ import DSKit
 import BaseFeatureDependency
 
 public struct MyPageView: View {
-    @EnvironmentObject var router: Router
-    @EnvironmentObject var myPageRouter: MyPageNavigationRouter
+    @EnvironmentObject var container: DIContainer
     @ObservedObject var viewModel: MyPageViewModel
     
     public init(viewModel: MyPageViewModel) {
@@ -21,7 +20,7 @@ public struct MyPageView: View {
     }
     
     public var body: some View {
-        NavigationStack(path: $myPageRouter.destinations) {
+        NavigationStack(path: $container.navigationRouter.destinations) {
             ZStack {
                 Color.heyMain
                 
@@ -30,7 +29,7 @@ public struct MyPageView: View {
                         .frame(height: 60)
                     
                     MyPageTopView()
-                        .environmentObject(router)
+                        .environmentObject(container)
                     
                     VStack {
                         Spacer()
@@ -80,7 +79,7 @@ public struct MyPageView: View {
             }
             .ignoresSafeArea(edges: .vertical)
             .ignoresSafeArea(.keyboard)
-            .setMyPageNavigation()
+            .setMypageNavigation()
         }
         .navigationBarBackButtonHidden()
         .heyAlert(
@@ -97,7 +96,7 @@ public struct MyPageView: View {
 }
 
 public struct MyPageTopView: View {
-    @EnvironmentObject var router: Router
+    @EnvironmentObject var router: DIContainer
     public var body: some View {
         HStack {
             Button {

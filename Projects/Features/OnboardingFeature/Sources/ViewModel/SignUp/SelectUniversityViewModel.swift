@@ -40,7 +40,7 @@ public class SelectUniversityViewModel: ObservableObject {
     }
     
     // MARK: - Properties
-    public var navigationRouter: OnboardingNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     public var user: UserInfo = .init(
         email: "",
         password: "",
@@ -60,7 +60,7 @@ public class SelectUniversityViewModel: ObservableObject {
     @Published var university: UniversityInfo? = nil
     
     // MARK: - Init
-    public init(navigationRouter: OnboardingNavigationRouter) {
+    public init(navigationRouter: NavigationRoutableType) {
         self.navigationRouter = navigationRouter
         
         observe()

@@ -40,7 +40,7 @@ public class EnterPersonalInfoViewModel: ObservableObject {
         case birthDayDidChange(Date)
     }
     
-    public var navigationRouter: OnboardingNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     private var user: UserInfo
     
     @Published var state = State()
@@ -48,7 +48,7 @@ public class EnterPersonalInfoViewModel: ObservableObject {
     @Published var birth: Date = Date()
     
     public init(
-        navigationRouter: OnboardingNavigationRouter,
+        navigationRouter: NavigationRoutableType,
         user: UserInfo
     ) {
         self.navigationRouter = navigationRouter

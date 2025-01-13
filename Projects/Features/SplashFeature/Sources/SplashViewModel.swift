@@ -21,7 +21,7 @@ public class SplashViewModel: ObservableObject {
     
     public var windowRouter: WindowRoutable
     
-    public init(windowRouter: WindowRoutable) {
+    public init(windowRouter: WindowRoutableType) {
         self.windowRouter = windowRouter
     }
     

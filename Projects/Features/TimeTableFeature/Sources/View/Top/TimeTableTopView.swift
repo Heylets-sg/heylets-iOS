@@ -13,7 +13,7 @@ import DSKit
 import BaseFeatureDependency
 
 public struct TopView: View {
-    @EnvironmentObject var router: Router
+    @EnvironmentObject var container: DIContainer
     @Binding var timeTableInfo: TimeTableInfo
     @Binding var viewType: TimeTableViewType
     @Binding var settingAlertType: TimeTableSettingAlertType?
@@ -68,7 +68,7 @@ public struct TopView: View {
                 }
                 
                 Button {
-                    router.windowRouter.switch(to: .mypage)
+                    container.windowRouter.switch(to: .mypage)
                 } label: {
                     Circle()
                         .frame(width: 31, height: 31)

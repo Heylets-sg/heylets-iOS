@@ -29,11 +29,11 @@ public class LogInViewModel: ObservableObject {
     @Published var password: String = ""
     private let cancelBag = CancelBag()
     
-    public var navigationRouter: OnboardingNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType
     
     public init(
-        navigationRouter: OnboardingNavigationRouter,
+        navigationRouter: NavigationRoutableType,
         windowRouter: WindowRoutableType
     ) {
         self.navigationRouter = navigationRouter

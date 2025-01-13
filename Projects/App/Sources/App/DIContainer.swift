@@ -6,23 +6,31 @@
 ////  Copyright © 2024 Heylets-iOS. All rights reserved.
 ////
 //
-//import Foundation
+//import SwiftUI
+//import DSKit
 //
+//import RootFeature
 //import Core
 //import BaseFeatureDependency
+//import RootFeature
+//
+//
+//final class DIContainer: DIContainerType {
+//    var navigationRouter: NavigationRoutableType
+//    var windowRouter: WindowRoutableType
+//    
+//    init(
+//        navigationRouter: NavigationRoutableType = NavigationRouter(),
+//        windowRouter: WindowRoutableType = WindowRouter()
+//    ) {
+//        self.navigationRouter = navigationRouter
+//        self.windowRouter = windowRouter
+//        
+////        navigationRouter.setObjectWillChange(objectWillChange)
+////        windowRouter.setObjectWillChange(objectWillChange)
+//    }
+//}
 //
 //extension DIContainer {
-//    static let `default`: DIContainer = {
-//        let container = DIContainer()
-//        
-//        container.register(NavigationRoutableType.self) {
-//            return NavigationRouter()
-//        }
-//        
-//        container.register(WindowRoutableType.self) {
-//            return WindowRouter()
-//        }
-//        
-//        return container
-//    }()
+//    static let `default` = DIContainer()
 //}

@@ -16,14 +16,12 @@ import RootFeature
 
 @main
 struct Heylets_iOSAPP: App {
-    @StateObject var windowRouter = Router.default
-    @StateObject var navigationRouter = HeyNavigationRouter()
+    @StateObject var container = DIContainer.default
     
     var body: some Scene {
         WindowGroup {
             RootView()
-                .environmentObject(windowRouter)
-                .environmentObject(navigationRouter)
+                .environmentObject(container)
         }
     }
 }

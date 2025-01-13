@@ -28,7 +28,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
         case checkIDAvailabilityButtonDidTap
     }
     
-    public var navigationRouter: OnboardingNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     private var user: UserInfo
     private let cancelBag = CancelBag()
     
@@ -38,7 +38,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
     @Published var checkPassword = ""
     
     public init(
-        navigationRouter: OnboardingNavigationRouter,
+        navigationRouter: NavigationRoutableType,
         user: UserInfo
     ) {
         self.navigationRouter = navigationRouter

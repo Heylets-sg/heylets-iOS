@@ -12,11 +12,14 @@ import BaseFeatureDependency
 import DSKit
 
 public struct LogInView: View {
-    @EnvironmentObject var router: Router
-    @StateObject var viewModel: LogInViewModel
+    @EnvironmentObject var container: DIContainer
+    @ObservedObject var viewModel: LogInViewModel
     
     @State var showPassword: Bool = false
     
+    public init(viewModel: LogInViewModel) {
+        self.viewModel = viewModel
+    }
     
     public var body: some View {
         VStack(alignment: .trailing) {
@@ -91,7 +94,8 @@ public struct LogInView: View {
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()
-        .setOnboardingNavigation()
+        .setOnboardingHeyNavigation()
+//        .setOnboardingNavigation()
     }
 }
 

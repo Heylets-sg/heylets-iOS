@@ -8,42 +8,27 @@
 
 import SwiftUI
 
+import Core
 import BaseFeatureDependency
 
-public enum MyPageNavigationDestination: Hashable {
-    case myPage
-    
-    case changePassword
-    
-    case privacyPolicy
-    case termsOfService
-    case contactUs
-    
-    case notificationSetting
-    
-    case deleteAccount
-}
-
 struct MyPageNavigationRoutingView: View {
-    
-    @EnvironmentObject var navigationRouter: MyPageNavigationRouter
-    @EnvironmentObject var router: Router
-    @State var destination: MyPageNavigationDestination
+    @EnvironmentObject var container: DIContainer
+    @State var destination: NavigationDestination
     
     var body: some View {
         switch destination {
+            
+            // MyPage Feature
         case .myPage:
             MyPageView(
                 viewModel: .init(
-                    navigationRouter: navigationRouter,
-                    windowRouter: router.windowRouter
+                    navigationRouter: container.navigationRouter,
+                    windowRouter: container.windowRouter
                 )
             )
         case .changePassword:
             ChangePasswordView(
-                viewModel: .init(
-                    navigationRouter: navigationRouter
-                )
+                viewModel: .init(navigationRouter: container.navigationRouter)
             )
         case .privacyPolicy:
             PrivacyPolicyView()
@@ -53,24 +38,24 @@ struct MyPageNavigationRoutingView: View {
             ContactUsView()
         case .notificationSetting:
             NotificationSettingView(
-                viewModel: .init(
-                    navigationRouter: navigationRouter
-                )
+                viewModel: .init(navigationRouter: container.navigationRouter)
             )
         case .deleteAccount:
             DeleteAccountView(
                 viewModel: .init(
-                    navigationRouter: navigationRouter,
-                    windowRouter: router.windowRouter
+                    navigationRouter: container.navigationRouter,
+                    windowRouter: container.windowRouter
                 )
             )
+        default:
+            EmptyView()
         }
     }
 }
 
 extension View {
-    func setMyPageNavigation() -> some View {
-        self.navigationDestination(for: MyPageNavigationDestination.self) { destination in
+    public func setMypageNavigation() -> some View {
+        self.navigationDestination(for: NavigationDestination.self) { destination in
             MyPageNavigationRoutingView(destination: destination)
         }
     }

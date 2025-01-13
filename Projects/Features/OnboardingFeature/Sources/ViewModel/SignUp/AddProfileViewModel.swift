@@ -25,7 +25,7 @@ public class AddProfileViewModel: ObservableObject {
         case profileImageDidChange(PhotosPickerItem?)
     }
     
-    public var navigationRouter: OnboardingNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     private var user: UserInfo
     private let cancelBag = CancelBag()
     
@@ -33,7 +33,7 @@ public class AddProfileViewModel: ObservableObject {
     @Published var profileImage: UIImage? = nil
     
     public init(
-        navigationRouter: OnboardingNavigationRouter,
+        navigationRouter: NavigationRoutableType,
         user: UserInfo
     ) {
         self.navigationRouter = navigationRouter

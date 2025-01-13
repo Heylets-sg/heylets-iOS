@@ -6,22 +6,29 @@
 ////  Copyright © 2024 Heylets-iOS. All rights reserved.
 ////
 //
-//import SwiftUI
-//
-//public enum NavigationDestination: Hashable {
-//    case onboarding
-//    
-//    //signup
-//    case selectUniversity
-//    case verifyEmail
-//    case enterSecurityCode
-//    case enterPersonalInfo
-//    case enterIdPassword
-//    case addProfile
-//    
-//    //signin
-//    case login
-//    case enterEmail
-//    case resetPassword
-//}
-//
+
+import Domain
+import SwiftUI
+
+public enum NavigationDestination: Hashable {
+    // MyPage destinations
+    case myPage
+    case changePassword
+    case privacyPolicy
+    case termsOfService
+    case contactUs
+    case notificationSetting
+    case deleteAccount
+    
+    // Onboarding destinations
+    case onboarding
+    case selectUniversity
+    case verifyEmail(UserInfo)
+    case enterSecurityCode(UserInfo?, String)
+    case enterPersonalInfo(UserInfo)
+    case enterIdPassword(UserInfo)
+    case addProfile(UserInfo)
+    case login
+    case enterEmail
+    case resetPassword
+}

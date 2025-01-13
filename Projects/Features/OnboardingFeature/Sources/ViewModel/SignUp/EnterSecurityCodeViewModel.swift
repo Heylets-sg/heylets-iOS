@@ -24,7 +24,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         case nextButtonDidTap
     }
     
-    public var navigationRouter: OnboardingNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     private var user: UserInfo?
     
     @Published var state = State()
@@ -32,7 +32,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     private let cancelBag = CancelBag()
     
     public init(
-        navigationRouter: OnboardingNavigationRouter,
+        navigationRouter: NavigationRoutableType,
         user: UserInfo?,
         email: String
     ) {

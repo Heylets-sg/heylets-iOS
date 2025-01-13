@@ -24,9 +24,9 @@ public class NotificationSettingViewModel: ObservableObject {
     }
     
     @Published var state = State()
-    public var navigationRouter: MyPageNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     
-    public init(navigationRouter: MyPageNavigationRouter) {
+    public init(navigationRouter: NavigationRoutableType) {
         self.navigationRouter = navigationRouter
     }
     

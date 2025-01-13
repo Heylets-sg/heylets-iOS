@@ -6,11 +6,11 @@
 //  Copyright © 2024 Heylets-iOS. All rights reserved.
 //
 
-import Combine
-import BaseFeatureDependency
-import OnboardingFeature
-
-extension Router {
-    static let `default` = Router.init(windowRouter: WindowRouter())
+//import Combine
+//import BaseFeatureDependency
+//import OnboardingFeature
+//
+//extension Router {
+//    static let `default` = Router.init(windowRouter: WindowRouter())
 //    static let stub = Router.init(navigationRouter: NavigationRouter(), windowRouter: WindowRouter())
-}
+//}

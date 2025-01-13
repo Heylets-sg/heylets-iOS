@@ -10,6 +10,7 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Domain
 
 public class MyPageViewModel: ObservableObject {
     struct State {
@@ -30,15 +31,18 @@ public class MyPageViewModel: ObservableObject {
     }
     
     @Published var state = State()
-    public var navigationRouter: MyPageNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType
+//    private let useCase: MyPageUseCaseType
     
     public init(
-        navigationRouter: MyPageNavigationRouter,
+        navigationRouter: NavigationRoutableType,
         windowRouter: WindowRoutableType
+//        useCase: MyPageUseCaseType
     ) {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
+//        self.useCase = useCase
     }
     
     func send(_ action: Action) {

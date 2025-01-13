@@ -25,14 +25,14 @@ public class ResetPasswordViewModel: ObservableObject {
         case gotoLoginView
     }
     
-    public var navigationRouter: OnboardingNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     private let cancelBag = CancelBag()
     
     @Published var state = State()
     @Published var password = ""
     @Published var checkPassword = ""
     
-    public init(navigationRouter: OnboardingNavigationRouter) {
+    public init(navigationRouter: NavigationRoutableType) {
         self.navigationRouter = navigationRouter
         
         observe()

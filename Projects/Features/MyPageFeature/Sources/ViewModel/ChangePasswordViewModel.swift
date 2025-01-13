@@ -27,7 +27,7 @@ public class ChangePasswordViewModel: ObservableObject {
         case dismissAlertView
     }
     
-    public var navigationRouter: MyPageNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     private let cancelBag = CancelBag()
     
     @Published var state = State()
@@ -35,7 +35,7 @@ public class ChangePasswordViewModel: ObservableObject {
     @Published var newPassword = ""
     @Published var checkPassword = ""
     
-    public init(navigationRouter: MyPageNavigationRouter) {
+    public init(navigationRouter: NavigationRoutableType) {
         self.navigationRouter = navigationRouter
         
         observe()

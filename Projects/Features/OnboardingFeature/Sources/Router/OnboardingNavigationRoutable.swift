@@ -1,20 +1,20 @@
+////
+////  OnboardingNavigationRoutable.swift
+////  OnboardingFeature
+////
+////  Created by 류희재 on 12/20/24.
+////  Copyright © 2024 Heylets-iOS. All rights reserved.
+////
 //
-//  OnboardingNavigationRoutable.swift
-//  OnboardingFeature
+//import Foundation
+//import Combine
 //
-//  Created by 류희재 on 12/20/24.
-//  Copyright © 2024 Heylets-iOS. All rights reserved.
+//import Core
 //
-
-import Foundation
-import Combine
-
-import Core
-
-public protocol OnboardingNavigationRoutable {
-    var destinations: [OnboardingNavigationDestination] { get set }
-    
-    func push(to view: OnboardingNavigationDestination)
-    func pop()
-    func popToRootView()
-}
+//public protocol OnboardingNavigationRoutable {
+//    var destinations: [OnboardingNavigationDestination] { get set }
+//    
+//    func push(to view: OnboardingNavigationDestination)
+//    func pop()
+//    func popToRootView()
+//}

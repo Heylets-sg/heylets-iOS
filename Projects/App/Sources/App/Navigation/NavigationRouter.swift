@@ -12,8 +12,8 @@
 //import BaseFeatureDependency
 //import OnboardingFeature
 //
-//final class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
-//    var objectWillChange: ObservableObjectPublisher?
+//class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
+//    public var objectWillChange: ObservableObjectPublisher?
 //    
 //    var destinations: [NavigationDestination] = [] {
 //        didSet {

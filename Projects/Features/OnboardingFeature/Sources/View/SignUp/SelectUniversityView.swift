@@ -12,7 +12,7 @@ import BaseFeatureDependency
 import DSKit
 
 public struct SelectUniversityView: View {
-    @EnvironmentObject var router: Router
+    @EnvironmentObject var container: DIContainer
     @ObservedObject var viewModel: SelectUniversityViewModel
     
     public init(viewModel: SelectUniversityViewModel) {

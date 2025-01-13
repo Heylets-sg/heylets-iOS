@@ -24,14 +24,14 @@ public class EnterEmailViewModel: ObservableObject {
         case nextButtonDidTap
     }
     
-    public var navigationRouter: OnboardingNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     
     @Published var state = State()
     private let cancelBag = CancelBag()
     
     @Published var email: String = ""
     
-    public init(navigationRouter: OnboardingNavigationRouter) {
+    public init(navigationRouter: NavigationRoutableType) {
         self.navigationRouter = navigationRouter
         
         observe()

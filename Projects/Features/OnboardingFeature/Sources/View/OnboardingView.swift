@@ -12,7 +12,7 @@ import Core
 import DSKit
 
 public struct OnboardingView: View {
-    @EnvironmentObject var onboardingRouter: OnboardingNavigationRouter
+    @EnvironmentObject var container: DIContainer
     var viewModel: OnboardingViewModel
     
     let images: [UIImage] = [.timeTable, .color]
@@ -22,7 +22,7 @@ public struct OnboardingView: View {
     }
     
     public var body: some View {
-        NavigationStack(path: $onboardingRouter.destinations) {
+        NavigationStack(path: $container.navigationRouter.destinations) {
             ZStack {
                 Color.heyMain.ignoresSafeArea()
                 
@@ -74,7 +74,7 @@ public struct OnboardingView: View {
                         .frame(height: 65)
                 }
             }
-            .setOnboardingNavigation()
+            .setOnboardingHeyNavigation()
         }
         .navigationBarBackButtonHidden()
     }
@@ -82,10 +82,10 @@ public struct OnboardingView: View {
 
 
 
-#Preview {
-    OnboardingView(
-        viewModel: OnboardingViewModel(
-            navigationRouter: OnboardingNavigationRouter()
-        )
-    )
-}
+//#Preview {
+//    OnboardingView(
+//        viewModel: OnboardingViewModel(
+//            navigationRouter: NavigationRoutableType()
+//        )
+//    )
+//}

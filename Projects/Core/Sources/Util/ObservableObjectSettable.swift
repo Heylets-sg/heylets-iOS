@@ -9,13 +9,13 @@
 import Combine
 
 public protocol ObservableObjectSettable: AnyObject {
-  var objectWillChange: ObservableObjectPublisher? { get set }
-  func setObjectWillChange(_ objectWillChange: ObservableObjectPublisher?)
+    var objectWillChange: ObservableObjectPublisher? { get set }
+    func setObjectWillChange(_ objectWillChange: ObservableObjectPublisher?)
 }
 
 public extension ObservableObjectSettable {
-  func setObjectWillChange(_ objectWillChange: ObservableObjectPublisher?) {
-    self.objectWillChange = objectWillChange
-  }
+    func setObjectWillChange(_ objectWillChange: ObservableObjectPublisher?) {
+        self.objectWillChange = objectWillChange
+    }
 }
 

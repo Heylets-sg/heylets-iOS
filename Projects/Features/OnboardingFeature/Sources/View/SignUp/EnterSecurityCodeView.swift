@@ -12,7 +12,7 @@ import BaseFeatureDependency
 import DSKit
 
 public struct EnterSecurityCodeView: View {
-    @EnvironmentObject var router: Router
+    @EnvironmentObject var container: DIContainer
     @ObservedObject var viewModel: EnterSecurityCodeViewModel
     
     public init(viewModel: EnterSecurityCodeViewModel) {

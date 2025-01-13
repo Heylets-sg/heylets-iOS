@@ -12,7 +12,7 @@ import DSKit
 import BaseFeatureDependency
 
 public struct DeleteAccountView: View {
-    @EnvironmentObject var router: Router
+    @EnvironmentObject var container: DIContainer
     @ObservedObject var viewModel: DeleteAccountViewModel
     
     public init(viewModel: DeleteAccountViewModel) {

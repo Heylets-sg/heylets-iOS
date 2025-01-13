@@ -1,119 +1,91 @@
-//
-//  OnboardingNavigationDestination.swift
-//  OnboardingFeature
-//
-//  Created by 류희재 on 12/20/24.
-//  Copyright © 2024 Heylets-iOS. All rights reserved.
-//
-
+import Foundation
 import SwiftUI
 
 import BaseFeatureDependency
-import Domain
+import MyPageFeature
+import OnboardingFeature
+import TimeTableFeature
 
-public enum OnboardingNavigationDestination: Hashable {
-    case onboarding
-    
-    //signup
-    case selectUniversity
-    case verifyEmail(UserInfo)
-    case enterSecurityCode(UserInfo?, String)
-    case enterPersonalInfo(UserInfo)
-    case enterIdPassword(UserInfo)
-    case addProfile(UserInfo)
-    
-    //signin
-    case login
-    case enterEmail
-    case resetPassword
-}
+import Core
+import Networks
 
 struct OnboardingNavigationRoutingView: View {
-    
-    @EnvironmentObject var navigationRouter: OnboardingNavigationRouter
-    @EnvironmentObject var router: Router
-    @State var destination: OnboardingNavigationDestination
+    @EnvironmentObject var container: DIContainer
+    @State var destination: NavigationDestination
     
     var body: some View {
         switch destination {
+        
+        // Onboarding Feature
         case .onboarding:
             OnboardingView(
-                viewModel: .init(
-                    navigationRouter: navigationRouter
-                )
+                viewModel: .init(navigationRouter: container.navigationRouter)
             )
-            //MARK: SignUp
-            
         case .selectUniversity:
             SelectUniversityView(
-                viewModel: .init(
-                    navigationRouter: navigationRouter
-                )
+                viewModel: .init(navigationRouter: container.navigationRouter)
             )
         case .verifyEmail(let user):
             VerifyEmailView(
                 viewModel: .init(
-                    navigationRouter: navigationRouter,
+                    navigationRouter: container.navigationRouter,
                     user: user
                 )
             )
         case .enterSecurityCode(let user, let email):
             EnterSecurityCodeView(
                 viewModel: .init(
-                    navigationRouter: navigationRouter,
-                    user: user, 
+                    navigationRouter: container.navigationRouter,
+                    user: user,
                     email: email
                 )
             )
         case .enterPersonalInfo(let user):
             EnterPersonalInfoView(
                 viewModel: .init(
-                    navigationRouter: navigationRouter,
+                    navigationRouter: container.navigationRouter,
                     user: user
                 )
             )
         case .enterIdPassword(let user):
             EnterIdPasswordView(
                 viewModel: .init(
-                    navigationRouter: navigationRouter,
+                    navigationRouter: container.navigationRouter,
                     user: user
                 )
             )
         case .addProfile(let user):
             AddProfileView(
                 viewModel: .init(
-                    navigationRouter: navigationRouter,
+                    navigationRouter: container.navigationRouter,
                     user: user
                 )
             )
-            
-            //MARK: SignIn
-            
         case .login:
             LogInView(
                 viewModel: .init(
-                    navigationRouter: navigationRouter, 
-                    windowRouter: router.windowRouter
+                    navigationRouter: container.navigationRouter,
+                    windowRouter: container.windowRouter
                 )
             )
         case .enterEmail:
             EnterEmailView(
-                viewModel: .init(
-                    navigationRouter: navigationRouter
-                )
+                viewModel: .init(navigationRouter: container.navigationRouter)
             )
         case .resetPassword:
             ResetPasswordView(
-                viewModel: .init(
-                    navigationRouter: navigationRouter
-                )
+                viewModel: .init(navigationRouter: container.navigationRouter)
             )
+            
+        default:
+            EmptyView()
         }
     }
 }
+
 extension View {
-    func setOnboardingNavigation() -> some View {
-        self.navigationDestination(for: OnboardingNavigationDestination.self) { destination in
+    public func setOnboardingHeyNavigation() -> some View {
+        self.navigationDestination(for: NavigationDestination.self) { destination in
             OnboardingNavigationRoutingView(destination: destination)
         }
     }

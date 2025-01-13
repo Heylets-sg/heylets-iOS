@@ -26,7 +26,7 @@ public class VerifyEmailViewModel: ObservableObject {
         case selectDomain(String)
     }
     
-    public var navigationRouter: OnboardingNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     public var user: UserInfo
     
     @Published var state = State()
@@ -37,7 +37,7 @@ public class VerifyEmailViewModel: ObservableObject {
     @Published var email: String = ""
     
     public init(
-        navigationRouter: OnboardingNavigationRouter,
+        navigationRouter: NavigationRoutableType,
         user: UserInfo
     ) {
         self.navigationRouter = navigationRouter

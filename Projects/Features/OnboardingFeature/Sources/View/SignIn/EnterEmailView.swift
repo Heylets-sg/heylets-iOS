@@ -12,7 +12,7 @@ import BaseFeatureDependency
 import DSKit
 
 public struct EnterEmailView: View {
-    @EnvironmentObject var router: Router
+    @EnvironmentObject var container: DIContainer
     @ObservedObject var viewModel: EnterEmailViewModel
     
     public init(viewModel: EnterEmailViewModel) {

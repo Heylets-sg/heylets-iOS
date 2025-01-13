@@ -12,7 +12,7 @@ import PhotosUI
 import BaseFeatureDependency
 
 public struct AddProfileView: View {
-    @EnvironmentObject var router: Router
+    @EnvironmentObject var container: DIContainer
     @ObservedObject var viewModel: AddProfileViewModel
     
     public init(viewModel: AddProfileViewModel) {

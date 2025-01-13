@@ -28,7 +28,7 @@ public class DeleteAccountViewModel: ObservableObject {
         case deleteAccount
     }
     
-    public var navigationRouter: MyPageNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType
     private let cancelBag = CancelBag()
     
@@ -36,7 +36,7 @@ public class DeleteAccountViewModel: ObservableObject {
     @Published var password = ""
     
     public init(
-        navigationRouter: MyPageNavigationRouter,
+        navigationRouter: NavigationRoutableType,
         windowRouter: WindowRoutableType
     ) {
         self.navigationRouter = navigationRouter

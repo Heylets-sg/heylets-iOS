@@ -5,7 +5,7 @@ import DSKit
 
 public struct SplashView: View {
     
-    @EnvironmentObject var router: Router
+    @EnvironmentObject var container: DIContainer
     var viewModel: SplashViewModel
     
     public init(viewModel: SplashViewModel) {
