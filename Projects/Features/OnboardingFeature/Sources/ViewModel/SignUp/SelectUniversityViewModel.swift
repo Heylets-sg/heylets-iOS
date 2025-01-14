@@ -57,7 +57,6 @@ public class SelectUniversityViewModel: ObservableObject {
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
-        dump(useCase.userInfo)
         
         observe()
     }

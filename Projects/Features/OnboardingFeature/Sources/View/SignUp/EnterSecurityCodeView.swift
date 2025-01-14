@@ -37,6 +37,7 @@ public struct EnterSecurityCodeView: View {
             
         }, titleText: "Enter Your Security Code", nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled, nextButtonAction: { viewModel.send(.nextButtonDidTap)
         })
+        .onAppear { viewModel.send(.onAppear) }
     }
 }
 

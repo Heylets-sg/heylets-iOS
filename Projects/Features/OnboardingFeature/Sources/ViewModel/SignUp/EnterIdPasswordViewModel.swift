@@ -44,7 +44,6 @@ public class EnterIdPasswordViewModel: ObservableObject {
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
-        dump(useCase.userInfo)
         
         observe()
     }
@@ -59,9 +58,10 @@ public class EnterIdPasswordViewModel: ObservableObject {
             navigationRouter.push(to: .addProfile)
         case .checkIDAvailabilityButtonDidTap:
             useCase.checkUserName(nickName)
-                .sink(receiveValue: { [weak self] _ in
-                    //TODO: 한번 더 확인
-                    self?.state.nickNameIsValid = .idle
+                .sink(receiveValue: { [weak self] available in
+                    if available {
+                        self?.state.nickNameIsValid = .valid
+                    }
                 })
                 .store(in: cancelBag)
         }
@@ -70,11 +70,6 @@ public class EnterIdPasswordViewModel: ObservableObject {
     private func observe() {
         weak var owner = self
         guard let owner else { return }
-        
-        $nickName
-            .map { $0.isEmpty ? .idle : ($0.isValidNickname() ? .valid : .invalid) }
-            .assign(to: \.state.nickNameIsValid, on: owner)
-            .store(in: cancelBag)
         
         $password
             .map { $0.isEmpty ? .idle : ($0.isValidPassword() ? .valid : .invalid) }
@@ -93,6 +88,14 @@ public class EnterIdPasswordViewModel: ObservableObject {
                 owner.state.checkPasswordIsValid == .valid
             }
             .assign(to: \.state.continueButtonIsEnabled, on: owner)
+            .store(in: cancelBag)
+    }
+    
+    private func bindState() {
+        useCase.checkUserNameFailed
+            .map { _ in TextFieldState.invalid }
+            .receive(on: RunLoop.main)
+            .assign(to: \.state.nickNameIsValid, on: self)
             .store(in: cancelBag)
     }
 }

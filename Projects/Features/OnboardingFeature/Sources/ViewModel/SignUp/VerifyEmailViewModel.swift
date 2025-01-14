@@ -41,7 +41,6 @@ public class VerifyEmailViewModel: ObservableObject {
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
-        dump(useCase.userInfo)
         
         observe()
     }
@@ -52,7 +51,7 @@ public class VerifyEmailViewModel: ObservableObject {
             navigationRouter.pop()
         case .nextButtonDidTap:
             useCase.userInfo.email = email
-            navigationRouter.push(to: .enterSecurityCode(.email))
+            navigationRouter.push(to: .enterSecurityCode(.email(email)))
         case .domainListButtonDidTap:
             state.domainListViewIsVisible.toggle()
         case .selectDomain(let domain):

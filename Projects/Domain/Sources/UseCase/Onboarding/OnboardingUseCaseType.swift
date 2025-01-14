@@ -12,7 +12,7 @@ import Foundation
 import Combine
 
 public enum VerifyCodeType: Hashable {
-    case email
+    case email(String)
     case resetPassword(String)
 }
 
@@ -46,7 +46,7 @@ public protocol OnboardingUseCaseType {
     // checkUserName
     func checkUserName(
         _ userName: String
-    ) -> AnyPublisher<Void, Never>
+    ) -> AnyPublisher<Bool, Never>
     
     // ResetPassword
     

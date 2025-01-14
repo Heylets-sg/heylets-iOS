@@ -36,7 +36,10 @@ public struct EnterIdPasswordView: View {
                     placeHolder: "username",
                     rightImage: .icRepeat,
                     textFieldState: $viewModel.state.nickNameIsValid,
-                    colorSystem: .gray
+                    colorSystem: .gray,
+                    action: {
+                        viewModel.send(.checkIDAvailabilityButtonDidTap)
+                    }
                 )
                 
                 PasswordField(

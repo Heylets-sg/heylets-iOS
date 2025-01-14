@@ -12,7 +12,7 @@ import Domain
 
 public enum AuthAPI {
     case checkUserName(String)
-//    case refreshToken
+    //    case refreshToken
     case signUp(SignUpRequest)
     case resetPassword(ResetPasswordRequest)
     case verifyResetPassword(VerifyOTPCodeRequest)
@@ -32,8 +32,8 @@ extension AuthAPI: BaseAPI {
         switch self {
         case .checkUserName:
             Paths.checkUserName
-//        case .refreshToken:
-//            Paths.refreshToken
+            //        case .refreshToken:
+            //            Paths.refreshToken
         case .signUp:
             Paths.signUp
         case .resetPassword:
@@ -57,8 +57,8 @@ extension AuthAPI: BaseAPI {
         switch self {
         case .checkUserName:
             return .get
-//        case .refreshToken:
-//            return .post
+            //        case .refreshToken:
+            //            return .post
         case .signUp:
             return .post
         case .resetPassword:
@@ -77,15 +77,35 @@ extension AuthAPI: BaseAPI {
             return .post
         }
     }
+    func encodeToJSONString<T: Encodable>(_ value: T) throws -> String {
+        let jsonData = try JSONEncoder().encode(value)
+        guard let jsonString = String(data: jsonData, encoding: .utf8) else {
+            throw HeyNetworkError.RequestError.multipartFailed
+        }
+        print("jsonString -> \(jsonString)")
+        return jsonString
+    }
     
     public var task: Task {
         switch self {
         case .checkUserName(let name):
             return .requestParameters(["username": name])
-//        case .refreshToken:
-//            <#code#>
+            //        case .refreshToken:
+            //            <#code#>
         case .signUp(let request):
-            let multipartData = MultipartFormDataHandler.createMultipartData(from: request)
+            var multipartData: [MultipartFormData] = 
+            [
+                .text("request", "{\"nickname\":\"\(request.requset.nickname)\",\"email\":\"\(request.requset.email)\",\"password\":\"\(request.requset.password)\",\"university\":\"\(request.requset.university)\",\"sex\":\"\(request.requset.sex)\",\"birth\":\"\(request.requset.birth)\"}")
+            ]
+            
+            if let profileImage = request.profileImg {
+                multipartData.append(.file(
+                    name: "profileImage",
+                    filename: "profile.jpg",
+                    mimeType: "image/jpeg",
+                    fileData: profileImage
+                ))
+            }
             return .uploadMultipartFormData(multipartData)
         case .resetPassword(let request):
             return .requestJSONEncodable(request)
@@ -105,7 +125,13 @@ extension AuthAPI: BaseAPI {
     }
     
     public var headers: [String : String]? {
-        return APIHeaders.defaultHeader
+        switch self {
+        case .signUp:
+            return APIHeaders.multipartHeader
+        default:
+            return APIHeaders.defaultHeader
+        }
+        
     }
 }
 

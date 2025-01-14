@@ -70,10 +70,8 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         _ type: VerifyCodeType
     ) -> AnyPublisher<Void, Never> {
         switch type {
-        case .email:
-            authRepository.requestVerifyEmail(
-                UserDefaultsManager.getEmail()
-            )
+        case .email(let email):
+            authRepository.requestVerifyEmail(email)
             .map { _ in }
             .catch { [weak self] _ in
                 self?.requestOTPCodeFailed.send("request OTPCode Failed (Email)")
@@ -81,10 +79,8 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
             }
             .eraseToAnyPublisher()
             
-        case .resetPassword:
-            authRepository.requestResetPassword(
-                UserDefaultsManager.getEmail()
-            )
+        case .resetPassword(let email):
+            authRepository.requestResetPassword(email)
             .map { _ in }
             .catch { [weak self] _ in
                 self?.requestOTPCodeFailed.send("request OTPCode Failed (password")
@@ -99,11 +95,8 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         _ otpCode: Int
     ) -> AnyPublisher<Void, Never> {
         switch type {
-        case .email:
-            authRepository.verifyEmail(
-                UserDefaultsManager.getEmail(),
-                otpCode
-            )
+        case .email(let email):
+            authRepository.verifyEmail(email, otpCode)
             .map { _ in }
             .catch { [weak self] _ in
                 self?.verifyOTPCodeFailed.send("request OTPCode Failed (Email)")
@@ -111,10 +104,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
             }
             .eraseToAnyPublisher()
         case .resetPassword(let email):
-            authRepository.verifyResetPassword(
-                email,
-                otpCode
-            )
+            authRepository.verifyResetPassword(email, otpCode)
             .map { _ in }
             .catch { [weak self] _ in
                 self?.verifyOTPCodeFailed.send("request OTPCode Failed (password")
@@ -126,12 +116,12 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     
     public func checkUserName(
         _ userName: String
-    ) -> AnyPublisher<Void, Never> {
+    ) -> AnyPublisher<Bool, Never> {
         authRepository.checkUserName(userName)
-            .map { _ in }
+            .map { $0 }
             .catch { [weak self] _ in
                 self?.checkUserNameFailed.send("잘못된 형식의 이름입니다")
-                return Just(()).eraseToAnyPublisher()
+                return Just(false).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }

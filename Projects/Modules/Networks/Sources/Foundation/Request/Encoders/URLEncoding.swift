@@ -36,6 +36,7 @@ public struct URLEncoding: URLEncodingType {
                     }
                     var modifiedRequest = request
                     modifiedRequest.url = urlComponents.url
+                    print("⌚️ \(urlComponents.url)")
                     return modifiedRequest
                 } else {
                     throw HeyNetworkError.RequestError.ParameterEncodingError.urlEncodingFailed

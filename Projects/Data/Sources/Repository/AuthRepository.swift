@@ -91,7 +91,7 @@ public struct AuthRepository: AuthRepositoryType {
         _ email: String
     ) -> AnyPublisher<Void, Error> {
         let request: RequestOTPCodeRequest = .init(email)
-        return authService.requestResetPassword(request)
+        return authService.requestVerifyEmail(request)
             .asVoidWithGeneralError()
     }
 }

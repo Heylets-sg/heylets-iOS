@@ -64,7 +64,14 @@ extension UserAPI: BaseAPI {
         case .patchAcademicInfo(let request):
             return .requestJSONEncodable(request)
         case .postProfileImg(let request):
-            let multipartData = MultipartFormDataHandler.createMultipartData(from: request)
+            var multipartData: [MultipartFormData] = []
+            multipartData.append(.file(
+                name: "profileImage",
+                filename: "profile.jpg",
+                mimeType: "image/jpeg",
+                fileData: request.image
+            ))
+            
             return .uploadMultipartFormData(multipartData)
         }
     }

@@ -61,7 +61,7 @@ extension ErrorHandler {
         let error: HeyNetworkError.ResponseError
         if let data = response.data {
             if let errorResponse = try? JSONDecoder().decode(ErrorResponse.self, from: data) {
-                error = .invalidStatusCode(code: response.response.statusCode, message: errorResponse.message)
+                error = .invalidStatusCode(code: response.response.statusCode, message: errorResponse.message[0])
             } else {
                 error = .invalidStatusCode(code: response.response.statusCode)
             }

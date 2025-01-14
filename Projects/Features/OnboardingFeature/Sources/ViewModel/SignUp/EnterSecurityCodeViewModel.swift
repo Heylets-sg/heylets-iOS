@@ -41,8 +41,6 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
         self.type = type
-        self.state.hiddenEmail = useCase.userInfo.email.maskedEmail()
-        dump(useCase.userInfo)
         
         observe()
     }

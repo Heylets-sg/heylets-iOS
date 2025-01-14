@@ -15,12 +15,14 @@ import Networks
 extension User {
     public func toDTO() -> SignUpRequest {
         .init(
-            nickname: profile.nickName,
-            email: email,
-            password: password,
-            university: profile.university,
-            sex: gender,
-            birth: birth.toInt(),
+            requset: .init(
+                nickname: profile.nickName,
+                email: email,
+                password: password,
+                university: profile.university,
+                sex: gender,
+                birth: birth.toInt()
+            ),
             profileImg: profile.image
         )
     }

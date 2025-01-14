@@ -20,16 +20,16 @@ public struct APIHeaders {
     static let auth = "Authorization"
     
     static let deviceID_key = "Device-Id"
-    static let deviceID_value = "ex) 1234abcd5678efgh"
+    static let deviceID_value = AppService.getDeviceIdentifier()
     
     static let deviceModel_key = "Device-Model"
-    static let deviceModel_value = "ex) SM-S918N"
+    static let deviceModel_value = AppService.getDeviceModelName()
     
     static let osVersion_key = "OS-Version"
-    static let osVersion_value = "ex) 13"
+    static let osVersion_value = AppService.getOSVersion()
     
     static let appVersion_key = "App-Version"
-    static let appVersion_value = "ex) 1.0.0"
+    static let appVersion_value = AppService.getLocalAppVersion()
     
     static let xPlatform = "X-Platform"
     static let iOS = "IOS"

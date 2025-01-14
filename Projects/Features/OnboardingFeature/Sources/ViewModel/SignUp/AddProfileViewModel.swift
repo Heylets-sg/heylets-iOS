@@ -39,7 +39,6 @@ public class AddProfileViewModel: ObservableObject {
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
-        dump(useCase.userInfo)
     }
     
     func send(_ action: Action) {
