@@ -8,6 +8,22 @@
 
 import Foundation
 
+//public var id: String?
+//public var code: String
+//public var name: String
+//public var schedule: [ScheduleInfo]
+//public var professor: String
+//public var unit: Int?
+
+//public var id: Int?
+//public var day: Week
+//public var startHour: Int
+//public var startMinute: Int
+//public var endHour: Int
+//public var endMinute: Int
+//public var location: String
+
+
 public struct CustomModuleInfo {
     public let scheduleId: Int
     public let title: String

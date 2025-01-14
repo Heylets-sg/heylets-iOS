@@ -58,6 +58,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
             navigationRouter.push(to: .addProfile)
         case .checkIDAvailabilityButtonDidTap:
             useCase.checkUserName(nickName)
+                .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] available in
                     if available {
                         self?.state.nickNameIsValid = .valid

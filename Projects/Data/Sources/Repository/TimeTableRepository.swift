@@ -38,7 +38,7 @@ public struct TimeTableRepository: TimeTableRepositoryType {
     
     public func getTableDetailInfo(
         _ tableId: String
-    ) -> AnyPublisher<TimeTableInfo, Error> {
+    ) -> AnyPublisher<TimeTableDetailInfo, Error> {
         service.getTableDetailInfo(tableId)
             .map { $0.toEntity() }
             .mapToGeneralError()

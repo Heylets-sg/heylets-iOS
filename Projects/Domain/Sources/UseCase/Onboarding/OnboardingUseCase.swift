@@ -60,7 +60,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
             })
             .map { _ in }
             .catch { [weak self] _ in
-                self?.loginFailed.send("SignUp Failed")
+                self?.signUpFailed.send("SignUp Failed")
                 return Just(()).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()

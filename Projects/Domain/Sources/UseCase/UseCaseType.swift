@@ -11,6 +11,7 @@ import Foundation
 public protocol UseCaseType {
     var myPageUseCase: MyPageUseCaseType { get }
     var onboardingUseCase: OnboardingUseCaseType { get }
+    var timeTableUseCase: TimeTableUseCaseType { get }
 }
 
 public final class HeyUseCase: UseCaseType & ObservableObject {
@@ -18,6 +19,7 @@ public final class HeyUseCase: UseCaseType & ObservableObject {
     
     public var myPageUseCase: MyPageUseCaseType
     public var onboardingUseCase: OnboardingUseCaseType
+    public var timeTableUseCase: TimeTableUseCaseType
     
     public init(repository: RepositoryType) {
         self.repository = repository
@@ -29,6 +31,15 @@ public final class HeyUseCase: UseCaseType & ObservableObject {
         
         onboardingUseCase = OnboardingUseCase(
             authRepository: repository.authRepository
+        )
+        
+        timeTableUseCase = TimeTableUseCase(
+            lectureRepository: repository.lectureRepository,
+            scheduleRepository: repository.scheduleRepository,
+            sectionRepository: repository.sectionRepository,
+            themeRepository: repository.themeRepository,
+            timeTableRepository: repository.timeTableRepository
+        
         )
     }
 }

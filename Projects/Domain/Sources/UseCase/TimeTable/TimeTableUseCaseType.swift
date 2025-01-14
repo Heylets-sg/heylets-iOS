@@ -12,47 +12,53 @@ import Foundation
 import Combine
 
 public protocol TimeTableUseCaseType {
-    func getLectureList() -> AnyPublisher<([SectionInfo], [Week]), Error>
-    // lectureInfo -> sectionInfo, weekInfo
+    //MARK: Main
     
+    // 시간표 상세조회 불러오기
     func getTableDetailInfo(
         _ tableId: String
-    ) -> AnyPublisher<TimeTableInfo, Error>
+    ) -> AnyPublisher<TimeTableDetailInfo?, Never>
     
-}
-
-public protocol TimeTableDetailUseCaseType {
-    var lectureInfo: SectionInfo { get }
+    // 강의 삭제하기
+//    func deleteModule(
+//        _ tableId: String
+//    ) -> AnyPublisher<Void, Error>
     
-    var deleteModuleFailed: PassthroughSubject<String, Never> { get }
+//    var deleteModuleFailed: PassthroughSubject<String, Never> { get } // 강의 삭제 실패
     
-    func deleteTable(
-        _ tableId: String
-    ) -> AnyPublisher<Void, Error>
-}
-
-public protocol TimeTableSearchUseCaseType {
-    var addModuleFailed: PassthroughSubject<String, Never> { get }
     
-    // 강의 조회
-    func getLectureListWithKeyword(
-        _ keyword: String
-    ) -> AnyPublisher<[LectureInfo], Error>
+    //MARK: Detail
+//    var lectureInfo: SectionInfo { get } // 상세 강의
     
-    // 없는 모듈 report 하기 -> API 어디감?
     
-    // 커스텀 모듈 추가
-    func addCustomModule(
-        _ tableId: String,
-        _ customModuleInfo: CustomModuleInfo
-    ) -> AnyPublisher<CustomModuleInfo, Error>
+    
+//    
+//    //MARK: Search
+//    
+//    // 강의 조회
+//    func getLectureList() -> AnyPublisher<[LectureInfo], Never>
+//    
+//    // 강의 검색
+//    func getLectureListWithKeyword(
+//        _ keyword: String
+//    ) -> AnyPublisher<[LectureInfo], Never>
+//    
+//    // 커스텀 모듈 추가
+//    func addCustomModule(
+//        _ tableId: String,
+//        _ customModuleInfo: CustomModuleInfo
+//    ) -> AnyPublisher<CustomModuleInfo, Never>
+//    
+//    var addModuleFailed: PassthroughSubject<String, Never> { get }
+//    
+//    
 }
 
 public protocol TimeTableSettingUseCaseType {
     func changeTimetableName(
         _ tableId: String,
         _ tableName: String
-    ) -> AnyPublisher<Void, Error>
+    ) -> AnyPublisher<Void, Never>
     
-    func getThemeList() -> AnyPublisher<[Theme], Error>
+    func getThemeList() -> AnyPublisher<[Theme], Never>
 }

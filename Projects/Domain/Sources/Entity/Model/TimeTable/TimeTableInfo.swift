@@ -8,6 +8,20 @@
 
 import Foundation
 
+public struct TimeTableDetailInfo {
+    public var tableInfo: TimeTableInfo
+    public let sectionList: [SectionInfo]
+    
+    public init(
+        tableInfo: TimeTableInfo,
+        sectionList: [SectionInfo]
+    ) {
+        self.tableInfo = tableInfo
+        self.sectionList = sectionList
+    }
+}
+
+
 public struct TimeTableInfo {
     public var id: Int
     public var name: String

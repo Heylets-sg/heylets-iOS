@@ -9,12 +9,13 @@
 import Foundation
 
 public struct SectionInfo: Hashable, Equatable {
-    public var id: String?
-    public var code: String
+    public var id: Int?
+    public var code: String?
     public var name: String
     public var schedule: [ScheduleInfo]
     public var professor: String
     public var unit: Int?
+    public var memo: String?
     
     public var allscheduleTime: String {
         let all = schedule.map { "\($0.day) \($0.startTime) - \($0.endTime)" }
@@ -35,12 +36,13 @@ public struct SectionInfo: Hashable, Equatable {
     }
     
     public init(
-        id: String? = nil,
-        code: String,
+        id: Int? = nil,
+        code: String? = nil,
         name: String,
         schedule: [ScheduleInfo],
-        professor: String = "To Be Announced",
-        unit: Int? = nil
+        professor: String,
+        unit: Int? = nil,
+        memo: String? = nil
     ) {
         self.id = id
         self.code = code
@@ -48,6 +50,7 @@ public struct SectionInfo: Hashable, Equatable {
         self.schedule = schedule
         self.professor = professor
         self.unit = unit
+        self.memo = memo
     }
 }
 
@@ -59,7 +62,7 @@ extension Array where Element == SectionInfo {
             for schedule in lecture.schedule {
                 let timeTableCell: TimeTableCellInfo = .init(
                     id: lecture.id,
-                    code: lecture.code,
+                    code: lecture.code ?? "custom",
                     name: lecture.name,
                     professor: lecture.professor,
                     schedule: schedule

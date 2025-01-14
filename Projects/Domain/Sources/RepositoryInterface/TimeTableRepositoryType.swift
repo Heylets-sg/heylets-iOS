@@ -22,7 +22,7 @@ public protocol TimeTableRepositoryType {
     
     func getTableDetailInfo(
         _ tableId: String
-    ) -> AnyPublisher<TimeTableInfo, Error>
+    ) -> AnyPublisher<TimeTableDetailInfo, Error>
     
     //추가하자마자 전체 API 불러올 생각이어서 일단 Void
     func patchTableName(

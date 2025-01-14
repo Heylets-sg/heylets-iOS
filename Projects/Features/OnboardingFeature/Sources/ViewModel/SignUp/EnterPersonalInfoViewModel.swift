@@ -60,7 +60,6 @@ public class EnterPersonalInfoViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            //TODO: DTO 타입보고 변경할지 말지 결정하기
             guard let gender else { return }
             useCase.userInfo.gender = gender.rawValue
             useCase.userInfo.birth = birth

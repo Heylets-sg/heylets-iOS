@@ -17,6 +17,6 @@ public struct TimeTableDetailInfoDTO: Decodable {
     let status: String
     let color: String
     let displayType: String
-    let sections: [SectionResult]
-    let customMudles: [ModuleResult]
+    public let sections: [SectionResult]
+    public let customModules: [CustomModuleResult]
 }

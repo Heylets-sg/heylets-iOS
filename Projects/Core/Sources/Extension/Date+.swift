@@ -16,3 +16,13 @@ extension Date {
         return Int(dateString) ?? 0 // String을 Int로 변환
     }
 }
+
+
+public extension String {
+    /// Parses a time string in the format "HH:mm" and returns a tuple of hour and minute.
+    func parseTime() -> (hour: Int, minute: Int) {
+        let components = self.split(separator: ":").compactMap { Int($0) }
+        guard components.count == 2 else { return (hour: 0, minute: 0) }
+        return (hour: components[0], minute: components[1])
+    }
+}

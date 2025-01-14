@@ -77,14 +77,6 @@ extension AuthAPI: BaseAPI {
             return .post
         }
     }
-    func encodeToJSONString<T: Encodable>(_ value: T) throws -> String {
-        let jsonData = try JSONEncoder().encode(value)
-        guard let jsonString = String(data: jsonData, encoding: .utf8) else {
-            throw HeyNetworkError.RequestError.multipartFailed
-        }
-        print("jsonString -> \(jsonString)")
-        return jsonString
-    }
     
     public var task: Task {
         switch self {

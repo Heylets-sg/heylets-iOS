@@ -27,7 +27,7 @@ public struct DetailModuleInfoView: View {
         
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
-                Text(viewModel.moduleInfo.code)
+                Text(viewModel.moduleInfo.code ?? "custom")
                     .font(.semibold_14)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 3)
