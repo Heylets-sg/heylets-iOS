@@ -16,7 +16,7 @@ public struct LectureInfo {
     let department: String?
     let credit: Int?
     let courseLevel: Int?
-    let termId: Int
+    public let termId: Int
     public let academicYear: String
     public let semester: String
     public let sections: [SectionInfo]

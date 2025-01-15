@@ -21,7 +21,7 @@ public struct AddCustomModuleView: View {
                     viewModel.send(.weekPickerButtonDidTap)
                 } label: {
                     HStack {
-                        Text(viewModel.day)
+                        Text(viewModel.day.rawValue)
                             .font(.regular_14)
                             .foregroundColor(.heyGray1)
                             .padding(.trailing, 6)

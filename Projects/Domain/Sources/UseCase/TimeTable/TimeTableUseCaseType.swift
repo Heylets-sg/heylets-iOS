@@ -12,9 +12,10 @@ import Foundation
 import Combine
 
 public protocol TimeTableUseCaseType {
+    var tableId: String { get }
     //MARK: Main
     
-    //TODO: 시간표 상세조회 불러오기
+    //시간표 상세조회 불러오기
     var timeTableInfo: PassthroughSubject<TimeTableInfo, Never> { get }
     var timeTableCellInfo: PassthroughSubject<[TimeTableCellInfo], Never> { get }
     
@@ -22,10 +23,13 @@ public protocol TimeTableUseCaseType {
     
     
     
-    
     //MARK: Search
-    //TODO: 강의 리스트 조회하기
-    func getLectureList() -> AnyPublisher<[SectionInfo], Never>
+    //강의 리스트 조회하기 & 강의 검색하기
+    func getLectureList(_ keyword: String) -> AnyPublisher<[SectionInfo], Never>
+    
+    //TODO: 커스텀 모듈 추가하기
+    
+    func addCustomModule(_ customModule: CustomModuleInfo) -> AnyPublisher<Void, Never>
     
     
     //TODO: 강의 삭제하기
@@ -33,8 +37,8 @@ public protocol TimeTableUseCaseType {
     
     //MARK: Search
 
-    //TODO: 강의 검색하기
-    //TODO: 커스텀 모듈 추가하기
+    
+    
     
     //TODO: 정규 강의 추가하기
     //TODO: 정규 강의 추가하기 실패 처리

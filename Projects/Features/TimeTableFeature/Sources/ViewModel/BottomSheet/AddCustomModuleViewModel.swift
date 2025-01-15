@@ -18,6 +18,7 @@ public class AddCustomModuleViewModel: ObservableObject {
     struct State {
         var weekPickerIsHidden = true
         var timePickerIsHidden = true
+        var isAddSuccess = false
     }
     
     enum Action {
@@ -26,8 +27,9 @@ public class AddCustomModuleViewModel: ObservableObject {
         case addCustomModuleButtonDidTap
     }
     
+    
     @Published var state = State()
-    @Published var day = "Mon"
+    @Published var day: Week = .Mon
     @Published var time = "09:00 - 10:00"
     @Published var schedule: String = ""
     @Published var location: String = ""
@@ -41,8 +43,10 @@ public class AddCustomModuleViewModel: ObservableObject {
     }
     
     private let cancelBag = CancelBag()
+    private let useCase: TimeTableUseCaseType
     
-    public init() {
+    public init(useCase: TimeTableUseCaseType) {
+        self.useCase = useCase
         
         observe()
     }
@@ -56,9 +60,21 @@ public class AddCustomModuleViewModel: ObservableObject {
             state.weekPickerIsHidden = true
             state.timePickerIsHidden.toggle()
         case .addCustomModuleButtonDidTap:
-            //TODO: 커스텀 모듈 추가 API 호출
-            print(day, time, schedule, location, professor)
-            break
+            let splitTime = splitTimeRange(time)
+            let customModule: CustomModuleInfo = .init(
+                title: schedule,
+                classDay: day.fromWeek(),
+                startTime: splitTime.0,
+                endTime: splitTime.1,
+                location: location == "" ? nil : location,
+                professor: professor == "" ? nil : professor,
+                memo: nil
+            )
+            useCase.addCustomModule(customModule)
+                .sink(receiveValue: { [weak self] _ in
+                    self?.state.isAddSuccess = true
+                })
+                .store(in: cancelBag)
         }
     }
     
@@ -66,6 +82,16 @@ public class AddCustomModuleViewModel: ObservableObject {
         weak var owner = self
         guard let owner else { return }
         
+    }
+}
+
+extension AddCustomModuleViewModel {
+    func splitTimeRange(_ timeRange: String) -> (start: String, end: String) {
+        let components = timeRange.components(separatedBy: " - ")
+        let start = components[0]
+        let end = components[1]
+        
+        return (start, end)
     }
 }
 

@@ -120,8 +120,10 @@ extension AuthAPI: BaseAPI {
         switch self {
         case .signUp:
             return APIHeaders.multipartHeader
-        default:
+        case .checkUserName, .login, .requestVerifyEmail, .verifyEmail, .resetPassword, .verifyResetPassword, .requestResetPassword:
             return APIHeaders.defaultHeader
+        case .logout:
+            return APIHeaders.headerWithAccessToken
         }
         
     }

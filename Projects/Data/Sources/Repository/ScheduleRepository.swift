@@ -56,13 +56,14 @@ public struct ScheduleRepository: ScheduleRepositoryType {
     public func addCustomModule(
         _ tableId: String,
         _ customModuleInfo: CustomModuleInfo
-    ) -> AnyPublisher<CustomModuleInfo, Error> {
+    ) -> AnyPublisher<Void, Error> {
         let request = customModuleInfo.toDTO()
         return service.addCustomModule(
             tableId,
             request
         )
-        .map { $0.toEntity() }
+//        .map { $0.toEntity() }
+        .map { _ in }
         .mapToGeneralError()
     }
 }

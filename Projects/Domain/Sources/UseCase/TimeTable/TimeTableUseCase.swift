@@ -12,6 +12,7 @@ import Combine
 import Core
 
 final public class TimeTableUseCase: TimeTableUseCaseType {
+    private let userRepository: UserRepositoryType
     private let lectureRepository: LectureRepositoryType
     private let scheduleRepository: ScheduleRepositoryType
     private let sectionRepository: SectionRepositoryType
@@ -21,12 +22,14 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
     private var cancelBag = CancelBag()
     
     public init(
+        userRepository: UserRepositoryType,
         lectureRepository: LectureRepositoryType,
         scheduleRepository: ScheduleRepositoryType,
         sectionRepository: SectionRepositoryType,
         themeRepository: ThemeRepositoryType,
         timeTableRepository: TimeTableRepositoryType
     ) {
+        self.userRepository = userRepository
         self.lectureRepository = lectureRepository
         self.scheduleRepository = scheduleRepository
         self.sectionRepository = sectionRepository
@@ -34,6 +37,7 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
         self.timeTableRepository = timeTableRepository
     }
     
+    public var tableId: String = ""
     public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()
     public var timeTableCellInfo = PassthroughSubject<[TimeTableCellInfo], Never>()
 }
@@ -46,6 +50,9 @@ extension TimeTableUseCase {
         getTableId()
             .filter { $0 != nil}
             .map { "\($0!)"}
+            .handleEvents(receiveOutput: { [weak self] id in
+                self?.tableId = id
+            })
             .flatMap(getTableDetailInfo)
             .eraseToAnyPublisher()
     }
@@ -93,11 +100,31 @@ extension TimeTableUseCase {
 
 //MARK: Serach
 extension TimeTableUseCase {
-    public func getLectureList() -> AnyPublisher<[SectionInfo], Never> {
-        lectureRepository.getLectureList()
-            .catch { _ in
-                return Just([]).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+    public func getLectureList(_ keyword: String) -> AnyPublisher<[SectionInfo], Never> {
+        if keyword != "" {
+            lectureRepository.getLectureListWithKeyword(keyword)
+                .catch { _ in
+                    return Just([]).eraseToAnyPublisher()
+                }
+                .eraseToAnyPublisher()
+        } else {
+            lectureRepository.getLectureList()
+                .catch { _ in
+                    return Just([]).eraseToAnyPublisher()
+                }
+                .eraseToAnyPublisher()
+        }
+    }
+    
+    public func addCustomModule(
+        _ customModule: CustomModuleInfo
+    ) -> AnyPublisher<Void, Never> {
+        return scheduleRepository.addCustomModule(
+            tableId, customModule)
+        .catch { _ in
+            //TODO: 커스텀 모듈 추가 실패 처리
+            return Just(()).eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
     }
 }

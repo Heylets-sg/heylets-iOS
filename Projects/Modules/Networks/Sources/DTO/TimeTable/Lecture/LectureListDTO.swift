@@ -12,26 +12,33 @@ public struct LectureListResult: Decodable {
     public let content: [LectureInfoResult]
     let pageable: PageableResult
     let last: Bool
-    let totalElements, totalPages: Int
+    let totalPages, totalElements, size, number: Int
     let sort: SortResult
     let first: Bool
-    let size, number, numberOfElements: Int
+    let numberOfElements: Int
     let empty: Bool
 }
 
 public struct LectureInfoResult: Decodable {
-    public let lectureId: Int
-    public let courseCode: String
-    public let courseName: String
+    public let lectureID: Int
+    public let courseCode, courseName: String
     public let sections: [SectionResult]
     public let credit: Int
-    public let courseLevel: Int?
-    public let termId: Int
+    public let courseLevel: String
+    public let termID: Int
     public let academicYear: String
     public let semester: String
     public let keywordScore: Int
+
+    enum CodingKeys: String, CodingKey {
+        case lectureID = "lectureId"
+        case courseCode, courseName, sections, credit, courseLevel
+        case termID = "termId"
+        case academicYear, semester, keywordScore
+    }
 }
 
+// MARK: - Pageable
 struct PageableResult: Decodable {
     let pageNumber, pageSize: Int
     let sort: SortResult
@@ -39,6 +46,7 @@ struct PageableResult: Decodable {
     let paged, unpaged: Bool
 }
 
+// MARK: - Sort
 struct SortResult: Decodable {
-    let empty, unsorted, sorted: Bool
+    let empty, sorted, unsorted: Bool
 }

@@ -20,5 +20,5 @@ public protocol LectureRepositoryType {
     
     func getLectureListWithKeyword(
         _ keyword: String
-    ) -> AnyPublisher<[LectureInfo], Error>
+    ) -> AnyPublisher<[SectionInfo], Error>
 }

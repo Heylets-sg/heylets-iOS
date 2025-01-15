@@ -39,17 +39,28 @@ public enum Week: String, CaseIterable, Hashable {
     public static let weekDay: [Week] = [.Mon, .Tue, .Wed, .Thu, .Fri]
     public static let dayOfWeek: [Week] = Week.allCases
     
-    /// Converts a string representing a day of the week into the `Week` enum.
-    public static func convertToWeek(from day: String) -> Week {
+    public static func toWeek(from day: String) -> Week {
         switch day {
-        case "Monday": return .Mon
-        case "Tuesday": return .Tue
-        case "Wednesday": return .Wed
-        case "Thursday": return .Thu
-        case "Friday": return .Fri
-        case "Saturday": return .Sat
-        case "Sunday": return .Sun
+        case "MONDAY": return .Mon
+        case "TUESDAY": return .Tue
+        case "WEDNESDAY": return .Wed
+        case "THURSDAY": return .Thu
+        case "FRIDAY": return .Fri
+        case "SATURDAY": return .Sat
+        case "SUNDAY": return .Sun
         default: return .Mon
+        }
+    }
+    
+    public func fromWeek() -> String {
+        switch self {
+        case .Mon: return "MONDAY"
+        case .Tue: return "TUESDAY"
+        case .Wed: return "WEDNESDAY"
+        case .Thu: return "THURSDAY"
+        case .Fri: return "FRIDAY"
+        case .Sat: return "SATURDAY"
+        case .Sun: return "SUNDAY"
         }
     }
 }

@@ -32,10 +32,14 @@ extension LectureInfoResult {
         .init(
             code: courseCode,
             name: courseName,
-            termId: termId,
+            termId: termID,
             academicYear: academicYear,
             semester: semester,
-            sections: sections.map { $0.toEntity() }
+            sections: sections.map { $0.toEntity(
+                credit,
+                courseCode,
+                courseName
+            ) }
         )
     }
 }

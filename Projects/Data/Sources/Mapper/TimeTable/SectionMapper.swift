@@ -34,13 +34,25 @@ extension SectionResult {
         )
     }
     
-    func toEntity(_ code: String, _ name: String) -> SectionInfo {
+    func toEntity(_ unit: Int, _ code: String, _ name: String) -> SectionInfo {
         .init(
-            id: nil, //TODO: sectionCode랑 비교
+            id: sectionID, //TODO: sectionCode랑 비교
             code: code,
             name: name,
             schedule: schedules.map { $0.toEntity() }, 
+            professor: professor,
+            unit: unit
+        )
+    }
+    
+    func toEntity(_ code: String, _ name: String) -> SectionInfo {
+        .init(
+            id: sectionID, //TODO: sectionCode랑 비교
+            code: code,
+            name: name,
+            schedule: schedules.map { $0.toEntity() },
             professor: professor
+//            unit: unit
         )
     }
 }

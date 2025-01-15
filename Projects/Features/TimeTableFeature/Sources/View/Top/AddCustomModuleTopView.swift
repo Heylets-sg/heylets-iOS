@@ -40,5 +40,9 @@ struct AddCustomModuleTopView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 26)
         }
+        .onChange(of: viewModel.state.isAddSuccess) {
+            if $0 { withAnimation { viewType = .main }
+            }
+        }
     }
 }

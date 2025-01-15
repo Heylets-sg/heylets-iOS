@@ -11,12 +11,12 @@ import Foundation
 public struct CustomModuleResult: Decodable {
     public let scheduleId: Int
     public let title: String
-    public let location: String
-    public let professor: String
+    public let location: String?
+    public let professor: String?
     public let classDay: String
     public let startTime: String
     public let endTime: String
-    public let memo: String
+    public let memo: String?
     
     public init(
         scheduleId: Int,

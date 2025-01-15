@@ -36,7 +36,7 @@ extension ScheduleAPI: BaseAPI {
             return Paths.addLectureModule
                 .replacingOccurrences(of: "{tableId}", with: tableId)
         case .addCustomModule(let tableId, _):
-            return Paths.addLectureModule
+            return Paths.addCustomLectureModule
                 .replacingOccurrences(of: "{tableId}", with: tableId)
         }
     }
@@ -68,7 +68,7 @@ extension ScheduleAPI: BaseAPI {
     }
     
     public var headers: [String : String]? {
-        return APIHeaders.defaultHeader
+        return APIHeaders.headerWithAccessToken
     }
 }
 

@@ -34,6 +34,7 @@ public final class HeyUseCase: UseCaseType & ObservableObject {
         )
         
         timeTableUseCase = TimeTableUseCase(
+            userRepository: repository.userRepository,
             lectureRepository: repository.lectureRepository,
             scheduleRepository: repository.scheduleRepository,
             sectionRepository: repository.sectionRepository,
