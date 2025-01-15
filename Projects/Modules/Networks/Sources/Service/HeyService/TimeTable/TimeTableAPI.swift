@@ -12,7 +12,7 @@ import Domain
 
 public enum TimeTableAPI {
     case deleteTable(String)
-    case getTableList(String, String)
+    case getTableList
     case getTableDetailInfo(String)
     case patchTable(String, TimeTableEditNameRequest)
     case postTable(AddTimeTableRequest)
@@ -60,8 +60,8 @@ extension TimeTableAPI: BaseAPI {
         switch self {
         case .deleteTable:
             return .requestPlain
-        case .getTableList(let academicYear, let semester):
-            return .requestParameters(["academicYear": academicYear, "semester": semester])
+        case .getTableList:
+            return .requestPlain
         case .getTableDetailInfo:
             return .requestPlain
         case .patchTable(_, let request):
@@ -72,7 +72,7 @@ extension TimeTableAPI: BaseAPI {
     }
     
     public var headers: [String : String]? {
-        return APIHeaders.defaultHeader
+        return APIHeaders.headerWithAccessToken
     }
 }
 

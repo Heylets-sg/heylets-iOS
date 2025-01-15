@@ -17,8 +17,6 @@ public protocol TimeTableServiceType {
     ) -> NetworkVoidResponse
     
     func getTableList(
-        _ academicYear: String,
-        _ semester: String
     ) -> NetworkDecodableResponse<TimeTableListResult>
     
     func getTableDetailInfo(
@@ -43,10 +41,8 @@ extension TimeTableService: TimeTableServiceType {
     }
     
     public func getTableList(
-        _ academicYear: String,
-        _ semester: String
     ) -> NetworkDecodableResponse<TimeTableListResult> {
-        requestWithResult(.getTableList(academicYear, semester))
+        requestWithResult(.getTableList)
     }
     
     public func getTableDetailInfo(

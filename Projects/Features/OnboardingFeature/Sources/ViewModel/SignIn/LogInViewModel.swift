@@ -50,6 +50,7 @@ public class LogInViewModel: ObservableObject {
         switch action {
         case .loginButtonDidTap:
             //TODO: 비밀번호, ID 유효성 처리
+            print(id, password)
             useCase.logIn(id, password)
                 .sink(receiveValue: { [weak self] _ in
                     self?.windowRouter.switch(to: .timetable)

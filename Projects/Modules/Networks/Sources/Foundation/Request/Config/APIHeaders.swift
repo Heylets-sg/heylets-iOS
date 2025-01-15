@@ -9,6 +9,7 @@
 import Foundation
 
 import Core
+import Domain
 
 public struct APIHeaders {
     static let contentType = "Content-Type"
@@ -34,10 +35,9 @@ public struct APIHeaders {
     static let xPlatform = "X-Platform"
     static let iOS = "IOS"
     
-    
-    static var accessToken: String {
-        return "Bearer " /*+ (UserManager.shared.accessToken)*/
-    }
+//    static var accessToken: String {
+////        return "Bearer \(UserDefaultsManager.shared.accessToken)"
+//    }
     
     static var refreshToken: String {
         return "Bearer " /*+ (UserManager.shared.refreshToken)*/
@@ -59,7 +59,19 @@ public extension APIHeaders {
             deviceModel_key: deviceModel_value,
             osVersion_key: osVersion_value,
             appVersion_key: appVersion_value,
+            xPlatform: iOS
+        ]
+    }
+    
+    static var headerWithAccessToken: [String:String] {
+        return [
+            contentType: applicationJSON,
+            deviceID_key: deviceID_value,
+            deviceModel_key: deviceModel_value,
+            osVersion_key: osVersion_value,
+            appVersion_key: appVersion_value,
             xPlatform: iOS,
+            auth: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OTAsImRldmljZUlkIjoiRjlCNDMxMjItMzNFMC00QjFELTlGOTItMjhBRkMxMjhCNkI2IiwidHlwZSI6IkFDQ0VTUyIsImlhdCI6MTczNjk0MzAxMSwiZXhwIjoxNzM3MDI5NDExfQ.O0r3_3zrKE7sw5XqOiFZk4C4YB08siLkGURNunCR4VU"
         ]
     }
     

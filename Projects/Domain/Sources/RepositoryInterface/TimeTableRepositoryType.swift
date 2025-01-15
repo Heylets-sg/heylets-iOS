@@ -14,11 +14,8 @@ public protocol TimeTableRepositoryType {
         _ tableId: String
     ) -> AnyPublisher<Void, Error>
     
-    //MARK: 지금 MVP에서는 사용하지 않을거 같음 너묵 고민 ㄴㄴ
-    func getTableList(
-        _ academicYear: String,
-        _ semester: String
-    ) -> AnyPublisher<[TimeTableInfo], Error>
+    // 현재는 테이블 아이디를 가져오는 용도로만 사용됨
+    func getTableList() -> AnyPublisher<Int?, Error>
     
     func getTableDetailInfo(
         _ tableId: String
@@ -30,9 +27,6 @@ public protocol TimeTableRepositoryType {
         _ tableName: String
     ) -> AnyPublisher<Void, Error>
     
-    func postTable(
-        _ tableName: String,
-        _ semester: String,
-        _ academicYear: Int
-    ) -> AnyPublisher<TimeTableInfo, Error>
+    // 현재는 테이블 아이디를 가져오는 용도로만 사용됨
+    func postTable() -> AnyPublisher<Int, Error>
 }

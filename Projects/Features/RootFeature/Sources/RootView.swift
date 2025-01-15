@@ -34,7 +34,9 @@ public struct RootView: View {
                 )
             case .timetable:
                 TimeTableView(
-                    viewModel: .init(),
+                    viewModel: .init(
+                        useCase: useCase.timeTableUseCase
+                    ),
                     searchModuleViewModel: .init(),
                     addCustomModuleViewModel: .init(),
                     settingTimeTableViewModel: .init(),

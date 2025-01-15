@@ -19,17 +19,8 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         self.authRepository = authRepository
     }
     
-    public var userInfo = User(
-        email: "",
-        password: "",
-        gender: "",
-        birth: Date(),
-        profile: .init(
-            nickName: "",
-            university: "",
-            image: nil
-        )
-    )
+    public var userInfo: User = .stub
+    
     public var loginFailed = PassthroughSubject<String, Never>()
     public var requestOTPCodeFailed = PassthroughSubject<String, Never>()
     public var verifyOTPCodeFailed = PassthroughSubject<String, Never>()
