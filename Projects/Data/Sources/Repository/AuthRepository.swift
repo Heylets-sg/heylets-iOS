@@ -83,7 +83,7 @@ public struct AuthRepository: AuthRepositoryType {
         _ otpCode: Int
     ) -> AnyPublisher<Void, Error> {
         let request: VerifyOTPCodeRequest = .init(email, otpCode)
-        return authService.verifyResetPassword(request)
+        return authService.verifyEmail(request)
             .asVoidWithGeneralError()
     }
     
