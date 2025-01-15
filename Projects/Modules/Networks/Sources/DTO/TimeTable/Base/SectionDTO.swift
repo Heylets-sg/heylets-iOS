@@ -9,18 +9,17 @@
 import Foundation
 
 public struct SectionResult: Decodable {
+    public let sectionId: Int
     public let sectionCode: String
     public let professor: String
-    public let courseCode: String?
-    public let courseName: String?
+    public let status: String
     public let schedules: [SchedulesResult]
-    
-    //강의 조회시
-    public let sectionID: Int?
-    public let status: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case sectionID = "sectionId"
-        case sectionCode, professor, courseCode, courseName, status, schedules
-    }
+}
+
+public struct SectionInTableList: Decodable {
+    public let sectionId: Int
+    public let courseName: String
+    public let courseCode: String
+    public let professor: String
+    public let status: String
 }

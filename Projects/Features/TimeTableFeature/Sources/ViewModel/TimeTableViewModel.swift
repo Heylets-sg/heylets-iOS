@@ -81,7 +81,9 @@ public class TimeTableViewModel: ObservableObject {
             if lectureList.contains(where: { $0 == lecture }) {
                 state.inValidregisterModuleIsPresented = (true, "This module is already exist")
             } else {
-                //TODO: 정규 강의 추가 API 호출
+                useCase.addSection(lecture.id!)
+                    .sink(receiveValue: {_  in })
+                    .store(in: cancelBag)
             }
         }
     }
@@ -111,8 +113,11 @@ public class TimeTableViewModel: ObservableObject {
             
         case .editTimeTableName:
             //TODO: 시간표 이름 변경 API 호출 with timeTableName
-            print("시간표 이름 변경 메소드 호출: \(state.timeTableName)")
-            state.settingAlertType = nil
+            useCase.changeTimeTableName(state.timeTableName)
+                .receive(on: RunLoop.main)
+                .map { _ in  nil}
+                .assign(to: \.state.settingAlertType, on: self)
+                .store(in: cancelBag)
         }
     }
     

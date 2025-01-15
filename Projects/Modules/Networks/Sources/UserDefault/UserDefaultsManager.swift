@@ -1,14 +1,12 @@
 //
 //  UserDefaultsManager.swift
-//  Data
+//  Networks
 //
-//  Created by 류희재 on 1/13/25.
+//  Created by 류희재 on 1/16/25.
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
 import Foundation
-
-import Domain
 
 enum UserDefaultKeys: String, CaseIterable {
     case fcmToken
@@ -37,23 +35,15 @@ public struct UserDefaultsManager {
 }
 
 extension UserDefaultsManager {
-    static public func getEmail() -> String { return email }
+    static let shared = UserDefaultsManager()
     
-    static func setToken(_ authInfo: Auth) {
-        UserDefaultsManager.heyAccessToken = authInfo.accessToken
-        UserDefaultsManager.heyRefreshToken = authInfo.refreshToken
+    static func setToken(_ authInfo: AuthResult) {
+        UserDefaultsManager.heyAccessToken = authInfo.access_token
+        UserDefaultsManager.heyRefreshToken = authInfo.refresh_token
     }
-//
-//    static func reset() {
-//
-//        UserDefaultKeys.allCases.forEach { key in
-//            guard key != .fcmToken else { return  }
-//            guard key != .neverShowTutorial else { return  }
-//            UserDefaults.standard.removeObject(forKey: key.rawValue)
-//        }
-//    }
+
+    static func clearLogout() {
+        UserDefaultsManager.heyAccessToken = ""
+        UserDefaultsManager.heyRefreshToken = ""
+    }
 }
-
-
-
-

@@ -59,7 +59,7 @@ extension SectionAPI: BaseAPI {
     }
     
     public var headers: [String : String]? {
-        return APIHeaders.defaultHeader
+        return APIHeaders.headerWithAccessToken
     }
 }
 

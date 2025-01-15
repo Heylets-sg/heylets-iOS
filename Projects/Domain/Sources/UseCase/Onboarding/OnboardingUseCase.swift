@@ -33,9 +33,6 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         _ password: String
     ) -> AnyPublisher<Void, Never> {
         authRepository.logIn(email, password)
-            .handleEvents(receiveOutput: { token in
-                UserDefaultsManager.setToken(token)
-            })
             .map { _ in }
             .catch { [weak self] _ in
                 self?.loginFailed.send("Login Failed")
@@ -46,9 +43,6 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     
     public func signUp() -> AnyPublisher<Void, Never> {
         authRepository.signUp(userInfo)
-            .handleEvents(receiveOutput: { token in
-                UserDefaultsManager.setToken(token)
-            })
             .map { _ in }
             .catch { [weak self] _ in
                 self?.signUpFailed.send("SignUp Failed")
@@ -121,7 +115,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         _ newPassword: String
     ) -> AnyPublisher<Void, Never> {
         authRepository.resetPassword(
-            UserDefaultsManager.getEmail(),
+            "UserDefaultsManager.getEmail()",
             newPassword
         )
         .map { _ in }

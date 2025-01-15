@@ -80,12 +80,20 @@ extension AuthService: AuthServiceType {
     
     public func logout() -> AnyPublisher<Void, HeyNetworkError> {
         requestWithNoResult(.logout)
+            .handleEvents(receiveOutput: { _ in
+                UserDefaultsManager.clearLogout()
+            })
+            .eraseToAnyPublisher()
     }
     
     public func logIn(
         _ request: SignInRequest
     ) -> AnyPublisher<AuthResult, HeyNetworkError> {
         requestWithResult(.login(request))
+            .handleEvents(receiveOutput: { token in
+                UserDefaultsManager.setToken(token)
+            })
+            .eraseToAnyPublisher()
     }
     
     public func verifyEmail(

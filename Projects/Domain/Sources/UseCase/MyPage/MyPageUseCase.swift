@@ -59,7 +59,7 @@ final public class MyPageUseCase: MyPageUseCaseType {
             })
             .flatMap { newPassword in
                 self.authRepository.resetPassword(
-                    UserDefaultsManager.getEmail(),
+                    "UserDefaultsManager.getEmail()",
                     newPassword
                 )
             }

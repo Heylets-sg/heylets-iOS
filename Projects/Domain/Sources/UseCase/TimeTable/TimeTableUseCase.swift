@@ -96,6 +96,15 @@ extension TimeTableUseCase {
             }
             .eraseToAnyPublisher()
     }
+    
+    public func addSection(_ sectionId: Int) -> AnyPublisher<Void, Never> {
+        return sectionRepository.addSection(tableId, sectionId, "")
+            .catch { _ in
+                //TODO: 커스텀 모듈 추가 실패 처리
+                return Just(()).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
 }
 
 //MARK: Serach
@@ -126,5 +135,17 @@ extension TimeTableUseCase {
             return Just(()).eraseToAnyPublisher()
         }
         .eraseToAnyPublisher()
+    }
+}
+
+//MARK: Setting
+extension TimeTableUseCase {
+    public func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never> {
+        return timeTableRepository.patchTableName(tableId, name)
+            .catch { _ in
+                //TODO: 실패 관련 처리
+                return Just(()).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
 }

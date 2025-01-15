@@ -26,9 +26,7 @@ public protocol TimeTableUseCaseType {
     //MARK: Search
     //강의 리스트 조회하기 & 강의 검색하기
     func getLectureList(_ keyword: String) -> AnyPublisher<[SectionInfo], Never>
-    
-    //TODO: 커스텀 모듈 추가하기
-    
+    //커스텀 모듈 추가하기
     func addCustomModule(_ customModule: CustomModuleInfo) -> AnyPublisher<Void, Never>
     
     
@@ -40,11 +38,13 @@ public protocol TimeTableUseCaseType {
     
     
     
-    //TODO: 정규 강의 추가하기
+    //정규 강의 추가하기
+    func addSection(_ sectionId: Int) -> AnyPublisher<Void, Never>
     //TODO: 정규 강의 추가하기 실패 처리
     
     //MARK: Setting
     //TODO: 시간표 이름 바꾸기
+    func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never>
     //TODO: 테마 리스트 불러오기
     //TODO: Setting 값 저장하기
     //TODO: 시간표 삭제하기

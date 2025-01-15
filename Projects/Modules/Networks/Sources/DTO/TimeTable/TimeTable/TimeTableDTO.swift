@@ -12,6 +12,16 @@ public struct TimeTableListResult: Decodable {
     public let tables: [TimeTableInfoResult]
 }
 
+public struct TimeTableInfoResult: Decodable {
+    public let tableId: Int
+    public let tableName: String
+    public let semester: String
+    public let academicYear: Int
+    let isFavorite: Bool
+    let status: String
+    let sections: [SectionInTableList]
+}
+
 public struct TimeTableEditNameRequest: Encodable {
     let tableName: String
     
@@ -34,14 +44,4 @@ public struct AddTimeTableRequest: Encodable {
         self.semester = semester
         self.academicYear = academicYear
     }
-}
-
-public struct TimeTableInfoResult: Decodable {
-    public let tableId: Int
-    public let tableName: String
-    public let semester: String
-    public let academicYear: Int
-    let isFavorite: Bool
-    let status: String
-    let sections: [SectionResult]
 }

@@ -16,6 +16,6 @@ public struct TimeTableDetailInfoDTO: Decodable {
     let isFavorite: Bool
     let status: String
     let displayType: String
-    public let sections: [SectionResult]
+    public let sections: [SectionInTableList]
     public let customModules: [CustomModuleResult]
 }
