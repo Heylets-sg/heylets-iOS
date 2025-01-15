@@ -49,8 +49,10 @@ public class SearchModuleViewModel: ObservableObject {
     @Published var searchText = ""
     
     private let cancelBag = CancelBag()
+    private let useCase: TimeTableUseCaseType
     
-    public init() {
+    public init(useCase: TimeTableUseCaseType) {
+        self.useCase = useCase
         state.filteredItems = lectureList
         
         observe()
@@ -60,7 +62,10 @@ public class SearchModuleViewModel: ObservableObject {
         switch action {
         case .onAppear:
             //TODO: 전체 lecture 불러오는 API 호출
-            break
+            useCase.getLectureList()
+                .receive(on: RunLoop.main)
+                .assign(to: \.lectureList, on: self)
+                .store(in: cancelBag)
         case .lectureCellDidTap(let lecture):
             state.selectedLecture = lecture
         case .searchButtonDidTap:

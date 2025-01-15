@@ -16,7 +16,7 @@ public protocol LectureRepositoryType {
     ) -> AnyPublisher<LectureInfo, Error>
     
     //TODO: ⭐️ 다시 확인
-    func getLectureList() -> AnyPublisher<[LectureInfo], Error>
+    func getLectureList() -> AnyPublisher<[SectionInfo], Error>
     
     func getLectureListWithKeyword(
         _ keyword: String

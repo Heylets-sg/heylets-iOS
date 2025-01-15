@@ -67,9 +67,8 @@ public class TimeTableViewModel: ObservableObject {
         switch action {
         case .onAppear:
             useCase.fetchTableInfo()
-                .sink(receiveValue: { [weak self] sectionList in
-                    self?.lectureList = sectionList
-                })
+                .receive(on: RunLoop.main)
+                .assign(to: \.lectureList, on: self)
                 .store(in: cancelBag)
         case .deleteModule:
             //TODO: 삭제 API 호출

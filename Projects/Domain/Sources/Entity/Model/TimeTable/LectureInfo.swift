@@ -20,8 +20,8 @@ public struct LectureInfo {
     public let academicYear: String
     public let semester: String
     public let sections: [SectionInfo]
-//    public let reviewStats: ReviewStateResult
-//    public let reviews: ReviewsResult
+    //    public let reviewStats: ReviewStateResult
+    //    public let reviews: ReviewsResult
     
     public init(
         id: Int? = nil,
@@ -47,5 +47,11 @@ public struct LectureInfo {
         self.academicYear = academicYear
         self.semester = semester
         self.sections = sections
+    }
+}
+
+extension Array where Element == LectureInfo {
+    public var allSections: [SectionInfo] {
+        return self.reduce([]) { $0 + $1.sections }
     }
 }

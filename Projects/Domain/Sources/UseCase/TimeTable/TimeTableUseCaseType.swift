@@ -20,16 +20,19 @@ public protocol TimeTableUseCaseType {
     
     func fetchTableInfo() -> AnyPublisher<[SectionInfo], Never>
     
-    //TODO: 강의 삭제하기
-//    func deleteLecture(
-//        _ tableId: String,
-//        _ scheduleId: String
-//    ) -> AnyPublisher<Void, Never>
     
-    //TODO: 강의 삭제하기 실패 처리
+    
     
     //MARK: Search
     //TODO: 강의 리스트 조회하기
+    func getLectureList() -> AnyPublisher<[SectionInfo], Never>
+    
+    
+    //TODO: 강의 삭제하기
+    //TODO: 강의 삭제하기 실패 처리
+    
+    //MARK: Search
+
     //TODO: 강의 검색하기
     //TODO: 커스텀 모듈 추가하기
     

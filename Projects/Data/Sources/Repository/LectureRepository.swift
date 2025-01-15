@@ -27,9 +27,9 @@ public struct LectureRepository: LectureRepositoryType {
             .mapToGeneralError()
     }
     
-    public func getLectureList() -> AnyPublisher<[LectureInfo], Error> {
+    public func getLectureList() -> AnyPublisher<[SectionInfo], Error> {
         service.getLectureList()
-            .map { $0.content.map {$0.toEntity()} }
+            .map { $0.content.flatMap { $0.toEntity().sections } }
             .mapToGeneralError()
     }
     

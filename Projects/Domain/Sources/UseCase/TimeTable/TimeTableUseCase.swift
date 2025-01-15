@@ -90,62 +90,14 @@ extension TimeTableUseCase {
             .eraseToAnyPublisher()
     }
 }
-    
-    
-    //            .map { Optional($0) } // 성공 시 Int를 Int?로 감싸서 반환
-    //            .catch { [weak self] _ -> AnyPublisher<Int?, Never> in
-    //                guard let self = self else {
-    //                    return Just(nil).eraseToAnyPublisher()
-    //                }
-    //                return self.timeTableRepository.postTable()
-    //                    .map { Optional($0) } // 성공 시 Int를 Int?로 감싸서 반환
-    //                    .catch { _ in
-    //                        Just(nil).eraseToAnyPublisher() // 실패 시 nil 반환
-    //                    }
-    //                    .eraseToAnyPublisher()
-    //            }
-    //            .eraseToAnyPublisher()
 
-
-
-
-
-
-
-
-// 강의 삭제하기
-//    public func deleteModule(
-//        _ tableId: String
-//    ) -> AnyPublisher<Void, Error> {
-//        Just(
-//    }
-
-//    var deleteModuleFailed: PassthroughSubject<String, Never> { get } // 강의 삭제 실패
-
-////MARK: Detail
-//extension TimeTableUseCase {
-//    var lectureInfo: SectionInfo { get } // 상세 강의
-//}
-//
-////MARK: Search
-//extension TimeTableUseCase {
-//    //MARK: Search
-//
-//    // 강의 조회
-//    func getLectureList() -> AnyPublisher<[LectureInfo], Never> {}
-//
-//    // 강의 검색
-//    func getLectureListWithKeyword(
-//        _ keyword: String
-//    ) -> AnyPublisher<[LectureInfo], Never> {}
-//
-//    // 커스텀 모듈 추가
-//    func addCustomModule(
-//        _ tableId: String,
-//        _ customModuleInfo: CustomModuleInfo
-//    ) -> AnyPublisher<CustomModuleInfo, Error> {}
-//
-//    var addModuleFailed = PassthroughSubject<String, Never>()
-//}
-//
-////MARK:
+//MARK: Serach
+extension TimeTableUseCase {
+    public func getLectureList() -> AnyPublisher<[SectionInfo], Never> {
+        lectureRepository.getLectureList()
+            .catch { _ in
+                return Just([]).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+}

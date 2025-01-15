@@ -37,7 +37,8 @@ public struct RootView: View {
                     viewModel: .init(
                         useCase: useCase.timeTableUseCase
                     ),
-                    searchModuleViewModel: .init(),
+                    searchModuleViewModel: .init(
+                        useCase: useCase.timeTableUseCase),
                     addCustomModuleViewModel: .init(),
                     settingTimeTableViewModel: .init(),
                     themeViewModel: .init()
