@@ -14,6 +14,9 @@ public struct Version {
     let minor: Int
     let patch: Int
 
+    public var versionString: String {
+        return "\(major).\(minor).\(patch)"
+    }
 
     public init(_ versionString: String) {
         let versions = versionString.split(separator: ".").map{ Int($0)! }

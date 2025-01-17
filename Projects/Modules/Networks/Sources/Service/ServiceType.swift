@@ -20,7 +20,7 @@ public protocol ServiceType {
 
 final public class HeyService: ServiceType {
     public init() {}
-//    var appService: AppServiceType = AppService()
+//    public var appService: AppServiceType = AppService()
     public var authService: AuthServiceType = AuthService()
     public var timeTableService: TimeTableServiceType = TimeTableService()
     public var themeService: ThemeServiceType = ThemeService()

@@ -10,6 +10,7 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Domain
 
 public class SplashViewModel: ObservableObject {
     

@@ -21,6 +21,7 @@ public enum AuthAPI {
     case login(SignInRequest)
     case verifyEmail(VerifyOTPCodeRequest)
     case requestVerifyEmail(RequestOTPCodeRequest)
+    case deleteAccount(DeleteAccountRequest)
 }
 
 extension AuthAPI: BaseAPI {
@@ -50,6 +51,8 @@ extension AuthAPI: BaseAPI {
             Paths.verifyEmail
         case .requestVerifyEmail:
             Paths.requestVerifyEmail
+        case .deleteAccount:
+            Paths.deleteAccount
         }
     }
     
@@ -74,6 +77,8 @@ extension AuthAPI: BaseAPI {
         case .verifyEmail:
             return .post
         case .requestVerifyEmail:
+            return .post
+        case .deleteAccount:
             return .post
         }
     }
@@ -113,6 +118,8 @@ extension AuthAPI: BaseAPI {
             return .requestJSONEncodable(request)
         case .requestVerifyEmail(let request):
             return .requestJSONEncodable(request)
+        case .deleteAccount(let request):
+            return .requestJSONEncodable(request)
         }
     }
     
@@ -122,7 +129,7 @@ extension AuthAPI: BaseAPI {
             return APIHeaders.multipartHeader
         case .checkUserName, .login, .requestVerifyEmail, .verifyEmail, .resetPassword, .verifyResetPassword, .requestResetPassword:
             return APIHeaders.defaultHeader
-        case .logout:
+        case .logout, .deleteAccount:
             return APIHeaders.headerWithAccessToken
         }
         

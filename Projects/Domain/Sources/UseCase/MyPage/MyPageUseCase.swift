@@ -37,15 +37,12 @@ final public class MyPageUseCase: MyPageUseCaseType {
     }
     
     public func changePassword(
-        _ current: String,
+        _ email: String,
         _ new: String,
         _ check: String
     ) -> AnyPublisher<Void, Never> {
-        Just((current, new, check))
-            .tryMap { current, new, check in
-                guard current != new else { // 1. 현재 비밀번호와 새로운 비밀번호 비교
-                    throw PasswordError.inValidCurrentPassword
-                }
+        Just((email, new, check))
+            .tryMap { email, new, check in
                 guard new == check else { // 2. 새로운 비밀번호와 확인 비밀번호 일치 여부 확인
                     throw PasswordError.inValidCheckPassword
                 }
@@ -57,12 +54,7 @@ final public class MyPageUseCase: MyPageUseCaseType {
                     self?.passwordFailed.send(passwordError)
                 }
             })
-            .flatMap { newPassword in
-                self.authRepository.resetPassword(
-                    "UserDefaultsManager.getEmail()",
-                    newPassword
-                )
-            }
+            .flatMap {self.authRepository.resetPassword(email, $0)}
             .asVoid()
             .catch { [weak self] error in
                 self?.changePasswordFailed.send("로그아웃에 실패했습니다.")
@@ -81,6 +73,11 @@ final public class MyPageUseCase: MyPageUseCaseType {
     }
     
     public func deleteAccount(_ password: String) -> AnyPublisher<Void, Never> {
-        return Just(()).eraseToAnyPublisher()
+        authRepository.deleteAccount(password)
+            .catch { [weak self] Error in
+                self?.revokeUserFailed.send("회원탈퇴에 실패했습니다")
+                return Just(())
+            }
+            .eraseToAnyPublisher()
     }
 }

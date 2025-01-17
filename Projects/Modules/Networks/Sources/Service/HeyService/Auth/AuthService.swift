@@ -45,6 +45,10 @@ public protocol AuthServiceType {
     func requestVerifyEmail(
         _ request: RequestOTPCodeRequest
     ) -> NetworkDecodableResponse<RequestOTPCodeResult>
+    
+    func deleteAccount(
+        _ request: DeleteAccountRequest
+    ) -> NetworkVoidResponse
 }
 
 extension AuthService: AuthServiceType {
@@ -106,6 +110,12 @@ extension AuthService: AuthServiceType {
         _ request: RequestOTPCodeRequest
     ) -> AnyPublisher<RequestOTPCodeResult, HeyNetworkError> {
         requestWithResult(.requestVerifyEmail(request))
+    }
+    
+    public func deleteAccount(
+        _ request: DeleteAccountRequest
+    ) -> NetworkVoidResponse {
+        requestWithNoResult(.deleteAccount(request))
     }
 }
 

@@ -55,4 +55,8 @@ public protocol AuthRepositoryType {
     func requestVerifyEmail(
         _ email: String
     ) -> AnyPublisher<Void, Error>
+    
+    func deleteAccount(
+        _ password: String
+    ) -> AnyPublisher<Void, Error>
 }

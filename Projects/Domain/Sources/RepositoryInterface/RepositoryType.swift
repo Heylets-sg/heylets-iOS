@@ -9,7 +9,6 @@
 import Foundation
 
 public protocol RepositoryType {
-//    var appService: AppServiceType { get }
     var authRepository: AuthRepositoryType { get }
     var timeTableRepository: TimeTableRepositoryType { get }
     var themeRepository: ThemeRepositoryType { get }

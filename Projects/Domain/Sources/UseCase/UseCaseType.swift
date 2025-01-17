@@ -12,17 +12,24 @@ public protocol UseCaseType {
     var myPageUseCase: MyPageUseCaseType { get }
     var onboardingUseCase: OnboardingUseCaseType { get }
     var timeTableUseCase: TimeTableUseCaseType { get }
+    var splashUseCase: SplashUseCaseType { get }
 }
 
 public final class HeyUseCase: UseCaseType & ObservableObject {
+    
     var repository: RepositoryType
     
+    public var splashUseCase: SplashUseCaseType
     public var myPageUseCase: MyPageUseCaseType
     public var onboardingUseCase: OnboardingUseCaseType
     public var timeTableUseCase: TimeTableUseCaseType
     
     public init(repository: RepositoryType) {
         self.repository = repository
+        
+        splashUseCase = SplashUseCase(
+            authRepository: repository.authRepository
+        )
         
         myPageUseCase = MyPageUseCase(
             userRepository: repository.userRepository,

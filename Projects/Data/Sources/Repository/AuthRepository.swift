@@ -94,4 +94,12 @@ public struct AuthRepository: AuthRepositoryType {
         return authService.requestVerifyEmail(request)
             .asVoidWithGeneralError()
     }
+    
+    public func deleteAccount(
+        _ password: String
+    ) -> AnyPublisher<Void, Error> {
+        let request: DeleteAccountRequest = .init(password)
+        return authService.deleteAccount(request)
+            .asVoidWithGeneralError()
+    }
 }

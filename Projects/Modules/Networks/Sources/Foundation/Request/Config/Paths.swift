@@ -23,6 +23,7 @@ public enum Paths {
     static let login = "api/v1/auth/login"
     static let verifyEmail = "api/v1/auth/email/verify"
     static let requestVerifyEmail = "api/v1/auth/email/verification"
+    static let deleteAccount = "api/v1/users/security/me/withdrawal"
     
     //MARK: Lecture
     

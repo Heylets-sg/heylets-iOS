@@ -14,7 +14,7 @@ import Domain
 public struct APIHeaders {
     static let contentType = "Content-Type"
     static let applicationJSON = "application/json"
-    static let multiPartFormData = "multipart/form-data; boundary=\("boundary")" //boundary 값 넣어줘야함
+    static let multiPartFormData = "multipart/form-data; boundary=\("boundary")"
     
     
     
@@ -58,7 +58,7 @@ public extension APIHeaders {
             deviceID_key: deviceID_value,
             deviceModel_key: deviceModel_value,
             osVersion_key: osVersion_value,
-            appVersion_key: appVersion_value,
+            appVersion_key: appVersion_value.versionString,
             xPlatform: iOS
         ]
     }
@@ -69,7 +69,7 @@ public extension APIHeaders {
             deviceID_key: deviceID_value,
             deviceModel_key: deviceModel_value,
             osVersion_key: osVersion_value,
-            appVersion_key: appVersion_value,
+            appVersion_key: appVersion_value.versionString,
             xPlatform: iOS,
             auth: accessToken
         ]
@@ -81,7 +81,7 @@ public extension APIHeaders {
             deviceID_key: deviceID_value,
             deviceModel_key: deviceModel_value,
             osVersion_key: osVersion_value,
-            appVersion_key: appVersion_value,
+            appVersion_key: appVersion_value.versionString,
             xPlatform: iOS,
         ]
     }
