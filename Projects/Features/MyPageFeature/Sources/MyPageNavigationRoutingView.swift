@@ -47,6 +47,7 @@ struct MyPageNavigationRoutingView: View {
         case .deleteAccount:
             DeleteAccountView(
                 viewModel: .init(
+                    useCase: useCase.myPageUseCase,
                     navigationRouter: router.navigationRouter,
                     windowRouter: router.windowRouter
                 )

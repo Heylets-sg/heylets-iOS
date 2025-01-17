@@ -38,9 +38,11 @@ public class DeleteAccountViewModel: ObservableObject {
     @Published var password = ""
     
     public init(
+        useCase: MyPageUseCaseType,
         navigationRouter: NavigationRoutableType,
         windowRouter: WindowRoutableType
     ) {
+        self.useCase = useCase
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
         
