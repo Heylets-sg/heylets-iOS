@@ -18,7 +18,7 @@ extension SchedulesResult {
         let weekDay = Week.toWeek(from: classDay)
         
         return .init(
-            id: scheduleID,
+            id: scheduleId,
             day: weekDay,
             startHour: startTimeComponents.hour,
             startMinute: startTimeComponents.minute,

@@ -20,22 +20,15 @@ public struct LectureListResult: Decodable {
 }
 
 public struct LectureInfoResult: Decodable {
-    public let lectureID: Int
+    public let lectureId: Int
     public let courseCode, courseName: String
     public let sections: [SectionResult]
     public let credit: Int
     public let courseLevel: String
-    public let termID: Int
+    public let termId: Int
     public let academicYear: String
     public let semester: String
     public let keywordScore: Int
-
-    enum CodingKeys: String, CodingKey {
-        case lectureID = "lectureId"
-        case courseCode, courseName, sections, credit, courseLevel
-        case termID = "termId"
-        case academicYear, semester, keywordScore
-    }
 }
 
 // MARK: - Pageable

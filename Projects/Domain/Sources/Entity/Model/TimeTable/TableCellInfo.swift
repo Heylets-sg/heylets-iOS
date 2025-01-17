@@ -8,11 +8,12 @@
 
 import Foundation
 
-public struct TimeTableCellInfo {
-    public var id: Int?
+public struct TimeTableCellInfo: Equatable {
+    public var id: Int
     public var code: String
     public var name: String
     public var professor: String
+    public var unit: Int?
     public var schedule: ScheduleInfo
     
     public var slot: [Int: Double] {

@@ -11,9 +11,8 @@ import SwiftUI
 import Domain
 
 public struct TimeTableGridView: View {
+    @ObservedObject var viewModel: TimeTableViewModel
     @Binding var viewType: TimeTableViewType
-    @Binding var weekList: [Week]
-    @Binding var timeTable: [[TimeTableCellInfo?]]
     var hourList = Array(9...24)
     
     public var body: some View {
@@ -31,7 +30,7 @@ public struct TimeTableGridView: View {
     @ViewBuilder
     private func createHeaderRow() -> some View {
         GridRow {
-            ForEach(weekList, id: \.self) { _ in
+            ForEach(viewModel.weekList, id: \.self) { _ in
                 Rectangle()
                     .fill(Color.clear)
                     .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
@@ -43,7 +42,7 @@ public struct TimeTableGridView: View {
     @ViewBuilder
     private func createGridRow(for hour: Int) -> some View {
         GridRow(alignment: .top) {
-            ForEach(weekList, id: \.self) { day in
+            ForEach(viewModel.weekList, id: \.self) { day in
                 createGridCell(for: hour, day: day)
             }
         }
@@ -57,13 +56,13 @@ public struct TimeTableGridView: View {
                 .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
             
             if let cell = getSlot(
-                timeTable: timeTable,
+                timeTable: viewModel.timeTable,
                 for: hour,
                 day: day
             ) {
                 Button {
                     withAnimation {
-                        viewType = .detail
+                        viewModel.send(.tableCellDidTap(cell.id))
                     }
                 } label: {
                     ZStack {

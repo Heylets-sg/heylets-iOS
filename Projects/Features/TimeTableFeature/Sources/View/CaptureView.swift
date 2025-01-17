@@ -99,9 +99,6 @@ public struct TimeTableGridCaptureView: View {
                 day: day
             ) {
                 Button {
-//                    withAnimation {
-//                        viewType = .detail
-//                    }
                 } label: {
                     ZStack {
                         VStack {

@@ -58,7 +58,7 @@ extension LectureAPI: BaseAPI {
         case .getLectureListWithKeyword(let keyword):
             return .requestParameters([
                 "keyword": keyword,
-                "academicYear": "2025",
+                "academicYear": "2024",
                 "semester": "TERM_1"
                 /*TODO: pageable 파라미터 추가 page=0&size=1&sort=%5B%22string%22%5D
                  {

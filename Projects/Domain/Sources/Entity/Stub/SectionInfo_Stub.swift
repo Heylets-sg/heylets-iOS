@@ -8,107 +8,6 @@
 
 import Foundation
 
-extension SectionInfo {
-    static public var search_stub: Self {
-        .init(
-            code: "EE3100",
-            name: "ENGINEERING ELECTROMAGNETICS",
-            schedule: [.stub2_1, .stub2_2],
-            professor: "TUT-EE04",
-            unit: 2
-        )
-    }
-    
-    static public var search_stub1: Self {
-        .init(
-            code: "EE3101",
-            name: "ENGINEERING ELECTROMAGNETICS",
-            schedule: [.stub2_1, .stub2_2],
-            professor: "TUT-EE04",
-            unit: 2
-        )
-    }
-    
-    static public var search_stub2: Self {
-        .init(
-            code: "EE3102",
-            name: "ENGINEERING ELECTROMAGNETICS",
-            schedule: [.stub2_1, .stub2_2],
-            professor: "TUT-EE04",
-            unit: 2
-        )
-    }
-    
-    static public var search_stub3: Self {
-        .init(
-            code: "EE3103",
-            name: "ENGINEERING ELECTROMAGNETICS",
-            schedule: [.stub2_1, .stub2_2],
-            professor: "TUT-EE04",
-            unit: 2
-        )
-    }
-    
-    static public var search_stub4: Self {
-        .init(
-            code: "EE3104",
-            name: "ENGINEERING ELECTROMAGNETICS",
-            schedule: [.stub2_1, .stub2_2],
-            professor: "TUT-EE04",
-            unit: 2
-        )
-    }
-    
-    static public var search_stub5: Self {
-        .init(
-            code: "EE3105",
-            name: "ENGINEERING ELECTROMAGNETICS",
-            schedule: [.stub2_1, .stub2_2],
-            professor: "TUT-EE04",
-            unit: 2
-        )
-    }
-    
-    static public var search_stub6: Self {
-        .init(
-            code: "EE3106",
-            name: "ENGINEERING ELECTROMAGNETICS",
-            schedule: [.stub2_1, .stub2_2],
-            professor: "TUT-EE04",
-            unit: 2
-        )
-    }
-    
-    static public var search_stub7: Self {
-        .init(
-            code: "EE3107",
-            name: "ENGINEERING ELECTROMAGNETICS",
-            schedule: [.stub2_1, .stub2_2],
-            professor: "TUT-EE04",
-            unit: 2
-        )
-    }
-    
-    static public var search_stub8: Self {
-        .init(
-            code: "EE3108",
-            name: "ENGINEERING ELECTROMAGNETICS",
-            schedule: [.stub2_1, .stub2_2],
-            professor: "TUT-EE04",
-            unit: 2
-        )
-    }
-    
-    static public var search_stub9: Self {
-        .init(
-            code: "EE3109",
-            name: "ENGINEERING ELECTROMAGNETICS",
-            schedule: [.stub2_1, .stub2_2],
-            professor: "TUT-EE04",
-            unit: 2
-        )
-    }
-}
 
 extension SectionInfo {
     static public var timetable_stub1: Self {
@@ -149,6 +48,15 @@ extension SectionInfo {
             name: "OPTICS, VIBRATIONS & WAVES",
             schedule: [.stub4],
             professor: "LEC/STUDIO-LE"
+        )
+    }
+    
+    static public var empty: Self {
+        .init(
+            id: 0,
+            name: "",
+            schedule: [],
+            professor: ""
         )
     }
 }

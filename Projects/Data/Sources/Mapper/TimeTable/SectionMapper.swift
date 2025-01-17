@@ -12,11 +12,31 @@ import Domain
 import Networks
 
 extension SectionResult {
-
+    func toEntity() -> SectionInfo {
+        .init(
+            id: sectionId,
+            code: courseCode!, //TODO: sectionCode랑 비교
+            name: courseName!,
+            schedule: schedules.map { $0.toEntity() },
+            professor: professor,
+            unit: nil
+        )
+    }
+    
+    func toEntity(_ unit: Int) -> SectionInfo {
+        .init(
+            id: sectionId,
+            code: courseCode!, //TODO: sectionCode랑 비교
+            name: courseName!,
+            schedule: schedules.map { $0.toEntity() },
+            professor: professor,
+            unit: unit
+        )
+    }
     
     func toEntity(_ unit: Int, _ code: String, _ name: String) -> SectionInfo {
         .init(
-            id: sectionId, //TODO: sectionCode랑 비교
+            id: sectionId,
             code: code,
             name: name,
             schedule: schedules.map { $0.toEntity() }, 
@@ -24,28 +44,16 @@ extension SectionResult {
             unit: unit
         )
     }
-    
-    func toEntity(_ code: String, _ name: String) -> SectionInfo {
-        .init(
-            id: sectionId, //TODO: sectionCode랑 비교
-            code: code,
-            name: name,
-            schedule: schedules.map { $0.toEntity() },
-            professor: professor
-//            unit: unit
-        )
-    }
 }
 
-extension SectionInTableList{
-    func toEntity() -> SectionInfo {
+extension SectioninTableResult {
+    func toEntity(_ unit: Int) -> SectionInfo {
         .init(
             id: sectionId,
             code: courseCode,
             name: courseName,
-            schedule: [],
             professor: professor,
-            unit: nil
+            unit: unit
         )
     }
 }

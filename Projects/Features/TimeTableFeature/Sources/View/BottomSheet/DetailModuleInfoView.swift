@@ -7,27 +7,28 @@
 //
 
 import SwiftUI
+import Domain
 
 public struct DetailModuleInfoView: View {
     @Binding var viewType: TimeTableViewType
     @Binding var deleteModuleAlertIsPresented: Bool
-    @ObservedObject var viewModel: DetailModuleInfoViewModel
+    private var sectionInfo: SectionInfo = .empty
     
     init(
         viewType: Binding<TimeTableViewType>,
         deleteModuleAlertIsPresented: Binding<Bool>,
-        viewModel: DetailModuleInfoViewModel
+        sectionInfo: SectionInfo
     ) {
         self._viewType = viewType
         self._deleteModuleAlertIsPresented = deleteModuleAlertIsPresented
-        self.viewModel = viewModel
+        self.sectionInfo = sectionInfo
     }
     
     public var body: some View {
         
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
-                Text(viewModel.moduleInfo.code ?? "custom")
+                Text(sectionInfo.code ?? "")
                     .font(.semibold_14)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 3)
@@ -35,7 +36,7 @@ public struct DetailModuleInfoView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 4))
                 
                 
-                Text(viewModel.moduleInfo.name)
+                Text(sectionInfo.name)
                     .font(.semibold_18)
                     .foregroundColor(.heyGray1)
                     .lineLimit(nil)
@@ -50,15 +51,15 @@ public struct DetailModuleInfoView: View {
                 .frame(height: 16)
             
             VStack(alignment: .leading, spacing: 7) {
-                Text(viewModel.moduleInfo.allscheduleTime)
+                Text(sectionInfo.allscheduleTime)
                     .font(.regular_14)
                     .foregroundColor(.heyGray2)
                 
-                Text(viewModel.moduleInfo.professor ?? "To Be Announced")
+                Text(sectionInfo.professor)
                     .font(.regular_14)
                     .foregroundColor(.heyGray2)
                 
-                Text("\(viewModel.moduleInfo.location) / \(viewModel.moduleInfo.unit) unit")
+                Text("\(sectionInfo.location) / \(sectionInfo.unit ?? 0) unit")
                     .font(.regular_14)
                     .foregroundColor(.heyGray2)
                 

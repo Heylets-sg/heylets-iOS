@@ -19,7 +19,7 @@ public struct TimeTableInfoResult: Decodable {
     public let academicYear: Int
     let isFavorite: Bool
     let status: String
-    let sections: [SectionInTableList]
+    let sections: [SectioninTableResult]
 }
 
 public struct TimeTableEditNameRequest: Encodable {

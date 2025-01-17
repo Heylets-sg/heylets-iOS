@@ -9,15 +9,10 @@
 import Foundation
 
 public struct SchedulesResult: Decodable {
-    public let scheduleID: Int?
+    public let scheduleId: Int?
+    public let location: String
+    public let professor: String?
     public let classDay: String
     public let startTime: String
     public let endTime: String
-    public let location: String
-    public let professor: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case scheduleID = "scheduleId"
-        case location, professor, classDay, startTime, endTime
-    }
 }

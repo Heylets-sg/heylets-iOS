@@ -92,6 +92,9 @@ public struct MyPageView: View {
                 viewModel.send(.logout)
             })
         )
+        .onAppear {
+            viewModel.send(.onAppear)
+        }
     }
 }
 

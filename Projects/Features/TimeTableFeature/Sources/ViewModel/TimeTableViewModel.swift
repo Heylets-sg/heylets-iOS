@@ -29,6 +29,7 @@ public class TimeTableViewModel: ObservableObject {
     
     enum Action {
         case onAppear
+        case tableCellDidTap(Int)
         case deleteModule
         case addLecture(SectionInfo)
         case deleteModuleAlertCloseButtonDidTap
@@ -44,16 +45,15 @@ public class TimeTableViewModel: ObservableObject {
     }
     
     @Published var state = State()
-    //TODO: lectureList -> timeTableCellList -> weekList, timaTable 컴바인으로 서버통신하면서 연결
-    
-    
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
+    @Published var viewType: TimeTableViewType = .main
     
     @Published var timeTableInfo: TimeTableInfo = .stub
     @Published var lectureList: [SectionInfo] = []
     @Published var weekList: [Week] = Week.weekDay
     @Published var timeTable: [[TimeTableCellInfo?]] = []
+    @Published var detailSectionInfo: SectionInfo = .empty
     
     
     public init(useCase: TimeTableUseCaseType) {
@@ -70,6 +70,12 @@ public class TimeTableViewModel: ObservableObject {
                 .receive(on: RunLoop.main)
                 .assign(to: \.lectureList, on: self)
                 .store(in: cancelBag)
+        case .tableCellDidTap(let sectionId):
+            detailSectionInfo = lectureList.first(where: {
+                $0.id == sectionId })!
+            print("\(detailSectionInfo) -> 이거이랑케용")
+            viewType = .detail
+            
         case .deleteModule:
             //TODO: 삭제 API 호출
             state.deleteModuleAlertIsPresented = false
@@ -77,12 +83,15 @@ public class TimeTableViewModel: ObservableObject {
             state.deleteModuleAlertIsPresented = false
         case .inValidregisterModuleAlertCloseButtonDidTap:
             state.inValidregisterModuleIsPresented = (false, "")
+            
         case .addLecture(let lecture):
             if lectureList.contains(where: { $0 == lecture }) {
                 state.inValidregisterModuleIsPresented = (true, "This module is already exist")
             } else {
-                useCase.addSection(lecture.id!)
-                    .sink(receiveValue: {_  in })
+                useCase.addSection(lecture.id)
+                    .sink(receiveValue: {[weak self] _  in
+                        self?.viewType = .main
+                    })
                     .store(in: cancelBag)
             }
         }

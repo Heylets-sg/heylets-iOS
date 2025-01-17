@@ -55,9 +55,9 @@ public class MyPageViewModel: ObservableObject {
         switch action {
         case .onAppear:
             useCase.getProfile()
-                .sink(receiveValue: { [weak self] profile in
-                    self?.state.profileInfo = profile
-                }).store(in: cancelBag)
+                .receive(on: RunLoop.main)
+                .assign(to: \.state.profileInfo, on: self)
+                .store(in: cancelBag)
             
         case .changePasswordButtonDidTap:
             navigationRouter.push(to: .changePassword)

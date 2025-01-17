@@ -44,7 +44,9 @@ public struct RootView: View {
                         useCase: useCase.timeTableUseCase
                     ),
                     settingTimeTableViewModel: .init(),
-                    themeViewModel: .init()
+                    themeViewModel: .init(
+                        useCase: useCase.timeTableUseCase
+                    )
                 )
             case .mypage:
                 MyPageView(

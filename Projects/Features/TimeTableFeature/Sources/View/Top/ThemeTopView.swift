@@ -63,6 +63,9 @@ struct ThemeTopView: View {
             }
             .scrollIndicators(.hidden)
         }
+        .onAppear {
+            viewModel.send(.onAppear)
+        }
     }
 }
 

@@ -9,7 +9,7 @@
 import Foundation
 
 public struct SectionInfo: Hashable, Equatable {
-    public var id: Int?
+    public var id: Int
     public var code: String?
     public var name: String
     public var schedule: [ScheduleInfo]
@@ -36,10 +36,10 @@ public struct SectionInfo: Hashable, Equatable {
     }
     
     public init(
-        id: Int? = nil,
+        id: Int,
         code: String? = nil,
         name: String,
-        schedule: [ScheduleInfo],
+        schedule: [ScheduleInfo] = [],
         professor: String,
         unit: Int? = nil,
         memo: String? = nil
@@ -65,6 +65,7 @@ extension Array where Element == SectionInfo {
                     code: lecture.code ?? "custom",
                     name: lecture.name,
                     professor: lecture.professor,
+                    unit: lecture.unit,
                     schedule: schedule
                 )
                 

@@ -30,10 +30,14 @@ public protocol TimeTableUseCaseType {
     func addCustomModule(_ customModule: CustomModuleInfo) -> AnyPublisher<Void, Never>
     
     
-    //TODO: 강의 삭제하기
-    //TODO: 강의 삭제하기 실패 처리
+    //MARK: Detail
+    //TODO: 강의 상세 정보 불러오기
     
-    //MARK: Search
+    
+    
+    //TODO: 강의 삭제하기
+//    func deleteSection(_ sectionId: String) -> AnyPublisher<Void, Never>
+    //TODO: 강의 삭제하기 실패 처리
 
     
     
@@ -43,9 +47,12 @@ public protocol TimeTableUseCaseType {
     //TODO: 정규 강의 추가하기 실패 처리
     
     //MARK: Setting
-    //TODO: 시간표 이름 바꾸기
+    //시간표 이름 바꾸기
     func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never>
-    //TODO: 테마 리스트 불러오기
+    //테마 리스트 불러오기
+    func getThemeList() -> AnyPublisher<[Theme], Never>
+    
+    
     //TODO: Setting 값 저장하기
     //TODO: 시간표 삭제하기
 }
