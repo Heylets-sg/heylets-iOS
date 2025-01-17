@@ -36,7 +36,7 @@ public protocol TimeTableUseCaseType {
     
     
     //TODO: 강의 삭제하기
-//    func deleteSection(_ sectionId: String) -> AnyPublisher<Void, Never>
+    func deleteSection(_ sectionId: Int) -> AnyPublisher<Void, Never>
     //TODO: 강의 삭제하기 실패 처리
 
     

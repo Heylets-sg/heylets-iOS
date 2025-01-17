@@ -77,8 +77,12 @@ public class TimeTableViewModel: ObservableObject {
             viewType = .detail
             
         case .deleteModule:
-            //TODO: 삭제 API 호출
-            state.deleteModuleAlertIsPresented = false
+            useCase.deleteSection(detailSectionInfo.id)
+                .receive(on: RunLoop.main)
+                .sink(receiveValue: {[weak self] _  in
+                    self?.state.deleteModuleAlertIsPresented = false
+                })
+                .store(in: cancelBag)
         case .deleteModuleAlertCloseButtonDidTap:
             state.deleteModuleAlertIsPresented = false
         case .inValidregisterModuleAlertCloseButtonDidTap:

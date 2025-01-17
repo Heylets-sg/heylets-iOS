@@ -12,10 +12,6 @@ import Combine
 import Core
 
 final public class TimeTableUseCase: TimeTableUseCaseType {
-//    public func deleteSection(_ sectionId: String) -> AnyPublisher<Void, Never> {
-//        <#code#>
-//    }
-    
     private let userRepository: UserRepositoryType
     private let lectureRepository: LectureRepositoryType
     private let scheduleRepository: ScheduleRepositoryType
@@ -105,6 +101,14 @@ extension TimeTableUseCase {
         return sectionRepository.addSection(tableId, sectionId, "")
             .catch { _ in
                 //TODO: 커스텀 모듈 추가 실패 처리
+                return Just(()).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func deleteSection(_ sectionId: Int) -> AnyPublisher<Void, Never> {
+        return sectionRepository.deleteSection(tableId, sectionId)
+            .catch { _ in
                 return Just(()).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()

@@ -16,7 +16,7 @@ public protocol SectionRepositoryType {
     
     func deleteSection(
         _ tableId: String,
-        _ sectionId: String
+        _ sectionId: Int
     ) -> AnyPublisher<Void, Error>
     
     //추가하자마자 전체 API 불러올 생각이어서 일단 Void

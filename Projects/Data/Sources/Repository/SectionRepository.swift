@@ -28,7 +28,7 @@ public struct SectionRepository: SectionRepositoryType {
     
     public func deleteSection(
         _ tableId: String,
-        _ sectionId: String
+        _ sectionId: Int
     ) -> AnyPublisher<Void, Error> {
         service.deleteSection(tableId, sectionId)
             .asVoidWithGeneralError()

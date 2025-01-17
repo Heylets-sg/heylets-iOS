@@ -18,7 +18,7 @@ public protocol SectionServiceType {
     
     func deleteSection(
         _ tableId: String,
-        _ sectionId: String
+        _ sectionId: Int
     ) -> NetworkVoidResponse
     
     func addSection(
@@ -36,7 +36,7 @@ extension SectionService: SectionServiceType {
     
     public func deleteSection(
         _ tableId: String,
-        _ sectionId: String
+        _ sectionId: Int
     ) -> NetworkVoidResponse {
         requestWithNoResult(.deleteSection(tableId, sectionId))
     }
