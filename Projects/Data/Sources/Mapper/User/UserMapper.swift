@@ -23,7 +23,7 @@ extension User {
                 sex: gender,
                 birth: birth.toInt()
             ),
-            profileImg: profile.image
+            profileImg: profile.image?.jpegData(compressionQuality: 1.0)
         )
     }
 }

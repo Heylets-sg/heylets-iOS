@@ -11,7 +11,10 @@ import DependencyPlugin
 
 let project = Project.makeModule(
     name: "ThirdPartyLibs",
-    targets: [.dynamicFramework]
+    targets: [.dynamicFramework],
+    externalDependencies: [
+        .SPM.Kingfisher
+    ]
 )
 
 

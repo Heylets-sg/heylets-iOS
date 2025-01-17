@@ -34,12 +34,12 @@ public struct User: Hashable {
 public struct ProfileInfo: Hashable {
     public var nickName: String
     public var university: String
-    public var image: Data?
+    public var image: UIImage?
     
     public init(
         nickName: String = "",
         university: String = "",
-        image: Data? = nil
+        image: UIImage? = nil
     ) {
         self.nickName = nickName
         self.university = university

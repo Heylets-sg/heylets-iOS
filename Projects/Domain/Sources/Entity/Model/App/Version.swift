@@ -19,10 +19,10 @@ public struct Version {
     }
 
     public init(_ versionString: String) {
-        let versions = versionString.split(separator: ".").map{ Int($0)! }
-        self.major = versions[0]
-        self.minor = versions[1]
-        self.patch = versions[2]
+        let versions = versionString.split(separator: ".").map{ Int($0) }
+        self.major = versions[0] ?? 0
+        self.minor = versions[1] ?? 0
+        self.patch = 0
     }
 }
 

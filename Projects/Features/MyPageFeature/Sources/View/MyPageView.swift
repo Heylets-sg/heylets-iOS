@@ -10,6 +10,7 @@ import SwiftUI
 
 import DSKit
 import BaseFeatureDependency
+import Kingfisher
 
 public struct MyPageView: View {
     @EnvironmentObject var container: Router
@@ -67,7 +68,7 @@ public struct MyPageView: View {
                 }
                 
                 VStack {
-                    Image(uiImage: .icSchool)
+                    Image(uiImage: viewModel.state.profileInfo.image ?? UIImage().withTintColor(.black))
                         .resizable()
                         .frame(width: 80, height: 80)
                         .background(Color.heyWhite)
