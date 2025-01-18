@@ -15,8 +15,8 @@ import Networks
 public struct ScheduleRepository: ScheduleRepositoryType {
     private let service: ScheduleServiceType
     
-    public init(sevice: ScheduleServiceType) {
-        self.service = sevice
+    public init(service: ScheduleServiceType) {
+        self.service = service
     }
     
     public func deleteLectureModule(
@@ -56,14 +56,14 @@ public struct ScheduleRepository: ScheduleRepositoryType {
     public func addCustomModule(
         _ tableId: String,
         _ customModuleInfo: CustomModuleInfo
-    ) -> AnyPublisher<CustomModuleInfo, Error> {
+    ) -> AnyPublisher<Void, Error> {
         let request = customModuleInfo.toDTO()
         return service.addCustomModule(
             tableId,
             request
         )
-        .map { $0.toEntity() }
+//        .map { $0.toEntity() }
+        .map { _ in }
         .mapToGeneralError()
-        
     }
 }

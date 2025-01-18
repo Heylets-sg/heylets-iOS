@@ -12,46 +12,50 @@ import OnboardingFeature
 import TimeTableFeature
 import MyPageFeature
 import SplashFeature
-
-public class HeyNavigationRouter: ObservableObject {
-    public init() {}
-    let onboarding = OnboardingNavigationRouter()
-    let myPage = MyPageNavigationRouter()
-}
+import Domain
 
 public struct RootView: View {
     public init() {}
     @EnvironmentObject var router: Router
-    @EnvironmentObject var navigationRouter: HeyNavigationRouter
-    
+    @EnvironmentObject var useCase: HeyUseCase
+
     public var body: some View {
         Group {
             switch router.windowRouter.destination {
             case .splash:
-                SplashView(viewModel: .init(windowRouter: router.windowRouter))
+                SplashView(
+                    viewModel: .init(windowRouter: router.windowRouter)
+                )
             case .onboarding:
                 OnboardingView(
                     viewModel: OnboardingViewModel(
-                        navigationRouter: navigationRouter.onboarding
+                        navigationRouter: router.navigationRouter
                     )
                 )
-                .environmentObject(navigationRouter.onboarding)
             case .timetable:
                 TimeTableView(
-                    viewModel: .init(),
-                    searchModuleViewModel: .init(),
-                    addCustomModuleViewModel: .init(),
+                    viewModel: .init(
+                        useCase: useCase.timeTableUseCase
+                    ),
+                    searchModuleViewModel: .init(
+                        useCase: useCase.timeTableUseCase
+                    ),
+                    addCustomModuleViewModel: .init(
+                        useCase: useCase.timeTableUseCase
+                    ),
                     settingTimeTableViewModel: .init(),
-                    themeViewModel: .init()
+                    themeViewModel: .init(
+                        useCase: useCase.timeTableUseCase
+                    )
                 )
             case .mypage:
                 MyPageView(
                     viewModel: MyPageViewModel(
-                        navigationRouter: navigationRouter.myPage,
-                        windowRouter: router.windowRouter
+                        navigationRouter: router.navigationRouter,
+                        windowRouter: router.windowRouter,
+                        useCase: useCase.myPageUseCase
                     )
                 )
-                .environmentObject(navigationRouter.myPage)
             }
             
         }

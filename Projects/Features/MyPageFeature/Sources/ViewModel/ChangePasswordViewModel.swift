@@ -10,6 +10,7 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Domain
 import DSKit
 import Core
 
@@ -19,6 +20,8 @@ public class ChangePasswordViewModel: ObservableObject {
         var checkPasswordIsValid: TextFieldState = .idle
         var changePasswordButtonIsEnabled: Bool = false
         var changePasswordAlertViewIsPresented: Bool = false
+        
+        var showToast: String = ""
     }
     
     enum Action {
@@ -27,18 +30,25 @@ public class ChangePasswordViewModel: ObservableObject {
         case dismissAlertView
     }
     
-    public var navigationRouter: MyPageNavigationRouter
-    private let cancelBag = CancelBag()
-    
     @Published var state = State()
     @Published var currentPassword = ""
     @Published var newPassword = ""
     @Published var checkPassword = ""
     
-    public init(navigationRouter: MyPageNavigationRouter) {
+    public var navigationRouter: NavigationRoutableType
+    private let useCase: MyPageUseCaseType
+    private let cancelBag = CancelBag()
+    
+    
+    public init(
+        navigationRouter: NavigationRoutableType,
+        useCase: MyPageUseCaseType
+    ) {
         self.navigationRouter = navigationRouter
+        self.useCase = useCase
         
         observe()
+        bindState()
     }
     
     func send(_ action: Action) {
@@ -47,11 +57,15 @@ public class ChangePasswordViewModel: ObservableObject {
             navigationRouter.pop()
         case .changePasswordButtonDidTap:
             //TODO: 비밀번호 Reset API 구현
+            useCase.changePassword(currentPassword, newPassword, checkPassword)
+                .sink(receiveValue: { [weak self] _ in
+                    self?.navigationRouter.pop()
+                }).store(in: cancelBag)
             
             //TODO: 안되면 alert창
             
             //TODO: 성공하면 pop
-            navigationRouter.pop()
+            
         case .dismissAlertView:
             state.changePasswordAlertViewIsPresented = true
         }
@@ -79,7 +93,15 @@ public class ChangePasswordViewModel: ObservableObject {
             }
             .assign(to: \.state.changePasswordButtonIsEnabled, on: owner)
             .store(in: cancelBag)
-        
+    }
+    
+    private func bindState() {
+        useCase.passwordFailed
+//            .merge(with: useCase.passwordFailed)
+            .receive(on: RunLoop.main)
+            .map { $0.message }
+            .assign(to: \.state.showToast, on: self)
+            .store(in: cancelBag)
     }
 }
 

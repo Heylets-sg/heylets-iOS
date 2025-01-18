@@ -13,7 +13,7 @@ import Domain
 import Networks
 
 public struct AuthRepository: AuthRepositoryType {
-    private let authService: AuthServiceType
+    public let authService: AuthServiceType
     
     public init(authService: AuthServiceType) {
         self.authService = authService
@@ -24,6 +24,15 @@ public struct AuthRepository: AuthRepositoryType {
     ) -> AnyPublisher<Bool, Error> {
         authService.checkUserName(name)
             .map { $0.available }
+            .mapToGeneralError()
+    }
+    
+    public func signUp(
+        _ user: User
+    ) -> AnyPublisher<Auth, Error> {
+        let request = user.toDTO()
+        return authService.signUp(request)
+            .map { $0.toEntity() }
             .mapToGeneralError()
     }
     
@@ -74,7 +83,7 @@ public struct AuthRepository: AuthRepositoryType {
         _ otpCode: Int
     ) -> AnyPublisher<Void, Error> {
         let request: VerifyOTPCodeRequest = .init(email, otpCode)
-        return authService.verifyResetPassword(request)
+        return authService.verifyEmail(request)
             .asVoidWithGeneralError()
     }
     
@@ -82,7 +91,15 @@ public struct AuthRepository: AuthRepositoryType {
         _ email: String
     ) -> AnyPublisher<Void, Error> {
         let request: RequestOTPCodeRequest = .init(email)
-        return authService.requestResetPassword(request)
+        return authService.requestVerifyEmail(request)
+            .asVoidWithGeneralError()
+    }
+    
+    public func deleteAccount(
+        _ password: String
+    ) -> AnyPublisher<Void, Error> {
+        let request: DeleteAccountRequest = .init(password)
+        return authService.deleteAccount(request)
             .asVoidWithGeneralError()
     }
 }

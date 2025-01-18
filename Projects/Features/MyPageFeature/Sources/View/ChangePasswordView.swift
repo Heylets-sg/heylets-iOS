@@ -12,7 +12,7 @@ import DSKit
 import BaseFeatureDependency
 
 public struct ChangePasswordView: View {
-    @EnvironmentObject var router: Router
+    @EnvironmentObject var container: Router
     @ObservedObject var viewModel: ChangePasswordViewModel
     
     public init(viewModel: ChangePasswordViewModel) {

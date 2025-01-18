@@ -28,7 +28,8 @@ public class ThemeViewModel: ObservableObject {
     }
     
     @Published var state = State()
-    @Published var themeList: [Theme] = [.라일락, .오트, .에버그린, .베이비블루, .베이지]
+    @Published var themeList: [Theme] = []
+    private let useCase: TimeTableUseCaseType
     @Published var displayType: String = "module code"
     
     let options = [
@@ -40,7 +41,8 @@ public class ThemeViewModel: ObservableObject {
     
     private let cancelBag = CancelBag()
     
-    public init() {
+    public init(useCase: TimeTableUseCaseType) {
+        self.useCase = useCase
         
         observe()
     }
@@ -48,7 +50,10 @@ public class ThemeViewModel: ObservableObject {
     func send(_ action: Action) {
         switch action {
         case .onAppear:
-            break
+            useCase.getThemeList()
+                .receive(on: RunLoop.main)
+                .assign(to: \.themeList, on: self)
+                .store(in: cancelBag)
             //TODO: 시간표 모듈 설정 API 호출
             
         case .saveButtonDidTap:

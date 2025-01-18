@@ -1,0 +1,29 @@
+//
+//  User.swift
+//  Data
+//
+//  Created by 류희재 on 1/14/25.
+//  Copyright © 2025 Heylets-iOS. All rights reserved.
+//
+
+import Foundation
+
+import Core
+import Domain
+import Networks
+
+extension User {
+    public func toDTO() -> SignUpRequest {
+        .init(
+            requset: .init(
+                nickname: profile.nickName,
+                email: email,
+                password: password,
+                university: profile.university,
+                sex: gender,
+                birth: birth.toInt()
+            ),
+            profileImg: profile.image?.jpegData(compressionQuality: 1.0)
+        )
+    }
+}

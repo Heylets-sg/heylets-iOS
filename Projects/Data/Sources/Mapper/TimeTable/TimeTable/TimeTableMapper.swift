@@ -17,7 +17,7 @@ extension TimeTableInfoResult {
             id: tableId,
             name: tableName,
             semester: semester,
-            academicYear: acadmicYear
+            academicYear: academicYear
         )
     }
 }

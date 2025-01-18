@@ -29,6 +29,7 @@ public class TimeTableViewModel: ObservableObject {
     
     enum Action {
         case onAppear
+        case tableCellDidTap(Int)
         case deleteModule
         case addLecture(SectionInfo)
         case deleteModuleAlertCloseButtonDidTap
@@ -44,50 +45,58 @@ public class TimeTableViewModel: ObservableObject {
     }
     
     @Published var state = State()
-    //TODO: lectureList -> timeTableCellList -> weekList, timaTable 컴바인으로 서버통신하면서 연결
-    @Published var lectureList: [SectionInfo] = [
-        .timetable_stub1,
-        .timetable_stub2,
-        .timetable_stub3,
-        .timetable_stub4
-    ]
-    @Published var timeTableInfo: TimeTableInfo = TimeTableInfo(
-        id: 1,
-        name: "A+++",
-        semester: "sem 1",
-        academicYear: 2024
-    )
     private let cancelBag = CancelBag()
-    @Published private var timeTableCellList: [TimeTableCellInfo] = []
+    private let useCase: TimeTableUseCaseType
+    @Published var viewType: TimeTableViewType = .main
     
+    @Published var timeTableInfo: TimeTableInfo = .stub
+    @Published var lectureList: [SectionInfo] = []
     @Published var weekList: [Week] = Week.weekDay
     @Published var timeTable: [[TimeTableCellInfo?]] = []
+    @Published var detailSectionInfo: SectionInfo = .empty
     
     
-    public init() {
+    public init(useCase: TimeTableUseCaseType) {
+        self.useCase = useCase
         
         observe()
-        self.timeTableCellList = lectureList.createTimeTableCellList()
-        
+        bindState()
     }
     
     func send(_ action: Action) {
         switch action {
         case .onAppear:
-            configWeekList()
-            configTimeTable()
+            useCase.fetchTableInfo()
+                .receive(on: RunLoop.main)
+                .assign(to: \.lectureList, on: self)
+                .store(in: cancelBag)
+        case .tableCellDidTap(let sectionId):
+            detailSectionInfo = lectureList.first(where: {
+                $0.id == sectionId })!
+            print("\(detailSectionInfo) -> 이거이랑케용")
+            viewType = .detail
+            
         case .deleteModule:
-            //TODO: 삭제 API 호출
-            state.deleteModuleAlertIsPresented = false
+            useCase.deleteSection(detailSectionInfo.id)
+                .receive(on: RunLoop.main)
+                .sink(receiveValue: {[weak self] _  in
+                    self?.state.deleteModuleAlertIsPresented = false
+                })
+                .store(in: cancelBag)
         case .deleteModuleAlertCloseButtonDidTap:
             state.deleteModuleAlertIsPresented = false
         case .inValidregisterModuleAlertCloseButtonDidTap:
             state.inValidregisterModuleIsPresented = (false, "")
+            
         case .addLecture(let lecture):
             if lectureList.contains(where: { $0 == lecture }) {
                 state.inValidregisterModuleIsPresented = (true, "This module is already exist")
             } else {
-                //TODO: 정규 강의 추가 API 호출
+                useCase.addSection(lecture.id)
+                    .sink(receiveValue: {[weak self] _  in
+                        self?.viewType = .main
+                    })
+                    .store(in: cancelBag)
             }
         }
     }
@@ -117,8 +126,11 @@ public class TimeTableViewModel: ObservableObject {
             
         case .editTimeTableName:
             //TODO: 시간표 이름 변경 API 호출 with timeTableName
-            print("시간표 이름 변경 메소드 호출: \(state.timeTableName)")
-            state.settingAlertType = nil
+            useCase.changeTimeTableName(state.timeTableName)
+                .receive(on: RunLoop.main)
+                .map { _ in  nil}
+                .assign(to: \.state.settingAlertType, on: self)
+                .store(in: cancelBag)
         }
     }
     
@@ -128,30 +140,59 @@ public class TimeTableViewModel: ObservableObject {
         
     }
     
-    private func configWeekList() {
+    private func bindState() {
+        useCase.timeTableInfo
+            .receive(on: RunLoop.main)
+            .assign(to: \.timeTableInfo, on: self)
+            .store(in: cancelBag)
+        
+        useCase.timeTableCellInfo
+            .receive(on: RunLoop.main)
+            .flatMap(configWeekList)
+            .assign(to: \.weekList, on: self)
+            .store(in: cancelBag)
+        
+        useCase.timeTableCellInfo
+            .receive(on: RunLoop.main)
+            .flatMap(configTimeTable)
+            .assign(to: \.timeTable, on: self)
+            .store(in: cancelBag)
+    }
+}
+
+extension TimeTableViewModel {
+    private func configWeekList(
+        _ timeTableCellList: [TimeTableCellInfo]
+    ) -> AnyPublisher<[Week], Never> {
+        var updatedWeekList = weekList
         for cell in timeTableCellList {
             if cell.schedule.day == .Sun {
-                weekList = Week.dayOfWeek
+                updatedWeekList = Week.dayOfWeek
                 break
             }
-            if cell.schedule.day == .Sat && !weekList.contains(.Sat) {
-                weekList.append(.Sat)
+            if cell.schedule.day == .Sat && !updatedWeekList.contains(.Sat) {
+                updatedWeekList.append(.Sat)
             }
         }
-        self.weekList = weekList
+        return Just(updatedWeekList)
+            .eraseToAnyPublisher()
     }
     
-    private func configTimeTable() {
-        var timeTable: [[TimeTableCellInfo?]] = Array(repeating: Array(repeating: nil, count: 16), count: weekList.count)
-        for cell in timeTableCellList {
+    private func configTimeTable(
+        _ timeTableCellList: [TimeTableCellInfo]
+    ) -> AnyPublisher<[[TimeTableCellInfo?]], Never> {
+        let updatedTimeTable: [[TimeTableCellInfo?]] = Array(repeating: Array(repeating: nil, count: 16), count: weekList.count)
+        let resultTimeTable = timeTableCellList.reduce(into: updatedTimeTable) { timeTable, cell in
             if let weekIndex = weekList.firstIndex(of: cell.schedule.day) {
                 for s in cell.slot {
                     timeTable[weekIndex][s.key] = cell
                 }
             }
         }
-        self.timeTable = timeTable
+        return Just(resultTimeTable)
+            .eraseToAnyPublisher()
     }
+
 }
 
 

@@ -12,7 +12,7 @@ import BaseFeatureDependency
 import DSKit
 
 public struct ResetPasswordView: View {
-    @EnvironmentObject var router: Router
+    @EnvironmentObject var container: Router
     @ObservedObject var viewModel: ResetPasswordViewModel
     
     public init(viewModel: ResetPasswordViewModel) {

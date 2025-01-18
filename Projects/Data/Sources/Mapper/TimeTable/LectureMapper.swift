@@ -21,7 +21,7 @@ extension LectureDetailResult {
             termId: termId,
             academicYear: academicYear,
             semester: semester,
-            sections: sections.map { $0.toEntity(courseCode, courseName)
+            sections: sections.map { $0.toEntity(unit, courseCode, courseName)
             }
         )
     }
@@ -35,7 +35,11 @@ extension LectureInfoResult {
             termId: termId,
             academicYear: academicYear,
             semester: semester,
-            sections: sections.map { $0.toEntity() }
+            sections: sections.map { $0.toEntity(
+                Int(credit),
+                courseCode,
+                courseName
+            ) }
         )
     }
 }

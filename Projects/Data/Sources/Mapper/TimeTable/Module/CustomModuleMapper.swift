@@ -12,16 +12,35 @@ import Domain
 import Networks
 
 extension CustomModuleResult {
+    func toEntity() -> SectionInfo {
+        let startTimeComponents = startTime.parseTime()
+        let endTimeComponents = endTime.parseTime()
+        let weekDay = Week.toWeek(from: classDay)
+        
+        return .init(
+            id: scheduleId,
+            name: title,
+            schedule: [.init(
+                day: weekDay,
+                startHour: startTimeComponents.hour,
+                startMinute: startTimeComponents.minute,
+                endHour: endTimeComponents.hour,
+                endMinute: endTimeComponents.minute,
+                location: location ?? ""
+            )],
+            professor: professor ?? "",
+            memo: memo
+        )
+    }
+    
     func toEntity() -> CustomModuleInfo {
         .init(
-            scheduleId: scheduleId,
             title: title,
-            location: location,
-            professor: professor,
             classDay: classDay,
             startTime: startTime,
             endTime: endTime,
-            memo: memo
+            location: location,
+            professor: professor
         )
     }
 }
@@ -30,11 +49,11 @@ extension CustomModuleInfo {
     func toDTO() -> CustomModuleRequest {
         .init(
             title: title,
-            location: location,
-            professor: professor,
             day: classDay,
             startTime: startTime,
             endTime: endTime,
+            location: location,
+            professor: professor,
             memo: memo
         )
     }

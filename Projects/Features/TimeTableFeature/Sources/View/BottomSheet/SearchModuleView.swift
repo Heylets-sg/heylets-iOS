@@ -26,7 +26,7 @@ public struct SearchModuleView: View {
                 .padding(.bottom, 28)
                 .padding(.horizontal, 16)
             
-            if viewModel.state.filteredItems.isEmpty {
+            if viewModel.lectureList.isEmpty {
                 Text("We couldn’t find a match for\n‘Career and Enterpreneurial’.")
                     .font(.regular_16)
                     .foregroundColor(.heyGray2)
@@ -56,10 +56,10 @@ public struct SearchModuleView: View {
                 
             } else {
                 ScrollView {
-                    ForEach(viewModel.state.filteredItems, id: \.self) { lecture in
+                    ForEach(viewModel.lectureList, id: \.self) { lecture in
                         ClassSearchListCellView(
                             isSelected: viewModel.state.selectedLecture == lecture,
-                            lecture: lecture
+                            section: lecture
                         ) {
                             viewModel.send(.lectureCellDidTap(lecture))
                         }
@@ -69,8 +69,10 @@ public struct SearchModuleView: View {
                 .scrollIndicators(.hidden)
             }
         }
+        .onAppear {
+            viewModel.send(.onAppear)
+        }
         .cornerRadius(12, corners: [.topLeft, .topRight])
-        
     }
 }
 
@@ -115,12 +117,12 @@ fileprivate struct ClassSearchBarView: View {
 
 fileprivate struct ClassSearchListCellView: View {
     var isSelected: Bool
-    var lecture: SectionInfo
+    var section: SectionInfo
     var cellDidTap: () -> Void
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("\(lecture.code) \(lecture.name)")
+            Text("\(section.code ?? "")) \(section.name)")
                 .font(.medium_14)
                 .foregroundColor(.heyGray1)
                 .lineLimit(nil)
@@ -129,12 +131,12 @@ fileprivate struct ClassSearchListCellView: View {
                 .padding(.trailing, 87)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            Text(lecture.allscheduleTime)
+            Text(section.allscheduleTime)
                 .font(.regular_12)
                 .foregroundColor(.heyGray3)
                 .padding(.bottom, 2)
             
-            Text("\(lecture.professor ?? "TO BE ") / \(lecture.location) / \(lecture.unit!) unit")
+            Text("\(section.professor) / \(section.location) / \(section.unit!) unit")
                 .font(.regular_12)
                 .foregroundColor(.heyGray3)
         }

@@ -40,28 +40,23 @@ public class SelectUniversityViewModel: ObservableObject {
     }
     
     // MARK: - Properties
-    public var navigationRouter: OnboardingNavigationRouter
-    public var user: UserInfo = .init(
-        email: "",
-        password: "",
-        gender: "",
-        birth: Date(),
-        profile: .init(
-            nickName: "",
-            university: ""
-        )
-    )
-    
-    @Published var state = State()
-    private let cancelBag = CancelBag()
     
     private let allUniversityItems: [UniversityInfo] = [.NTU, .NUS]
     @Published var searchText = ""
     @Published var university: UniversityInfo? = nil
     
+    @Published var state = State()
+    public var navigationRouter: NavigationRoutableType
+    private var useCase: OnboardingUseCaseType
+    private let cancelBag = CancelBag()
+
     // MARK: - Init
-    public init(navigationRouter: OnboardingNavigationRouter) {
+    public init(
+        navigationRouter: NavigationRoutableType,
+        useCase: OnboardingUseCaseType
+    ) {
         self.navigationRouter = navigationRouter
+        self.useCase = useCase
         
         observe()
     }
@@ -73,8 +68,8 @@ public class SelectUniversityViewModel: ObservableObject {
             navigationRouter.pop()
         case .nextButtonDidTap:
             guard let university = university else { return }
-            user.profile.university = university.rawValue
-            navigationRouter.push(to: .verifyEmail(user))
+            useCase.userInfo.profile.university = university.rawValue
+            navigationRouter.push(to: .verifyEmail)
         case .selectUniversity(let university):
             self.university = university
             searchText = university.rawValue

@@ -40,19 +40,19 @@ public class EnterPersonalInfoViewModel: ObservableObject {
         case birthDayDidChange(Date)
     }
     
-    public var navigationRouter: OnboardingNavigationRouter
-    private var user: UserInfo
-    
-    @Published var state = State()
-    @Published var gender: Gender = .men
+    @Published var gender: Gender?
     @Published var birth: Date = Date()
     
+    @Published var state = State()
+    public var navigationRouter: NavigationRoutableType
+    private var useCase: OnboardingUseCaseType
+    
     public init(
-        navigationRouter: OnboardingNavigationRouter,
-        user: UserInfo
+        navigationRouter: NavigationRoutableType,
+        useCase: OnboardingUseCaseType
     ) {
         self.navigationRouter = navigationRouter
-        self.user = user
+        self.useCase = useCase
     }
     
     func send(_ action: Action) {
@@ -60,10 +60,10 @@ public class EnterPersonalInfoViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            //TODO: DTO 타입보고 변경할지 말지 결정하기
-            user.gender = gender.rawValue
-            user.birth = birth
-            navigationRouter.push(to: .enterIdPassword(user))
+            guard let gender else { return }
+            useCase.userInfo.gender = gender.rawValue
+            useCase.userInfo.birth = birth
+            navigationRouter.push(to: .enterIdPassword)
         case .genderButtonDidTap(let gender):
             self.gender = gender
         case .birthDayDidChange(let date):

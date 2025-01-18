@@ -12,6 +12,7 @@ import Combine
 import BaseFeatureDependency
 import DSKit
 import Core
+import Domain
 
 public class EnterEmailViewModel: ObservableObject {
     struct State {
@@ -24,15 +25,19 @@ public class EnterEmailViewModel: ObservableObject {
         case nextButtonDidTap
     }
     
-    public var navigationRouter: OnboardingNavigationRouter
-    
     @Published var state = State()
+    public var navigationRouter: NavigationRoutableType
+    private var useCase: OnboardingUseCaseType
     private let cancelBag = CancelBag()
     
     @Published var email: String = ""
     
-    public init(navigationRouter: OnboardingNavigationRouter) {
+    public init(
+        navigationRouter: NavigationRoutableType,
+        useCase: OnboardingUseCaseType
+    ) {
         self.navigationRouter = navigationRouter
+        self.useCase = useCase
         
         observe()
     }
@@ -42,7 +47,7 @@ public class EnterEmailViewModel: ObservableObject {
         case .gotoLoginView:
             navigationRouter.popToRootView()
         case .nextButtonDidTap:
-            navigationRouter.push(to: .enterSecurityCode(nil, email))
+            navigationRouter.push(to: .enterSecurityCode(.resetPassword(email)))
         }
     }
     

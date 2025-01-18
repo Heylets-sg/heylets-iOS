@@ -10,8 +10,9 @@ import SwiftUI
 
 import DSKit
 import BaseFeatureDependency
+import Domain
 
-public enum TimeTableViewType {
+public enum TimeTableViewType: Equatable {
     case main
     case detail
     case search
@@ -28,8 +29,7 @@ public enum TimeTableSettingAlertType {
 }
 
 public struct TimeTableView: View {
-    @EnvironmentObject var router: Router
-    @State var viewType: TimeTableViewType = .main
+    @EnvironmentObject var container: Router
     @ObservedObject var viewModel: TimeTableViewModel
     @ObservedObject var searchModuleViewModel: SearchModuleViewModel
     @ObservedObject var addCustomModuleViewModel: AddCustomModuleViewModel
@@ -51,26 +51,24 @@ public struct TimeTableView: View {
     public var body: some View {
         ZStack {
             VStack(alignment: .leading) {
-                createTopView(viewType)
+                createTopView(viewModel.viewType)
                 
                 Spacer()
                     .frame(height: 19)
                 
                 MainView(
-                    viewType: $viewType,
-                    weekList: $viewModel.weekList,
-                    timeTable: $viewModel.timeTable
+                    viewModel: viewModel,
+                    viewType: $viewModel.viewType
                 )
             }
             .onTapGesture {
                 withAnimation {
-                    viewType = .main
+                    viewModel.viewType = .main
                 }
             }
             .onAppear {
                 viewModel.send(.onAppear)
                 searchModuleViewModel.addLectureClosure = { lecture in
-                    viewType = .main
                     viewModel.send(.addLecture(lecture))
                 }
             }
@@ -78,7 +76,6 @@ public struct TimeTableView: View {
                 isPresented: viewModel.state.inValidregisterModuleIsPresented.0,
                 title: viewModel.state.inValidregisterModuleIsPresented.1,
                 primaryButton: ("Close", .gray, {
-                    viewType = .search
                     viewModel.send(.inValidregisterModuleAlertCloseButtonDidTap)
                 })
             )
@@ -104,12 +101,8 @@ public struct TimeTableView: View {
             SettingTimeTableAlertView(viewModel: viewModel)
         }
         
-        createBottomSheetView(viewType)
-        
+        createBottomSheetView(viewModel.viewType)
     }
-    
-    
-    
 }
 
 extension TimeTableView {
@@ -118,7 +111,7 @@ extension TimeTableView {
         switch viewType {
         case .search:
             SearchModuleView(
-                viewType: $viewType,
+                viewType: $viewModel.viewType,
                 reportMissingModuleAlertIsPresented: $viewModel.state.reportMissingModuleAlertIsPresented,
                 viewModel: searchModuleViewModel
             )
@@ -128,8 +121,9 @@ extension TimeTableView {
                 .bottomSheetTransition()
         case .detail:
             DetailModuleInfoView(
-                viewType: $viewType,
-                deleteModuleAlertIsPresented: $viewModel.state.deleteModuleAlertIsPresented, viewModel: .init()
+                viewType: $viewModel.viewType,
+                deleteModuleAlertIsPresented: $viewModel.state.deleteModuleAlertIsPresented,
+                sectionInfo: viewModel.detailSectionInfo
             )
             .bottomSheetTransition()
         case .addCustom:
@@ -145,28 +139,28 @@ extension TimeTableView {
         switch viewType {
         case .search:
             SearchModuleTopView(
-                viewType: $viewType,
+                viewType: $viewModel.viewType,
                 isShowingAddCustomModuleView: $viewModel.state.isShowingAddCustomModuleView,
                 viewModel: searchModuleViewModel,
                 addCustomViewModel: addCustomModuleViewModel
             )
         case .theme:
             ThemeTopView(
-                viewType: $viewType,
+                viewType: $viewModel.viewType,
                 viewModel: themeViewModel
             )
         case .addCustom:
             AddCustomModuleTopView(
-                viewType: $viewType,
+                viewType: $viewModel.viewType,
                 viewModel: addCustomModuleViewModel
             )
         default:
             TopView(
                 timeTableInfo: $viewModel.timeTableInfo,
-                viewType: $viewType,
+                viewType: $viewModel.viewType,
                 settingAlertType: $viewModel.state.settingAlertType
             )
-            .environmentObject(router)
+            .environmentObject(container)
         }
     }
 }

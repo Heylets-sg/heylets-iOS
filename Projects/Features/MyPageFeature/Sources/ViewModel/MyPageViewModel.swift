@@ -10,13 +10,18 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Domain
+import Core
 
 public class MyPageViewModel: ObservableObject {
     struct State {
         var logoutAlertViewIsPresented: Bool = false
+        var profileInfo: ProfileInfo = .init()
     }
     
     enum Action {
+        case onAppear
+        
         case changePasswordButtonDidTap
         case privacyPolicyButtonDidTap
         case termsOfServiceButtonDidTap
@@ -30,19 +35,30 @@ public class MyPageViewModel: ObservableObject {
     }
     
     @Published var state = State()
-    public var navigationRouter: MyPageNavigationRouter
+    public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType
+    private let useCase: MyPageUseCaseType
     
     public init(
-        navigationRouter: MyPageNavigationRouter,
-        windowRouter: WindowRoutableType
+        navigationRouter: NavigationRoutableType,
+        windowRouter: WindowRoutableType,
+        useCase: MyPageUseCaseType
     ) {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
+        self.useCase = useCase
     }
+    
+    private let cancelBag = CancelBag()
     
     func send(_ action: Action) {
         switch action {
+        case .onAppear:
+            useCase.getProfile()
+                .receive(on: RunLoop.main)
+                .assign(to: \.state.profileInfo, on: self)
+                .store(in: cancelBag)
+            
         case .changePasswordButtonDidTap:
             navigationRouter.push(to: .changePassword)
         case .privacyPolicyButtonDidTap:
@@ -55,15 +71,20 @@ public class MyPageViewModel: ObservableObject {
             navigationRouter.push(to: .notificationSetting)
         case .deleteAccountButtonDidTap:
             navigationRouter.push(to: .deleteAccount)
-        
+            
         case .logoutButtonDidTap:
             state.logoutAlertViewIsPresented = true
         case .logout:
             //TODO: 로그아웃 API
-            windowRouter.switch(to: .onboarding)
+            useCase.logout()
+                .sink(receiveValue: { [weak self] _ in
+                    self?.windowRouter.switch(to: .onboarding)
+                }).store(in: cancelBag)
+            
+            
         case .dismissLogoutAlertView:
             state.logoutAlertViewIsPresented = false
         }
-
+        
     }
 }

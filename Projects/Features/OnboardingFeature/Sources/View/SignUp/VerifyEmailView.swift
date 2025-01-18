@@ -12,7 +12,7 @@ import BaseFeatureDependency
 import DSKit
 
 public struct VerifyEmailView: View {
-    @EnvironmentObject var router: Router
+    @EnvironmentObject var container: Router
     @ObservedObject var viewModel: VerifyEmailViewModel
     
     public init(viewModel: VerifyEmailViewModel) {
@@ -81,14 +81,7 @@ fileprivate struct EmailDomainListView: View {
         "u.nus.edu",
         "e.ntu.edu.sg",
         "smu.edu.sg",
-        "accountancy.smu.edu.sg",
-        "computing.smu.edu.sg",
-        "economics.smu.edu.sg",
-        "scis.smu.edu.sg",
-        "law.smu.edu.sg",
-        "business.edu.sg",
-        "socsc.smu.edu.sg",
-        "business.smu.edu.sg"
+        "*.smu.edu.sg"
     ]
     var body: some View {
         ScrollView {

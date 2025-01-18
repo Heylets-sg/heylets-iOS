@@ -12,22 +12,20 @@ import Domain
 
 public struct MainView: View {
     @Binding var viewType: TimeTableViewType
-    @Binding var weekList: [Week]
-    @Binding var timeTable: [[TimeTableCellInfo?]]
+    @ObservedObject var viewModel: TimeTableViewModel
     
     init(
-        viewType: Binding<TimeTableViewType>,
-        weekList: Binding<[Week]>, timeTable: Binding<[[TimeTableCellInfo?]]>
+        viewModel: TimeTableViewModel,
+        viewType: Binding<TimeTableViewType>
     ) {
+        self.viewModel = viewModel
         self._viewType = viewType
-        self._weekList = weekList
-        self._timeTable = timeTable
     }
     
     public var body: some View {
         ScrollView(.horizontal) {
             HStack {
-                WeeklyListView($weekList.wrappedValue)
+                WeeklyListView(viewModel.weekList)
                     .padding(.bottom, 16)
                     .padding(.leading, 30)
             }
@@ -38,9 +36,8 @@ public struct MainView: View {
                         .padding(.top, 10)
                     
                     TimeTableGridView(
-                        viewType: $viewType,
-                        weekList: $weekList,
-                        timeTable: $timeTable
+                        viewModel: viewModel,
+                        viewType: $viewType
                     )
                 }
             }

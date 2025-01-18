@@ -10,10 +10,10 @@ import SwiftUI
 
 import DSKit
 import BaseFeatureDependency
+import Kingfisher
 
 public struct MyPageView: View {
-    @EnvironmentObject var router: Router
-    @EnvironmentObject var myPageRouter: MyPageNavigationRouter
+    @EnvironmentObject var container: Router
     @ObservedObject var viewModel: MyPageViewModel
     
     public init(viewModel: MyPageViewModel) {
@@ -21,7 +21,7 @@ public struct MyPageView: View {
     }
     
     public var body: some View {
-        NavigationStack(path: $myPageRouter.destinations) {
+        NavigationStack(path: $container.navigationRouter.destinations) {
             ZStack {
                 Color.heyMain
                 
@@ -30,14 +30,14 @@ public struct MyPageView: View {
                         .frame(height: 60)
                     
                     MyPageTopView()
-                        .environmentObject(router)
+                        .environmentObject(container)
                     
                     VStack {
                         Spacer()
                             .frame(height:90)
                         
                         VStack {
-                            Text("Heidi109 / NUS")
+                            Text("\(viewModel.state.profileInfo.nickName) / \(viewModel.state.profileInfo.university)")
                                 .font(.medium_16)
                                 .foregroundColor(Color.heyBlack)
                                 .padding(.top, 44)
@@ -68,7 +68,7 @@ public struct MyPageView: View {
                 }
                 
                 VStack {
-                    Image(uiImage: .icSchool)
+                    Image(uiImage: viewModel.state.profileInfo.image ?? UIImage().withTintColor(.black))
                         .resizable()
                         .frame(width: 80, height: 80)
                         .background(Color.heyWhite)
@@ -80,7 +80,7 @@ public struct MyPageView: View {
             }
             .ignoresSafeArea(edges: .vertical)
             .ignoresSafeArea(.keyboard)
-            .setMyPageNavigation()
+            .setMypageNavigation()
         }
         .navigationBarBackButtonHidden()
         .heyAlert(
@@ -93,6 +93,9 @@ public struct MyPageView: View {
                 viewModel.send(.logout)
             })
         )
+        .onAppear {
+            viewModel.send(.onAppear)
+        }
     }
 }
 
@@ -103,6 +106,7 @@ public struct MyPageTopView: View {
             Button {
                 router.windowRouter.switch(to: .timetable)
             } label: {
+                //TODO: 킹피셔로 바로 가져오기
                 Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
                     .resizable()
                     .frame(width: 22, height: 18)

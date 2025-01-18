@@ -28,8 +28,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
         case checkIDAvailabilityButtonDidTap
     }
     
-    public var navigationRouter: OnboardingNavigationRouter
-    private var user: UserInfo
+    public var navigationRouter: NavigationRoutableType
     private let cancelBag = CancelBag()
     
     @Published var state = State()
@@ -37,12 +36,14 @@ public class EnterIdPasswordViewModel: ObservableObject {
     @Published var password = ""
     @Published var checkPassword = ""
     
+    private var useCase: OnboardingUseCaseType
+    
     public init(
-        navigationRouter: OnboardingNavigationRouter,
-        user: UserInfo
+        navigationRouter: NavigationRoutableType,
+        useCase: OnboardingUseCaseType
     ) {
         self.navigationRouter = navigationRouter
-        self.user = user
+        self.useCase = useCase
         
         observe()
     }
@@ -52,23 +53,24 @@ public class EnterIdPasswordViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            user.profile.nickName = nickName
-            user.password = password
-            navigationRouter.push(to: .addProfile(user))
+            useCase.userInfo.profile.nickName = nickName
+            useCase.userInfo.password = password
+            navigationRouter.push(to: .addProfile)
         case .checkIDAvailabilityButtonDidTap:
-            //TODO: 아이디 중복 확인하는 API 연결
-            break
+            useCase.checkUserName(nickName)
+                .receive(on: RunLoop.main)
+                .sink(receiveValue: { [weak self] available in
+                    if available {
+                        self?.state.nickNameIsValid = .valid
+                    }
+                })
+                .store(in: cancelBag)
         }
     }
     
     private func observe() {
         weak var owner = self
         guard let owner else { return }
-        
-        $nickName
-            .map { $0.isEmpty ? .idle : ($0.isValidNickname() ? .valid : .invalid) }
-            .assign(to: \.state.nickNameIsValid, on: owner)
-            .store(in: cancelBag)
         
         $password
             .map { $0.isEmpty ? .idle : ($0.isValidPassword() ? .valid : .invalid) }
@@ -87,6 +89,14 @@ public class EnterIdPasswordViewModel: ObservableObject {
                 owner.state.checkPasswordIsValid == .valid
             }
             .assign(to: \.state.continueButtonIsEnabled, on: owner)
+            .store(in: cancelBag)
+    }
+    
+    private func bindState() {
+        useCase.checkUserNameFailed
+            .map { _ in TextFieldState.invalid }
+            .receive(on: RunLoop.main)
+            .assign(to: \.state.nickNameIsValid, on: self)
             .store(in: cancelBag)
     }
 }

@@ -27,15 +27,15 @@ public struct LectureRepository: LectureRepositoryType {
             .mapToGeneralError()
     }
     
-    public func getLectureList() -> AnyPublisher<[LectureInfo], Error> {
+    public func getLectureList() -> AnyPublisher<[SectionInfo], Error> {
         service.getLectureList()
-            .map { $0.content.map {$0.toEntity()} }
+            .map { $0.content.flatMap { $0.toEntity().sections } }
             .mapToGeneralError()
     }
     
-    public func getLectureListWithKeyword(_ keyword: String) -> AnyPublisher<[LectureInfo], Error> {
+    public func getLectureListWithKeyword(_ keyword: String) -> AnyPublisher<[SectionInfo], Error> {
         service.getLectureListWithKeyword(keyword)
-            .map { $0.content.map {$0.toEntity()} }
+            .map { $0.content.flatMap { $0.toEntity().sections } }
             .mapToGeneralError()
     }
 }

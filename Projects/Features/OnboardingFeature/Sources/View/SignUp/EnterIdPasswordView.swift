@@ -12,7 +12,7 @@ import BaseFeatureDependency
 import DSKit
 
 public struct EnterIdPasswordView: View {
-    @EnvironmentObject var router: Router
+    @EnvironmentObject var container: Router
     @ObservedObject var viewModel: EnterIdPasswordViewModel
     
     @State var showPassword = false
@@ -36,7 +36,10 @@ public struct EnterIdPasswordView: View {
                     placeHolder: "username",
                     rightImage: .icRepeat,
                     textFieldState: $viewModel.state.nickNameIsValid,
-                    colorSystem: .gray
+                    colorSystem: .gray,
+                    action: {
+                        viewModel.send(.checkIDAvailabilityButtonDidTap)
+                    }
                 )
                 
                 PasswordField(

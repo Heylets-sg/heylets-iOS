@@ -18,11 +18,11 @@ public struct ScheduleInfo: Hashable {
     public var location: String
     
     var startTime: String {
-        return "\(startHour):\(startMinute)"
+        return String(format: "%02d", startHour) + ":" + String(format: "%02d", startMinute)
     }
     
     var endTime: String {
-        return "\(endHour):\(endMinute)"
+        return String(format: "%02d", endHour) + ":" + String(format: "%02d", endMinute)
     }
     
     var isSaturday: Bool {

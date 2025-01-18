@@ -7,23 +7,21 @@
 //
 
 import SwiftUI
-import DSKit
 
 import RootFeature
-import Core
 import BaseFeatureDependency
-import RootFeature
+import Domain
 
 @main
 struct Heylets_iOSAPP: App {
-    @StateObject var windowRouter = Router.default
-    @StateObject var navigationRouter = HeyNavigationRouter()
+    @StateObject var router = Router.default
+    @StateObject var useCase = HeyUseCase.default
     
     var body: some Scene {
         WindowGroup {
             RootView()
-                .environmentObject(windowRouter)
-                .environmentObject(navigationRouter)
+                .environmentObject(router)
+                .environmentObject(useCase)
         }
     }
 }

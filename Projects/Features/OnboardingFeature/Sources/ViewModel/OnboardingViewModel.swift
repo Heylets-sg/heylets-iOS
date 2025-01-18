@@ -18,9 +18,9 @@ public class OnboardingViewModel: ObservableObject {
         case signUpButtonDidTap
     }
     
-    public var navigationRouter: OnboardingNavigationRoutable
+    public var navigationRouter: NavigationRoutableType
     
-    public init(navigationRouter: OnboardingNavigationRoutable) {
+    public init(navigationRouter: NavigationRoutableType) {
         self.navigationRouter = navigationRouter
     }
     

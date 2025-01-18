@@ -11,7 +11,7 @@ import Foundation
 public struct MyProfileResult: Decodable {
     public let nickname: String
     public let university: String
-    public let profileImageUrl: String
+    public let profileImageUrl: String?
 }
 
 public struct EditNameRequest: Encodable {

@@ -12,12 +12,15 @@ import Domain
 import Networks
 
 extension TimeTableDetailInfoDTO {
-    func toEntity() -> TimeTableInfo {
+    func toEntity() -> TimeTableDetailInfo {
         .init(
-            id: tableId,
-            name: tableName,
-            semester: semester,
-            academicYear: acadmicYear
+            tableInfo: .init(
+                id: tableId,
+                name: tableName,
+                semester: semester,
+                academicYear: academicYear
+            ),
+            sectionList: sections.map { $0.toEntity() } + customModules.map { $0.toEntity()}
         )
     }
 }

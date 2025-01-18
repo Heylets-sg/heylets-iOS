@@ -20,40 +20,53 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     }
     
     enum Action {
+        case onAppear
         case backButtonDidTap
         case nextButtonDidTap
     }
     
-    public var navigationRouter: OnboardingNavigationRouter
-    private var user: UserInfo?
+    @Published var otpCode: String = ""
     
     @Published var state = State()
-    @Published var otpCode: String = ""
+    public var navigationRouter: NavigationRoutableType
+    private var useCase: OnboardingUseCaseType
+    private var type: VerifyCodeType
     private let cancelBag = CancelBag()
     
     public init(
-        navigationRouter: OnboardingNavigationRouter,
-        user: UserInfo?,
-        email: String
+        navigationRouter: NavigationRoutableType,
+        useCase: OnboardingUseCaseType,
+        type: VerifyCodeType
     ) {
         self.navigationRouter = navigationRouter
-        self.user = user
-        self.state.hiddenEmail = email.maskedEmail()
+        self.useCase = useCase
+        self.type = type
         
         observe()
     }
     
     func send(_ action: Action) {
         switch action {
+        case .onAppear:
+            useCase.requestEmailVerifyCode(type)
+                .sink(receiveValue: { _ in })
+                .store(in: cancelBag)
+            
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            //TODO: 인증번호 확인 API 연결
-            if let user = user {
-                navigationRouter.push(to: .enterPersonalInfo(user))
-            } else {
-                navigationRouter.push(to: .resetPassword)
-            }
+            useCase.verifyEmail(type, Int(otpCode)!)
+                .sink(receiveValue: { [weak self] _ in
+                    switch self?.type {
+                    case .email:
+                        self?.navigationRouter.push(to: .enterPersonalInfo)
+                    case .resetPassword:
+                        self?.navigationRouter.push(to: .resetPassword)
+                    case .none:
+                        break
+                    }
+                })
+                .store(in: cancelBag)
         }
     }
     

@@ -8,7 +8,16 @@
 
 import Foundation
 
-public enum PasswordError {
+public enum PasswordError: Error {
     case inValidCurrentPassword
     case inValidCheckPassword
+    
+    public var message: String {
+        switch self {
+        case .inValidCurrentPassword:
+            return "inValidCurrentPassword"
+        case .inValidCheckPassword:
+            return "inValidCheckPassword"
+        }
+    }
 }

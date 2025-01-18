@@ -14,8 +14,8 @@ import Networks
 extension SectionResult {
     func toEntity() -> SectionInfo {
         .init(
-            id: sectionCode,
-            code: courseCode!,
+            id: sectionId,
+            code: courseCode!, //TODO: sectionCode랑 비교
             name: courseName!,
             schedule: schedules.map { $0.toEntity() },
             professor: professor,
@@ -25,8 +25,8 @@ extension SectionResult {
     
     func toEntity(_ unit: Int) -> SectionInfo {
         .init(
-            id: sectionCode,
-            code: courseCode!,
+            id: sectionId,
+            code: courseCode!, //TODO: sectionCode랑 비교
             name: courseName!,
             schedule: schedules.map { $0.toEntity() },
             professor: professor,
@@ -34,12 +34,26 @@ extension SectionResult {
         )
     }
     
-    func toEntity(_ code: String, _ name: String) -> SectionInfo {
+    func toEntity(_ unit: Int, _ code: String, _ name: String) -> SectionInfo {
         .init(
-            id: sectionCode,
+            id: sectionId,
             code: code,
             name: name,
-            schedule: schedules.map { $0.toEntity() }
+            schedule: schedules.map { $0.toEntity() }, 
+            professor: professor,
+            unit: unit
+        )
+    }
+}
+
+extension SectioninTableResult {
+    func toEntity(_ unit: Int) -> SectionInfo {
+        .init(
+            id: sectionId,
+            code: courseCode,
+            name: courseName,
+            professor: professor,
+            unit: unit
         )
     }
 }

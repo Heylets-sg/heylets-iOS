@@ -9,9 +9,32 @@
 import Foundation
 
 public struct SectionResult: Decodable {
-    public let sectionCode: String
+    public let sectionId: Int
+    public let sectionCode: String?
     public let professor: String
+    public let status: String?
+    public let schedules: [SchedulesResult]
+    
     public let courseCode: String?
     public let courseName: String?
-    public let schedules: [SchedulesResult]
+//    public let displayStyle: DisplayStyleResult
+    
+    
+    //강의 조회시
+    
 }
+
+public struct SectioninTableResult: Decodable {
+    public let sectionId: Int
+    public let courseName: String
+    public let courseCode: String
+    public let professor: String
+    public let status: String?
+}
+
+
+public struct DisplayStyleResult: Decodable {
+    let backgroundColor, textColor: String
+}
+
+

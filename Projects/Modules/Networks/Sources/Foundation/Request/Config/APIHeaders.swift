@@ -9,38 +9,38 @@
 import Foundation
 
 import Core
+import Domain
 
 public struct APIHeaders {
     static let contentType = "Content-Type"
     static let applicationJSON = "application/json"
-    static let multiPartFormData = "multipart/form-data; boundary=\("boundary")" //boundary 값 넣어줘야함
+    static let multiPartFormData = "multipart/form-data; boundary=\("boundary")"
     
     
     
     static let auth = "Authorization"
     
     static let deviceID_key = "Device-Id"
-    static let deviceID_value = "ex) 1234abcd5678efgh"
+    static let deviceID_value = AppService.getDeviceIdentifier()
     
     static let deviceModel_key = "Device-Model"
-    static let deviceModel_value = "ex) SM-S918N"
+    static let deviceModel_value = AppService.getDeviceModelName()
     
     static let osVersion_key = "OS-Version"
-    static let osVersion_value = "ex) 13"
+    static let osVersion_value = AppService.getOSVersion()
     
     static let appVersion_key = "App-Version"
-    static let appVersion_value = "ex) 1.0.0"
+    static let appVersion_value = AppService.getLocalAppVersion()
     
     static let xPlatform = "X-Platform"
     static let iOS = "IOS"
     
-    
     static var accessToken: String {
-        return "Bearer " /*+ (UserManager.shared.accessToken)*/
+        return "Bearer \(UserDefaultsManager.heyAccessToken)"
     }
     
     static var refreshToken: String {
-        return "Bearer " /*+ (UserManager.shared.refreshToken)*/
+        return "Bearer \(UserDefaultsManager.heyRefreshToken)"
     }
     
     static var appleAccessToken: String {
@@ -58,8 +58,20 @@ public extension APIHeaders {
             deviceID_key: deviceID_value,
             deviceModel_key: deviceModel_value,
             osVersion_key: osVersion_value,
-            appVersion_key: appVersion_value,
+            appVersion_key: appVersion_value.versionString,
+            xPlatform: iOS
+        ]
+    }
+    
+    static var headerWithAccessToken: [String:String] {
+        return [
+            contentType: applicationJSON,
+            deviceID_key: deviceID_value,
+            deviceModel_key: deviceModel_value,
+            osVersion_key: osVersion_value,
+            appVersion_key: appVersion_value.versionString,
             xPlatform: iOS,
+            auth: accessToken
         ]
     }
     
@@ -69,7 +81,7 @@ public extension APIHeaders {
             deviceID_key: deviceID_value,
             deviceModel_key: deviceModel_value,
             osVersion_key: osVersion_value,
-            appVersion_key: appVersion_value,
+            appVersion_key: appVersion_value.versionString,
             xPlatform: iOS,
         ]
     }

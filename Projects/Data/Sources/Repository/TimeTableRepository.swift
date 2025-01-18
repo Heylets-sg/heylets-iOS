@@ -27,18 +27,16 @@ public struct TimeTableRepository: TimeTableRepositoryType {
             .asVoidWithGeneralError()
     }
     
-    public func getTableList(
-        _ academicYear: String,
-        _ semester: String
-    ) -> AnyPublisher<[TimeTableInfo], Error> {
-        service.getTableList(academicYear, semester)
-            .map { $0.tables.map { $0.toEntity() }}
+    // 현재는 테이블 아이디를 가져오는 용도로만 사용됨
+    public func getTableList() -> AnyPublisher<Int?, Error> {
+        service.getTableList()
+            .map { $0.tables.isEmpty ? nil : $0.tables[0].tableId }
             .mapToGeneralError()
     }
     
     public func getTableDetailInfo(
         _ tableId: String
-    ) -> AnyPublisher<TimeTableInfo, Error> {
+    ) -> AnyPublisher<TimeTableDetailInfo, Error> {
         service.getTableDetailInfo(tableId)
             .map { $0.toEntity() }
             .mapToGeneralError()
@@ -53,14 +51,10 @@ public struct TimeTableRepository: TimeTableRepositoryType {
             .asVoidWithGeneralError()
     }
     
-    public func postTable(
-        _ tableName: String,
-        _ semester: String,
-        _ academicYear: Int
-    ) -> AnyPublisher<TimeTableInfo, Error> {
-        let request: AddTimeTableRequest = .init(tableName, semester, academicYear)
+    public func postTable() -> AnyPublisher<Int, Error> {
+        let request: AddTimeTableRequest = .init("TimeTable", "TERM_1", 2024)
         return service.postTable(request)
-            .map { $0.toEntity() }
+            .map { $0.tableId }
             .mapToGeneralError()
     }
 }

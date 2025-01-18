@@ -46,7 +46,7 @@ public final class BaseService<Target: URLRequestTargetType> {
                     .mapError { $0 }
             }
             .flatMap { data -> AnyPublisher<VoidResult, HeyNetworkError> in
-                self.decode(data: data)
+                self.decodeNoResult(data: data)
                     .mapError { ErrorHandler.handleDecodingError(data: data, decodingType: VoidResult.self, error: $0) }
                     .eraseToAnyPublisher()
             }
@@ -108,6 +108,14 @@ extension BaseService {
             .decode(type: GenericResponse<T>.self, decoder: JSONDecoder())
             .mapError { _ in .decodingFailed }
             .map { $0.data! }
+            .eraseToAnyPublisher()
+    }
+    
+    private func decodeNoResult(data: Data) -> AnyPublisher<VoidResult, HeyNetworkError.DecodeError> {
+        return Just(data)
+            .decode(type: GenericResponse<VoidResult>.self, decoder: JSONDecoder())
+            .mapError { _ in .decodingFailed }
+            .map { _ in  VoidResult() }
             .eraseToAnyPublisher()
     }
     

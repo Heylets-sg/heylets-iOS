@@ -10,6 +10,7 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Domain
 import DSKit
 import Core
 
@@ -28,7 +29,8 @@ public class DeleteAccountViewModel: ObservableObject {
         case deleteAccount
     }
     
-    public var navigationRouter: MyPageNavigationRouter
+    private let useCase: MyPageUseCaseType
+    public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType
     private let cancelBag = CancelBag()
     
@@ -36,9 +38,11 @@ public class DeleteAccountViewModel: ObservableObject {
     @Published var password = ""
     
     public init(
-        navigationRouter: MyPageNavigationRouter,
+        useCase: MyPageUseCaseType,
+        navigationRouter: NavigationRoutableType,
         windowRouter: WindowRoutableType
     ) {
+        self.useCase = useCase
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
         
@@ -54,12 +58,12 @@ public class DeleteAccountViewModel: ObservableObject {
         case .dismissDeleteAccountAlertView:
             state.deleteAccountAlertViewIsPresented = false
         case .deleteAccount:
-            //TODO: 회원탈퇴 API 구현
-            
-            //TODO: 안되면 alert창 (invalid 뭐시기~)
-            
-            //TODO: 성공하면 온보딩으로
-            windowRouter.switch(to: .onboarding)
+            useCase.deleteAccount(password)
+                //TODO: 실패처리
+                .sink(receiveValue: { [weak self] _ in
+                    self?.windowRouter.switch(to: .onboarding)
+                })
+                .store(in: cancelBag)
         case .dismissInValidPasswordAlertView:
             state.inValidPasswordAlertViewIsPresented = false
         }

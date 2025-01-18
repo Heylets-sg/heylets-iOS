@@ -28,7 +28,7 @@ struct AddCustomModuleTopView: View {
                 Spacer()
                 
                 Button {
-                    viewType = .main //TODO: 커스텀 모듈 추가 성공하면 해당 로직 실행
+                    viewType = .main
                     viewModel.send(.addCustomModuleButtonDidTap)
                 } label: {
                     Text("Save")
@@ -39,6 +39,10 @@ struct AddCustomModuleTopView: View {
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 26)
+        }
+        .onChange(of: viewModel.state.isAddSuccess) {
+            if $0 { withAnimation { viewType = .main }
+            }
         }
     }
 }
