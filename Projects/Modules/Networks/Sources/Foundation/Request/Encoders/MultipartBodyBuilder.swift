@@ -17,8 +17,7 @@ public enum MultipartFormData {
 public protocol MultipartBodyBuilderType {
     func buildRequest(
         _ request: URLRequest,
-        _ boundary: String,
-        with multipartData: [MultipartFormData]
+        with multipartData: Data
     ) -> AnyPublisher<URLRequest, HeyNetworkError.RequestError>
 }
 
@@ -27,10 +26,9 @@ public class MultipartBodyBuilder: MultipartBodyBuilderType {
     
     public func buildRequest(
         _ request: URLRequest,
-        _ boundary: String,
-        with multipartData: [MultipartFormData]
+        with multipartData: Data
     ) -> AnyPublisher<URLRequest, HeyNetworkError.RequestError> {
-        return createMultipartBody(multipartData: multipartData, boundary: boundary)
+        return Just(multipartData)
             .tryMap { body in
                 var request = request
                 request.httpBody = body
@@ -38,6 +36,14 @@ public class MultipartBodyBuilder: MultipartBodyBuilderType {
             }
             .mapError { _ in .multipartFailed }
             .eraseToAnyPublisher()
+//        return createMultipartBody(multipartData: multipartData, boundary: boundary)
+//            .tryMap { body in
+//                var request = request
+//                request.httpBody = body
+//                return request
+//            }
+//            .mapError { _ in .multipartFailed }
+//            .eraseToAnyPublisher()
     }
     
     /// 멀티파트 데이터 본문을 반환하는 Publisher

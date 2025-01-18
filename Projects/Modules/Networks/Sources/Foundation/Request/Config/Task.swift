@@ -22,7 +22,7 @@ public enum Task {
     )
     
     case uploadMultipartFormData(
-        [MultipartFormData],
+        Data,
         multipartBodyBuilder: MultipartBodyBuilderType = MultipartBodyBuilder()
     )
 }
@@ -53,9 +53,12 @@ extension Task {
                 .mapError { ErrorHandler.handleParameterEncodingError(request, encodable, error: $0) }
                 .eraseToAnyPublisher()
         case .uploadMultipartFormData(let multipartData, let multipartBuilder):
-            return multipartBuilder.buildRequest(request, UUID().uuidString, with: multipartData)
-                .mapError { $0 }
-                .eraseToAnyPublisher()
+            return multipartBuilder.buildRequest(
+                request,
+                with: multipartData
+            )
+            .mapError { $0 }
+            .eraseToAnyPublisher()
         }
     }
 }

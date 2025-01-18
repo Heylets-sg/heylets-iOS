@@ -13,7 +13,7 @@ import Domain
 public enum AuthAPI {
     case checkUserName(String)
     //    case refreshToken
-    case signUp(SignUpRequest)
+    case signUp(SignUpRequest, String)
     case resetPassword(ResetPasswordRequest)
     case verifyResetPassword(VerifyOTPCodeRequest)
     case requestResetPassword(RequestOTPCodeRequest)
@@ -89,21 +89,8 @@ extension AuthAPI: BaseAPI {
             return .requestParameters(["username": name])
             //        case .refreshToken:
             //            <#code#>
-        case .signUp(let request):
-            var multipartData: [MultipartFormData] = 
-            [
-                .text("request", "{\"nickname\":\"\(request.requset.nickname)\",\"email\":\"\(request.requset.email)\",\"password\":\"\(request.requset.password)\",\"university\":\"\(request.requset.university)\",\"sex\":\"\(request.requset.sex)\",\"birth\":\"\(request.requset.birth)\"}")
-            ]
-            
-            if let profileImage = request.profileImg {
-                multipartData.append(.file(
-                    name: "profileImage",
-                    filename: "profile.jpg",
-                    mimeType: "image/jpeg",
-                    fileData: profileImage
-                ))
-            }
-            return .uploadMultipartFormData(multipartData)
+        case .signUp(let request, let boundary):
+            return .uploadMultipartFormData(request.toMultipart(boundary))
         case .resetPassword(let request):
             return .requestJSONEncodable(request)
         case .verifyResetPassword(let request):
@@ -125,8 +112,8 @@ extension AuthAPI: BaseAPI {
     
     public var headers: [String : String]? {
         switch self {
-        case .signUp:
-            return APIHeaders.multipartHeader
+        case .signUp(_, let boundary):
+            return APIHeaders.multipartHeader(boundary)
         case .checkUserName, .login, .requestVerifyEmail, .verifyEmail, .resetPassword, .verifyResetPassword, .requestResetPassword:
             return APIHeaders.defaultHeader
         case .logout, .deleteAccount:

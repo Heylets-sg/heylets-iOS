@@ -14,7 +14,8 @@ import Domain
 public struct APIHeaders {
     static let contentType = "Content-Type"
     static let applicationJSON = "application/json"
-    static let multiPartFormData = "multipart/form-data; boundary=\("boundary")"
+    static let multiPartFormData = "multipart/form-data; "
+    static let accept = "Accept"
     
     
     
@@ -75,9 +76,10 @@ public extension APIHeaders {
         ]
     }
     
-    static var multipartHeader: [String:String] {
+    static func multipartHeader(_ boundary: String) -> [String:String] {
         return [
-            contentType: multiPartFormData,
+            contentType: multiPartFormData + "boundary=\(boundary)",
+            accept: applicationJSON,
             deviceID_key: deviceID_value,
             deviceModel_key: deviceModel_value,
             osVersion_key: osVersion_value,

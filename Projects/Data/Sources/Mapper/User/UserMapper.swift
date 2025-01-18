@@ -15,7 +15,7 @@ import Networks
 extension User {
     public func toDTO() -> SignUpRequest {
         .init(
-            requset: .init(
+            request: .init(
                 nickname: profile.nickName,
                 email: email,
                 password: password,

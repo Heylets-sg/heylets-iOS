@@ -7,18 +7,19 @@
 //
 
 import Foundation
+import DSKit
 
 extension User {
     static public var stub: Self {
         .init(
-            email: "",
-            password: "",
-            gender: "",
+            email: "fbgmlwo123@naver.com",
+            password: "fbgmlwo1072!",
+            gender: "M",
             birth: Date(),
             profile: .init(
-                nickName: "",
-                university: "",
-                image: nil
+                nickName: "hidi",
+                university: "KMU",
+                image: .icBack
             )
         )
     }

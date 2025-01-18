@@ -61,7 +61,7 @@ extension AuthService: AuthServiceType {
     public func signUp(
         _ request: SignUpRequest
     ) -> NetworkDecodableResponse<AuthResult> {
-        requestWithResult(.signUp(request))
+        requestWithResult(.signUp(request, UUID().uuidString))
     }
     
     public func resetPassword(

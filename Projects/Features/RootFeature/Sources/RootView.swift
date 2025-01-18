@@ -18,7 +18,7 @@ public struct RootView: View {
     public init() {}
     @EnvironmentObject var router: Router
     @EnvironmentObject var useCase: HeyUseCase
-
+    
     public var body: some View {
         Group {
             switch router.windowRouter.destination {
@@ -27,11 +27,16 @@ public struct RootView: View {
                     viewModel: .init(windowRouter: router.windowRouter)
                 )
             case .onboarding:
-                OnboardingView(
-                    viewModel: OnboardingViewModel(
-                        navigationRouter: router.navigationRouter
+                AddProfileView(viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    useCase: useCase.onboardingUseCase
                     )
                 )
+                //                OnboardingView(
+                //                    viewModel: OnboardingViewModel(
+                //                        navigationRouter: router.navigationRouter
+                //                    )
+                //                )
             case .timetable:
                 TimeTableView(
                     viewModel: .init(
