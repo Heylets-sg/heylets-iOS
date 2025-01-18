@@ -19,7 +19,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         self.authRepository = authRepository
     }
     
-    public var userInfo: User = .stub
+    public var userInfo: User = .empty
     
     public var loginFailed = PassthroughSubject<String, Never>()
     public var requestOTPCodeFailed = PassthroughSubject<String, Never>()

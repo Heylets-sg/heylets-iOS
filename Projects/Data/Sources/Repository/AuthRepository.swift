@@ -29,11 +29,10 @@ public struct AuthRepository: AuthRepositoryType {
     
     public func signUp(
         _ user: User
-    ) -> AnyPublisher<Auth, Error> {
+    ) -> AnyPublisher<Void, Error> {
         let request = user.toDTO()
         return authService.signUp(request)
-            .map { $0.toEntity() }
-            .mapToGeneralError()
+            .asVoidWithGeneralError()
     }
     
     public func resetPassword(

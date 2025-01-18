@@ -90,7 +90,29 @@ extension AuthAPI: BaseAPI {
             //        case .refreshToken:
             //            <#code#>
         case .signUp(let request, let boundary):
-            return .uploadMultipartFormData(request.toMultipart(boundary))
+            var multipartData: [MultipartData] = []
+            
+            if let jsonData = try? JSONEncoder().encode(request.request),
+               let jsonString = String(data: jsonData, encoding: .utf8) {
+                let part: MultipartData = .init(
+                    name: "request",
+                    value: .text(jsonString),
+                    contentType: "application/json"
+                )
+                multipartData.append(part)
+            }
+            
+            // 프로필 이미지 추가
+            if let profileImageData = request.profileImg {
+                let part: MultipartData = .init(
+                    name: "profileImage",
+                    value: .file(profileImageData, "profile.jpeg"),
+                    contentType: "image/jpeg"
+                )
+                multipartData.append(part)
+            }
+            
+            return .uploadMultipartFormData(multipartData, boundary)
         case .resetPassword(let request):
             return .requestJSONEncodable(request)
         case .verifyResetPassword(let request):

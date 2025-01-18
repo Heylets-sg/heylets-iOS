@@ -18,7 +18,7 @@ public protocol AuthServiceType {
     
     func signUp(
         _ request: SignUpRequest
-    ) -> NetworkDecodableResponse<AuthResult>
+    ) -> NetworkVoidResponse
     
     func resetPassword(
         _ request: ResetPasswordRequest
@@ -60,8 +60,8 @@ extension AuthService: AuthServiceType {
     
     public func signUp(
         _ request: SignUpRequest
-    ) -> NetworkDecodableResponse<AuthResult> {
-        requestWithResult(.signUp(request, UUID().uuidString))
+    ) -> NetworkVoidResponse {
+        requestWithNoResult(.signUp(request, UUID().uuidString))
     }
     
     public func resetPassword(

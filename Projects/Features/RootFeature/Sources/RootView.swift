@@ -27,16 +27,11 @@ public struct RootView: View {
                     viewModel: .init(windowRouter: router.windowRouter)
                 )
             case .onboarding:
-                AddProfileView(viewModel: .init(
-                    navigationRouter: router.navigationRouter,
-                    useCase: useCase.onboardingUseCase
+                OnboardingView(
+                    viewModel: OnboardingViewModel(
+                        navigationRouter: router.navigationRouter
                     )
                 )
-                //                OnboardingView(
-                //                    viewModel: OnboardingViewModel(
-                //                        navigationRouter: router.navigationRouter
-                //                    )
-                //                )
             case .timetable:
                 TimeTableView(
                     viewModel: .init(
