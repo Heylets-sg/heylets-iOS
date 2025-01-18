@@ -26,6 +26,7 @@ public class ResetPasswordViewModel: ObservableObject {
         case gotoLoginView
     }
     
+    private var email: String = ""
     @Published var password = ""
     @Published var checkPassword = ""
     
@@ -36,10 +37,12 @@ public class ResetPasswordViewModel: ObservableObject {
     
     public init(
         navigationRouter: NavigationRoutableType,
-        useCase: OnboardingUseCaseType
+        useCase: OnboardingUseCaseType,
+        email: String
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
+        self.email = email
     }
     
     func send(_ action: Action) {
@@ -47,7 +50,7 @@ public class ResetPasswordViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .gotoLoginView:
-            useCase.resetPassword(password)
+            useCase.resetPassword(email, password)
                 .sink(receiveValue: { [weak self] _ in
                     self?.navigationRouter.popToRootView()
                 })
@@ -76,7 +79,6 @@ public class ResetPasswordViewModel: ObservableObject {
             }
             .assign(to: \.state.continueButtonIsEnabled, on: owner)
             .store(in: cancelBag)
-        
     }
 }
 

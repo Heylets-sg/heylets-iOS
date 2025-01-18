@@ -56,6 +56,7 @@ public protocol AuthRepositoryType {
         _ email: String
     ) -> AnyPublisher<Void, Error>
     
+    // 회원 탈퇴
     func deleteAccount(
         _ password: String
     ) -> AnyPublisher<Void, Error>

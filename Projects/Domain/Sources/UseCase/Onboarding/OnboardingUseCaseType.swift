@@ -12,8 +12,8 @@ import Foundation
 import Combine
 
 public enum VerifyCodeType: Hashable {
-    case email(String)
-    case resetPassword(String)
+    case email
+    case resetPassword
 }
 
 public protocol OnboardingUseCaseType {
@@ -35,11 +35,13 @@ public protocol OnboardingUseCaseType {
     
     // 이메일 인증코드 요청 & 인증코드
     func requestEmailVerifyCode(
-        _ type: VerifyCodeType
+        _ type: VerifyCodeType,
+        _ email: String
     ) -> AnyPublisher<Void, Never>
     
     func verifyEmail(
         _ type: VerifyCodeType,
+        _ email: String,
         _ otpCode: Int
     ) -> AnyPublisher<Void, Never>
     
@@ -51,6 +53,7 @@ public protocol OnboardingUseCaseType {
     // ResetPassword
     
     func resetPassword(
+        _ email: String,
         _ newPassword: String
     ) -> AnyPublisher<Void, Never>
 }

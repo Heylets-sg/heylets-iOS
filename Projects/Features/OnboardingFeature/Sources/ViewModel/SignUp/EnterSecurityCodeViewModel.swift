@@ -31,39 +31,43 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     public var navigationRouter: NavigationRoutableType
     private var useCase: OnboardingUseCaseType
     private var type: VerifyCodeType
+    private var email: String
     private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: NavigationRoutableType,
         useCase: OnboardingUseCaseType,
-        type: VerifyCodeType
+        type: VerifyCodeType,
+        email: String
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
         self.type = type
+        self.email = email
         
         observe()
     }
     
     func send(_ action: Action) {
+        weak var owner = self
+        guard let owner else { return }
+        
         switch action {
         case .onAppear:
-            useCase.requestEmailVerifyCode(type)
+            useCase.requestEmailVerifyCode(type, email)
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
             
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            useCase.verifyEmail(type, Int(otpCode)!)
-                .sink(receiveValue: { [weak self] _ in
-                    switch self?.type {
+            useCase.verifyEmail(type, email, Int(otpCode)!)
+                .sink(receiveValue: {  _ in
+                    switch owner.type {
                     case .email:
-                        self?.navigationRouter.push(to: .enterPersonalInfo)
+                        owner.navigationRouter.push(to: .enterPersonalInfo)
                     case .resetPassword:
-                        self?.navigationRouter.push(to: .resetPassword)
-                    case .none:
-                        break
+                        owner.navigationRouter.push(to: .resetPassword(owner.email))
                     }
                 })
                 .store(in: cancelBag)
