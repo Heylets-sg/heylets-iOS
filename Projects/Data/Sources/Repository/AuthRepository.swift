@@ -19,6 +19,11 @@ public struct AuthRepository: AuthRepositoryType {
         self.authService = authService
     }
     
+    public func autoLogin() -> AnyPublisher<Bool, Never> {
+        return Just(UserDefaultsManager.isTokenExist())
+            .eraseToAnyPublisher()
+    }
+    
     public func checkUserName(
         _ name: String
     ) -> AnyPublisher<Bool, Error> {
@@ -64,6 +69,9 @@ public struct AuthRepository: AuthRepositoryType {
     
     public func logout() -> AnyPublisher<Void, Error> {
         authService.logout()
+            .handleEvents(receiveOutput: { _ in
+                UserDefaultsManager.clearLogout()
+            })
             .asVoidWithGeneralError()
     }
     
@@ -73,6 +81,9 @@ public struct AuthRepository: AuthRepositoryType {
     ) -> AnyPublisher<Auth, Error> {
         let request: SignInRequest = .init(email, password)
         return authService.logIn(request)
+            .handleEvents(receiveOutput: { token in
+                UserDefaultsManager.setToken(token)
+            })
             .map { $0.toEntity() }
             .mapToGeneralError()
     }

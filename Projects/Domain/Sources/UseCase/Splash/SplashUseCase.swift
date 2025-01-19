@@ -19,33 +19,7 @@ final public class SplashUseCase: SplashUseCaseType {
         self.authRepository = authRepository
     }
     
-    public func autoLogin() {
-//        authRepository.autoLogin()
-//            .catch {
-//                
-//            }
+    public func autoLogin() -> AnyPublisher<Bool, Never> {
+        return authRepository.autoLogin()
     }
 }
-//appService.isLatestVersion()
-//    .receive(on: RunLoop.main)
-//    .sink { isLatestVersion in
-//        
-//        guard isLatestVersion else {
-//            owner.state.mustUpdateAlertIsPresented = true
-//            return
-//        }
-//        
-//        Just(owner.appService.getDeviceIdentifier() ?? "" )
-//            .filter { !$0.isEmpty }
-//            .flatMap(owner.authService.signIn)
-//            .receive(on: RunLoop.main)
-//            .map {
-//                owner.userDefaultsService.userID = $0.userID
-//                owner.userDefaultsService.accessToken = $0.accessToken
-//                return WindowDestination.main
-//            }
-//            .catch { _ in Just(WindowDestination.onboarding) }
-//            .sink {
-//                owner.windowRouter.switch(to: $0)
-//            }
-//            .store(in: owner.cancelBag)

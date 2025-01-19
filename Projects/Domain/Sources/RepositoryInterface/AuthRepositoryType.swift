@@ -10,6 +10,9 @@ import Foundation
 import Combine
 
 public protocol AuthRepositoryType {
+    // 자동로그인
+    func autoLogin() -> AnyPublisher<Bool, Never>
+    
     // 닉네임 중복 확인
     func checkUserName(
         _ name: String

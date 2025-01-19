@@ -24,7 +24,10 @@ public struct RootView: View {
             switch router.windowRouter.destination {
             case .splash:
                 SplashView(
-                    viewModel: .init(windowRouter: router.windowRouter)
+                    viewModel: .init(
+                        windowRouter: router.windowRouter, 
+                        useCase: useCase.splashUseCase
+                    )
                 )
             case .onboarding:
                 OnboardingView(
@@ -58,12 +61,6 @@ public struct RootView: View {
                 )
             }
             
-        }
-    }
-    
-    var splashView: some View {
-        VStack {
-            Text("Splash View")
         }
     }
 }
