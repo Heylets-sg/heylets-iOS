@@ -13,6 +13,9 @@ public protocol AuthRepositoryType {
     // 자동로그인
     func autoLogin() -> AnyPublisher<Bool, Never>
     
+    // 토큰 리프레서
+    func tokenRefresh() -> AnyPublisher<Void, Error>
+    
     // 닉네임 중복 확인
     func checkUserName(
         _ name: String

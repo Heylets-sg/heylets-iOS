@@ -16,6 +16,8 @@ public protocol AuthServiceType {
         _ name: String
     ) -> NetworkDecodableResponse<UserNameResult>
     
+    func refreshToken() -> NetworkDecodableResponse<AuthResult>
+    
     func signUp(
         _ request: SignUpRequest
     ) -> NetworkVoidResponse
@@ -58,6 +60,10 @@ extension AuthService: AuthServiceType {
         requestWithResult(.checkUserName(name))
     }
     
+    public func refreshToken() -> NetworkDecodableResponse<AuthResult> {
+        requestWithResult(.refreshToken)
+    }
+    
     public func signUp(
         _ request: SignUpRequest
     ) -> NetworkVoidResponse {
@@ -66,30 +72,30 @@ extension AuthService: AuthServiceType {
     
     public func resetPassword(
         _ request: ResetPasswordRequest
-    ) -> AnyPublisher<AuthResult, HeyNetworkError> {
+    ) -> NetworkDecodableResponse<AuthResult> {
         requestWithResult(.resetPassword(request))
     }
     
     public func verifyResetPassword(
         _ request: VerifyOTPCodeRequest
-    ) -> AnyPublisher<Void, HeyNetworkError> {
+    ) -> NetworkVoidResponse {
         requestWithNoResult(.verifyResetPassword(request))
     }
     
     public func requestResetPassword(
         _ request: RequestOTPCodeRequest
-    ) -> AnyPublisher<RequestOTPCodeResult, HeyNetworkError> {
+    ) -> NetworkDecodableResponse<RequestOTPCodeResult> {
         requestWithResult(.requestResetPassword(request))
     }
     
-    public func logout() -> AnyPublisher<Void, HeyNetworkError> {
+    public func logout() -> NetworkVoidResponse {
         requestWithNoResult(.logout)
             .eraseToAnyPublisher()
     }
     
     public func logIn(
         _ request: SignInRequest
-    ) -> AnyPublisher<AuthResult, HeyNetworkError> {
+    ) -> NetworkDecodableResponse<AuthResult> {
         requestWithResult(.login(request))
             .eraseToAnyPublisher()
     }
@@ -102,7 +108,7 @@ extension AuthService: AuthServiceType {
     
     public func requestVerifyEmail(
         _ request: RequestOTPCodeRequest
-    ) -> AnyPublisher<RequestOTPCodeResult, HeyNetworkError> {
+    ) -> NetworkDecodableResponse<RequestOTPCodeResult> {
         requestWithResult(.requestVerifyEmail(request))
     }
     
@@ -112,7 +118,3 @@ extension AuthService: AuthServiceType {
         requestWithNoResult(.deleteAccount(request))
     }
 }
-
-//public struct StubAuthService: AuthServiceType {
-//    
-//}

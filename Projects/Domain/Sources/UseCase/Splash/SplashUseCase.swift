@@ -22,4 +22,11 @@ final public class SplashUseCase: SplashUseCaseType {
     public func autoLogin() -> AnyPublisher<Bool, Never> {
         return authRepository.autoLogin()
     }
+    
+    public func tokenRefresh() -> AnyPublisher<Void, Never> {
+        return authRepository.tokenRefresh()
+        //TODO: 실패처리
+            .catch { _ in Just(()) }
+            .eraseToAnyPublisher()
+    }
 }

@@ -24,6 +24,14 @@ public struct AuthRepository: AuthRepositoryType {
             .eraseToAnyPublisher()
     }
     
+    public func tokenRefresh() -> AnyPublisher<Void, Error> {
+        authService.refreshToken()
+            .handleEvents(receiveOutput: { token in
+                UserDefaultsManager.setToken(token)
+            })
+            .asVoidWithGeneralError()
+    }
+    
     public func checkUserName(
         _ name: String
     ) -> AnyPublisher<Bool, Error> {

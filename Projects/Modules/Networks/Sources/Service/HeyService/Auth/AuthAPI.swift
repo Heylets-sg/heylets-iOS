@@ -12,7 +12,7 @@ import Domain
 
 public enum AuthAPI {
     case checkUserName(String)
-    //    case refreshToken
+    case refreshToken
     case signUp(SignUpRequest, String)
     case resetPassword(ResetPasswordRequest)
     case verifyResetPassword(VerifyOTPCodeRequest)
@@ -33,8 +33,8 @@ extension AuthAPI: BaseAPI {
         switch self {
         case .checkUserName:
             Paths.checkUserName
-            //        case .refreshToken:
-            //            Paths.refreshToken
+        case .refreshToken:
+            Paths.refreshToken
         case .signUp:
             Paths.signUp
         case .resetPassword:
@@ -60,8 +60,8 @@ extension AuthAPI: BaseAPI {
         switch self {
         case .checkUserName:
             return .get
-            //        case .refreshToken:
-            //            return .post
+        case .refreshToken:
+            return .post
         case .signUp:
             return .post
         case .resetPassword:
@@ -87,8 +87,8 @@ extension AuthAPI: BaseAPI {
         switch self {
         case .checkUserName(let name):
             return .requestParameters(["username": name])
-            //        case .refreshToken:
-            //            <#code#>
+        case .refreshToken:
+            return .requestPlain
         case .signUp(let request, let boundary):
             var multipartData: [MultipartData] = []
             
@@ -136,10 +136,12 @@ extension AuthAPI: BaseAPI {
         switch self {
         case .signUp(_, let boundary):
             return APIHeaders.multipartHeader(boundary)
-        case .checkUserName, .login, .requestVerifyEmail, .verifyEmail, .resetPassword, .verifyResetPassword, .requestResetPassword:
-            return APIHeaders.defaultHeader
         case .logout, .deleteAccount:
             return APIHeaders.headerWithAccessToken
+        case .refreshToken:
+            return APIHeaders.headerWithRefreshToken
+        default:
+            return APIHeaders.defaultHeader
         }
         
     }
