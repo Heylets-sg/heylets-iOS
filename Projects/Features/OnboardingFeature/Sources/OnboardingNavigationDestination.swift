@@ -36,12 +36,13 @@ struct OnboardingNavigationRoutingView: View {
                     useCase: useCase.onboardingUseCase
                 )
             )
-        case .enterSecurityCode(let type):
+        case .enterSecurityCode(let type, let email):
             EnterSecurityCodeView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
                     useCase: useCase.onboardingUseCase, 
-                    type: type
+                    type: type,
+                    email: email
                 )
             )
         case .enterPersonalInfo:
@@ -79,14 +80,14 @@ struct OnboardingNavigationRoutingView: View {
                     navigationRouter: router.navigationRouter, useCase: useCase.onboardingUseCase
                 )
             )
-        case .resetPassword:
+        case .resetPassword(let email):
             ResetPasswordView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    useCase: useCase.onboardingUseCase
+                    useCase: useCase.onboardingUseCase, 
+                    email: email
                 )
             )
-            
         default:
             EmptyView()
         }

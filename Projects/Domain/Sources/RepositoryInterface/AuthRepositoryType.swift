@@ -10,6 +10,12 @@ import Foundation
 import Combine
 
 public protocol AuthRepositoryType {
+    // 자동로그인
+    func autoLogin() -> AnyPublisher<Bool, Never>
+    
+    // 토큰 리프레서
+    func tokenRefresh() -> AnyPublisher<Void, Error>
+    
     // 닉네임 중복 확인
     func checkUserName(
         _ name: String
@@ -17,7 +23,7 @@ public protocol AuthRepositoryType {
     
     func signUp(
         _ user: User
-    ) -> AnyPublisher<Auth, Error>
+    ) -> AnyPublisher<Void, Error>
     
     // 새 비밀번호 설정
     func resetPassword(
@@ -56,6 +62,7 @@ public protocol AuthRepositoryType {
         _ email: String
     ) -> AnyPublisher<Void, Error>
     
+    // 회원 탈퇴
     func deleteAccount(
         _ password: String
     ) -> AnyPublisher<Void, Error>

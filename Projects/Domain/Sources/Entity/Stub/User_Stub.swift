@@ -9,7 +9,7 @@
 import Foundation
 
 extension User {
-    static public var stub: Self {
+    static public var empty: Self {
         .init(
             email: "",
             password: "",

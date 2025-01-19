@@ -47,7 +47,7 @@ public class EnterEmailViewModel: ObservableObject {
         case .gotoLoginView:
             navigationRouter.popToRootView()
         case .nextButtonDidTap:
-            navigationRouter.push(to: .enterSecurityCode(.resetPassword(email)))
+            navigationRouter.push(to: .enterSecurityCode(.resetPassword, email))
         }
     }
     

@@ -10,5 +10,6 @@ import Foundation
 import Combine
 
 public protocol SplashUseCaseType {
-    func autoLogin()
+    func autoLogin() -> AnyPublisher<Bool, Never>
+    func tokenRefresh() -> AnyPublisher<Void, Never>
 }

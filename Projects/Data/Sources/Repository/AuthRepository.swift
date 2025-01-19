@@ -19,6 +19,19 @@ public struct AuthRepository: AuthRepositoryType {
         self.authService = authService
     }
     
+    public func autoLogin() -> AnyPublisher<Bool, Never> {
+        return Just(UserDefaultsManager.isTokenExist())
+            .eraseToAnyPublisher()
+    }
+    
+    public func tokenRefresh() -> AnyPublisher<Void, Error> {
+        authService.refreshToken()
+            .handleEvents(receiveOutput: { token in
+                UserDefaultsManager.setToken(token)
+            })
+            .asVoidWithGeneralError()
+    }
+    
     public func checkUserName(
         _ name: String
     ) -> AnyPublisher<Bool, Error> {
@@ -29,11 +42,10 @@ public struct AuthRepository: AuthRepositoryType {
     
     public func signUp(
         _ user: User
-    ) -> AnyPublisher<Auth, Error> {
+    ) -> AnyPublisher<Void, Error> {
         let request = user.toDTO()
         return authService.signUp(request)
-            .map { $0.toEntity() }
-            .mapToGeneralError()
+            .asVoidWithGeneralError()
     }
     
     public func resetPassword(
@@ -65,6 +77,9 @@ public struct AuthRepository: AuthRepositoryType {
     
     public func logout() -> AnyPublisher<Void, Error> {
         authService.logout()
+            .handleEvents(receiveOutput: { _ in
+                UserDefaultsManager.clearLogout()
+            })
             .asVoidWithGeneralError()
     }
     
@@ -74,6 +89,9 @@ public struct AuthRepository: AuthRepositoryType {
     ) -> AnyPublisher<Auth, Error> {
         let request: SignInRequest = .init(email, password)
         return authService.logIn(request)
+            .handleEvents(receiveOutput: { token in
+                UserDefaultsManager.setToken(token)
+            })
             .map { $0.toEntity() }
             .mapToGeneralError()
     }

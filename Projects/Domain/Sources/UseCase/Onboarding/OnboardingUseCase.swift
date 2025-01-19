@@ -19,7 +19,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         self.authRepository = authRepository
     }
     
-    public var userInfo: User = .stub
+    public var userInfo: User = .empty
     
     public var loginFailed = PassthroughSubject<String, Never>()
     public var requestOTPCodeFailed = PassthroughSubject<String, Never>()
@@ -52,10 +52,11 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     }
     
     public func requestEmailVerifyCode(
-        _ type: VerifyCodeType
+        _ type: VerifyCodeType,
+        _ email: String
     ) -> AnyPublisher<Void, Never> {
         switch type {
-        case .email(let email):
+        case .email:
             authRepository.requestVerifyEmail(email)
             .map { _ in }
             .catch { [weak self] _ in
@@ -64,7 +65,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
             }
             .eraseToAnyPublisher()
             
-        case .resetPassword(let email):
+        case .resetPassword:
             authRepository.requestResetPassword(email)
             .map { _ in }
             .catch { [weak self] _ in
@@ -77,10 +78,11 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     
     public func verifyEmail(
         _ type: VerifyCodeType,
+        _ email: String,
         _ otpCode: Int
     ) -> AnyPublisher<Void, Never> {
         switch type {
-        case .email(let email):
+        case .email:
             authRepository.verifyEmail(email, otpCode)
             .map { _ in }
             .catch { [weak self] _ in
@@ -88,7 +90,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
                 return Just(()).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
-        case .resetPassword(let email):
+        case .resetPassword:
             authRepository.verifyResetPassword(email, otpCode)
             .map { _ in }
             .catch { [weak self] _ in
@@ -112,12 +114,10 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     }
     
     public func resetPassword(
+        _ email: String,
         _ newPassword: String
     ) -> AnyPublisher<Void, Never> {
-        authRepository.resetPassword(
-            "UserDefaultsManager.getEmail()",
-            newPassword
-        )
+        authRepository.resetPassword(email, newPassword)
         .map { _ in }
         .catch { [weak self] _ in
             self?.resetPasswordFailed.send("resetPasswordFailed")

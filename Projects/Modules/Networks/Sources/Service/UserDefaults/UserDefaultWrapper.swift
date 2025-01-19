@@ -2,18 +2,18 @@
 //  UserDefaultWrapper.swift
 //  Networks
 //
-//  Created by 류희재 on 1/16/25.
+//  Created by 류희재 on 1/19/25.
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
 import Foundation
 
 @propertyWrapper
-struct UserDefaultWrapper<T> {
+public struct UserDefaultWrapper<T> {
     private let key: String
     private let defaultValue: T
     
-    var wrappedValue: T {
+    public var wrappedValue: T {
         get {
             return UserDefaults.standard.object(forKey: key) as? T ?? defaultValue
         }

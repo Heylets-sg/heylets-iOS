@@ -11,23 +11,44 @@ import Combine
 
 import BaseFeatureDependency
 import Domain
+import Core
 
 public class SplashViewModel: ObservableObject {
     
     enum Action {
+        case onAppear
         case goToOnboarding
         case goToMyPage
         case goToTimeTable
     }
     
     public var windowRouter: WindowRoutable
+    private var cancelBag = CancelBag()
+    var useCase: SplashUseCaseType
     
-    public init(windowRouter: WindowRoutableType) {
+    public init(
+        windowRouter: WindowRoutableType,
+        useCase: SplashUseCaseType
+    ) {
         self.windowRouter = windowRouter
+        self.useCase = useCase
     }
     
     func send(_ action: Action) {
         switch action {
+        case .onAppear:
+            useCase.autoLogin()
+                .flatMap { tokenExisted -> AnyPublisher<Void, Never> in
+                    if tokenExisted {
+                        return Just(()).eraseToAnyPublisher()
+                    } else {
+                        return self.useCase.tokenRefresh()
+                    }
+                }
+                .sink(receiveValue: { [weak self] in
+                    self?.windowRouter.switch(to: .timetable)
+                })
+                .store(in: cancelBag)
         case .goToOnboarding:
             windowRouter.switch(to: .onboarding)
         case .goToMyPage:

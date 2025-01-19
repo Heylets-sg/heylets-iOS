@@ -9,11 +9,11 @@
 import Foundation
 
 public struct SignUpRequest: Encodable {
-    let requset: RequiredRequest
+    let request: RequiredRequest
     let profileImg: Data?
     
-    public init(requset: RequiredRequest, profileImg: Data?) {
-        self.requset = requset
+    public init(request: RequiredRequest, profileImg: Data?) {
+        self.request = request
         self.profileImg = profileImg
     }
 }
