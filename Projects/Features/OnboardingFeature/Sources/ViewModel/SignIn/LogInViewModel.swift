@@ -17,12 +17,17 @@ public class LogInViewModel: ObservableObject {
     
     enum Action {
         case loginButtonDidTap
+        case dismissToastView
         case forgotPasswordButtonDidTap
         case signUpButtonDidTap
     }
     
     struct State {
         var loginButtonEnabled = true
+        var errMessage: String = ""
+        var showToast: Bool {
+            return !errMessage.isEmpty
+        }
     }
     
     @Published var id: String = ""
@@ -44,18 +49,19 @@ public class LogInViewModel: ObservableObject {
         self.useCase = useCase
         
         observe()
+        bindState()
     }
     
     func send(_ action: Action) {
         switch action {
         case .loginButtonDidTap:
-            //TODO: 비밀번호, ID 유효성 처리
             useCase.logIn(id, password)
                 .sink(receiveValue: { [weak self] _ in
                     self?.windowRouter.switch(to: .timetable)
                 })
                 .store(in: cancelBag)
-            
+        case .dismissToastView:
+            state.errMessage = ""
         case .forgotPasswordButtonDidTap:
             navigationRouter.push(to: .enterEmail)
         case .signUpButtonDidTap:
@@ -70,6 +76,13 @@ public class LogInViewModel: ObservableObject {
         Publishers.CombineLatest($id, $password)
             .map { !$0.isEmpty && !$1.isEmpty }
             .assign(to: \.state.loginButtonEnabled, on: owner)
+            .store(in: cancelBag)
+    }
+    
+    func bindState() {
+        useCase.errMessage
+            .receive(on: RunLoop.main)
+            .assign(to: \.state.errMessage, on: self)
             .store(in: cancelBag)
     }
 }

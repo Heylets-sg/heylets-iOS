@@ -34,3 +34,14 @@ import Foundation
     }
 }
 
+extension HeyNetworkError {
+    // 오류가 invalidResponse인지 체크하는 메서드
+    public func isInvalidStatusCode() -> Int? {
+        if case let .invalidResponse(responseError) = self {
+            if case .invalidStatusCode(let code, _) = responseError {
+                return code
+            }
+        }
+        return nil
+    }
+}

@@ -49,7 +49,7 @@ public protocol AuthRepositoryType {
     func logIn(
         _ email: String,
         _ password: String
-    ) -> AnyPublisher<Auth, Error>
+    ) -> AnyPublisher<Auth, LoginError>
     
     // 이메일 인증 확인
     func verifyEmail(

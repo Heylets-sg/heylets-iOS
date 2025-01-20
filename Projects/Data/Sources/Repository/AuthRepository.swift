@@ -86,14 +86,21 @@ public struct AuthRepository: AuthRepositoryType {
     public func logIn(
         _ email: String,
         _ password: String
-    ) -> AnyPublisher<Auth, Error> {
+    ) -> AnyPublisher<Auth, LoginError> {
         let request: SignInRequest = .init(email, password)
         return authService.logIn(request)
             .handleEvents(receiveOutput: { token in
                 UserDefaultsManager.setToken(token)
             })
             .map { $0.toEntity() }
-            .mapToGeneralError()
+            .mapError { error in
+                if let errorCode = error.isInvalidStatusCode() {
+                    return LoginError.error(with: errorCode)
+                } else {
+                    return .unknown
+                }
+            }
+            .eraseToAnyPublisher()
     }
     
     public func verifyEmail(

@@ -38,17 +38,25 @@ public class SplashViewModel: ObservableObject {
         switch action {
         case .onAppear:
             useCase.autoLogin()
-                .flatMap { tokenExisted -> AnyPublisher<Void, Never> in
+                .sink(receiveValue: {[weak self] tokenExisted in
                     if tokenExisted {
-                        return Just(()).eraseToAnyPublisher()
+                        self?.windowRouter.switch(to: .timetable)
                     } else {
-                        return self.useCase.tokenRefresh()
+                        self?.windowRouter.switch(to: .onboarding)
                     }
-                }
-                .sink(receiveValue: { [weak self] in
-                    self?.windowRouter.switch(to: .timetable)
                 })
                 .store(in: cancelBag)
+//                .flatMap { tokenExisted -> AnyPublisher<Void, Never> in
+//                    if tokenExisted {
+//                        return Just(()).eraseToAnyPublisher()
+//                    } else {
+//                        return self.useCase.tokenRefresh()
+//                    }
+//                }
+//                .sink(receiveValue: { [weak self] in
+//                    self?.windowRouter.switch(to: .timetable)
+//                })
+//                .store(in: cancelBag)
         case .goToOnboarding:
             windowRouter.switch(to: .onboarding)
         case .goToMyPage:
