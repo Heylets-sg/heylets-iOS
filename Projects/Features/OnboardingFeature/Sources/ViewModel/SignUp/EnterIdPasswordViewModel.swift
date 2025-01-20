@@ -19,6 +19,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
         var nickNameIsValid: TextFieldState = .idle
         var passwordIsValid: TextFieldState = .idle
         var checkPasswordIsValid: TextFieldState = .idle
+        var errorMessage: String = ""
         var continueButtonIsEnabled: Bool = false
     }
     
@@ -60,6 +61,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
             useCase.checkUserName(nickName)
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] available in
+                    self?.state.errorMessage = available ? "" : "The format of the name is incorrect."
                     self?.state.nickNameIsValid = available ? .valid : .invalid
                 })
                 .store(in: cancelBag)
@@ -91,10 +93,9 @@ public class EnterIdPasswordViewModel: ObservableObject {
     }
     
     private func bindState() {
-        useCase.checkUserNameFailed
-            .map { _ in TextFieldState.invalid }
+        useCase.errMessage
             .receive(on: RunLoop.main)
-            .assign(to: \.state.nickNameIsValid, on: self)
+            .assign(to: \.state.errorMessage, on: self)
             .store(in: cancelBag)
     }
 }

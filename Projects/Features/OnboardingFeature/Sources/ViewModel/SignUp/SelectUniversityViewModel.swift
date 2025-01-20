@@ -31,6 +31,7 @@ public class SelectUniversityViewModel: ObservableObject {
     struct State {
         var filteredItems: [UniversityInfo] = []
         var continueButtonIsEnabled = false
+        var errMessage = ""
     }
     
     enum Action {

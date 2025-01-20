@@ -13,11 +13,13 @@ struct OnboardingBaseView<Content:View>: View {
     
     @Environment(\.dismiss) var dismiss
     
-    
     let content: Content
+    
     let titleText: String
-    let buttonTitle: String
+    
     let hiddenCloseBtn: Bool
+    
+    let buttonTitle: String
     let nextButtonIsEnabled: Bool
     let nextButtonAction: () -> Void
     
@@ -38,57 +40,59 @@ struct OnboardingBaseView<Content:View>: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            
-            Spacer()
-                .frame(height: 92)
-            HStack {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(uiImage: .icBack)
-                        .resizable()
-                        .frame(width: 22, height: 18)
-                }
-                .hidden(!hiddenCloseBtn)
-                
-                Spacer()
-                
-                Button {
-                } label: {
-                    Image(uiImage: .icClose)
-                        .resizable()
-                        .frame(width: 18, height: 18)
-                }
-                .hidden(hiddenCloseBtn)
-                
-            }
-            
+        ZStack {
             VStack(alignment: .leading) {
-                Text(titleText)
-                    .font(.semibold_18)
-                    .foregroundColor(.heyGray1)
-                    .padding(.bottom, 18)
-                
-                content
                 
                 Spacer()
-                
-                Button(buttonTitle) {
-                    nextButtonAction()
+                    .frame(height: 92)
+                HStack {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(uiImage: .icBack)
+                            .resizable()
+                            .frame(width: 22, height: 18)
+                    }
+                    .hidden(!hiddenCloseBtn)
+                    
+                    Spacer()
+                    
+                    Button {
+                    } label: {
+                        Image(uiImage: .icClose)
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                    }
+                    .hidden(hiddenCloseBtn)
+                    
                 }
-                .disabled(!nextButtonIsEnabled)
-                .heyBottomButtonStyle()
                 
+                VStack(alignment: .leading) {
+                    Text(titleText)
+                        .font(.semibold_18)
+                        .foregroundColor(.heyGray1)
+                        .padding(.bottom, 18)
+                    
+                    content
+                    
+                    Spacer()
+                    
+                    Button(buttonTitle) {
+                        nextButtonAction()
+                    }
+                    .disabled(!nextButtonIsEnabled)
+                    .heyBottomButtonStyle()
+                    
+                }
+                .padding(.top, 36)
+                .padding(.bottom, 65)
             }
-            .padding(.top, 36)
-            .padding(.bottom, 65)
+            .padding(.horizontal, 16)
+            .background(Color.heyWhite)
+            .ignoresSafeArea(edges: .vertical)
+            .ignoresSafeArea(.keyboard)
+            .navigationBarBackButtonHidden()
         }
-        .padding(.horizontal, 16)
-        .background(Color.heyWhite)
-        .ignoresSafeArea(edges: .vertical)
-        .ignoresSafeArea(.keyboard)
-        .navigationBarBackButtonHidden()
     }
 }
 

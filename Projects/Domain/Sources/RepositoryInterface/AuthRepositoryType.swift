@@ -40,7 +40,7 @@ public protocol AuthRepositoryType {
     // 비밀번호 재설정 요청
     func requestResetPassword(
         _ email: String
-    ) -> AnyPublisher<Void, Error>
+    ) -> AnyPublisher<Void, VerificationRequestError>
     
     // 로그아웃
     func logout() -> AnyPublisher<Void, Error>
@@ -60,7 +60,7 @@ public protocol AuthRepositoryType {
     // 이메일 인증 요청
     func requestVerifyEmail(
         _ email: String
-    ) -> AnyPublisher<Void, Error>
+    ) -> AnyPublisher<Void, VerificationRequestError>
     
     // 회원 탈퇴
     func deleteAccount(

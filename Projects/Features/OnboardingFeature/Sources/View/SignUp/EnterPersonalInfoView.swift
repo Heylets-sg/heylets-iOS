@@ -49,10 +49,10 @@ public struct EnterPersonalInfoView: View {
                 }
                 .labelsHidden()
             }
-        }, titleText: "Please check your gender/birth", nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
-                           nextButtonAction: { viewModel.send(.nextButtonDidTap
-                           )
-        })
+        }, titleText: "Please check your gender/birth", 
+        nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
+        nextButtonAction: { viewModel.send(.nextButtonDidTap) }
+        )
     }
 }
 

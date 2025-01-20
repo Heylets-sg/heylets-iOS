@@ -50,10 +50,9 @@ public struct SelectUniversityView: View {
                         .cornerRadius(8)
                     }
                 }
-            }, titleText: "What school are you attending?",nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
-            nextButtonAction: { viewModel.send(.nextButtonDidTap)
-//            isEnabled: viewModel.state.continueButtonEnabled
-            }
+            }, titleText: "What school are you attending?",
+            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
+            nextButtonAction: { viewModel.send(.nextButtonDidTap) }
         )
     }
 }

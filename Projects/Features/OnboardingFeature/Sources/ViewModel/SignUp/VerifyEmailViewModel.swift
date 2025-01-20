@@ -17,6 +17,7 @@ public class VerifyEmailViewModel: ObservableObject {
     struct State {
         var domainListViewIsVisible = false
         var continueButtonIsEnabled = false
+        var errMessage = ""
     }
     
     enum Action {
@@ -43,15 +44,23 @@ public class VerifyEmailViewModel: ObservableObject {
         self.useCase = useCase
         
         observe()
+        bindState()
     }
     
     func send(_ action: Action) {
+        weak var owner = self
+        guard let owner else { return }
+        
         switch action {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            useCase.userInfo.email = email
-            navigationRouter.push(to: .enterSecurityCode(.email, email))
+            useCase.requestEmailVerifyCode(.email, email)
+                .sink(receiveValue: { _ in
+                    owner.useCase.userInfo.email = owner.email
+                    owner.navigationRouter.push(to: .enterSecurityCode(.email, owner.email))
+                })
+                .store(in: cancelBag)
         case .domainListButtonDidTap:
             state.domainListViewIsVisible.toggle()
         case .selectDomain(let domain):
@@ -73,6 +82,13 @@ public class VerifyEmailViewModel: ObservableObject {
         Publishers.CombineLatest($localPart, $domain)
             .map { !$0.isEmpty && !$1.isEmpty }
             .assign(to: \.state.continueButtonIsEnabled, on: owner)
+            .store(in: cancelBag)
+    }
+    
+    private func bindState() {
+        useCase.errMessage
+            .receive(on: RunLoop.main)
+            .assign(to: \.state.errMessage, on: self)
             .store(in: cancelBag)
     }
 }

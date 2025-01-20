@@ -19,6 +19,7 @@ public class ResetPasswordViewModel: ObservableObject {
         var passwordIsValid: TextFieldState = .idle
         var checkPasswordIsValid: TextFieldState = .idle
         var continueButtonIsEnabled: Bool = false
+        var errorMessage: String = ""
     }
     
     enum Action {

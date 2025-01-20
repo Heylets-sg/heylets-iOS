@@ -35,9 +35,10 @@ public struct EnterSecurityCodeView: View {
             SecurityCodeInputView(otpCode: $viewModel.otpCode)
             .frame(height: 50)
             
-        }, titleText: "Enter Your Security Code", nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled, nextButtonAction: { viewModel.send(.nextButtonDidTap)
-        })
-        .onAppear { viewModel.send(.onAppear) }
+        }, titleText: "Enter Your Security Code",
+            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
+            nextButtonAction: { viewModel.send(.nextButtonDidTap) }
+        )
     }
 }
 

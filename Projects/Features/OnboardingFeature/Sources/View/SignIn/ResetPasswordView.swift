@@ -45,7 +45,8 @@ public struct ResetPasswordView: View {
         }, titleText: "Reset your password",
            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
            hiddenCloseBtn: false,
-           nextButtonAction: { viewModel.send(.gotoLoginView) })
+           nextButtonAction: { viewModel.send(.gotoLoginView) }
+        )
     }
 }
 

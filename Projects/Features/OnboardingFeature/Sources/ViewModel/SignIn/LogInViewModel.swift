@@ -69,7 +69,7 @@ public class LogInViewModel: ObservableObject {
         }
     }
     
-    func observe() {
+    private func observe() {
         weak var owner = self
         guard let owner else { return }
         
@@ -79,7 +79,7 @@ public class LogInViewModel: ObservableObject {
             .store(in: cancelBag)
     }
     
-    func bindState() {
+    private func bindState() {
         useCase.errMessage
             .receive(on: RunLoop.main)
             .assign(to: \.state.errMessage, on: self)

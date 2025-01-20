@@ -69,10 +69,18 @@ public struct AuthRepository: AuthRepositoryType {
     
     public func requestResetPassword(
         _ email: String
-    ) -> AnyPublisher<Void, Error> {
+    ) -> AnyPublisher<Void, VerificationRequestError> {
         let request: RequestOTPCodeRequest = .init(email)
         return authService.requestResetPassword(request)
-            .asVoidWithGeneralError()
+            .asVoid()
+            .mapError { error in
+                if let errorCode = error.isInvalidStatusCode() {
+                    return VerificationRequestError.error(with: errorCode)
+                } else {
+                    return .unknown
+                }
+            }
+            .eraseToAnyPublisher()
     }
     
     public func logout() -> AnyPublisher<Void, Error> {
@@ -114,10 +122,18 @@ public struct AuthRepository: AuthRepositoryType {
     
     public func requestVerifyEmail(
         _ email: String
-    ) -> AnyPublisher<Void, Error> {
+    ) -> AnyPublisher<Void, VerificationRequestError> {
         let request: RequestOTPCodeRequest = .init(email)
         return authService.requestVerifyEmail(request)
-            .asVoidWithGeneralError()
+            .asVoid()
+            .mapError { error in
+                if let errorCode = error.isInvalidStatusCode() {
+                    return VerificationRequestError.error(with: errorCode)
+                } else {
+                    return .unknown
+                }
+            }
+            .eraseToAnyPublisher()
     }
     
     public func deleteAccount(

@@ -18,6 +18,7 @@ public class EnterEmailViewModel: ObservableObject {
     struct State {
         var emailIsValid: TextFieldState = .idle
         var continueButtonIsEnabled: Bool = false
+        var errMessage: String = ""
     }
     
     enum Action {
@@ -43,11 +44,19 @@ public class EnterEmailViewModel: ObservableObject {
     }
     
     func send(_ action: Action) {
+        weak var owner = self
+        guard let owner else { return }
+        
         switch action {
         case .gotoLoginView:
             navigationRouter.popToRootView()
         case .nextButtonDidTap:
-            navigationRouter.push(to: .enterSecurityCode(.resetPassword, email))
+            useCase.requestEmailVerifyCode(.resetPassword, email)
+                .sink(receiveValue: { _ in
+                    owner.useCase.userInfo.email = owner.email
+                    owner.navigationRouter.push(to: .enterSecurityCode(.resetPassword, owner.email))
+                })
+                .store(in: cancelBag)
         }
     }
     

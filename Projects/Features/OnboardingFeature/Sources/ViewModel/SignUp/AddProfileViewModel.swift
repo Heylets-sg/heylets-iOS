@@ -17,6 +17,7 @@ import Domain
 
 public class AddProfileViewModel: ObservableObject {
     struct State {
+        var errorMessage: String = ""
     }
     
     enum Action {

@@ -20,6 +20,7 @@ public struct VerifyEmailView: View {
     }
     
     public var body: some View {
+        
         OnboardingBaseView(content: {
             Spacer()
                 .frame(height: 18)
@@ -59,15 +60,21 @@ public struct VerifyEmailView: View {
             .background(Color.heyGray4)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.trailing, 116)
+            .padding(.bottom, 20)
+            
+            Text(viewModel.state.errMessage)
+                .font(.regular_14)
+                .foregroundColor(.heyError)
             
             EmailDomainListView(viewModel: viewModel)
                 .frame(height: 250)
                 .padding(.trailing, 116)
+                .padding(.bottom, 20)
                 .hidden(!viewModel.state.domainListViewIsVisible)
-            
-            
-        },titleText: "Verify with your school email",nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled, nextButtonAction: { viewModel.send(.nextButtonDidTap)
-        })
+        },
+        titleText: "Verify with your school email",
+        nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
+        nextButtonAction: { viewModel.send(.nextButtonDidTap) } )
     }
 }
 

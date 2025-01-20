@@ -22,11 +22,6 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     public var userInfo: User = .empty
     
     public var errMessage = PassthroughSubject<String, Never>()
-    public var requestOTPCodeFailed = PassthroughSubject<String, Never>()
-    public var verifyOTPCodeFailed = PassthroughSubject<String, Never>()
-    public var checkUserNameFailed = PassthroughSubject<String, Never>()
-    public var signUpFailed = PassthroughSubject<String, Never>()
-    public var resetPasswordFailed = PassthroughSubject<String, Never>()
     
     public func logIn(
         _ email: String,
@@ -45,7 +40,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         authRepository.signUp(userInfo)
             .map { _ in }
             .catch { [weak self] _ in
-                self?.signUpFailed.send("SignUp Failed")
+                self?.errMessage.send("SignUp Failed")
                 return Just(()).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
@@ -59,18 +54,18 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         case .email:
             authRepository.requestVerifyEmail(email)
                 .map { _ in }
-                .catch { [weak self] _ in
-                    self?.requestOTPCodeFailed.send("request OTPCode Failed (Email)")
-                    return Just(()).eraseToAnyPublisher()
+                .catch { [weak self] error in
+                    self?.errMessage.send(error.description)
+                    return Empty<Void, Never>()
                 }
                 .eraseToAnyPublisher()
             
         case .resetPassword:
             authRepository.requestResetPassword(email)
                 .map { _ in }
-                .catch { [weak self] _ in
-                    self?.requestOTPCodeFailed.send("request OTPCode Failed (password")
-                    return Just(()).eraseToAnyPublisher()
+                .catch { [weak self] error in
+                    self?.errMessage.send(error.description)
+                    return Empty<Void, Never>()
                 }
                 .eraseToAnyPublisher()
         }
@@ -86,7 +81,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
             authRepository.verifyEmail(email, otpCode)
                 .map { _ in }
                 .catch { [weak self] _ in
-                    self?.verifyOTPCodeFailed.send("request OTPCode Failed (Email)")
+                    self?.errMessage.send("request OTPCode Failed (Email)")
                     return Just(()).eraseToAnyPublisher()
                 }
                 .eraseToAnyPublisher()
@@ -94,7 +89,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
             authRepository.verifyResetPassword(email, otpCode)
                 .map { _ in }
                 .catch { [weak self] _ in
-                    self?.verifyOTPCodeFailed.send("request OTPCode Failed (password")
+                    self?.errMessage.send("request OTPCode Failed (password")
                     return Just(()).eraseToAnyPublisher()
                 }
                 .eraseToAnyPublisher()
@@ -107,8 +102,8 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         authRepository.checkUserName(userName)
             .map { $0 }
             .catch { [weak self] _ in
-                self?.checkUserNameFailed.send("잘못된 형식의 이름입니다")
-                return Just(false).eraseToAnyPublisher()
+                self?.errMessage.send("The format of the name is incorrect.")
+                return Empty<Bool, Never>()
             }
             .eraseToAnyPublisher()
     }
@@ -120,7 +115,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         authRepository.resetPassword(email, newPassword)
             .map { _ in }
             .catch { [weak self] _ in
-                self?.resetPasswordFailed.send("resetPasswordFailed")
+                self?.errMessage.send("resetPasswordFailed")
                 return Just(()).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()

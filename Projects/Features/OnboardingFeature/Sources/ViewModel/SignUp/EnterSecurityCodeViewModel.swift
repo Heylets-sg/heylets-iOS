@@ -17,10 +17,10 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     struct State {
         var hiddenEmail: String = ""
         var continueButtonIsEnabled: Bool = false
+        var errorMessage: String = ""
     }
     
     enum Action {
-        case onAppear
         case backButtonDidTap
         case nextButtonDidTap
     }
@@ -53,11 +53,6 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         guard let owner else { return }
         
         switch action {
-        case .onAppear:
-            useCase.requestEmailVerifyCode(type, email)
-                .sink(receiveValue: { _ in })
-                .store(in: cancelBag)
-            
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:

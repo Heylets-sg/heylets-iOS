@@ -39,7 +39,8 @@ public struct EnterEmailView: View {
         }, titleText: "Reset your password", 
            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
            hiddenCloseBtn: false,
-           nextButtonAction: { viewModel.send(.nextButtonDidTap)})
+           nextButtonAction: { viewModel.send(.nextButtonDidTap)}
+        )
     }
 }
 
