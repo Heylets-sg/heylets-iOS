@@ -60,9 +60,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
             useCase.checkUserName(nickName)
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] available in
-                    if available {
-                        self?.state.nickNameIsValid = .valid
-                    }
+                    self?.state.nickNameIsValid = available ? .valid : .invalid
                 })
                 .store(in: cancelBag)
         }

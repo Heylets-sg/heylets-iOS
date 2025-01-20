@@ -50,13 +50,13 @@ public struct HeyTextField: View {
             )
             .heyTextFieldStyle()
             
-            if let image = textFieldState.image {
-                Image(uiImage: image)
+            if let image = rightImage {
+                Button(action: self.action) {
+                    Image(uiImage: image)
+                }
             } else {
-                if let image = rightImage {
-                    Button(action: self.action) {
-                        Image(uiImage: image)
-                    }
+                if let image = textFieldState.image {
+                    Image(uiImage: image)
                 }
             }
         }

@@ -56,6 +56,8 @@ public class EnterPersonalInfoViewModel: ObservableObject {
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
+        
+        observe()
     }
     
     func send(_ action: Action) {
