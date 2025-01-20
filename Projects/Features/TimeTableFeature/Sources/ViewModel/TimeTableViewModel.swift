@@ -66,10 +66,7 @@ public class TimeTableViewModel: ObservableObject {
     func send(_ action: Action) {
         switch action {
         case .onAppear:
-            useCase.fetchTableInfo()
-                .receive(on: RunLoop.main)
-                .assign(to: \.lectureList, on: self)
-                .store(in: cancelBag)
+            fetchTableInfo()
         case .tableCellDidTap(let sectionId):
             detailSectionInfo = lectureList.first(where: {
                 $0.id == sectionId })!
@@ -138,6 +135,14 @@ public class TimeTableViewModel: ObservableObject {
         weak var owner = self
         guard let owner else { return }
         
+        $viewType
+            .sink(receiveValue: { viewType in
+                if viewType == .main {
+                    owner.fetchTableInfo()
+                }
+            })
+            .store(in: cancelBag)
+        
     }
     
     private func bindState() {
@@ -161,6 +166,13 @@ public class TimeTableViewModel: ObservableObject {
 }
 
 extension TimeTableViewModel {
+    private func fetchTableInfo() {
+        useCase.fetchTableInfo()
+            .receive(on: RunLoop.main)
+            .assign(to: \.lectureList, on: self)
+            .store(in: cancelBag)
+    }
+    
     private func configWeekList(
         _ timeTableCellList: [TimeTableCellInfo]
     ) -> AnyPublisher<[Week], Never> {
@@ -192,7 +204,7 @@ extension TimeTableViewModel {
         return Just(resultTimeTable)
             .eraseToAnyPublisher()
     }
-
+    
 }
 
 
