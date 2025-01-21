@@ -20,6 +20,7 @@ public struct EnterIdPasswordView: View {
     public init(viewModel: EnterIdPasswordViewModel) {
         self.viewModel = viewModel
     }
+    
     public var body: some View {
         OnboardingBaseView(content: {
             Spacer()

@@ -51,6 +51,8 @@ public struct TimeTableView: View {
     public var body: some View {
         ZStack {
             VStack(alignment: .leading) {
+                Spacer()
+                    .frame(height: 1)
                 createTopView(viewModel.viewType)
                 
                 Spacer()
@@ -60,6 +62,8 @@ public struct TimeTableView: View {
                     viewModel: viewModel,
                     viewType: $viewModel.viewType
                 )
+                Spacer()
+                    .frame(height: 1)
             }
             .onTapGesture {
                 withAnimation {
@@ -100,7 +104,6 @@ public struct TimeTableView: View {
             
             SettingTimeTableAlertView(viewModel: viewModel)
         }
-        
         createBottomSheetView(viewModel.viewType)
     }
 }

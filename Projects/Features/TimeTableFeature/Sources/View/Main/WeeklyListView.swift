@@ -17,12 +17,11 @@ public struct WeeklyListView: View {
         self.weekList = weekList
     }
     public var body: some View {
-        HStack(spacing: 55) {
+        HStack(spacing: 50) {
             ForEach(weekList, id: \.self) { day in
                 WeeklyListCellView(day.rawValue)
             }
         }
-        
     }
 }
 
@@ -33,18 +32,9 @@ fileprivate struct WeeklyListCellView: View {
     }
     var body: some View {
         HStack {
-            
-            
             Text(day)
                 .font(.semibold_12)
                 .foregroundColor(.heyGray1)
-            
-            
         }
-        
-        //            .padding(.horizontal, 8)
-        //            .padding(.vertical, 5)
-        //            .background(Color.heyGray3) //색상 확인하기
-        //            .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }

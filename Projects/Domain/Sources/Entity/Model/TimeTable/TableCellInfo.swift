@@ -39,7 +39,7 @@ public struct TimeTableCellInfo: Equatable {
             }
             
             colorRatio = Double(round(10 * colorRatio) / 10)
-            slotDict[hour - 9] = colorRatio
+            slotDict[hour - 8] = colorRatio
         }
         return slotDict
     }

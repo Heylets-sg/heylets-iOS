@@ -7,8 +7,8 @@
 //
 
 import SwiftUI
-import BaseFeatureDependency
 
+import BaseFeatureDependency
 import DSKit
 
 public struct EnterEmailView: View {

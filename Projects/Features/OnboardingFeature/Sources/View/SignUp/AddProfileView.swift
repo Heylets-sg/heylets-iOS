@@ -50,7 +50,7 @@ public struct AddProfileView: View {
             .frame(maxWidth: .infinity)
             
         }, titleText: "Add profile picture",
-                           nextButtonAction: { viewModel.send(.nextButtonDidTap) }
+            nextButtonAction: { viewModel.send(.nextButtonDidTap) }
         )
     }
 }

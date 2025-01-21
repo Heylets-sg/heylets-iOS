@@ -27,7 +27,8 @@ public struct MainView: View {
             HStack {
                 WeeklyListView(viewModel.weekList)
                     .padding(.bottom, 16)
-                    .padding(.leading, 30)
+                    .padding(.leading, 49)
+                    .padding(.trailing, 35)
             }
             
             ScrollView() {
@@ -44,6 +45,7 @@ public struct MainView: View {
             .scrollIndicators(.hidden)
             .border(Color.heyGray6, width: 1)
         }
+        .scrollDisabled(viewModel.state.scrollDisabled)
         .scrollIndicators(.hidden)
     }
 }

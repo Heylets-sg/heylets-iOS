@@ -25,6 +25,7 @@ public class TimeTableViewModel: ObservableObject {
         var reportMissingModuleAlertIsPresented: Bool = false
         var isShowingAddCustomModuleView = false
         var timeTableName: String = ""
+        var scrollDisabled: Bool = true
     }
     
     enum Action {
@@ -154,6 +155,9 @@ public class TimeTableViewModel: ObservableObject {
         useCase.timeTableCellInfo
             .receive(on: RunLoop.main)
             .flatMap(configWeekList)
+            .handleEvents(receiveOutput: { [weak self] weekList in
+                self?.state.scrollDisabled = weekList == Week.weekDay
+            })
             .assign(to: \.weekList, on: self)
             .store(in: cancelBag)
         
@@ -193,7 +197,7 @@ extension TimeTableViewModel {
     private func configTimeTable(
         _ timeTableCellList: [TimeTableCellInfo]
     ) -> AnyPublisher<[[TimeTableCellInfo?]], Never> {
-        let updatedTimeTable: [[TimeTableCellInfo?]] = Array(repeating: Array(repeating: nil, count: 16), count: weekList.count)
+        let updatedTimeTable: [[TimeTableCellInfo?]] = Array(repeating: Array(repeating: nil, count: 17), count: weekList.count)
         let resultTimeTable = timeTableCellList.reduce(into: updatedTimeTable) { timeTable, cell in
             if let weekIndex = weekList.firstIndex(of: cell.schedule.day) {
                 for s in cell.slot {
