@@ -53,7 +53,6 @@ public class EnterEmailViewModel: ObservableObject {
         case .nextButtonDidTap:
             useCase.requestEmailVerifyCode(.resetPassword, email)
                 .sink(receiveValue: { _ in
-                    owner.useCase.userInfo.email = owner.email
                     owner.navigationRouter.push(to: .enterSecurityCode(.resetPassword, owner.email))
                 })
                 .store(in: cancelBag)

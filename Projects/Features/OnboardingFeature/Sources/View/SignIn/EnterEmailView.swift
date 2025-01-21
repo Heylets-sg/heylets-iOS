@@ -36,6 +36,10 @@ public struct EnterEmailView: View {
                 colorSystem: .gray
             )
             
+            Text(viewModel.state.errMessage)
+                .font(.regular_14)
+                .foregroundColor(.heyError)
+            
         }, titleText: "Reset your password", 
            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
            hiddenCloseBtn: false,

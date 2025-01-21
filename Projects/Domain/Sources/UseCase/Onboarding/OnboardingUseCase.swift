@@ -81,16 +81,16 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
             authRepository.verifyEmail(email, otpCode)
                 .map { _ in }
                 .catch { [weak self] _ in
-                    self?.errMessage.send("request OTPCode Failed (Email)")
-                    return Just(()).eraseToAnyPublisher()
+                    self?.errMessage.send("Incorrect security code. Check your code and try again")
+                    return Empty<Void, Never>()
                 }
                 .eraseToAnyPublisher()
         case .resetPassword:
             authRepository.verifyResetPassword(email, otpCode)
                 .map { _ in }
                 .catch { [weak self] _ in
-                    self?.errMessage.send("request OTPCode Failed (password")
-                    return Just(()).eraseToAnyPublisher()
+                    self?.errMessage.send("Incorrect security code. Check your code and try again")
+                    return Empty<Void, Never>()
                 }
                 .eraseToAnyPublisher()
         }

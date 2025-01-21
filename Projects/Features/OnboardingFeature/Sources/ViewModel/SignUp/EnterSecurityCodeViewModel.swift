@@ -17,7 +17,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     struct State {
         var hiddenEmail: String = ""
         var continueButtonIsEnabled: Bool = false
-        var errorMessage: String = ""
+        var errMessage = ""
     }
     
     enum Action {
@@ -76,6 +76,13 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         $otpCode
             .map { $0.count >= 6 }
             .assign(to: \.state.continueButtonIsEnabled, on: owner)
+            .store(in: cancelBag)
+    }
+    
+    private func bindState() {
+        useCase.errMessage
+            .receive(on: RunLoop.main)
+            .assign(to: \.state.errMessage, on: self)
             .store(in: cancelBag)
     }
 }
