@@ -65,6 +65,9 @@ public struct SecurityCodeInputView: View {
                 }
             }
         }
+        .onTapGesture {
+            self.focusedField = .field
+        }
     }
 }
 

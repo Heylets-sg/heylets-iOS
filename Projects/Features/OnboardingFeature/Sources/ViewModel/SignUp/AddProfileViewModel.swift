@@ -17,7 +17,7 @@ import Domain
 
 public class AddProfileViewModel: ObservableObject {
     struct State {
-        var errorMessage: String = ""
+        var errMessage: String = ""
     }
     
     enum Action {
@@ -40,6 +40,8 @@ public class AddProfileViewModel: ObservableObject {
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
+        
+        bindState()
     }
     
     func send(_ action: Action) {
@@ -66,12 +68,17 @@ public class AddProfileViewModel: ObservableObject {
                         }
                     }
                 case .failure:
-                    DispatchQueue.main.async {
-//                        isPresentedError = true
-                    }
+                    self.state.errMessage = "load Image Failed"
                 }
             }
         }
+    }
+    
+    private func bindState() {
+        useCase.errMessage
+            .receive(on: RunLoop.main)
+            .assign(to: \.state.errMessage, on: self)
+            .store(in: cancelBag)
     }
 }
 

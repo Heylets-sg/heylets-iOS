@@ -39,9 +39,9 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     public func signUp() -> AnyPublisher<Void, Never> {
         authRepository.signUp(userInfo)
             .map { _ in }
-            .catch { [weak self] _ in
-                self?.errMessage.send("SignUp Failed")
-                return Just(()).eraseToAnyPublisher()
+            .catch { [weak self] error in
+                self?.errMessage.send(error.description)
+                return Empty<Void, Never>()
             }
             .eraseToAnyPublisher()
     }

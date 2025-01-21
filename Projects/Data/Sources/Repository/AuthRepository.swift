@@ -42,10 +42,18 @@ public struct AuthRepository: AuthRepositoryType {
     
     public func signUp(
         _ user: User
-    ) -> AnyPublisher<Void, Error> {
+    ) -> AnyPublisher<Void, SignUpError> {
         let request = user.toDTO()
         return authService.signUp(request)
-            .asVoidWithGeneralError()
+            .asVoid()
+            .mapError { error in
+                if let errorCode = error.isInvalidStatusCode() {
+                    return SignUpError.error(with: errorCode)
+                } else {
+                    return .unknown
+                }
+            }
+            .eraseToAnyPublisher()
     }
     
     public func resetPassword(
@@ -86,7 +94,7 @@ public struct AuthRepository: AuthRepositoryType {
     public func logout() -> AnyPublisher<Void, Error> {
         authService.logout()
             .handleEvents(receiveOutput: { _ in
-                UserDefaultsManager.clearLogout()
+                UserDefaultsManager.clearToken()
             })
             .asVoidWithGeneralError()
     }
@@ -141,6 +149,9 @@ public struct AuthRepository: AuthRepositoryType {
     ) -> AnyPublisher<Void, Error> {
         let request: DeleteAccountRequest = .init(password)
         return authService.deleteAccount(request)
+            .handleEvents(receiveOutput: { _ in
+                UserDefaultsManager.clearToken()
+            })
             .asVoidWithGeneralError()
     }
 }
