@@ -22,7 +22,7 @@ public class EnterEmailViewModel: ObservableObject {
     }
     
     enum Action {
-        case gotoLoginView
+        case closeButtonDidTap
         case nextButtonDidTap
     }
     
@@ -41,6 +41,7 @@ public class EnterEmailViewModel: ObservableObject {
         self.useCase = useCase
         
         observe()
+        bindState()
     }
     
     func send(_ action: Action) {
@@ -48,7 +49,7 @@ public class EnterEmailViewModel: ObservableObject {
         guard let owner else { return }
         
         switch action {
-        case .gotoLoginView:
+        case .closeButtonDidTap:
             navigationRouter.popToRootView()
         case .nextButtonDidTap:
             useCase.requestEmailVerifyCode(.resetPassword, email)
@@ -69,6 +70,13 @@ public class EnterEmailViewModel: ObservableObject {
                 owner.state.emailIsValid = $0
                 owner.state.continueButtonIsEnabled = $0 == .valid
             }
+            .store(in: cancelBag)
+    }
+    
+    private func bindState() {
+        useCase.errMessage
+            .receive(on: RunLoop.main)
+            .assign(to: \.state.errMessage, on: self)
             .store(in: cancelBag)
     }
 }

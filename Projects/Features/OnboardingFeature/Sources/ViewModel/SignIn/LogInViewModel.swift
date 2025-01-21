@@ -56,6 +56,7 @@ public class LogInViewModel: ObservableObject {
         switch action {
         case .loginButtonDidTap:
             useCase.logIn(id, password)
+                .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
                     self?.windowRouter.switch(to: .timetable)
                 })

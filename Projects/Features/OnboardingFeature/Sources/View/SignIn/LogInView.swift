@@ -23,55 +23,62 @@ public struct LogInView: View {
     }
     
     public var body: some View {
-        ZStack {
-            VStack(alignment: .trailing) {
-                Image(uiImage: .logo)
-                    .resizable()
-                    .frame(height: 56)
-                    .padding(.horizontal, 125)
-                    .padding(.bottom, 32)
+        VStack(alignment: .trailing) {
+            Image(uiImage: .logo)
+                .resizable()
+                .frame(height: 56)
+                .padding(.horizontal, 125)
+                .padding(.bottom, 32)
+            
+            HStack {
+                Text("Log In")
+                    .font(.semibold_18)
+                    .foregroundStyle(Color.heyGray1)
                 
-                HStack {
-                    Text("Log In")
-                        .font(.semibold_18)
-                        .foregroundStyle(Color.heyGray1)
-                    
-                    Spacer()
-                    
-                    Text("New to Heylets?")
-                        .font(.regular_14)
-                        .foregroundStyle(Color.heyGray1)
-                        .padding(.trailing, 8)
-                    
-                    Button {
-                        viewModel.send(.signUpButtonDidTap)
-                    } label: {
-                        Text("Sign Up")
-                            .font(.regular_12)
-                            .foregroundStyle(Color.heyMain)
-                    }
+                Spacer()
+                
+                Text("New to Heylets?")
+                    .font(.regular_14)
+                    .foregroundStyle(Color.heyGray1)
+                    .padding(.trailing, 8)
+                
+                Button {
+                    viewModel.send(.signUpButtonDidTap)
+                } label: {
+                    Text("Sign Up")
+                        .font(.regular_12)
+                        .foregroundStyle(Color.heyMain)
                 }
-                .padding(.bottom, 29)
+            }
+            .padding(.bottom, 29)
+            
+            HeyTextField(
+                text: $viewModel.id,
+                placeHolder: "ID"
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.heyGray3, lineWidth: 1)
+            )
+            .padding(.bottom, 21)
+            
+            PasswordField(
+                password: $viewModel.password,
+                showPassword: $showPassword, colorSystem: .white
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.heyGray3, lineWidth: 1)
+            )
+            .padding(.bottom, 14)
+            
+            HStack {
+                Text(viewModel.state.errMessage)
+                    .font(.regular_14)
+                    .foregroundColor(.heyError)
+                    .frame(width: 180)
                 
-                HeyTextField(
-                    text: $viewModel.id,
-                    placeHolder: "ID"
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.heyGray3, lineWidth: 1)
-                )
-                .padding(.bottom, 21)
-                
-                PasswordField(
-                    password: $viewModel.password,
-                    showPassword: $showPassword, colorSystem: .white
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.heyGray3, lineWidth: 1)
-                )
-                .padding(.bottom, 14)
+                Spacer()
                 
                 Button {
                     viewModel.send(.forgotPasswordButtonDidTap)
@@ -80,38 +87,23 @@ public struct LogInView: View {
                         .font(.regular_12)
                         .foregroundStyle(Color.heyGray1)
                 }
-                
-                Spacer()
-                
-                Button("Log In") {
-                    viewModel.send(.loginButtonDidTap)
-                }
-                .heyBottomButtonStyle()
             }
-            .padding(.top, 106)
-            .padding(.bottom, 65)
-            .padding(.horizontal, 16)
-            .background(Color.heyWhite)
-            .ignoresSafeArea(edges: .vertical)
-            .ignoresSafeArea(.keyboard)
-            .navigationBarBackButtonHidden()
             
-            if viewModel.state.showToast {
-                VStack {
-                    Spacer()
-                    ErrorMessageToastView(viewModel.state.errMessage)
-                        .padding(.bottom, 150)
-                        .padding(.horizontal, 16)
-                        .zIndex(1)
-                }
-                .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        withAnimation {
-                            viewModel.send(.dismissToastView)
-                        }
-                    }
-                }
+            
+            
+            Spacer()
+            
+            Button("Log In") {
+                viewModel.send(.loginButtonDidTap)
             }
+            .heyBottomButtonStyle()
         }
+        .padding(.top, 106)
+        .padding(.bottom, 65)
+        .padding(.horizontal, 16)
+        .background(Color.heyWhite)
+        .ignoresSafeArea(edges: .vertical)
+        .ignoresSafeArea(.keyboard)
+        .navigationBarBackButtonHidden()
     }
 }

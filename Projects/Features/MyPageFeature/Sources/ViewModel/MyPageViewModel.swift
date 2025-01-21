@@ -77,11 +77,10 @@ public class MyPageViewModel: ObservableObject {
         case .logout:
             //TODO: 로그아웃 API
             useCase.logout()
+                .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
                     self?.windowRouter.switch(to: .onboarding)
                 }).store(in: cancelBag)
-            
-            
         case .dismissLogoutAlertView:
             state.logoutAlertViewIsPresented = false
         }

@@ -38,6 +38,7 @@ public class SplashViewModel: ObservableObject {
         switch action {
         case .onAppear:
             useCase.autoLogin()
+                .receive(on: RunLoop.main)
                 .sink(receiveValue: {[weak self] tokenExisted in
                     if tokenExisted {
                         self?.windowRouter.switch(to: .timetable)

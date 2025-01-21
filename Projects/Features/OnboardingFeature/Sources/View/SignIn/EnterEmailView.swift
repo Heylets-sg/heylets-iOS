@@ -35,6 +35,7 @@ public struct EnterEmailView: View {
                 textFieldState: $viewModel.state.emailIsValid,
                 colorSystem: .gray
             )
+            .padding(.bottom, 8)
             
             Text(viewModel.state.errMessage)
                 .font(.regular_14)
@@ -43,7 +44,7 @@ public struct EnterEmailView: View {
         }, titleText: "Reset your password", 
            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
            hiddenCloseBtn: false,
-           nextButtonAction: { viewModel.send(.nextButtonDidTap)}
+           nextButtonAction: { viewModel.send(.nextButtonDidTap) }
         )
     }
 }

@@ -58,6 +58,7 @@ struct OnboardingBaseView<Content:View>: View {
                     Spacer()
                     
                     Button {
+                        dismiss()
                     } label: {
                         Image(uiImage: .icClose)
                             .resizable()
