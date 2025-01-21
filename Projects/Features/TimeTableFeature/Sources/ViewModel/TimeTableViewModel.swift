@@ -79,6 +79,7 @@ public class TimeTableViewModel: ObservableObject {
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: {[weak self] _  in
                     self?.state.deleteModuleAlertIsPresented = false
+                    self?.fetchTableInfo()
                 })
                 .store(in: cancelBag)
         case .deleteModuleAlertCloseButtonDidTap:
