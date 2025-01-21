@@ -8,6 +8,7 @@ public struct SecurityCodeInputView: View {
     enum FocusField: Hashable {
         case field
     }
+    
     @FocusState private var focusedField: FocusField?
     @Binding var otpCode: String
     
@@ -28,6 +29,9 @@ public struct SecurityCodeInputView: View {
                     .multilineTextAlignment(.center)
                     .keyboardType(.numberPad)
                     .onReceive(Just(otpCode)) { _ in
+                        if otpCode == "" {
+                            self.focusedField = .field
+                        }
                         if otpCode.count >= 6 {
                             otpCode = String(otpCode.prefix(6))
                             
@@ -61,7 +65,9 @@ public struct SecurityCodeInputView: View {
             }
         }
     }
-    
+}
+
+extension SecurityCodeInputView {
     //MARK: func
     private func getPin(at index: Int) -> String {
         guard self.otpCode.count > index else {
@@ -77,7 +83,8 @@ public struct SecurityCodeInputView: View {
         }
     }
 }
-
+    
+    
 extension String {
     subscript(idx: Int) -> String {
         String(self[index(startIndex, offsetBy: idx)])

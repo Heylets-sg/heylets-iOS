@@ -46,6 +46,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         self.email = email
         
         observe()
+        bindState()
     }
     
     func send(_ action: Action) {
@@ -80,8 +81,14 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     }
     
     private func bindState() {
+        weak var owner = self
+        guard let owner else { return }
+        
         useCase.errMessage
             .receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: { _ in
+                self.otpCode = ""
+            })
             .assign(to: \.state.errMessage, on: self)
             .store(in: cancelBag)
     }
