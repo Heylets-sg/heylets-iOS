@@ -102,26 +102,32 @@ public struct MyPageView: View {
 public struct MyPageTopView: View {
     @EnvironmentObject var router: Router
     public var body: some View {
-        HStack {
-            Button {
-                router.windowRouter.switch(to: .timetable)
-            } label: {
-                //TODO: 킹피셔로 바로 가져오기
-                Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
-                    .resizable()
-                    .frame(width: 22, height: 18)
-                    .tint(.white)
+        ZStack {
+            HStack {
+                Spacer()
+                
+                Text("My account")
+                    .font(.semibold_18)
+                    .foregroundColor(.white)
+                
+                Spacer()
             }
-            .padding(.leading, 16)
             
-            Spacer()
+            HStack {
+                Button {
+                    router.windowRouter.switch(to: .timetable)
+                } label: {
+                    Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
+                        .resizable()
+                        .frame(width: 22, height: 18)
+                        .tint(.white)
+                }
+                .padding(.leading, 16)
+                Spacer()
+            }
             
-            Text("My account")
-                .font(.semibold_18)
-                .foregroundColor(.white)
-            
-            Spacer()
         }
+        
     }
 }
 
