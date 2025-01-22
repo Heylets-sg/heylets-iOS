@@ -13,7 +13,8 @@ extension TimeTableInfo {
         .init(id: 0,
               name: "",
               semester: "",
-              academicYear: 0
+              academicYear: 0,
+              displayType: .MODULE_CODE
         )
     }
 }

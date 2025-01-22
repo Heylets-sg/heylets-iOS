@@ -51,6 +51,7 @@ public class TimeTableViewModel: ObservableObject {
     @Published var viewType: TimeTableViewType = .main
     
     @Published var timeTableInfo: TimeTableInfo = .empty
+    @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
     @Published var lectureList: [SectionInfo] = []
     @Published var weekList: [Week] = Week.weekDay
     @Published var timeTable: [[TimeTableCellInfo?]] = []
@@ -126,6 +127,9 @@ public class TimeTableViewModel: ObservableObject {
             state.settingAlertType = nil
         case .deleteTimeTable:
             useCase.deleteAllSection()
+                .map { _ in }
+                .flatMap(useCase.fetchTableInfo)
+                .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
                     self?.state.settingAlertType = nil
                 })
@@ -159,6 +163,11 @@ public class TimeTableViewModel: ObservableObject {
         useCase.timeTableInfo
             .receive(on: RunLoop.main)
             .assign(to: \.timeTableInfo, on: self)
+            .store(in: cancelBag)
+        
+        useCase.displayInfo
+            .receive(on: RunLoop.main)
+            .assign(to: \.displayTypeInfo, on: self)
             .store(in: cancelBag)
         
         useCase.timeTableCellInfo

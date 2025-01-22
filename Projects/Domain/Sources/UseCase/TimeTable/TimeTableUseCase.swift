@@ -41,6 +41,7 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
     public var errMessage = PassthroughSubject<String, Never>()
     public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()
     public var timeTableCellInfo = PassthroughSubject<[TimeTableCellInfo], Never>()
+    public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()
 }
 
 //MARK: Main
@@ -71,6 +72,7 @@ extension TimeTableUseCase {
         timeTableRepository.getTableDetailInfo(tableId)
             .handleEvents(receiveOutput: { [weak self] detailInfo in
                 self?.timeTableInfo.send(detailInfo.tableInfo)
+                self?.displayInfo.send(detailInfo.tableInfo.displayType!)
                 self?.timeTableCellInfo.send(detailInfo.sectionList.createTimeTableCellList())
             })
             .map { $0.sectionList } // -> 성공을 위해서???

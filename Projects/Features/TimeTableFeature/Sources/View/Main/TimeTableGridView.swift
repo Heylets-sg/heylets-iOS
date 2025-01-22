@@ -12,6 +12,7 @@ import Domain
 
 public struct TimeTableGridView: View {
     @ObservedObject var viewModel: TimeTableViewModel
+    @Binding var displayType: DisplayTypeInfo
     @Binding var viewType: TimeTableViewType
     var hourList = Array(8...24)
     
@@ -96,9 +97,18 @@ public struct TimeTableGridView: View {
                                     .font(.medium_12)
                                     .foregroundColor(cell.textColor)
                                     .multilineTextAlignment(.center)
-                                Text(cell.schedule.location)
-                                    .font(.regular_10)
-                                    .foregroundColor(cell.textColor)
+                                
+                                if displayType.classRoomIsVisible {
+                                    Text(cell.schedule.location)
+                                        .font(.regular_10)
+                                        .foregroundColor(cell.textColor)
+                                }
+                                
+                                if displayType.creditIsVisible && cell.unit != nil{
+                                    Text("unit: \(cell.unit!)")
+                                        .font(.regular_10)
+                                        .foregroundColor(cell.textColor)
+                                }
                             }
                         }
                     }

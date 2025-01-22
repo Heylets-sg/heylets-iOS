@@ -38,6 +38,7 @@ public struct MainView: View {
                     
                     TimeTableGridView(
                         viewModel: viewModel,
+                        displayType: $viewModel.displayTypeInfo,
                         viewType: $viewType
                     )
                 }

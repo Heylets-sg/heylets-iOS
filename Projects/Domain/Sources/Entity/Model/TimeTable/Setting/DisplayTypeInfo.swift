@@ -21,9 +21,27 @@ public enum DisplayTypeInfo: String {
         case .MODULE_CODE_CLASSROOM:
             "module code, class room"
         case .MODULE_CODE_CLASSROOM_CREDIT:
-            "module code, class room, professor"
+            "module code, class room, unit"
         case .MODULE_CODE_CREDIT:
-            "module code, professor"
+            "module code, unit"
+        }
+    }
+    
+    public var classRoomIsVisible: Bool {
+        switch self {
+        case .MODULE_CODE, .MODULE_CODE_CREDIT:
+            return false
+        case .MODULE_CODE_CLASSROOM, .MODULE_CODE_CLASSROOM_CREDIT:
+            return true
+        }
+    }
+    
+    public var creditIsVisible: Bool {
+        switch self {
+        case .MODULE_CODE, .MODULE_CODE_CLASSROOM:
+            return false
+        case .MODULE_CODE_CLASSROOM_CREDIT, .MODULE_CODE_CREDIT:
+            return true
         }
     }
 }
