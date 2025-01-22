@@ -39,23 +39,29 @@ struct MyPageBaseView<Content:View>: View {
                 Spacer()
                     .frame(height: 58)
                 
-                HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
-                            .resizable()
-                            .frame(width: 22, height: 18)
-                            .tint(titleColor)
+                ZStack {
+                    HStack {
+                        Spacer()
+                        
+                        Text(titleText)
+                            .font(.semibold_18)
+                            .foregroundColor(titleColor)
+                        
+                        Spacer()
                     }
                     
-                    Spacer()
+                    HStack {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
+                                .resizable()
+                                .frame(width: 22, height: 18)
+                                .tint(titleColor)
+                        }
+                        Spacer()
+                    }
                     
-                    Text(titleText)
-                        .font(.semibold_18)
-                        .foregroundColor(titleColor)
-                    
-                    Spacer()
                 }
                 
                 content

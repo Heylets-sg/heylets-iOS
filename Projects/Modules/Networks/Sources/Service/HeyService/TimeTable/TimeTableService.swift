@@ -13,18 +13,18 @@ public typealias TimeTableService = BaseService<TimeTableAPI>
 
 public protocol TimeTableServiceType {
     func deleteTable(
-        _ tableId: String
+        _ tableId: Int
     ) -> NetworkVoidResponse
     
     func getTableList(
     ) -> NetworkDecodableResponse<TimeTableListResult>
     
     func getTableDetailInfo(
-        _ tableId: String
+        _ tableId: Int
     ) -> NetworkDecodableResponse<TimeTableDetailInfoDTO>
     
     func patchTableName(
-        _ tableId: String,
+        _ tableId: Int,
         _ request: TimeTableEditNameRequest
     ) -> NetworkDecodableResponse<TimeTableInfoResult>
     
@@ -35,7 +35,7 @@ public protocol TimeTableServiceType {
 
 extension TimeTableService: TimeTableServiceType {
     public func deleteTable(
-        _ tableId: String
+        _ tableId: Int
     ) -> NetworkVoidResponse {
         requestWithNoResult(.deleteTable(tableId))
     }
@@ -46,13 +46,13 @@ extension TimeTableService: TimeTableServiceType {
     }
     
     public func getTableDetailInfo(
-        _ tableId: String
+        _ tableId: Int
     ) -> NetworkDecodableResponse<TimeTableDetailInfoDTO> {
         requestWithResult(.getTableDetailInfo(tableId))
     }
     
     public func patchTableName(
-        _ tableId: String,
+        _ tableId: Int,
         _ request: TimeTableEditNameRequest
     ) -> NetworkDecodableResponse<TimeTableInfoResult> {
         requestWithResult(.patchTable(tableId, request))

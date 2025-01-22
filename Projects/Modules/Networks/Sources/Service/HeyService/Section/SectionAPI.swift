@@ -11,9 +11,9 @@ import Foundation
 import Domain
 
 public enum SectionAPI {
-    case deleteAllSection(String)
-    case deleteSection(String, Int)
-    case addSection(String, AddSectionRequest)
+    case deleteAllSection(Int)
+    case deleteSection(Int, Int)
+    case addSection(Int, AddSectionRequest)
 }
 
 extension SectionAPI: BaseAPI {
@@ -25,14 +25,14 @@ extension SectionAPI: BaseAPI {
         switch self {
         case .deleteAllSection(let tableId):
             return Paths.deleteAllSection
-                .replacingOccurrences(of: "{tableId}", with: tableId)
+                .replacingOccurrences(of: "{tableId}", with: "\(tableId)")
         case .deleteSection(let tableId, let sectionId):
             return Paths.deleteLectureSection
-                .replacingOccurrences(of: "{tableId}", with: tableId)
+                .replacingOccurrences(of: "{tableId}", with: "\(tableId)")
                 .replacingOccurrences(of: "{sectionId}", with: "\(sectionId)")
         case .addSection(let tableId, _):
             return Paths.addLectureSection
-                .replacingOccurrences(of: "{tableId}", with: tableId)
+                .replacingOccurrences(of: "{tableId}", with: "\(tableId)")
         }
     }
     

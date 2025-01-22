@@ -11,7 +11,7 @@ import Foundation
 extension TimeTableDetailInfo {
     static public var stub: Self {
         .init(
-            tableInfo: .stub,
+            tableInfo: .empty,
             sectionList: [
                 .timetable_stub1,
                 .timetable_stub2,

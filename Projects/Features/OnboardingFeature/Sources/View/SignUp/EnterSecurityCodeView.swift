@@ -33,11 +33,17 @@ public struct EnterSecurityCodeView: View {
                 .frame(height: 88)
             
             SecurityCodeInputView(otpCode: $viewModel.otpCode)
-            .frame(height: 50)
+                .frame(height: 50)
+                .padding(.bottom, 16)
             
-        }, titleText: "Enter Your Security Code", nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled, nextButtonAction: { viewModel.send(.nextButtonDidTap)
-        })
-        .onAppear { viewModel.send(.onAppear) }
+            Text(viewModel.state.errMessage)
+                .font(.regular_14)
+                .foregroundColor(.heyError)
+            
+        }, titleText: "Enter Your Security Code",
+            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
+            nextButtonAction: { viewModel.send(.nextButtonDidTap) }
+        )
     }
 }
 

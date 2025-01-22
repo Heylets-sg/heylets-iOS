@@ -16,6 +16,7 @@ import Core
 enum UniversityInfo: String {
     case NUS
     case NTU
+    case SMU
     
     var icon: UIImage {
         switch self {
@@ -23,6 +24,8 @@ enum UniversityInfo: String {
             return .nus
         case .NTU:
             return .ntu
+        case .SMU:
+            return .smu
         }
     }
 }
@@ -31,6 +34,7 @@ public class SelectUniversityViewModel: ObservableObject {
     struct State {
         var filteredItems: [UniversityInfo] = []
         var continueButtonIsEnabled = false
+        var errMessage = ""
     }
     
     enum Action {
@@ -41,7 +45,7 @@ public class SelectUniversityViewModel: ObservableObject {
     
     // MARK: - Properties
     
-    private let allUniversityItems: [UniversityInfo] = [.NTU, .NUS]
+    private let allUniversityItems: [UniversityInfo] = [.NTU, .NUS, .SMU]
     @Published var searchText = ""
     @Published var university: UniversityInfo? = nil
     
@@ -68,7 +72,7 @@ public class SelectUniversityViewModel: ObservableObject {
             navigationRouter.pop()
         case .nextButtonDidTap:
             guard let university = university else { return }
-            useCase.userInfo.profile.university = university.rawValue
+            useCase.userInfo.university = university.rawValue
             navigationRouter.push(to: .verifyEmail)
         case .selectUniversity(let university):
             self.university = university

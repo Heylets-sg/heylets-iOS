@@ -23,12 +23,12 @@ public struct LectureInfoResult: Decodable {
     public let lectureId: Int
     public let courseCode, courseName: String
     public let sections: [SectionResult]
-    public let credit: Int
-    public let courseLevel: String
+    public let credit: Double
+    public let courseLevel: String?
     public let termId: Int
     public let academicYear: String
     public let semester: String
-    public let keywordScore: Int
+    public let keywordScore: Double
 }
 
 // MARK: - Pageable

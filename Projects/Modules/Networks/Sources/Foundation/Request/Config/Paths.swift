@@ -44,10 +44,12 @@ public enum Paths {
     static let deleteLectureSection = "api/v1/timetables/{tableId}/sections/{sectionId}"
     static let addLectureSection = "api/v1/timetables/{tableId}/sections"
     
-    //MARK: Theme
+    //MARK: Setting
     
     static let getThemeDetailInfo = "api/v1/timetables/themes/{themeName}"
     static let getPreviewTheme = "api/v1/timetables/themes/preview"
+    static let getTimeTableSetting = "api/v1/users/preferences/timetable-settings"
+    static let patchTimeTableSetting = "api/v1/users/preferences/timetable-settings"
     
     //MARK: TimeTable
     

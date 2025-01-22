@@ -30,19 +30,28 @@ public struct AddProfileView: View {
             
             HStack {
                 Spacer()
-                HeyPhotoPicker(viewModel: viewModel) {
-                    Image(uiImage: viewModel.profileImage ?? .icCamera)
-                        .resizable()
-                        .frame(width: 136, height: 136)
-                        .background(Color.heyGray4)
-                        .clipShape(Circle())
+                VStack {
+                    HeyPhotoPicker(viewModel: viewModel) {
+                        Image(uiImage: viewModel.profileImage ?? .icCamera)
+                            .resizable()
+                            .frame(width: 136, height: 136)
+                            .background(Color.heyGray4)
+                            .clipShape(Circle())
+                    }
+                    .padding(.bottom, 50)
+                    
+                    Text(viewModel.state.errMessage)
+                        .font(.regular_14)
+                        .foregroundColor(.heyError)
                 }
+                
                 Spacer()
             }
             .frame(maxWidth: .infinity)
             
-            
-        }, titleText: "Add profile picture", nextButtonAction: { viewModel.send(.nextButtonDidTap) })
+        }, titleText: "Add profile picture",
+            nextButtonAction: { viewModel.send(.nextButtonDidTap) }
+        )
     }
 }
 

@@ -7,8 +7,8 @@
 //
 
 import SwiftUI
-import BaseFeatureDependency
 
+import BaseFeatureDependency
 import DSKit
 
 public struct EnterEmailView: View {
@@ -35,11 +35,17 @@ public struct EnterEmailView: View {
                 textFieldState: $viewModel.state.emailIsValid,
                 colorSystem: .gray
             )
+            .padding(.bottom, 8)
+            
+            Text(viewModel.state.errMessage)
+                .font(.regular_14)
+                .foregroundColor(.heyError)
             
         }, titleText: "Reset your password", 
            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
            hiddenCloseBtn: false,
-           nextButtonAction: { viewModel.send(.nextButtonDidTap)})
+           nextButtonAction: { viewModel.send(.nextButtonDidTap) }
+        )
     }
 }
 

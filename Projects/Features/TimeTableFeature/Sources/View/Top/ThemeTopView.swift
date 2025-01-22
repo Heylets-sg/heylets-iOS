@@ -38,11 +38,9 @@ struct ThemeTopView: View {
                 
                 Button {
                     viewModel.send(.saveButtonDidTap)
-                    //성공하면
                     withAnimation {
                         viewType = .main
                     }
-                    
                 } label: {
                     Text("Save")
                         .font(.medium_16)
@@ -55,8 +53,14 @@ struct ThemeTopView: View {
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(viewModel.themeList, id: \.self) { theme in
-                        ThemeListCellView(theme)
-                            .padding(.trailing, 20)
+                        ThemeListCellView(
+                            theme,
+                            theme == viewModel.state.selectedTheme
+                        )
+                        .padding(.trailing, 20)
+                        .onTapGesture {
+                            viewModel.send(.themeButtonDidTap(theme))
+                        }
                     }
                 }
                 .padding(.leading, 24)
@@ -71,24 +75,35 @@ struct ThemeTopView: View {
 
 fileprivate struct ThemeListCellView: View {
     private let theme: Theme
+    private let isSelected: Bool
     
-    init(_ theme: Theme) {
+    init(_ theme: Theme, _ isSelected: Bool) {
         self.theme = theme
+        self.isSelected = isSelected
     }
+    
     var body: some View {
-        VStack {
-            Button {
+        ZStack {
+            if isSelected {
+                LinearGradient(
+                    gradient: Gradient(colors: theme.colorList.map { Color(hex: $0) }),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .cornerRadius(10) // 배경에 둥근 모서리 적용
+            } else {
+                Color.clear
+                    .cornerRadius(10) // 선택되지 않은 경우에도 동일한 코너 처리
+            }
+            
+            VStack {
+                QuarterCircleView(theme.colorList)
+                    .frame(width: 56, height: 56)
+                    .padding(.bottom, 6)
                 
-            } label: {
-                VStack {
-                    QuarterCircleView(theme.colorList)
-                        .frame(width: 56, height: 56)
-                        .padding(.bottom, 6)
-                    
-                    Text(theme.name)
-                        .font(.medium_10)
-                        .foregroundColor(.heyGray1)
-                }
+                Text(theme.name)
+                    .font(.medium_10)
+                    .foregroundColor(.heyGray1)
             }
         }
     }
@@ -118,7 +133,7 @@ struct QuarterCircleView: View {
                 .fill(Color.white)
                 .frame(width: 2)
                 .offset(x: 0) // 중심에 위치하도록 설정
-
+            
             // 가로 선
             Rectangle()
                 .fill(Color.white)

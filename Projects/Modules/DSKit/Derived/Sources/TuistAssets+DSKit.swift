@@ -47,6 +47,7 @@ public enum DSKitAsset {
   public static let theme5 = DSKitImages(name: "theme5")
   public static let uniNtu = DSKitImages(name: "uni_ntu")
   public static let uniNus = DSKitImages(name: "uni_nus")
+  public static let uniSmu = DSKitImages(name: "uni_smu")
   public static let heyBlack = DSKitColors(name: "heyBlack")
   public static let heyDarkBlue = DSKitColors(name: "heyDarkBlue")
   public static let heyError = DSKitColors(name: "heyError")

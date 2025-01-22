@@ -9,10 +9,17 @@
 import Foundation
 import Combine
 
-public protocol ThemeRepositoryType {
+public protocol SettingRepositoryType {
     func getThemeDetailInfo(
         _ themeName: String
     ) -> AnyPublisher<ThemeColorInfo, Error>
     
     func getThemeList() -> AnyPublisher<[Theme], Error>
+    
+    func getTimeTableSettingInfo() -> AnyPublisher<SettingInfo, Error>
+    
+    func patchTimeTableSettingInfo(
+        _ displayType: DisplayTypeInfo,
+        _ theme: String
+    ) -> AnyPublisher<Void, Error>
 }

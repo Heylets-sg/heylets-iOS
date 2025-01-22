@@ -16,7 +16,7 @@ public class HeyRepository: RepositoryType {
     
     public var authRepository: AuthRepositoryType
     public var timeTableRepository: TimeTableRepositoryType
-    public var themeRepository: ThemeRepositoryType
+    public var settingRepository: SettingRepositoryType
     public var sectionRepository: SectionRepositoryType
     public var scheduleRepository: ScheduleRepositoryType
     public var lectureRepository: LectureRepositoryType
@@ -31,7 +31,7 @@ public class HeyRepository: RepositoryType {
         timeTableRepository = TimeTableRepository(
             service: service.timeTableService
         )
-        themeRepository  = ThemeRepository(
+        settingRepository = SettingRepository(
             service: service.themeService
         )
         sectionRepository =  SectionRepository(

@@ -59,6 +59,7 @@ public class DeleteAccountViewModel: ObservableObject {
             state.deleteAccountAlertViewIsPresented = false
         case .deleteAccount:
             useCase.deleteAccount(password)
+                .receive(on: RunLoop.main)
                 //TODO: 실패처리
                 .sink(receiveValue: { [weak self] _ in
                     self?.windowRouter.switch(to: .onboarding)

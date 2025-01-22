@@ -21,7 +21,7 @@ public struct TimeTableRepository: TimeTableRepositoryType {
     
     
     public func deleteTable(
-        _ tableId: String
+        _ tableId: Int
     ) -> AnyPublisher<Void, Error> {
         service.deleteTable(tableId)
             .asVoidWithGeneralError()
@@ -35,7 +35,7 @@ public struct TimeTableRepository: TimeTableRepositoryType {
     }
     
     public func getTableDetailInfo(
-        _ tableId: String
+        _ tableId: Int
     ) -> AnyPublisher<TimeTableDetailInfo, Error> {
         service.getTableDetailInfo(tableId)
             .map { $0.toEntity() }
@@ -43,7 +43,7 @@ public struct TimeTableRepository: TimeTableRepositoryType {
     }
     
     public func patchTableName(
-        _ tableId: String,
+        _ tableId: Int,
         _ tableName: String
     ) -> AnyPublisher<Void, Error> {
         let request: TimeTableEditNameRequest = .init(tableName)

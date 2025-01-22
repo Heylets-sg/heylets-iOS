@@ -21,9 +21,7 @@ public protocol AuthRepositoryType {
         _ name: String
     ) -> AnyPublisher<Bool, Error>
     
-    func signUp(
-        _ user: User
-    ) -> AnyPublisher<Void, Error>
+    func signUp(_ user: User) -> AnyPublisher<Void, SignUpError>
     
     // 새 비밀번호 설정
     func resetPassword(
@@ -40,7 +38,7 @@ public protocol AuthRepositoryType {
     // 비밀번호 재설정 요청
     func requestResetPassword(
         _ email: String
-    ) -> AnyPublisher<Void, Error>
+    ) -> AnyPublisher<Void, VerificationRequestError>
     
     // 로그아웃
     func logout() -> AnyPublisher<Void, Error>
@@ -49,7 +47,7 @@ public protocol AuthRepositoryType {
     func logIn(
         _ email: String,
         _ password: String
-    ) -> AnyPublisher<Auth, Error>
+    ) -> AnyPublisher<Auth, LoginError>
     
     // 이메일 인증 확인
     func verifyEmail(
@@ -60,7 +58,7 @@ public protocol AuthRepositoryType {
     // 이메일 인증 요청
     func requestVerifyEmail(
         _ email: String
-    ) -> AnyPublisher<Void, Error>
+    ) -> AnyPublisher<Void, VerificationRequestError>
     
     // 회원 탈퇴
     func deleteAccount(

@@ -42,10 +42,18 @@ public struct AuthRepository: AuthRepositoryType {
     
     public func signUp(
         _ user: User
-    ) -> AnyPublisher<Void, Error> {
+    ) -> AnyPublisher<Void, SignUpError> {
         let request = user.toDTO()
         return authService.signUp(request)
-            .asVoidWithGeneralError()
+            .asVoid()
+            .mapError { error in
+                if let errorCode = error.isInvalidStatusCode() {
+                    return SignUpError.error(with: errorCode)
+                } else {
+                    return .unknown
+                }
+            }
+            .eraseToAnyPublisher()
     }
     
     public func resetPassword(
@@ -69,16 +77,24 @@ public struct AuthRepository: AuthRepositoryType {
     
     public func requestResetPassword(
         _ email: String
-    ) -> AnyPublisher<Void, Error> {
+    ) -> AnyPublisher<Void, VerificationRequestError> {
         let request: RequestOTPCodeRequest = .init(email)
         return authService.requestResetPassword(request)
-            .asVoidWithGeneralError()
+            .asVoid()
+            .mapError { error in
+                if let errorCode = error.isInvalidStatusCode() {
+                    return VerificationRequestError.error(with: errorCode)
+                } else {
+                    return .unknown
+                }
+            }
+            .eraseToAnyPublisher()
     }
     
     public func logout() -> AnyPublisher<Void, Error> {
         authService.logout()
             .handleEvents(receiveOutput: { _ in
-                UserDefaultsManager.clearLogout()
+                UserDefaultsManager.clearToken()
             })
             .asVoidWithGeneralError()
     }
@@ -86,14 +102,21 @@ public struct AuthRepository: AuthRepositoryType {
     public func logIn(
         _ email: String,
         _ password: String
-    ) -> AnyPublisher<Auth, Error> {
+    ) -> AnyPublisher<Auth, LoginError> {
         let request: SignInRequest = .init(email, password)
         return authService.logIn(request)
             .handleEvents(receiveOutput: { token in
                 UserDefaultsManager.setToken(token)
             })
             .map { $0.toEntity() }
-            .mapToGeneralError()
+            .mapError { error in
+                if let errorCode = error.isInvalidStatusCode() {
+                    return LoginError.error(with: errorCode)
+                } else {
+                    return .unknown
+                }
+            }
+            .eraseToAnyPublisher()
     }
     
     public func verifyEmail(
@@ -107,10 +130,18 @@ public struct AuthRepository: AuthRepositoryType {
     
     public func requestVerifyEmail(
         _ email: String
-    ) -> AnyPublisher<Void, Error> {
+    ) -> AnyPublisher<Void, VerificationRequestError> {
         let request: RequestOTPCodeRequest = .init(email)
         return authService.requestVerifyEmail(request)
-            .asVoidWithGeneralError()
+            .asVoid()
+            .mapError { error in
+                if let errorCode = error.isInvalidStatusCode() {
+                    return VerificationRequestError.error(with: errorCode)
+                } else {
+                    return .unknown
+                }
+            }
+            .eraseToAnyPublisher()
     }
     
     public func deleteAccount(
@@ -118,6 +149,9 @@ public struct AuthRepository: AuthRepositoryType {
     ) -> AnyPublisher<Void, Error> {
         let request: DeleteAccountRequest = .init(password)
         return authService.deleteAccount(request)
+            .handleEvents(receiveOutput: { _ in
+                UserDefaultsManager.clearToken()
+            })
             .asVoidWithGeneralError()
     }
 }

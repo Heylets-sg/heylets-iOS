@@ -16,7 +16,7 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
     private let lectureRepository: LectureRepositoryType
     private let scheduleRepository: ScheduleRepositoryType
     private let sectionRepository: SectionRepositoryType
-    private let themeRepository: ThemeRepositoryType
+    private let settingRepository: SettingRepositoryType
     private let timeTableRepository: TimeTableRepositoryType
     
     private var cancelBag = CancelBag()
@@ -26,20 +26,22 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
         lectureRepository: LectureRepositoryType,
         scheduleRepository: ScheduleRepositoryType,
         sectionRepository: SectionRepositoryType,
-        themeRepository: ThemeRepositoryType,
+        settingRepository: SettingRepositoryType,
         timeTableRepository: TimeTableRepositoryType
     ) {
         self.userRepository = userRepository
         self.lectureRepository = lectureRepository
         self.scheduleRepository = scheduleRepository
         self.sectionRepository = sectionRepository
-        self.themeRepository = themeRepository
+        self.settingRepository = settingRepository
         self.timeTableRepository = timeTableRepository
     }
     
-    public var tableId: String = ""
+    public var tableId: Int = 0
+    public var errMessage = PassthroughSubject<String, Never>()
     public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()
     public var timeTableCellInfo = PassthroughSubject<[TimeTableCellInfo], Never>()
+    public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()
 }
 
 //MARK: Main
@@ -49,7 +51,7 @@ extension TimeTableUseCase {
     public func fetchTableInfo() -> AnyPublisher<[SectionInfo], Never> {
         getTableId()
             .filter { $0 != nil}
-            .map { "\($0!)"}
+            .map { $0! }
             .handleEvents(receiveOutput: { [weak self] id in
                 self?.tableId = id
             })
@@ -57,20 +59,24 @@ extension TimeTableUseCase {
             .eraseToAnyPublisher()
     }
     
+    public func getProfileInfo() -> AnyPublisher<ProfileInfo, Never> {
+        userRepository.getProfile()
+            .catch { _ in  Empty() }
+            .eraseToAnyPublisher()
+    }
+    
     
     public func getTableDetailInfo(
-        _ tableId: String
+        _ tableId: Int
     ) -> AnyPublisher<[SectionInfo], Never> {
         timeTableRepository.getTableDetailInfo(tableId)
             .handleEvents(receiveOutput: { [weak self] detailInfo in
                 self?.timeTableInfo.send(detailInfo.tableInfo)
+                self?.displayInfo.send(detailInfo.tableInfo.displayType!)
                 self?.timeTableCellInfo.send(detailInfo.sectionList.createTimeTableCellList())
             })
             .map { $0.sectionList } // -> 성공을 위해서???
-            .catch {  _ in
-                //TODO: 실패처리
-                return Just([]).eraseToAnyPublisher()
-            }
+            .catch {  _ in Empty() }
             .eraseToAnyPublisher()
     }
     
@@ -99,19 +105,25 @@ extension TimeTableUseCase {
     
     public func addSection(_ sectionId: Int) -> AnyPublisher<Void, Never> {
         return sectionRepository.addSection(tableId, sectionId, "")
-            .catch { _ in
-                //TODO: 커스텀 모듈 추가 실패 처리
-                return Just(()).eraseToAnyPublisher()
+            .catch { [weak self] error in
+                self?.errMessage.send(error.description)
+                return Empty<Void, Never>()
             }
             .eraseToAnyPublisher()
     }
     
-    public func deleteSection(_ sectionId: Int) -> AnyPublisher<Void, Never> {
-        return sectionRepository.deleteSection(tableId, sectionId)
-            .catch { _ in
-                return Just(()).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+    public func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never> {
+        if isCustom {
+            return scheduleRepository.deleteLectureModule(tableId, sectionId)
+                .catch { _ in Empty() }
+                .eraseToAnyPublisher()
+        } else {
+            return sectionRepository.deleteSection(tableId, sectionId)
+                .catch { _ in
+                    return Just(()).eraseToAnyPublisher()
+                }
+                .eraseToAnyPublisher()
+        }
     }
 }
 
@@ -136,13 +148,9 @@ extension TimeTableUseCase {
     public func addCustomModule(
         _ customModule: CustomModuleInfo
     ) -> AnyPublisher<Void, Never> {
-        return scheduleRepository.addCustomModule(
-            tableId, customModule)
-        .catch { _ in
-            //TODO: 커스텀 모듈 추가 실패 처리
-            return Just(()).eraseToAnyPublisher()
-        }
-        .eraseToAnyPublisher()
+        return scheduleRepository.addCustomModule(tableId, customModule)
+            .catch { _ in Empty() }
+            .eraseToAnyPublisher()
     }
 }
 
@@ -158,10 +166,28 @@ extension TimeTableUseCase {
     }
     
     public func getThemeList() -> AnyPublisher<[Theme], Never> {
-        return themeRepository.getThemeList()
+        return settingRepository.getThemeList()
             .catch { _ in
                 return Just([]).eraseToAnyPublisher()
             }
+            .eraseToAnyPublisher()
+    }
+    
+    public func getSettingInfo() -> AnyPublisher<SettingInfo, Never> {
+        return settingRepository.getTimeTableSettingInfo()
+            .catch { _ in Empty() }
+            .eraseToAnyPublisher()
+    }
+    
+    public func patchSettingInfo(_ displayType: DisplayTypeInfo, _ theme: String) -> AnyPublisher<Void, Never> {
+        return settingRepository.patchTimeTableSettingInfo(displayType, theme)
+            .catch { _ in Empty() }
+            .eraseToAnyPublisher()
+    }
+    
+    public func deleteAllSection() -> AnyPublisher<Void, Never> {
+        return sectionRepository.deleteAllSection(tableId)
+            .catch { _ in Empty() }
             .eraseToAnyPublisher()
     }
 }

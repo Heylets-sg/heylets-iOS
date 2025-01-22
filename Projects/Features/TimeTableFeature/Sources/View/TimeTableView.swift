@@ -51,6 +51,8 @@ public struct TimeTableView: View {
     public var body: some View {
         ZStack {
             VStack(alignment: .leading) {
+                Spacer()
+                    .frame(height: 1)
                 createTopView(viewModel.viewType)
                 
                 Spacer()
@@ -60,6 +62,8 @@ public struct TimeTableView: View {
                     viewModel: viewModel,
                     viewType: $viewModel.viewType
                 )
+                Spacer()
+                    .frame(height: 1)
             }
             .onTapGesture {
                 withAnimation {
@@ -73,8 +77,8 @@ public struct TimeTableView: View {
                 }
             }
             .heyAlert(
-                isPresented: viewModel.state.inValidregisterModuleIsPresented.0,
-                title: viewModel.state.inValidregisterModuleIsPresented.1,
+                isPresented: viewModel.state.inValidregisterModuleIsPresented,
+                title: viewModel.state.errMessage,
                 primaryButton: ("Close", .gray, {
                     viewModel.send(.inValidregisterModuleAlertCloseButtonDidTap)
                 })
@@ -100,7 +104,6 @@ public struct TimeTableView: View {
             
             SettingTimeTableAlertView(viewModel: viewModel)
         }
-        
         createBottomSheetView(viewModel.viewType)
     }
 }
@@ -149,6 +152,9 @@ extension TimeTableView {
                 viewType: $viewModel.viewType,
                 viewModel: themeViewModel
             )
+            .onDisappear {
+                viewModel.send(.onAppear)
+            }
         case .addCustom:
             AddCustomModuleTopView(
                 viewType: $viewModel.viewType,
@@ -158,7 +164,8 @@ extension TimeTableView {
             TopView(
                 timeTableInfo: $viewModel.timeTableInfo,
                 viewType: $viewModel.viewType,
-                settingAlertType: $viewModel.state.settingAlertType
+                settingAlertType: $viewModel.state.settingAlertType,
+                profileInfo: $viewModel.state.profileInfo
             )
             .environmentObject(container)
         }

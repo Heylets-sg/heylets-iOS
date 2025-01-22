@@ -12,10 +12,10 @@ import Combine
 import Domain
 import Networks
 
-public struct ThemeRepository: ThemeRepositoryType {
-    private let service: ThemeServiceType
+public struct SettingRepository: SettingRepositoryType {
+    private let service: SettingServiceType
     
-    public init(service: ThemeServiceType) {
+    public init(service: SettingServiceType) {
         self.service = service
     }
     
@@ -31,5 +31,17 @@ public struct ThemeRepository: ThemeRepositoryType {
         service.getThemeList()
             .map { $0.themes.map { $0.toEntity()} }
             .mapToGeneralError()
+    }
+    
+    public func getTimeTableSettingInfo() -> AnyPublisher<SettingInfo, Error> {
+        service.getTimeTableSettingInfo()
+            .map { $0.toEntity() }
+            .mapToGeneralError()
+    }
+    
+    public func patchTimeTableSettingInfo(_ displayType: DisplayTypeInfo, _ theme: String) -> AnyPublisher<Void, Error> {
+        let request: TimeTableSettingRequest = .init(displayType.rawValue, theme)
+        return service.patchTimeTableSettingInfo(request)
+            .asVoidWithGeneralError()
     }
 }

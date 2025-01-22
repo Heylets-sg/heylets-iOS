@@ -16,7 +16,7 @@ extension UserDefaultsManager {
         UserDefaultsManager.heyRefreshToken = authInfo.refresh_token
     }
 
-    static func clearLogout() {
+    static func clearToken() {
         UserDefaultsManager.heyAccessToken = ""
         UserDefaultsManager.heyRefreshToken = ""
     }

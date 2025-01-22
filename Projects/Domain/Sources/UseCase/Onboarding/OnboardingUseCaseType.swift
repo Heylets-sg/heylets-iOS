@@ -19,12 +19,7 @@ public enum VerifyCodeType: Hashable {
 public protocol OnboardingUseCaseType {
     var userInfo: User { get set }
     
-    var loginFailed: PassthroughSubject<String, Never> { get }
-    var requestOTPCodeFailed: PassthroughSubject<String, Never> { get }
-    var verifyOTPCodeFailed: PassthroughSubject<String, Never> { get }
-    var checkUserNameFailed: PassthroughSubject<String, Never> { get }
-    var signUpFailed: PassthroughSubject<String, Never> { get }
-    var resetPasswordFailed: PassthroughSubject<String, Never> { get }
+    var errMessage: PassthroughSubject<String, Never> { get }
     
     func logIn(
         _ email: String,

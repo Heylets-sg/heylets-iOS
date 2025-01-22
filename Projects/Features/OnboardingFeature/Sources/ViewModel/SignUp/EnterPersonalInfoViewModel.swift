@@ -11,6 +11,7 @@ import Combine
 
 import BaseFeatureDependency
 import Domain
+import Core
 
 enum Gender: String {
     case men = "M"
@@ -31,6 +32,7 @@ enum Gender: String {
 
 public class EnterPersonalInfoViewModel: ObservableObject {
     struct State {
+        var continueButtonIsEnabled: Bool = false
     }
     
     enum Action {
@@ -46,6 +48,7 @@ public class EnterPersonalInfoViewModel: ObservableObject {
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
     private var useCase: OnboardingUseCaseType
+    private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: NavigationRoutableType,
@@ -53,6 +56,8 @@ public class EnterPersonalInfoViewModel: ObservableObject {
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
+        
+        observe()
     }
     
     func send(_ action: Action) {
@@ -69,5 +74,16 @@ public class EnterPersonalInfoViewModel: ObservableObject {
         case .birthDayDidChange(let date):
             self.birth = date
         }
+    }
+    
+    private func observe() {
+        weak var owner = self
+        guard let owner else { return }
+        
+        $gender
+            .map { $0 != nil }
+            .assign(to: \.state.continueButtonIsEnabled, on: owner
+            )
+            .store(in: cancelBag)
     }
 }

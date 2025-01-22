@@ -17,10 +17,10 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     struct State {
         var hiddenEmail: String = ""
         var continueButtonIsEnabled: Bool = false
+        var errMessage = ""
     }
     
     enum Action {
-        case onAppear
         case backButtonDidTap
         case nextButtonDidTap
     }
@@ -46,6 +46,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         self.email = email
         
         observe()
+        bindState()
     }
     
     func send(_ action: Action) {
@@ -53,11 +54,6 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         guard let owner else { return }
         
         switch action {
-        case .onAppear:
-            useCase.requestEmailVerifyCode(type, email)
-                .sink(receiveValue: { _ in })
-                .store(in: cancelBag)
-            
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
@@ -81,6 +77,19 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         $otpCode
             .map { $0.count >= 6 }
             .assign(to: \.state.continueButtonIsEnabled, on: owner)
+            .store(in: cancelBag)
+    }
+    
+    private func bindState() {
+        weak var owner = self
+        guard let owner else { return }
+        
+        useCase.errMessage
+            .receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: { _ in
+                owner.otpCode = ""
+            })
+            .assign(to: \.state.errMessage, on: self)
             .store(in: cancelBag)
     }
 }

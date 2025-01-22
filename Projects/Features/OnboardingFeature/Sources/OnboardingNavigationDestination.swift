@@ -2,11 +2,9 @@ import Foundation
 import SwiftUI
 
 import BaseFeatureDependency
-import OnboardingFeature
 import Domain
 
 import Core
-import Networks
 
 struct OnboardingNavigationRoutingView: View {
     @EnvironmentObject var router: Router

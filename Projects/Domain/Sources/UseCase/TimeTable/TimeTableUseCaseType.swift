@@ -12,14 +12,18 @@ import Foundation
 import Combine
 
 public protocol TimeTableUseCaseType {
-    var tableId: String { get }
+    var tableId: Int { get }
+    var errMessage: PassthroughSubject<String, Never> { get }
+    
     //MARK: Main
     
     //시간표 상세조회 불러오기
     var timeTableInfo: PassthroughSubject<TimeTableInfo, Never> { get }
+    var displayInfo: PassthroughSubject<DisplayTypeInfo, Never> { get }
     var timeTableCellInfo: PassthroughSubject<[TimeTableCellInfo], Never> { get }
     
     func fetchTableInfo() -> AnyPublisher<[SectionInfo], Never>
+    func getProfileInfo() -> AnyPublisher<ProfileInfo, Never>
     
     
     
@@ -35,24 +39,25 @@ public protocol TimeTableUseCaseType {
     
     
     
-    //TODO: 강의 삭제하기
-    func deleteSection(_ sectionId: Int) -> AnyPublisher<Void, Never>
-    //TODO: 강의 삭제하기 실패 처리
+    // 강의 삭제하기
+    func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never>
 
-    
-    
     
     //정규 강의 추가하기
     func addSection(_ sectionId: Int) -> AnyPublisher<Void, Never>
-    //TODO: 정규 강의 추가하기 실패 처리
     
     //MARK: Setting
+    
     //시간표 이름 바꾸기
     func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never>
     //테마 리스트 불러오기
     func getThemeList() -> AnyPublisher<[Theme], Never>
+    //테마, display 불러오기
+    func getSettingInfo() -> AnyPublisher<SettingInfo, Never>
     
+    //테마, display 수정하기
+    func patchSettingInfo(_ displayType: DisplayTypeInfo,_ theme: String) -> AnyPublisher<Void, Never>
     
-    //TODO: Setting 값 저장하기
-    //TODO: 시간표 삭제하기
+    //시간표 삭제하기
+    func deleteAllSection() -> AnyPublisher<Void, Never>
 }

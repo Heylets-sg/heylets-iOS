@@ -28,7 +28,6 @@ struct AddCustomModuleTopView: View {
                 Spacer()
                 
                 Button {
-                    viewType = .main
                     viewModel.send(.addCustomModuleButtonDidTap)
                 } label: {
                     Text("Save")
@@ -41,8 +40,7 @@ struct AddCustomModuleTopView: View {
             .padding(.bottom, 26)
         }
         .onChange(of: viewModel.state.isAddSuccess) {
-            if $0 { withAnimation { viewType = .main }
-            }
+            if $0 { withAnimation { viewType = .main } }
         }
     }
 }

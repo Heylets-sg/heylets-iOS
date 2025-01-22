@@ -16,6 +16,7 @@ public struct LogInView: View {
     @ObservedObject var viewModel: LogInViewModel
     
     @State var showPassword: Bool = false
+    @State private var isShowingToast: Bool = false
     
     public init(viewModel: LogInViewModel) {
         self.viewModel = viewModel
@@ -71,20 +72,30 @@ public struct LogInView: View {
             )
             .padding(.bottom, 14)
             
-            Button {
-                viewModel.send(.forgotPasswordButtonDidTap)
-            } label: {
-                Text("Forgot password?")
-                    .font(.regular_12)
-                    .foregroundStyle(Color.heyGray1)
+            HStack {
+                Text(viewModel.state.errMessage)
+                    .font(.regular_14)
+                    .foregroundColor(.heyError)
+                    .frame(width: 180)
+                
+                Spacer()
+                
+                Button {
+                    viewModel.send(.forgotPasswordButtonDidTap)
+                } label: {
+                    Text("Forgot password?")
+                        .font(.regular_12)
+                        .foregroundStyle(Color.heyGray1)
+                }
             }
+            
+            
             
             Spacer()
             
             Button("Log In") {
                 viewModel.send(.loginButtonDidTap)
             }
-//            .disabled(!viewModel.state.loginButtonEnabled)
             .heyBottomButtonStyle()
         }
         .padding(.top, 106)
@@ -94,10 +105,5 @@ public struct LogInView: View {
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()
-//        .setOnboardingHeyNavigation()
     }
 }
-
-//#Preview {
-//    LogInView()
-//}

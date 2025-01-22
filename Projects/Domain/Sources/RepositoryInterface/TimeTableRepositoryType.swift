@@ -11,19 +11,19 @@ import Combine
 
 public protocol TimeTableRepositoryType {
     func deleteTable(
-        _ tableId: String
+        _ tableId: Int
     ) -> AnyPublisher<Void, Error>
     
     // 현재는 테이블 아이디를 가져오는 용도로만 사용됨
     func getTableList() -> AnyPublisher<Int?, Error>
     
     func getTableDetailInfo(
-        _ tableId: String
+        _ tableId: Int
     ) -> AnyPublisher<TimeTableDetailInfo, Error>
     
     //추가하자마자 전체 API 불러올 생각이어서 일단 Void
     func patchTableName(
-        _ tableId: String,
+        _ tableId: Int,
         _ tableName: String
     ) -> AnyPublisher<Void, Error>
     

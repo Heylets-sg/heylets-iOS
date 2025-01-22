@@ -19,7 +19,7 @@ struct SettingTimeTableInfoView: View {
                 Button {
                     viewModel.send(.selectDisplayTypeButtonDidTap)
                 } label: {
-                    Text(viewModel.displayType)
+                    Text(viewModel.displayType.text)
                         .font(.regular_12)
                         .foregroundColor(.heyGray2)
                 }
@@ -58,7 +58,7 @@ struct SelectDisplayModuleView: View {
                             HStack {
                                 Spacer()
                                 
-                                Text(option)
+                                Text(option.text)
                                     .font(.body)
                                 
                                 Spacer()

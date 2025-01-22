@@ -21,12 +21,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     
     public var userInfo: User = .empty
     
-    public var loginFailed = PassthroughSubject<String, Never>()
-    public var requestOTPCodeFailed = PassthroughSubject<String, Never>()
-    public var verifyOTPCodeFailed = PassthroughSubject<String, Never>()
-    public var checkUserNameFailed = PassthroughSubject<String, Never>()
-    public var signUpFailed = PassthroughSubject<String, Never>()
-    public var resetPasswordFailed = PassthroughSubject<String, Never>()
+    public var errMessage = PassthroughSubject<String, Never>()
     
     public func logIn(
         _ email: String,
@@ -34,9 +29,9 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     ) -> AnyPublisher<Void, Never> {
         authRepository.logIn(email, password)
             .map { _ in }
-            .catch { [weak self] _ in
-                self?.loginFailed.send("Login Failed")
-                return Just(()).eraseToAnyPublisher()
+            .catch { [weak self] error in
+                self?.errMessage.send(error.description)
+                return Empty<Void, Never>()
             }
             .eraseToAnyPublisher()
     }
@@ -44,9 +39,9 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     public func signUp() -> AnyPublisher<Void, Never> {
         authRepository.signUp(userInfo)
             .map { _ in }
-            .catch { [weak self] _ in
-                self?.signUpFailed.send("SignUp Failed")
-                return Just(()).eraseToAnyPublisher()
+            .catch { [weak self] error in
+                self?.errMessage.send(error.description)
+                return Empty<Void, Never>()
             }
             .eraseToAnyPublisher()
     }
@@ -58,21 +53,21 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         switch type {
         case .email:
             authRepository.requestVerifyEmail(email)
-            .map { _ in }
-            .catch { [weak self] _ in
-                self?.requestOTPCodeFailed.send("request OTPCode Failed (Email)")
-                return Just(()).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+                .map { _ in }
+                .catch { [weak self] error in
+                    self?.errMessage.send(error.description)
+                    return Empty<Void, Never>()
+                }
+                .eraseToAnyPublisher()
             
         case .resetPassword:
             authRepository.requestResetPassword(email)
-            .map { _ in }
-            .catch { [weak self] _ in
-                self?.requestOTPCodeFailed.send("request OTPCode Failed (password")
-                return Just(()).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+                .map { _ in }
+                .catch { [weak self] error in
+                    self?.errMessage.send(error.description)
+                    return Empty<Void, Never>()
+                }
+                .eraseToAnyPublisher()
         }
     }
     
@@ -84,20 +79,20 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         switch type {
         case .email:
             authRepository.verifyEmail(email, otpCode)
-            .map { _ in }
-            .catch { [weak self] _ in
-                self?.verifyOTPCodeFailed.send("request OTPCode Failed (Email)")
-                return Just(()).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+                .map { _ in }
+                .catch { [weak self] _ in
+                    self?.errMessage.send("Incorrect security code. Check your code and try again")
+                    return Empty<Void, Never>()
+                }
+                .eraseToAnyPublisher()
         case .resetPassword:
             authRepository.verifyResetPassword(email, otpCode)
-            .map { _ in }
-            .catch { [weak self] _ in
-                self?.verifyOTPCodeFailed.send("request OTPCode Failed (password")
-                return Just(()).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+                .map { _ in }
+                .catch { [weak self] _ in
+                    self?.errMessage.send("Incorrect security code. Check your code and try again")
+                    return Empty<Void, Never>()
+                }
+                .eraseToAnyPublisher()
         }
     }
     
@@ -107,8 +102,8 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         authRepository.checkUserName(userName)
             .map { $0 }
             .catch { [weak self] _ in
-                self?.checkUserNameFailed.send("잘못된 형식의 이름입니다")
-                return Just(false).eraseToAnyPublisher()
+                self?.errMessage.send("The format of the name is incorrect.")
+                return Empty<Bool, Never>()
             }
             .eraseToAnyPublisher()
     }
@@ -118,11 +113,11 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         _ newPassword: String
     ) -> AnyPublisher<Void, Never> {
         authRepository.resetPassword(email, newPassword)
-        .map { _ in }
-        .catch { [weak self] _ in
-            self?.resetPasswordFailed.send("resetPasswordFailed")
-            return Just(()).eraseToAnyPublisher()
-        }
-        .eraseToAnyPublisher()
+            .map { _ in }
+            .catch { [weak self] _ in
+                self?.errMessage.send("resetPasswordFailed")
+                return Just(()).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
 }

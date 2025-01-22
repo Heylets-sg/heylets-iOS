@@ -11,7 +11,7 @@ import SwiftUI
 import DSKit
 
 public struct HourListView: View {
-    let hourList = [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    let hourList = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     
     public var body: some View {
         VStack(spacing: 40) {
@@ -20,6 +20,7 @@ public struct HourListView: View {
             }
         }
         .padding(.top, 10)
+        .frame(width: 25)
     }
 }
 
@@ -33,8 +34,8 @@ fileprivate struct HourListCellView: View {
             Text("\(hour)")
                 .font(.regular_12)
                 .foregroundColor(.heyGray1)
+                .padding(.leading, 10)
         }
-        .padding(.leading, 10)
     }
 }
 

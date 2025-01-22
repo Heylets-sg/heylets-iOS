@@ -59,7 +59,7 @@ public struct DetailModuleInfoView: View {
                     .font(.regular_14)
                     .foregroundColor(.heyGray2)
                 
-                Text("\(sectionInfo.location) / \(sectionInfo.unit ?? 0) unit")
+                Text("\(sectionInfo.location) / \(sectionInfo.unit) unit")
                     .font(.regular_14)
                     .foregroundColor(.heyGray2)
                 
@@ -95,7 +95,3 @@ public struct DetailModuleInfoView: View {
         .cornerRadius(12, corners: [.topLeft, .topRight])
     }
 }
-
-//#Preview {
-//    DetailModuleInfoView(isShowingModuleDetailInfoView: true)
-//}

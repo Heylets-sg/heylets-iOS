@@ -19,6 +19,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
         var nickNameIsValid: TextFieldState = .idle
         var passwordIsValid: TextFieldState = .idle
         var checkPasswordIsValid: TextFieldState = .idle
+        var errorMessage: String = ""
         var continueButtonIsEnabled: Bool = false
     }
     
@@ -46,6 +47,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
         self.useCase = useCase
         
         observe()
+        bindState()
     }
     
     func send(_ action: Action) {
@@ -53,16 +55,14 @@ public class EnterIdPasswordViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            useCase.userInfo.profile.nickName = nickName
+            useCase.userInfo.nickName = nickName
             useCase.userInfo.password = password
             navigationRouter.push(to: .addProfile)
         case .checkIDAvailabilityButtonDidTap:
             useCase.checkUserName(nickName)
                 .receive(on: RunLoop.main)
-                .sink(receiveValue: { [weak self] available in
-                    if available {
-                        self?.state.nickNameIsValid = .valid
-                    }
+                .sink(receiveValue: { [weak self] _ in
+                    self?.state.nickNameIsValid = .valid
                 })
                 .store(in: cancelBag)
         }
@@ -93,10 +93,15 @@ public class EnterIdPasswordViewModel: ObservableObject {
     }
     
     private func bindState() {
-        useCase.checkUserNameFailed
-            .map { _ in TextFieldState.invalid }
+        weak var owner = self
+        guard let owner else { return }
+        
+        useCase.errMessage
             .receive(on: RunLoop.main)
-            .assign(to: \.state.nickNameIsValid, on: self)
+            .handleEvents(receiveOutput: { _ in
+                owner.state.nickNameIsValid = .invalid
+            })
+            .assign(to: \.state.errorMessage, on: self)
             .store(in: cancelBag)
     }
 }

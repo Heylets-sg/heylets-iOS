@@ -25,7 +25,9 @@ public class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
     
     public var destinations: [NavigationDestination] = [] {
         didSet {
-            objectWillChange?.send()
+            DispatchQueue.main.async { [weak self] in
+                self?.objectWillChange?.send()
+            }
         }
     }
     

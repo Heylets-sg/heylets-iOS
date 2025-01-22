@@ -20,6 +20,7 @@ public struct EnterIdPasswordView: View {
     public init(viewModel: EnterIdPasswordViewModel) {
         self.viewModel = viewModel
     }
+    
     public var body: some View {
         OnboardingBaseView(content: {
             Spacer()
@@ -55,8 +56,8 @@ public struct EnterIdPasswordView: View {
                 )
             }
             
-        }, titleText: "Create your username\nand password", nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled, nextButtonAction: { viewModel.send(.nextButtonDidTap)
-        })
+        }, titleText: "Create your username\nand password", nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled, nextButtonAction: { viewModel.send(.nextButtonDidTap) }
+        )
     }
 }
 

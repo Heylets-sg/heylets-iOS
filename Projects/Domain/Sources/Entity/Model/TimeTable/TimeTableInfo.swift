@@ -27,19 +27,23 @@ public struct TimeTableInfo {
     public var name: String
     public var semester: String
     public var academicYear: Int
-    //    var isFavorite: Bool
-    //    var status: "DRAFT"
-    //    var color: "#123456"
-    //    "displayType": "MODULE_CODE_CLASSROOM"
+    public var displayType: DisplayTypeInfo?
     
     public var fullSemester: String {
         return "AY\(academicYear)/\(academicYear+1) \(semester)"
     }
     
-    public init(id: Int, name: String, semester: String, academicYear: Int) {
+    public init(
+        id: Int,
+        name: String,
+        semester: String,
+        academicYear: Int,
+        displayType: DisplayTypeInfo? = nil
+    ) {
         self.id = id
         self.name = name
         self.semester = semester
         self.academicYear = academicYear
+        self.displayType = displayType
     }
 }

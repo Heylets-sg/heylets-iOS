@@ -15,11 +15,9 @@ extension User {
             password: "",
             gender: "",
             birth: Date(),
-            profile: .init(
-                nickName: "",
-                university: "",
-                image: nil
-            )
+            nickName: "",
+            university: "",
+            profileImage: nil
         )
     }
 }

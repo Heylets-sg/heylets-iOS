@@ -12,7 +12,7 @@ import SwiftUI
 
 public enum NavigationDestination: Hashable {
     // MyPage destinations
-    case myPage
+    case myPage(ProfileInfo)
     case changePassword
     case privacyPolicy
     case termsOfService

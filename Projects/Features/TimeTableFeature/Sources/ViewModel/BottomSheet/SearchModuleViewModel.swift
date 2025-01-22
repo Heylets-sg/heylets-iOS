@@ -38,41 +38,33 @@ public class SearchModuleViewModel: ObservableObject {
     
     public init(useCase: TimeTableUseCaseType) {
         self.useCase = useCase
-        
-        observe()
     }
     
     func send(_ action: Action) {
         switch action {
         case .onAppear:
-            //TODO: 전체 lecture 불러오는 API 호출
             useCase.getLectureList(searchText)
                 .receive(on: RunLoop.main)
                 .assign(to: \.lectureList, on: self)
                 .store(in: cancelBag)
+            
         case .lectureCellDidTap(let lecture):
             state.selectedLecture = lecture
+            
         case .searchButtonDidTap:
             useCase.getLectureList(searchText)
                 .receive(on: RunLoop.main)
                 .assign(to: \.lectureList, on: self)
                 .store(in: cancelBag)
+            
         case .clearButtonDidTap:
             searchText = ""
+            
         case .addLectureButtonDidTap:
             guard let lecture = state.selectedLecture, let addLecture = addLectureClosure else { return }
             addLecture(lecture)
-//        case .addCustomModuleButtonDidTap:
-//            state.isShowingAddCustomModuleView.toggle()
+            state.selectedLecture = nil
         }
-    }
-    
-    
-    private func observe() {
-        weak var owner = self
-        guard let owner else { return }
-        
-        
     }
 }
 

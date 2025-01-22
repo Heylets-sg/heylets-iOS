@@ -8,9 +8,11 @@
 
 import Foundation
 
+import Domain
+
 public enum WindowDestination {
     case splash
     case onboarding
     case timetable
-    case mypage
+    case mypage(ProfileInfo)
 }

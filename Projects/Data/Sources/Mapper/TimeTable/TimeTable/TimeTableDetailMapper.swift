@@ -18,7 +18,8 @@ extension TimeTableDetailInfoDTO {
                 id: tableId,
                 name: tableName,
                 semester: semester,
-                academicYear: academicYear
+                academicYear: academicYear,
+                displayType: DisplayTypeInfo.toEntity(with: displayType)
             ),
             sectionList: sections.map { $0.toEntity() } + customModules.map { $0.toEntity()}
         )

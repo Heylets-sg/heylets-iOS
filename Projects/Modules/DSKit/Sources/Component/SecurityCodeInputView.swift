@@ -8,6 +8,7 @@ public struct SecurityCodeInputView: View {
     enum FocusField: Hashable {
         case field
     }
+    
     @FocusState private var focusedField: FocusField?
     @Binding var otpCode: String
     
@@ -27,11 +28,15 @@ public struct SecurityCodeInputView: View {
                     .foregroundColor(.clear)
                     .multilineTextAlignment(.center)
                     .keyboardType(.numberPad)
-                    .onReceive(Just(otpCode)) { _ in
+                    .onChange(of: otpCode) { newValue in
+                        print(otpCode)
+                        if otpCode.isEmpty {
+                            self.focusedField = .field // otpCode가 비어 있으면 키보드 올리기
+                        }
                         if otpCode.count >= 6 {
                             otpCode = String(otpCode.prefix(6))
                             
-                            //TODO: 키보드 누르면 내려가는거 해야됨
+                            // 키보드 내리기
                             endTextEditing()
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         }
@@ -60,8 +65,13 @@ public struct SecurityCodeInputView: View {
                 }
             }
         }
+        .onTapGesture {
+            self.focusedField = .field
+        }
     }
-    
+}
+
+extension SecurityCodeInputView {
     //MARK: func
     private func getPin(at index: Int) -> String {
         guard self.otpCode.count > index else {
@@ -78,6 +88,7 @@ public struct SecurityCodeInputView: View {
     }
 }
 
+
 extension String {
     subscript(idx: Int) -> String {
         String(self[index(startIndex, offsetBy: idx)])
@@ -88,16 +99,16 @@ import SwiftUI
 
 struct ContentView: View {
     @State var otpCode: String = ""
-
+    
     var body: some View {
         VStack {
             Text("Enter OTP")
                 .font(.headline)
                 .padding(.bottom, 8)
-
+            
             SecurityCodeInputView(otpCode: $otpCode)
-            .frame(height: 50)
-            .padding()
+                .frame(height: 50)
+                .padding()
         }
         .padding()
     }
