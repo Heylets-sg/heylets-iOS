@@ -18,11 +18,13 @@ public class ThemeViewModel: ObservableObject {
     struct State {
         var isShowingSelectInfoView: Bool = false
         var saveSettingInfoSucced: Bool = false
+        var selectedTheme: Theme? = nil
     }
     
     enum Action {
         case onAppear
         case saveButtonDidTap
+        case themeButtonDidTap(Theme)
         case selectDisplayTypeButtonDidTap
         case selectDisplayType(DisplayTypeInfo)
         case reportButtonDidTap
@@ -40,7 +42,7 @@ public class ThemeViewModel: ObservableObject {
         .MODULE_CODE_CLASSROOM_CREDIT,
         .MODULE_CODE_CREDIT
     ]
-
+    
     
     private let cancelBag = CancelBag()
     
@@ -67,10 +69,13 @@ public class ThemeViewModel: ObservableObject {
         case .saveButtonDidTap:
             useCase.patchSettingInfo(displayType, theme)
                 .receive(on: RunLoop.main)
-                .sink(receiveValue: { [weak self] _ in
-                    self?.state.saveSettingInfoSucced = true
-                })
+                .sink(receiveValue: {  _ in })
                 .store(in: cancelBag)
+            
+        case .themeButtonDidTap(let selectedTheme):
+            state.selectedTheme = selectedTheme
+            theme = selectedTheme.name
+            
         case .selectDisplayTypeButtonDidTap:
             state.isShowingSelectInfoView.toggle()
             

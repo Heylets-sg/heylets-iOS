@@ -152,6 +152,9 @@ extension TimeTableView {
                 viewType: $viewModel.viewType,
                 viewModel: themeViewModel
             )
+            .onDisappear {
+                viewModel.send(.onAppear)
+            }
         case .addCustom:
             AddCustomModuleTopView(
                 viewType: $viewModel.viewType,
