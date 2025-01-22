@@ -40,4 +40,5 @@ public extension UIImage {
     
     static let nus = DSKitAsset.uniNus.image
     static let ntu = DSKitAsset.uniNtu.image
+    static let smu = DSKitAsset.uniSmu.image
 }

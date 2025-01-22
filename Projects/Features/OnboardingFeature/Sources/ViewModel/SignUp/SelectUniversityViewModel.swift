@@ -16,6 +16,7 @@ import Core
 enum UniversityInfo: String {
     case NUS
     case NTU
+    case SMU
     
     var icon: UIImage {
         switch self {
@@ -23,6 +24,8 @@ enum UniversityInfo: String {
             return .nus
         case .NTU:
             return .ntu
+        case .SMU:
+            return .smu
         }
     }
 }
@@ -42,7 +45,7 @@ public class SelectUniversityViewModel: ObservableObject {
     
     // MARK: - Properties
     
-    private let allUniversityItems: [UniversityInfo] = [.NTU, .NUS]
+    private let allUniversityItems: [UniversityInfo] = [.NTU, .NUS, .SMU]
     @Published var searchText = ""
     @Published var university: UniversityInfo? = nil
     
