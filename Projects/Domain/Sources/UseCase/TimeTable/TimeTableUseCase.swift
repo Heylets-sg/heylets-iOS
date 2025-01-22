@@ -189,4 +189,10 @@ extension TimeTableUseCase {
             .catch { _ in Empty() }
             .eraseToAnyPublisher()
     }
+    
+    public func deleteAllSection() -> AnyPublisher<Void, Never> {
+        return sectionRepository.deleteAllSection(tableId)
+            .catch { _ in Empty() }
+            .eraseToAnyPublisher()
+    }
 }

@@ -38,16 +38,15 @@ public protocol TimeTableUseCaseType {
     
     
     
-    //TODO: 강의 삭제하기
+    // 강의 삭제하기
     func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never>
 
-    
-    
     
     //정규 강의 추가하기
     func addSection(_ sectionId: Int) -> AnyPublisher<Void, Never>
     
     //MARK: Setting
+    
     //시간표 이름 바꾸기
     func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never>
     //테마 리스트 불러오기
@@ -58,6 +57,6 @@ public protocol TimeTableUseCaseType {
     //테마, display 수정하기
     func patchSettingInfo(_ displayType: DisplayTypeInfo,_ theme: String) -> AnyPublisher<Void, Never>
     
-    //TODO: Setting 값 저장하기
-    //TODO: 시간표 삭제하기
+    //시간표 삭제하기
+    func deleteAllSection() -> AnyPublisher<Void, Never>
 }

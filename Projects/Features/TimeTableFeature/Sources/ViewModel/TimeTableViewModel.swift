@@ -125,10 +125,11 @@ public class TimeTableViewModel: ObservableObject {
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
             state.settingAlertType = nil
         case .deleteTimeTable:
-            //TODO: 시간표 삭제 API 호출
-            //성공하면 settingAlertType = nil
-            print("시간표 삭제 API 호출")
-            state.settingAlertType = nil
+            useCase.deleteAllSection()
+                .sink(receiveValue: { [weak self] _ in
+                    self?.state.settingAlertType = nil
+                })
+                .store(in: cancelBag)
             
         case .shareURL:
             state.settingAlertType = nil
