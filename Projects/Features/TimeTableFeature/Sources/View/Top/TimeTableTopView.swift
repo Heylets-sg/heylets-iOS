@@ -73,18 +73,25 @@ public struct TopView: View {
                 
                 Button {
                     container.navigationRouter.destinations = []
-                    container.windowRouter.switch(to: .mypage)
+                    container.windowRouter.switch(to: .mypage(profileInfo))
                 } label: {
-                    if let profileImage = profileInfo.image {
-                        Image(uiImage: profileImage)
-                            .resizable()
-                            .frame(width: 31, height: 31)
+                    if let imageURL = profileInfo.imageURL {
+                        AsyncImage(url: URL(string: imageURL)) { image in
+                            image
+                                .resizable()
+                                .frame(width: 31, height: 31)
+                                .background(Color.heyWhite)
+                                .clipShape(Circle())
+                        } placeholder: {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                        }
                     } else {
                         Circle()
-                            .fill(Color.blue)
+                            .fill(Color.heyBlack)
                             .frame(width: 31, height: 31)
-
                     }
+                
                 }
             }
             .padding(.top, 38)

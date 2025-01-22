@@ -76,10 +76,7 @@ extension TimeTableUseCase {
                 self?.timeTableCellInfo.send(detailInfo.sectionList.createTimeTableCellList())
             })
             .map { $0.sectionList } // -> 성공을 위해서???
-            .catch {  _ in
-                //TODO: 실패처리
-                return Just([]).eraseToAnyPublisher()
-            }
+            .catch {  _ in Empty() }
             .eraseToAnyPublisher()
     }
     
@@ -151,13 +148,9 @@ extension TimeTableUseCase {
     public func addCustomModule(
         _ customModule: CustomModuleInfo
     ) -> AnyPublisher<Void, Never> {
-        return scheduleRepository.addCustomModule(
-            tableId, customModule)
-        .catch { _ in
-            //TODO: 커스텀 모듈 추가 실패 처리
-            return Just(()).eraseToAnyPublisher()
-        }
-        .eraseToAnyPublisher()
+        return scheduleRepository.addCustomModule(tableId, customModule)
+            .catch { _ in Empty() }
+            .eraseToAnyPublisher()
     }
 }
 

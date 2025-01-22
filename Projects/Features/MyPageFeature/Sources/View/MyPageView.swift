@@ -37,7 +37,7 @@ public struct MyPageView: View {
                             .frame(height:90)
                         
                         VStack {
-                            Text("\(viewModel.state.profileInfo.nickName) / \(viewModel.state.profileInfo.university)")
+                            Text("\(viewModel.profileInfo.nickName) / \(  viewModel.profileInfo.university)")
                                 .font(.medium_16)
                                 .foregroundColor(Color.heyBlack)
                                 .padding(.top, 44)
@@ -68,12 +68,26 @@ public struct MyPageView: View {
                 }
                 
                 VStack {
-                    Image(uiImage: viewModel.state.profileInfo.image ?? UIImage().withTintColor(.black))
-                        .resizable()
-                        .frame(width: 80, height: 80)
-                        .background(Color.heyWhite)
-                        .clipShape(Circle())
-                        .padding(.top, 125)
+                    if let imageURL = viewModel.profileInfo.imageURL {
+                        AsyncImage(url: URL(string: imageURL)) { image in
+                            image
+                                .resizable()
+                                .frame(width: 80, height: 80)
+                                .background(Color.heyWhite)
+                                .clipShape(Circle())
+                                .padding(.top, 125)
+                        } placeholder: {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                        }
+                    } else {
+                        Circle()
+                            .fill(Color.heyBlack)
+                            .frame(width: 80, height: 80)
+                            .padding(.top, 125)
+                    }
+                    
+                    
                     
                     Spacer()
                 }
@@ -93,9 +107,6 @@ public struct MyPageView: View {
                 viewModel.send(.logout)
             })
         )
-        .onAppear {
-            viewModel.send(.onAppear)
-        }
     }
 }
 

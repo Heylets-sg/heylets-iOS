@@ -51,12 +51,13 @@ public struct RootView: View {
                         useCase: useCase.timeTableUseCase
                     )
                 )
-            case .mypage:
+            case .mypage(let profileInfo):
                 MyPageView(
                     viewModel: MyPageViewModel(
                         navigationRouter: router.navigationRouter,
                         windowRouter: router.windowRouter,
-                        useCase: useCase.myPageUseCase
+                        useCase: useCase.myPageUseCase,
+                        profileInfo: profileInfo
                     )
                 )
             }

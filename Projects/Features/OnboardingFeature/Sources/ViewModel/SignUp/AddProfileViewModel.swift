@@ -49,7 +49,7 @@ public class AddProfileViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            useCase.userInfo.profile.image = profileImage
+            useCase.userInfo.profileImage = profileImage
             useCase.signUp()
                 .sink(receiveValue: { [weak self] _ in
                     self?.navigationRouter.popToRootView()

@@ -32,7 +32,7 @@ final public class MyPageUseCase: MyPageUseCaseType {
     public func getProfile() -> AnyPublisher<ProfileInfo, Never> {
         userRepository.getProfile()
             .map { $0 }
-            .catch { _ in Just(.init()) } // 프로필 안 불려올때
+            .catch { _ in Empty() }
             .eraseToAnyPublisher()
     }
     
@@ -67,7 +67,7 @@ final public class MyPageUseCase: MyPageUseCaseType {
         authRepository.logout()
             .catch { [weak self] error in
                 self?.logoutFailed.send("로그아웃에 실패했습니다.")
-                return Just(())
+                return Empty<Void, Never>()
             }
             .eraseToAnyPublisher()
     }
@@ -76,7 +76,7 @@ final public class MyPageUseCase: MyPageUseCaseType {
         authRepository.deleteAccount(password)
             .catch { [weak self] Error in
                 self?.revokeUserFailed.send("회원탈퇴에 실패했습니다")
-                return Just(())
+                return Empty<Void, Never>()
             }
             .eraseToAnyPublisher()
     }

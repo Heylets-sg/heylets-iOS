@@ -14,35 +14,41 @@ public struct User: Hashable {
     public var password: String
     public var gender: String
     public var birth: Date
-    public var profile: ProfileInfo
+    public var nickName: String
+    public var university: String
+    public var profileImage: UIImage?
     
     public init(
         email: String,
         password: String,
         gender: String,
         birth: Date,
-        profile: ProfileInfo
+        nickName: String,
+        university: String,
+        profileImage: UIImage? = nil
     ) {
         self.email = email
         self.password = password
         self.gender = gender
         self.birth = birth
-        self.profile = profile
+        self.nickName = nickName
+        self.university = university
+        self.profileImage = profileImage
     }
 }
 
 public struct ProfileInfo: Hashable {
     public var nickName: String
     public var university: String
-    public var image: UIImage?
+    public var imageURL: String?
     
     public init(
         nickName: String = "",
         university: String = "",
-        image: UIImage? = nil
+        imageURL: String? = nil
     ) {
         self.nickName = nickName
         self.university = university
-        self.image = image
+        self.imageURL = imageURL
     }
 }

@@ -55,7 +55,7 @@ public class EnterIdPasswordViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            useCase.userInfo.profile.nickName = nickName
+            useCase.userInfo.nickName = nickName
             useCase.userInfo.password = password
             navigationRouter.push(to: .addProfile)
         case .checkIDAvailabilityButtonDidTap:

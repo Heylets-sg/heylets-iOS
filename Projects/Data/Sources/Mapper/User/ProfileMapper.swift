@@ -10,13 +10,14 @@ import Foundation
 
 import Domain
 import Networks
+import UIKit
 
 extension MyProfileResult {
     func toEntity() -> ProfileInfo {
         .init(
             nickName: nickname,
-            university: university
-//            image: Image(""profileImageUrl -> 킹피셔 다운 이후
+            university: university,
+            imageURL: profileImageUrl
         )
     }
 }

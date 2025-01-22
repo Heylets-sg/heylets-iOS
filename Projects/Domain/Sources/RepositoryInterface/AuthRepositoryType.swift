@@ -21,9 +21,7 @@ public protocol AuthRepositoryType {
         _ name: String
     ) -> AnyPublisher<Bool, Error>
     
-    func signUp(
-        _ user: User
-    ) -> AnyPublisher<Void, SignUpError>
+    func signUp(_ user: User) -> AnyPublisher<Void, SignUpError>
     
     // 새 비밀번호 설정
     func resetPassword(

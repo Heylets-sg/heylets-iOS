@@ -16,14 +16,14 @@ extension User {
     public func toDTO() -> SignUpRequest {
         .init(
             request: .init(
-                nickname: profile.nickName,
+                nickname: nickName,
                 email: email,
                 password: password,
-                university: profile.university,
+                university: university,
                 sex: gender,
                 birth: birth.toInt()
             ),
-            profileImg: profile.image?.jpegData(compressionQuality: 0.1)
+            profileImg: profileImage?.jpegData(compressionQuality: 0.1)
         )
     }
 }
