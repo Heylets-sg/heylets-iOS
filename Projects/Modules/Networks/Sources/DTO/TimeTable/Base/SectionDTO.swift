@@ -31,7 +31,7 @@ public struct SectioninTableResult: Decodable {
     public let professor: String
     public let sectionStatus: String
     public let displayStyle: DisplayStyleResult
-    public let schedules: [SchedulesResult]
+    public let schedules: [SchedulesinTableResult]
 }
 
 public struct SectioninTableListResult: Decodable {

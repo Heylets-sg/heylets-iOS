@@ -37,7 +37,7 @@ public struct MyPageView: View {
                             .frame(height:90)
                         
                         VStack {
-                            Text("\(viewModel.profileInfo.nickName) / \(  viewModel.profileInfo.university)")
+                            Text("\(viewModel.profileInfo.nickName) / \(viewModel.profileInfo.university)")
                                 .font(.medium_16)
                                 .foregroundColor(Color.heyBlack)
                                 .padding(.top, 44)
@@ -53,7 +53,6 @@ public struct MyPageView: View {
                                     
                                     EtcView(viewModel: viewModel)
                                 }
-                                
                                 
                                 Spacer()
                             }
@@ -86,9 +85,6 @@ public struct MyPageView: View {
                             .frame(width: 80, height: 80)
                             .padding(.top, 125)
                     }
-                    
-                    
-                    
                     Spacer()
                 }
             }
