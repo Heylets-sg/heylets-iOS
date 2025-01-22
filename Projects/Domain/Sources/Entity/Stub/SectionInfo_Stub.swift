@@ -17,7 +17,9 @@ extension SectionInfo {
             name: "OPTICS, VIBRATIONS & WAVES",
             schedule: [.stub2_1, .stub2_2],
             professor: "LEC/STUDIO-LE",
-            unit: 2
+            unit: 2,
+            backgroundColor: "",
+            textColor: ""
         )
     }
     
@@ -28,7 +30,9 @@ extension SectionInfo {
             name: "ENGINEERING ELECTROMAGNETICS",
             schedule: [.stub1],
             professor: "TUT-EE04",
-            unit: 3
+            unit: 3,
+            backgroundColor: "",
+            textColor: ""
         )
     }
     
@@ -39,7 +43,9 @@ extension SectionInfo {
             name: "OPTICS, VIBRATIONS & WAVES",
             schedule: [.stub3],
             professor: "LEC/STUDIO-LE",
-            unit: 3
+            unit: 3,
+            backgroundColor: "",
+            textColor: ""
         )
     }
     
@@ -50,7 +56,9 @@ extension SectionInfo {
             name: "OPTICS, VIBRATIONS & WAVES",
             schedule: [.stub4],
             professor: "LEC/STUDIO-LE",
-            unit: 3
+            unit: 3,
+            backgroundColor: "",
+            textColor: ""
         )
     }
     
@@ -60,7 +68,9 @@ extension SectionInfo {
             name: "",
             schedule: [],
             professor: "",
-            unit: 3
+            unit: 0,
+            backgroundColor: "",
+            textColor: ""
         )
     }
 }

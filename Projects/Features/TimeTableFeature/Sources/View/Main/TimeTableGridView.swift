@@ -67,19 +67,19 @@ public struct TimeTableGridView: View {
                                 if cell.schedule.startMinute != 0 {
                                     Spacer()
                                 }
-                                Color.heySubMain.opacity(0.5)
+                                cell.backgrounColor
                                     .frame(height: getCellHeight(for: cell, hour: hour))
                                     .clipped()
                             } else if hour == cell.schedule.endHour {
                                 // 종료 시간일 때 위로 배치
-                                Color.heySubMain.opacity(0.5)
+                                cell.backgrounColor
                                     .frame(height: getCellHeight(for: cell, hour: hour))
                                     .clipped()
                                 if cell.schedule.endMinute != 0 {
                                     Spacer()
                                 }
                             } else {
-                                Color.heySubMain.opacity(0.5)
+                                cell.backgrounColor
                                     .frame(height: getCellHeight(for: cell, hour: hour))
                                     .clipped()
                             }
@@ -94,10 +94,11 @@ public struct TimeTableGridView: View {
                                 }
                                 Text(cell.code)
                                     .font(.medium_12)
+                                    .foregroundColor(cell.textColor)
                                     .multilineTextAlignment(.center)
                                 Text(cell.schedule.location)
                                     .font(.regular_10)
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(cell.textColor)
                             }
                         }
                     }

@@ -68,12 +68,12 @@ public class TimeTableViewModel: ObservableObject {
         switch action {
         case .onAppear:
             useCase.getProfileInfo()
+                .receive(on: RunLoop.main)
                 .handleEvents(receiveOutput: { [weak self]  profileInfo in
                     self?.state.profileInfo = profileInfo
                 })
                 .map { _ in }
                 .flatMap(useCase.fetchTableInfo)
-                .receive(on: RunLoop.main)
                 .assign(to: \.lectureList, on: self)
                 .store(in: cancelBag)
             

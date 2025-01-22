@@ -8,6 +8,8 @@
 
 import Foundation
 
+import SwiftUI
+
 public struct TimeTableCellInfo: Equatable {
     public var id: Int
     public var code: String
@@ -15,6 +17,8 @@ public struct TimeTableCellInfo: Equatable {
     public var professor: String
     public var unit: Int?
     public var schedule: ScheduleInfo
+    public var backgrounColor: Color
+    public var textColor: Color
     
     public var slot: [Int: Double] {
         var slotDict: [Int: Double] = [:]

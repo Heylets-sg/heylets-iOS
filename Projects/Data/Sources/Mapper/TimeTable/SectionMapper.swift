@@ -23,17 +23,6 @@ extension SectionResult {
         )
     }
     
-    func toEntity(_ unit: Int) -> SectionInfo {
-        .init(
-            id: sectionId,
-            code: courseCode!, //TODO: sectionCode랑 비교
-            name: courseName!,
-            schedule: schedules.map { $0.toEntity() },
-            professor: professor,
-            unit: unit
-        )
-    }
-    
     func toEntity(_ unit: Int, _ code: String, _ name: String) -> SectionInfo {
         .init(
             id: sectionId,
@@ -47,13 +36,16 @@ extension SectionResult {
 }
 
 extension SectioninTableResult {
-    func toEntity(_ unit: Int) -> SectionInfo {
+    func toEntity() -> SectionInfo {
         .init(
             id: sectionId,
             code: courseCode,
             name: courseName,
+            schedule: schedules.map { $0.toEntity() },
             professor: professor,
-            unit: unit
+            unit: Int(schedules[0].credit),
+            backgroundColor: displayStyle.backgroundColor,
+            textColor: displayStyle.textColor
         )
     }
 }

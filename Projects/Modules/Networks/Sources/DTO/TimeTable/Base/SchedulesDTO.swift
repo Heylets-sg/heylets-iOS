@@ -18,15 +18,3 @@ public struct SchedulesResult: Decodable {
     public let endTime: String
 }
 
-public struct SchedulesTableResult: Decodable {
-    public let scheduleId: Int?
-    public let courseName: String
-    public let courseCode: String
-    public let credit: Float
-    public let location: String
-    public let professor: String
-    public let classDay: String
-    public let startTime: String
-    public let endTime: String
-}
-

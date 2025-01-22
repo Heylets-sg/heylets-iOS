@@ -17,6 +17,7 @@ public struct CustomModuleResult: Decodable {
     public let startTime: String
     public let endTime: String
     public let memo: String?
+    public let displayStyle: DisplayStyleResult
     
     public init(
         scheduleId: Int,
@@ -26,7 +27,8 @@ public struct CustomModuleResult: Decodable {
         classDay: String,
         startTime: String,
         endTime: String,
-        memo: String
+        memo: String,
+        displayStyle: DisplayStyleResult
     ) {
         self.scheduleId = scheduleId
         self.title = title
@@ -36,6 +38,7 @@ public struct CustomModuleResult: Decodable {
         self.startTime = startTime
         self.endTime = endTime
         self.memo = memo
+        self.displayStyle = displayStyle
     }
 }
 
