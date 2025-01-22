@@ -20,16 +20,16 @@ public struct ScheduleRepository: ScheduleRepositoryType {
     }
     
     public func deleteLectureModule(
-        _ tableId: String,
-        _ scheduleId: String
+        _ tableId: Int,
+        _ scheduleId: Int
     ) -> AnyPublisher<Void, Error> {
         service.deleteLectureModule(tableId, scheduleId)
             .asVoidWithGeneralError()
     }
     
     public func patchCustomModule(
-        _ tableId: String,
-        _ scheduleId: String,
+        _ tableId: Int,
+        _ scheduleId: Int,
         _ customModuleInfo: CustomModuleInfo
     ) -> AnyPublisher<CustomModuleInfo, Error> {
         let request = customModuleInfo.toDTO()
@@ -43,7 +43,7 @@ public struct ScheduleRepository: ScheduleRepositoryType {
     }
     
     public func addLecture(
-        _ tableId: String,
+        _ tableId: Int,
         _ scheduleId: Int,
         _ memo: String
     ) -> AnyPublisher<ModuleInfo, Error> {
@@ -54,7 +54,7 @@ public struct ScheduleRepository: ScheduleRepositoryType {
     }
     
     public func addCustomModule(
-        _ tableId: String,
+        _ tableId: Int,
         _ customModuleInfo: CustomModuleInfo
     ) -> AnyPublisher<Void, Error> {
         let request = customModuleInfo.toDTO()

@@ -38,9 +38,10 @@ struct ThemeTopView: View {
                 
                 Button {
                     viewModel.send(.saveButtonDidTap)
-                    //성공하면
-                    withAnimation {
-                        viewType = .main
+                    if viewModel.state.saveSettingInfoSucced {
+                        withAnimation {
+                            viewType = .main
+                        }
                     }
                     
                 } label: {

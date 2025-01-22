@@ -13,52 +13,52 @@ public typealias ScheduleService = BaseService<ScheduleAPI>
 
 public protocol ScheduleServiceType {
     func deleteLectureModule(
-        _ tableId: String,
-        _ scheduleId: String
+        _ tableId: Int,
+        _ scheduleId: Int
     ) -> NetworkVoidResponse
     
     func patchCustomModule(
-        _ tableId: String,
-        _ scheduleId: String,
+        _ tableId: Int,
+        _ scheduleId: Int,
         _ request: CustomModuleRequest
     ) -> NetworkDecodableResponse<CustomModuleResult>
     
     func addLecture(
-        _ tableId: String,
+        _ tableId: Int,
         _ request: AddLectureRequest
     ) -> NetworkDecodableResponse<ModuleResult>
     
     func addCustomModule(
-        _ tableId: String,
+        _ tableId: Int,
         _ request: CustomModuleRequest
     ) -> NetworkDecodableResponse<CustomModuleResult>
 }
 
 extension ScheduleService: ScheduleServiceType {
     public func deleteLectureModule(
-        _ tableId: String,
-        _ scheduleId: String
+        _ tableId: Int,
+        _ scheduleId: Int
     ) -> NetworkVoidResponse {
         requestWithNoResult(.deleteModule(tableId, scheduleId))
     }
     
     public func patchCustomModule(
-        _ tableId: String,
-        _ scheduleId: String,
+        _ tableId: Int,
+        _ scheduleId: Int,
         _ request: CustomModuleRequest
     ) -> NetworkDecodableResponse<CustomModuleResult> {
         requestWithResult(.patchCustomModule(tableId, scheduleId, request))
     }
     
     public func addLecture(
-        _ tableId: String,
+        _ tableId: Int,
         _ request: AddLectureRequest
     ) -> NetworkDecodableResponse<ModuleResult> {
         requestWithResult(.addModule(tableId, request))
     }
     
     public func addCustomModule(
-        _ tableId: String,
+        _ tableId: Int,
         _ request: CustomModuleRequest
     ) -> NetworkDecodableResponse<CustomModuleResult> {
         requestWithResult(.addCustomModule(tableId, request))

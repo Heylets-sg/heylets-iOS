@@ -11,7 +11,7 @@ import Foundation
 public protocol RepositoryType {
     var authRepository: AuthRepositoryType { get }
     var timeTableRepository: TimeTableRepositoryType { get }
-    var themeRepository: ThemeRepositoryType { get }
+    var settingRepository: SettingRepositoryType { get }
     var sectionRepository: SectionRepositoryType { get }
     var scheduleRepository: ScheduleRepositoryType { get }
     var lectureRepository: LectureRepositoryType { get }

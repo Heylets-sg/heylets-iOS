@@ -45,7 +45,7 @@ public final class HeyUseCase: UseCaseType & ObservableObject {
             lectureRepository: repository.lectureRepository,
             scheduleRepository: repository.scheduleRepository,
             sectionRepository: repository.sectionRepository,
-            themeRepository: repository.themeRepository,
+            settingRepository: repository.settingRepository,
             timeTableRepository: repository.timeTableRepository
         
         )

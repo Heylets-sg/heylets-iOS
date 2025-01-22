@@ -10,7 +10,7 @@ import Foundation
 
 public struct SchedulesResult: Decodable {
     public let scheduleId: Int?
-    public let credit: Float
+    public let credit: Float?
     public let location: String
     public let professor: String?
     public let classDay: String

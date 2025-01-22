@@ -11,24 +11,24 @@ import Combine
 
 public protocol ScheduleRepositoryType {
     func deleteLectureModule(
-        _ tableId: String,
-        _ scheduleId: String
+        _ tableId: Int,
+        _ scheduleId: Int
     ) -> AnyPublisher<Void, Error>
     
     func patchCustomModule(
-        _ tableId: String,
-        _ scheduleId: String,
+        _ tableId: Int,
+        _ scheduleId: Int,
         _ customModuleInfo: CustomModuleInfo
     ) -> AnyPublisher<CustomModuleInfo, Error>
     
     func addLecture(
-        _ tableId: String,
+        _ tableId: Int,
         _ scheduleId: Int,
         _ memo: String
     ) -> AnyPublisher<ModuleInfo, Error>
     
     func addCustomModule(
-        _ tableId: String,
+        _ tableId: Int,
         _ customModuleInfo: CustomModuleInfo
     ) -> AnyPublisher<Void, Error>
 }

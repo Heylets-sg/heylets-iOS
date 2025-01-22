@@ -17,64 +17,70 @@ import Core
 public class ThemeViewModel: ObservableObject {
     struct State {
         var isShowingSelectInfoView: Bool = false
+        var saveSettingInfoSucced: Bool = false
     }
     
     enum Action {
         case onAppear
         case saveButtonDidTap
         case selectDisplayTypeButtonDidTap
-        case selectDisplayType(String)
+        case selectDisplayType(DisplayTypeInfo)
         case reportButtonDidTap
     }
     
     @Published var state = State()
     @Published var themeList: [Theme] = []
     private let useCase: TimeTableUseCaseType
-    @Published var displayType: String = "module code"
+    @Published var displayType: DisplayTypeInfo = .MODULE_CODE
+    @Published var theme: String = ""
     
-    let options = [
-        "module code",
-        "module code, class room",
-        "module code, class room, professor",
-        "module code, professor"
+    let options: [DisplayTypeInfo] = [
+        .MODULE_CODE,
+        .MODULE_CODE_CLASSROOM,
+        .MODULE_CODE_CLASSROOM_CREDIT,
+        .MODULE_CODE_CREDIT
     ]
+
     
     private let cancelBag = CancelBag()
     
     public init(useCase: TimeTableUseCaseType) {
         self.useCase = useCase
-        
-        observe()
     }
     
     func send(_ action: Action) {
         switch action {
         case .onAppear:
+            useCase.getSettingInfo()
+                .receive(on: RunLoop.main)
+                .sink(receiveValue: { [weak self] settingInfo in
+                    self?.displayType = settingInfo.displayType
+                    self?.theme = settingInfo.theme
+                })
+                .store(in: cancelBag)
+            
             useCase.getThemeList()
                 .receive(on: RunLoop.main)
                 .assign(to: \.themeList, on: self)
                 .store(in: cancelBag)
-            //TODO: 시간표 모듈 설정 API 호출
             
         case .saveButtonDidTap:
-            break
-            //TODO: 시간표 모듈 설정 API
-            
+            useCase.patchSettingInfo(displayType, theme)
+                .receive(on: RunLoop.main)
+                .sink(receiveValue: { [weak self] _ in
+                    self?.state.saveSettingInfoSucced = true
+                })
+                .store(in: cancelBag)
         case .selectDisplayTypeButtonDidTap:
             state.isShowingSelectInfoView.toggle()
+            
         case .selectDisplayType(let displayType):
             self.displayType = displayType
             state.isShowingSelectInfoView.toggle()
+            
         case .reportButtonDidTap:
-            print("report 버튼 누름")
             state.isShowingSelectInfoView = false
             
         }
-    }
-    
-    private func observe() {
-        weak var owner = self
-        guard let owner else { return }
-        
     }
 }

@@ -11,10 +11,10 @@ import Foundation
 import Domain
 
 public enum ScheduleAPI {
-    case deleteModule(String, String)
-    case patchCustomModule(String, String, CustomModuleRequest)
-    case addModule(String, AddLectureRequest)
-    case addCustomModule(String, CustomModuleRequest)
+    case deleteModule(Int, Int)
+    case patchCustomModule(Int, Int, CustomModuleRequest)
+    case addModule(Int, AddLectureRequest)
+    case addCustomModule(Int, CustomModuleRequest)
 }
 
 extension ScheduleAPI: BaseAPI {
@@ -26,18 +26,18 @@ extension ScheduleAPI: BaseAPI {
         switch self {
         case .deleteModule(let tableId, let scheduleId):
             return Paths.deleteLectureModule
-                .replacingOccurrences(of: "{tableId}", with: tableId)
-                .replacingOccurrences(of: "{scheduleId}", with: scheduleId)
+                .replacingOccurrences(of: "{tableId}", with: "\(tableId)")
+                .replacingOccurrences(of: "{scheduleId}", with: "\(scheduleId)")
         case .patchCustomModule(let tableId, let scheduleId, _):
             return Paths.patchCustomModule
-                .replacingOccurrences(of: "{tableId}", with: tableId)
-                .replacingOccurrences(of: "{scheduleId}", with: scheduleId)
+                .replacingOccurrences(of: "{tableId}", with: "\(tableId)")
+                .replacingOccurrences(of: "{scheduleId}", with: "\(scheduleId)")
         case .addModule(let tableId, _):
             return Paths.addLectureModule
-                .replacingOccurrences(of: "{tableId}", with: tableId)
+                .replacingOccurrences(of: "{tableId}", with: "\(tableId)")
         case .addCustomModule(let tableId, _):
             return Paths.addCustomLectureModule
-                .replacingOccurrences(of: "{tableId}", with: tableId)
+                .replacingOccurrences(of: "{tableId}", with: "\(tableId)")
         }
     }
     

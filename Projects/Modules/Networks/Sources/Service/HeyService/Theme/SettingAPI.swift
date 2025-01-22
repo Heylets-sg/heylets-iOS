@@ -10,12 +10,14 @@ import Foundation
 
 import Domain
 
-public enum ThemeAPI {
+public enum SettingAPI {
     case getThemeDetailInfo(String)
     case getPreviewTheme
+    case getTimeTableSetting
+    case patchTimeTableSetting(TimeTableSettingRequest)
 }
 
-extension ThemeAPI: BaseAPI {
+extension SettingAPI: BaseAPI {
     public var isWithInterceptor: Bool {
         return false
     }
@@ -27,15 +29,30 @@ extension ThemeAPI: BaseAPI {
                 .replacingOccurrences(of: "{themeName}", with: themeName)
         case .getPreviewTheme:
             return Paths.getPreviewTheme
+        case .getTimeTableSetting:
+            return Paths.getTimeTableSetting
+        case .patchTimeTableSetting:
+            return Paths.patchTimeTableSetting
         }
     }
     
     public var method: HTTPMethod {
-        return .get
+        switch self {
+        case .patchTimeTableSetting:
+            return .patch
+        default:
+            return .get
+        }
+        
     }
     
     public var task: Task {
-        return .requestPlain
+        switch self {
+        case .patchTimeTableSetting(let request):
+            return .requestJSONEncodable(request)
+        default:
+            return .requestPlain
+        }
     }
     
     public var headers: [String : String]? {

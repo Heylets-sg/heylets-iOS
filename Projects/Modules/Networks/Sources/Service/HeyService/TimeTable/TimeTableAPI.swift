@@ -11,10 +11,10 @@ import Foundation
 import Domain
 
 public enum TimeTableAPI {
-    case deleteTable(String)
+    case deleteTable(Int)
     case getTableList
-    case getTableDetailInfo(String)
-    case patchTable(String, TimeTableEditNameRequest)
+    case getTableDetailInfo(Int)
+    case patchTable(Int, TimeTableEditNameRequest)
     case postTable(AddTimeTableRequest)
 }
 
@@ -27,15 +27,15 @@ extension TimeTableAPI: BaseAPI {
         switch self {
         case .deleteTable(let tableId):
             return Paths.deleteTable
-                .replacingOccurrences(of: "{tableId}", with: tableId)
+                .replacingOccurrences(of: "{tableId}", with: "\(tableId)")
         case .getTableList:
             return Paths.getTableList
         case .getTableDetailInfo(let tableId):
             return Paths.getTableDetailInfo
-                .replacingOccurrences(of: "{tableId}", with: tableId)
+                .replacingOccurrences(of: "{tableId}", with: "\(tableId)")
         case .patchTable(let tableId, _):
             return Paths.patchTable
-                .replacingOccurrences(of: "{tableId}", with: tableId)
+                .replacingOccurrences(of: "{tableId}", with: "\(tableId)")
         case .postTable:
             return Paths.postTable
         }

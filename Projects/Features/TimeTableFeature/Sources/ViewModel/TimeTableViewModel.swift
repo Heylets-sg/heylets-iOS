@@ -83,7 +83,7 @@ public class TimeTableViewModel: ObservableObject {
             viewType = .detail
             
         case .deleteModule:
-            useCase.deleteSection(detailSectionInfo.id)
+            useCase.deleteSection(detailSectionInfo.isCustom, detailSectionInfo.id)
                 .map { _ in }
                 .flatMap(useCase.fetchTableInfo)
                 .receive(on: RunLoop.main)

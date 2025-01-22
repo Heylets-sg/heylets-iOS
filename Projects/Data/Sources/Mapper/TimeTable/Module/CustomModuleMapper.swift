@@ -32,7 +32,8 @@ extension CustomModuleResult {
             unit: endTimeComponents.hour - startTimeComponents.hour, //그냥 시간으로 표시
             memo: memo,
             backgroundColor: displayStyle.backgroundColor,
-            textColor: displayStyle.textColor
+            textColor: displayStyle.textColor,
+            isCustom: true
         )
     }
     

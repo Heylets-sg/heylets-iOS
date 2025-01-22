@@ -13,36 +13,36 @@ public typealias SectionService = BaseService<SectionAPI>
 
 public protocol SectionServiceType {
     func deleteAllSection(
-        _ tableId: String
+        _ tableId: Int
     ) -> NetworkDecodableResponse<DeleteAllSectionResult>
     
     func deleteSection(
-        _ tableId: String,
+        _ tableId: Int,
         _ sectionId: Int
     ) -> NetworkVoidResponse
     
     func addSection(
-        _ tableId: String,
+        _ tableId: Int,
         _ request: AddSectionRequest
     ) -> NetworkDecodableResponse<SectionInfoResult>
 }
 
 extension SectionService: SectionServiceType {
     public func deleteAllSection(
-        _ tableId: String
+        _ tableId: Int
     ) -> NetworkDecodableResponse<DeleteAllSectionResult> {
         requestWithResult(.deleteAllSection(tableId))
     }
     
     public func deleteSection(
-        _ tableId: String,
+        _ tableId: Int,
         _ sectionId: Int
     ) -> NetworkVoidResponse {
         requestWithNoResult(.deleteSection(tableId, sectionId))
     }
     
     public func addSection(
-        _ tableId: String,
+        _ tableId: Int,
         _ request: AddSectionRequest
     ) -> NetworkDecodableResponse<SectionInfoResult> {
         requestWithResult(.addSection(tableId, request))

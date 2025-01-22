@@ -12,6 +12,7 @@ import Domain
 import Networks
 
 extension SectionResult {
+    //시간표
     func toEntity() -> SectionInfo {
         .init(
             id: sectionId,
@@ -19,7 +20,19 @@ extension SectionResult {
             name: courseName!,
             schedule: schedules.map { $0.toEntity() },
             professor: professor,
-            unit: Int(schedules[0].credit)
+            unit: Int(schedules[0].credit ?? -1)
+        )
+    }
+    
+    //검색
+    func toEntity(_ unit: Int) -> SectionInfo {
+        .init(
+            id: sectionId,
+            code: courseCode!, //TODO: sectionCode랑 비교
+            name: courseName!,
+            schedule: schedules.map { $0.toEntity() },
+            professor: professor,
+            unit: unit
         )
     }
     
@@ -43,7 +56,7 @@ extension SectioninTableResult {
             name: courseName,
             schedule: schedules.map { $0.toEntity() },
             professor: professor,
-            unit: Int(schedules[0].credit),
+            unit: Int(schedules[0].credit!),
             backgroundColor: displayStyle.backgroundColor,
             textColor: displayStyle.textColor
         )

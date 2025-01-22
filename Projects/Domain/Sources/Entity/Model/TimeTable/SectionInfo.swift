@@ -22,6 +22,8 @@ public struct SectionInfo: Hashable, Equatable {
     public var backgroundColor: String
     public var textColor: String
     
+    public var isCustom: Bool
+    
     public var allscheduleTime: String {
         let all = schedule.map { "\($0.day) \($0.startTime) - \($0.endTime)" }
         return all.joined(separator: ", ")
@@ -49,7 +51,8 @@ public struct SectionInfo: Hashable, Equatable {
         unit: Int,
         memo: String? = nil,
         backgroundColor: String = "#CAD0ED", // heySubMain
-        textColor: String = "#FFFFFF" //black
+        textColor: String = "#FFFFFF", //black,
+        isCustom: Bool = false
     ) {
         self.id = id
         self.code = code
@@ -60,6 +63,7 @@ public struct SectionInfo: Hashable, Equatable {
         self.memo = memo
         self.backgroundColor = backgroundColor
         self.textColor = textColor
+        self.isCustom = isCustom
     }
 }
 

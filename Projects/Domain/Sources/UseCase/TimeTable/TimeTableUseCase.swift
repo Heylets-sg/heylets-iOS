@@ -16,7 +16,7 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
     private let lectureRepository: LectureRepositoryType
     private let scheduleRepository: ScheduleRepositoryType
     private let sectionRepository: SectionRepositoryType
-    private let themeRepository: ThemeRepositoryType
+    private let settingRepository: SettingRepositoryType
     private let timeTableRepository: TimeTableRepositoryType
     
     private var cancelBag = CancelBag()
@@ -26,18 +26,18 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
         lectureRepository: LectureRepositoryType,
         scheduleRepository: ScheduleRepositoryType,
         sectionRepository: SectionRepositoryType,
-        themeRepository: ThemeRepositoryType,
+        settingRepository: SettingRepositoryType,
         timeTableRepository: TimeTableRepositoryType
     ) {
         self.userRepository = userRepository
         self.lectureRepository = lectureRepository
         self.scheduleRepository = scheduleRepository
         self.sectionRepository = sectionRepository
-        self.themeRepository = themeRepository
+        self.settingRepository = settingRepository
         self.timeTableRepository = timeTableRepository
     }
     
-    public var tableId: String = ""
+    public var tableId: Int = 0
     public var errMessage = PassthroughSubject<String, Never>()
     public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()
     public var timeTableCellInfo = PassthroughSubject<[TimeTableCellInfo], Never>()
@@ -50,7 +50,7 @@ extension TimeTableUseCase {
     public func fetchTableInfo() -> AnyPublisher<[SectionInfo], Never> {
         getTableId()
             .filter { $0 != nil}
-            .map { "\($0!)"}
+            .map { $0! }
             .handleEvents(receiveOutput: { [weak self] id in
                 self?.tableId = id
             })
@@ -66,7 +66,7 @@ extension TimeTableUseCase {
     
     
     public func getTableDetailInfo(
-        _ tableId: String
+        _ tableId: Int
     ) -> AnyPublisher<[SectionInfo], Never> {
         timeTableRepository.getTableDetailInfo(tableId)
             .handleEvents(receiveOutput: { [weak self] detailInfo in
@@ -113,12 +113,18 @@ extension TimeTableUseCase {
             .eraseToAnyPublisher()
     }
     
-    public func deleteSection(_ sectionId: Int) -> AnyPublisher<Void, Never> {
-        return sectionRepository.deleteSection(tableId, sectionId)
-            .catch { _ in
-                return Just(()).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+    public func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never> {
+        if isCustom {
+            return scheduleRepository.deleteLectureModule(tableId, sectionId)
+                .catch { _ in Empty() }
+                .eraseToAnyPublisher()
+        } else {
+            return sectionRepository.deleteSection(tableId, sectionId)
+                .catch { _ in
+                    return Just(()).eraseToAnyPublisher()
+                }
+                .eraseToAnyPublisher()
+        }
     }
 }
 
@@ -165,10 +171,22 @@ extension TimeTableUseCase {
     }
     
     public func getThemeList() -> AnyPublisher<[Theme], Never> {
-        return themeRepository.getThemeList()
+        return settingRepository.getThemeList()
             .catch { _ in
                 return Just([]).eraseToAnyPublisher()
             }
+            .eraseToAnyPublisher()
+    }
+    
+    public func getSettingInfo() -> AnyPublisher<SettingInfo, Never> {
+        return settingRepository.getTimeTableSettingInfo()
+            .catch { _ in Empty() }
+            .eraseToAnyPublisher()
+    }
+    
+    public func patchSettingInfo(_ displayType: DisplayTypeInfo, _ theme: String) -> AnyPublisher<Void, Never> {
+        return settingRepository.patchTimeTableSettingInfo(displayType, theme)
+            .catch { _ in Empty() }
             .eraseToAnyPublisher()
     }
 }
