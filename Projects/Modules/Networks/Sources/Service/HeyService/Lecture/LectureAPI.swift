@@ -43,7 +43,8 @@ extension LectureAPI: BaseAPI {
         case .getLectureList:
             return .requestParameters([
                 "academicYear": "2024",
-                "semester": "TERM_1"
+                "semester": "TERM_1",
+                "size" : "5"
                 /*TODO: pageable 파라미터 추가 page=0&size=1&sort=%5B%22string%22%5D
                  {
                    "page": 0,

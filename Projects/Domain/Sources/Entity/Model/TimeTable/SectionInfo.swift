@@ -9,7 +9,6 @@
 import Foundation
 
 import Core
-import DSKit
 
 public struct SectionInfo: Hashable, Equatable {
     public var id: Int
