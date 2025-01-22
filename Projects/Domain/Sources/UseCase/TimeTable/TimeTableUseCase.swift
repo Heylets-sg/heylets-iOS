@@ -38,6 +38,7 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
     }
     
     public var tableId: String = ""
+    public var errMessage = PassthroughSubject<String, Never>()
     public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()
     public var timeTableCellInfo = PassthroughSubject<[TimeTableCellInfo], Never>()
 }
@@ -54,6 +55,12 @@ extension TimeTableUseCase {
                 self?.tableId = id
             })
             .flatMap(getTableDetailInfo)
+            .eraseToAnyPublisher()
+    }
+    
+    public func getProfileInfo() -> AnyPublisher<ProfileInfo, Never> {
+        userRepository.getProfile()
+            .catch { _ in  Empty() }
             .eraseToAnyPublisher()
     }
     
@@ -99,9 +106,9 @@ extension TimeTableUseCase {
     
     public func addSection(_ sectionId: Int) -> AnyPublisher<Void, Never> {
         return sectionRepository.addSection(tableId, sectionId, "")
-            .catch { _ in
-                //TODO: 커스텀 모듈 추가 실패 처리
-                return Just(()).eraseToAnyPublisher()
+            .catch { [weak self] error in
+                self?.errMessage.send(error.description)
+                return Empty<Void, Never>()
             }
             .eraseToAnyPublisher()
     }

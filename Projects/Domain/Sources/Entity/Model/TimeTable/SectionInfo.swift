@@ -14,7 +14,7 @@ public struct SectionInfo: Hashable, Equatable {
     public var name: String
     public var schedule: [ScheduleInfo]
     public var professor: String
-    public var unit: Int?
+    public var unit: Int
     public var memo: String?
     
     public var allscheduleTime: String {
@@ -41,7 +41,7 @@ public struct SectionInfo: Hashable, Equatable {
         name: String,
         schedule: [ScheduleInfo] = [],
         professor: String,
-        unit: Int? = nil,
+        unit: Int,
         memo: String? = nil
     ) {
         self.id = id

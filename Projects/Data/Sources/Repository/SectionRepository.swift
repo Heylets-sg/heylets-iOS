@@ -38,9 +38,17 @@ public struct SectionRepository: SectionRepositoryType {
         _ tableId: String,
         _ sectionId: Int,
         _ memo: String
-    ) -> AnyPublisher<Void, Error> {
+    ) -> AnyPublisher<Void, AddSectionError> {
         let request: AddSectionRequest = .init(sectionId, memo)
         return service.addSection(tableId, request)
-            .asVoidWithGeneralError()
+            .asVoid()
+            .mapError { error in
+                if let errorCode = error.isInvalidStatusCodeWithMessage() {
+                    return AddSectionError.error(with: errorCode)
+                } else {
+                    return .unknown
+                }
+            }
+            .eraseToAnyPublisher()
     }
 }

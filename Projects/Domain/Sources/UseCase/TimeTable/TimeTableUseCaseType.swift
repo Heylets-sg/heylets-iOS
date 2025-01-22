@@ -13,6 +13,8 @@ import Combine
 
 public protocol TimeTableUseCaseType {
     var tableId: String { get }
+    var errMessage: PassthroughSubject<String, Never> { get }
+    
     //MARK: Main
     
     //시간표 상세조회 불러오기
@@ -20,6 +22,7 @@ public protocol TimeTableUseCaseType {
     var timeTableCellInfo: PassthroughSubject<[TimeTableCellInfo], Never> { get }
     
     func fetchTableInfo() -> AnyPublisher<[SectionInfo], Never>
+    func getProfileInfo() -> AnyPublisher<ProfileInfo, Never>
     
     
     

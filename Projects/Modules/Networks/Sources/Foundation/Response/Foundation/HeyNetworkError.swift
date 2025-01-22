@@ -44,4 +44,13 @@ extension HeyNetworkError {
         }
         return nil
     }
+    
+    public func isInvalidStatusCodeWithMessage() -> String? {
+        if case let .invalidResponse(responseError) = self {
+            if case .invalidStatusCode(_, let message) = responseError {
+                return message
+            }
+        }
+        return nil
+    }
 }

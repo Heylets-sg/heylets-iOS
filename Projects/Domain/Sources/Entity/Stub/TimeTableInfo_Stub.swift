@@ -9,11 +9,11 @@
 import Foundation
 
 extension TimeTableInfo {
-    static public var stub: Self {
-        .init(id: 1,
-              name: "A+++",
-              semester: "sem 1",
-              academicYear: 2024
+    static public var empty: Self {
+        .init(id: 0,
+              name: "",
+              semester: "",
+              academicYear: 0
         )
     }
 }

@@ -136,7 +136,7 @@ fileprivate struct ClassSearchListCellView: View {
                 .foregroundColor(.heyGray3)
                 .padding(.bottom, 2)
             
-            Text("\(section.professor) / \(section.location) / \(section.unit!) unit")
+            Text("\(section.professor) / \(section.location) / \(section.unit) unit")
                 .font(.regular_12)
                 .foregroundColor(.heyGray3)
         }

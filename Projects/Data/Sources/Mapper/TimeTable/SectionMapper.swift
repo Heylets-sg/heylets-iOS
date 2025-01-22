@@ -19,7 +19,7 @@ extension SectionResult {
             name: courseName!,
             schedule: schedules.map { $0.toEntity() },
             professor: professor,
-            unit: nil
+            unit: Int(schedules[0].credit)
         )
     }
     

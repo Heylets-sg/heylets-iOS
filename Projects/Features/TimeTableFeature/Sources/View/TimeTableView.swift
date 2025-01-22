@@ -77,8 +77,8 @@ public struct TimeTableView: View {
                 }
             }
             .heyAlert(
-                isPresented: viewModel.state.inValidregisterModuleIsPresented.0,
-                title: viewModel.state.inValidregisterModuleIsPresented.1,
+                isPresented: viewModel.state.inValidregisterModuleIsPresented,
+                title: viewModel.state.errMessage,
                 primaryButton: ("Close", .gray, {
                     viewModel.send(.inValidregisterModuleAlertCloseButtonDidTap)
                 })
@@ -161,7 +161,8 @@ extension TimeTableView {
             TopView(
                 timeTableInfo: $viewModel.timeTableInfo,
                 viewType: $viewModel.viewType,
-                settingAlertType: $viewModel.state.settingAlertType
+                settingAlertType: $viewModel.state.settingAlertType,
+                profileInfo: $viewModel.state.profileInfo
             )
             .environmentObject(container)
         }

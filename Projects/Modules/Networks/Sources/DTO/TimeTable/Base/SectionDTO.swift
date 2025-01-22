@@ -26,10 +26,20 @@ public struct SectionResult: Decodable {
 
 public struct SectioninTableResult: Decodable {
     public let sectionId: Int
-    public let courseName: String
     public let courseCode: String
+    public let courseName: String
     public let professor: String
-    public let status: String?
+    public let sectionStatus: String
+    public let displayStyle: DisplayStyleResult
+    public let schedules: [SchedulesTableResult]
+}
+
+public struct SectioninTableListResult: Decodable {
+    public let sectionId: Int
+    public let courseCode: String
+    public let courseName: String
+    public let professor: String
+    public let status: String
 }
 
 

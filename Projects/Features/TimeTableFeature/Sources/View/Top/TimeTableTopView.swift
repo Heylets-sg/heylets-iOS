@@ -17,6 +17,7 @@ public struct TopView: View {
     @Binding var timeTableInfo: TimeTableInfo
     @Binding var viewType: TimeTableViewType
     @Binding var settingAlertType: TimeTableSettingAlertType?
+    @Binding var profileInfo: ProfileInfo
     
     public var body: some View {
         HStack {
@@ -25,7 +26,7 @@ public struct TopView: View {
                     .frame(height: 34)
                 
                 HStack {
-                    Text("NUS") //TODO: 여기 API 통신 이후 User에서 학교 빼오기
+                    Text(profileInfo.university) //TODO: 여기 API 통신 이후 User에서 학교 빼오기
                         .font(.bold_8)
                         .foregroundColor(.heyGray6)
                         .padding(.horizontal, 5)
@@ -74,8 +75,16 @@ public struct TopView: View {
                     container.navigationRouter.destinations = []
                     container.windowRouter.switch(to: .mypage)
                 } label: {
-                    Circle()
-                        .frame(width: 31, height: 31)
+                    if let profileImage = profileInfo.image {
+                        Image(uiImage: profileImage)
+                            .resizable()
+                            .frame(width: 31, height: 31)
+                    } else {
+                        Circle()
+                            .fill(Color.blue)
+                            .frame(width: 31, height: 31)
+
+                    }
                 }
             }
             .padding(.top, 38)

@@ -24,5 +24,5 @@ public protocol SectionRepositoryType {
         _ tableId: String,
         _ sectionId: Int,
         _ memo: String
-    ) -> AnyPublisher<Void, Error>
+    ) -> AnyPublisher<Void, AddSectionError>
 }

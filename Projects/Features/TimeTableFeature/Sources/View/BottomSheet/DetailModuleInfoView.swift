@@ -95,7 +95,3 @@ public struct DetailModuleInfoView: View {
         .cornerRadius(12, corners: [.topLeft, .topRight])
     }
 }
-
-//#Preview {
-//    DetailModuleInfoView(isShowingModuleDetailInfoView: true)
-//}

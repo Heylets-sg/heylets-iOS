@@ -87,7 +87,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         useCase.errMessage
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { _ in
-                self.otpCode = ""
+                owner.otpCode = ""
             })
             .assign(to: \.state.errMessage, on: self)
             .store(in: cancelBag)
