@@ -181,15 +181,22 @@ extension TimeTableUseCase {
             .eraseToAnyPublisher()
     }
     
-    public func patchSettingInfo(_ displayType: DisplayTypeInfo, _ theme: String) -> AnyPublisher<Void, Never> {
+    public func patchSettingInfo(
+        _ displayType: DisplayTypeInfo,
+        _ theme: String
+    ) -> AnyPublisher<Void, Never> {
         return settingRepository.patchTimeTableSettingInfo(displayType, theme)
             .catch { _ in Empty() }
+            .flatMap(getTableDetailInfo)
             .eraseToAnyPublisher()
     }
     
     public func deleteAllSection() -> AnyPublisher<Void, Never> {
         return sectionRepository.deleteAllSection(tableId)
-            .catch { _ in Empty() }
+            .catch { [weak self] error in
+                self?.errMessage.send(error.description)
+                return Empty<Void, Never>()
+            }
             .flatMap(getTableDetailInfo)
             .eraseToAnyPublisher()
     }

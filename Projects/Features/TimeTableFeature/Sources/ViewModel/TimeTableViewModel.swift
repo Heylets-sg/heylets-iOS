@@ -17,15 +17,18 @@ import Core
 
 public class TimeTableViewModel: ObservableObject {
     struct State {
-        var settingAlertType: TimeTableSettingAlertType? = nil
-        var deleteModuleAlertIsPresented: Bool = false
-        var inValidregisterModuleIsPresented: Bool = false
-        var reportMissingModuleAlertIsPresented: Bool = false
-        var isShowingAddCustomModuleView = false
+        struct Alerts {
+            var settingAlertType: TimeTableSettingAlertType? = nil
+            var showDeleteAlert: Bool = false
+            var showReposrtMissingModuleAlert: Bool = false
+            var showAddCustomAlert: Bool = false
+        }
+        
+        var alerts: Alerts = Alerts()
         var timeTableName: String = ""
-        var scrollDisabled: Bool = true
-        var profileInfo: ProfileInfo = .init()
-        var errMessage: String = ""
+        var isScrollDisabled: Bool = true
+        var profile: ProfileInfo = .init()
+        var error: (Bool, String) = (false, "")
     }
     
     enum Action {
@@ -34,7 +37,7 @@ public class TimeTableViewModel: ObservableObject {
         case deleteModule
         case addLecture(SectionInfo)
         case deleteModuleAlertCloseButtonDidTap
-        case inValidregisterModuleAlertCloseButtonDidTap
+        case errorAlertViewCloseButtonDidTap
     }
     
     enum SettingAction {
@@ -69,7 +72,7 @@ public class TimeTableViewModel: ObservableObject {
         case .onAppear:
             useCase.getProfileInfo()
                 .receive(on: RunLoop.main)
-                .assign(to: \.state.profileInfo, on: self)
+                .assign(to: \.state.profile, on: self)
                 .store(in: cancelBag)
             
             useCase.fetchTableInfo()
@@ -77,9 +80,12 @@ public class TimeTableViewModel: ObservableObject {
                 .store(in: cancelBag)
             
         case .tableCellDidTap(let sectionId):
-            detailSectionInfo = sectionList.first(where: {
-                $0.id == sectionId })!
-            viewType = .detail
+            if let detailInfo = sectionList.first(where: { $0.id == sectionId }) {
+                detailSectionInfo = detailInfo
+                viewType = .detail
+            } else {
+                state.error = (true, "선택한 섹션 정보를 찾을 수 없습니다.")
+            }
             
         case .deleteModule:
             useCase.deleteSection(
@@ -87,16 +93,14 @@ public class TimeTableViewModel: ObservableObject {
                 detailSectionInfo.id
             )
             .map { _ in false}
-            .assign(to: \.state.deleteModuleAlertIsPresented, on: self)
+            .assign(to: \.state.alerts.showDeleteAlert, on: self)
             .store(in: cancelBag)
             
         case .deleteModuleAlertCloseButtonDidTap:
-            state.deleteModuleAlertIsPresented = false
+            state.alerts.showDeleteAlert = false
             
-        case .inValidregisterModuleAlertCloseButtonDidTap:
-            state.inValidregisterModuleIsPresented = false
-            state.errMessage = ""
-            viewType = .search
+        case .errorAlertViewCloseButtonDidTap:
+            state.error = (false, "")
             
         case .addLecture(let lecture):
             useCase.addSection(lecture.id)
@@ -118,26 +122,26 @@ public class TimeTableViewModel: ObservableObject {
             
             let image = mainView.captureAsImage()
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-            state.settingAlertType = nil
+            state.alerts.settingAlertType = nil
             
         case .deleteTimeTable:
             useCase.deleteAllSection()
                 .receive(on: RunLoop.main)
                 .map { _ in nil}
-                .assign(to: \.state.settingAlertType, on: self)
+                .assign(to: \.state.alerts.settingAlertType, on: self)
                 .store(in: cancelBag)
             
         case .shareURL:
-            state.settingAlertType = nil
+            state.alerts.settingAlertType = nil
             
         case .settingAlertDismiss:
-            state.settingAlertType = nil
+            state.alerts.settingAlertType = nil
             
         case .editTimeTableName:
             useCase.changeTimeTableName(state.timeTableName)
                 .receive(on: RunLoop.main)
                 .map { _ in nil }
-                .assign(to: \.state.settingAlertType, on: self)
+                .assign(to: \.state.alerts.settingAlertType, on: self)
                 .store(in: cancelBag)
         }
     }
@@ -167,7 +171,7 @@ public class TimeTableViewModel: ObservableObject {
             }
             .handleEvents(receiveOutput: {
                 owner.weekList = $0
-                owner.state.scrollDisabled = $0 == Week.weekDay
+                owner.state.isScrollDisabled = $0 == Week.weekDay
             })
             .map { _ in owner.sectionList.createTimeTableCellList() }
             .flatMap(configTimeTable)
@@ -177,10 +181,11 @@ public class TimeTableViewModel: ObservableObject {
         useCase.errMessage
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
-                self?.state.inValidregisterModuleIsPresented = true
                 self?.viewType = .main
+                self?.state.alerts.settingAlertType = nil
             })
-            .assign(to: \.state.errMessage, on: self)
+            .map { message in (true, message)}
+            .assign(to: \.state.error, on: self)
             .store(in: cancelBag)
     }
 }

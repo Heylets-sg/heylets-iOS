@@ -12,7 +12,7 @@ import Combine
 public protocol SectionRepositoryType {
     func deleteAllSection(
         _ tableId: Int
-    ) -> AnyPublisher<Void, Error>
+    ) -> AnyPublisher<Void, DeleteAllSectionError>
     
     func deleteSection(
         _ tableId: Int,
