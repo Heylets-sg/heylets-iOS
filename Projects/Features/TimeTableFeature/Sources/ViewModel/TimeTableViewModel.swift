@@ -52,7 +52,7 @@ public class TimeTableViewModel: ObservableObject {
     
     @Published var timeTableInfo: TimeTableInfo = .empty
     @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
-    @Published var lectureList: [SectionInfo] = []
+    @Published var sectionList: [SectionInfo] = []
     @Published var weekList: [Week] = Week.weekDay
     @Published var timeTable: [[TimeTableCellInfo?]] = []
     @Published var detailSectionInfo: SectionInfo = .empty
@@ -70,29 +70,26 @@ public class TimeTableViewModel: ObservableObject {
         case .onAppear:
             useCase.getProfileInfo()
                 .receive(on: RunLoop.main)
-                .handleEvents(receiveOutput: { [weak self]  profileInfo in
-                    self?.state.profileInfo = profileInfo
-                })
-                .map { _ in }
-                .flatMap(useCase.fetchTableInfo)
-                .assign(to: \.lectureList, on: self)
+                .assign(to: \.state.profileInfo, on: self)
+                .store(in: cancelBag)
+            
+            useCase.fetchTableInfo()
+                .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
             
         case .tableCellDidTap(let sectionId):
-            detailSectionInfo = lectureList.first(where: {
+            detailSectionInfo = sectionList.first(where: {
                 $0.id == sectionId })!
             viewType = .detail
             
         case .deleteModule:
-            useCase.deleteSection(detailSectionInfo.isCustom, detailSectionInfo.id)
-                .map { _ in }
-                .flatMap(useCase.fetchTableInfo)
-                .receive(on: RunLoop.main)
-                .sink { [weak self] lectureList in
-                    self?.lectureList = lectureList // lectureList를 먼저 업데이트
-                    self?.state.deleteModuleAlertIsPresented = false
-                }
-                .store(in: cancelBag)
+            useCase.deleteSection(
+                detailSectionInfo.isCustom,
+                detailSectionInfo.id
+            )
+            .map { _ in false}
+            .assign(to: \.state.deleteModuleAlertIsPresented, on: self)
+            .store(in: cancelBag)
             
         case .deleteModuleAlertCloseButtonDidTap:
             state.deleteModuleAlertIsPresented = false
@@ -104,13 +101,9 @@ public class TimeTableViewModel: ObservableObject {
             
         case .addLecture(let lecture):
             useCase.addSection(lecture.id)
-                .map { _ in }
-                .flatMap(useCase.fetchTableInfo)
                 .receive(on: RunLoop.main)
-                .sink { [weak self] lectureList in
-                    self?.lectureList = lectureList
-                    self?.viewType = .main
-                }
+                .map { _ in TimeTableViewType.main }
+                .assign(to: \.viewType, on: self)
                 .store(in: cancelBag)
         }
     }
@@ -125,14 +118,12 @@ public class TimeTableViewModel: ObservableObject {
             let image = mainView.captureAsImage()
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
             state.settingAlertType = nil
+            
         case .deleteTimeTable:
             useCase.deleteAllSection()
-                .map { _ in }
-                .flatMap(useCase.fetchTableInfo)
                 .receive(on: RunLoop.main)
-                .sink(receiveValue: { [weak self] _ in
-                    self?.state.settingAlertType = nil
-                })
+                .map { _ in nil}
+                .assign(to: \.state.settingAlertType, on: self)
                 .store(in: cancelBag)
             
         case .shareURL:
@@ -143,23 +134,22 @@ public class TimeTableViewModel: ObservableObject {
             
         case .editTimeTableName:
             useCase.changeTimeTableName(state.timeTableName)
-                .flatMap(useCase.fetchTableInfo)
                 .receive(on: RunLoop.main)
-                .sink { [weak self] lectureList in
-                    self?.lectureList = lectureList
-                    self?.state.settingAlertType = nil
-                }
+                .map { _ in nil }
+                .assign(to: \.state.settingAlertType, on: self)
                 .store(in: cancelBag)
         }
     }
     
     private func observe() {
-        weak var owner = self
-        guard let owner else { return }
+        
         
     }
     
     private func bindState() {
+        weak var owner = self
+        guard let owner else { return }
+        
         useCase.timeTableInfo
             .receive(on: RunLoop.main)
             .assign(to: \.timeTableInfo, on: self)
@@ -170,17 +160,20 @@ public class TimeTableViewModel: ObservableObject {
             .assign(to: \.displayTypeInfo, on: self)
             .store(in: cancelBag)
         
-        useCase.timeTableCellInfo
+        useCase.sectionList
             .receive(on: RunLoop.main)
-            .flatMap(configWeekList)
-            .handleEvents(receiveOutput: { [weak self] weekList in
-                self?.state.scrollDisabled = weekList == Week.weekDay
+            .handleEvents(receiveOutput: { sectionList in
+                owner.sectionList = sectionList
             })
-            .assign(to: \.weekList, on: self)
-            .store(in: cancelBag)
-        
-        useCase.timeTableCellInfo
-            .receive(on: RunLoop.main)
+            .map { $0.createTimeTableCellList() }
+            .flatMap {
+                owner.configWeekList($0)
+            }
+            .handleEvents(receiveOutput: {
+                owner.weekList = $0
+                owner.state.scrollDisabled = $0 == Week.weekDay
+            })
+            .map { _ in owner.sectionList.createTimeTableCellList() }
             .flatMap(configTimeTable)
             .assign(to: \.timeTable, on: self)
             .store(in: cancelBag)
