@@ -61,7 +61,6 @@ public class TimeTableViewModel: ObservableObject {
     public init(useCase: TimeTableUseCaseType) {
         self.useCase = useCase
         
-        observe()
         bindState()
     }
     
@@ -113,8 +112,10 @@ public class TimeTableViewModel: ObservableObject {
         case .saveImage:
             let mainView = MainCaptureContentView(
                 weekList: weekList,
-                timeTable: timeTable
+                timeTable: timeTable,
+                displayType: displayTypeInfo
             )
+            
             let image = mainView.captureAsImage()
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
             state.settingAlertType = nil
@@ -139,11 +140,6 @@ public class TimeTableViewModel: ObservableObject {
                 .assign(to: \.state.settingAlertType, on: self)
                 .store(in: cancelBag)
         }
-    }
-    
-    private func observe() {
-        
-        
     }
     
     private func bindState() {

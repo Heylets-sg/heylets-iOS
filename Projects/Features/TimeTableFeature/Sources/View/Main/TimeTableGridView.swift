@@ -24,8 +24,6 @@ public struct TimeTableGridView: View {
                 createGridRow(for: hour)
             }
         }
-        .onAppear {
-        }
     }
     
     @ViewBuilder
