@@ -47,8 +47,6 @@ public class AddCustomModuleViewModel: ObservableObject {
     
     public init(useCase: TimeTableUseCaseType) {
         self.useCase = useCase
-        
-        observe()
     }
     
     func send(_ action: Action) {
@@ -56,9 +54,11 @@ public class AddCustomModuleViewModel: ObservableObject {
         case .weekPickerButtonDidTap:
             state.weekPickerIsHidden.toggle()
             state.timePickerIsHidden = true
+            
         case .timePickerButtonDidTap:
             state.weekPickerIsHidden = true
             state.timePickerIsHidden.toggle()
+            
         case .addCustomModuleButtonDidTap:
             let splitTime = splitTimeRange(time)
             let customModule: CustomModuleInfo = .init(
@@ -71,17 +71,12 @@ public class AddCustomModuleViewModel: ObservableObject {
                 memo: nil
             )
             useCase.addCustomModule(customModule)
+                .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
                     self?.state.isAddSuccess = true
                 })
                 .store(in: cancelBag)
         }
-    }
-    
-    private func observe() {
-        weak var owner = self
-        guard let owner else { return }
-        
     }
 }
 

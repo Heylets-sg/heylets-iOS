@@ -9,6 +9,7 @@
 import Foundation
 
 public enum AddSectionError: Error {
+    case titleIsEmpty
     case inValidSemester
     case sectionNotAvailable
     case timeTableNotFound
@@ -19,6 +20,8 @@ public enum AddSectionError: Error {
     
     var description: String {
         switch self {
+        case .titleIsEmpty:
+            return "Title is Empty"
         case .inValidSemester:
             return "The class does not belong to the current semester."
         case .sectionNotAvailable:
@@ -40,6 +43,8 @@ public enum AddSectionError: Error {
 extension AddSectionError {
     static public func error(with message: String) -> AddSectionError {
         switch message {
+        case "title: 강의명은 필수입니다.":
+            return .titleIsEmpty
         case "해당 학기의 강의가 아닙니다.":
             return .inValidSemester
         case "수강 신청이 불가능한 강의입니다.":
@@ -54,8 +59,6 @@ extension AddSectionError {
             return .timeConflict
         default:
             return .unknown
-            
-            
         }
     }
 }

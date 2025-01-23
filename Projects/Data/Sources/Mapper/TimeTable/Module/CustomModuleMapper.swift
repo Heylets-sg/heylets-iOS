@@ -31,12 +31,12 @@ extension CustomModuleResult {
             professor: professor ?? "",
             unit: endTimeComponents.hour - startTimeComponents.hour, //그냥 시간으로 표시
             memo: memo,
-            backgroundColor: displayStyle.backgroundColor,
-            textColor: displayStyle.textColor,
+            backgroundColor: displayStyle?.backgroundColor ?? "#CAD0ED",
+            textColor: displayStyle?.textColor ?? "#FFFFFF",
             isCustom: true
         )
     }
-    
+
     func toEntity() -> CustomModuleInfo {
         .init(
             title: title,

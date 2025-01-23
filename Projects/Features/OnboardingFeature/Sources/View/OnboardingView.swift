@@ -52,7 +52,7 @@ public struct OnboardingView: View {
                             .resizable()
                             .scaledToFit()
                     }
-                    .frame(height: 353)
+//                    .frame(height: 353)
                     .padding(.horizontal, 0)
                     
                     Spacer()

@@ -149,7 +149,10 @@ extension TimeTableUseCase {
         _ customModule: CustomModuleInfo
     ) -> AnyPublisher<Void, Never> {
         return scheduleRepository.addCustomModule(tableId, customModule)
-            .catch { _ in Empty() }
+            .catch { [weak self] error in
+                self?.errMessage.send(error.description)
+                return Empty<Void, Never>()
+            }
             .eraseToAnyPublisher()
     }
 }
