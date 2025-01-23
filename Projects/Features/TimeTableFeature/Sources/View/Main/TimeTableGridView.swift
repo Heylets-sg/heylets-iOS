@@ -33,7 +33,7 @@ public struct TimeTableGridView: View {
                 Rectangle()
                     .fill(Color.clear)
                     .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
-                    .frame(width: 70, height: 21)
+                    .frame(height: 21)
             }
         }
     }
@@ -120,7 +120,7 @@ public struct TimeTableGridView: View {
                     .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
             }
         }
-        .frame(width: 70, height: 52)
+        .frame(height: 52)
     }
     
     private func getCellHeight(for cell: TimeTableCellInfo, hour: Int) -> CGFloat {
