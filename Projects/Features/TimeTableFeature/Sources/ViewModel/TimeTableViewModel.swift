@@ -191,7 +191,6 @@ public class TimeTableViewModel: ObservableObject {
 }
 
 extension TimeTableViewModel {
-    
     private func configWeekList(
         _ timeTableCellList: [TimeTableCellInfo]
     ) -> AnyPublisher<[Week], Never> {

@@ -62,8 +62,6 @@ public struct MyPageView: View {
                         .background(Color.heyWhite)
                         .cornerRadius(24, corners: [.topLeft, .topRight])
                     }
-                    
-                    Spacer()
                 }
                 
                 VStack {
