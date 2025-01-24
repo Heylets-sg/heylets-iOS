@@ -71,12 +71,15 @@ public class SelectUniversityViewModel: ObservableObject {
         switch action {
         case .backButtonDidTap:
             navigationRouter.pop()
+            
         case .textFieldDidTap:
             state.filteredItems = allUniversityItems
+            
         case .nextButtonDidTap:
             guard let university = university else { return }
             useCase.userInfo.university = university.rawValue
             navigationRouter.push(to: .verifyEmail)
+            
         case .selectUniversity(let university):
             self.university = university
             searchText = university.rawValue
@@ -94,7 +97,6 @@ public class SelectUniversityViewModel: ObservableObject {
         
         $searchText
             .map { text in
-                print("text ====> \(text)")
                 return text.isEmpty
                 ? []
                 : owner.allUniversityItems.filter {

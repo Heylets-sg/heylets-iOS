@@ -36,8 +36,6 @@ public struct SecurityCodeInputView: View {
                         if otpCode.count >= 6 {
                             otpCode = String(otpCode.prefix(6))
                             
-                            // 키보드 내리기
-                            endTextEditing()
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         }
                     }
