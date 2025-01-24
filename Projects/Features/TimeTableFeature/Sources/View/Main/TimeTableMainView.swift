@@ -46,7 +46,7 @@ public struct MainView: View {
             .scrollIndicators(.hidden)
             .border(Color.heyGray6, width: 1)
         }
-        .scrollDisabled(viewModel.state.scrollDisabled)
+        .scrollDisabled(viewModel.state.isScrollDisabled)
         .scrollIndicators(.hidden)
     }
 }

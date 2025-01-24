@@ -56,14 +56,17 @@ public struct ScheduleRepository: ScheduleRepositoryType {
     public func addCustomModule(
         _ tableId: Int,
         _ customModuleInfo: CustomModuleInfo
-    ) -> AnyPublisher<Void, Error> {
+    ) -> AnyPublisher<Void, AddSectionError> {
         let request = customModuleInfo.toDTO()
-        return service.addCustomModule(
-            tableId,
-            request
-        )
-//        .map { $0.toEntity() }
+        return service.addCustomModule(tableId, request)
         .map { _ in }
-        .mapToGeneralError()
+        .mapError { error in
+            if let errorCode = error.isInvalidStatusCodeWithMessage() {
+                return AddSectionError.error(with: errorCode)
+            } else {
+                return .unknown
+            }
+        }
+        .eraseToAnyPublisher()
     }
 }

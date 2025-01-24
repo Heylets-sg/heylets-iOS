@@ -24,6 +24,12 @@ public struct SectionInfo: Hashable, Equatable {
     public var isCustom: Bool
     
     public var allscheduleTime: String {
+        let schedule = schedule.sorted {
+            if $0.day.index == $1.day.index {
+                return $0.startHour < $1.startHour
+            }
+            return $0.day.index < $1.day.index
+        }
         let all = schedule.map { "\($0.day) \($0.startTime) - \($0.endTime)" }
         return all.joined(separator: ", ")
     }

@@ -77,14 +77,14 @@ public struct TimeTableView: View {
                 }
             }
             .heyAlert(
-                isPresented: viewModel.state.inValidregisterModuleIsPresented,
-                title: viewModel.state.errMessage,
+                isPresented: viewModel.state.error.0,
+                title: viewModel.state.error.1,
                 primaryButton: ("Close", .gray, {
-                    viewModel.send(.inValidregisterModuleAlertCloseButtonDidTap)
+                    viewModel.send(.errorAlertViewCloseButtonDidTap)
                 })
             )
             .heyAlert(
-                isPresented: viewModel.state.deleteModuleAlertIsPresented,
+                isPresented: viewModel.state.alerts.showDeleteAlert,
                 title: "Delete module?",
                 primaryButton: ("Delete", .error, {
                     viewModel.send(.deleteModule)
@@ -93,9 +93,9 @@ public struct TimeTableView: View {
                     viewModel.send(.deleteModuleAlertCloseButtonDidTap)
                 })
             )
-            .sheet(isPresented: $viewModel.state.reportMissingModuleAlertIsPresented) {
+            .sheet(isPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert) {
                 ReportMissingModuleView(
-                    reportMissingModuleAlertIsPresented: $viewModel.state.reportMissingModuleAlertIsPresented
+                    reportMissingModuleAlertIsPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert
                 )
                 .transition(.move(edge: .trailing))
                 .presentationDetents([.height(802)])
@@ -115,7 +115,7 @@ extension TimeTableView {
         case .search:
             SearchModuleView(
                 viewType: $viewModel.viewType,
-                reportMissingModuleAlertIsPresented: $viewModel.state.reportMissingModuleAlertIsPresented,
+                reportMissingModuleAlertIsPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert,
                 viewModel: searchModuleViewModel
             )
             .bottomSheetTransition()
@@ -125,7 +125,7 @@ extension TimeTableView {
         case .detail:
             DetailModuleInfoView(
                 viewType: $viewModel.viewType,
-                deleteModuleAlertIsPresented: $viewModel.state.deleteModuleAlertIsPresented,
+                deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
                 sectionInfo: viewModel.detailSectionInfo
             )
             .bottomSheetTransition()
@@ -143,7 +143,7 @@ extension TimeTableView {
         case .search:
             SearchModuleTopView(
                 viewType: $viewModel.viewType,
-                isShowingAddCustomModuleView: $viewModel.state.isShowingAddCustomModuleView,
+                isShowingAddCustomModuleView: $viewModel.state.alerts.showAddCustomAlert,
                 viewModel: searchModuleViewModel,
                 addCustomViewModel: addCustomModuleViewModel
             )
@@ -152,9 +152,6 @@ extension TimeTableView {
                 viewType: $viewModel.viewType,
                 viewModel: themeViewModel
             )
-            .onDisappear {
-                viewModel.send(.onAppear)
-            }
         case .addCustom:
             AddCustomModuleTopView(
                 viewType: $viewModel.viewType,
@@ -164,8 +161,8 @@ extension TimeTableView {
             TopView(
                 timeTableInfo: $viewModel.timeTableInfo,
                 viewType: $viewModel.viewType,
-                settingAlertType: $viewModel.state.settingAlertType,
-                profileInfo: $viewModel.state.profileInfo
+                settingAlertType: $viewModel.state.alerts.settingAlertType,
+                profileInfo: $viewModel.state.profile
             )
             .environmentObject(container)
         }

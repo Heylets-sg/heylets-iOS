@@ -21,9 +21,17 @@ public struct SectionRepository: SectionRepositoryType {
     
     public func deleteAllSection(
         _ tableId: Int
-    ) -> AnyPublisher<Void, Error> {
+    ) -> AnyPublisher<Void, DeleteAllSectionError> {
         service.deleteAllSection(tableId)
-            .asVoidWithGeneralError()
+            .asVoid()
+            .mapError { error in
+                if let statusCode = error.isInvalidStatusCode() {
+                    return DeleteAllSectionError.error(with: statusCode)
+                } else {
+                    return .unknown
+                }
+            }
+            .eraseToAnyPublisher()
     }
     
     public func deleteSection(

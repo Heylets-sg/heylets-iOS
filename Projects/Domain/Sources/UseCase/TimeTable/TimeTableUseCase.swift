@@ -40,7 +40,7 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
     public var tableId: Int = 0
     public var errMessage = PassthroughSubject<String, Never>()
     public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()
-    public var timeTableCellInfo = PassthroughSubject<[TimeTableCellInfo], Never>()
+    public var sectionList = PassthroughSubject<[SectionInfo], Never>()
     public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()
 }
 
@@ -48,13 +48,14 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
 extension TimeTableUseCase {
     // 시간표 상세조회 불러오기
     
-    public func fetchTableInfo() -> AnyPublisher<[SectionInfo], Never> {
+    public func fetchTableInfo() -> AnyPublisher<Void, Never> {
         getTableId()
             .filter { $0 != nil}
             .map { $0! }
             .handleEvents(receiveOutput: { [weak self] id in
                 self?.tableId = id
             })
+            .map { _ in }
             .flatMap(getTableDetailInfo)
             .eraseToAnyPublisher()
     }
@@ -66,16 +67,14 @@ extension TimeTableUseCase {
     }
     
     
-    public func getTableDetailInfo(
-        _ tableId: Int
-    ) -> AnyPublisher<[SectionInfo], Never> {
+    public func getTableDetailInfo() -> AnyPublisher<Void, Never> {
         timeTableRepository.getTableDetailInfo(tableId)
             .handleEvents(receiveOutput: { [weak self] detailInfo in
                 self?.timeTableInfo.send(detailInfo.tableInfo)
                 self?.displayInfo.send(detailInfo.tableInfo.displayType!)
-                self?.timeTableCellInfo.send(detailInfo.sectionList.createTimeTableCellList())
+                self?.sectionList.send(detailInfo.sectionList)
             })
-            .map { $0.sectionList } // -> 성공을 위해서???
+            .map { _ in }
             .catch {  _ in Empty() }
             .eraseToAnyPublisher()
     }
@@ -109,6 +108,7 @@ extension TimeTableUseCase {
                 self?.errMessage.send(error.description)
                 return Empty<Void, Never>()
             }
+            .flatMap(getTableDetailInfo)
             .eraseToAnyPublisher()
     }
     
@@ -116,12 +116,12 @@ extension TimeTableUseCase {
         if isCustom {
             return scheduleRepository.deleteLectureModule(tableId, sectionId)
                 .catch { _ in Empty() }
+                .flatMap(getTableDetailInfo)
                 .eraseToAnyPublisher()
         } else {
             return sectionRepository.deleteSection(tableId, sectionId)
-                .catch { _ in
-                    return Just(()).eraseToAnyPublisher()
-                }
+                .catch { _ in Empty() }
+                .flatMap(getTableDetailInfo)
                 .eraseToAnyPublisher()
         }
     }
@@ -149,7 +149,11 @@ extension TimeTableUseCase {
         _ customModule: CustomModuleInfo
     ) -> AnyPublisher<Void, Never> {
         return scheduleRepository.addCustomModule(tableId, customModule)
-            .catch { _ in Empty() }
+            .catch { [weak self] error in
+                self?.errMessage.send(error.description)
+                return Empty<Void, Never>()
+            }
+            .flatMap(getTableDetailInfo)
             .eraseToAnyPublisher()
     }
 }
@@ -158,10 +162,8 @@ extension TimeTableUseCase {
 extension TimeTableUseCase {
     public func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never> {
         return timeTableRepository.patchTableName(tableId, name)
-            .catch { _ in
-                //TODO: 실패 관련 처리
-                return Just(()).eraseToAnyPublisher()
-            }
+            .catch { _ in Empty() }
+            .flatMap(getTableDetailInfo)
             .eraseToAnyPublisher()
     }
     
@@ -179,15 +181,23 @@ extension TimeTableUseCase {
             .eraseToAnyPublisher()
     }
     
-    public func patchSettingInfo(_ displayType: DisplayTypeInfo, _ theme: String) -> AnyPublisher<Void, Never> {
+    public func patchSettingInfo(
+        _ displayType: DisplayTypeInfo,
+        _ theme: String
+    ) -> AnyPublisher<Void, Never> {
         return settingRepository.patchTimeTableSettingInfo(displayType, theme)
             .catch { _ in Empty() }
+            .flatMap(getTableDetailInfo)
             .eraseToAnyPublisher()
     }
     
     public func deleteAllSection() -> AnyPublisher<Void, Never> {
         return sectionRepository.deleteAllSection(tableId)
-            .catch { _ in Empty() }
+            .catch { [weak self] error in
+                self?.errMessage.send(error.description)
+                return Empty<Void, Never>()
+            }
+            .flatMap(getTableDetailInfo)
             .eraseToAnyPublisher()
     }
 }

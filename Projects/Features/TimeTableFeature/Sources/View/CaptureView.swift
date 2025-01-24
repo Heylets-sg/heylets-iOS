@@ -13,10 +13,16 @@ import Domain
 struct MainCaptureContentView: View {
     var weekList: [Week]
     var timeTable: [[TimeTableCellInfo?]]
+    var displayType: DisplayTypeInfo
     
-    init(weekList: [Week], timeTable: [[TimeTableCellInfo?]]) {
+    init(
+        weekList: [Week],
+        timeTable: [[TimeTableCellInfo?]],
+        displayType: DisplayTypeInfo
+    ) {
         self.weekList = weekList
         self.timeTable = timeTable
+        self.displayType = displayType
     }
     
     var body: some View {
@@ -34,7 +40,8 @@ struct MainCaptureContentView: View {
                     
                     TimeTableGridCaptureView(
                         weekList: weekList,
-                        timeTable: timeTable
+                        timeTable: timeTable,
+                        displayType: displayType
                     )
                 }
             }
@@ -51,17 +58,16 @@ import SwiftUI
 public struct TimeTableGridCaptureView: View {
     var weekList: [Week]
     var timeTable: [[TimeTableCellInfo?]]
-    var hourList = Array(9...24)
+    var displayType: DisplayTypeInfo
+    var hourList = Array(8...24)
     
     public var body: some View {
         Grid(horizontalSpacing: 1, verticalSpacing: 1) {
             createHeaderRow()
             
             ForEach(hourList, id: \.self) { hour in
-                createGridRow(for: hour)
+                createGridRow(for: hour, displayType: displayType)
             }
-        }
-        .onAppear {
         }
     }
     
@@ -78,21 +84,21 @@ public struct TimeTableGridCaptureView: View {
     }
     
     @ViewBuilder
-    private func createGridRow(for hour: Int) -> some View {
+    private func createGridRow(for hour: Int, displayType: DisplayTypeInfo) -> some View {
         GridRow(alignment: .top) {
             ForEach(weekList, id: \.self) { day in
-                createGridCell(for: hour, day: day)
+                createGridCell(for: hour, day: day, displayType: displayType)
             }
         }
     }
     
     @ViewBuilder
-    private func createGridCell(for hour: Int, day: Week) -> some View {
-        ZStack {
-            Rectangle()
-                .fill(Color.clear)
-                .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
-            
+    private func createGridCell(
+        for hour: Int,
+        day: Week,
+        displayType: DisplayTypeInfo
+    ) -> some View {
+        VStack {
             if let cell = getSlot(
                 timeTable: timeTable,
                 for: hour,
@@ -103,18 +109,22 @@ public struct TimeTableGridCaptureView: View {
                     ZStack {
                         VStack {
                             if hour == cell.schedule.startHour {
-                                Spacer()
-                                Color.heySubMain.opacity(0.5)
+                                if cell.schedule.startMinute != 0 {
+                                    Spacer()
+                                }
+                                cell.backgrounColor
                                     .frame(height: getCellHeight(for: cell, hour: hour))
                                     .clipped()
                             } else if hour == cell.schedule.endHour {
                                 // 종료 시간일 때 위로 배치
-                                Color.heySubMain.opacity(0.5)
+                                cell.backgrounColor
                                     .frame(height: getCellHeight(for: cell, hour: hour))
                                     .clipped()
-                                Spacer()
+                                if cell.schedule.endMinute != 0 {
+                                    Spacer()
+                                }
                             } else {
-                                Color.heySubMain.opacity(0.5)
+                                cell.backgrounColor
                                     .frame(height: getCellHeight(for: cell, hour: hour))
                                     .clipped()
                             }
@@ -123,27 +133,44 @@ public struct TimeTableGridCaptureView: View {
                         // 시간 시작에만 텍스트 보여주기
                         if hour == cell.schedule.startHour {
                             VStack(alignment: .leading) {
-                                Spacer()
-                                    .frame(height: getCellHeight(for: cell, hour: hour))
-                                Text(cell.name)
+                                if cell.schedule.startMinute != 0 {
+                                    Spacer()
+                                        .frame(height: getCellHeight(for: cell, hour: hour))
+                                }
+                                Text(cell.code)
                                     .font(.medium_12)
+                                    .foregroundColor(cell.textColor)
                                     .multilineTextAlignment(.center)
-                                Text(cell.schedule.location)
-                                    .font(.regular_10)
-                                    .foregroundColor(.gray)
+                                
+                                if displayType.classRoomIsVisible {
+                                    Text(cell.schedule.location)
+                                        .font(.regular_10)
+                                        .foregroundColor(cell.textColor)
+                                }
+                                
+                                if displayType.creditIsVisible && cell.unit != nil{
+                                    Text("unit: \(cell.unit!)")
+                                        .font(.regular_10)
+                                        .foregroundColor(cell.textColor)
+                                }
                             }
                         }
                     }
                 }
-//                .disabled(!(viewType == .main))
+                .buttonStyle(PlainButtonStyle())
+                .clipShape(RoundedRectangle(cornerRadius: 2))
+            } else {
+                Rectangle()
+                    .fill(Color.clear)
+                    .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
             }
         }
-        .frame(width: 73, height: 52)
+        .frame(width: 70, height: 52)
     }
     
     private func getCellHeight(for cell: TimeTableCellInfo, hour: Int) -> CGFloat {
         var baseHeight: CGFloat = 52 // 기본 셀 높이
-        if let colorRatio = cell.slot[hour-9] {
+        if let colorRatio = cell.slot[hour-8] {
             baseHeight *= CGFloat(colorRatio)
         } else {
             print(hour)
@@ -153,8 +180,8 @@ public struct TimeTableGridCaptureView: View {
     
     private func getSlot(timeTable: [[TimeTableCellInfo?]], for hour: Int, day: Week) -> TimeTableCellInfo? {
         guard day.index < timeTable.count,
-              hour - 9 < timeTable[day.index].count else { return nil }
-        return timeTable[day.index][hour - 9]
+              hour - 8 < timeTable[day.index].count else { return nil }
+        return timeTable[day.index][hour - 8]
     }
     
 }

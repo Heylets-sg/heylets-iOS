@@ -20,9 +20,9 @@ public protocol TimeTableUseCaseType {
     //시간표 상세조회 불러오기
     var timeTableInfo: PassthroughSubject<TimeTableInfo, Never> { get }
     var displayInfo: PassthroughSubject<DisplayTypeInfo, Never> { get }
-    var timeTableCellInfo: PassthroughSubject<[TimeTableCellInfo], Never> { get }
+    var sectionList: PassthroughSubject<[SectionInfo], Never> { get }
     
-    func fetchTableInfo() -> AnyPublisher<[SectionInfo], Never>
+    func fetchTableInfo() -> AnyPublisher<Void, Never>
     func getProfileInfo() -> AnyPublisher<ProfileInfo, Never>
     
     

@@ -30,6 +30,6 @@ public protocol ScheduleRepositoryType {
     func addCustomModule(
         _ tableId: Int,
         _ customModuleInfo: CustomModuleInfo
-    ) -> AnyPublisher<Void, Error>
+    ) -> AnyPublisher<Void, AddSectionError>
 }
 

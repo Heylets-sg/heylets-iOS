@@ -90,10 +90,10 @@ fileprivate struct ThemeListCellView: View {
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
-                .cornerRadius(10) // 배경에 둥근 모서리 적용
+                .cornerRadius(10)
             } else {
                 Color.clear
-                    .cornerRadius(10) // 선택되지 않은 경우에도 동일한 코너 처리
+                    .cornerRadius(10)
             }
             
             VStack {

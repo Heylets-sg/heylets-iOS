@@ -41,7 +41,7 @@ public protocol AuthRepositoryType {
     ) -> AnyPublisher<Void, VerificationRequestError>
     
     // 로그아웃
-    func logout() -> AnyPublisher<Void, Error>
+    func logout() -> AnyPublisher<Void, LogoutError>
     
     // 로그인
     func logIn(

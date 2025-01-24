@@ -85,7 +85,6 @@ public class ThemeViewModel: ObservableObject {
             
         case .reportButtonDidTap:
             state.isShowingSelectInfoView = false
-            
         }
     }
 }
