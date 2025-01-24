@@ -31,7 +31,7 @@ public struct OnboardingView: View {
                         .frame(height: 120)
                     
                     Text("Add a personal schedule to\nyour school timetable")
-                        .font(.bold_20)
+                        .font(.regular_16)
                         .foregroundColor(.heyWhite)
                         .lineSpacing(3.5)
                         .padding(.bottom, 12)
@@ -74,6 +74,8 @@ public struct OnboardingView: View {
                         .frame(height: 65)
                 }
             }
+            .ignoresSafeArea(edges: .vertical)
+            .ignoresSafeArea(.keyboard)
             .setOnboardingHeyNavigation()
         }
         .navigationBarBackButtonHidden()
@@ -82,10 +84,11 @@ public struct OnboardingView: View {
 
 
 
-//#Preview {
-//    OnboardingView(
-//        viewModel: OnboardingViewModel(
-//            navigationRouter: NavigationRoutableType()
-//        )
-//    )
-//}
+#Preview {
+    OnboardingView(
+        viewModel: OnboardingViewModel(
+            navigationRouter: Router.default.navigationRouter
+        )
+    )
+    .environmentObject(Router.default)
+}

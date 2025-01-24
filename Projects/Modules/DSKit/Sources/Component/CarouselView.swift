@@ -50,15 +50,24 @@ public struct CarouselView<Content: View>: View {
                 .offset(x: offsetX)
                 .gesture(
                     DragGesture()
-                        .updating($dragOffset) { value, out, _ in
-                            out = value.translation.width // 드래그 중에 발생하는 이동을 dragOffset으로 업데이트
-                        }
+//                        .updating($dragOffset) { value, out, _ in
+//                            out = value.translation.width // 드래그 중에 발생하는 이동을 dragOffset으로 업데이트
+//                        }
                         .onEnded { value in
                             let offsetX = value.translation.width // 드래그가 끝난 후 이동한 거리를 계산한 값
-                            let progress = -offsetX / pageWidth // 페이지의 이동 비율로, -offsetX / pageWidth로 계산
-                            let increment = Int(progress.rounded()) // progress를 반올림하여 현재 페이지 인덱스를 결정
                             
-                            currentIndex = max(min(currentIndex + increment, pageCount - 1), 0) // 페이지 전환 후 새로운 인덱스를 설정
+                            let progress = -offsetX / pageWidth // 페이지의 이동 비율로, -offsetX / pageWidth로 계산
+                            let threshold: CGFloat = 0.3
+                            
+                            withAnimation {
+                                    if progress > threshold {
+                                        // 오른쪽에서 왼쪽으로 이동 (다음 페이지로)
+                                        currentIndex = min(currentIndex + 1, pageCount - 1)
+                                    } else if progress < -threshold {
+                                        // 왼쪽에서 오른쪽으로 이동 (이전 페이지로)
+                                        currentIndex = max(currentIndex - 1, 0)
+                                    }
+                                }
                         }
                 )
             }
@@ -70,9 +79,11 @@ public struct CarouselView<Content: View>: View {
             HStack(spacing: 6) {
                 ForEach(0..<pageCount, id: \.self) { index in
                     Circle()
-                        .fill(Color.gray.opacity(
-                            (index == (currentIndex) % pageCount) ? 0.8 : 0.3
-                        ))
+                        .fill(
+                            index == (currentIndex) % pageCount
+                            ? Color.init(hex: "EFF2FF")
+                            : Color.init(hex: "#CBD6FF")
+                        )
                         .frame(width: 6, height: 6) // 동그라미 크기 설정
                 }
             }

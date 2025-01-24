@@ -12,11 +12,11 @@ import BaseFeatureDependency
 import Domain
 import Data
 import Networks
-
-extension Router {
-    static public let `default` = Router()
-}
-
+//
+//extension Router {
+//    static public let `default` = Router()
+//}
+//
 extension HeyUseCase {
     static public let `default` = HeyUseCase(
         repository: HeyRepository(
