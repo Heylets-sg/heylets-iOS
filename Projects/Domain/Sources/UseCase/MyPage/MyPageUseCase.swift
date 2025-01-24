@@ -78,3 +78,27 @@ final public class MyPageUseCase: MyPageUseCaseType {
             .eraseToAnyPublisher()
     }
 }
+
+final public class StubMyPageUseCase: MyPageUseCaseType {
+    public var errMessage = PassthroughSubject<String, Never>()
+    
+    public func getProfile() -> AnyPublisher<ProfileInfo, Never> {
+        Just(.init()).eraseToAnyPublisher()
+    }
+    
+    public func changePassword(
+        _ email: String,
+        _ new: String,
+        _ check: String
+    ) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
+    public func logout() -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
+    public func deleteAccount(_ password: String) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+}

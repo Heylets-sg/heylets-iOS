@@ -40,6 +40,7 @@ public class SelectUniversityViewModel: ObservableObject {
     enum Action {
         case backButtonDidTap
         case nextButtonDidTap
+        case textFieldDidTap
         case selectUniversity(UniversityInfo)
     }
     
@@ -53,7 +54,7 @@ public class SelectUniversityViewModel: ObservableObject {
     public var navigationRouter: NavigationRoutableType
     private var useCase: OnboardingUseCaseType
     private let cancelBag = CancelBag()
-
+    
     // MARK: - Init
     public init(
         navigationRouter: NavigationRoutableType,
@@ -70,6 +71,8 @@ public class SelectUniversityViewModel: ObservableObject {
         switch action {
         case .backButtonDidTap:
             navigationRouter.pop()
+        case .textFieldDidTap:
+            state.filteredItems = allUniversityItems
         case .nextButtonDidTap:
             guard let university = university else { return }
             useCase.userInfo.university = university.rawValue
@@ -85,22 +88,32 @@ public class SelectUniversityViewModel: ObservableObject {
         guard let owner else { return }
         
         $university
-            .filter { $0 != nil }
-            .map { owner.allUniversityItems.contains($0!) }
+            .map { $0 != nil }
             .assign(to: \.state.continueButtonIsEnabled, on: self)
             .store(in: cancelBag)
         
         $searchText
             .map { text in
-                if text.isEmpty {
-                    return []
-                } else {
-                    return owner.allUniversityItems.filter {
-                        $0.rawValue.localizedCaseInsensitiveContains(text)
-                    }
+                print("text ====> \(text)")
+                return text.isEmpty
+                ? []
+                : owner.allUniversityItems.filter {
+                    $0.rawValue.localizedCaseInsensitiveContains(text)
                 }
             }
             .assign(to: \.state.filteredItems, on: owner)
+            .store(in: cancelBag)
+        
+        $searchText
+            .map { text in
+                owner.allUniversityItems.first {
+                    $0.rawValue.caseInsensitiveCompare(text) == .orderedSame
+                }
+            }
+            .handleEvents(receiveOutput: { university in
+                print(university ?? "nil")
+            })
+            .assign(to: \.university, on: self)
             .store(in: cancelBag)
     }
 }

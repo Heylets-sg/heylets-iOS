@@ -121,3 +121,47 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
             .eraseToAnyPublisher()
     }
 }
+
+final public class StubOnboardingUseCase: OnboardingUseCaseType {
+    public var userInfo: User = .empty
+    public var errMessage = PassthroughSubject<String, Never>()
+    
+    public func logIn(
+        _ email: String,
+        _ password: String
+    ) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
+    public func signUp() -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
+    public func requestEmailVerifyCode(
+        _ type: VerifyCodeType,
+        _ email: String
+    ) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
+    public func verifyEmail(
+        _ type: VerifyCodeType,
+        _ email: String,
+        _ otpCode: Int
+    ) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
+    public func checkUserName(
+        _ userName: String
+    ) -> AnyPublisher<Bool, Never> {
+        Just(true).eraseToAnyPublisher()
+    }
+    
+    public func resetPassword(
+        _ email: String,
+        _ newPassword: String
+    ) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+}

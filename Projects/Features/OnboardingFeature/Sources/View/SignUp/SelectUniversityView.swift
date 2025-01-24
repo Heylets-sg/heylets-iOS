@@ -10,6 +10,7 @@ import SwiftUI
 
 import BaseFeatureDependency
 import DSKit
+import Domain
 
 public struct SelectUniversityView: View {
     @EnvironmentObject var container: Router
@@ -28,12 +29,16 @@ public struct SelectUniversityView: View {
                         placeHolder: "Select your university",
                         leftImage: .icSchool
                     )
+                    .onTapGesture {
+                        viewModel.send(.textFieldDidTap)
+                    }
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.heyMain, lineWidth: 2)
+                            .stroke(Color.heyMain, lineWidth: 3)
                     )
+                    
                     
                     ScrollView {
                         VStack(spacing: 0) {
@@ -85,6 +90,13 @@ fileprivate struct SelectUniversityListCellView: View {
         .background(isSelected ? Color.heyMain : Color.heyGray4)
     }
 }
-//#Preview {
-//    SelectUniversityView()
-//}
+
+#Preview {
+    SelectUniversityView(
+        viewModel: SelectUniversityViewModel(
+            navigationRouter: Router.default.navigationRouter,
+            useCase: StubHeyUseCase.stub.onboardingUseCase
+        )
+    )
+    .environmentObject(Router.default)
+}
