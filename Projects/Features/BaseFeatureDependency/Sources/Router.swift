@@ -31,3 +31,9 @@ final public class Router: ObservableObject {
         windowRouter.setObjectWillChange(objectWillChange)
     }
 }
+
+extension Router {
+    static public let `default` = Router()
+}
+
+

@@ -9,6 +9,7 @@
 import SwiftUI
 
 import BaseFeatureDependency
+import Domain
 
 public struct EnterPersonalInfoView: View {
     @EnvironmentObject var container: Router
@@ -70,9 +71,18 @@ fileprivate struct GenderButton: View {
                 .frame(maxWidth: .infinity)
                 .font(.semibold_14)
                 .background(isSelected ? Color.heyMain : Color.heyGray4)
-                .foregroundStyle(Color.heyBlack)
+                .foregroundStyle(Color.heyGray2)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
         }
     }
 }
 
+#Preview {
+    EnterPersonalInfoView(
+        viewModel: .init(
+            navigationRouter: Router.default.navigationRouter,
+            useCase: StubHeyUseCase.stub.onboardingUseCase
+        )
+    )
+    .environmentObject(Router.default)
+}

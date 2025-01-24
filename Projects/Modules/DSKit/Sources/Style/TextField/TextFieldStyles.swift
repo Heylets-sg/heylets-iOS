@@ -12,6 +12,8 @@ import SwiftUI
 struct HeyTextFieldStlyes: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
+            .disableAutocorrection(true)
+            .textInputAutocapitalization(.never)
             .font(.medium_14)
             .foregroundColor(.heyBlack)
             .frame(height: 52)

@@ -10,10 +10,12 @@ import SwiftUI
 
 import BaseFeatureDependency
 import DSKit
+import Domain
 
 public struct SelectUniversityView: View {
     @EnvironmentObject var container: Router
     @ObservedObject var viewModel: SelectUniversityViewModel
+    @FocusState private var isFocused: Bool
     
     public init(viewModel: SelectUniversityViewModel) {
         self.viewModel = viewModel
@@ -28,12 +30,18 @@ public struct SelectUniversityView: View {
                         placeHolder: "Select your university",
                         leftImage: .icSchool
                     )
+                    .focused($isFocused)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.heyMain, lineWidth: 2)
                     )
+                    .onChange(of: isFocused) { isFocused in
+                        if isFocused {
+                            viewModel.send(.textFieldDidTap)
+                        }
+                    }
                     
                     ScrollView {
                         VStack(spacing: 0) {
@@ -54,6 +62,7 @@ public struct SelectUniversityView: View {
             nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
             nextButtonAction: { viewModel.send(.nextButtonDidTap) }
         )
+        .onTapGesture { isFocused = false }
     }
 }
 
@@ -85,6 +94,13 @@ fileprivate struct SelectUniversityListCellView: View {
         .background(isSelected ? Color.heyMain : Color.heyGray4)
     }
 }
-//#Preview {
-//    SelectUniversityView()
-//}
+
+#Preview {
+    SelectUniversityView(
+        viewModel: SelectUniversityViewModel(
+            navigationRouter: Router.default.navigationRouter,
+            useCase: StubHeyUseCase.stub.onboardingUseCase
+        )
+    )
+    .environmentObject(Router.default)
+}

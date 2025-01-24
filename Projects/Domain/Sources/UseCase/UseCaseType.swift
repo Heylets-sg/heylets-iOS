@@ -8,14 +8,14 @@
 
 import Foundation
 
-public protocol UseCaseType {
+public protocol UseCaseType: ObservableObject {
     var myPageUseCase: MyPageUseCaseType { get }
     var onboardingUseCase: OnboardingUseCaseType { get }
     var timeTableUseCase: TimeTableUseCaseType { get }
     var splashUseCase: SplashUseCaseType { get }
 }
 
-public final class HeyUseCase: UseCaseType & ObservableObject {
+public final class HeyUseCase: UseCaseType {
     
     var repository: RepositoryType
     
@@ -50,4 +50,17 @@ public final class HeyUseCase: UseCaseType & ObservableObject {
         
         )
     }
+}
+
+public final class StubHeyUseCase: UseCaseType {
+    public init() {}
+    
+    public var splashUseCase: SplashUseCaseType = StubSplashUseCase()
+    public var myPageUseCase: MyPageUseCaseType = StubMyPageUseCase()
+    public var onboardingUseCase: OnboardingUseCaseType = StubOnboardingUseCase()
+    public var timeTableUseCase: TimeTableUseCaseType = StubTimeTableUseCase()
+}
+
+extension StubHeyUseCase {
+    static public let `stub` = StubHeyUseCase()
 }

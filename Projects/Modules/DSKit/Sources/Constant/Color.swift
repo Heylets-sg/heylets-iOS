@@ -16,6 +16,7 @@ public extension Color {
     static let heyGray4 = DSKitAsset.heyGray4.swiftUIColor
     static let heyGray5 = DSKitAsset.heyGray5.swiftUIColor
     static let heyGray6 = DSKitAsset.heyGray6.swiftUIColor
+    static let heyGray7 = DSKitAsset.heyGray7.swiftUIColor
     static let heyGreen = DSKitAsset.heyGreen.swiftUIColor
     static let heyMain = DSKitAsset.heyMain.swiftUIColor
     static let heySubError = DSKitAsset.heySubError.swiftUIColor

@@ -9,6 +9,7 @@
 import SwiftUI
 
 import BaseFeatureDependency
+import Domain
 import DSKit
 
 public struct LogInView: View {
@@ -16,7 +17,12 @@ public struct LogInView: View {
     @ObservedObject var viewModel: LogInViewModel
     
     @State var showPassword: Bool = false
-    @State private var isShowingToast: Bool = false
+    @FocusState var isFocused: Field?
+    
+    enum Field {
+        case id
+        case password
+    }
     
     public init(viewModel: LogInViewModel) {
         self.viewModel = viewModel
@@ -56,6 +62,7 @@ public struct LogInView: View {
                 text: $viewModel.id,
                 placeHolder: "ID"
             )
+            .focused($isFocused, equals: .id)
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.heyGray3, lineWidth: 1)
@@ -66,6 +73,7 @@ public struct LogInView: View {
                 password: $viewModel.password,
                 showPassword: $showPassword, colorSystem: .white
             )
+            .focused($isFocused, equals: .password)
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.heyGray3, lineWidth: 1)
@@ -89,14 +97,20 @@ public struct LogInView: View {
                 }
             }
             
-            
-            
             Spacer()
             
             Button("Log In") {
                 viewModel.send(.loginButtonDidTap)
             }
             .heyBottomButtonStyle()
+        }
+        .onSubmit {
+            switch isFocused {
+            case .id:
+                isFocused = .password
+            default:
+                isFocused = nil
+            }
         }
         .padding(.top, 106)
         .padding(.bottom, 65)
@@ -105,5 +119,19 @@ public struct LogInView: View {
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()
+        .onTapGesture {
+            isFocused = nil
+        }
     }
+}
+
+#Preview {
+    LogInView(
+        viewModel: .init(
+            navigationRouter: Router.default.navigationRouter,
+            windowRouter: Router.default.windowRouter,
+            useCase: StubHeyUseCase.stub.onboardingUseCase
+        )
+    )
+    .environmentObject(Router.default)
 }

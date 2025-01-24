@@ -201,3 +201,74 @@ extension TimeTableUseCase {
             .eraseToAnyPublisher()
     }
 }
+
+
+final public class StubTimeTableUseCase: TimeTableUseCaseType {
+    public var tableId: Int = 0
+    public var errMessage = PassthroughSubject<String, Never>()
+    public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()
+    public var sectionList = PassthroughSubject<[SectionInfo], Never>()
+    public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()
+}
+
+//MARK: Main
+extension StubTimeTableUseCase {
+    // 시간표 상세조회 불러오기
+    
+    public func fetchTableInfo() -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
+    public func getProfileInfo() -> AnyPublisher<ProfileInfo, Never> {
+        Just(.init()).eraseToAnyPublisher()    }
+    
+    
+    public func getTableDetailInfo() -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
+    public func getTableId() -> AnyPublisher<Int?, Never> {
+        Just(nil).eraseToAnyPublisher()
+    }
+    
+    public func addSection(_ sectionId: Int) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
+    public func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+
+    public func getLectureList(_ keyword: String) -> AnyPublisher<[SectionInfo], Never> {
+        Just([]).eraseToAnyPublisher()
+    }
+    
+    public func addCustomModule(
+        _ customModule: CustomModuleInfo
+    ) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+
+    public func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
+    public func getThemeList() -> AnyPublisher<[Theme], Never> {
+        Just([]).eraseToAnyPublisher()
+    }
+    
+    public func getSettingInfo() -> AnyPublisher<SettingInfo, Never> {
+        Just(.init(displayType: .MODULE_CODE, theme: "")).eraseToAnyPublisher()
+    }
+    
+    public func patchSettingInfo(
+        _ displayType: DisplayTypeInfo,
+        _ theme: String
+    ) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
+    public func deleteAllSection() -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+}
