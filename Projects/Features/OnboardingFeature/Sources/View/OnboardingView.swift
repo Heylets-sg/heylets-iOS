@@ -11,11 +11,42 @@ import BaseFeatureDependency
 import Core
 import DSKit
 
+enum OnboardingType {
+    case timeTable
+    case theme
+    
+    var title: String {
+        switch self {
+        case .timeTable:
+            return "Add a personal schedule to\nyour school timetable"
+        case .theme:
+            return "Customize Your Timetable\nwith Your Favorite Color"
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case.timeTable:
+            return "Manage your school-related schedules\nall at once!"
+        case .theme:
+            return "Customize your timetable with your\nfavorite colors!"
+        }
+    }
+    
+    var image: UIImage {
+        switch self {
+        case .timeTable:
+            return .timeTable
+        case .theme:
+            return .color
+        }
+    }
+}
 public struct OnboardingView: View {
     @EnvironmentObject var container: Router
     var viewModel: OnboardingViewModel
     
-    let images: [UIImage] = [.timeTable, .color]
+    let onboardingContent: [OnboardingType] = [.timeTable, .theme]
     
     public init(viewModel: OnboardingViewModel) {
         self.viewModel = viewModel
@@ -30,32 +61,47 @@ public struct OnboardingView: View {
                     Spacer()
                         .frame(height: 120)
                     
-                    Text("Add a personal schedule to\nyour school timetable")
-                        .font(.regular_16)
-                        .foregroundColor(.heyWhite)
-                        .lineSpacing(3.5)
-                        .padding(.bottom, 12)
-                        .padding(.leading, 16)
-                        .lineLimit(2)
-                    
-                    Text("Manage your school-related schedules\nall at once!")
-                        .font(.medium_14)
-                        .foregroundColor(.heyWhite)
-                        .padding(.leading, 16)
-                        .lineLimit(2)
-                    
-                    Spacer()
-                        .frame(height: 52)
-                    
-                    CarouselView(pageCount: images.count, visibleEdgeSpace: 0, spacing: 0) { index in
-                        Image(uiImage: images[index])
-                            .resizable()
-                            .scaledToFit()
+                    CarouselView(pageCount: 2, visibleEdgeSpace: 0, spacing: 0) { index in
+                        VStack(alignment: .leading) {
+                            VStack {
+                                Text(onboardingContent[index].title)
+                                    .font(.bold_20)
+                                    .foregroundColor(.heyWhite)
+                                    .lineSpacing(3.5)
+                                    .padding(.bottom, 12)
+                                    .padding(.leading, 16)
+                                    .lineLimit(2)
+                                
+                                Text(onboardingContent[index].description)
+                                    .font(.medium_14)
+                                    .foregroundColor(.heyWhite)
+                                    .padding(.leading, 16)
+                                    .lineLimit(2)
+                            }
+                            
+                            
+                            if index == 0 {
+                                Spacer()
+                                    .frame(height: 52)
+                                
+                                Image(uiImage: onboardingContent[index].image)
+                                    .resizable()
+                                    .frame(width: 293, height: 293)
+                                    .padding(.horizontal, 50)
+                            } else {
+                                Spacer()
+                                    .frame(height: 125)
+                                
+                                Image(uiImage: onboardingContent[index].image)
+                                    .resizable()
+                                    .frame(height: 150)
+                                
+                                Spacer()
+                            }
+                            
+                            
+                        }
                     }
-//                    .frame(height: 353)
-                    .padding(.horizontal, 0)
-                    
-                    Spacer()
                     
                     VStack {
                         Button("Sign up") {

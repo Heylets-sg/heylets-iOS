@@ -25,12 +25,13 @@ public struct CarouselView<Content: View>: View {
     
     public var body: some View {
         VStack(alignment: .center) {
-            Spacer() // 위쪽 공간 확보
             GeometryReader { proxy in
                 // 양쪽 가장자리에 보일 여백 = 두 뷰 사이 간격 + 화면 양쪽 가장자리에 보일 여백
                 let baseOffset: CGFloat = spacing + visibleEdgeSpace
                 // 각 페이지의 너비 = 전체 너비 - (화면 양쪽 가장자리에 보일 여백 + 두 뷰 사이 간격) * 양쪽(= 2)
+                
                 let pageWidth: CGFloat = proxy.size.width - (visibleEdgeSpace + spacing) * 2
+                
                 // HStack의 전체 오프셋을 계산하여 페이지 전환을 구현
                 let offsetX: CGFloat = baseOffset + CGFloat(currentIndex) * -pageWidth + CGFloat(currentIndex) * -spacing + dragOffset
                 
@@ -41,7 +42,7 @@ public struct CarouselView<Content: View>: View {
                     ForEach(0..<pageCount, id: \.self) { pageIndex in
                         self.content(pageIndex)
                             .frame(
-                                width: pageWidth, // 각 페이지의 너비를 화면 크기에 맞게 설정
+                                width: pageWidth,
                                 height: proxy.size.height
                             )
                     }
@@ -50,9 +51,6 @@ public struct CarouselView<Content: View>: View {
                 .offset(x: offsetX)
                 .gesture(
                     DragGesture()
-//                        .updating($dragOffset) { value, out, _ in
-//                            out = value.translation.width // 드래그 중에 발생하는 이동을 dragOffset으로 업데이트
-//                        }
                         .onEnded { value in
                             let offsetX = value.translation.width // 드래그가 끝난 후 이동한 거리를 계산한 값
                             
@@ -94,15 +92,65 @@ public struct CarouselView<Content: View>: View {
 }
 
 import SwiftUI
+enum OnboardingType {
+    case timeTable
+    case theme
+    
+    var title: String {
+        switch self {
+        case .timeTable:
+            return "Add a personal schedule to\nyour school timetable"
+        case .theme:
+            return "Customize Your Timetable\nwith Your Favorite Color"
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case.timeTable:
+            return "Manage your school-related schedules\nall at once!"
+        case .theme:
+            return "Customize your timetable with your\nfavorite colors!"
+        }
+    }
+    
+    var image: UIImage {
+        switch self {
+        case .timeTable:
+            return .timeTable
+        case .theme:
+            return .color
+        }
+    }
+}
 
 struct ContentView2: View {
-    let images: [UIImage] = [.timeTable, .color] // 테스트용 이미지
+    let onboardingContent: [OnboardingType] = [.timeTable, .theme]
     
     var body: some View {
-        CarouselView(pageCount: images.count, visibleEdgeSpace: 0, spacing: 0) { index in
-            Image(uiImage: images[index])
-                .resizable()
-                .scaledToFit()
+        CarouselView(pageCount: onboardingContent.count, visibleEdgeSpace: 0, spacing: 0) { index in
+            VStack(alignment: .leading) {
+                Text(onboardingContent[index].title)
+                    .font(.regular_16)
+                    .foregroundColor(.heyBlack)
+                    .lineSpacing(3.5)
+                    .padding(.bottom, 12)
+                    .padding(.leading, 16)
+                    .lineLimit(2)
+                
+                Text(onboardingContent[index].description)
+                    .font(.medium_14)
+                    .foregroundColor(.heyBlack)
+                    .padding(.leading, 16)
+                    .lineLimit(2)
+                
+                Spacer()
+                    .frame(height: 52)
+                
+                Image(uiImage: onboardingContent[index].image)
+                    .resizable()
+                    .scaledToFit()
+            }
         }
         .frame(height: 353) // 전체 Carousel 뷰의 높이 설정
         .padding(.horizontal, 0) // 양쪽 여백을 없애기 위해 horizontal padding 0
