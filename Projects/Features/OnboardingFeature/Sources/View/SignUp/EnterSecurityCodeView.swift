@@ -9,6 +9,7 @@
 import SwiftUI
 
 import BaseFeatureDependency
+import Domain
 import DSKit
 
 public struct EnterSecurityCodeView: View {
@@ -26,7 +27,7 @@ public struct EnterSecurityCodeView: View {
             
             Text(verbatim: "Enter the 6-digit code we sent to the email:\n\(viewModel.state.hiddenEmail)")
                 .font(.regular_16)
-                .foregroundColor(.heyGray2)
+                .foregroundColor(.heyGray1)
                 .lineLimit(2)
             
             Spacer()
@@ -41,12 +42,20 @@ public struct EnterSecurityCodeView: View {
                 .foregroundColor(.heyError)
             
         }, titleText: "Enter Your Security Code",
-            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
-            nextButtonAction: { viewModel.send(.nextButtonDidTap) }
+                           nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
+                           nextButtonAction: { viewModel.send(.nextButtonDidTap) }
         )
     }
 }
 
-//#Preview {
-//    EnterSecurityCodeView()
-//}
+#Preview {
+    EnterSecurityCodeView(
+        viewModel: .init(
+            navigationRouter: Router.default.navigationRouter,
+            useCase: StubHeyUseCase.stub.onboardingUseCase,
+            type: .email,
+            email: ""
+        )
+    )
+    .environmentObject(Router.default)
+}

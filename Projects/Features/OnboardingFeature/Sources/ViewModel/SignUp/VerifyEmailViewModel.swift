@@ -24,6 +24,7 @@ public class VerifyEmailViewModel: ObservableObject {
         case backButtonDidTap
         case nextButtonDidTap
         case domainListButtonDidTap
+        case dismissFocus
         case selectDomain(String)
     }
     
@@ -35,6 +36,23 @@ public class VerifyEmailViewModel: ObservableObject {
     public var navigationRouter: NavigationRoutableType
     private var useCase: OnboardingUseCaseType
     private let cancelBag = CancelBag()
+    
+    let domainList: [String] = [
+        "u.nus.edu",
+        "e.ntu.edu.sg",
+        "smu.edu.sg",
+        "smu.edu.sg",
+        "accountancy.smu.edu.sg",
+        "computing.smu.edu.sg",
+        "economics.smu.edu.sg",
+        "scis.smu.edu.sg",
+        "law.smu.edu.sg",
+        "business.edu.sg",
+        "socsc.smu.edu.sg",
+        "business.smu.edu.sg",
+        "gmail.com",
+        "naver.com"
+    ]
     
     public init(
         navigationRouter: NavigationRoutableType,
@@ -63,6 +81,8 @@ public class VerifyEmailViewModel: ObservableObject {
                 .store(in: cancelBag)
         case .domainListButtonDidTap:
             state.domainListViewIsVisible.toggle()
+        case .dismissFocus:
+            state.domainListViewIsVisible = false
         case .selectDomain(let domain):
             state.domainListViewIsVisible = false
             self.domain = domain

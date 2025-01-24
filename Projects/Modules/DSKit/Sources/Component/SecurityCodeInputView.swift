@@ -54,9 +54,10 @@ public struct SecurityCodeInputView: View {
                                 .font(.semibold_28)
                                 .foregroundColor(Color.heyGray1)
                             Rectangle()
-                                .frame(height: 2)
+                                .frame(width: 32, height: 2)
                                 .foregroundColor(Color.heyGray1)
-                                .padding(.horizontal, 5)
+                                .padding(.leading, index == 3 ? 20 : 10)
+                                .padding(.trailing, index == 2 ? 20 : 10)
                                 .opacity(self.otpCode.count <= index ? 1 : 0)
                         }
                     }

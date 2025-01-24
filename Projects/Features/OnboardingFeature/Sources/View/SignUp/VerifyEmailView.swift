@@ -9,11 +9,14 @@
 import SwiftUI
 
 import BaseFeatureDependency
+import Domain
 import DSKit
 
 public struct VerifyEmailView: View {
     @EnvironmentObject var container: Router
     @ObservedObject var viewModel: VerifyEmailViewModel
+
+    @FocusState private var isFocused: Bool
     
     public init(viewModel: VerifyEmailViewModel) {
         self.viewModel = viewModel
@@ -31,6 +34,7 @@ public struct VerifyEmailView: View {
                     placeHolder: "Enter your school email",
                     colorSystem: .gray
                 )
+                .focused($isFocused)
                 .padding(.trailing, 12)
                 
                 Text("@")
@@ -40,23 +44,32 @@ public struct VerifyEmailView: View {
             .padding(.trailing, 47)
             .padding(.bottom, 18)
             
-            HStack {
-                HeyTextField(
-                    text: $viewModel.domain,
-                    placeHolder: "Click DownList Button",
-                    colorSystem: .gray
-                )
-                .padding(.trailing, 16)
-                
-                Button {
-                    viewModel.send(.domainListButtonDidTap)
-                } label: {
+            Button {
+                viewModel.send(.domainListButtonDidTap)
+            } label: {
+                HStack {
+                    Text(viewModel.domain.isEmpty
+                         ? "Click DownList Button"
+                         : viewModel.domain
+                    )
+                    .font(.medium_14)
+                    .foregroundColor(
+                        viewModel.domain.isEmpty
+                        ? .heyGray3
+                        : .heyGray1
+                    )
+                    
+                    Spacer()
+                    
                     Image(uiImage: .icDown)
                         .resizable()
                         .frame(width: 12, height: 6)
                 }
-                .padding(.trailing, 16)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 17)
+                .background(Color.heyGray4)
             }
+            
             .background(Color.heyGray4)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.trailing, 116)
@@ -69,12 +82,18 @@ public struct VerifyEmailView: View {
             EmailDomainListView(viewModel: viewModel)
                 .frame(height: 250)
                 .padding(.trailing, 116)
-                .padding(.bottom, 20)
                 .hidden(!viewModel.state.domainListViewIsVisible)
         },
-        titleText: "Verify with your school email",
-        nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
-        nextButtonAction: { viewModel.send(.nextButtonDidTap) } )
+       titleText: "Verify with your school email",
+       nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
+       nextButtonAction: { viewModel.send(.nextButtonDidTap) } 
+        )
+        .onTapGesture {
+            viewModel.send(.dismissFocus)
+            isFocused = false
+        }
+        .ignoresSafeArea(edges: .vertical)
+        .ignoresSafeArea(.keyboard)
     }
 }
 
@@ -84,25 +103,20 @@ fileprivate struct EmailDomainListView: View {
     init(viewModel: VerifyEmailViewModel) {
         self.viewModel = viewModel
     }
-    var domainList: [String] = [
-        "u.nus.edu",
-        "e.ntu.edu.sg",
-        "smu.edu.sg",
-        "*.smu.edu.sg"
-    ]
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                ForEach(domainList, id: \.self) { domain in
+                ForEach(viewModel.domainList, id: \.self) { domain in
                     EmailDomainListCellView(domain)
                         .onTapGesture {
                             viewModel.send(.selectDomain(domain))
                         }
                 }
             }
-            .cornerRadius(8)
         }
         .background(Color.heyGray4)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
 
@@ -124,8 +138,15 @@ fileprivate struct EmailDomainListCellView: View {
         .padding(.leading, 16)
     }
 }
-//#Preview {
-//    VerifyEmailView()
-//}
+
+#Preview {
+    VerifyEmailView(
+        viewModel: .init(
+            navigationRouter: Router.default.navigationRouter,
+            useCase: StubHeyUseCase.stub.onboardingUseCase
+        )
+    )
+    .environmentObject(Router.default)
+}
 
 

@@ -18,7 +18,7 @@ public struct HeyButtonColorStyle {
 extension HeyButtonColorStyle {
     public static let white = HeyButtonColorStyle(
         background: .heyWhite,
-        foreground: .heyGray7,
+        foreground: .heyBlack,
         disabledForeground: .heyGray7,
         disabledBackground: .heyGray4
     )
