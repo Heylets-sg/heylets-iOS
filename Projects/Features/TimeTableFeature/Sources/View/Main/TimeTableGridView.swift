@@ -50,78 +50,81 @@ public struct TimeTableGridView: View {
     @ViewBuilder
     private func createGridCell(for hour: Int, day: Week) -> some View {
         VStack {
-            if let cell = getSlot(
-                timeTable: viewModel.timeTable,
-                for: hour,
-                day: day
-            ) {
-                Button {
-                    withAnimation {
-                        viewModel.send(.tableCellDidTap(cell.id))
-                    }
-                } label: {
-                    ZStack {
+            if let cell = getSlot(timeTable: viewModel.timeTable, for: hour, day: day) {
+                ZStack {
+                    Button {
+                        withAnimation {
+                            viewModel.send(.tableCellDidTap(cell.id))
+                        }
+                    } label: {
                         VStack {
-                            if hour == cell.schedule.startHour {
-                                if cell.schedule.startMinute != 0 {
-                                    Spacer()
-                                }
-                                cell.backgrounColor
-                                    .frame(height: getCellHeight(for: cell, hour: hour))
-                                    .clipped()
-                            } else if hour == cell.schedule.endHour {
-                                // 종료 시간일 때 위로 배치
-                                cell.backgrounColor
-                                    .frame(height: getCellHeight(for: cell, hour: hour))
-                                    .clipped()
-                                if cell.schedule.endMinute != 0 {
-                                    Spacer()
-                                }
-                            } else {
-                                cell.backgrounColor
-                                    .frame(height: getCellHeight(for: cell, hour: hour))
-                                    .clipped()
-                            }
+                            createCellBackground(cell: cell, hour: hour)
                         }
-
-                        // 시간 시작에만 텍스트 보여주기
-                        if hour == cell.schedule.startHour {
-                            VStack(alignment: .leading) {
-                                if cell.schedule.startMinute != 0 {
-                                    Spacer()
-                                        .frame(height: getCellHeight(for: cell, hour: hour))
-                                }
-                                Text(cell.code)
-                                    .font(.medium_12)
-                                    .foregroundColor(cell.textColor)
-                                    .multilineTextAlignment(.center)
-                                
-                                if displayType.classRoomIsVisible {
-                                    Text(cell.schedule.location)
-                                        .font(.regular_10)
-                                        .foregroundColor(cell.textColor)
-                                }
-                                
-                                if displayType.creditIsVisible && cell.unit != nil{
-                                    Text("unit: \(cell.unit!)")
-                                        .font(.regular_10)
-                                        .foregroundColor(cell.textColor)
-                                }
-                            }
-                        }
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .clipShape(RoundedRectangle(cornerRadius: 2))
+                    .disabled(!(viewType == .main))
+                    
+                    if hour == cell.schedule.startHour {
+                        createCellText(cell: cell)
                     }
                 }
-                .buttonStyle(PlainButtonStyle())
-                .clipShape(RoundedRectangle(cornerRadius: 2))
-                .disabled(!(viewType == .main))
             } else {
-                Rectangle()
-                    .fill(Color.clear)
-                    .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
+                createEmptyCell()
             }
         }
         .frame(height: 52)
     }
+
+    @ViewBuilder
+    private func createCellBackground(cell: TimeTableCellInfo, hour: Int) -> some View {
+        VStack {
+            if hour == cell.schedule.startHour {
+                if cell.schedule.startMinute != 0 { Spacer() }
+            }
+            
+            cell.backgrounColor
+                .frame(height: getCellHeight(for: cell, hour: hour))
+                .clipped()
+            
+            if hour == cell.schedule.endHour && cell.schedule.endMinute != 0 {
+                Spacer()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func createCellText(cell: TimeTableCellInfo) -> some View {
+        VStack(alignment: .leading) {
+            if cell.schedule.startMinute != 0 {
+                Spacer().frame(height: getCellHeight(for: cell, hour: cell.schedule.startHour))
+            }
+            Text(cell.code)
+                .font(.medium_12)
+                .foregroundColor(cell.textColor)
+                .multilineTextAlignment(.center)
+            
+            if displayType.classRoomIsVisible {
+                Text(cell.schedule.location)
+                    .font(.regular_10)
+                    .foregroundColor(cell.textColor)
+            }
+            
+            if displayType.creditIsVisible, let unit = cell.unit {
+                Text("unit: \(unit)")
+                    .font(.regular_10)
+                    .foregroundColor(cell.textColor)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func createEmptyCell() -> some View {
+        Rectangle()
+            .fill(Color.clear)
+            .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
+    }
+
     
     private func getCellHeight(for cell: TimeTableCellInfo, hour: Int) -> CGFloat {
         var baseHeight: CGFloat = 52 // 기본 셀 높이
