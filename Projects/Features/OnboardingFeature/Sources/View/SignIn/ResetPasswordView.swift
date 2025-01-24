@@ -9,6 +9,7 @@
 import SwiftUI
 
 import BaseFeatureDependency
+import Domain
 import DSKit
 
 public struct ResetPasswordView: View {
@@ -50,7 +51,13 @@ public struct ResetPasswordView: View {
     }
 }
 
-
-//#Preview {
-//    ResetPasswordView()
-//}
+#Preview {
+    ResetPasswordView(
+        viewModel: .init(
+            navigationRouter: Router.default.navigationRouter,
+            useCase: StubHeyUseCase.stub.onboardingUseCase,
+            email: ""
+        )
+    )
+    .environmentObject(Router.default)
+}
