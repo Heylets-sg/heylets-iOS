@@ -24,10 +24,7 @@ final public class MyPageUseCase: MyPageUseCaseType {
         self.authRepository = authRepository
     }
     
-    public var passwordFailed = PassthroughSubject<PasswordError, Never>()
-    public var changePasswordFailed = PassthroughSubject<String, Never>()
-    public var logoutFailed = PassthroughSubject<String, Never>()
-    public var revokeUserFailed = PassthroughSubject<String, Never>()
+    public var errMessage = PassthroughSubject<String, Never>()
     
     public func getProfile() -> AnyPublisher<ProfileInfo, Never> {
         userRepository.getProfile()
@@ -51,13 +48,13 @@ final public class MyPageUseCase: MyPageUseCaseType {
             .handleEvents(receiveCompletion: { [weak self] completion in
                 if case let .failure(error) = completion {
                     guard let passwordError = error as? PasswordError else { return }
-                    self?.passwordFailed.send(passwordError)
+                    self?.errMessage.send(passwordError.message)
                 }
             })
             .flatMap {self.authRepository.resetPassword(email, $0)}
             .asVoid()
             .catch { [weak self] error in
-                self?.changePasswordFailed.send("로그아웃에 실패했습니다.")
+                self?.errMessage.send("로그아웃에 실패했습니다.")
                 return Just(())
             }
             .eraseToAnyPublisher()
@@ -66,7 +63,7 @@ final public class MyPageUseCase: MyPageUseCaseType {
     public func logout() -> AnyPublisher<Void, Never> {
         authRepository.logout()
             .catch { [weak self] error in
-                self?.logoutFailed.send("로그아웃에 실패했습니다.")
+                self?.errMessage.send("로그아웃에 실패했습니다.")
                 return Empty<Void, Never>()
             }
             .eraseToAnyPublisher()
@@ -75,7 +72,7 @@ final public class MyPageUseCase: MyPageUseCaseType {
     public func deleteAccount(_ password: String) -> AnyPublisher<Void, Never> {
         authRepository.deleteAccount(password)
             .catch { [weak self] Error in
-                self?.revokeUserFailed.send("회원탈퇴에 실패했습니다")
+                self?.errMessage.send("회원탈퇴에 실패했습니다")
                 return Empty<Void, Never>()
             }
             .eraseToAnyPublisher()

@@ -91,12 +91,19 @@ public struct AuthRepository: AuthRepositoryType {
             .eraseToAnyPublisher()
     }
     
-    public func logout() -> AnyPublisher<Void, Error> {
+    public func logout() -> AnyPublisher<Void, LogoutError> {
         authService.logout()
             .handleEvents(receiveOutput: { _ in
                 UserDefaultsManager.clearToken()
             })
-            .asVoidWithGeneralError()
+            .mapError { error in
+                if let errorCode = error.isInvalidStatusCode() {
+                    return LogoutError.error(with: errorCode)
+                } else {
+                    return .unknown
+                }
+            }
+            .eraseToAnyPublisher()
     }
     
     public func logIn(

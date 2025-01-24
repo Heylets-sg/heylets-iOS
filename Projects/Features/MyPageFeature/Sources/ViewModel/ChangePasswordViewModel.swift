@@ -96,10 +96,10 @@ public class ChangePasswordViewModel: ObservableObject {
     }
     
     private func bindState() {
-        useCase.passwordFailed
+        useCase.errMessage
 //            .merge(with: useCase.passwordFailed)
             .receive(on: RunLoop.main)
-            .map { $0.message }
+            .map { $0 }
             .assign(to: \.state.showToast, on: self)
             .store(in: cancelBag)
     }

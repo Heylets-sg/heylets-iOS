@@ -80,6 +80,7 @@ public class MyPageViewModel: ObservableObject {
                 .sink(receiveValue: { [weak self] _ in
                     self?.windowRouter.switch(to: .onboarding)
                 }).store(in: cancelBag)
+            
         case .dismissLogoutAlertView:
             state.logoutAlertViewIsPresented = false
         }

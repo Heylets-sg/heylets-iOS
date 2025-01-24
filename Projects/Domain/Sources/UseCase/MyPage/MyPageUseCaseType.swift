@@ -10,9 +10,7 @@ import Foundation
 import Combine
 
 public protocol MyPageUseCaseType {
-    var passwordFailed: PassthroughSubject<PasswordError, Never> { get }
-    var logoutFailed: PassthroughSubject<String, Never> { get }
-    var revokeUserFailed: PassthroughSubject<String, Never> { get }
+    var errMessage: PassthroughSubject<String, Never> { get }
     
     func getProfile() -> AnyPublisher<ProfileInfo, Never>
     // 유저 정보 받아오기
