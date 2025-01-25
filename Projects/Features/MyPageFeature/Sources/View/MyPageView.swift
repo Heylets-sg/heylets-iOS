@@ -126,7 +126,7 @@ public struct MyPageTopView: View {
                 } label: {
                     Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
                         .resizable()
-                        .frame(width: 22, height: 18)
+                        .frame(width: 24, height: 20)
                         .tint(.white)
                 }
                 .padding(.leading, 16)
