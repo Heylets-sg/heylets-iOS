@@ -52,27 +52,4 @@
          </FileRef>
       </Group>
    </Group>
-   <Group
-      location = "group:Tuist"
-      name = "Tuist">
-      <Group
-         location = "group:Dependencies"
-         name = "Dependencies">
-         <Group
-            location = "group:SwiftPackageManager"
-            name = "SwiftPackageManager">
-            <Group
-               location = "group:.build"
-               name = ".build">
-               <Group
-                  location = "group:checkouts"
-                  name = "checkouts">
-                  <FileRef
-                     location = "group:Kingfisher/Kingfisher.xcodeproj">
-                  </FileRef>
-               </Group>
-            </Group>
-         </Group>
-      </Group>
-   </Group>
 </Workspace>

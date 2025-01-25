@@ -82,7 +82,6 @@ extension View {
                         secondaryAction: secondaryButton
                     )
                     .padding(.horizontal, 44)
-                    .shadow(radius: 10)
                 }
                 .ignoresSafeArea()
                 

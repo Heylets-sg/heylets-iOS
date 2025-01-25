@@ -33,7 +33,7 @@ public struct SecurityPasswordField: View {
                 "",
                 text: $password,
                 prompt: Text(placeHolder)
-                    .foregroundColor(.heyGray2)
+                    .foregroundColor(.heyGray3)
             )
             .heyTextFieldStyle()
             

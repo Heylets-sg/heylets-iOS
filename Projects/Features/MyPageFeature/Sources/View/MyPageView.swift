@@ -9,8 +9,8 @@
 import SwiftUI
 
 import DSKit
+import Domain
 import BaseFeatureDependency
-import Kingfisher
 
 public struct MyPageView: View {
     @EnvironmentObject var container: Router
@@ -55,6 +55,7 @@ public struct MyPageView: View {
                                 }
                                 
                                 Spacer()
+                                    .frame(height: 60)
                             }
                             .scrollIndicators(.hidden)
                         }
@@ -83,6 +84,7 @@ public struct MyPageView: View {
                             .frame(width: 80, height: 80)
                             .padding(.top, 125)
                     }
+                    
                     Spacer()
                 }
             }
@@ -124,7 +126,7 @@ public struct MyPageTopView: View {
                 } label: {
                     Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
                         .resizable()
-                        .frame(width: 22, height: 18)
+                        .frame(width: 24, height: 20)
                         .tint(.white)
                 }
                 .padding(.leading, 16)
@@ -171,7 +173,7 @@ public struct AccountView: View {
             }
             
         }
-        .background(Color.heyGray5)
+        .background(Color.heyGray4)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
@@ -222,7 +224,7 @@ public struct SupportView: View {
             }
             
         }
-        .background(Color.heyGray5)
+        .background(Color.heyGray4)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
@@ -257,7 +259,7 @@ public struct AppSettingView: View {
             }
             
         }
-        .background(Color.heyGray5)
+        .background(Color.heyGray4)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
@@ -300,11 +302,19 @@ public struct EtcView: View {
             }
             
         }
-        .background(Color.heyGray5)
+        .background(Color.heyGray4)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
 
-//#Preview {
-//    MyPageView()
-//}
+#Preview {
+    MyPageView(
+        viewModel: .init(
+            navigationRouter: Router.default.navigationRouter,
+            windowRouter: Router.default.windowRouter,
+            useCase: StubHeyUseCase.stub.myPageUseCase,
+            profileInfo: .init()
+        )
+    )
+    .environmentObject(Router.default)
+}

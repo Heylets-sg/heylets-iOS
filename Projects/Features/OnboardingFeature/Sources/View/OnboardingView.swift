@@ -67,18 +67,18 @@ public struct OnboardingView: View {
                                 Text(onboardingContent[index].title)
                                     .font(.bold_20)
                                     .foregroundColor(.heyWhite)
-                                    .lineSpacing(3.5)
                                     .padding(.bottom, 12)
-                                    .padding(.leading, 16)
-                                    .lineLimit(2)
+                                    .multilineTextAlignment(.leading)
+                                    .background(Color.blue)
                                 
                                 Text(onboardingContent[index].description)
-                                    .font(.medium_14)
+                                    .font(.regular_14)
                                     .foregroundColor(.heyWhite)
-                                    .padding(.leading, 16)
-                                    .lineLimit(2)
+                                    .multilineTextAlignment(.leading)
+                                    .background(Color.green)
                             }
-                            
+                            .padding(.leading, 16)
+                            .background(Color.red)
                             
                             if index == 0 {
                                 Spacer()
@@ -98,8 +98,6 @@ public struct OnboardingView: View {
                                 
                                 Spacer()
                             }
-                            
-                            
                         }
                     }
                     

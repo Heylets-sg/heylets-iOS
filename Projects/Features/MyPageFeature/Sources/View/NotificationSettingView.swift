@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import BaseFeatureDependency
 
 public struct NotificationSettingView: View {
     
@@ -47,7 +48,7 @@ public struct NotificationSettingView: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 24)
-                .background(Color.heyGray5)
+                .background(Color.heyGray4)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 
                 Spacer()
@@ -78,7 +79,7 @@ public struct NotificationSettingView: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 24)
-                .background(Color.heyGray5)
+                .background(Color.heyGray4)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
             }
             
@@ -87,6 +88,11 @@ public struct NotificationSettingView: View {
     }
 }
 
-//#Preview {
-//    NotificationSettingView()
-//}
+#Preview {
+    NotificationSettingView(
+        viewModel: .init(
+            navigationRouter: Router.default.navigationRouter)
+    )
+    .environmentObject(Router.default)
+}
+
