@@ -20,10 +20,12 @@
 // swiftlint:disable identifier_name line_length type_body_length
 public enum DSKitFontFamily {
   public enum NotoSansKR {
+    public static let bold = DSKitFontConvertible(name: "NotoSansKR-Bold", family: "Noto Sans KR", path: "NotoSansKR-Bold.ttf")
     public static let medium = DSKitFontConvertible(name: "NotoSansKR-Medium", family: "Noto Sans KR", path: "NotoSansKR-Medium.ttf")
     public static let regular = DSKitFontConvertible(name: "NotoSansKR-Regular", family: "Noto Sans KR", path: "NotoSansKR-Regular.ttf")
     public static let semiBold = DSKitFontConvertible(name: "NotoSansKR-SemiBold", family: "Noto Sans KR", path: "NotoSansKR-SemiBold.ttf")
-    public static let all: [DSKitFontConvertible] = [medium, regular, semiBold]
+    public static let Bold = DSKitFontConvertible(name: "NotoSansKR-Bold", family: "Noto Sans KR", path: "NotoSansKR-Bold.ttf")
+    public static let all: [DSKitFontConvertible] = [bold, medium, regular, semiBold]
   }
   public static let allCustomFonts: [DSKitFontConvertible] = [NotoSansKR.all].flatMap { $0 }
   public static func registerAllCustomFonts() {

@@ -46,7 +46,7 @@ public struct HeyTextField: View {
                 "",
                 text: $text,
                 prompt: Text(placeHolder)
-                    .foregroundColor(.heyGray2)
+                    .foregroundColor(.heyGray3)
             )
             .heyTextFieldStyle()
             
