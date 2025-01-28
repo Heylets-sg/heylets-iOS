@@ -11,8 +11,6 @@ import ProjectDescriptionHelpers
 import ConfigPlugin
 
 let spm = SwiftPackageManagerDependencies([
-    .remote(url: "https://github.com/onevcat/Kingfisher.git", requirement: .upToNextMajor(from: "8.1.3"))
-    
 ], baseSettings: Settings.settings(
     configurations: XCConfig.configurations
 ))
