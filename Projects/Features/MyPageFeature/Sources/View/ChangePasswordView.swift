@@ -9,6 +9,7 @@
 import SwiftUI
 
 import DSKit
+import Domain
 import BaseFeatureDependency
 
 public struct ChangePasswordView: View {
@@ -23,17 +24,14 @@ public struct ChangePasswordView: View {
         MyPageBaseView(content: {
             VStack(alignment: .leading) {
                 Text("Current Password")
-                    .font(.medium_14)
+                    .font(.medium_16)
                     .foregroundColor(.heyGray1)
                     .padding(.top, 36)
                 
                 HeyTextField(
                     text: $viewModel.currentPassword,
-                    placeHolder: "Current Password"
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.heyGray3, lineWidth: 1)
+                    placeHolder: "Current Password",
+                    colorSystem: .gray
                 )
                 .padding(.top, 8)
                 
@@ -41,14 +39,14 @@ public struct ChangePasswordView: View {
                     .frame(height: 32)
                 
                 Text("New password")
-                    .font(.medium_14)
+                    .font(.medium_16)
                     .foregroundColor(.heyGray1)
                 
                 SecurityPasswordField(
                     password: $viewModel.newPassword,
-                    placeHolder: "New password", 
+                    placeHolder: "New Password", 
                     textFieldState: $viewModel.state.newPasswordIsValid,
-                    colorSystem: .lightgray
+                    colorSystem: .gray
                 )
                 .padding(.top, 8)
                 
@@ -56,7 +54,7 @@ public struct ChangePasswordView: View {
                     password: $viewModel.checkPassword,
                     placeHolder: "Confirm password",
                     textFieldState: $viewModel.state.checkPasswordIsValid,
-                    colorSystem: .lightgray
+                    colorSystem: .gray
                 )
                 .padding(.top, 8)
                 
@@ -83,6 +81,12 @@ public struct ChangePasswordView: View {
     
 }
 
-//#Preview {
-//    ChangePasswordView(viewModel: ChangePasswordViewModel(navigationRouter: StubMyPageNavigationRouter()))
-//}
+#Preview {
+    ChangePasswordView(
+        viewModel: .init(
+            navigationRouter: Router.default.navigationRouter,
+            useCase: StubHeyUseCase.stub.myPageUseCase
+        )
+    )
+    .environmentObject(Router.default)
+}

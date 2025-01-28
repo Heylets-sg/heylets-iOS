@@ -19,7 +19,7 @@ public struct ContactUsView: View {
             
             VStack(alignment: .leading) {
                 Text("Our email")
-                    .font(.medium_14)
+                    .font(.medium_16)
                     .foregroundColor(.heyGray1)
                     .lineSpacing(10)
                     .padding(.bottom, 8)
@@ -42,7 +42,7 @@ public struct ContactUsView: View {
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(Color.heyMain, lineWidth: 2)
                 )
-                .background(Color.heyGray5)
+                .background(Color.heyGray4)
             }
             
             

@@ -11,6 +11,7 @@ import ProjectDescriptionHelpers
 import ConfigPlugin
 
 let spm = SwiftPackageManagerDependencies([
+    
 ], baseSettings: Settings.settings(
     configurations: XCConfig.configurations
 ))

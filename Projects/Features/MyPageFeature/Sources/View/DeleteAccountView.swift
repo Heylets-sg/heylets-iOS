@@ -9,6 +9,7 @@
 import SwiftUI
 
 import DSKit
+import Domain
 import BaseFeatureDependency
 
 public struct DeleteAccountView: View {
@@ -23,17 +24,14 @@ public struct DeleteAccountView: View {
         MyPageBaseView(content: {
             VStack(alignment: .leading) {
                 Text("Account password")
-                    .font(.medium_14)
+                    .font(.medium_16)
                     .foregroundColor(.heyGray1)
                     .padding(.top, 36)
                 
                 HeyTextField(
                     text: $viewModel.password,
-                    placeHolder: "Account password"
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.heyGray3, lineWidth: 1)
+                    placeHolder: "Account password",
+                    colorSystem: .gray
                 )
                 .padding(.top, 8)
                 
@@ -66,7 +64,13 @@ public struct DeleteAccountView: View {
         )
     }
 }
-//
-//#Preview {
-//    DeleteAccountView()
-//}
+
+#Preview {
+    DeleteAccountView(
+        viewModel: .init(
+            useCase: StubHeyUseCase.stub.myPageUseCase, navigationRouter: Router.default.navigationRouter,
+            windowRouter: Router.default.windowRouter
+        )
+    )
+    .environmentObject(Router.default)
+}
