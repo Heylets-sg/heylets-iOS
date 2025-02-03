@@ -20,6 +20,11 @@ fastlane/Preview.html
 fastlane/screenshots/
 fastlane/test_output/
 
+# Fastlane.swift runner binary
+**/fastlane/FastlaneRunner
+**/fastlane/.env
+*.p8
+
 # Archives
 *.xcarchive
 
