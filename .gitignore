@@ -53,8 +53,10 @@ fastlane/test_output/
 
 # Fastlane.swift runner binary
 **/fastlane/FastlaneRunner
-**/fastlane/.env
+**/fastlane/.env.default
 *.p8
+
+**Gemfile.lock
 
 # Archives
 *.xcarchive
@@ -73,7 +75,6 @@ fastlane/test_output/
 
 # Environment
 .env
-.env.default
 
 # Other build artifacts
 *.app
@@ -87,4 +88,8 @@ Derived/
 
 ### Tuist managed dependencies ###
 Tuist/Dependencies
+
+###Config
+*.xcconfig
+
 
