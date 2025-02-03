@@ -35,10 +35,8 @@ jobs:
 
     - name: Install Tuist
       run: |
-          brew install asdf
-          asdf plugin add tuist
-          asdf install tuist latest
-          asdf global tuist latest
+          curl -L -o ./tuist.zip https://github.com/tuist/tuist/releases/download/${{ matrix.tuist }}/tuist.zip
+          unzip ./tuist.zip -d .tuist-bin
 
     - name: Tuist Version Check
       run: tuist version
