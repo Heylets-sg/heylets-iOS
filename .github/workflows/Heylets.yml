@@ -21,7 +21,35 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v4 #테스트를 하기 위해서 Repository의 코드 복사본을 만드는 코드
+    # 1. Git Repository Checkout
+    - name: Checkout Repository
+      uses: actions/checkout@v4 #테스트를 하기 위해서 Repository의 코드 복사본을 만드는 코드
+
+    # 2. 프로젝트 build를 수행할 XCode의 버전 설정
+    - name: Select Xcode Version
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+          xcode-version: latest-stable
+
+    # 3. Tuist 설치 및 확인
+    - name: Install Tuist
+      run: curl -Ls https://install.tuist.io | bash
+
+    - name: Tuist Version Check
+      run: tuist version
+
+    # 4. Fetch Tuist & Generate
+    - name: Fetch Tuist
+      run: tuist fetch
+
+    # 5. Pod install
+    - name: Cocoapod install
+      run: pod install
+
+    # 6. Build Project using xcodebuild
+    - name: Build Project
+      run: xcodebuild -workspace "{PROJECT_NAME}.xcworkspace" -scheme "{SCHEME_NAME}" -destination "platform=iOS Simulator,name={DEVICE_NAME},OS=16.0" -verbose clean build
+    
     # secrets에 저장된 SSH_KEY를 받아와서 match에 사용할 권한 받아옴
     - uses: shimataro/ssh-key-action@v2
       with:
@@ -34,16 +62,6 @@ jobs:
         bundler-cache: true
     # fastlane 설치
     - run: brew install fastlane
-    # tuist 설치
-    - name: Install Tuist
-      run: |
-        curl -L -o ./tuist.zip https://github.com/tuist/tuist/releases/download/${{ matrix.tuist }}/tuist.zip
-        unzip ./tuist.zip -d .tuist-bin
-    # tuist generate
-    - name: tuist generate
-      run: |
-        .tuist-bin/tuist fetch
-        .tuist-bin/tuist generate
     - run: build exec fastlane upload_testflight
       env:
         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
