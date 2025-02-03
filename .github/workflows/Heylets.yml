@@ -34,11 +34,7 @@ jobs:
     # 3. Tuist 설치 및 확인
 
     - name: Install Mise
-      run: |
-          curl https://mise.run | sh
-          mise install
-    - name: Install Tuist dependencies
-      run: mise x -- tuist install
+      run: bash <(curl -Ls https://install.tuist.io) 
 
     - name: Tuist Version Check
       run: tuist version
