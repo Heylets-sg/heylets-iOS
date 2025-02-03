@@ -1,0 +1,10 @@
+app_identifier("com.heeom.Heylets-iOS.release") # The bundle identifier of your app
+apple_id("jacobkwak1122@gmail.com") # Your Apple Developer Portal username
+app_store_connect_api_key(
+  key_id: "8F7ZA35DHY",
+  issuer_id: "1c043202-f6d3-487a-8236-0d70beae8b38",
+  key_filepath: "fastlane/AuthKey_8F7ZA35DHY.p8"
+)
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

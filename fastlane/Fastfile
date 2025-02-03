@@ -1,0 +1,42 @@
+default_platform(:ios)
+
+desc "build app and upload to testflight"
+lane :upload_testflight do |version|
+  version = version[:version]
+
+  match(
+    type: "appstore",
+    app_identifier: ['com.heeom.Heylets-iOS.release']
+    #readonly: true
+  )
+  increment_build_number(
+    build_number: latest_testflight_build_number + 1,
+    xcodeproj: "./Projects/APP/Heylets-iOS.xcodeproj"
+  )
+
+  # 빌드할 앱
+  build_app(scheme: "Heylets-iOS-PROD")
+
+  # TestFlight에 업로드
+  upload_to_testflight(skip_waiting_for_build_processing: false)
+
+  # Slack에 메시지 보내기
+  slack(
+    message: "Testflight 배포 성공 🍀",
+    slack_url: "https://hooks.slack.com/services/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",
+    payload: {
+        "Build Date" => Time.new.to_s,
+    },
+    success: true
+  )
+end
+
+platform :ios do
+  error do |lane, exception, options|
+    slack(
+      message: "에러 발생 : #{exception}",
+      success: false,
+      slack_url: "https://hooks.slack.com/services/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"
+    )
+  end
+end

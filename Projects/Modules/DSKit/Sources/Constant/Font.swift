@@ -11,9 +11,9 @@ import SwiftUI
 public extension Font {
     
     //bold
-    static let bold_20: Font = DSKitFontFamily.NotoSansKR.Bold.swiftUIFont(size: 20)
-    static let bold_14: Font = DSKitFontFamily.NotoSansKR.Bold.swiftUIFont(size: 14)
-    static let bold_8: Font = DSKitFontFamily.NotoSansKR.Bold.swiftUIFont(size: 8)
+    static let bold_20: Font = DSKitFontFamily.NotoSansKR.bold.swiftUIFont(size: 20)
+    static let bold_14: Font = DSKitFontFamily.NotoSansKR.bold.swiftUIFont(size: 14)
+    static let bold_8: Font = DSKitFontFamily.NotoSansKR.bold.swiftUIFont(size: 8)
     
     // semibold
     static let semibold_28: Font = DSKitFontFamily.NotoSansKR.semiBold.swiftUIFont(size: 28)
