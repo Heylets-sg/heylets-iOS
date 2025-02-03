@@ -32,10 +32,8 @@ jobs:
           xcode-version: latest-stable
 
     # 3. Tuist 설치 및 확인
-    - name: Install rtx
-      run: brew install jdxcode/tap/rtx
 
-    - name: Install Tuist using rtx
+    - name: Install Tuist
       run: |
           brew install asdf
           asdf plugin add tuist
