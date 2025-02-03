@@ -51,22 +51,22 @@ jobs:
       run: xcodebuild -workspace "{PROJECT_NAME}.xcworkspace" -scheme "{SCHEME_NAME}" -destination "platform=iOS Simulator,name={DEVICE_NAME},OS=16.0" -verbose clean build
     
     # secrets에 저장된 SSH_KEY를 받아와서 match에 사용할 권한 받아옴
-    - uses: shimataro/ssh-key-action@v2
-      with:
-        key: ${{ secrets.SSH_KEY }}
-        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+    # - uses: shimataro/ssh-key-action@v2
+      # with:
+        # key: ${{ secrets.SSH_KEY }}
+        # known_hosts: ${{ secrets.KNOWN_HOSTS }}
     # ruby 설치
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby }}
-        bundler-cache: true
+    # - uses: ruby/setup-ruby@v1
+      # with:
+        # ruby-version: ${{ matrix.ruby }}
+        # bundler-cache: true
     # fastlane 설치
-    - run: brew install fastlane
-    - run: build exec fastlane upload_testflight
-      env:
-        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-        KEYCHAIN_NAME: ${{ secrets.KEYCHAIN_NAME }}
-        KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-        APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
-        APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
-        APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+    # - run: brew install fastlane
+    # - run: build exec fastlane upload_testflight
+      # env:
+        # MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        # KEYCHAIN_NAME: ${{ secrets.KEYCHAIN_NAME }}
+        # KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        # APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+        # APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+        # APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
