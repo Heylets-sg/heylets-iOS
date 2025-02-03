@@ -42,3 +42,12 @@ fastlane/test_output/
 *.app
 *.ipa
 *.dSYM/
+
+### Tuist derived files ###
+graph.dot
+graph.png
+Derived/
+
+### Tuist managed dependencies ###
+Tuist/Dependencies
+
