@@ -34,7 +34,7 @@ jobs:
     # 3. Tuist 설치 및 확인
 
     - name: Install Mise
-      run: bash <(curl -Ls https://install.tuist.io) 
+      run: curl -Ls https://install.tuist.io | bash -s -- 3.28.0
 
     - name: Tuist Version Check
       run: tuist version
