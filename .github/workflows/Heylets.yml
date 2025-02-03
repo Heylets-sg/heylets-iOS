@@ -1,0 +1,54 @@
+# This workflow will build a Swift project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+# 참고 사이트
+# https://munokkim.medium.com/github-actions-fastlane으로-앱-배포-자동화하기-5a420493e978
+# 
+
+
+name: Heylets
+
+
+on: # 언제 행동을 트리거 시킬지에 관한 문법
+  push: # push 트리거
+    branches: [ "develop" ] # 브랜치 푸시 트리거
+  pull_request: # PR 트리거
+    branches: [ "develop" ]
+
+jobs:
+  build:
+    # 어느 플랫폼에서 실행시킬지 설정 (iOS인 경우 디폴트 값 macos-latest로 설정 -> macOS)
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4 #테스트를 하기 위해서 Repository의 코드 복사본을 만드는 코드
+    # secrets에 저장된 SSH_KEY를 받아와서 match에 사용할 권한 받아옴
+    - uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_KEY }}
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+    # ruby 설치
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
+    # fastlane 설치
+    - run: brew install fastlane
+    # tuist 설치
+    - name: Install Tuist
+      run: |
+        curl -L -o ./tuist.zip https://github.com/tuist/tuist/releases/download/${{ matrix.tuist }}/tuist.zip
+        unzip ./tuist.zip -d .tuist-bin
+    # tuist generate
+    - name: tuist generate
+      run: |
+        .tuist-bin/tuist fetch
+        .tuist-bin/tuist generate
+    - run: build exec fastlane upload_testflight
+      env:
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        KEYCHAIN_NAME: ${{ secrets.KEYCHAIN_NAME }}
+        KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+        APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+        APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
