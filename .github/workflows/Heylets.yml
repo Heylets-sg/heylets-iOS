@@ -37,8 +37,10 @@ jobs:
 
     - name: Install Tuist using rtx
       run: |
-        rtx install tuist
-        rtx global tuist latest
+          brew install asdf
+          asdf plugin add tuist
+          asdf install tuist latest
+          asdf global tuist latest
 
     - name: Tuist Version Check
       run: tuist version
