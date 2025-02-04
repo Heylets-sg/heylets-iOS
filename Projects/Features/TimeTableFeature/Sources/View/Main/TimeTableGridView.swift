@@ -51,36 +51,41 @@ public struct TimeTableGridView: View {
     private func createGridCell(for hour: Int, day: Week) -> some View {
         VStack {
             if let cell = getSlot(timeTable: viewModel.timeTable, for: hour, day: day) {
-                ZStack {
-                    Button {
-                        withAnimation {
-                            viewModel.send(.tableCellDidTap(cell.id))
-                        }
-                    } label: {
-                        VStack {
-                            createCellBackground(cell: cell, hour: hour)
-                        }
+                Button {
+                    withAnimation {
+                        viewModel.send(.tableCellDidTap(cell.id))
                     }
-                    .buttonStyle(PlainButtonStyle())
-                    .clipShape(RoundedRectangle(cornerRadius: 2))
-                    .disabled(!(viewType == .main))
-                    
-                    if hour == cell.schedule.startHour {
-                        createCellText(cell: cell)
+                } label: {
+                    ZStack {
+                        createCellBackground(cell: cell, hour: hour)
+                        
+                        VStack {
+                            if hour == cell.schedule.startHour {
+                                createCellText(cell: cell)
+//                                    .padding(.top, cell.schedule.startMinute != 0
+//                                             ? getCellHeight(for: cell, hour: hour)
+//                                             : 0
+//                                    )
+                            }
+                        }
                     }
                 }
+                .buttonStyle(PlainButtonStyle())
+                .clipShape(RoundedRectangle(cornerRadius: 2))
+                .disabled(!(viewType == .main))
             } else {
                 createEmptyCell()
             }
         }
         .frame(height: 52)
     }
-
+    
     @ViewBuilder
     private func createCellBackground(cell: TimeTableCellInfo, hour: Int) -> some View {
         VStack {
-            if hour == cell.schedule.startHour {
-                if cell.schedule.startMinute != 0 { Spacer() }
+            if hour == cell.schedule.startHour && cell.schedule.startMinute != 0 {
+                    Spacer()
+                        .allowsHitTesting(false)
             }
             
             cell.backgrounColor
@@ -89,42 +94,50 @@ public struct TimeTableGridView: View {
             
             if hour == cell.schedule.endHour && cell.schedule.endMinute != 0 {
                 Spacer()
+                    .allowsHitTesting(false)
             }
         }
     }
-
+    
     @ViewBuilder
     private func createCellText(cell: TimeTableCellInfo) -> some View {
         VStack(alignment: .leading) {
-            if cell.schedule.startMinute != 0 {
-                Spacer().frame(height: getCellHeight(for: cell, hour: cell.schedule.startHour))
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(cell.code)
+                        .font(.medium_12)
+                        .foregroundColor(cell.textColor)
+                    
+                    if displayType.classRoomIsVisible {
+                        Text(cell.schedule.location)
+                            .font(.regular_10)
+                            .foregroundColor(cell.textColor)
+                    }
+                    
+                    //            if displayType.creditIsVisible, let unit = cell.unit {
+                    //                Text("unit: \(unit)")
+                    //                    .font(.regular_10)
+                    //                    .foregroundColor(cell.textColor)
+                    //            }
+                    
+                    Spacer()
+                }
+                .padding(.leading, 4)
+                
+                Spacer()
             }
-            Text(cell.code)
-                .font(.medium_12)
-                .foregroundColor(cell.textColor)
-                .multilineTextAlignment(.center)
             
-            if displayType.classRoomIsVisible {
-                Text(cell.schedule.location)
-                    .font(.regular_10)
-                    .foregroundColor(cell.textColor)
-            }
             
-            if displayType.creditIsVisible, let unit = cell.unit {
-                Text("unit: \(unit)")
-                    .font(.regular_10)
-                    .foregroundColor(cell.textColor)
-            }
         }
     }
-
+    
     @ViewBuilder
     private func createEmptyCell() -> some View {
         Rectangle()
             .fill(Color.clear)
             .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
     }
-
+    
     
     private func getCellHeight(for cell: TimeTableCellInfo, hour: Int) -> CGFloat {
         var baseHeight: CGFloat = 52 // 기본 셀 높이
@@ -143,3 +156,14 @@ public struct TimeTableGridView: View {
     }
     
 }
+
+#Preview {
+    @State var stub_viewType: TimeTableViewType = .main
+    @State var stub_displayType: DisplayTypeInfo = .MODULE_CODE_CLASSROOM_CREDIT
+    return TimeTableGridView(
+        viewModel: .init(StubHeyUseCase.stub.timeTableUseCase),
+        displayType: $stub_displayType,
+        viewType: $stub_viewType
+    )
+}
+

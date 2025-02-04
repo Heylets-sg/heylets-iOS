@@ -209,6 +209,16 @@ final public class StubTimeTableUseCase: TimeTableUseCaseType {
     public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()
     public var sectionList = PassthroughSubject<[SectionInfo], Never>()
     public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()
+
+    public init() {
+        timeTableInfo.send(TimeTableInfo.stub)
+        sectionList.send([
+            .timetable_stub1,
+            .timetable_stub2,
+            .timetable_stub3,
+            .timetable_stub4
+        ])
+    }
 }
 
 //MARK: Main
@@ -220,16 +230,17 @@ extension StubTimeTableUseCase {
     }
     
     public func getProfileInfo() -> AnyPublisher<ProfileInfo, Never> {
-        Just(.init()).eraseToAnyPublisher()
+        Just(.stub).eraseToAnyPublisher()
     }
     
     
     public func getTableDetailInfo() -> AnyPublisher<Void, Never> {
-        Just(()).eraseToAnyPublisher()
+        timeTableInfo.send(TimeTableInfo.stub)
+        return Just(()).eraseToAnyPublisher()
     }
     
     public func getTableId() -> AnyPublisher<Int?, Never> {
-        Just(nil).eraseToAnyPublisher()
+        Just(91).eraseToAnyPublisher()
     }
     
     public func addSection(_ sectionId: Int) -> AnyPublisher<Void, Never> {

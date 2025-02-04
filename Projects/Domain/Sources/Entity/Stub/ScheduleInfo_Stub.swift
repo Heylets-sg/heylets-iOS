@@ -14,9 +14,9 @@ extension ScheduleInfo {
             id: 3,
             day: .Tue,
             startHour: 10,
-            startMinute: 30,
-            endHour: 11,
-            endMinute: 50,
+            startMinute: 0,
+            endHour: 12,
+            endMinute: 0,
             location: "TR+67"
         )
     }
@@ -28,7 +28,7 @@ extension ScheduleInfo {
             startHour: 9,
             startMinute: 30,
             endHour: 11,
-            endMinute: 20,
+            endMinute: 30,
             location: "SPMS-LT3"
         )
     }
@@ -40,7 +40,7 @@ extension ScheduleInfo {
             startHour: 9,
             startMinute: 30,
             endHour: 11,
-            endMinute: 20,
+            endMinute: 30,
             location: "SPMS-TR+6"
         )
     }
@@ -52,7 +52,7 @@ extension ScheduleInfo {
             startHour: 9,
             startMinute: 30,
             endHour: 11,
-            endMinute: 20,
+            endMinute: 30,
             location: "SPMS-TR+6"
         )
     }
@@ -64,7 +64,7 @@ extension ScheduleInfo {
             startHour: 9,
             startMinute: 30,
             endHour: 11,
-            endMinute: 20,
+            endMinute: 30,
             location: "SPMS-TR+6"
         )
     }

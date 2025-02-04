@@ -31,21 +31,19 @@ public struct MainView: View {
                     .padding(.leading, 49)
                     .padding(.trailing, 35)
             }
+            
             BounceScrollView(axis: .vertical) {
-                        HStack(alignment: .top) {
-                            HourListView()
-                                .padding(.top, 10)
-                            
-                            TimeTableGridView(
-                                viewModel: viewModel,
-                                displayType: $viewModel.displayTypeInfo,
-                                viewType: $viewType
-                            )
-                        }
-                    }
-            
-            
-            
+                HStack(alignment: .top) {
+                    HourListView()
+                        .padding(.top, 10)
+                    
+                    TimeTableGridView(
+                        viewModel: viewModel,
+                        displayType: $viewModel.displayTypeInfo,
+                        viewType: $viewType
+                    )
+                }
+            }
         }
         .scrollDisabled(viewModel.state.isScrollDisabled)
         .scrollIndicators(.hidden)

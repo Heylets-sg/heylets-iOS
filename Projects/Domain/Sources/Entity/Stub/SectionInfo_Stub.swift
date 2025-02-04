@@ -18,8 +18,8 @@ extension SectionInfo {
             schedule: [.stub2_1, .stub2_2],
             professor: "LEC/STUDIO-LE",
             unit: 2,
-            backgroundColor: "",
-            textColor: ""
+            backgroundColor: "#CAD0ED",
+            textColor: "#000000"
         )
     }
     
@@ -31,8 +31,8 @@ extension SectionInfo {
             schedule: [.stub1],
             professor: "TUT-EE04",
             unit: 3,
-            backgroundColor: "",
-            textColor: ""
+            backgroundColor: "#CAD0ED",
+            textColor: "#000000"
         )
     }
     
@@ -44,8 +44,8 @@ extension SectionInfo {
             schedule: [.stub3],
             professor: "LEC/STUDIO-LE",
             unit: 3,
-            backgroundColor: "",
-            textColor: ""
+            backgroundColor: "#CAD0ED",
+            textColor: "#000000"
         )
     }
     
@@ -57,8 +57,8 @@ extension SectionInfo {
             schedule: [.stub4],
             professor: "LEC/STUDIO-LE",
             unit: 3,
-            backgroundColor: "",
-            textColor: ""
+            backgroundColor: "#CAD0ED",
+            textColor: "#000000"
         )
     }
     
@@ -69,8 +69,8 @@ extension SectionInfo {
             schedule: [],
             professor: "",
             unit: 0,
-            backgroundColor: "",
-            textColor: ""
+            backgroundColor: "#CAD0ED",
+            textColor: "#000000"
         )
     }
 }

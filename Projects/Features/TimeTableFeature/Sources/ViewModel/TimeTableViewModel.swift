@@ -53,11 +53,11 @@ public class TimeTableViewModel: ObservableObject {
     private let useCase: TimeTableUseCaseType
     @Published var viewType: TimeTableViewType = .main
     
-    @Published var timeTableInfo: TimeTableInfo = .empty
+    @Published var timeTableInfo: TimeTableInfo = .stub //TODO: QA용 -> .empty로 변경
     @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
-    @Published var sectionList: [SectionInfo] = []
+    @Published var sectionList: [SectionInfo] = [.timetable_stub1, .timetable_stub2, .timetable_stub3, .timetable_stub4]
     @Published var weekList: [Week] = Week.weekDay
-    @Published var timeTable: [[TimeTableCellInfo?]] = []
+    @Published var timeTable: [[TimeTableCellInfo?]] = [[]]
     @Published var detailSectionInfo: SectionInfo = .empty
     
     
@@ -65,6 +65,10 @@ public class TimeTableViewModel: ObservableObject {
         self.useCase = useCase
         
         bindState()
+        
+        configTimeTable(sectionList.createTimeTableCellList())
+            .assign(to: \.timeTable, on: self)
+            .store(in: cancelBag)
     }
     
     func send(_ action: Action) {
