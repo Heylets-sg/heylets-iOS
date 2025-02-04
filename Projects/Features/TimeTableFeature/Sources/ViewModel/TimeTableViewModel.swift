@@ -61,7 +61,7 @@ public class TimeTableViewModel: ObservableObject {
     @Published var detailSectionInfo: SectionInfo = .empty
     
     
-    public init(useCase: TimeTableUseCaseType) {
+    public init(_ useCase: TimeTableUseCaseType) {
         self.useCase = useCase
         
         bindState()

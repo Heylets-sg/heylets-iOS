@@ -1,24 +1,34 @@
 default_platform(:ios)
 
 desc "build app and upload to testflight"
-lane :upload_testflight do |version|
-  version = version[:version]
-
-  match(
-    type: "appstore",
-    app_identifier: ['com.heeom.Heylets-iOS.release']
-    #readonly: true
+lane :upload_testflight do
+  app_store_connect_api_key(
+    key_id: "{KEY_ID}",
+    issuer_id: "{ISSUER_ID}",
+    key_filepath: "{P8_KEY_FILE_PATH}"
   )
+
+  match(type: "appstore")
+
+  latest_build_number=latest_testflight_build_number(version:"{APP_VERSION}")
+
   increment_build_number(
     build_number: latest_testflight_build_number + 1,
-    xcodeproj: "./Projects/APP/Heylets-iOS.xcodeproj"
+    xcodeproj: "{PATH}/{PROJECT_NAME}.xcodeproj"
   )
 
-  # 빌드할 앱
-  build_app(scheme: "Heylets-iOS-PROD")
+  build_app(
+    workspace: "{WORKSPACE_NAME}.xcworkspace",
+    scheme: "{SCHEME_NAME}"
+    clean: true,
+    export_method: "app-store",
+    include_bitcode: false,
+  )
 
-  # TestFlight에 업로드
-  upload_to_testflight(skip_waiting_for_build_processing: false)
+  upload_to_testflight(
+    username: "{USER_EMAIL}",
+    app_identifier: "{APP_BUNDLE_ID}"
+  )
 
   # Slack에 메시지 보내기
   slack(

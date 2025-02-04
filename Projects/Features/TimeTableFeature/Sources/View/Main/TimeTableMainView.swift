@@ -9,6 +9,7 @@
 import SwiftUI
 
 import Domain
+import DSKit
 
 public struct MainView: View {
     @Binding var viewType: TimeTableViewType
@@ -30,24 +31,31 @@ public struct MainView: View {
                     .padding(.leading, 49)
                     .padding(.trailing, 35)
             }
+            BounceScrollView(axis: .vertical) {
+                        HStack(alignment: .top) {
+                            HourListView()
+                                .padding(.top, 10)
+                            
+                            TimeTableGridView(
+                                viewModel: viewModel,
+                                displayType: $viewModel.displayTypeInfo,
+                                viewType: $viewType
+                            )
+                        }
+                    }
             
-            ScrollView() {
-                HStack(alignment: .top) {
-                    HourListView()
-                        .padding(.top, 10)
-                    
-                    TimeTableGridView(
-                        viewModel: viewModel,
-                        displayType: $viewModel.displayTypeInfo,
-                        viewType: $viewType
-                    )
-                }
-            }
-            .scrollIndicators(.hidden)
-            .border(Color.heyGray6, width: 1)
+            
+            
         }
         .scrollDisabled(viewModel.state.isScrollDisabled)
         .scrollIndicators(.hidden)
     }
 }
 
+#Preview {
+    @State var stub: TimeTableViewType = .main
+    return MainView(
+        viewModel: .init(StubHeyUseCase.stub.timeTableUseCase),
+        viewType: $stub
+    )
+}

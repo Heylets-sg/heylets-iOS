@@ -220,7 +220,8 @@ extension StubTimeTableUseCase {
     }
     
     public func getProfileInfo() -> AnyPublisher<ProfileInfo, Never> {
-        Just(.init()).eraseToAnyPublisher()    }
+        Just(.init()).eraseToAnyPublisher()
+    }
     
     
     public func getTableDetailInfo() -> AnyPublisher<Void, Never> {

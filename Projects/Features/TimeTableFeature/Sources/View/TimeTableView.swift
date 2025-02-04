@@ -39,7 +39,6 @@ public struct TimeTableView: View {
         viewModel: TimeTableViewModel,
         searchModuleViewModel: SearchModuleViewModel,
         addCustomModuleViewModel: AddCustomModuleViewModel,
-        settingTimeTableViewModel: SettingTimeTableViewModel,
         themeViewModel: ThemeViewModel
     ) {
         self.viewModel = viewModel
@@ -167,4 +166,16 @@ extension TimeTableView {
             .environmentObject(container)
         }
     }
+}
+
+#Preview {
+    @State var stub: TimeTableViewType = .main
+    let useCase = StubHeyUseCase.stub.timeTableUseCase
+    return TimeTableView(
+        viewModel: .init(useCase),
+        searchModuleViewModel: .init(useCase),
+        addCustomModuleViewModel: .init(useCase),
+        themeViewModel: .init(useCase)
+    )
+    .environmentObject(Router.default)
 }

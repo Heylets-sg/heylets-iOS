@@ -1,0 +1,8 @@
+git_url("https://github.com/Heylets-sg/heylets-iOS")
+
+storage_mode("git")
+
+type("appstore") #테스트 플라이트 업로드 할 예정
+
+# app_identifier("com.heeom.Heylets-iOS.release") #Bundle ID
+# username("jacobkwak1122@gmail.com") #Developer 이메일 계정
