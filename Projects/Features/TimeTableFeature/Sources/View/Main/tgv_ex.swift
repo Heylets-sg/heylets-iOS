@@ -80,42 +80,42 @@ public struct TimeTableGridView: View {
                             viewModel.send(.tableCellDidTap(cell.id))
                         }
                     } label: {
-                            switch hour {
-                            case cell.schedule.startHour:
-                                if cell.schedule.startMinute != 0 {
-                                    Rectangle().fill(cell.backgroundColor)
-                                        .position(
-                                            CGPoint(
-                                                x: cellWidth / 2,
-                                                y: 0
-                                            )
-                                        )
-                                        .frame(height: height)
-                                        .onTapGesture { location in
-                                            tappedPosition = location
-                                            print("Tapped at position: \(location)") // 여기에 좌표를 찍어볼 수 있습니다.
-                                        }
-                                    //                                        .frame(height: height)
-                                    
-                                    
-                                } else {
-                                    Rectangle().fill(cell.backgroundColor)
-                                        .frame(width: cellWidth, height: 52)
-                                }
-                            case cell.schedule.endHour:
-                                
-                                if cell.schedule.endMinute != 0 {
-                                    Rectangle().fill(cell.backgroundColor)
-                                        .position(CGPoint(x: cellWidth / 2, y: 0))
-                                    
-                                } else {
-                                    Rectangle().fill(cell.backgroundColor)
-                                }
-                                
-                            default:
+                        switch hour {
+                        case cell.schedule.startHour:
+                            if cell.schedule.startMinute != 0 {
                                 Rectangle().fill(cell.backgroundColor)
-                                    .frame(width: cellWidth, height: height)
+                                    .position(
+                                        CGPoint(
+                                            x: cellWidth / 2,
+                                            y: 0
+                                        )
+                                    )
+                                    .frame(height: height)
+                                    .onTapGesture { location in
+                                        tappedPosition = location
+                                        print("Tapped at position: \(location)") // 여기에 좌표를 찍어볼 수 있습니다.
+                                    }
+                                //                                        .frame(height: height)
+                                
+                                
+                            } else {
+                                Rectangle().fill(cell.backgroundColor)
+                                    .frame(width: cellWidth, height: 52)
                             }
+                        case cell.schedule.endHour:
+                            
+                            if cell.schedule.endMinute != 0 {
+                                Rectangle().fill(cell.backgroundColor)
+                                    .position(CGPoint(x: cellWidth / 2, y: 0))
+                                
+                            } else {
+                                Rectangle().fill(cell.backgroundColor)
+                            }
+                            
+                        default:
+                            Rectangle().fill(cell.backgroundColor)
+                                .frame(width: cellWidth, height: height)
+                        }
                     }
                     .buttonStyle(PlainButtonStyle())
                     .clipShape(RoundedRectangle(cornerRadius: 2))
@@ -174,10 +174,13 @@ public struct TimeTableGridView: View {
         return baseHeight
     }
     
-    private func getSlot(timeTable: [[TimeTableCellInfo?]], for hour: Int, day: Week) -> TimeTableCellInfo? {
-        guard day.index < timeTable.count,
-              hour - 8 < timeTable[day.index].count else { return nil }
-        return timeTable[day.index][hour - 8]
+    private func getSlot(timeTable: [TimeTableCellInfo?], for hour: Int, day: Week) -> TimeTableCellInfo? {
+        let slotCount = 17
+        guard let weekIndex = viewModel.weekList.firstIndex(of: day) else { return nil }
+        let slotIndex = hour - 8 // 예를 들어, 8시가 0번 인덱스라고 가정
+        guard slotIndex >= 0 && slotIndex < slotCount else { return nil }
+        let index = weekIndex * slotCount + slotIndex
+        return timeTable[index]
     }
 }
 

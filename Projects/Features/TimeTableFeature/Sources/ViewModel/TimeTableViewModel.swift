@@ -64,7 +64,7 @@ public class TimeTableViewModel: ObservableObject {
         .timetable_stub4
     ]
     @Published var weekList: [Week] = Week.weekDay
-    @Published var timeTable: [[TimeTableCellInfo?]] = [[]]
+    @Published var timeTable: [TimeTableCellInfo?] = []
     @Published var detailSectionInfo: SectionInfo = .empty
     
     
@@ -221,15 +221,32 @@ extension TimeTableViewModel {
     
     private func configTimeTable(
         _ timeTableCellList: [TimeTableCellInfo]
-    ) -> AnyPublisher<[[TimeTableCellInfo?]], Never> {
-        let updatedTimeTable: [[TimeTableCellInfo?]] = Array(repeating: Array(repeating: nil, count: 17), count: weekList.count)
-        let resultTimeTable = timeTableCellList.reduce(into: updatedTimeTable) { timeTable, cell in
+    ) -> AnyPublisher<[TimeTableCellInfo?], Never> {
+        //        let updatedTimeTable: [[TimeTableCellInfo?]] = Array(repeating: Array(repeating: nil, count: 17), count: weekList.count)
+        //        let resultTimeTable = timeTableCellList.reduce(into: updatedTimeTable) { timeTable, cell in
+        //            if let weekIndex = weekList.firstIndex(of: cell.schedule.day) {
+        //                for s in cell.slot {
+        //                    timeTable[weekIndex][s.key] = cell
+        //                }
+        //            }
+        //        }
+        //        print(resultTimeTable)
+        //        return Just(resultTimeTable)
+        //            .eraseToAnyPublisher()
+        let slotCount = 17
+        let totalSlots = weekList.count * slotCount
+        var updatedTimeTable = Array<TimeTableCellInfo?>(repeating: nil, count: totalSlots)
+        
+        let resultTimeTable = timeTableCellList.reduce(into: updatedTimeTable) { table, cell in
             if let weekIndex = weekList.firstIndex(of: cell.schedule.day) {
                 for s in cell.slot {
-                    timeTable[weekIndex][s.key] = cell
+                    // s.key가 해당 요일의 슬롯 인덱스라고 가정 (0 ~ slotCount-1)
+                    let index = weekIndex * slotCount + s.key
+                    table[index] = cell
                 }
             }
         }
+        print(resultTimeTable)
         return Just(resultTimeTable)
             .eraseToAnyPublisher()
     }
