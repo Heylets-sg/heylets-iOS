@@ -35,11 +35,17 @@ public struct TimeTableGridView: View {
                 createHeaderRow(cellWidth: cellWidth)
                 
                 ForEach(hourList, id: \.self) { hour in
-                    createGridRow(for: hour, cellWidth: cellWidth, cellHeight: cellHeight)
+                    createGridRow(
+                        for: hour,
+                        cellWidth: cellWidth,
+                        cellHeight: cellHeight
+                    )
                 }
             }
         }
     }
+    
+        
     
     @ViewBuilder
     private func createHeaderRow(cellWidth: CGFloat) -> some View {
@@ -55,9 +61,15 @@ public struct TimeTableGridView: View {
     
     @ViewBuilder
     private func createGridRow(for hour: Int, cellWidth: CGFloat, cellHeight: CGFloat) -> some View {
+        @State var tappedPosition: CGPoint? = nil
         GridRow(alignment: .top) {
             ForEach(viewModel.weekList, id: \.self) { day in
-                createGridCell(for: hour, day: day, cellWidth: cellWidth, cellHeight: cellHeight)
+                createGridCell(
+                    for: hour,
+                    day: day,
+                    cellWidth: cellWidth,
+                    cellHeight: cellHeight
+                )
             }
         }
     }
@@ -83,21 +95,12 @@ public struct TimeTableGridView: View {
                         switch hour {
                         case cell.schedule.startHour:
                             if cell.schedule.startMinute != 0 {
-                                Rectangle().fill(cell.backgroundColor)
-                                    .position(
-                                        CGPoint(
-                                            x: cellWidth / 2,
-                                            y: 0
-                                        )
-                                    )
-                                    .frame(height: height)
-                                    .onTapGesture { location in
-                                        tappedPosition = location
-                                        print("Tapped at position: \(location)") // 여기에 좌표를 찍어볼 수 있습니다.
-                                    }
-                                //                                        .frame(height: height)
-                                
-                                
+                                VStack {
+                                    Spacer()
+                                    Rectangle().fill(cell.backgroundColor)
+                                        .frame(height: height)
+                                    
+                                }
                             } else {
                                 Rectangle().fill(cell.backgroundColor)
                                     .frame(width: cellWidth, height: 52)
@@ -107,6 +110,10 @@ public struct TimeTableGridView: View {
                             if cell.schedule.endMinute != 0 {
                                 Rectangle().fill(cell.backgroundColor)
                                     .position(CGPoint(x: cellWidth / 2, y: 0))
+                                    .onTapGesture { location in
+                                        tappedPosition = location
+                                        print("Tapped at position: \(location)") // 여기에 좌표를 찍어볼 수 있습니다.
+                                    }
                                 
                             } else {
                                 Rectangle().fill(cell.backgroundColor)
@@ -127,9 +134,10 @@ public struct TimeTableGridView: View {
                 }
             } else {
                 createEmptyCell()
+                    
             }
         }
-        .frame(height: cellHeight)
+//        .frame(height: cellHeight)
     }
     
     @ViewBuilder
@@ -177,7 +185,7 @@ public struct TimeTableGridView: View {
     private func getSlot(timeTable: [TimeTableCellInfo?], for hour: Int, day: Week) -> TimeTableCellInfo? {
         let slotCount = 17
         guard let weekIndex = viewModel.weekList.firstIndex(of: day) else { return nil }
-        let slotIndex = hour - 8 // 예를 들어, 8시가 0번 인덱스라고 가정
+        let slotIndex = hour - 8
         guard slotIndex >= 0 && slotIndex < slotCount else { return nil }
         let index = weekIndex * slotCount + slotIndex
         return timeTable[index]

@@ -37,7 +37,7 @@ public struct MainView: View {
                     HourListView()
                         .padding(.top, 10)
                     
-                    TimeTableGridView(
+                    TimeTableGridView2(
                         viewModel: viewModel,
                         displayType: $viewModel.displayTypeInfo,
                         viewType: $viewType

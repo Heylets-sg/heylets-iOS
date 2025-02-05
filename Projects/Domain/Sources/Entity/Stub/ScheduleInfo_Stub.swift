@@ -40,7 +40,7 @@ extension ScheduleInfo {
             startHour: 9,
             startMinute: 30,
             endHour: 11,
-            endMinute: 30,
+            endMinute: 20,
             location: "SPMS-LT3"
         )
     }

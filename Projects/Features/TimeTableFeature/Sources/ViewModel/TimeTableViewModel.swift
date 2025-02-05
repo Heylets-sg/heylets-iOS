@@ -222,17 +222,7 @@ extension TimeTableViewModel {
     private func configTimeTable(
         _ timeTableCellList: [TimeTableCellInfo]
     ) -> AnyPublisher<[TimeTableCellInfo?], Never> {
-        //        let updatedTimeTable: [[TimeTableCellInfo?]] = Array(repeating: Array(repeating: nil, count: 17), count: weekList.count)
-        //        let resultTimeTable = timeTableCellList.reduce(into: updatedTimeTable) { timeTable, cell in
-        //            if let weekIndex = weekList.firstIndex(of: cell.schedule.day) {
-        //                for s in cell.slot {
-        //                    timeTable[weekIndex][s.key] = cell
-        //                }
-        //            }
-        //        }
-        //        print(resultTimeTable)
-        //        return Just(resultTimeTable)
-        //            .eraseToAnyPublisher()
+
         let slotCount = 17
         let totalSlots = weekList.count * slotCount
         var updatedTimeTable = Array<TimeTableCellInfo?>(repeating: nil, count: totalSlots)
@@ -246,7 +236,6 @@ extension TimeTableViewModel {
                 }
             }
         }
-        print(resultTimeTable)
         return Just(resultTimeTable)
             .eraseToAnyPublisher()
     }
