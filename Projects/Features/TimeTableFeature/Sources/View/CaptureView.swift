@@ -112,19 +112,19 @@ public struct TimeTableGridCaptureView: View {
                                 if cell.schedule.startMinute != 0 {
                                     Spacer()
                                 }
-                                cell.backgrounColor
+                                cell.backgroundColor
                                     .frame(height: getCellHeight(for: cell, hour: hour))
                                     .clipped()
                             } else if hour == cell.schedule.endHour {
                                 // 종료 시간일 때 위로 배치
-                                cell.backgrounColor
+                                cell.backgroundColor
                                     .frame(height: getCellHeight(for: cell, hour: hour))
                                     .clipped()
                                 if cell.schedule.endMinute != 0 {
                                     Spacer()
                                 }
                             } else {
-                                cell.backgrounColor
+                                cell.backgroundColor
                                     .frame(height: getCellHeight(for: cell, hour: hour))
                                     .clipped()
                             }

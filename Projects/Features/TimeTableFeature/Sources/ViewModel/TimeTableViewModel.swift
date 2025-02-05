@@ -55,7 +55,14 @@ public class TimeTableViewModel: ObservableObject {
     
     @Published var timeTableInfo: TimeTableInfo = .stub //TODO: QA용 -> .empty로 변경
     @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
-    @Published var sectionList: [SectionInfo] = [.timetable_stub1, .timetable_stub2, .timetable_stub3, .timetable_stub4]
+    @Published var sectionList: [SectionInfo] = [
+        .timetable_stub1,
+        .timetable_stub1_1,
+        .timetable_stub2,
+        .timetable_stub2_1,
+        .timetable_stub3,
+        .timetable_stub4
+    ]
     @Published var weekList: [Week] = Week.weekDay
     @Published var timeTable: [[TimeTableCellInfo?]] = [[]]
     @Published var detailSectionInfo: SectionInfo = .empty

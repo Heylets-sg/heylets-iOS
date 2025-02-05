@@ -14,7 +14,7 @@ public struct HourListView: View {
     let hourList = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     
     public var body: some View {
-        VStack(spacing: 40) {
+        VStack(spacing: 30) {
             ForEach(hourList, id: \.self) { hour in
                 HourListCellView(hour)
             }

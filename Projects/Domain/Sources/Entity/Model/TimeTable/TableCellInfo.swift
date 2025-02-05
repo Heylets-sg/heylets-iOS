@@ -17,7 +17,7 @@ public struct TimeTableCellInfo: Equatable {
     public var professor: String
     public var unit: Int?
     public var schedule: ScheduleInfo
-    public var backgrounColor: Color
+    public var backgroundColor: Color
     public var textColor: Color
     
     public var slot: [Int: Double] {

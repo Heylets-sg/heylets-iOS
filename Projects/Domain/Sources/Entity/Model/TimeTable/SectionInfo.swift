@@ -85,7 +85,7 @@ extension Array where Element == SectionInfo {
                     professor: section.professor,
                     unit: section.unit,
                     schedule: schedule,
-                    backgrounColor: .init(hex: section.backgroundColor),
+                    backgroundColor: .init(hex: section.backgroundColor),
                     textColor: .init(hex: section.textColor)
                 )
                 

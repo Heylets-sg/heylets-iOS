@@ -21,6 +21,18 @@ extension ScheduleInfo {
         )
     }
     
+    static var stub1_1: Self {
+        .init(
+            id: 3,
+            day: .Tue,
+            startHour: 12,
+            startMinute: 0,
+            endHour: 15,
+            endMinute: 0,
+            location: "TR+67"
+        )
+    }
+    
     static var stub2_1: Self {
         .init(
             id: 1,
@@ -40,6 +52,18 @@ extension ScheduleInfo {
             startHour: 9,
             startMinute: 30,
             endHour: 11,
+            endMinute: 30,
+            location: "SPMS-TR+6"
+        )
+    }
+    
+    static var stub2_3: Self {
+        .init(
+            id: 2,
+            day: .Mon,
+            startHour: 11,
+            startMinute: 30,
+            endHour: 13,
             endMinute: 30,
             location: "SPMS-TR+6"
         )

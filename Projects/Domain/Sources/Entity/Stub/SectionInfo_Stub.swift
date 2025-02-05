@@ -15,10 +15,23 @@ extension SectionInfo {
             id: 11214,
             code: "PH1105",
             name: "OPTICS, VIBRATIONS & WAVES",
-            schedule: [.stub2_1, .stub2_2],
+            schedule: [.stub1],
             professor: "LEC/STUDIO-LE",
             unit: 2,
-            backgroundColor: "#CAD0ED",
+            backgroundColor: "#F5EBEB",
+            textColor: "#000000"
+        )
+    }
+    
+    static public var timetable_stub1_1: Self {
+        .init(
+            id: 11214,
+            code: "PH1105",
+            name: "OPTICS, VIBRATIONS & WAVES_1",
+            schedule: [.stub1_1],
+            professor: "LEC/STUDIO-LE",
+            unit: 2,
+            backgroundColor: "#D5B4B4",
             textColor: "#000000"
         )
     }
@@ -28,10 +41,23 @@ extension SectionInfo {
             id: 11914,
             code: "EE3103",
             name: "ENGINEERING ELECTROMAGNETICS",
-            schedule: [.stub1],
+            schedule: [.stub2_1, .stub2_2],
             professor: "TUT-EE04",
             unit: 3,
-            backgroundColor: "#CAD0ED",
+            backgroundColor: "#E4D0D0",
+            textColor: "#000000"
+        )
+    }
+    
+    static public var timetable_stub2_1: Self {
+        .init(
+            id: 11914,
+            code: "EE3103",
+            name: "ENGINEERING ELECTROMAGNETICS_1",
+            schedule: [.stub2_3],
+            professor: "TUT-EE04",
+            unit: 3,
+            backgroundColor: "#867070",
             textColor: "#000000"
         )
     }
@@ -44,7 +70,7 @@ extension SectionInfo {
             schedule: [.stub3],
             professor: "LEC/STUDIO-LE",
             unit: 3,
-            backgroundColor: "#CAD0ED",
+            backgroundColor: "#CFABAB",
             textColor: "#000000"
         )
     }
@@ -57,7 +83,7 @@ extension SectionInfo {
             schedule: [.stub4],
             professor: "LEC/STUDIO-LE",
             unit: 3,
-            backgroundColor: "#CAD0ED",
+            backgroundColor: "#D7B4B4",
             textColor: "#000000"
         )
     }
@@ -69,7 +95,7 @@ extension SectionInfo {
             schedule: [],
             professor: "",
             unit: 0,
-            backgroundColor: "#CAD0ED",
+            backgroundColor: "#CAD0EC",
             textColor: "#000000"
         )
     }
