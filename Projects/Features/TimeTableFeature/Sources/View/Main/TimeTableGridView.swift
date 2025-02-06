@@ -2,7 +2,7 @@ import SwiftUI
 import Domain
 import DSKit
 
-public struct TimeTableGridView2: View {
+public struct TimeTableGridView: View {
     @ObservedObject var viewModel: TimeTableViewModel
     @Binding var displayType: DisplayTypeInfo
     @Binding var viewType: TimeTableViewType
@@ -16,6 +16,7 @@ public struct TimeTableGridView2: View {
             let cellWidth = geometry.size.width / CGFloat(columnCount)
             let cellHeight: CGFloat = 52
             ZStack {
+                // 📌 빈 시간표 배치
                 Canvas { context, size in
                     drawGrid(
                         &context,
@@ -26,9 +27,8 @@ public struct TimeTableGridView2: View {
                         cellHeight
                     )
                 }
-
                 
-                // 📌 각 수업을 버튼으로 표시
+                // 📌 수업 버튼 배치
                 ForEach(viewModel.weekList, id: \.self) {  day in
                     ForEach(hourList, id: \.self) { hour in
                         if let cell = getSlot(timeTable: viewModel.timeTable, for: hour, day: day) {
@@ -44,45 +44,7 @@ public struct TimeTableGridView2: View {
     }
 }
 
-// Create a separate view for the class button
-private func createClassButton(for cell: TimeTableCellInfo, at dayIndex: Int, cellWidth: CGFloat, cellHeight: CGFloat) -> some View {
-    // 시작 시간과 분을 기준으로 시작 위치 계산
-    let startY = CGFloat(cell.schedule.startHour - 8) * cellHeight + CGFloat(cell.schedule.startMinute) / 60 * cellHeight
-    
-    // 종료 시간과 분을 기준으로 높이 계산
-    let height = CGFloat(cell.schedule.endHour - cell.schedule.startHour) * cellHeight +
-    CGFloat(cell.schedule.endMinute - cell.schedule.startMinute) / 60 * cellHeight
-    
-    let x = CGFloat(dayIndex) * cellWidth
-    
-    return Button(action: {
-        // 버튼 클릭 시 수업 정보를 출력
-        print("클릭된 수업: \(cell.code), \(cell.schedule.startHour):\(cell.schedule.startMinute) ~ \(cell.schedule.endHour):\(cell.schedule.endMinute)")
-    }) {
-        Rectangle()
-        //            .fill(.red)
-        //            .opacity(0.3)
-            .fill(cell.backgroundColor)
-            .frame(width: cellWidth, height: height)
-            .position(x: x + cellWidth / 2, y: startY + height / 2) // 정확한 위치에 버튼 배치
-    }
-    .buttonStyle(PlainButtonStyle()) // 기본 버튼 스타일 제거
-}
-
-
-
-#Preview {
-    @State var stub: TimeTableViewType = .main
-    @State var stub_display: DisplayTypeInfo = .MODULE_CODE_CLASSROOM
-    return MainView(
-        viewModel: .init(StubHeyUseCase.stub.timeTableUseCase),
-        //        displayType: $stub_display,
-        viewType: $stub
-    )
-}
-
-
-extension TimeTableGridView2 {
+extension TimeTableGridView {
     private func drawGrid(
         _ context: inout GraphicsContext,
         _ size: CGSize,
@@ -92,9 +54,30 @@ extension TimeTableGridView2 {
         _ cellHeight: CGFloat
     ) {
         let gridColor = Color.heyGray6
+        // 첫번째 선 그리기
+        context.stroke(
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: 0))
+                path.addLine(to: CGPoint(x: size.width, y: 0)) // 가로선 길이를 반으로 설정
+            },
+            with: .color(gridColor),
+            lineWidth: 1
+        )
+        
+        // 1/2 선 그리기
+        let firstRowY = cellHeight / 2
+        context.stroke(
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: firstRowY))
+                path.addLine(to: CGPoint(x: size.width, y: firstRowY)) // 가로선 길이를 반으로 설정
+            },
+            with: .color(gridColor),
+            lineWidth: 0.5
+        )
+        
         // 가로선 그리기
-        for row in 0...rowCount {
-            let y = CGFloat(row) * cellHeight
+        for row in 1...rowCount {
+            let y = firstRowY + CGFloat(row) * cellHeight
             context.stroke(
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: y))
@@ -114,9 +97,43 @@ extension TimeTableGridView2 {
                     path.addLine(to: CGPoint(x: x, y: size.height))
                 },
                 with: .color(gridColor),
-                lineWidth: 0.5
+                lineWidth: col == 0 || col == columnCount ? 1 : 0.5
             )
         }
+    }
+    
+    private func createClassButton(
+        for cell: TimeTableCellInfo,
+        at dayIndex: Int,
+        cellWidth: CGFloat,
+        cellHeight: CGFloat
+    ) -> some View {
+        let startHour = cell.schedule.startHour
+        let startMinute = cell.schedule.startMinute
+        let endHour = cell.schedule.endHour
+        let endMinute = cell.schedule.endMinute
+        
+        let rect: (
+            centerX: CGFloat,
+            centerY: CGFloat,
+            height: CGFloat
+        ) = configButtonLayout(
+            (h: startHour, m: startMinute),
+            (h: endHour, m: endMinute),
+            at: dayIndex,
+            cellWidth: cellWidth, 
+            cellHeight: cellHeight
+        )
+        
+        return Button {
+            print("클릭된 수업: \(cell.code), \(startHour):\(startMinute) ~ \(endHour):\(endMinute)")
+        } label: {
+            Rectangle()
+                .fill(cell.backgroundColor)
+                .frame(width: cellWidth, height: rect.height)
+                .position(x: rect.centerX, y: rect.centerY)
+        }
+        .buttonStyle(PlainButtonStyle())
     }
     
     
@@ -161,7 +178,7 @@ extension TimeTableGridView2 {
     }
 }
 
-extension TimeTableGridView2 {
+extension TimeTableGridView {
     private func getSlot(timeTable: [TimeTableCellInfo?], for hour: Int, day: Week) -> TimeTableCellInfo? {
         let slotCount = 17
         guard let weekIndex = viewModel.weekList.firstIndex(of: day) else { return nil }
@@ -171,11 +188,37 @@ extension TimeTableGridView2 {
         return timeTable[index]
     }
     
-    private func getCellHeight(for cell: TimeTableCellInfo, hour: Int) -> CGFloat {
-        var baseHeight: CGFloat = 52 // 기본 셀 높이
-        if let colorRatio = cell.slot[hour-8] {
-            baseHeight *= CGFloat(colorRatio)
-        }
-        return baseHeight
+    private func configButtonLayout(
+        _ startTIme: (h: Int, m: Int),
+        _ endTime: (h: Int, m: Int),
+        at dayIndex: Int,
+        cellWidth: CGFloat,
+        cellHeight: CGFloat
+    ) -> (centerX: CGFloat, centerY: CGFloat, height: CGFloat) {
+        
+        let x = CGFloat(dayIndex) * cellWidth
+        // 시작 시간과 분을 기준으로 시작 위치 계산
+        let y = CGFloat(startTIme.h - 8) * cellHeight + CGFloat(startTIme.m) / 60 * cellHeight
+        
+        // 종료 시간과 분을 기준으로 높이 계산
+        let height = CGFloat(endTime.h - startTIme.h) * cellHeight +
+        CGFloat(endTime.m - startTIme.m) / 60 * cellHeight
+        
+        let centerX = x + cellWidth / 2
+        let centerY =  y + height / 2 + cellHeight / 2
+        return (centerX, centerY, height)
     }
+}
+
+
+
+
+#Preview {
+    @State var stub: TimeTableViewType = .main
+    @State var stub_display: DisplayTypeInfo = .MODULE_CODE_CLASSROOM
+    return MainView(
+        viewModel: .init(StubHeyUseCase.stub.timeTableUseCase),
+        //        displayType: $stub_display,
+        viewType: $stub
+    )
 }

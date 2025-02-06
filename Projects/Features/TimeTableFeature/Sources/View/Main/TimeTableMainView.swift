@@ -24,7 +24,7 @@ public struct MainView: View {
     }
     
     public var body: some View {
-        ScrollView(.horizontal) {
+        BounceScrollView(axis: .horizontal) {
             HStack {
                 WeeklyListView(viewModel.weekList)
                     .padding(.bottom, 16)
@@ -33,11 +33,10 @@ public struct MainView: View {
             }
             
             BounceScrollView(axis: .vertical) {
-                HStack(alignment: .top) {
+                HStack(alignment: .top, spacing: 0) {
                     HourListView()
-                        .padding(.top, 10)
                     
-                    TimeTableGridView2(
+                    TimeTableGridView(
                         viewModel: viewModel,
                         displayType: $viewModel.displayTypeInfo,
                         viewType: $viewType
