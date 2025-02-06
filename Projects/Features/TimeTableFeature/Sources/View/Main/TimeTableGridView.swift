@@ -130,51 +130,16 @@ extension TimeTableGridView {
         } label: {
             Rectangle()
                 .fill(cell.backgroundColor)
+                .clipShape(RoundedRectangle(cornerRadius: 2))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 2)
+                        .stroke(Color.heyGray6, lineWidth: 1)
+                )
                 .frame(width: cellWidth, height: rect.height)
                 .position(x: rect.centerX, y: rect.centerY)
+                
         }
         .buttonStyle(PlainButtonStyle())
-    }
-    
-    
-    private func drawClasses(
-        _ context: inout GraphicsContext,
-        _ size: CGSize,
-        _ cellWidth: CGFloat,
-        _ cellHeight: CGFloat
-    ) {
-        
-        // 모든 시간대와 요일에 대해 수업을 그린다.
-        for (dayIndex, day) in viewModel.weekList.enumerated() {
-            for hour in hourList {
-                if let cell = getSlot(timeTable: viewModel.timeTable, for: hour, day: day) {
-                    // 시작 시간과 분을 기준으로 시작 위치 계산
-                    let startY = CGFloat(cell.schedule.startHour - 8) * cellHeight + CGFloat(cell.schedule.startMinute) / 60 * cellHeight
-                    
-                    // 종료 시간과 분을 기준으로 높이 계산
-                    let height = CGFloat(cell.schedule.endHour - cell.schedule.startHour) * cellHeight +
-                    CGFloat(cell.schedule.endMinute - cell.schedule.startMinute) / 60 * cellHeight
-                    
-                    let x = CGFloat(dayIndex) * cellWidth
-                    
-                    // 수업 표시
-                    context.fill(
-                        Path { path in
-                            path.addRect(CGRect(x: x, y: startY, width: cellWidth, height: height))
-                        },
-                        with: .color(cell.backgroundColor)
-                    )
-                }
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private func createHeaderRow(cellWidth: CGFloat) -> some View {
-        Rectangle()
-            .fill(Color.clear)
-            .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
-            .frame(width: cellWidth, height: 21)
     }
 }
 
