@@ -26,7 +26,7 @@ public class TimeTableViewModel: ObservableObject {
         
         var alerts: Alerts = Alerts()
         var timeTableName: String = ""
-        var isScrollDisabled: Bool = true
+        var isScrollDisabled: Bool = false
         var profile: ProfileInfo = .init()
         var error: (Bool, String) = (false, "")
     }
@@ -63,7 +63,7 @@ public class TimeTableViewModel: ObservableObject {
         .timetable_stub3,
         .timetable_stub4
     ]
-    @Published var weekList: [Week] = Week.weekDay
+    @Published var weekList: [Week] = Week.dayOfWeek
     @Published var timeTable: [TimeTableCellInfo?] = []
     @Published var detailSectionInfo: SectionInfo = .empty
     
