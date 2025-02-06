@@ -223,9 +223,6 @@ extension TimeTableGridView {
     }
 }
 
-
-
-
 #Preview {
     @State var stub: TimeTableViewType = .main
     @State var stub_display: DisplayTypeInfo = .MODULE_CODE_CLASSROOM

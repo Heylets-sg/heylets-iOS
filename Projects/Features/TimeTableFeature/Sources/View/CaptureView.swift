@@ -55,6 +55,8 @@ struct MainCaptureContentView: View {
 
 import SwiftUI
 
+
+
 public struct TimeTableGridCaptureView: View {
     var weekList: [Week]
     var timeTable: [TimeTableCellInfo?]
@@ -113,19 +115,19 @@ public struct TimeTableGridCaptureView: View {
                                     Spacer()
                                 }
                                 cell.backgroundColor
-                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                    .frame(height: 52)
                                     .clipped()
                             } else if hour == cell.schedule.endHour {
                                 // 종료 시간일 때 위로 배치
                                 cell.backgroundColor
-                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                    .frame(height: 52)
                                     .clipped()
                                 if cell.schedule.endMinute != 0 {
                                     Spacer()
                                 }
                             } else {
                                 cell.backgroundColor
-                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                    .frame(height: 52)
                                     .clipped()
                             }
                         }
@@ -135,7 +137,7 @@ public struct TimeTableGridCaptureView: View {
                             VStack(alignment: .leading) {
                                 if cell.schedule.startMinute != 0 {
                                     Spacer()
-                                        .frame(height: getCellHeight(for: cell, hour: hour))
+                                        .frame(height: 52)
                                 }
                                 Text(cell.code)
                                     .font(.medium_12)
@@ -167,16 +169,7 @@ public struct TimeTableGridCaptureView: View {
         }
         .frame(width: 70, height: 52)
     }
-    
-    private func getCellHeight(for cell: TimeTableCellInfo, hour: Int) -> CGFloat {
-        var baseHeight: CGFloat = 52 // 기본 셀 높이
-        if let colorRatio = cell.slot[hour-8] {
-            baseHeight *= CGFloat(colorRatio)
-        } else {
-            print(hour)
-        }
-        return baseHeight
-    }
+
     
     private func getSlot(timeTable: [TimeTableCellInfo?], for hour: Int, day: Week) -> TimeTableCellInfo? {
         let slotCount = 17
