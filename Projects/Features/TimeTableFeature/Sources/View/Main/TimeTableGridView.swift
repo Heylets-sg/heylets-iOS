@@ -6,13 +6,12 @@ public struct TimeTableGridView: View {
     @ObservedObject var viewModel: TimeTableViewModel
     @Binding var displayType: DisplayTypeInfo
     @Binding var viewType: TimeTableViewType
-    var hourList = Array(8...21)
     
     
     public var body: some View {
         GeometryReader { geometry in
             let columnCount = viewModel.weekList.count
-            let rowCount = hourList.count
+            let rowCount = viewModel.hourList.count
             let cellWidth = geometry.size.width / CGFloat(columnCount)
             let cellHeight: CGFloat = 52
             ZStack {
@@ -29,27 +28,18 @@ public struct TimeTableGridView: View {
                 }
                 
                 // 📌 수업 버튼 배치
-                ForEach(viewModel.weekList, id: \.self) {  day in
-                    ForEach(hourList, id: \.self) { hour in
-                        if let cell = getSlot(timeTable: viewModel.timeTable, for: hour, day: day) {
-                            // 수업 버튼 뷰 생성
-                            let dayIndex = viewModel.weekList.firstIndex(of: day)!
-                            createClassButton(for: cell, at: dayIndex, cellWidth: cellWidth, cellHeight: cellHeight)
-                        }
+                ForEach($viewModel.timeTable, id: \.self) { $cell in
+                    if let dayIndex = viewModel.weekList.firstIndex(of: cell.schedule.day) {
+                        createClassButton(for: cell, at: dayIndex, cellWidth: cellWidth, cellHeight: cellHeight)
                     }
                 }
                 
                 // 📌 글자 배치
-                ForEach(viewModel.weekList, id: \.self) {  day in
-                    ForEach(hourList, id: \.self) { hour in
-                        if let cell = getSlot(timeTable: viewModel.timeTable, for: hour, day: day) {
-                            // 수업 버튼 뷰 생성
-                            let dayIndex = viewModel.weekList.firstIndex(of: day)!
-                            createClassInfoText(for: cell, at: dayIndex, cellWidth: cellWidth, cellHeight: cellHeight)
-                        }
+                ForEach($viewModel.timeTable, id: \.self) { $cell in
+                    if let dayIndex = viewModel.weekList.firstIndex(of: cell.schedule.day) {
+                        createClassInfoText(for: cell, at: dayIndex, cellWidth: cellWidth, cellHeight: cellHeight)
                     }
                 }
-                
             }
         }
     }
@@ -99,6 +89,15 @@ extension TimeTableGridView {
             )
         }
         
+        context.stroke(
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: 0))
+                path.addLine(to: CGPoint(x: size.width, y: 0)) // 가로선 길이를 반으로 설정
+            },
+            with: .color(gridColor),
+            lineWidth: 1
+        )
+        
         // 세로선 그리기
         for col in 0...columnCount {
             let x = CGFloat(col) * cellWidth
@@ -119,12 +118,14 @@ extension TimeTableGridView {
         cellWidth: CGFloat,
         cellHeight: CGFloat
     ) -> some View {
+        print("🐘 \(cell)")
         let startHour = cell.schedule.startHour
         let startMinute = cell.schedule.startMinute
         let endHour = cell.schedule.endHour
         let endMinute = cell.schedule.endMinute
         
         let rect: (centerX: CGFloat, centerY: CGFloat, height: CGFloat) = configButtonLayout(
+            viewModel.hourList[0],
             (h: startHour, m: startMinute),
             (h: endHour, m: endMinute),
             at: dayIndex,
@@ -161,6 +162,7 @@ extension TimeTableGridView {
         let endMinute = cell.schedule.endMinute
         
         let rect: (centerX: CGFloat, centerY: CGFloat, height: CGFloat) = configButtonLayout(
+            viewModel.hourList[0],
             (h: startHour, m: startMinute),
             (h: endHour, m: endMinute),
             at: dayIndex,
@@ -192,16 +194,8 @@ extension TimeTableGridView {
 }
 
 extension TimeTableGridView {
-    private func getSlot(timeTable: [TimeTableCellInfo?], for hour: Int, day: Week) -> TimeTableCellInfo? {
-        let slotCount = 17
-        guard let weekIndex = viewModel.weekList.firstIndex(of: day) else { return nil }
-        let slotIndex = hour - 8
-        guard slotIndex >= 0 && slotIndex < slotCount else { return nil }
-        let index = weekIndex * slotCount + slotIndex
-        return timeTable[index]
-    }
-    
     private func configButtonLayout(
+        _ firstTime: Int,
         _ startTime: (h: Int, m: Int),
         _ endTime: (h: Int, m: Int),
         at dayIndex: Int,
@@ -211,7 +205,7 @@ extension TimeTableGridView {
         
         let x = CGFloat(dayIndex) * cellWidth
         // 시작 시간과 분을 기준으로 시작 위치 계산
-        let y = CGFloat(startTime.h - 8) * cellHeight + CGFloat(startTime.m) / 60 * cellHeight
+        let y = CGFloat(startTime.h - firstTime) * cellHeight + CGFloat(startTime.m) / 60 * cellHeight
         
         // 종료 시간과 분을 기준으로 높이 계산
         let height = CGFloat(endTime.h - startTime.h) * cellHeight +

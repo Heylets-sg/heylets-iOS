@@ -34,7 +34,7 @@ public struct MainView: View {
             
             BounceScrollView(axis: .vertical) {
                 HStack(alignment: .top, spacing: 0) {
-                    HourListView()
+                    HourListView(viewModel.hourList)
                     
                     TimeTableGridView(
                         viewModel: viewModel,

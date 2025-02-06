@@ -12,15 +12,18 @@ import Domain
 
 struct MainCaptureContentView: View {
     var weekList: [Week]
+    var hourList: [Int]
     var timeTable: [TimeTableCellInfo?]
     var displayType: DisplayTypeInfo
     
     init(
         weekList: [Week],
+        hourList: [Int],
         timeTable: [TimeTableCellInfo?],
         displayType: DisplayTypeInfo
     ) {
         self.weekList = weekList
+        self.hourList = hourList
         self.timeTable = timeTable
         self.displayType = displayType
     }
@@ -35,7 +38,7 @@ struct MainCaptureContentView: View {
             
             ScrollView() {
                 HStack(alignment: .top) {
-                    HourListView()
+                    HourListView(hourList)
                         .padding(.top, 10)
                     
                     TimeTableGridCaptureView(

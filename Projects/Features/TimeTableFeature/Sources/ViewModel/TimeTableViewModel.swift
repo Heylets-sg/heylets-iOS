@@ -65,7 +65,7 @@ public class TimeTableViewModel: ObservableObject {
     ]
     @Published var weekList: [Week] = Week.dayOfWeek
     @Published var hourList: [Int] = Array(8...21)
-    @Published var timeTable: [TimeTableCellInfo?] = []
+    @Published var timeTable: [TimeTableCellInfo] = []
     @Published var detailSectionInfo: SectionInfo = .empty
     
     
@@ -74,9 +74,7 @@ public class TimeTableViewModel: ObservableObject {
         
         bindState()
         
-        configTimeTable(sectionList.createTimeTableCellList())
-            .assign(to: \.timeTable, on: self)
-            .store(in: cancelBag)
+        timeTable = sectionList.createTimeTableCellList()
     }
     
     func send(_ action: Action) {
@@ -128,6 +126,7 @@ public class TimeTableViewModel: ObservableObject {
         case .saveImage:
             let mainView = MainCaptureContentView(
                 weekList: weekList,
+                hourList: hourList,
                 timeTable: timeTable,
                 displayType: displayTypeInfo
             )
@@ -192,7 +191,6 @@ public class TimeTableViewModel: ObservableObject {
                     .handleEvents(receiveOutput: { owner.hourList = $0 })
                     .map { _ in timeTableCellList }
             }
-            .flatMap(configTimeTable)
             .assign(to: \.timeTable, on: owner)
             .store(in: cancelBag)
         
@@ -216,7 +214,10 @@ extension TimeTableViewModel {
         var endTime = 21
         var hourList: [Int] = []
         
-        let allTimeList = Set(timeTableCellList.map { $0.schedule.startHour } + timeTableCellList.map { $0.schedule.endHour })
+        let allTimeList = Set(
+            timeTableCellList.map { $0.schedule.startHour } +
+            timeTableCellList.map { $0.schedule.endHour }
+        )
         
         if allTimeList.isEmpty { hourList = Array(startTime...endTime) }
         
@@ -243,28 +244,6 @@ extension TimeTableViewModel {
         return Just(updatedWeekList)
             .eraseToAnyPublisher()
     }
-    
-    private func configTimeTable(
-        _ timeTableCellList: [TimeTableCellInfo]
-    ) -> AnyPublisher<[TimeTableCellInfo?], Never> {
-        
-        let slotCount = hourList.count
-        let totalSlots = weekList.count * slotCount
-        var updatedTimeTable = Array<TimeTableCellInfo?>(repeating: nil, count: totalSlots)
-        
-        let resultTimeTable = timeTableCellList.reduce(into: updatedTimeTable) { table, cell in
-            if let weekIndex = weekList.firstIndex(of: cell.schedule.day) {
-                for s in cell.slot {
-                    // s.key가 해당 요일의 슬롯 인덱스라고 가정 (0 ~ slotCount-1)
-                    let index = weekIndex * slotCount + s.key
-                    table[index] = cell
-                }
-            }
-        }
-        return Just(resultTimeTable)
-            .eraseToAnyPublisher()
-    }
-    
 }
 
 

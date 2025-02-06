@@ -73,7 +73,7 @@ extension ScheduleInfo {
         .init(
             id: 2,
             day: .Sat,
-            startHour: 9,
+            startHour: 7,
             startMinute: 30,
             endHour: 11,
             endMinute: 30,

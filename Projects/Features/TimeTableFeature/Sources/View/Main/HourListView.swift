@@ -12,7 +12,11 @@ import DSKit
 import Domain
 
 public struct HourListView: View {
-    let hourList = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    var hourList: [Int]
+    
+    init(_ hourList: [Int]) {
+        self.hourList = hourList
+    }
     
     public var body: some View {
         VStack(spacing: 0) {
@@ -22,7 +26,7 @@ public struct HourListView: View {
             
             ForEach(hourList, id: \.self) { hour in
                 HStack {
-                    Text("\(hour)")
+                    Text("\(hour > 12 ? hour - 12 : hour)")
                         .font(.regular_12)
                         .foregroundColor(.heyGray1)
                         .multilineTextAlignment(.trailing)
