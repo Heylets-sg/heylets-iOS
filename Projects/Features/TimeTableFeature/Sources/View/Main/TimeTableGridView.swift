@@ -39,6 +39,17 @@ public struct TimeTableGridView: View {
                     }
                 }
                 
+                // 📌 글자 배치
+                ForEach(viewModel.weekList, id: \.self) {  day in
+                    ForEach(hourList, id: \.self) { hour in
+                        if let cell = getSlot(timeTable: viewModel.timeTable, for: hour, day: day) {
+                            // 수업 버튼 뷰 생성
+                            let dayIndex = viewModel.weekList.firstIndex(of: day)!
+                            createClassInfoText(for: cell, at: dayIndex, cellWidth: cellWidth, cellHeight: cellHeight)
+                        }
+                    }
+                }
+                
             }
         }
     }
@@ -113,15 +124,11 @@ extension TimeTableGridView {
         let endHour = cell.schedule.endHour
         let endMinute = cell.schedule.endMinute
         
-        let rect: (
-            centerX: CGFloat,
-            centerY: CGFloat,
-            height: CGFloat
-        ) = configButtonLayout(
+        let rect: (centerX: CGFloat, centerY: CGFloat, height: CGFloat) = configButtonLayout(
             (h: startHour, m: startMinute),
             (h: endHour, m: endMinute),
             at: dayIndex,
-            cellWidth: cellWidth, 
+            cellWidth: cellWidth,
             cellHeight: cellHeight
         )
         
@@ -137,9 +144,50 @@ extension TimeTableGridView {
                 )
                 .frame(width: cellWidth, height: rect.height)
                 .position(x: rect.centerX, y: rect.centerY)
-                
         }
         .buttonStyle(PlainButtonStyle())
+    }
+    
+    
+    private func createClassInfoText(
+        for cell: TimeTableCellInfo,
+        at dayIndex: Int,
+        cellWidth: CGFloat,
+        cellHeight: CGFloat
+    ) -> some View {
+        let startHour = cell.schedule.startHour
+        let startMinute = cell.schedule.startMinute
+        let endHour = cell.schedule.endHour
+        let endMinute = cell.schedule.endMinute
+        
+        let rect: (centerX: CGFloat, centerY: CGFloat, height: CGFloat) = configButtonLayout(
+            (h: startHour, m: startMinute),
+            (h: endHour, m: endMinute),
+            at: dayIndex,
+            cellWidth: cellWidth,
+            cellHeight: cellHeight
+        )
+        
+        return VStack(alignment: .leading, spacing: 0) {
+            Text(cell.code)
+                .font(.medium_12)
+                .foregroundColor(cell.textColor)
+                .multilineTextAlignment(.center)
+            
+            if displayType.classRoomIsVisible {
+                Text(cell.schedule.location)
+                    .font(.regular_10)
+                    .foregroundColor(cell.textColor)
+            }
+            
+            if displayType.creditIsVisible, let unit = cell.unit {
+                Text("unit: \(unit)")
+                    .font(.regular_10)
+                    .foregroundColor(cell.textColor)
+            }
+        }
+        .frame(width: 56, height: rect.height, alignment: .topLeading)
+        .position(x: rect.centerX-4, y: rect.centerY)
     }
 }
 
@@ -154,7 +202,7 @@ extension TimeTableGridView {
     }
     
     private func configButtonLayout(
-        _ startTIme: (h: Int, m: Int),
+        _ startTime: (h: Int, m: Int),
         _ endTime: (h: Int, m: Int),
         at dayIndex: Int,
         cellWidth: CGFloat,
@@ -163,11 +211,11 @@ extension TimeTableGridView {
         
         let x = CGFloat(dayIndex) * cellWidth
         // 시작 시간과 분을 기준으로 시작 위치 계산
-        let y = CGFloat(startTIme.h - 8) * cellHeight + CGFloat(startTIme.m) / 60 * cellHeight
+        let y = CGFloat(startTime.h - 8) * cellHeight + CGFloat(startTime.m) / 60 * cellHeight
         
         // 종료 시간과 분을 기준으로 높이 계산
-        let height = CGFloat(endTime.h - startTIme.h) * cellHeight +
-        CGFloat(endTime.m - startTIme.m) / 60 * cellHeight
+        let height = CGFloat(endTime.h - startTime.h) * cellHeight +
+        CGFloat(endTime.m - startTime.m) / 60 * cellHeight
         
         let centerX = x + cellWidth / 2
         let centerY =  y + height / 2 + cellHeight / 2
