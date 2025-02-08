@@ -27,7 +27,7 @@ public class TimeTableViewModel: ObservableObject {
         struct TimeTable {
             var columnCount: Int = 5
             var rowCount: Int = 17
-            var isScrollDisabled: Bool = false
+            var isScrollEnabled: Bool = true
         }
         
         var alerts: Alerts = Alerts()
@@ -62,7 +62,7 @@ public class TimeTableViewModel: ObservableObject {
     @Published var timeTableInfo: TimeTableInfo = .stub //TODO: QA용 -> .empty로 변경
     @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
     @Published var sectionList: [SectionInfo] = []
-    @Published var weekList: [Week] = Week.dayOfWeek
+    @Published var weekList: [Week] = Week.weekDay
     @Published var hourList: [Int] = Array(8...21)
     @Published var timeTable: [TimeTableCellInfo] = []
     @Published var detailSectionInfo: SectionInfo = .empty
@@ -101,6 +101,7 @@ public class TimeTableViewModel: ObservableObject {
                 detailSectionInfo.isCustom,
                 detailSectionInfo.id
             )
+            .receive(on: RunLoop.main)
             .map { _ in false}
             .assign(to: \.state.alerts.showDeleteAlert, on: self)
             .store(in: cancelBag)
@@ -185,7 +186,7 @@ public class TimeTableViewModel: ObservableObject {
             .flatMap(configWeekList)
             .sink(receiveValue: {
                 owner.weekList = $0
-                owner.state.timeTable.isScrollDisabled = $0 == Week.weekDay
+                owner.state.timeTable.isScrollEnabled = $0 != Week.weekDay
                 owner.state.timeTable.columnCount = $0.count
             })
             .store(in: cancelBag)
@@ -240,7 +241,7 @@ extension TimeTableViewModel {
     private func configWeekList(
         _ timeTableCellList: [TimeTableCellInfo]
     ) -> AnyPublisher<[Week], Never> {
-        var updatedWeekList = weekList
+        var updatedWeekList = Week.weekDay
         for cell in timeTableCellList {
             if cell.schedule.day == .Sun {
                 updatedWeekList = Week.dayOfWeek

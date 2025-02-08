@@ -8,35 +8,38 @@ public struct TimeTableGridView: View {
     @Binding var viewType: TimeTableViewType
     
     
+    
     public var body: some View {
         GeometryReader { geometry in
-            let columnCount = viewModel.state.timeTable.columnCount
-            let rowCount = viewModel.state.timeTable.rowCount
-            let cellWidth = geometry.size.width / CGFloat(columnCount)
-            let cellHeight: CGFloat = 52
-            ZStack {
-                // 📌 빈 시간표 배치
-                Canvas { context, size in
-                    drawGrid(
-                        &context, size,
-                        columnCount, rowCount,
-                        cellWidth, cellHeight
-                    )
+            VStack {
+                let columnCount = viewModel.state.timeTable.columnCount
+                let rowCount = viewModel.state.timeTable.rowCount
+                let cellWidth: CGFloat = (geometry.size.width) / CGFloat(columnCount)
+                let cellHeight: CGFloat = 52
+                ZStack {
+                    // 📌 빈 시간표 배치
+                    Canvas { context, size in
+                        drawGrid(
+                            &context, size,
+                            columnCount, rowCount,
+                            geometry.size.width, cellWidth, cellHeight
+                        )
+                    }
+                    
+                    // 📌 수업 버튼 배치
+                    ForEach($viewModel.timeTable, id: \.self) { $cell in
+                        if let dayIndex = viewModel.weekList.firstIndex(of: cell.schedule.day) {
+                            createClassButton(for: cell, at: dayIndex, cellWidth: cellWidth, cellHeight: cellHeight)
+                        }
+                    }
+                    
+                    // 📌 글자 배치
+                    ForEach($viewModel.timeTable, id: \.self) { $cell in
+                        if let dayIndex = viewModel.weekList.firstIndex(of: cell.schedule.day) {
+                            createClassInfoText(for: cell, at: dayIndex, cellWidth: cellWidth, cellHeight: cellHeight)
+                        }
+                    }
                 }
-                
-                // 📌 수업 버튼 배치
-//                ForEach($viewModel.timeTable, id: \.self) { $cell in
-//                    if let dayIndex = viewModel.weekList.firstIndex(of: cell.schedule.day) {
-//                        createClassButton(for: cell, at: dayIndex, cellWidth: cellWidth, cellHeight: cellHeight)
-//                    }
-//                }
-                
-                // 📌 글자 배치
-//                ForEach($viewModel.timeTable, id: \.self) { $cell in
-//                    if let dayIndex = viewModel.weekList.firstIndex(of: cell.schedule.day) {
-//                        createClassInfoText(for: cell, at: dayIndex, cellWidth: cellWidth, cellHeight: cellHeight)
-//                    }
-//                }
             }
         }
     }
@@ -48,19 +51,19 @@ extension TimeTableGridView {
         _ size: CGSize,
         _ columnCount: Int,
         _ rowCount: Int,
+        _ fullWidth: CGFloat,
         _ cellWidth: CGFloat,
         _ cellHeight: CGFloat
     ) {
         let gridColor = Color.heyGray6
         // 첫번째 선 그리기
         print("🍎🍎🍎🍎🍎🍎🍎🍎🍎")
-        print(rowCount, columnCount)
-        let width = CGFloat(rowCount) * cellWidth
-        let height = CGFloat(columnCount) * cellHeight
+        print("\(rowCount)")
+        let height = CGFloat(rowCount) * cellHeight
         context.stroke(
             Path { path in
                 path.move(to: CGPoint(x: 0, y: 0))
-                path.addLine(to: CGPoint(x: width, y: 0)) // 가로선 길이를 반으로 설정
+                path.addLine(to: CGPoint(x: size.width, y: 0)) // 가로선 길이를 반으로 설정
             },
             with: .color(gridColor),
             lineWidth: 1
@@ -71,7 +74,7 @@ extension TimeTableGridView {
         context.stroke(
             Path { path in
                 path.move(to: CGPoint(x: 0, y: firstRowY))
-                path.addLine(to: CGPoint(x: width, y: firstRowY)) // 가로선 길이를 반으로 설정
+                path.addLine(to: CGPoint(x: size.width, y: firstRowY)) // 가로선 길이를 반으로 설정
             },
             with: .color(gridColor),
             lineWidth: 0.5
@@ -83,7 +86,7 @@ extension TimeTableGridView {
             context.stroke(
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: y))
-                    path.addLine(to: CGPoint(x: width, y: y))
+                    path.addLine(to: CGPoint(x: size.width, y: y))
                 },
                 with: .color(gridColor),
                 lineWidth: 0.5
@@ -93,10 +96,11 @@ extension TimeTableGridView {
         // 세로선 그리기
         for col in 0...columnCount {
             let x = CGFloat(col) * cellWidth
+            print("🐘 \(x)")
             context.stroke(
                 Path { path in
                     path.move(to: CGPoint(x: x, y: 0))
-                    path.addLine(to: CGPoint(x: x, y: size.height))
+                    path.addLine(to: CGPoint(x: x, y: height))
                 },
                 with: .color(gridColor),
                 lineWidth: col == 0 || col == columnCount ? 1 : 0.5

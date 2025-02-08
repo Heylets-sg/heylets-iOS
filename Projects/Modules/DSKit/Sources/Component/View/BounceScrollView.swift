@@ -10,10 +10,16 @@ import SwiftUI
 
 public struct BounceScrollView<Content: View>: UIViewRepresentable {
     var axis: Axis
+    var isScrollEnabled: Bool
     var content: () -> Content
     
-    public init(axis: Axis, @ViewBuilder content: @escaping () -> Content) {
+    public init(
+        axis: Axis,
+        isScrollEnabled: Bool = true,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
         self.axis = axis
+        self.isScrollEnabled = isScrollEnabled
         self.content = content
     }
 
@@ -24,6 +30,7 @@ public struct BounceScrollView<Content: View>: UIViewRepresentable {
         scrollView.alwaysBounceHorizontal = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.isScrollEnabled = isScrollEnabled
 
         let hostingController = UIHostingController(rootView: content())
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false

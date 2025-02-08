@@ -24,7 +24,7 @@ public struct MainView: View {
     }
     
     public var body: some View {
-        BounceScrollView(axis: .horizontal) {
+        ScrollView(.horizontal) {
             HStack {
                 WeeklyListView(viewModel.weekList)
                     .padding(.bottom, 16)
@@ -32,7 +32,7 @@ public struct MainView: View {
                     .padding(.trailing, 35)
             }
             
-            BounceScrollView(axis: .vertical) {
+            ScrollView {
                 HStack(alignment: .top, spacing: 0) {
                     HourListView(viewModel.hourList)
                     
@@ -44,8 +44,7 @@ public struct MainView: View {
                 }
             }
         }
-        .scrollDisabled(viewModel.state.timeTable.isScrollDisabled)
-        .scrollIndicators(.hidden)
+        .scrollDisabled(!viewModel.state.timeTable.isScrollEnabled)
     }
 }
 
