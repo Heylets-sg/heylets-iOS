@@ -44,7 +44,7 @@ public struct MainView: View {
                 }
             }
         }
-        .scrollDisabled(viewModel.state.isScrollDisabled)
+        .scrollDisabled(viewModel.state.timeTable.isScrollDisabled)
         .scrollIndicators(.hidden)
     }
 }

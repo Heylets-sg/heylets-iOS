@@ -10,6 +10,14 @@ import Foundation
 
 
 extension SectionInfo {
+    static public var timetable_stubList: [SectionInfo] =  [
+        .timetable_stub1,
+        .timetable_stub1_1,
+        .timetable_stub2,
+        .timetable_stub2_1,
+        .timetable_stub3,
+        .timetable_stub4
+    ]
     static public var timetable_stub1: Self {
         .init(
             id: 11214,

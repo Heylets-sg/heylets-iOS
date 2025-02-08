@@ -24,9 +24,15 @@ public class TimeTableViewModel: ObservableObject {
             var showAddCustomAlert: Bool = false
         }
         
+        struct TimeTable {
+            var columnCount: Int = 5
+            var rowCount: Int = 17
+            var isScrollDisabled: Bool = false
+        }
+        
         var alerts: Alerts = Alerts()
+        var timeTable: TimeTable = TimeTable()
         var timeTableName: String = ""
-        var isScrollDisabled: Bool = false
         var profile: ProfileInfo = .init()
         var error: (Bool, String) = (false, "")
     }
@@ -55,14 +61,7 @@ public class TimeTableViewModel: ObservableObject {
     
     @Published var timeTableInfo: TimeTableInfo = .stub //TODO: QA용 -> .empty로 변경
     @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
-    @Published var sectionList: [SectionInfo] = [
-        .timetable_stub1,
-        .timetable_stub1_1,
-        .timetable_stub2,
-        .timetable_stub2_1,
-        .timetable_stub3,
-        .timetable_stub4
-    ]
+    @Published var sectionList: [SectionInfo] = []
     @Published var weekList: [Week] = Week.dayOfWeek
     @Published var hourList: [Int] = Array(8...21)
     @Published var timeTable: [TimeTableCellInfo] = []
@@ -173,25 +172,32 @@ public class TimeTableViewModel: ObservableObject {
         
         useCase.sectionList
             .receive(on: RunLoop.main)
-            .handleEvents(receiveOutput: { sectionList in
-                owner.sectionList = sectionList
+            .handleEvents(receiveOutput: {
+                owner.sectionList = $0
             })
             .map { $0.createTimeTableCellList() }
-            .flatMap { timeTableCellList in
-                owner.configWeekList(timeTableCellList)
-                    .handleEvents(receiveOutput: {
-                        owner.weekList = $0
-                        owner.state.isScrollDisabled = $0 == Week.weekDay
-                    })
-                    .map { _ in timeTableCellList }
-            }
-            .map { _ in owner.sectionList.createTimeTableCellList() }
-            .flatMap { timeTableCellList in
-                owner.configHourList(timeTableCellList)
-                    .handleEvents(receiveOutput: { owner.hourList = $0 })
-                    .map { _ in timeTableCellList }
-            }
             .assign(to: \.timeTable, on: owner)
+            .store(in: cancelBag)
+        
+        useCase.sectionList
+            .receive(on: RunLoop.main)
+            .map { $0.createTimeTableCellList() }
+            .flatMap(configWeekList)
+            .sink(receiveValue: {
+                owner.weekList = $0
+                owner.state.timeTable.isScrollDisabled = $0 == Week.weekDay
+                owner.state.timeTable.columnCount = $0.count
+            })
+            .store(in: cancelBag)
+        
+        useCase.sectionList
+            .receive(on: RunLoop.main)
+            .map { $0.createTimeTableCellList() }
+            .flatMap(configHourList)
+            .sink(receiveValue: {
+                owner.hourList = $0
+                owner.state.timeTable.rowCount = $0.count
+            })
             .store(in: cancelBag)
         
         useCase.errMessage
@@ -219,11 +225,14 @@ extension TimeTableViewModel {
             timeTableCellList.map { $0.schedule.endHour }
         )
         
-        if allTimeList.isEmpty { hourList = Array(startTime...endTime) }
+        if allTimeList.isEmpty {
+            hourList = Array(startTime...endTime)
+        } else {
+            startTime = min(allTimeList.min()!, startTime)
+            endTime = max(allTimeList.max()!, endTime)
+            hourList = Array(startTime...endTime)
+        }
         
-        startTime = min(allTimeList.min()!, startTime)
-        endTime = max(allTimeList.max()!, endTime)
-        hourList = Array(startTime...endTime)
         return Just(hourList)
             .eraseToAnyPublisher()
     }
