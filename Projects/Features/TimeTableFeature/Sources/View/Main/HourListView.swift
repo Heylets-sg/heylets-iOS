@@ -9,36 +9,43 @@
 import SwiftUI
 
 import DSKit
+import Domain
 
 public struct HourListView: View {
-    let hourList = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    var hourList: [Int]
+    
+    init(_ hourList: [Int]) {
+        self.hourList = hourList
+    }
     
     public var body: some View {
-        VStack(spacing: 40) {
+        VStack(spacing: 0) {
+            Divider()
+                .background(Color.heyGray6)
+                .padding(.bottom, 17)
+            
             ForEach(hourList, id: \.self) { hour in
-                HourListCellView(hour)
+                HStack {
+                    Text("\(hour > 12 ? hour - 12 : hour)")
+                        .font(.regular_12)
+                        .foregroundColor(.heyGray1)
+                        .multilineTextAlignment(.trailing)
+                }
+                .frame(height: 16)
+                .padding(.leading, 2)
+                .padding(.bottom, 36)
             }
         }
-        .padding(.top, 10)
         .frame(width: 25)
     }
 }
 
-fileprivate struct HourListCellView: View {
-    public let hour: Int
-    public init(_ hour: Int) {
-        self.hour = hour
-    }
-    var body: some View {
-        HStack {
-            Text("\(hour)")
-                .font(.regular_12)
-                .foregroundColor(.heyGray1)
-                .padding(.leading, 10)
-        }
-    }
+#Preview {
+    @State var stub: TimeTableViewType = .main
+    return MainView(
+        viewModel: .init(StubHeyUseCase.stub.timeTableUseCase),
+        viewType: $stub
+    )
 }
-
-
 
 

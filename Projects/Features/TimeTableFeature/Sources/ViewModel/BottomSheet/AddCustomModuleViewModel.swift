@@ -36,7 +36,7 @@ public class AddCustomModuleViewModel: ObservableObject {
     @Published var professor: String  = ""
     
     let dayofWeeks = Week.dayOfWeek
-    let timeList: [String] = (9...23).map { hour in
+    let timeList: [String] = (1...22).map { hour in
         let start = String(format: "%02d:00", hour)
         let end = String(format: "%02d:00", hour + 1)
         return "\(start) - \(end)"
@@ -45,7 +45,7 @@ public class AddCustomModuleViewModel: ObservableObject {
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
     
-    public init(useCase: TimeTableUseCaseType) {
+    public init(_ useCase: TimeTableUseCaseType) {
         self.useCase = useCase
     }
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Week: String, CaseIterable, Hashable {
+public enum Week: String, CaseIterable, Hashable, Equatable {
     case Mon
     case Tue
     case Wed

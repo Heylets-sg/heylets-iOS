@@ -12,15 +12,18 @@ import Domain
 
 struct MainCaptureContentView: View {
     var weekList: [Week]
-    var timeTable: [[TimeTableCellInfo?]]
+    var hourList: [Int]
+    var timeTable: [TimeTableCellInfo?]
     var displayType: DisplayTypeInfo
     
     init(
         weekList: [Week],
-        timeTable: [[TimeTableCellInfo?]],
+        hourList: [Int],
+        timeTable: [TimeTableCellInfo?],
         displayType: DisplayTypeInfo
     ) {
         self.weekList = weekList
+        self.hourList = hourList
         self.timeTable = timeTable
         self.displayType = displayType
     }
@@ -28,14 +31,14 @@ struct MainCaptureContentView: View {
     var body: some View {
         ScrollView(.horizontal) {
             HStack {
-                WeeklyListView(weekList)
+                WeeklyListView(weekList, cellWidth: CGFloat(0))
                     .padding(.bottom, 16)
                     .padding(.leading, 30)
             }
             
             ScrollView() {
                 HStack(alignment: .top) {
-                    HourListView()
+                    HourListView(hourList)
                         .padding(.top, 10)
                     
                     TimeTableGridCaptureView(
@@ -55,9 +58,11 @@ struct MainCaptureContentView: View {
 
 import SwiftUI
 
+
+
 public struct TimeTableGridCaptureView: View {
     var weekList: [Week]
-    var timeTable: [[TimeTableCellInfo?]]
+    var timeTable: [TimeTableCellInfo?]
     var displayType: DisplayTypeInfo
     var hourList = Array(8...24)
     
@@ -112,30 +117,30 @@ public struct TimeTableGridCaptureView: View {
                                 if cell.schedule.startMinute != 0 {
                                     Spacer()
                                 }
-                                cell.backgrounColor
-                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                cell.backgroundColor
+                                    .frame(height: 52)
                                     .clipped()
                             } else if hour == cell.schedule.endHour {
                                 // 종료 시간일 때 위로 배치
-                                cell.backgrounColor
-                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                cell.backgroundColor
+                                    .frame(height: 52)
                                     .clipped()
                                 if cell.schedule.endMinute != 0 {
                                     Spacer()
                                 }
                             } else {
-                                cell.backgrounColor
-                                    .frame(height: getCellHeight(for: cell, hour: hour))
+                                cell.backgroundColor
+                                    .frame(height: 52)
                                     .clipped()
                             }
                         }
-
+                        
                         // 시간 시작에만 텍스트 보여주기
                         if hour == cell.schedule.startHour {
                             VStack(alignment: .leading) {
                                 if cell.schedule.startMinute != 0 {
                                     Spacer()
-                                        .frame(height: getCellHeight(for: cell, hour: hour))
+                                        .frame(height: 52)
                                 }
                                 Text(cell.code)
                                     .font(.medium_12)
@@ -167,21 +172,15 @@ public struct TimeTableGridCaptureView: View {
         }
         .frame(width: 70, height: 52)
     }
+
     
-    private func getCellHeight(for cell: TimeTableCellInfo, hour: Int) -> CGFloat {
-        var baseHeight: CGFloat = 52 // 기본 셀 높이
-        if let colorRatio = cell.slot[hour-8] {
-            baseHeight *= CGFloat(colorRatio)
-        } else {
-            print(hour)
-        }
-        return baseHeight
-    }
-    
-    private func getSlot(timeTable: [[TimeTableCellInfo?]], for hour: Int, day: Week) -> TimeTableCellInfo? {
-        guard day.index < timeTable.count,
-              hour - 8 < timeTable[day.index].count else { return nil }
-        return timeTable[day.index][hour - 8]
+    private func getSlot(timeTable: [TimeTableCellInfo?], for hour: Int, day: Week) -> TimeTableCellInfo? {
+        let slotCount = 17
+        guard let weekIndex = weekList.firstIndex(of: day) else { return nil }
+        let slotIndex = hour - 8 // 예를 들어, 8시가 0번 인덱스라고 가정
+        guard slotIndex >= 0 && slotIndex < slotCount else { return nil }
+        let index = weekIndex * slotCount + slotIndex
+        return timeTable[index]
     }
     
 }

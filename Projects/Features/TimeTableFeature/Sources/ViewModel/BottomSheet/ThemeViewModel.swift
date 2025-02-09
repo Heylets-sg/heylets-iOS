@@ -46,7 +46,7 @@ public class ThemeViewModel: ObservableObject {
     
     private let cancelBag = CancelBag()
     
-    public init(useCase: TimeTableUseCaseType) {
+    public init(_ useCase: TimeTableUseCaseType) {
         self.useCase = useCase
     }
     

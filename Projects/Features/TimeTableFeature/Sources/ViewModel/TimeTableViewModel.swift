@@ -24,9 +24,15 @@ public class TimeTableViewModel: ObservableObject {
             var showAddCustomAlert: Bool = false
         }
         
+        struct TimeTable {
+            var columnCount: Int = 5
+            var rowCount: Int = 17
+            var isScrollEnabled: Bool = true
+        }
+        
         var alerts: Alerts = Alerts()
+        var timeTable: TimeTable = TimeTable()
         var timeTableName: String = ""
-        var isScrollDisabled: Bool = true
         var profile: ProfileInfo = .init()
         var error: (Bool, String) = (false, "")
     }
@@ -53,18 +59,21 @@ public class TimeTableViewModel: ObservableObject {
     private let useCase: TimeTableUseCaseType
     @Published var viewType: TimeTableViewType = .main
     
-    @Published var timeTableInfo: TimeTableInfo = .empty
+    @Published var timeTableInfo: TimeTableInfo = .stub //TODO: QA용 -> .empty로 변경
     @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
     @Published var sectionList: [SectionInfo] = []
     @Published var weekList: [Week] = Week.weekDay
-    @Published var timeTable: [[TimeTableCellInfo?]] = []
+    @Published var hourList: [Int] = Array(8...21)
+    @Published var timeTable: [TimeTableCellInfo] = []
     @Published var detailSectionInfo: SectionInfo = .empty
     
     
-    public init(useCase: TimeTableUseCaseType) {
+    public init(_ useCase: TimeTableUseCaseType) {
         self.useCase = useCase
         
         bindState()
+        
+        timeTable = sectionList.createTimeTableCellList()
     }
     
     func send(_ action: Action) {
@@ -92,6 +101,7 @@ public class TimeTableViewModel: ObservableObject {
                 detailSectionInfo.isCustom,
                 detailSectionInfo.id
             )
+            .receive(on: RunLoop.main)
             .map { _ in false}
             .assign(to: \.state.alerts.showDeleteAlert, on: self)
             .store(in: cancelBag)
@@ -116,6 +126,7 @@ public class TimeTableViewModel: ObservableObject {
         case .saveImage:
             let mainView = MainCaptureContentView(
                 weekList: weekList,
+                hourList: hourList,
                 timeTable: timeTable,
                 displayType: displayTypeInfo
             )
@@ -162,20 +173,32 @@ public class TimeTableViewModel: ObservableObject {
         
         useCase.sectionList
             .receive(on: RunLoop.main)
-            .handleEvents(receiveOutput: { sectionList in
-                owner.sectionList = sectionList
+            .handleEvents(receiveOutput: {
+                owner.sectionList = $0
             })
             .map { $0.createTimeTableCellList() }
-            .flatMap {
-                owner.configWeekList($0)
-            }
-            .handleEvents(receiveOutput: {
+            .assign(to: \.timeTable, on: owner)
+            .store(in: cancelBag)
+        
+        useCase.sectionList
+            .receive(on: RunLoop.main)
+            .map { $0.createTimeTableCellList() }
+            .flatMap(configWeekList)
+            .sink(receiveValue: {
                 owner.weekList = $0
-                owner.state.isScrollDisabled = $0 == Week.weekDay
+                owner.state.timeTable.isScrollEnabled = $0 != Week.weekDay
+                owner.state.timeTable.columnCount = $0.count
             })
-            .map { _ in owner.sectionList.createTimeTableCellList() }
-            .flatMap(configTimeTable)
-            .assign(to: \.timeTable, on: self)
+            .store(in: cancelBag)
+        
+        useCase.sectionList
+            .receive(on: RunLoop.main)
+            .map { $0.createTimeTableCellList() }
+            .flatMap(configHourList)
+            .sink(receiveValue: {
+                owner.hourList = $0
+                owner.state.timeTable.rowCount = $0.count
+            })
             .store(in: cancelBag)
         
         useCase.errMessage
@@ -191,10 +214,34 @@ public class TimeTableViewModel: ObservableObject {
 }
 
 extension TimeTableViewModel {
+    private func configHourList(
+        _ timeTableCellList: [TimeTableCellInfo]
+    ) -> AnyPublisher<[Int], Never> {
+        var startTime = 8
+        var endTime = 21
+        var hourList: [Int] = []
+        
+        let allTimeList = Set(
+            timeTableCellList.map { $0.schedule.startHour } +
+            timeTableCellList.map { $0.schedule.endHour }
+        )
+        
+        if allTimeList.isEmpty {
+            hourList = Array(startTime...endTime)
+        } else {
+            startTime = min(allTimeList.min()!, startTime)
+            endTime = max(allTimeList.max()!, endTime)
+            hourList = Array(startTime...endTime)
+        }
+        
+        return Just(hourList)
+            .eraseToAnyPublisher()
+    }
+    
     private func configWeekList(
         _ timeTableCellList: [TimeTableCellInfo]
     ) -> AnyPublisher<[Week], Never> {
-        var updatedWeekList = weekList
+        var updatedWeekList = Week.weekDay
         for cell in timeTableCellList {
             if cell.schedule.day == .Sun {
                 updatedWeekList = Week.dayOfWeek
@@ -207,22 +254,6 @@ extension TimeTableViewModel {
         return Just(updatedWeekList)
             .eraseToAnyPublisher()
     }
-    
-    private func configTimeTable(
-        _ timeTableCellList: [TimeTableCellInfo]
-    ) -> AnyPublisher<[[TimeTableCellInfo?]], Never> {
-        let updatedTimeTable: [[TimeTableCellInfo?]] = Array(repeating: Array(repeating: nil, count: 17), count: weekList.count)
-        let resultTimeTable = timeTableCellList.reduce(into: updatedTimeTable) { timeTable, cell in
-            if let weekIndex = weekList.firstIndex(of: cell.schedule.day) {
-                for s in cell.slot {
-                    timeTable[weekIndex][s.key] = cell
-                }
-            }
-        }
-        return Just(resultTimeTable)
-            .eraseToAnyPublisher()
-    }
-    
 }
 
 

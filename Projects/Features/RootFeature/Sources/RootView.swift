@@ -36,20 +36,12 @@ public struct RootView: View {
                     )
                 )
             case .timetable:
+                let useCase = useCase.timeTableUseCase
                 TimeTableView(
-                    viewModel: .init(
-                        useCase: useCase.timeTableUseCase
-                    ),
-                    searchModuleViewModel: .init(
-                        useCase: useCase.timeTableUseCase
-                    ),
-                    addCustomModuleViewModel: .init(
-                        useCase: useCase.timeTableUseCase
-                    ),
-                    settingTimeTableViewModel: .init(),
-                    themeViewModel: .init(
-                        useCase: useCase.timeTableUseCase
-                    )
+                    viewModel: .init(useCase),
+                    searchModuleViewModel: .init(useCase),
+                    addCustomModuleViewModel: .init(useCase),
+                    themeViewModel: .init(useCase)
                 )
             case .mypage(let profileInfo):
                 MyPageView(

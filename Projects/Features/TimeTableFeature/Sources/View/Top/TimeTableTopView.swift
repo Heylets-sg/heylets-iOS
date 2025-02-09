@@ -26,18 +26,21 @@ public struct TopView: View {
                     .frame(height: 34)
                 
                 HStack {
-                    Text(profileInfo.university) //TODO: 여기 API 통신 이후 User에서 학교 빼오기
+                    Text(profileInfo.university)
                         .font(.bold_8)
                         .foregroundColor(.heyGray6)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 2)
                         .background(Color.heyDarkBlue)
+                        .clipShape(RoundedRectangle(cornerRadius: 1.2))
+                        .frame(width: 28, height: 14)
+                        
                     
                     Text(timeTableInfo.fullSemester)
                         .font(.medium_12)
                         .foregroundColor(.heyGray2)
                 }
-                .padding(.bottom, 11)
+                .padding(.bottom, 8)
                 
                 Text(timeTableInfo.name)
                     .font(.semibold_18)
@@ -108,3 +111,14 @@ public struct TopView: View {
     }
 }
 
+#Preview {
+    @State var stub: TimeTableViewType = .main
+    let useCase = StubHeyUseCase.stub.timeTableUseCase
+    return TimeTableView(
+        viewModel: .init(useCase),
+        searchModuleViewModel: .init(useCase),
+        addCustomModuleViewModel: .init(useCase),
+        themeViewModel: .init(useCase)
+    )
+    .environmentObject(Router.default)
+}

@@ -17,4 +17,13 @@ extension TimeTableInfo {
               displayType: .MODULE_CODE
         )
     }
+    
+    static public var stub: Self {
+        .init(id: 1,
+              name: "hi",
+              semester: "AY2025/2026 sem1",
+              academicYear: 0,
+              displayType: .MODULE_CODE
+        )
+    }
 }

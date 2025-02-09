@@ -36,7 +36,7 @@ public class SearchModuleViewModel: ObservableObject {
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
     
-    public init(useCase: TimeTableUseCaseType) {
+    public init(_ useCase: TimeTableUseCaseType) {
         self.useCase = useCase
     }
     
