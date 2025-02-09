@@ -31,7 +31,7 @@ struct MainCaptureContentView: View {
     var body: some View {
         ScrollView(.horizontal) {
             HStack {
-                WeeklyListView(weekList)
+                WeeklyListView(weekList, cellWidth: CGFloat(0))
                     .padding(.bottom, 16)
                     .padding(.leading, 30)
             }

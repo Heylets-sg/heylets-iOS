@@ -52,6 +52,9 @@ public struct BounceScrollView<Content: View>: UIViewRepresentable {
         return scrollView
     }
 
-    public func updateUIView(_ uiView: UIScrollView, context: Context) {}
+    public func updateUIView(_ uiView: UIScrollView, context: Context) {
+        uiView.setNeedsDisplay()
+        uiView.setNeedsLayout()
+    }
 }
 

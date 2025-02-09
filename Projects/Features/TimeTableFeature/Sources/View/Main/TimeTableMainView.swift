@@ -24,27 +24,31 @@ public struct MainView: View {
     }
     
     public var body: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                WeeklyListView(viewModel.weekList)
+        GeometryReader { geometry in
+            let cellWidth: CGFloat = (geometry.size.width - 25) / CGFloat(5)
+            ScrollView(.horizontal) {
+                WeeklyListView(viewModel.weekList, cellWidth: cellWidth)
                     .padding(.bottom, 16)
-                    .padding(.leading, 49)
-                    .padding(.trailing, 35)
-            }
-            
-            ScrollView {
-                HStack(alignment: .top, spacing: 0) {
-                    HourListView(viewModel.hourList)
-                    
-                    TimeTableGridView(
-                        viewModel: viewModel,
-                        displayType: $viewModel.displayTypeInfo,
-                        viewType: $viewType
-                    )
+                    .padding(.leading, 25)
+                
+                ScrollView {
+                    HStack(alignment: .top, spacing: 0) {
+                        HourListView(viewModel.hourList)
+                        
+                        TimeTableGridView(
+                            viewModel: viewModel,
+                            displayType: $viewModel.displayTypeInfo,
+                            viewType: $viewType,
+                            cellWidth: cellWidth
+                        )
+                    }
                 }
+                .scrollIndicators(.hidden)
             }
+            .scrollIndicators(.hidden)
+            .scrollDisabled(!viewModel.state.timeTable.isScrollEnabled)
         }
-        .scrollDisabled(!viewModel.state.timeTable.isScrollEnabled)
+        
     }
 }
 

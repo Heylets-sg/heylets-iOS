@@ -12,14 +12,17 @@ import Domain
 
 public struct WeeklyListView: View {
     var weekList: [Week]
+    let cellWidth: CGFloat
     
-    init(_ weekList: [Week]) {
+    init(_ weekList: [Week], cellWidth: CGFloat) {
         self.weekList = weekList
+        self.cellWidth = cellWidth
     }
     public var body: some View {
-        HStack(spacing: 50) {
+        HStack(spacing: 0) {
             ForEach(weekList, id: \.self) { day in
                 WeeklyListCellView(day.rawValue)
+                    .frame(width: cellWidth)
             }
         }
     }
@@ -32,9 +35,11 @@ fileprivate struct WeeklyListCellView: View {
     }
     var body: some View {
         HStack {
+            Spacer()
             Text(day)
                 .font(.semibold_12)
                 .foregroundColor(.heyGray1)
+            Spacer()
         }
     }
 }
