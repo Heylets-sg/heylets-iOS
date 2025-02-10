@@ -103,6 +103,13 @@ public struct TimeTableView: View {
             
             SettingTimeTableAlertView(viewModel: viewModel)
         }
+        .overlay(
+            viewModel.viewType == .main ?
+                .clear:
+                Color.init(hex: "#050505").opacity(0.5)
+        )
+        
+        
         createBottomSheetView(viewModel.viewType)
     }
 }
@@ -110,6 +117,7 @@ public struct TimeTableView: View {
 extension TimeTableView {
     @ViewBuilder
     private func createBottomSheetView(_ viewType: TimeTableViewType) -> some View {
+        
         switch viewType {
         case .search:
             SearchModuleView(
@@ -178,4 +186,25 @@ extension TimeTableView {
         themeViewModel: .init(useCase)
     )
     .environmentObject(Router.default)
+//    DimBackgroundView()
+}
+
+struct DimBackgroundView: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            
+            ZStack {
+                //              Color.green
+                Image("kenny-s-7qRM11Kmnh4-unsplash")
+                
+                Text("Click me")
+                    .frame(width: UIScreen.main.bounds.width, height: 350, alignment: .center)
+                    .background(.ultraThinMaterial)
+            }
+            .frame(height: 350)
+            .cornerRadius(30)
+        }
+        .ignoresSafeArea()
+    }
 }

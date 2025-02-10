@@ -8,11 +8,12 @@
 
 import SwiftUI
 import Domain
+import BaseFeatureDependency
 
 public struct DetailModuleInfoView: View {
     @Binding var viewType: TimeTableViewType
     @Binding var deleteModuleAlertIsPresented: Bool
-    private var sectionInfo: SectionInfo = .empty
+    private var sectionInfo: SectionInfo = .timetable_stub1
     
     init(
         viewType: Binding<TimeTableViewType>,
@@ -28,15 +29,16 @@ public struct DetailModuleInfoView: View {
         
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
-                Text(sectionInfo.code ?? "")
+                Text(SectionInfo.timetable_stub1.code ?? "")
                     .font(.semibold_14)
+                    .foregroundColor(Color.init(hex: SectionInfo.timetable_stub1.textColor))
                     .padding(.horizontal, 6)
                     .padding(.vertical, 3)
-                    .background(Color.heySubMain)
+                    .background(Color.init(hex: SectionInfo.timetable_stub1.backgroundColor))
                     .clipShape(RoundedRectangle(cornerRadius: 4))
                 
                 
-                Text(sectionInfo.name)
+                Text(SectionInfo.timetable_stub1.name)
                     .font(.semibold_18)
                     .foregroundColor(.heyGray1)
                     .lineLimit(nil)
@@ -51,15 +53,15 @@ public struct DetailModuleInfoView: View {
                 .frame(height: 16)
             
             VStack(alignment: .leading, spacing: 7) {
-                Text(sectionInfo.allscheduleTime)
+                Text(SectionInfo.timetable_stub1.allscheduleTime)
                     .font(.regular_14)
                     .foregroundColor(.heyGray2)
                 
-                Text(sectionInfo.professor)
+                Text(SectionInfo.timetable_stub1.professor)
                     .font(.regular_14)
                     .foregroundColor(.heyGray2)
                 
-                Text("\(sectionInfo.location) / \(sectionInfo.unit) unit")
+                Text("\(SectionInfo.timetable_stub1.location) / \(SectionInfo.timetable_stub1.unit) unit")
                     .font(.regular_14)
                     .foregroundColor(.heyGray2)
                 
@@ -94,4 +96,16 @@ public struct DetailModuleInfoView: View {
         .frame(height: 280)
         .cornerRadius(12, corners: [.topLeft, .topRight])
     }
+}
+
+#Preview {
+    @State var stub: TimeTableViewType = .detail
+    let useCase = StubHeyUseCase.stub.timeTableUseCase
+    return TimeTableView(
+        viewModel: .init(useCase),
+        searchModuleViewModel: .init(useCase),
+        addCustomModuleViewModel: .init(useCase),
+        themeViewModel: .init(useCase)
+    )
+    .environmentObject(Router.default)
 }

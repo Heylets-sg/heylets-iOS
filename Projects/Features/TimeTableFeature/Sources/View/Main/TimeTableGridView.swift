@@ -24,7 +24,6 @@ public struct TimeTableGridView: View {
             VStack {
                 let columnCount = viewModel.state.timeTable.columnCount
                 let rowCount = viewModel.state.timeTable.rowCount
-//                let cellWidth: CGFloat = (geometry.size.width - 25) / CGFloat(columnCount)
                 let cellHeight: CGFloat = 52
                 
                 ZStack {
@@ -123,7 +122,7 @@ extension TimeTableGridView {
                 path.addLine(to: CGPoint(x: size.width, y: firstRowY)) // 가로선 길이를 반으로 설정
             },
             with: .color(gridColor),
-            lineWidth: 0.5
+            lineWidth: 1
         )
         
         // 가로선 그리기
@@ -135,7 +134,7 @@ extension TimeTableGridView {
                     path.addLine(to: CGPoint(x: size.width, y: y))
                 },
                 with: .color(gridColor),
-                lineWidth: 0.5
+                lineWidth: 1
             )
         }
         
@@ -148,7 +147,7 @@ extension TimeTableGridView {
                     path.addLine(to: CGPoint(x: x, y: height))
                 },
                 with: .color(gridColor),
-                lineWidth: col == 0 || col == columnCount ? 1 : 0.5
+                lineWidth: 1
             )
         }
     }

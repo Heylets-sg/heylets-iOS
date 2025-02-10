@@ -57,7 +57,7 @@ public class TimeTableViewModel: ObservableObject {
     @Published var state = State()
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
-    @Published var viewType: TimeTableViewType = .main
+    @Published var viewType: TimeTableViewType = .detail
     
     @Published var timeTableInfo: TimeTableInfo = .stub //TODO: QA용 -> .empty로 변경
     @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
