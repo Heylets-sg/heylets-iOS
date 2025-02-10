@@ -16,7 +16,7 @@ struct SettingTimeTableView: View {
                 .padding(.leading, 32)
             
             Divider()
-                .frame(width: .infinity, height: 0.8)
+                .frame(height: 0.8)
                 .background(Color.heyGray5)
                 .padding(.bottom, 20)
             

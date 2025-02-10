@@ -27,9 +27,9 @@ struct SettingTimeTableInfoView: View {
                 Spacer()
             }
             .padding(.leading, 24)
-            
             Spacer()
         }
+        .frame(height: 173)
         .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
             SelectDisplayModuleView(viewModel: viewModel)
                 .background(.clear) // 투명한 배경을 추가

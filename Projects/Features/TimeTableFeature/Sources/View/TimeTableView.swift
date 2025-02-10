@@ -98,12 +98,14 @@ public struct TimeTableView: View {
             
             SettingTimeTableAlertView(viewModel: viewModel)
         }
+        
         .overlay(
-            Color.heyDimmed
-                .opacity(viewModel.viewType == .main || viewModel.viewType == .search
-                         ? 0 : 1)
-                .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
-                .ignoresSafeArea()
+            viewModel.viewType == .theme ? nil : AnyView(
+                Color.heyDimmed
+                    .opacity(viewModel.viewType == .detail || viewModel.viewType == .search ? 1 : 0)
+                    .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
+                    .ignoresSafeArea()
+            )
         )
         .onTapGesture {
             withAnimation {

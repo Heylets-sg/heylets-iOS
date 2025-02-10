@@ -83,8 +83,6 @@ public struct DetailModuleInfoView: View {
         .background(Color.heyWhite)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .frame(height: 280)
-        
-        
     }
 }
 

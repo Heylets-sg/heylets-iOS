@@ -10,6 +10,7 @@ import SwiftUI
 
 import Domain
 import DSKit
+import BaseFeatureDependency
 
 struct ThemeTopView: View {
     @Binding var viewType: TimeTableViewType
@@ -44,11 +45,12 @@ struct ThemeTopView: View {
                 } label: {
                     Text("Save")
                         .font(.medium_16)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.heyGray7)
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.bottom, 26)
+            .padding(.top, 25)
+            .padding(.bottom, 23)
             
             ScrollView(.horizontal) {
                 HStack {
@@ -58,6 +60,7 @@ struct ThemeTopView: View {
                             theme == viewModel.state.selectedTheme
                         )
                         .padding(.trailing, 20)
+                        .frame(height: 95)
                         .onTapGesture {
                             viewModel.send(.themeButtonDidTap(theme))
                         }
@@ -83,28 +86,24 @@ fileprivate struct ThemeListCellView: View {
     }
     
     var body: some View {
-        ZStack {
-            if isSelected {
-                LinearGradient(
-                    gradient: Gradient(colors: theme.colorList.map { Color(hex: $0) }),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .cornerRadius(10)
-            } else {
-                Color.clear
-                    .cornerRadius(10)
-            }
-            
-            VStack {
+        VStack {
+            ZStack {
+                if isSelected {
+                    Circle()
+                        .fill(Color.heyWhite)
+                        .frame(width: 64, height: 64)
+                        .overlay(Circle().stroke(Color.heySubMain, lineWidth: 3.2))
+                }
+                
                 QuarterCircleView(theme.colorList)
                     .frame(width: 56, height: 56)
-                    .padding(.bottom, 6)
-                
-                Text(theme.name)
-                    .font(.medium_10)
-                    .foregroundColor(.heyGray1)
             }
+            .padding(.bottom, 6)
+            
+            
+            Text(theme.name)
+                .font(.medium_10)
+                .foregroundColor(.heyGray1)
         }
     }
 }
