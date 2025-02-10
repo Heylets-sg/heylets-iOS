@@ -100,7 +100,8 @@ public struct TimeTableView: View {
         }
         .overlay(
             Color.heyDimmed
-                .opacity(viewModel.viewType == .main ? 0 : 1)
+                .opacity(viewModel.viewType == .main || viewModel.viewType == .search
+                         ? 0 : 1)
                 .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
                 .ignoresSafeArea()
         )
@@ -150,9 +151,7 @@ extension TimeTableView {
         case .search:
             SearchModuleTopView(
                 viewType: $viewModel.viewType,
-                isShowingAddCustomModuleView: $viewModel.state.alerts.showAddCustomAlert,
-                viewModel: searchModuleViewModel,
-                addCustomViewModel: addCustomModuleViewModel
+                isShowingAddCustomModuleView: $viewModel.state.alerts.showAddCustomAlert
             )
         case .theme:
             ThemeTopView(

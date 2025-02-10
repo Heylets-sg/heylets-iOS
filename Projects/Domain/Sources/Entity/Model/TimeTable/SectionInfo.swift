@@ -45,7 +45,7 @@ public struct SectionInfo: Hashable, Equatable {
                 return "\(location)(\(days))"
             }
         }
-        return list.joined(separator: ", ")
+        return list.sorted().joined(separator: ", ")
     }
     
     public init(
