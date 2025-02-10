@@ -18,8 +18,6 @@ public struct SearchModuleView: View {
     @Binding var reportMissingModuleAlertIsPresented: Bool
     @ObservedObject var viewModel: SearchModuleViewModel
     
-    let list: [SectionInfo] = SectionInfo.timetable_stubList
-    
     public var body: some View {
         VStack {
             Spacer()
@@ -29,7 +27,7 @@ public struct SearchModuleView: View {
                 .padding(.bottom, 18)
                 .padding(.horizontal, 16)
             
-            if list.isEmpty {
+            if viewModel.lectureList.isEmpty {
                 Text("We couldn’t find a match for\n‘Career and Enterpreneurial’.")
                     .font(.regular_16)
                     .foregroundColor(.heyGray2)
@@ -59,7 +57,7 @@ public struct SearchModuleView: View {
                 
             } else {
                 ScrollView {
-                    ForEach(list, id: \.self) { lecture in
+                    ForEach(viewModel.lectureList, id: \.self) { lecture in
                         ClassSearchListCellView(
                             viewModel: viewModel,
                             isSelected: viewModel.state.selectedLecture == lecture,

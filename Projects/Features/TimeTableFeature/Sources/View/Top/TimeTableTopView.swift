@@ -105,7 +105,7 @@ public struct TopView: View {
                 viewType: $viewType,
                 settingAlertType: $settingAlertType
             )
-            .presentationDetents([.medium, .large, .height(256)])
+            .presentationDetents([.medium, .large, .height(310)])
             .presentationDragIndicator(.hidden)
         }
     }
