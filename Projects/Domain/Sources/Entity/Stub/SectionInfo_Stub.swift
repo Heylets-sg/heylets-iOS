@@ -22,7 +22,7 @@ extension SectionInfo {
         .init(
             id: 11214,
             code: "PH1105",
-            name: "OPTICS, VIBRATIONS & WAVES",
+            name: "OPTICS, VIBRATIONS & WAVES OPTICS, VIBRATIONS & WAVES OPTICS, VIBRATIONS & WAVES",
             schedule: [.stub1],
             professor: "LEC/STUDIO-LE",
             unit: 2,

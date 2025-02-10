@@ -26,48 +26,42 @@ public struct DetailModuleInfoView: View {
     }
     
     public var body: some View {
-        
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
-                Text(SectionInfo.timetable_stub1.code ?? "")
+                Text(sectionInfo.code ?? "custom")
                     .font(.semibold_14)
-                    .foregroundColor(Color.init(hex: SectionInfo.timetable_stub1.textColor))
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 3)
-                    .background(Color.init(hex: SectionInfo.timetable_stub1.backgroundColor))
+                    .foregroundColor(Color.init(hex: sectionInfo.textColor))
+                    .padding(.all, 6)
+                    .background(Color.init(hex: sectionInfo.backgroundColor))
                     .clipShape(RoundedRectangle(cornerRadius: 4))
+                    .padding(.top, 25)
                 
-                
-                Text(SectionInfo.timetable_stub1.name)
+                Text(sectionInfo.name)
                     .font(.semibold_18)
                     .foregroundColor(.heyGray1)
-                    .lineLimit(nil)
+                    .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 12)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
+                    .padding(.bottom, 16)
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(sectionInfo.allscheduleTime)
+                        .font(.regular_14)
+                        .foregroundColor(.heyGray2)
+                    
+                    Text(sectionInfo.professor)
+                        .font(.regular_14)
+                        .foregroundColor(.heyGray2)
+                    
+                    Text("\(sectionInfo.location) / \(sectionInfo.unit) unit")
+                        .font(.regular_14)
+                        .foregroundColor(.heyGray2)
+                }
             }
+            .padding(.leading, 24)
             .padding(.trailing, 120)
-            .padding(.leading, 25)
-            
-            Spacer()
-                .frame(height: 16)
-            
-            VStack(alignment: .leading, spacing: 7) {
-                Text(SectionInfo.timetable_stub1.allscheduleTime)
-                    .font(.regular_14)
-                    .foregroundColor(.heyGray2)
-                
-                Text(SectionInfo.timetable_stub1.professor)
-                    .font(.regular_14)
-                    .foregroundColor(.heyGray2)
-                
-                Text("\(SectionInfo.timetable_stub1.location) / \(SectionInfo.timetable_stub1.unit) unit")
-                    .font(.regular_14)
-                    .foregroundColor(.heyGray2)
-                
-            }
-            .padding(.leading, 25)
-            .padding(.bottom, 47)
+            .padding(.bottom, 44)
             
             HStack {
                 Spacer()
@@ -76,15 +70,9 @@ public struct DetailModuleInfoView: View {
                     viewType = .main
                     deleteModuleAlertIsPresented.toggle()
                 } label: {
-                    VStack {
-                        Text("Delete")
-                            .font(.regular_14)
-                            .foregroundColor(.heyGray2)
-                        
-                        Divider()
-                            .frame(width: 43)
-                            .foregroundColor(.heyGray2)
-                    }
+                    Text("Delete")
+                        .font(.regular_14)
+                        .foregroundColor(.heyGray2)
                 }
                 Spacer()
             }
@@ -92,11 +80,14 @@ public struct DetailModuleInfoView: View {
             Spacer()
                 .frame(height: 36)
         }
-        .padding(.top, 25)
+        .background(Color.heyWhite)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
         .frame(height: 280)
-        .cornerRadius(12, corners: [.topLeft, .topRight])
+        
+        
     }
 }
+
 
 #Preview {
     @State var stub: TimeTableViewType = .detail

@@ -64,11 +64,6 @@ public struct TimeTableView: View {
                 Spacer()
                     .frame(height: 1)
             }
-            .onTapGesture {
-                withAnimation {
-                    viewModel.viewType = .main
-                }
-            }
             .onAppear {
                 viewModel.send(.onAppear)
                 searchModuleViewModel.addLectureClosure = { lecture in
@@ -104,20 +99,25 @@ public struct TimeTableView: View {
             SettingTimeTableAlertView(viewModel: viewModel)
         }
         .overlay(
-            viewModel.viewType == .main ?
-                .clear:
-                Color.init(hex: "#050505").opacity(0.5)
+            Color.heyDimmed
+                .opacity(viewModel.viewType == .main ? 0 : 1)
+                .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
+                .ignoresSafeArea()
         )
-        
+        .onTapGesture {
+            withAnimation {
+                viewModel.viewType = .main
+            }
+        }
         
         createBottomSheetView(viewModel.viewType)
+            .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
     }
 }
 
 extension TimeTableView {
     @ViewBuilder
     private func createBottomSheetView(_ viewType: TimeTableViewType) -> some View {
-        
         switch viewType {
         case .search:
             SearchModuleView(
@@ -186,25 +186,4 @@ extension TimeTableView {
         themeViewModel: .init(useCase)
     )
     .environmentObject(Router.default)
-//    DimBackgroundView()
-}
-
-struct DimBackgroundView: View {
-    var body: some View {
-        VStack {
-            Spacer()
-            
-            ZStack {
-                //              Color.green
-                Image("kenny-s-7qRM11Kmnh4-unsplash")
-                
-                Text("Click me")
-                    .frame(width: UIScreen.main.bounds.width, height: 350, alignment: .center)
-                    .background(.ultraThinMaterial)
-            }
-            .frame(height: 350)
-            .cornerRadius(30)
-        }
-        .ignoresSafeArea()
-    }
 }
