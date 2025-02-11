@@ -66,6 +66,9 @@ public struct TimeTableView: View {
             }
             .onAppear {
                 viewModel.send(.onAppear)
+                searchModuleViewModel.selectLectureClosure = { lecture in
+                    viewModel.send(.selectLecture(lecture))
+                }
                 searchModuleViewModel.addLectureClosure = { lecture in
                     viewModel.send(.addLecture(lecture))
                 }

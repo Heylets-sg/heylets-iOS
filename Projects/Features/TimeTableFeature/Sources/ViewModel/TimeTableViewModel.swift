@@ -41,6 +41,7 @@ public class TimeTableViewModel: ObservableObject {
         case onAppear
         case tableCellDidTap(Int)
         case deleteModule
+        case selectLecture(SectionInfo)
         case addLecture(SectionInfo)
         case deleteModuleAlertCloseButtonDidTap
         case errorAlertViewCloseButtonDidTap
@@ -67,6 +68,7 @@ public class TimeTableViewModel: ObservableObject {
     @Published var timeTable: [TimeTableCellInfo] = []
     @Published var detailSectionInfo: SectionInfo = .empty
     
+    @Published var selectLecture: [TimeTableCellInfo] = []
     
     public init(_ useCase: TimeTableUseCaseType) {
         self.useCase = useCase
@@ -111,6 +113,9 @@ public class TimeTableViewModel: ObservableObject {
             
         case .errorAlertViewCloseButtonDidTap:
             state.error = (false, "")
+            
+        case .selectLecture(let lecture):
+            selectLecture = lecture.timeTableCellInfo
             
         case .addLecture(let lecture):
             useCase.addSection(lecture.id)

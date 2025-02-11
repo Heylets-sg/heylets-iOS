@@ -48,6 +48,32 @@ public struct SectionInfo: Hashable, Equatable {
         return list.sorted().joined(separator: ", ")
     }
     
+    public var timeTableCellInfo: [TimeTableCellInfo] {
+        var timeTableCellList: [TimeTableCellInfo] = []
+        for schedule in self.schedule {
+            let timeTableCell: TimeTableCellInfo = .init(
+                id: self.id,
+                code: self.code ?? "custom",
+                name: self.name,
+                professor: self.professor,
+                unit: self.unit,
+                schedule: schedule,
+                backgroundColor: .init(hex: self.backgroundColor),
+                textColor: .init(hex: self.textColor)
+            )
+            
+            timeTableCellList.append(timeTableCell)
+        }
+        return timeTableCellList.sorted {
+            if $0.schedule.day.index == $1.schedule.day.index {
+                $0.schedule.startHour < $1.schedule.startHour
+            } else {
+                $0.schedule.day.index < $1.schedule.day.index
+            }
+        }
+    }
+    
+    
     public init(
         id: Int,
         code: String? = nil,
