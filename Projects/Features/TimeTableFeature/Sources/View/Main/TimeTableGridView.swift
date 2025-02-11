@@ -87,16 +87,14 @@ public struct TimeTableGridView: View {
                                 cellHeight: cellHeight
                             )
                             
-                            ZStack {
-                                selectLectureView(
-                                    for: cell,
-                                    centerX: rect.centerX,
-                                    centerY: rect.centerY,
-                                    cellWidth: cellWidth,
-                                    cellHeight: rect.height
-                                )
-                                .id(cell.id)
-                            }
+                            selectLectureView(
+                                for: cell,
+                                centerX: rect.centerX,
+                                centerY: rect.centerY,
+                                cellWidth: cellWidth,
+                                cellHeight: rect.height
+                            )
+                            
                         }
                     }
                 }

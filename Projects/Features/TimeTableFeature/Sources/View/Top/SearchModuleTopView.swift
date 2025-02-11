@@ -35,7 +35,6 @@ public struct SearchModuleTopView: View {
                 Image(uiImage: .icPencil)
                     .resizable()
                     .frame(width: 16, height: 16)
-                    .padding(.trailing, 28)
             }
         }
         .padding(.horizontal, 16)

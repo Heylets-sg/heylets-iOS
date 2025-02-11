@@ -44,20 +44,19 @@ public struct MainView: View {
                                 cellWidth: cellWidth
                             )
                             .onAppear {
-                                // ScrollViewProxy 저장
                                 scrollViewProxy = proxy
                             }
                             .onChange(of: viewModel.selectLecture) { _ in
                                 if let firstSelectLecture = viewModel.selectLecture.first {
-                                    // 화면에 완전히 로드된 후에 scrollTo가 호출되도록 하기 위해 delay를 줄 수 있습니다.
-                                    
                                     let offsetY: CGFloat = configButtonLayout(
                                         viewModel.hourList[0],
                                         for: firstSelectLecture,
                                         cellHeight: 52
                                     )
                                     scrollToPosition(proxy: scrollViewProxy, position: offsetY)
-                                    
+                                }
+                                else {
+                                    scrollToPosition(proxy: scrollViewProxy)
                                 }
                             }
                         }
@@ -72,13 +71,12 @@ public struct MainView: View {
 }
 
 extension MainView {
-    private func scrollToPosition(proxy: ScrollViewProxy?, position: CGFloat) {
+    private func scrollToPosition(proxy: ScrollViewProxy?, position: CGFloat? = nil) {
         guard let proxy = proxy else { return }
         
-        // 목표 위치를 계산하여 scrollTo 호출
-        let targetIndex = Int(position / 52) // 한 항목의 높이를 기준으로 인덱스 계산 (예시: 50포인트 높이)
+        // 한 항목의 높이를 기준으로 인덱스 계산 (예시: cellHeight포인트 높이)
+        let targetIndex = position != nil ? Int(position! / 52) : 0
         
-        print("===🐘===\(position)==\(targetIndex)")
         withAnimation {
             proxy.scrollTo(targetIndex, anchor: .top) // 스크롤 이동
         }
@@ -91,17 +89,11 @@ extension MainView {
     ) -> CGFloat {
         let startHour = cell.schedule.startHour
         let startMinute = cell.schedule.startMinute
-        let endHour = cell.schedule.endHour
-        let endMinute = cell.schedule.endMinute
         
         // 시작 시간과 분을 기준으로 시작 위치 계산
         let y = CGFloat(startHour - firstTime) * cellHeight + CGFloat(startMinute) / 60 * cellHeight
         
-        // 종료 시간과 분을 기준으로 높이 계산
-        let height = CGFloat(endHour - startHour) * cellHeight +
-        CGFloat(endMinute - startMinute) / 60 * cellHeight
-        
-        return y + 450
+        return y + 450 // 바텀시트 높이 추가
     }
 }
 

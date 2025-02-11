@@ -103,7 +103,9 @@ public struct TimeTableView: View {
         }
         
         .overlay(
-            viewModel.viewType == .theme && !themeViewModel.state.isShowingSelectInfoView ? nil : AnyView(
+            viewModel.viewType == .theme && !themeViewModel.state.isShowingSelectInfoView
+            || viewModel.viewType == .main
+            ? nil : AnyView(
                 Color.heyDimmed
                     .opacity(
                         viewModel.viewType == .detail ||
