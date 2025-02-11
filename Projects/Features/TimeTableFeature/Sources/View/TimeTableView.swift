@@ -100,9 +100,13 @@ public struct TimeTableView: View {
         }
         
         .overlay(
-            viewModel.viewType == .theme ? nil : AnyView(
+            viewModel.viewType == .theme && !themeViewModel.state.isShowingSelectInfoView ? nil : AnyView(
                 Color.heyDimmed
-                    .opacity(viewModel.viewType == .detail || viewModel.viewType == .search ? 1 : 0)
+                    .opacity(
+                        viewModel.viewType == .detail ||
+                        viewModel.viewType == .setting
+                        || (viewModel.viewType == .theme && themeViewModel.state.isShowingSelectInfoView)
+                        ? 1 : 0)
                     .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
                     .ignoresSafeArea()
             )
@@ -131,7 +135,7 @@ extension TimeTableView {
             .bottomSheetTransition()
         case .theme:
             SettingTimeTableInfoView(viewModel: themeViewModel)
-                .bottomSheetTransition()
+            .bottomSheetTransition()
         case .detail:
             DetailModuleInfoView(
                 viewType: $viewModel.viewType,

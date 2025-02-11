@@ -28,7 +28,7 @@ public struct MainView: View {
             let cellWidth: CGFloat = (geometry.size.width - 25) / CGFloat(5)
             ScrollView(.horizontal) {
                 WeeklyListView(viewModel.weekList, cellWidth: cellWidth)
-                    .padding(.bottom, 16)
+//                    .padding(.bottom, 10)
                     .padding(.leading, 25)
                 
                 ScrollView {
