@@ -62,40 +62,46 @@ public struct OnboardingView: View {
                         .frame(height: 120)
                     
                     CarouselView(pageCount: 2, visibleEdgeSpace: 0, spacing: 0) { index in
-                        VStack(alignment: .leading) {
-                            VStack {
-                                Text(onboardingContent[index].title)
-                                    .font(.bold_20)
-                                    .foregroundColor(.heyWhite)
-                                    .padding(.bottom, 12)
-                                    .multilineTextAlignment(.leading)
-                                    .background(Color.blue)
-                                
-                                Text(onboardingContent[index].description)
-                                    .font(.regular_14)
-                                    .foregroundColor(.heyWhite)
-                                    .multilineTextAlignment(.leading)
-                                    .background(Color.green)
+                        VStack(alignment: .leading, spacing: 0) {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    Text(onboardingContent[index].title)
+                                        .font(.bold_20)
+                                        .foregroundColor(.heyWhite)
+                                        .padding(.bottom, 12)
+                                        .multilineTextAlignment(.leading)
+                                    
+                                    Text(onboardingContent[index].description)
+                                        .font(.regular_14)
+                                        .foregroundColor(.heyWhite)
+                                        .multilineTextAlignment(.leading)
+                                }
+                                Spacer()
                             }
                             .padding(.leading, 16)
-                            .background(Color.red)
                             
-                            if index == 0 {
-                                Spacer()
-                                    .frame(height: 52)
-                                
-                                Image(uiImage: onboardingContent[index].image)
-                                    .resizable()
-                                    .frame(width: 293, height: 293)
-                                    .padding(.horizontal, 50)
-                            } else {
-                                Spacer()
-                                    .frame(height: 125)
-                                
-                                Image(uiImage: onboardingContent[index].image)
-                                    .resizable()
-                                    .frame(height: 150)
-                                
+                            VStack {
+                                if index == 0 {
+                                        Spacer()
+                                            .frame(height: 52)
+                                        
+                                        Image(uiImage: onboardingContent[index].image)
+                                            .resizable()
+                                            .frame(width: 293, height: 293)
+                                            .padding(.horizontal, 50)
+                                    
+                                    
+                                } else {
+                                        Spacer()
+                                            .frame(height: 125)
+                                        
+                                        Image(uiImage: onboardingContent[index].image)
+                                            .resizable()
+                                            .frame(height: 150)
+                                        
+                                        Spacer()
+                                    
+                                }
                                 Spacer()
                             }
                         }
