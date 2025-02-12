@@ -19,7 +19,7 @@ extension ThemeDetailInfoResult {
             gradient: colors.gradient,
             dayColor: colors.dayColor,
             defaultColor: colors.defaultColor,
-            specialColor: colors.specialColor
+            specialColor: colors.specialColor ?? []
         )
     }
 }

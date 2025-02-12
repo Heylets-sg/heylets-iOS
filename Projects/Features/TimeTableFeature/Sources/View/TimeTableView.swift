@@ -169,6 +169,11 @@ extension TimeTableView {
                 viewType: $viewModel.viewType,
                 viewModel: themeViewModel
             )
+            .onAppear {
+                themeViewModel.selectThemeClosure = { themeName in
+                    viewModel.send(.selectedTheme(themeName))
+                }
+            }
         case .addCustom:
             AddCustomModuleTopView(
                 viewType: $viewModel.viewType,

@@ -14,7 +14,7 @@ public struct ThemeColorInfo {
     let gradient: [String]
     let dayColor: String
     let defaultColor: String
-    let specialColor: [String]
+    let specialColor: [String]?
     
     public init(
         name: String,

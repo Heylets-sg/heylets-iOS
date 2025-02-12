@@ -54,6 +54,7 @@ public class TimeTableViewModel: ObservableObject {
         case editTimeTableName
         case deleteTimeTable
         case shareURL
+        case selectedTheme(String)
     }
     
     @Published var state = State()
@@ -63,6 +64,7 @@ public class TimeTableViewModel: ObservableObject {
         didSet {
             if viewType == .main {
                 selectLecture = []
+                selectedThemeColor = []
             }
         }
     }
@@ -76,6 +78,7 @@ public class TimeTableViewModel: ObservableObject {
     @Published var detailSectionInfo: SectionInfo = .empty
     
     @Published var selectLecture: [TimeTableCellInfo] = []
+    @Published var selectedThemeColor: [String] = []
     
     
     public init(_ useCase: TimeTableUseCaseType) {
@@ -177,7 +180,14 @@ public class TimeTableViewModel: ObservableObject {
                 .map { _ in nil }
                 .assign(to: \.state.alerts.settingAlertType, on: self)
                 .store(in: cancelBag)
+            
+        case .selectedTheme(let themeName):
+            useCase.getThemeDetailInfo(themeName)
+                .receive(on: RunLoop.main)
+                .assign(to: \.selectedThemeColor, on: self)
+                .store(in: cancelBag)
         }
+    
     }
     
     private func bindState() {

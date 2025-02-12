@@ -52,13 +52,18 @@ public struct TimeTableGridView: View {
                                 cellHeight: cellHeight
                             )
                             
+                            let backgroundColor: Color = viewModel.selectedThemeColor.isEmpty 
+                            ? cell.backgroundColor
+                            : Color.init(hex: viewModel.selectedThemeColor.randomElement()!)
+                            
                             ZStack {
                                 createClassButton(
                                     for: cell,
                                     centerX: rect.centerX,
                                     centerY: rect.centerY,
                                     cellWidth: cellWidth,
-                                    cellHeight: rect.height
+                                    cellHeight: rect.height,
+                                    backgroundColor: backgroundColor
                                 )
                                 
                                 createClassInfoText(
@@ -168,13 +173,14 @@ extension TimeTableGridView {
         centerX: CGFloat,
         centerY: CGFloat,
         cellWidth: CGFloat,
-        cellHeight: CGFloat
+        cellHeight: CGFloat,
+        backgroundColor: Color
     ) -> some View {
         return Button {
             viewModel.send(.tableCellDidTap(cell.id))
         } label: {
             Rectangle()
-                .fill(cell.backgroundColor)
+                .fill(backgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: 2))
                 .frame(width: cellWidth, height: cellHeight)
                 .position(x: centerX, y: centerY)
