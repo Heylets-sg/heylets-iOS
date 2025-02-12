@@ -25,7 +25,7 @@ public class SearchModuleViewModel: ObservableObject {
         case lectureCellDidTap(SectionInfo)
         case searchButtonDidTap
         case clearButtonDidTap
-        case addLectureButtonDidTap
+        case addLectureButtonDidTap(SectionInfo)
     }
     
     @Published var state = State()
@@ -63,8 +63,8 @@ public class SearchModuleViewModel: ObservableObject {
         case .clearButtonDidTap:
             searchText = ""
             
-        case .addLectureButtonDidTap:
-            guard let lecture = state.selectedLecture, let addLecture = addLectureClosure else { return }
+        case .addLectureButtonDidTap(let lecture):
+            guard let addLecture = addLectureClosure else { return }
             addLecture(lecture)
             state.selectedLecture = nil
         }

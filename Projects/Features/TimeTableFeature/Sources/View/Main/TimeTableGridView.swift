@@ -176,10 +176,6 @@ extension TimeTableGridView {
             Rectangle()
                 .fill(cell.backgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: 2))
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 2)
-//                        .stroke(Color.heyGrid, lineWidth: 1)
-//                )
                 .frame(width: cellWidth, height: cellHeight)
                 .position(x: centerX, y: centerY)
         }
@@ -198,7 +194,7 @@ extension TimeTableGridView {
             Text(cell.code)
                 .font(.medium_12)
                 .foregroundColor(cell.textColor)
-                .multilineTextAlignment(.center)
+                .multilineTextAlignment(.leading)
             
             if displayType.classRoomIsVisible {
                 Text(cell.schedule.location)

@@ -151,7 +151,7 @@ fileprivate struct ClassSearchListCellView: View {
             
             HStack {
                 Button {
-                    viewModel.send(.addLectureButtonDidTap)
+                    viewModel.send(.addLectureButtonDidTap(section))
                 } label: {
                     Text("Add")
                         .font(.regular_12)
@@ -162,15 +162,6 @@ fileprivate struct ClassSearchListCellView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 12.5))
                         .padding(.trailing, 7)
                 }
-                
-                Text("Review")
-                    .font(.regular_12)
-                    .foregroundColor(Color.heyGray1)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 5)
-                    .background(.clear)
-                    .overlay(RoundedRectangle(cornerRadius: 12.5).stroke(style: .init(lineWidth: 1)))
-                    .padding(.trailing, 7)
             }
             .padding(.bottom, 10)
         }
