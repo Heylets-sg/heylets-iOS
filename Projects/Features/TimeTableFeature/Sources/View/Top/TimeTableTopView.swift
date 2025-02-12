@@ -106,7 +106,6 @@ public struct TopView: View {
                 settingAlertType: $settingAlertType
             )
             .presentationDetents([.fraction(0.37)])
-            .background(.blue)
             .presentationDragIndicator(.hidden)
             .ignoresSafeArea(.container, edges: .bottom)
         }

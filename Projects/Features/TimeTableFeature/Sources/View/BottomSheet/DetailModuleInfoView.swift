@@ -31,18 +31,20 @@ public struct DetailModuleInfoView: View {
                 Text(sectionInfo.code ?? "custom")
                     .font(.semibold_14)
                     .foregroundColor(Color.init(hex: sectionInfo.textColor))
-                    .padding(.all, 6)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 3)
                     .background(Color.init(hex: sectionInfo.backgroundColor))
                     .clipShape(RoundedRectangle(cornerRadius: 4))
-                    .padding(.top, 25)
+                    .padding(.top, 24)
                 
                 Text(sectionInfo.name)
                     .font(.semibold_18)
                     .foregroundColor(.heyGray1)
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top, 12)
                     .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
+                    .padding(.top, 12)
+                    
                     .padding(.bottom, 16)
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -82,7 +84,7 @@ public struct DetailModuleInfoView: View {
         }
         .background(Color.heyWhite)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .frame(height: 280)
+        .frame(height: 220)
     }
 }
 
