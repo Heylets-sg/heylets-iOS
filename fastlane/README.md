@@ -19,7 +19,7 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 [bundle exec] fastlane upload_testflight
 ```
 
-build app and upload to testflight
+Build app and upload to TestFlight
 
 ----
 

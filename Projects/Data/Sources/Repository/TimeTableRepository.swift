@@ -52,7 +52,7 @@ public struct TimeTableRepository: TimeTableRepositoryType {
     }
     
     public func postTable() -> AnyPublisher<Int, Error> {
-        let request: AddTimeTableRequest = .init("TimeTable", "TERM_1", 2024)
+        let request: AddTimeTableRequest = .init("TimeTable", "TERM_2", 2024)
         return service.postTable(request)
             .map { $0.tableId }
             .mapToGeneralError()
