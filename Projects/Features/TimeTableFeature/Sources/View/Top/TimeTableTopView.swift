@@ -105,8 +105,10 @@ public struct TopView: View {
                 viewType: $viewType,
                 settingAlertType: $settingAlertType
             )
-            .presentationDetents([.height(310)])
+            .presentationDetents([.fraction(0.37)])
+            .background(.blue)
             .presentationDragIndicator(.hidden)
+            .ignoresSafeArea(.container, edges: .bottom)
         }
     }
 }
