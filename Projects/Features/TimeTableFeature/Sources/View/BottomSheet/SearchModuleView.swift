@@ -10,6 +10,7 @@ import SwiftUI
 
 import Domain
 import DSKit
+import BaseFeatureDependency
 
 
 public struct SearchModuleView: View {
@@ -23,7 +24,7 @@ public struct SearchModuleView: View {
                 .frame(height: 27)
             
             ClassSearchBarView(viewModel: viewModel)
-                .padding(.bottom, 28)
+                .padding(.bottom, 18)
                 .padding(.horizontal, 16)
             
             if viewModel.lectureList.isEmpty {
@@ -58,21 +59,23 @@ public struct SearchModuleView: View {
                 ScrollView {
                     ForEach(viewModel.lectureList, id: \.self) { lecture in
                         ClassSearchListCellView(
+                            viewModel: viewModel,
                             isSelected: viewModel.state.selectedLecture == lecture,
                             section: lecture
                         ) {
                             viewModel.send(.lectureCellDidTap(lecture))
                         }
-                        .padding(.bottom, 16)
+                        .padding(.bottom, 3)
                     }
                 }
                 .scrollIndicators(.hidden)
             }
         }
+        .frame(height: 450)
+        .shadow(color: .init(hex: "#B5B5B5").opacity(0.13), radius: 16, y: -4)
         .onAppear {
             viewModel.send(.onAppear)
         }
-        .cornerRadius(12, corners: [.topLeft, .topRight])
     }
 }
 
@@ -89,7 +92,7 @@ fileprivate struct ClassSearchBarView: View {
                 
             })
             .font(.medium_12)
-            .foregroundColor(.heyMain)
+            .foregroundColor(.heySubMain2)
             .onSubmit {
                 viewModel.send(.searchButtonDidTap)
             }
@@ -104,50 +107,89 @@ fileprivate struct ClassSearchBarView: View {
                     .tint(.heyGray2)
                     .frame(width: 6, height: 6)
                     .padding(.all, 6)
-                    .background(Color.heyGray3)
+                    .background(Color.heyGray9)
                     .clipShape(Circle())
             }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 9)
-        .background(Color.heyGray6)
+        .background(Color.heyGray10)
         .clipShape(RoundedRectangle(cornerRadius: 18))
     }
 }
 
 fileprivate struct ClassSearchListCellView: View {
+    @ObservedObject var viewModel: SearchModuleViewModel
     var isSelected: Bool
     var section: SectionInfo
     var cellDidTap: () -> Void
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("\(section.code ?? "")) \(section.name)")
-                .font(.medium_14)
-                .foregroundColor(.heyGray1)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.bottom, 6)
-                .padding(.trailing, 87)
-                .frame(maxWidth: .infinity, alignment: .leading)
+        VStack(alignment: .leading, spacing: 0) {
+            TextWithCustomFontSubstring(
+                originalText: "\(section.code!) \(section.name)",
+                targetSubstring: section.code!,
+                targetFont: .bold_14
+            )
+            .font(.medium_14)
+            .foregroundColor(.heyGray1)
+            .lineLimit(2)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.top, 12)
+            .padding(.bottom, 6)
+            .padding(.trailing, 103)
+            .frame(maxWidth: .infinity, alignment: .leading)
             
             Text(section.allscheduleTime)
                 .font(.regular_12)
-                .foregroundColor(.heyGray3)
-                .padding(.bottom, 2)
+                .foregroundColor(isSelected ? Color.heyGray2 : Color.heyGray8)
             
             Text("\(section.professor) / \(section.location) / \(section.unit) unit")
                 .font(.regular_12)
-                .foregroundColor(.heyGray3)
+                .foregroundColor(isSelected ? Color.heyGray2 : Color.heyGray8)
+                .padding(.bottom, 15)
+            
+            HStack {
+                Button {
+                    viewModel.send(.addLectureButtonDidTap)
+                } label: {
+                    Text("Add")
+                        .font(.regular_12)
+                        .foregroundColor(Color.heyWhite)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 5)
+                        .background(Color.heyMain)
+                        .clipShape(RoundedRectangle(cornerRadius: 12.5))
+                        .padding(.trailing, 7)
+                }
+                
+                Text("Review")
+                    .font(.regular_12)
+                    .foregroundColor(Color.heyGray1)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 5)
+                    .background(.clear)
+                    .overlay(RoundedRectangle(cornerRadius: 12.5).stroke(style: .init(lineWidth: 1)))
+                    .padding(.trailing, 7)
+            }
+            .padding(.bottom, 10)
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 10)
-        .background(isSelected ? Color.heyMain : Color.clear)
+        .background(isSelected ? Color.heySubMain3 : Color.clear)
         .onTapGesture {
             cellDidTap()
         }
     }
 }
-//#Preview {
-//    SearchModuleView()
-//}
+
+#Preview {
+    @State var stub: TimeTableViewType = .search
+    let useCase = StubHeyUseCase.stub.timeTableUseCase
+    return TimeTableView(
+        viewModel: .init(useCase),
+        searchModuleViewModel: .init(useCase),
+        addCustomModuleViewModel: .init(useCase),
+        themeViewModel: .init(useCase)
+    )
+    .environmentObject(Router.default)
+}

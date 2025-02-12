@@ -9,7 +9,7 @@
 import SwiftUI
 
 extension Color {
-    public init(hex: String) {
+    public init(hex: String, opacity: CGFloat = 1.0) {
         // 16진수에서 # 제거
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0
@@ -21,6 +21,6 @@ extension Color {
         let blue = Double(int & 0xFF) / 255.0
         
         // SwiftUI Color 생성
-        self.init(.sRGB, red: red, green: green, blue: blue, opacity: 1)
+        self.init(.sRGB, red: red, green: green, blue: blue, opacity: opacity)
     }
 }

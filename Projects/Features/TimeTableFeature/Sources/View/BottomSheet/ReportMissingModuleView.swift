@@ -32,7 +32,7 @@ struct ReportMissingModuleView: View {
             
             Spacer()
             
-            Button("Report") {
+            Button("Back") {
                 reportMissingModuleAlertIsPresented = false
             }.heyBottomButtonStyle()
             

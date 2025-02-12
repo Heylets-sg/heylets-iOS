@@ -54,17 +54,17 @@ extension View {
 
 //캡쳐
 extension View {
-    public func captureAsImage() -> UIImage {
+    public func captureAsImage(size: CGSize) -> UIImage {
         let controller = UIHostingController(rootView: self)
         let view = controller.view
 
-        let targetSize = controller.view.intrinsicContentSize
-        view?.bounds = CGRect(origin: .zero, size: targetSize)
+        view?.bounds = CGRect(origin: .zero, size: size)
         view?.backgroundColor = .clear
 
-        let renderer = UIGraphicsImageRenderer(size: targetSize)
-        return renderer.image { _ in
-            view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { context in
+            view?.drawHierarchy(in: view!.bounds, afterScreenUpdates: true)
         }
     }
 }
+

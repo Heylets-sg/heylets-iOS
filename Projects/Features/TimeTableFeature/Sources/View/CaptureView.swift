@@ -13,13 +13,13 @@ import Domain
 struct MainCaptureContentView: View {
     var weekList: [Week]
     var hourList: [Int]
-    var timeTable: [TimeTableCellInfo?]
+    var timeTable: [TimeTableCellInfo]
     var displayType: DisplayTypeInfo
     
     init(
         weekList: [Week],
         hourList: [Int],
-        timeTable: [TimeTableCellInfo?],
+        timeTable: [TimeTableCellInfo],
         displayType: DisplayTypeInfo
     ) {
         self.weekList = weekList
@@ -29,158 +29,256 @@ struct MainCaptureContentView: View {
     }
     
     var body: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                WeeklyListView(weekList, cellWidth: CGFloat(0))
-                    .padding(.bottom, 16)
-                    .padding(.leading, 30)
-            }
+        GeometryReader { geometry in
             
-            ScrollView() {
-                HStack(alignment: .top) {
-                    HourListView(hourList)
-                        .padding(.top, 10)
-                    
-                    TimeTableGridCaptureView(
-                        weekList: weekList,
-                        timeTable: timeTable,
-                        displayType: displayType
-                    )
-                }
+            let cellWidth: CGFloat = (geometry.size.width) / CGFloat(weekList.count)
+            let cellHeight: CGFloat = (geometry.size.height) / CGFloat(hourList.count)
+            
+            WeeklyListView(weekList, cellWidth: cellWidth)
+                .padding(.leading, 25)
+            
+            HStack(alignment: .top, spacing: 0) {
+                HourListView(hourList)
+                
+                TimeTableGridCaptureView(
+                    weekList: weekList,
+                    timeTable: timeTable,
+                    displayType: displayType,
+                    hourList: hourList,
+                    cellWidth: cellWidth,
+                    cellHeight: cellHeight
+                )
             }
-            .scrollIndicators(.hidden)
-            .border(Color.heyGray6, width: 1)
         }
-        .scrollIndicators(.hidden)
     }
 }
 
 
-import SwiftUI
-
-
-
 public struct TimeTableGridCaptureView: View {
     var weekList: [Week]
-    var timeTable: [TimeTableCellInfo?]
+    var timeTable: [TimeTableCellInfo]
     var displayType: DisplayTypeInfo
-    var hourList = Array(8...24)
+    var hourList: [Int]
+    var cellWidth: CGFloat
+    var cellHeight: CGFloat
+    
+    init(
+        weekList: [Week],
+        timeTable: [TimeTableCellInfo],
+        displayType: DisplayTypeInfo,
+        hourList: [Int],
+        cellWidth: CGFloat,
+        cellHeight: CGFloat
+    ) {
+        self.weekList = weekList
+        self.timeTable = timeTable
+        self.displayType = displayType
+        self.hourList = hourList
+        self.cellWidth = cellWidth
+        self.cellHeight = cellHeight
+    }
     
     public var body: some View {
-        Grid(horizontalSpacing: 1, verticalSpacing: 1) {
-            createHeaderRow()
-            
-            ForEach(hourList, id: \.self) { hour in
-                createGridRow(for: hour, displayType: displayType)
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private func createHeaderRow() -> some View {
-        GridRow {
-            ForEach(weekList, id: \.self) { _ in
-                Rectangle()
-                    .fill(Color.clear)
-                    .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
-                    .frame(width: 73, height: 21)
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private func createGridRow(for hour: Int, displayType: DisplayTypeInfo) -> some View {
-        GridRow(alignment: .top) {
-            ForEach(weekList, id: \.self) { day in
-                createGridCell(for: hour, day: day, displayType: displayType)
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private func createGridCell(
-        for hour: Int,
-        day: Week,
-        displayType: DisplayTypeInfo
-    ) -> some View {
-        VStack {
-            if let cell = getSlot(
-                timeTable: timeTable,
-                for: hour,
-                day: day
-            ) {
-                Button {
-                } label: {
-                    ZStack {
-                        VStack {
-                            if hour == cell.schedule.startHour {
-                                if cell.schedule.startMinute != 0 {
-                                    Spacer()
-                                }
-                                cell.backgroundColor
-                                    .frame(height: 52)
-                                    .clipped()
-                            } else if hour == cell.schedule.endHour {
-                                // 종료 시간일 때 위로 배치
-                                cell.backgroundColor
-                                    .frame(height: 52)
-                                    .clipped()
-                                if cell.schedule.endMinute != 0 {
-                                    Spacer()
-                                }
-                            } else {
-                                cell.backgroundColor
-                                    .frame(height: 52)
-                                    .clipped()
-                            }
-                        }
-                        
-                        // 시간 시작에만 텍스트 보여주기
-                        if hour == cell.schedule.startHour {
-                            VStack(alignment: .leading) {
-                                if cell.schedule.startMinute != 0 {
-                                    Spacer()
-                                        .frame(height: 52)
-                                }
-                                Text(cell.code)
-                                    .font(.medium_12)
-                                    .foregroundColor(cell.textColor)
-                                    .multilineTextAlignment(.center)
+        GeometryReader { geometry in
+            VStack {
+                let columnCount = weekList.count
+                let rowCount = hourList.count
+                
+                ZStack {
+                    // 📌 빈 시간표 배치
+                    Canvas { context, size in
+                        drawGrid(
+                            &context, size,
+                            columnCount, rowCount,
+                            cellWidth, cellHeight
+                        )
+                    }
+                    
+                    // 📌 수업 버튼 배치
+                    ForEach(timeTable, id: \.self) { cell in
+                        if let dayIndex = weekList.firstIndex(of: cell.schedule.day) {
+                            let rect: (
+                                centerX: CGFloat,
+                                centerY: CGFloat,
+                                height: CGFloat
+                            ) = configButtonLayout(
+                                hourList[0],
+                                for: cell,
+                                at: dayIndex,
+                                cellWidth: cellWidth,
+                                cellHeight: cellHeight
+                            )
+                            
+                            ZStack {
+                                createClassButton(
+                                    for: cell,
+                                    centerX: rect.centerX,
+                                    centerY: rect.centerY,
+                                    cellWidth: cellWidth,
+                                    cellHeight: rect.height
+                                )
                                 
-                                if displayType.classRoomIsVisible {
-                                    Text(cell.schedule.location)
-                                        .font(.regular_10)
-                                        .foregroundColor(cell.textColor)
-                                }
-                                
-                                if displayType.creditIsVisible && cell.unit != nil{
-                                    Text("unit: \(cell.unit!)")
-                                        .font(.regular_10)
-                                        .foregroundColor(cell.textColor)
-                                }
+                                createClassInfoText(
+                                    for: cell,
+                                    displayType: displayType,
+                                    centerX: rect.centerX,
+                                    centerY: rect.centerY,
+                                    cellWidth: cellWidth,
+                                    cellHeight: rect.height
+                                )
                             }
+                            
                         }
                     }
                 }
-                .buttonStyle(PlainButtonStyle())
-                .clipShape(RoundedRectangle(cornerRadius: 2))
-            } else {
-                Rectangle()
-                    .fill(Color.clear)
-                    .overlay(Rectangle().stroke(Color.heyGray6, lineWidth: 0.5))
             }
         }
-        .frame(width: 70, height: 52)
     }
+}
 
-    
-    private func getSlot(timeTable: [TimeTableCellInfo?], for hour: Int, day: Week) -> TimeTableCellInfo? {
-        let slotCount = 17
-        guard let weekIndex = weekList.firstIndex(of: day) else { return nil }
-        let slotIndex = hour - 8 // 예를 들어, 8시가 0번 인덱스라고 가정
-        guard slotIndex >= 0 && slotIndex < slotCount else { return nil }
-        let index = weekIndex * slotCount + slotIndex
-        return timeTable[index]
+extension TimeTableGridCaptureView {
+    private func drawGrid(
+        _ context: inout GraphicsContext,
+        _ size: CGSize,
+        _ columnCount: Int,
+        _ rowCount: Int,
+        _ cellWidth: CGFloat,
+        _ cellHeight: CGFloat
+    ) {
+        let gridColor = Color.heyGrid
+        // 첫번째 선 그리기
+        
+        let height = CGFloat(rowCount) * cellHeight
+        context.stroke(
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: 0))
+                path.addLine(to: CGPoint(x: size.width, y: 0)) // 가로선 길이를 반으로 설정
+            },
+            with: .color(gridColor),
+            lineWidth: 1
+        )
+        
+        // 1/2 선 그리기
+        let firstRowY = cellHeight / 2
+        context.stroke(
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: firstRowY))
+                path.addLine(to: CGPoint(x: size.width, y: firstRowY)) // 가로선 길이를 반으로 설정
+            },
+            with: .color(gridColor),
+            lineWidth: 1
+        )
+        
+        // 가로선 그리기
+        for row in 1...rowCount {
+            let y = firstRowY + CGFloat(row) * cellHeight
+            context.stroke(
+                Path { path in
+                    path.move(to: CGPoint(x: 0, y: y))
+                    path.addLine(to: CGPoint(x: size.width, y: y))
+                },
+                with: .color(gridColor),
+                lineWidth: 1
+            )
+        }
+        
+        // 세로선 그리기
+        for col in 0...columnCount {
+            let x = CGFloat(col) * cellWidth
+            context.stroke(
+                Path { path in
+                    path.move(to: CGPoint(x: x, y: 0))
+                    path.addLine(to: CGPoint(x: x, y: height))
+                },
+                with: .color(gridColor),
+                lineWidth: 1
+            )
+        }
     }
     
+    private func createClassButton(
+        for cell: TimeTableCellInfo,
+        centerX: CGFloat,
+        centerY: CGFloat,
+        cellWidth: CGFloat,
+        cellHeight: CGFloat
+    ) -> some View {
+        return Rectangle()
+            .fill(cell.backgroundColor)
+            .clipShape(RoundedRectangle(cornerRadius: 2))
+            .overlay(
+                RoundedRectangle(cornerRadius: 2)
+                    .stroke(Color.heyGrid, lineWidth: 1)
+            )
+            .frame(width: cellWidth, height: cellHeight)
+            .position(x: centerX, y: centerY)
+    }
+}
+
+
+private func createClassInfoText(
+    for cell: TimeTableCellInfo,
+    displayType: DisplayTypeInfo,
+    centerX: CGFloat,
+    centerY: CGFloat,
+    cellWidth: CGFloat,
+    cellHeight: CGFloat
+) -> some View {
+    return VStack(alignment: .leading, spacing: 0) {
+        Text(cell.code)
+            .font(.medium_12)
+            .foregroundColor(cell.textColor)
+            .multilineTextAlignment(.center)
+        
+        if displayType.classRoomIsVisible {
+            Text(cell.schedule.location)
+                .font(.regular_10)
+                .foregroundColor(cell.textColor)
+        }
+        
+        if displayType.creditIsVisible, let unit = cell.unit {
+            Text("unit: \(unit)")
+                .font(.regular_10)
+                .foregroundColor(cell.textColor)
+        }
+    }
+    .frame(width: cellWidth, height: cellHeight, alignment: .topLeading)
+    .position(x: centerX, y: centerY)
+}
+
+extension TimeTableGridCaptureView {
+    private func configButtonLayout(
+        _ firstTime: Int,
+        for cell: TimeTableCellInfo,
+        at dayIndex: Int,
+        cellWidth: CGFloat,
+        cellHeight: CGFloat
+    ) -> (centerX: CGFloat, centerY: CGFloat, height: CGFloat) {
+        let startHour = cell.schedule.startHour
+        let startMinute = cell.schedule.startMinute
+        let endHour = cell.schedule.endHour
+        let endMinute = cell.schedule.endMinute
+        
+        
+        let x = CGFloat(dayIndex) * cellWidth
+        // 시작 시간과 분을 기준으로 시작 위치 계산
+        let y = CGFloat(startHour - firstTime) * cellHeight + CGFloat(startMinute) / 60 * cellHeight
+        
+        // 종료 시간과 분을 기준으로 높이 계산
+        let height = CGFloat(endHour - startHour) * cellHeight +
+        CGFloat(endMinute - startMinute) / 60 * cellHeight
+        
+        let centerX = x + cellWidth / 2
+        let centerY =  y + height / 2 + cellHeight / 2
+        return (centerX, centerY, height)
+    }
+}
+
+#Preview {
+    return MainCaptureContentView(
+        weekList: Week.dayOfWeek,
+        hourList: Array(6...21),
+        timeTable: SectionInfo.timetable_stubList.createTimeTableCellList(),
+        displayType: .MODULE_CODE_CLASSROOM_CREDIT
+    )
 }

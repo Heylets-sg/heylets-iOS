@@ -29,6 +29,7 @@ public class SearchModuleViewModel: ObservableObject {
     }
     
     @Published var state = State()
+    var selectLectureClosure: ((SectionInfo) -> Void)?
     var addLectureClosure: ((SectionInfo) -> Void)?
     @Published var lectureList: [SectionInfo] = []
     @Published var searchText = ""
@@ -50,6 +51,8 @@ public class SearchModuleViewModel: ObservableObject {
             
         case .lectureCellDidTap(let lecture):
             state.selectedLecture = lecture
+            guard let selectLecture = selectLectureClosure else { return }
+            selectLecture(lecture)
             
         case .searchButtonDidTap:
             useCase.getLectureList(searchText)

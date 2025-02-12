@@ -8,23 +8,23 @@ public struct TimeTableGridView: View {
     @Binding var viewType: TimeTableViewType
     var cellWidth: CGFloat
     
-    init(viewModel: TimeTableViewModel, displayType: Binding<DisplayTypeInfo>, viewType: Binding<TimeTableViewType>, cellWidth: CGFloat) {
+    init(
+        viewModel: TimeTableViewModel,
+        displayType: Binding<DisplayTypeInfo>,
+        viewType: Binding<TimeTableViewType>,
+        cellWidth: CGFloat
+    ) {
         self.viewModel = viewModel
         self._displayType = displayType
         self._viewType = viewType
         self.cellWidth = cellWidth
     }
     
-    
-    
     public var body: some View {
-        
-        
         GeometryReader { geometry in
             VStack {
                 let columnCount = viewModel.state.timeTable.columnCount
                 let rowCount = viewModel.state.timeTable.rowCount
-//                let cellWidth: CGFloat = (geometry.size.width - 25) / CGFloat(columnCount)
                 let cellHeight: CGFloat = 52
                 
                 ZStack {
@@ -72,23 +72,33 @@ public struct TimeTableGridView: View {
                             
                         }
                     }
+                    
+                    ForEach($viewModel.selectLecture, id: \.self) { $cell in
+                        if let dayIndex = viewModel.weekList.firstIndex(of: cell.schedule.day) {
+                            let rect: (
+                                centerX: CGFloat,
+                                centerY: CGFloat,
+                                height: CGFloat
+                            ) = configButtonLayout(
+                                viewModel.hourList[0],
+                                for: cell,
+                                at: dayIndex,
+                                cellWidth: cellWidth,
+                                cellHeight: cellHeight
+                            )
+                            
+                            selectLectureView(
+                                for: cell,
+                                centerX: rect.centerX,
+                                centerY: rect.centerY,
+                                cellWidth: cellWidth,
+                                cellHeight: rect.height
+                            )
+                            
+                        }
+                    }
                 }
             }
-        }
-    }
-}
-
-
-fileprivate struct WeeklyListCellView: View {
-    public let day: String
-    public init(_ day: String) {
-        self.day = day
-    }
-    var body: some View {
-        HStack {
-            Text(day)
-                .font(.semibold_12)
-                .foregroundColor(.heyGray1)
         }
     }
 }
@@ -123,7 +133,7 @@ extension TimeTableGridView {
                 path.addLine(to: CGPoint(x: size.width, y: firstRowY)) // 가로선 길이를 반으로 설정
             },
             with: .color(gridColor),
-            lineWidth: 0.5
+            lineWidth: 1
         )
         
         // 가로선 그리기
@@ -135,7 +145,7 @@ extension TimeTableGridView {
                     path.addLine(to: CGPoint(x: size.width, y: y))
                 },
                 with: .color(gridColor),
-                lineWidth: 0.5
+                lineWidth: 1
             )
         }
         
@@ -148,7 +158,7 @@ extension TimeTableGridView {
                     path.addLine(to: CGPoint(x: x, y: height))
                 },
                 with: .color(gridColor),
-                lineWidth: col == 0 || col == columnCount ? 1 : 0.5
+                lineWidth: 1
             )
         }
     }
@@ -204,6 +214,24 @@ extension TimeTableGridView {
         }
         .frame(width: 56, height: cellHeight, alignment: .topLeading)
         .position(x: centerX-4, y: centerY)
+    }
+    
+    private func selectLectureView (
+        for cell: TimeTableCellInfo,
+        centerX: CGFloat,
+        centerY: CGFloat,
+        cellWidth: CGFloat,
+        cellHeight: CGFloat
+    ) -> some View {
+        return Rectangle()
+            .fill(Color.heyGray2.opacity(0.5))
+            .clipShape(RoundedRectangle(cornerRadius: 2))
+            .overlay(
+                RoundedRectangle(cornerRadius: 2)
+                    .stroke(Color.heyGrid, lineWidth: 1)
+            )
+            .frame(width: cellWidth, height: cellHeight)
+            .position(x: centerX, y: centerY)
     }
 }
 

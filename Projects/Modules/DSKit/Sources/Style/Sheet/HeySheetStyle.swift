@@ -30,7 +30,7 @@ struct ShowLicenseAgreement: View {
                 Button("Dismiss",
                        action: { isShowingSheet.toggle() })
             }
-            .presentationDetents([.medium, .large, .height(280)])
+            .presentationDetents([.height(280)])
         }
     }
 }

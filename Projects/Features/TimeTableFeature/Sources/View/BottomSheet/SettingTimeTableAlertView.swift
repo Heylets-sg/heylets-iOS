@@ -13,7 +13,9 @@ import DSKit
 public struct SettingTimeTableAlertView: View {
     @ObservedObject var viewModel: TimeTableViewModel
     
-    public init(viewModel: TimeTableViewModel) {
+    public init(
+        viewModel: TimeTableViewModel
+    ) {
         self.viewModel = viewModel
     }
     
@@ -52,12 +54,15 @@ public struct SettingTimeTableAlertView: View {
                     case .saveImage:
                         HeyAlertView(
                             title: "The timetable has been\nsaved as an image.",
-                            primaryAction: ("Ok", .gray, { viewModel.send(.saveImage) })
+                            primaryAction: ("Ok", .gray, {
+                                viewModel.send(.saveImage)
+//                                print("asdfasdf")
+                            })
                         )
                         
                     case .removeTimeTable:
                         HeyAlertView(
-                            title: "The timetable has been\nsaved as an image.",
+                            title: "Are you sure you want to delete\nthe timetable?",
                             primaryAction: ("Delete", .primary, { viewModel.send(.deleteTimeTable) }),
                             secondaryAction: ("Close", .gray, { viewModel.send(.settingAlertDismiss) })
                         )
