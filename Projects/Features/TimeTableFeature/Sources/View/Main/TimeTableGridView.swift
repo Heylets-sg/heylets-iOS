@@ -176,10 +176,10 @@ extension TimeTableGridView {
             Rectangle()
                 .fill(cell.backgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: 2))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 2)
-                        .stroke(Color.heyGrid, lineWidth: 1)
-                )
+//                .overlay(
+//                    RoundedRectangle(cornerRadius: 2)
+//                        .stroke(Color.heyGrid, lineWidth: 1)
+//                )
                 .frame(width: cellWidth, height: cellHeight)
                 .position(x: centerX, y: centerY)
         }

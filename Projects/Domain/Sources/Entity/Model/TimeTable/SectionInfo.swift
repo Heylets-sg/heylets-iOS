@@ -53,7 +53,7 @@ public struct SectionInfo: Hashable, Equatable {
         for schedule in self.schedule {
             let timeTableCell: TimeTableCellInfo = .init(
                 id: self.id,
-                code: self.code ?? "custom",
+                code: self.code ?? self.name, // customModule일 경우 이름으로
                 name: self.name,
                 professor: self.professor,
                 unit: self.unit,
@@ -107,7 +107,7 @@ extension Array where Element == SectionInfo {
             for schedule in section.schedule {
                 let timeTableCell: TimeTableCellInfo = .init(
                     id: section.id,
-                    code: section.code ?? "custom",
+                    code: section.code ?? section.name, //customModule일 경우 이름 표시
                     name: section.name,
                     professor: section.professor,
                     unit: section.unit,
