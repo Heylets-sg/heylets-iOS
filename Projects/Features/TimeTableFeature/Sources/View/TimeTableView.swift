@@ -118,7 +118,7 @@ public struct TimeTableView: View {
         )
         .onTapGesture {
             withAnimation {
-                viewModel.viewType = .main
+                viewModel.send(.initMainView)
             }
         }
         

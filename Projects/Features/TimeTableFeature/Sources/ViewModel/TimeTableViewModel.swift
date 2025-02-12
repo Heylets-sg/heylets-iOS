@@ -45,6 +45,7 @@ public class TimeTableViewModel: ObservableObject {
         case addLecture(SectionInfo)
         case deleteModuleAlertCloseButtonDidTap
         case errorAlertViewCloseButtonDidTap
+        case initMainView
     }
     
     enum SettingAction {
@@ -130,14 +131,17 @@ public class TimeTableViewModel: ObservableObject {
                 .map { _ in TimeTableViewType.main }
                 .assign(to: \.viewType, on: self)
                 .store(in: cancelBag)
+            
+        case .initMainView:
+            if !(viewType == .search && viewType == .theme) {
+                viewType = .main
+            }
         }
     }
     
     func send(_ action: SettingAction) {
         switch action {
         case .saveImage:
-            let width = UIScreen.main.bounds.width
-            
             let mainView = MainCaptureContentView(
                 weekList: weekList,
                 hourList: hourList,
