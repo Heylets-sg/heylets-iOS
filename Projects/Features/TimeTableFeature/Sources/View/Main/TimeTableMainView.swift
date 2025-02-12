@@ -93,7 +93,7 @@ extension MainView {
         // 시작 시간과 분을 기준으로 시작 위치 계산
         let y = CGFloat(startHour - firstTime) * cellHeight + CGFloat(startMinute) / 60 * cellHeight
         
-        return y + 450 // 바텀시트 높이 추가
+        return y 
     }
 }
 

@@ -40,7 +40,7 @@ struct SettingTimeTableInfoView: View {
         )
         .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
             SelectDisplayModuleView(viewModel: viewModel)
-                .presentationDetents([.medium, .large, .height(380)])
+                .presentationDetents([.height(380)])
                 .presentationDragIndicator(.hidden)
                 .presentationBackground(.clear)
         }

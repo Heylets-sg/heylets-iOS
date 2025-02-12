@@ -66,7 +66,7 @@ public class TimeTableViewModel: ObservableObject {
         }
     }
     
-    @Published var timeTableInfo: TimeTableInfo = .stub //TODO: QA용 -> .empty로 변경
+    @Published var timeTableInfo: TimeTableInfo = .empty
     @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
     @Published var sectionList: [SectionInfo] = []
     @Published var weekList: [Week] = Week.weekDay
@@ -75,6 +75,7 @@ public class TimeTableViewModel: ObservableObject {
     @Published var detailSectionInfo: SectionInfo = .empty
     
     @Published var selectLecture: [TimeTableCellInfo] = []
+    
     
     public init(_ useCase: TimeTableUseCaseType) {
         self.useCase = useCase
@@ -135,6 +136,8 @@ public class TimeTableViewModel: ObservableObject {
     func send(_ action: SettingAction) {
         switch action {
         case .saveImage:
+            let width = UIScreen.main.bounds.width
+            
             let mainView = MainCaptureContentView(
                 weekList: weekList,
                 hourList: hourList,
@@ -142,8 +145,13 @@ public class TimeTableViewModel: ObservableObject {
                 displayType: displayTypeInfo
             )
             
-            let image = mainView.captureAsImage()
-            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                let image = mainView.captureAsImage(size: CGSize(
+                    width: CGFloat(self.weekList.count * 100),
+                    height: CGFloat(self.hourList.count * 52)
+                ))
+                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+            }
             state.alerts.settingAlertType = nil
             
         case .deleteTimeTable:

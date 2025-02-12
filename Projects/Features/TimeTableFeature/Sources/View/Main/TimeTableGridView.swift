@@ -103,21 +103,6 @@ public struct TimeTableGridView: View {
     }
 }
 
-
-fileprivate struct WeeklyListCellView: View {
-    public let day: String
-    public init(_ day: String) {
-        self.day = day
-    }
-    var body: some View {
-        HStack {
-            Text(day)
-                .font(.semibold_12)
-                .foregroundColor(.heyGray1)
-        }
-    }
-}
-
 extension TimeTableGridView {
     private func drawGrid(
         _ context: inout GraphicsContext,

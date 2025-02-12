@@ -147,7 +147,7 @@ extension TimeTableView {
                 deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
                 sectionInfo: viewModel.detailSectionInfo
             )
-            .bottomSheetTransition()
+            .zIndex(2)
         case .addCustom:
             AddCustomModuleView(viewModel: addCustomModuleViewModel)
                 .bottomSheetTransition()
