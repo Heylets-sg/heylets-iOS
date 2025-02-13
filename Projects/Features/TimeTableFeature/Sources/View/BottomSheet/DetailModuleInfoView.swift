@@ -36,6 +36,7 @@ public struct DetailModuleInfoView: View {
                     .background(Color.init(hex: sectionInfo.backgroundColor))
                     .clipShape(RoundedRectangle(cornerRadius: 4))
                     .padding(.top, 24)
+                    .padding(.trailing, 120)
                 
                 Text(sectionInfo.name)
                     .font(.semibold_18)
@@ -44,13 +45,14 @@ public struct DetailModuleInfoView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
                     .padding(.top, 12)
-                    
                     .padding(.bottom, 16)
+                    .padding(.trailing, 120)
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(sectionInfo.allscheduleTime)
                         .font(.regular_14)
                         .foregroundColor(.heyGray2)
+                        .padding(.trailing, 24)
                     
                     Text(sectionInfo.professor)
                         .font(.regular_14)
@@ -62,7 +64,6 @@ public struct DetailModuleInfoView: View {
                 }
             }
             .padding(.leading, 24)
-            .padding(.trailing, 120)
             .padding(.bottom, 44)
             
             HStack {

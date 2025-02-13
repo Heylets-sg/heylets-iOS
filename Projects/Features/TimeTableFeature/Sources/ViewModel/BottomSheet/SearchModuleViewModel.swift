@@ -62,6 +62,11 @@ public class SearchModuleViewModel: ObservableObject {
             
         case .clearButtonDidTap:
             searchText = ""
+            state.selectedLecture = nil
+            useCase.getLectureList(searchText)
+                .receive(on: RunLoop.main)
+                .assign(to: \.lectureList, on: self)
+                .store(in: cancelBag)
             
         case .addLectureButtonDidTap(let lecture):
             guard let addLecture = addLectureClosure else { return }

@@ -77,7 +77,7 @@ struct SelectDisplayModuleView: View {
                         }
                         
                         Divider()
-                            .background(Color.init(hex: "#EEEEEE"))
+                            .background(Color.heyGrid)
                     }
                 }
             }

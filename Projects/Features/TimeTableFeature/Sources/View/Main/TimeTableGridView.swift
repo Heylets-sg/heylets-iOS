@@ -182,7 +182,7 @@ extension TimeTableGridView {
             Rectangle()
                 .fill(backgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: 2))
-                .frame(width: cellWidth, height: cellHeight)
+                .frame(width: cellWidth-2, height: cellHeight)
                 .position(x: centerX, y: centerY)
         }
         .buttonStyle(PlainButtonStyle())
@@ -214,7 +214,7 @@ extension TimeTableGridView {
                     .foregroundColor(cell.textColor)
             }
         }
-        .frame(width: 56, height: cellHeight, alignment: .topLeading)
+        .frame(width: 56, height: cellHeight ,alignment: .topLeading)
         .position(x: centerX-4, y: centerY)
     }
     

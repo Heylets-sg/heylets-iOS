@@ -21,7 +21,8 @@ public struct HourListView: View {
     public var body: some View {
         VStack(spacing: 0) {
             Divider()
-                .background(Color.heyGray6)
+                .background(Color.heyGrid)
+                .frame(height: 0.5)
                 .padding(.bottom, 17)
             
             ForEach(hourList, id: \.self) { hour in

@@ -51,7 +51,8 @@ public struct TimeTableView: View {
         ZStack {
             VStack(alignment: .leading) {
                 Spacer()
-                    .frame(height: 1)
+                    .frame(height: 60)
+                
                 createTopView(viewModel.viewType)
                 
                 Spacer()
@@ -64,6 +65,7 @@ public struct TimeTableView: View {
                 Spacer()
                     .frame(height: 1)
             }
+            .ignoresSafeArea()
             .onAppear {
                 viewModel.send(.onAppear)
                 searchModuleViewModel.selectLectureClosure = { lecture in

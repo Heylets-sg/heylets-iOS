@@ -156,10 +156,11 @@ fileprivate struct ClassSearchListCellView: View {
                     Text("Add")
                         .font(.regular_12)
                         .foregroundColor(Color.heyWhite)
-                        .padding(.horizontal, 12)
                         .padding(.vertical, 5)
+                        .frame(width: 46, height: 25)
                         .background(Color.heyMain)
                         .clipShape(RoundedRectangle(cornerRadius: 12.5))
+                        
                         .padding(.trailing, 7)
                 }
             }
