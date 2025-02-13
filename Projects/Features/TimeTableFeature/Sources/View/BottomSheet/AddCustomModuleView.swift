@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Domain
 
 public struct AddCustomModuleView: View {
     @ObservedObject var viewModel: AddCustomModuleViewModel
@@ -17,34 +18,37 @@ public struct AddCustomModuleView: View {
                 .frame(height: 48)
             
             HStack(spacing: 6) {
-                Button {
-                    viewModel.send(.weekPickerButtonDidTap)
-                } label: {
-                    HStack {
-                        Text(viewModel.day.rawValue)
-                            .font(.regular_14)
-                            .foregroundColor(.heyGray1)
-                            .padding(.trailing, 6)
-                        
-                        Image(uiImage: .icDown)
-                            .resizable()
-                            .frame(width: 9, height: 4)
+                HStack {
+                    Menu(viewModel.day.rawValue) {
+                        ForEach(Week.allCases.sorted(by: { $0.index > $1.index}), id: \.self) { day in
+                            Button(day.rawValue, action: {
+                                viewModel.send(.weekPickerButtonDidTap(day))
+                            })
+                        }
                     }
+                    .font(.regular_14)
+                    .foregroundColor(.heyGray1)
+                    .padding(.trailing, 6)
+                    
+                    Image(uiImage: .icDown)
+                        .resizable()
+                        .frame(width: 9, height: 4)
                 }
                 
-                Button {
-                    viewModel.send(.timePickerButtonDidTap)
-                } label: {
-                    HStack {
-                        Text(viewModel.time)
-                            .font(.regular_14)
-                            .foregroundColor(.heyGray1)
-                            .padding(.trailing, 6)
-                        Image(uiImage: .icDown)
-                            .resizable()
-                            .frame(width: 9, height: 4)
+                Menu(viewModel.time) {
+                    ForEach(viewModel.timeList.sorted(by: >), id: \.self) { time in
+                        Button(time, action: {
+                            viewModel.send(.timePickerButtonDidTap(time))
+                        })
                     }
                 }
+                .font(.regular_14)
+                .foregroundColor(.heyGray1)
+                .padding(.trailing, 6)
+                
+                Image(uiImage: .icDown)
+                    .resizable()
+                    .frame(width: 9, height: 4)
             }
             .padding(.bottom, 24)
             
@@ -89,31 +93,15 @@ public struct AddCustomModuleView: View {
                 }
             }
             Spacer()
-            
-            if !viewModel.state.weekPickerIsHidden {
-                Picker("", selection: $viewModel.day) {
-                    ForEach(viewModel.dayofWeeks, id: \.self) { day in
-                        Text(day.rawValue).tag(day.rawValue)
-                    }
-                }
-                .pickerStyle(.wheel)
-                .background(.white)
-                .cornerRadius(16)
-                .padding()
-            }
-            
-            if !viewModel.state.timePickerIsHidden {
-                Picker("", selection: $viewModel.time) {
-                    ForEach(viewModel.timeList, id: \.self) { time in
-                        Text(time).tag(time)
-                    }
-                }
-                .pickerStyle(.wheel)
-                .background(.white)
-                .cornerRadius(16)
-                .padding()
-            }
         }
         .padding(.horizontal, 16)
     }
+}
+
+
+#Preview {
+    @State var stub: TimeTableViewType = .main
+    return AddCustomModuleView(
+        viewModel: .init(StubHeyUseCase.stub.timeTableUseCase)
+    )
 }
