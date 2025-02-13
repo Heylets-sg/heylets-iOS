@@ -42,6 +42,7 @@ enum OnboardingType {
         }
     }
 }
+
 public struct OnboardingView: View {
     @EnvironmentObject var container: Router
     var viewModel: OnboardingViewModel
@@ -54,85 +55,80 @@ public struct OnboardingView: View {
     
     public var body: some View {
         NavigationStack(path: $container.navigationRouter.destinations) {
-            ZStack {
-                Color.heyMain.ignoresSafeArea()
-                
-                VStack(alignment: .leading) {
-                    Spacer()
-                        .frame(height: 120)
-                    
-                    CarouselView(pageCount: 2, visibleEdgeSpace: 0, spacing: 0) { index in
-                        VStack(alignment: .leading, spacing: 0) {
-                            HStack {
-                                VStack(alignment: .leading, spacing: 0) {
-                                    Text(onboardingContent[index].title)
-                                        .font(.bold_20)
-                                        .foregroundColor(.heyWhite)
-                                        .padding(.bottom, 12)
-                                        .multilineTextAlignment(.leading)
-                                    
-                                    Text(onboardingContent[index].description)
-                                        .font(.regular_14)
-                                        .foregroundColor(.heyWhite)
-                                        .multilineTextAlignment(.leading)
-                                }
-                                Spacer()
-                            }
-                            .padding(.leading, 16)
-                            
-                            VStack {
-                                if index == 0 {
-                                        Spacer()
-                                            .frame(height: 52)
-                                        
-                                        Image(uiImage: onboardingContent[index].image)
-                                            .resizable()
-                                            .frame(width: 293, height: 293)
-                                            .padding(.horizontal, 50)
-                                    
-                                    
-                                } else {
-                                        Spacer()
-                                            .frame(height: 125)
-                                        
-                                        Image(uiImage: onboardingContent[index].image)
-                                            .resizable()
-                                            .frame(height: 150)
-                                        
-                                        Spacer()
-                                    
-                                }
-                                Spacer()
-                            }
-                        }
-                    }
+            GeometryReader { geometry in
+                ZStack {
+                    Color.heyMain.ignoresSafeArea()
                     
                     VStack {
-                        Button("Sign up") {
-                            viewModel.send(.signUpButtonDidTap)
-                        }
-                        .heyBottomButtonStyle(.white)
-                        .padding(.bottom, 16)
+                        Spacer()
+                            .frame(height: geometry.size.height * 0.15) // 상대적인 높이 설정
                         
-                        Button("Log in") {
-                            viewModel.send(.signInButtonDidTap)
-                        }.heyBottomButtonStyle(.black)
+                        CarouselView(pageCount: 2, visibleEdgeSpace: 0, spacing: 0) { index in
+                            VStack(alignment: .leading, spacing: 0) {
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        Text(onboardingContent[index].title)
+                                            .font(.bold_20)
+                                            .foregroundColor(.heyWhite)
+                                            .multilineTextAlignment(.leading)
+                                        
+                                        Text(onboardingContent[index].description)
+                                            .font(.regular_14)
+                                            .foregroundColor(.heyWhite)
+                                            .multilineTextAlignment(.leading)
+                                    }
+                                }
+                                .padding(.horizontal, 16)
+                                
+                                
+                                VStack {
+                                    Spacer()
+                                        .frame(height: index == 0 ? geometry.size.height * 0.06 : geometry.size.height * 0.15)
+                                    
+                                    HStack {
+                                        Spacer()
+                                        
+                                        Image(uiImage: onboardingContent[index].image)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: geometry.size.width)
+                                        
+                                        Spacer()
+                                    }
+                                    
+                                    
+                                    Spacer()
+                                }
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        VStack {
+                            Button("Sign up") {
+                                viewModel.send(.signUpButtonDidTap)
+                            }
+                            .heyBottomButtonStyle(.white)
+                            .padding(.bottom, 16)
+                            
+                            Button("Log in") {
+                                viewModel.send(.signInButtonDidTap)
+                            }.heyBottomButtonStyle(.black)
+                        }
+                        .padding(.horizontal, 16)
+                        
+                        Spacer()
+                            .frame(height: geometry.size.height * 0.08) // 하단 여백도 상대적으로 조정
                     }
-                    .padding(.horizontal, 16)
-                    
-                    Spacer()
-                        .frame(height: 65)
                 }
+                .ignoresSafeArea(edges: .vertical)
+                .ignoresSafeArea(.keyboard)
+                .setOnboardingHeyNavigation()
             }
-            .ignoresSafeArea(edges: .vertical)
-            .ignoresSafeArea(.keyboard)
-            .setOnboardingHeyNavigation()
         }
         .navigationBarBackButtonHidden()
     }
 }
-
-
 
 #Preview {
     OnboardingView(
