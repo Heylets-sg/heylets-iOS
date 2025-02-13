@@ -74,6 +74,7 @@ public class AddCustomModuleViewModel: ObservableObject {
             useCase.addCustomModule(customModule)
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
+                    self?.initInfo()
                     self?.state.isAddSuccess = true
                 })
                 .store(in: cancelBag)
@@ -88,6 +89,14 @@ extension AddCustomModuleViewModel {
         let end = components[1]
         
         return (start, end)
+    }
+    
+    func initInfo() {
+        self.day = .Mon
+        self.time = "09:00 - 10:00"
+        self.schedule = ""
+        self.location = ""
+        self.professor = ""
     }
 }
 
