@@ -20,8 +20,8 @@ public struct HourListView: View {
     
     public var body: some View {
         VStack(spacing: 0) {
-            Divider()
-                .background(Color.heyGrid)
+            Rectangle()
+                .fill(Color.heyGrid)
                 .frame(height: 0.5)
                 .padding(.bottom, 17)
             
