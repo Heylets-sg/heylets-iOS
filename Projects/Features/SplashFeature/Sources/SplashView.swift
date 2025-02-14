@@ -26,23 +26,24 @@ public struct SplashView: View {
                             height: geometry.size.height * 0.1
                         )
                         .padding(.bottom, 12)
-
+                    
                     Text("School life in My Hands")
                         .font(.semibold_16)
                         .foregroundColor(.heyMain)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .multilineTextAlignment(.center)  // 텍스트 중앙 정렬
-
+                
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeArea()
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                viewModel.send(.onAppear)
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    viewModel.send(.onAppear)
+                }
             }
+            .transition(.opacity)
         }
-        .transition(.opacity)
     }
 }
