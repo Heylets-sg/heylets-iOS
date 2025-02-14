@@ -13,17 +13,31 @@ public struct SplashView: View {
     }
     
     public var body: some View {
-        VStack {
-            Image(uiImage: .logo)
-                .resizable()
-                .frame(height: 74)
-                .padding(.horizontal, 124)
-                .padding(.bottom, 12)
-            
-            Text("School life in My Hands")
-                .font(.semibold_18)
-                .foregroundColor(.heyMain)
-        }
+        GeometryReader { geometry in
+            VStack {
+                Spacer()
+                
+                VStack {
+                    Image(uiImage: .logo)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(
+                            width: geometry.size.width * 0.44,
+                            height: geometry.size.height * 0.1
+                        )
+                        .padding(.bottom, 12)
+
+                    Text("School life in My Hands")
+                        .font(.semibold_16)
+                        .foregroundColor(.heyMain)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .multilineTextAlignment(.center)  // 텍스트 중앙 정렬
+
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea()
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 viewModel.send(.onAppear)
