@@ -52,13 +52,18 @@ public struct TimeTableGridView: View {
                                 cellHeight: cellHeight
                             )
                             
+                            let backgroundColor: Color = viewModel.selectedThemeColor.isEmpty 
+                            ? cell.backgroundColor
+                            : Color.init(hex: viewModel.selectedThemeColor.randomElement()!)
+                            
                             ZStack {
                                 createClassButton(
                                     for: cell,
                                     centerX: rect.centerX,
                                     centerY: rect.centerY,
                                     cellWidth: cellWidth,
-                                    cellHeight: rect.height
+                                    cellHeight: rect.height,
+                                    backgroundColor: backgroundColor
                                 )
                                 
                                 createClassInfoText(
@@ -168,19 +173,16 @@ extension TimeTableGridView {
         centerX: CGFloat,
         centerY: CGFloat,
         cellWidth: CGFloat,
-        cellHeight: CGFloat
+        cellHeight: CGFloat,
+        backgroundColor: Color
     ) -> some View {
         return Button {
             viewModel.send(.tableCellDidTap(cell.id))
         } label: {
             Rectangle()
-                .fill(cell.backgroundColor)
+                .fill(backgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: 2))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 2)
-                        .stroke(Color.heyGrid, lineWidth: 1)
-                )
-                .frame(width: cellWidth, height: cellHeight)
+                .frame(width: cellWidth-2, height: cellHeight)
                 .position(x: centerX, y: centerY)
         }
         .buttonStyle(PlainButtonStyle())
@@ -198,7 +200,7 @@ extension TimeTableGridView {
             Text(cell.code)
                 .font(.medium_12)
                 .foregroundColor(cell.textColor)
-                .multilineTextAlignment(.center)
+                .multilineTextAlignment(.leading)
             
             if displayType.classRoomIsVisible {
                 Text(cell.schedule.location)
@@ -212,7 +214,7 @@ extension TimeTableGridView {
                     .foregroundColor(cell.textColor)
             }
         }
-        .frame(width: 56, height: cellHeight, alignment: .topLeading)
+        .frame(width: 56, height: cellHeight ,alignment: .topLeading)
         .position(x: centerX-4, y: centerY)
     }
     
@@ -226,10 +228,6 @@ extension TimeTableGridView {
         return Rectangle()
             .fill(Color.heyGray2.opacity(0.5))
             .clipShape(RoundedRectangle(cornerRadius: 2))
-            .overlay(
-                RoundedRectangle(cornerRadius: 2)
-                    .stroke(Color.heyGrid, lineWidth: 1)
-            )
             .frame(width: cellWidth, height: cellHeight)
             .position(x: centerX, y: centerY)
     }

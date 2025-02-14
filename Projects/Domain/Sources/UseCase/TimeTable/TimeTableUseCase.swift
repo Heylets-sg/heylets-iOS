@@ -12,6 +12,7 @@ import Combine
 import Core
 
 final public class TimeTableUseCase: TimeTableUseCaseType {
+    
     private let userRepository: UserRepositoryType
     private let lectureRepository: LectureRepositoryType
     private let scheduleRepository: ScheduleRepositoryType
@@ -167,6 +168,15 @@ extension TimeTableUseCase {
             .eraseToAnyPublisher()
     }
     
+    public func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never> {
+        return settingRepository.getThemeDetailInfo(themeName)
+            .map { $0.core + $0.gradient + [$0.defaultColor]}
+            .catch { _ in
+                return Just([]).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
     public func getThemeList() -> AnyPublisher<[Theme], Never> {
         return settingRepository.getThemeList()
             .catch { _ in
@@ -266,6 +276,10 @@ extension StubTimeTableUseCase {
     }
     
     public func getThemeList() -> AnyPublisher<[Theme], Never> {
+        Just([]).eraseToAnyPublisher()
+    }
+    
+    public func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never> {
         Just([]).eraseToAnyPublisher()
     }
     

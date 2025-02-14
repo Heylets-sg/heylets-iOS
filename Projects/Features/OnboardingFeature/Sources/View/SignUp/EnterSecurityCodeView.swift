@@ -33,9 +33,13 @@ public struct EnterSecurityCodeView: View {
             Spacer()
                 .frame(height: 88)
             
-            SecurityCodeInputView(otpCode: $viewModel.otpCode)
-                .frame(height: 50)
-                .padding(.bottom, 16)
+            HStack {
+                Spacer()
+                SecurityCodeInputView(otpCode: $viewModel.otpCode)
+                    .frame(width: 310, height: 50)
+                    .padding(.bottom, 16)
+                Spacer()
+            }
             
             Text(viewModel.state.errMessage)
                 .font(.regular_14)

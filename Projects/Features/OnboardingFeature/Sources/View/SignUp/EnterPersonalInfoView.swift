@@ -71,7 +71,7 @@ fileprivate struct GenderButton: View {
                 .frame(maxWidth: .infinity)
                 .font(.semibold_14)
                 .background(isSelected ? Color.heyMain : Color.heyGray4)
-                .foregroundStyle(isSelected ? Color.heyGray1 : Color.heyGray4)
+                .foregroundStyle(isSelected ? Color.heyGray1 : Color.heyGray2)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
         }
     }

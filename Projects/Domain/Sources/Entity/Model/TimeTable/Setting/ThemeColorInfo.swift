@@ -14,7 +14,7 @@ public struct ThemeColorInfo {
     let gradient: [String]
     let dayColor: String
     let defaultColor: String
-    let specialColor: [String]
+    let specialColor: Dictionary<String, String>?
     
     public init(
         name: String,
@@ -22,7 +22,7 @@ public struct ThemeColorInfo {
         gradient: [String],
         dayColor: String,
         defaultColor: String,
-        specialColor: [String]
+        specialColor: Dictionary<String, String>
     ) {
         self.name = name
         self.core = core

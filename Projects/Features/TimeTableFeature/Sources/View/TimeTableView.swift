@@ -51,7 +51,8 @@ public struct TimeTableView: View {
         ZStack {
             VStack(alignment: .leading) {
                 Spacer()
-                    .frame(height: 1)
+                    .frame(height: 60)
+                
                 createTopView(viewModel.viewType)
                 
                 Spacer()
@@ -64,6 +65,7 @@ public struct TimeTableView: View {
                 Spacer()
                     .frame(height: 1)
             }
+            .ignoresSafeArea()
             .onAppear {
                 viewModel.send(.onAppear)
                 searchModuleViewModel.selectLectureClosure = { lecture in
@@ -118,7 +120,7 @@ public struct TimeTableView: View {
         )
         .onTapGesture {
             withAnimation {
-                viewModel.viewType = .main
+                viewModel.send(.initMainView)
             }
         }
         
@@ -169,6 +171,11 @@ extension TimeTableView {
                 viewType: $viewModel.viewType,
                 viewModel: themeViewModel
             )
+            .onAppear {
+                themeViewModel.selectThemeClosure = { themeName in
+                    viewModel.send(.selectedTheme(themeName))
+                }
+            }
         case .addCustom:
             AddCustomModuleTopView(
                 viewType: $viewModel.viewType,

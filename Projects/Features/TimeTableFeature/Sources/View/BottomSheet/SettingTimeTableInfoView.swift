@@ -59,16 +59,17 @@ struct SelectDisplayModuleView: View {
         VStack {
             VStack(spacing: 0) {
                 ForEach(viewModel.options, id: \.self) { option in
-                    VStack {
-                        HStack {
+                    VStack(spacing: 0) {
+                        HStack(spacing: 0) {
                             Spacer()
                             
                             Text(option.text)
-                                .font(.body)
+                                .font(.medium_14)
+                                .foregroundColor(.heyGray1)
                             
                             Spacer()
                         }
-                        .padding(.vertical, 18)
+                        .padding(.vertical, 20)
                         .onTapGesture {
                             withAnimation {
                                 viewModel.send(.selectDisplayType(option))
@@ -76,7 +77,7 @@ struct SelectDisplayModuleView: View {
                         }
                         
                         Divider()
-                            .background(Color.heyGray1)
+                            .background(Color.heyGrid)
                     }
                 }
             }
@@ -90,8 +91,8 @@ struct SelectDisplayModuleView: View {
             Button {
                 viewModel.send(.reportButtonDidTap)
             } label: {
-                Text("Report")
-                    .font(.headline)
+                Text("Back")
+                    .font(.semibold_14)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.heyWhite)

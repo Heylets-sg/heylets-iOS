@@ -18,9 +18,9 @@ struct SettingTimeTableView: View {
             Divider()
                 .frame(height: 0.8)
                 .background(Color.heyGray5)
-                .padding(.bottom, 20)
+                .padding(.bottom, 12)
             
-            VStack(alignment: .leading, spacing: 25) {
+            VStack(alignment: .leading, spacing: 0) {
                 Button {
                     withAnimation {
                         viewType = .theme
@@ -30,6 +30,7 @@ struct SettingTimeTableView: View {
                         .font(.medium_14)
                         .foregroundColor(.heyGray1)
                 }
+                .padding(.bottom, 25)
                 
                 Button {
                     settingAlertType = .editTimeTableName
@@ -39,6 +40,7 @@ struct SettingTimeTableView: View {
                         .font(.medium_14)
                         .foregroundColor(.heyGray1)
                 }
+                .padding(.bottom, 25)
                 
                 Button {
                     settingAlertType = .shareURL
@@ -48,6 +50,7 @@ struct SettingTimeTableView: View {
                         .font(.medium_14)
                         .foregroundColor(.heyGray1)
                 }
+                .padding(.bottom, 25)
                 
                 Button {
                     settingAlertType = .saveImage
@@ -57,6 +60,7 @@ struct SettingTimeTableView: View {
                         .font(.medium_14)
                         .foregroundColor(.heyGray1)
                 }
+                .padding(.bottom, 25)
                 
                 Button {
                     settingAlertType = .removeTimeTable
@@ -70,7 +74,6 @@ struct SettingTimeTableView: View {
             .padding(.leading, 32)
             .padding(.trailing, 220)
         }
-        .padding(.bottom, 36)
         .animation(.easeInOut, value: viewType)
         .onDisappear {
             if viewType == .setting {

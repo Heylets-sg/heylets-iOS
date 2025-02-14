@@ -22,8 +22,8 @@ public class AddCustomModuleViewModel: ObservableObject {
     }
     
     enum Action {
-        case weekPickerButtonDidTap
-        case timePickerButtonDidTap
+        case weekPickerButtonDidTap(Week)
+        case timePickerButtonDidTap(String)
         case addCustomModuleButtonDidTap
     }
     
@@ -35,7 +35,6 @@ public class AddCustomModuleViewModel: ObservableObject {
     @Published var location: String = ""
     @Published var professor: String  = ""
     
-    let dayofWeeks = Week.dayOfWeek
     let timeList: [String] = (1...22).map { hour in
         let start = String(format: "%02d:00", hour)
         let end = String(format: "%02d:00", hour + 1)
@@ -51,11 +50,13 @@ public class AddCustomModuleViewModel: ObservableObject {
     
     func send(_ action: Action) {
         switch action {
-        case .weekPickerButtonDidTap:
+        case .weekPickerButtonDidTap(let week):
+            self.day = week
             state.weekPickerIsHidden.toggle()
             state.timePickerIsHidden = true
             
-        case .timePickerButtonDidTap:
+        case .timePickerButtonDidTap(let time):
+            self.time = time
             state.weekPickerIsHidden = true
             state.timePickerIsHidden.toggle()
             
@@ -73,6 +74,7 @@ public class AddCustomModuleViewModel: ObservableObject {
             useCase.addCustomModule(customModule)
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
+                    self?.initInfo()
                     self?.state.isAddSuccess = true
                 })
                 .store(in: cancelBag)
@@ -87,6 +89,14 @@ extension AddCustomModuleViewModel {
         let end = components[1]
         
         return (start, end)
+    }
+    
+    func initInfo() {
+        self.day = .Mon
+        self.time = "09:00 - 10:00"
+        self.schedule = ""
+        self.location = ""
+        self.professor = ""
     }
 }
 

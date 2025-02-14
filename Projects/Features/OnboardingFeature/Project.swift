@@ -11,7 +11,7 @@ import DependencyPlugin
 
 let project = Project.makeModule(
     name: "OnboardingFeature",
-    targets: [.staticFramework, .interface], //, .demo
+    targets: [.dynamicFramework, .interface], //, .demo
     interfaceDependencies: [
         .Features.BaseFeatureDependency
     ]

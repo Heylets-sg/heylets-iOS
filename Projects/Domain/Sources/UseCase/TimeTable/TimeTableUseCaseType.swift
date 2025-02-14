@@ -50,6 +50,8 @@ public protocol TimeTableUseCaseType {
     
     //시간표 이름 바꾸기
     func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never>
+    //테마 선택시 반영되도록 상세 색상 가져오기
+    func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never>
     //테마 리스트 불러오기
     func getThemeList() -> AnyPublisher<[Theme], Never>
     //테마, display 불러오기

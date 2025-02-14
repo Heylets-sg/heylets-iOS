@@ -35,6 +35,7 @@ public class ThemeViewModel: ObservableObject {
     private let useCase: TimeTableUseCaseType
     @Published var displayType: DisplayTypeInfo = .MODULE_CODE
     @Published var theme: String = ""
+    var selectThemeClosure: ((String) -> Void)?
     
     let options: [DisplayTypeInfo] = [
         .MODULE_CODE,
@@ -75,6 +76,8 @@ public class ThemeViewModel: ObservableObject {
         case .themeButtonDidTap(let selectedTheme):
             state.selectedTheme = selectedTheme
             theme = selectedTheme.name
+            guard let selectThemeClosure else { return }
+            selectThemeClosure(selectedTheme.name)
             
         case .selectDisplayTypeButtonDidTap:
             state.isShowingSelectInfoView.toggle()

@@ -19,5 +19,5 @@ public struct ColorResult: Decodable {
     public let gradient: [String]
     public let dayColor: String
     public let defaultColor: String
-    public let specialColor: [String]
+    public let specialColor: Dictionary<String, String>?
 }
