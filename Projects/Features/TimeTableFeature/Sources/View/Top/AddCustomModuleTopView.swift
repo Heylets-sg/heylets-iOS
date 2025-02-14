@@ -33,8 +33,8 @@ struct AddCustomModuleTopView: View {
                     Text("Save")
                         .font(.medium_16)
                         .foregroundColor(.heyGray1)
-                    
                 }
+                .disabled(viewModel.schedule.isEmpty)
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 26)
