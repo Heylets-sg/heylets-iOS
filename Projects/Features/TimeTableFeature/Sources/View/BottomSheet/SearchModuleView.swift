@@ -160,9 +160,9 @@ fileprivate struct ClassSearchListCellView: View {
                         .frame(width: 46, height: 25)
                         .background(Color.heyMain)
                         .clipShape(RoundedRectangle(cornerRadius: 12.5))
-                        
                         .padding(.trailing, 7)
                 }
+                .hidden(!isSelected)
             }
             .padding(.bottom, 10)
         }

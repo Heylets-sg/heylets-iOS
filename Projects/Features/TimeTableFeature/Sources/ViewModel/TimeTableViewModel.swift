@@ -136,7 +136,7 @@ public class TimeTableViewModel: ObservableObject {
                 .store(in: cancelBag)
             
         case .initMainView:
-            if !(viewType == .search || viewType == .theme) {
+            if !(viewType == .search || viewType == .theme || viewType == .addCustom) {
                 viewType = .main
             }
         }
