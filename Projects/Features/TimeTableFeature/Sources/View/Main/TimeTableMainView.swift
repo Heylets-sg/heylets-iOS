@@ -31,6 +31,7 @@ public struct MainView: View {
             ScrollView(.horizontal) {
                 WeeklyListView(viewModel.weekList, cellWidth: cellWidth)
                     .padding(.leading, 25)
+                    .padding(.bottom, 20)
                 
                 ScrollViewReader { proxy in
                     ScrollView {
