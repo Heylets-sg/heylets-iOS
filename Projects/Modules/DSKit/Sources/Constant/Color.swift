@@ -9,26 +9,26 @@
 import SwiftUI
 
 public extension Color {
-    static let heyError = DSKitAsset.heyError.swiftUIColor
-    static let heyGray1 = DSKitAsset.heyGray1.swiftUIColor
-    static let heyGray2 = DSKitAsset.heyGray2.swiftUIColor
-    static let heyGray3 = DSKitAsset.heyGray3.swiftUIColor
-    static let heyGray4 = DSKitAsset.heyGray4.swiftUIColor
-    static let heyGray5 = DSKitAsset.heyGray5.swiftUIColor
-    static let heyGray6 = DSKitAsset.heyGray6.swiftUIColor
-    static let heyGray7 = DSKitAsset.heyGray7.swiftUIColor
-    static let heyGray8 = DSKitAsset.heyGray8.swiftUIColor
-    static let heyGray9 = DSKitAsset.heyGray9.swiftUIColor
-    static let heyGray10 = DSKitAsset.heyGray10.swiftUIColor
-    static let heyGrid = DSKitAsset.heyGridColor.swiftUIColor
-    static let heyDimmed = DSKitAsset.heyDimmedColor.swiftUIColor
-    static let heyGreen = DSKitAsset.heyGreen.swiftUIColor
-    static let heyMain = DSKitAsset.heyMain.swiftUIColor
-    static let heySubError = DSKitAsset.heySubError.swiftUIColor
-    static let heySubMain = DSKitAsset.heySubMain.swiftUIColor
-    static let heySubMain2 = DSKitAsset.heySubMain2.swiftUIColor
-    static let heySubMain3 = DSKitAsset.heySubMain3.swiftUIColor
-    static let heyWhite = DSKitAsset.heyWhite.swiftUIColor
-    static let heyBlack = DSKitAsset.heyBlack.swiftUIColor
-    static let heyDarkBlue = DSKitAsset.heyDarkBlue.swiftUIColor
+    static let heyError = Color(DSKitAsset.heyError.color)
+    static let heyGray1 = Color(DSKitAsset.heyGray1.color)
+    static let heyGray2 = Color(DSKitAsset.heyGray2.color)
+    static let heyGray3 = Color(DSKitAsset.heyGray3.color)
+    static let heyGray4 = Color(DSKitAsset.heyGray4.color)
+    static let heyGray5 = Color(DSKitAsset.heyGray5.color)
+    static let heyGray6 = Color(DSKitAsset.heyGray6.color)
+    static let heyGray7 = Color(DSKitAsset.heyGray7.color)
+    static let heyGray8 = Color(DSKitAsset.heyGray8.color)
+    static let heyGray9 = Color(DSKitAsset.heyGray9.color)
+    static let heyGray10 = Color(DSKitAsset.heyGray10.color)
+    static let heyGrid = Color(DSKitAsset.heyGridColor.color)
+    static let heyDimmed = Color(DSKitAsset.heyDimmedColor.color)
+    static let heyGreen = Color(DSKitAsset.heyGreen.color)
+    static let heyMain = Color(DSKitAsset.heyMain.color)
+    static let heySubError = Color(DSKitAsset.heySubError.color)
+    static let heySubMain = Color(DSKitAsset.heySubMain.color)
+    static let heySubMain2 = Color(DSKitAsset.heySubMain2.color)
+    static let heySubMain3 = Color(DSKitAsset.heySubMain3.color)
+    static let heyWhite = Color(DSKitAsset.heyWhite.color)
+    static let heyBlack = Color(DSKitAsset.heyBlack.color)
+    static let heyDarkBlue = Color(DSKitAsset.heyDarkBlue.color)
 }

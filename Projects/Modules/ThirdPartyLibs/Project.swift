@@ -15,5 +15,3 @@ let project = Project.makeModule(
     externalDependencies: [
     ]
 )
-
-
