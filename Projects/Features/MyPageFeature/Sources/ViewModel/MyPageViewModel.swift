@@ -26,6 +26,9 @@ public class MyPageViewModel: ObservableObject {
         case notificationSettingButtonDidTap
         case deleteAccountButtonDidTap
         
+        case signUpLogInButtonDidTap
+        case editSchoolButtonDidTap
+        
         case logout
         case logoutButtonDidTap
         case dismissLogoutAlertView
@@ -83,6 +86,12 @@ public class MyPageViewModel: ObservableObject {
             
         case .dismissLogoutAlertView:
             state.logoutAlertViewIsPresented = false
+            
+        case .signUpLogInButtonDidTap:
+            windowRouter.switch(to: .onboarding)
+            
+        case .editSchoolButtonDidTap:
+            navigationRouter.push(to: .editSchool)
         }
         
     }

@@ -12,6 +12,7 @@ public enum UserDefaultKeys: String, CaseIterable {
     case fcmToken
     case heyAccessToken
     case heyRefreshToken
+    case isGuestMode
 }
 
 public struct UserDefaultsManager {
@@ -25,4 +26,7 @@ public struct UserDefaultsManager {
     
     @UserDefaultWrapper<String>(key: UserDefaultKeys.heyRefreshToken.rawValue, defaultValue: "")
     static public var heyRefreshToken: String
+    
+    @UserDefaultWrapper<Bool>(key: UserDefaultKeys.isGuestMode.rawValue, defaultValue: false)
+    static public var isGuestMode: Bool
 }

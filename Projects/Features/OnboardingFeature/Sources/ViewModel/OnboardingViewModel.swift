@@ -15,7 +15,7 @@ public class OnboardingViewModel: ObservableObject {
     
     enum Action {
         case signInButtonDidTap
-        case signUpButtonDidTap
+        case alreadyRegisteredButtonDidTap
     }
     
     @Published var index: Int = 0
@@ -29,8 +29,8 @@ public class OnboardingViewModel: ObservableObject {
         switch action {
         case .signInButtonDidTap:
             navigationRouter.push(to: .login)
-        case .signUpButtonDidTap:
-            navigationRouter.push(to: .selectUniversity)
+        case .alreadyRegisteredButtonDidTap:
+            navigationRouter.push(to: .selectGuestUniversity)
         }
     }
 }

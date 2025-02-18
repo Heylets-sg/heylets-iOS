@@ -19,6 +19,7 @@ public enum NavigationDestination: Hashable {
     case contactUs
     case notificationSetting
     case deleteAccount
+    case editSchool
     
     // Onboarding destinations
     case onboarding

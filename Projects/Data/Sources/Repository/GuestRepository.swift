@@ -28,6 +28,7 @@ public struct GuestRepository: GuestRepositoryType {
         service.startGuestMode(university)
             .handleEvents(receiveOutput: { token in
                 UserDefaultsManager.setToken(token)
+                UserDefaultsManager.isGuestMode = true
             })
             .map { $0.toEntity() }
             .mapToGeneralError()

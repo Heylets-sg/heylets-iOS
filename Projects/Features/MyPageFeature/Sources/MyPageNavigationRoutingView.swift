@@ -53,6 +53,14 @@ struct MyPageNavigationRoutingView: View {
                     windowRouter: router.windowRouter
                 )
             )
+            
+        case .editSchool:
+            EditSchoolView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    useCase: useCase.guestUseCase
+                )
+            )
         default:
             EmptyView()
         }

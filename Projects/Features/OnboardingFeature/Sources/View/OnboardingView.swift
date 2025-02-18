@@ -169,7 +169,7 @@ public struct OnboardingView: View {
                             .padding(.bottom, 16)
                             
                             Button {
-                                
+                                viewModel.send(.alreadyRegisteredButtonDidTap)
                             } label: {
                                 HStack {
                                     Spacer()

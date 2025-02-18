@@ -32,6 +32,7 @@ public extension UIImage {
     static let timeTable = DSKitAsset.graphicsTimeTable.image
     static let color = DSKitAsset.graphicsColor.image
     static let alarm = DSKitAsset.graphicsAlarm.image
+    static let guest = DSKitAsset.graphicsGuest.image
     
     static let logo = DSKitAsset.logo.image
     
