@@ -25,6 +25,13 @@ public enum Paths {
     static let requestVerifyEmail = "api/v1/auth/email/verification"
     static let deleteAccount = "api/v1/users/security/me/withdrawal"
     
+    //MARK: Guest
+    
+    static let changeGuestUniversity = "api/v1/auth/guest/university"
+    static let startGuestMode = "api/v1/auth/guest/start/{university}"
+    static let convertToMember = "/api/v1/auth/guest/signup"
+    
+    
     //MARK: Lecture
     
     static let getDetailLectureInfo = "api/v1/lectures/{lectureId}"

@@ -97,6 +97,7 @@ struct OnboardingNavigationRoutingView: View {
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
                     windowRouter: router.windowRouter,
+                    useCase: useCase.guestUseCase,
                     university: university
                 )
             )

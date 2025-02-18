@@ -7,7 +7,9 @@
 //
 
 import SwiftUI
+
 import BaseFeatureDependency
+import Domain
 
 struct TermsOfServiceView: View {
     @EnvironmentObject var container: Router
@@ -137,7 +139,8 @@ struct TermsOfServiceView: View {
 #Preview {
     TermsOfServiceView(viewModel: .init(
         navigationRouter: Router.default.navigationRouter,
-        windowRouter: Router.default.windowRouter,
+        windowRouter: Router.default.windowRouter, 
+        useCase: StubHeyUseCase.stub.guestUseCase,
         university: ""
     ))
     .environmentObject(Router.default)

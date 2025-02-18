@@ -34,6 +34,7 @@ public class TermsOfServiceViewModel: ObservableObject {
     @Published var state = State()
     public var windowRouter: WindowRoutableType
     public var navigationRouter: NavigationRoutableType
+    private var useCase: GuestUseCaseType
     private var university: String
     private let cancelBag = CancelBag()
     
@@ -41,10 +42,12 @@ public class TermsOfServiceViewModel: ObservableObject {
     public init(
         navigationRouter: NavigationRoutableType,
         windowRouter: WindowRoutableType,
+        useCase: GuestUseCaseType,
         university: String
     ) {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
+        self.useCase = useCase
         self.university = university
     }
     
@@ -52,9 +55,11 @@ public class TermsOfServiceViewModel: ObservableObject {
     func send(_ action: Action) {
         switch action {
         case .agreeButtonDidTap:
-            //게스트 시작 API 연결
-            //            guard let university = university else { return }
-            windowRouter.switch(to: .timetable)
+            useCase.startGuestMode(university: university)
+                .sink(receiveValue: { [weak self] _ in
+                    self?.windowRouter.switch(to: .timetable)
+                })
+                .store(in: cancelBag)
         case .termsOfServiceDidTap:
             state.termsOfServiceIsAgree.toggle()
             state.allAgree = state.termsOfServiceIsAgree && state.personalInformationIsAgree
