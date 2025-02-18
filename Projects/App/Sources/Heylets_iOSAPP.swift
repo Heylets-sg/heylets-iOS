@@ -14,6 +14,8 @@ import Domain
 
 @main
 struct Heylets_iOSAPP: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate 
+    
     @StateObject var router = Router.default
     @StateObject var useCase = HeyUseCase.default
     
