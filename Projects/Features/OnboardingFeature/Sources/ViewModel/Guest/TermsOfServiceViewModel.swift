@@ -60,12 +60,15 @@ public class TermsOfServiceViewModel: ObservableObject {
                     self?.windowRouter.switch(to: .timetable)
                 })
                 .store(in: cancelBag)
+            
         case .termsOfServiceDidTap:
             state.termsOfServiceIsAgree.toggle()
             state.allAgree = state.termsOfServiceIsAgree && state.personalInformationIsAgree
+            
         case .personalInformationDidTap:
             state.personalInformationIsAgree.toggle()
             state.allAgree = state.termsOfServiceIsAgree && state.personalInformationIsAgree
+            
         case .allAgreeButtonDidTap:
             state.allAgree.toggle()
             state.termsOfServiceIsAgree = state.allAgree
