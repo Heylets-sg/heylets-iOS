@@ -31,4 +31,8 @@ public enum NavigationDestination: Hashable {
     case login
     case enterEmail
     case resetPassword(String)
+    
+    //Guest
+    case selectGuestUniversity
+    case termsOfGuestService(String)
 }

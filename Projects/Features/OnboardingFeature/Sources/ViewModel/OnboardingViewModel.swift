@@ -18,6 +18,7 @@ public class OnboardingViewModel: ObservableObject {
         case signUpButtonDidTap
     }
     
+    @Published var index: Int = 0
     public var navigationRouter: NavigationRoutableType
     
     public init(navigationRouter: NavigationRoutableType) {
