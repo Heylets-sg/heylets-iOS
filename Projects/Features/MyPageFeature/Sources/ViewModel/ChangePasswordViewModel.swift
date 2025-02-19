@@ -97,7 +97,6 @@ public class ChangePasswordViewModel: ObservableObject {
     
     private func bindState() {
         useCase.errMessage
-//            .merge(with: useCase.passwordFailed)
             .receive(on: RunLoop.main)
             .map { $0 }
             .assign(to: \.state.showToast, on: self)

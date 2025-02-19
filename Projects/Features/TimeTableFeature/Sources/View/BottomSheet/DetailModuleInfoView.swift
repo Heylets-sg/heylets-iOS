@@ -94,7 +94,7 @@ public struct DetailModuleInfoView: View {
     @State var stub: TimeTableViewType = .detail
     let useCase = StubHeyUseCase.stub.timeTableUseCase
     return TimeTableView(
-        viewModel: .init(useCase),
+        viewModel: .init(Router.default.windowRouter, useCase),
         searchModuleViewModel: .init(useCase),
         addCustomModuleViewModel: .init(useCase),
         themeViewModel: .init(useCase)

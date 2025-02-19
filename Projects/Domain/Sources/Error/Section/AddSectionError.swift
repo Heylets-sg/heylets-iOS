@@ -16,6 +16,7 @@ public enum AddSectionError: Error {
     case sectionNotFound
     case duplicateSection
     case timeConflict
+    case guestSectionLimitExceeded
     case unknown
     
     var description: String {
@@ -34,8 +35,11 @@ public enum AddSectionError: Error {
             return "The class has already been added."
         case .timeConflict:
             return "There are overlapping classes."
+        case .guestSectionLimitExceeded:
+            return "Guest section addition limit exceeded."
         case .unknown:
             return "An unknown error has occurred."
+        
         }
     }
 }
@@ -57,6 +61,8 @@ extension AddSectionError {
             return .duplicateSection
         case "시간이 겹치는 강의가 존재합니다.":
             return .timeConflict
+        case "게스트 섹션 추가 제한을 초과했습니다.":
+            return .guestSectionLimitExceeded
         default:
             return .unknown
         }

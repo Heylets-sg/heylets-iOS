@@ -22,6 +22,7 @@ public class TimeTableViewModel: ObservableObject {
             var showDeleteAlert: Bool = false
             var showReposrtMissingModuleAlert: Bool = false
             var showAddCustomAlert: Bool = false
+            var showGuestErrorAlert: Bool = false
         }
         
         struct TimeTable {
@@ -46,6 +47,8 @@ public class TimeTableViewModel: ObservableObject {
         case deleteModuleAlertCloseButtonDidTap
         case errorAlertViewCloseButtonDidTap
         case initMainView
+        case notRightNowButtonDidTap
+        case loginButtonDidTap
     }
     
     enum SettingAction {
@@ -59,6 +62,7 @@ public class TimeTableViewModel: ObservableObject {
     
     @Published var state = State()
     private let cancelBag = CancelBag()
+    public var windowRouter: WindowRoutableType
     private let useCase: TimeTableUseCaseType
     @Published var viewType: TimeTableViewType = .main {
         didSet {
@@ -81,8 +85,12 @@ public class TimeTableViewModel: ObservableObject {
     @Published var selectedThemeColor: [String] = []
     
     
-    public init(_ useCase: TimeTableUseCaseType) {
+    public init(
+        _ windowRouter: WindowRoutableType,
+        _ useCase: TimeTableUseCaseType
+    ) {
         self.useCase = useCase
+        self.windowRouter = windowRouter
         
         bindState()
         
@@ -139,6 +147,10 @@ public class TimeTableViewModel: ObservableObject {
             if !(viewType == .search || viewType == .theme || viewType == .addCustom) {
                 viewType = .main
             }
+        case .notRightNowButtonDidTap:
+            state.alerts.showGuestErrorAlert = false
+        case .loginButtonDidTap:
+            windowRouter.switch(to: .signUp)
         }
     }
     
@@ -242,6 +254,16 @@ public class TimeTableViewModel: ObservableObject {
             })
             .map { message in (true, message)}
             .assign(to: \.state.error, on: self)
+            .store(in: cancelBag)
+        
+        useCase.guestSectionLimitExceeded
+            .receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: { [weak self] _ in
+                self?.viewType = .main
+                self?.state.alerts.settingAlertType = nil
+            })
+            .map { _ in true }
+            .assign(to: \.state.alerts.showGuestErrorAlert, on: self)
             .store(in: cancelBag)
     }
 }

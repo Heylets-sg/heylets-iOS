@@ -15,5 +15,5 @@ public enum WindowDestination {
     case signUp
     case onboarding
     case timetable
-    case mypage(ProfileInfo)
+    case mypage
 }
