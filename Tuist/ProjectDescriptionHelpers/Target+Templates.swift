@@ -15,6 +15,7 @@ struct TargetHandler {
     static func makeTarget(
         targetType: FeatureTarget,
         name: String,
+        package: [Package] = [],
         platform: Platform = env.platform,
         bundleID: String,
         deploymentTarget: DeploymentTarget = env.deploymentTarget,
@@ -39,6 +40,7 @@ struct TargetHandler {
     
     static func makeProjectTargets(
         name: String,
+        package: [Package] = [],
         hasResources: Bool,
         internalDependencies: [TargetDependency] = [],
         externalDependencies: [TargetDependency] = [],
@@ -136,6 +138,7 @@ extension TargetHandler {
     static func makeFrameworkTarget(
         targetType: FeatureTarget,
         name: String,
+        package: [Package] = [],
         hasResources: Bool,
         dependencies: [TargetDependency]
     ) -> Target {
