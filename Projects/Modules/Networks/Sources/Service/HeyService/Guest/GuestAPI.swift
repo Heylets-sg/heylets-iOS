@@ -60,8 +60,13 @@ extension GuestAPI: BaseAPI {
     
     public var headers: [String : String]? {
         switch self {
+        case .changeGuestUniversity:
+            return APIHeaders.headerWithAccessToken
+        case .startGuestMode:
+            return APIHeaders.defaultHeader
         default:
             return APIHeaders.defaultHeader
+            
         }
     }
 }

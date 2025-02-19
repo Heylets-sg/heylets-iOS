@@ -48,7 +48,8 @@ public class HeyRepository: RepositoryType {
             service: service.userService
         )
         guestRepository = GuestRepository(
-            service: service.guestService
+            userService: service.userService,
+            guestService: service.guestService
         )
     }
 }

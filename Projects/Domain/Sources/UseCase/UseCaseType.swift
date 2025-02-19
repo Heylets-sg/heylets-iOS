@@ -34,7 +34,8 @@ public final class HeyUseCase: UseCaseType {
         
         myPageUseCase = MyPageUseCase(
             userRepository: repository.userRepository,
-            authRepository: repository.authRepository
+            authRepository: repository.authRepository,
+            guestRepository: repository.guestRepository
         )
         
         onboardingUseCase = OnboardingUseCase(

@@ -43,7 +43,12 @@ public struct MyPageView: View {
                                 .padding(.top, 44)
                                 .padding(.bottom, 32)
                             
-                            MyPageContentView(viewModel: viewModel)
+                            if viewModel.state.isGuestMode {
+                                MyPageContentView(viewModel: viewModel)
+                            } else {
+                                MyPageGuestView(viewModel: viewModel)
+                            }
+                            
                         }
                         .padding(.horizontal, 16)
                         .background(Color.heyWhite)
@@ -73,6 +78,9 @@ public struct MyPageView: View {
                     
                     Spacer()
                 }
+            }
+            .onAppear {
+                viewModel.send(.onAppear)
             }
             .ignoresSafeArea(edges: .vertical)
             .ignoresSafeArea(.keyboard)
@@ -131,8 +139,8 @@ public struct MyPageTopView: View {
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
             windowRouter: Router.default.windowRouter,
-            useCase: StubHeyUseCase.stub.myPageUseCase,
-            profileInfo: .init()
+            useCase: StubHeyUseCase.stub.myPageUseCase
+//            profileInfo: .init()
         )
     )
     .environmentObject(Router.default)

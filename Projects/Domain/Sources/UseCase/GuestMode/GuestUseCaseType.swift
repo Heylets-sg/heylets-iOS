@@ -12,6 +12,6 @@ import Combine
 public protocol GuestUseCaseType {
     var errMessage: PassthroughSubject<String, Never> { get }
     
-    func changeGuestUniversity(university: String) -> AnyPublisher<Void, Never>
+//    func changeGuestUniversity(university: String) -> AnyPublisher<Void, Never>
     func startGuestMode(university: String) -> AnyPublisher<Void, Never>
 }

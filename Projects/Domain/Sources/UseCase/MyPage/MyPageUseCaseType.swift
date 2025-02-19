@@ -12,6 +12,8 @@ import Combine
 public protocol MyPageUseCaseType {
     var errMessage: PassthroughSubject<String, Never> { get }
     
+    func checkGuesetMode() -> AnyPublisher<Bool, Never>
+    
     func getProfile() -> AnyPublisher<ProfileInfo, Never>
     // 유저 정보 받아오기
     
@@ -32,4 +34,6 @@ public protocol MyPageUseCaseType {
         _ password: String
     ) -> AnyPublisher<Void, Never>
     // AuthRepository 회원탈퇴 API
+    
+    func changeGuestUniversity(university: String) -> AnyPublisher<Void, Never>
 }

@@ -24,8 +24,8 @@ struct MyPageNavigationRoutingView: View {
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
                     windowRouter: router.windowRouter,
-                    useCase: useCase.myPageUseCase,
-                    profileInfo: profileInfo
+                    useCase: useCase.myPageUseCase
+//                    profileInfo: profileInfo
                 )
             )
         case .changePassword:
@@ -58,7 +58,7 @@ struct MyPageNavigationRoutingView: View {
             EditSchoolView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    useCase: useCase.guestUseCase
+                    useCase: useCase.myPageUseCase
                 )
             )
         default:

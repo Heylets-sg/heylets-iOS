@@ -49,13 +49,13 @@ public class EditSchoolViewModel: ObservableObject {
     
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
-    private let useCase: GuestUseCaseType
+    private let useCase: MyPageUseCaseType
     private let cancelBag = CancelBag()
     
     // MARK: - Init
     public init(
         navigationRouter: NavigationRoutableType,
-        useCase: GuestUseCaseType
+        useCase: MyPageUseCaseType
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
@@ -69,6 +69,7 @@ public class EditSchoolViewModel: ObservableObject {
             
         case .continueButtonDidTap:
             guard let university = university else { return }
+            state.continueButtonIsEnabled = false
             useCase.changeGuestUniversity(university: university.rawValue)
                 .sink(receiveValue: { [weak self] _ in
                     self?.navigationRouter.pop()

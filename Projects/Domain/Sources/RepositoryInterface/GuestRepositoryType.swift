@@ -12,6 +12,9 @@ import Foundation
 import Combine
 
 public protocol GuestRepositoryType {
+    // 게스트모드 체크하기
+    func checkGuestMode() -> AnyPublisher<Bool, Never>
+    
     // 게스트모드 학교 바꾸기
     func changeGuestUniversity(university: String) -> AnyPublisher<Void, Error>
     

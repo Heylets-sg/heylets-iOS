@@ -10,13 +10,13 @@ import Foundation
 
 public struct Auth {
     public let accessToken: String
-    public let refreshToken: String
+    public let refreshToken: String?
 //    let token_type: String
 //    let expires_in: Int
     
     public init(
         accessToken: String,
-        refreshToken: String
+        refreshToken: String?
     ) {
         self.accessToken = accessToken
         self.refreshToken = refreshToken

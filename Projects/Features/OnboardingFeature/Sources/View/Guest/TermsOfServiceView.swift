@@ -64,7 +64,7 @@ struct TermsOfServiceView: View {
                     Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
                         .resizable()
                         .frame(width: 14, height: 10)
-                        .foregroundStyle(viewModel.state.termsOfServiceIsAgree ? Color.heyMain : Color.heyGray1)
+                        .foregroundStyle(viewModel.state.termsOfServiceIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
                         .padding(.trailing, 12)
                         .onTapGesture {
                             viewModel.send(.termsOfServiceDidTap)
@@ -92,7 +92,7 @@ struct TermsOfServiceView: View {
                     Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
                         .resizable()
                         .frame(width: 14, height: 10)
-                        .foregroundStyle(viewModel.state.personalInformationIsAgree ? Color.heyMain : Color.heyGray1)
+                        .foregroundStyle(viewModel.state.personalInformationIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
                         .padding(.trailing, 12)
                         .onTapGesture {
                             viewModel.send(.personalInformationDidTap)

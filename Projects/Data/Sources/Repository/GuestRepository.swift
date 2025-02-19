@@ -13,19 +13,29 @@ import Domain
 import Networks
 
 public struct GuestRepository: GuestRepositoryType {
-    public let service: GuestServiceType
+    public let userService: UserServiceType
+    public let guestService: GuestServiceType
     
-    public init(service: GuestServiceType) {
-        self.service = service
+    public init(
+        userService: UserServiceType,
+        guestService: GuestServiceType
+    ) {
+        self.userService = userService
+        self.guestService = guestService
+    }
+    
+    public func checkGuestMode() -> AnyPublisher<Bool, Never> {
+        Just(UserDefaultsManager.isGuestMode)
+            .eraseToAnyPublisher()
     }
     
     public func changeGuestUniversity(university: String) -> AnyPublisher<Void, Error> {
-        service.changeGuestUniversity(university)
+        guestService.changeGuestUniversity(university)
             .asVoidWithGeneralError()
     }
     
     public func startGuestMode(university: String) -> AnyPublisher<Auth, Error> {
-        service.startGuestMode(university)
+        guestService.startGuestMode(university)
             .handleEvents(receiveOutput: { token in
                 UserDefaultsManager.setToken(token)
                 UserDefaultsManager.isGuestMode = true

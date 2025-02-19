@@ -20,14 +20,14 @@ final public class GuestUseCase: GuestUseCaseType {
         self.guestRepository = guestRepository
     }
     
-    public func changeGuestUniversity(university: String) -> AnyPublisher<Void, Never> {
-        guestRepository.changeGuestUniversity(university: university)
-            .catch { [weak self] error in
-                self?.errMessage.send("대학교 변경에 실패했습니다.")
-                return Empty<Void, Never>()
-            }
-            .eraseToAnyPublisher()
-    }
+//    public func changeGuestUniversity(university: String) -> AnyPublisher<Void, Never> {
+//        guestRepository.changeGuestUniversity(university: university)
+//            .catch { [weak self] error in
+//                self?.errMessage.send("대학교 변경에 실패했습니다.")
+//                return Empty<Void, Never>()
+//            }
+//            .eraseToAnyPublisher()
+//    }
     
     public func startGuestMode(university: String) -> AnyPublisher<Void, Never> {
         guestRepository.startGuestMode(university: university)
