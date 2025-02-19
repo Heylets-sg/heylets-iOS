@@ -76,7 +76,7 @@ public struct TopView: View {
                 
                 Button {
                     container.navigationRouter.destinations = []
-                    container.windowRouter.switch(to: .mypage(profileInfo))
+                    container.windowRouter.switch(to: .mypage)
                 } label: {
                     if let imageURL = profileInfo.imageURL {
                         AsyncImage(url: URL(string: imageURL)) { image in
@@ -116,7 +116,7 @@ public struct TopView: View {
     @State var stub: TimeTableViewType = .main
     let useCase = StubHeyUseCase.stub.timeTableUseCase
     return TimeTableView(
-        viewModel: .init(useCase),
+        viewModel: .init(Router.default.windowRouter,useCase),
         searchModuleViewModel: .init(useCase),
         addCustomModuleViewModel: .init(useCase),
         themeViewModel: .init(useCase)

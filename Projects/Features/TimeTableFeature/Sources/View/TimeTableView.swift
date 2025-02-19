@@ -92,6 +92,14 @@ public struct TimeTableView: View {
                     viewModel.send(.deleteModuleAlertCloseButtonDidTap)
                 })
             )
+            .heyAlert(
+                isPresented: viewModel.state.alerts.showGuestErrorAlert,
+                loginButtonAction: {
+                    viewModel.send(.loginButtonDidTap)
+                },
+                notRightNowButton: {
+                    viewModel.send(.notRightNowButtonDidTap)
+                })
             .sheet(isPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert) {
                 ReportMissingModuleView(
                     reportMissingModuleAlertIsPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert
@@ -125,7 +133,7 @@ public struct TimeTableView: View {
         }
         
         createBottomSheetView(viewModel.viewType)
-            .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
+//            .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
     }
 }
 
@@ -142,7 +150,7 @@ extension TimeTableView {
             .bottomSheetTransition()
         case .theme:
             SettingTimeTableInfoView(viewModel: themeViewModel)
-            .bottomSheetTransition()
+                .bottomSheetTransition()
         case .detail:
             DetailModuleInfoView(
                 viewType: $viewModel.viewType,
@@ -197,7 +205,7 @@ extension TimeTableView {
     @State var stub: TimeTableViewType = .main
     let useCase = StubHeyUseCase.stub.timeTableUseCase
     return TimeTableView(
-        viewModel: .init(useCase),
+        viewModel: .init(Router.default.windowRouter,useCase),
         searchModuleViewModel: .init(useCase),
         addCustomModuleViewModel: .init(useCase),
         themeViewModel: .init(useCase)

@@ -13,7 +13,7 @@ extension UserDefaultsManager {
     
     static func setToken(_ authInfo: AuthResult) {
         UserDefaultsManager.heyAccessToken = authInfo.access_token
-        UserDefaultsManager.heyRefreshToken = authInfo.refresh_token
+        UserDefaultsManager.heyRefreshToken = authInfo.refresh_token ?? ""
     }
 
     static func clearToken() {

@@ -61,7 +61,7 @@ public class SplashViewModel: ObservableObject {
         case .goToOnboarding:
             windowRouter.switch(to: .onboarding)
         case .goToMyPage:
-            windowRouter.switch(to: .mypage(.init()))
+            windowRouter.switch(to: .mypage)
         case .goToTimeTable:
             windowRouter.switch(to: .timetable)
         }

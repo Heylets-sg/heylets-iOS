@@ -12,7 +12,8 @@ import Domain
 
 public enum WindowDestination {
     case splash
+    case signUp
     case onboarding
     case timetable
-    case mypage(ProfileInfo)
+    case mypage
 }

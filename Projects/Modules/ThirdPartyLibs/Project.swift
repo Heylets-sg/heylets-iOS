@@ -13,8 +13,8 @@ let project = Project.makeModule(
     name: "ThirdPartyLibs",
     targets: [.dynamicFramework],
     externalDependencies: [
-        .SPM.firebaseAnalytics,
-        .SPM.firebaseCrashlytics,
-        .SPM.firebaseMessaging
+//        .SPM.firebaseAnalytics,
+//        .SPM.firebaseCrashlytics,
+//        .SPM.firebaseMessaging
     ]
 )

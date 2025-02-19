@@ -25,7 +25,7 @@ public struct RootView: View {
             case .splash:
                 SplashView(
                     viewModel: .init(
-                        windowRouter: router.windowRouter, 
+                        windowRouter: router.windowRouter,
                         useCase: useCase.splashUseCase
                     )
                 )
@@ -35,21 +35,30 @@ public struct RootView: View {
                         navigationRouter: router.navigationRouter
                     )
                 )
+            case .signUp:
+                LogInView(viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    windowRouter: router.windowRouter,
+                    useCase: useCase.onboardingUseCase
+                    )
+                )
             case .timetable:
                 let useCase = useCase.timeTableUseCase
                 TimeTableView(
-                    viewModel: .init(useCase),
+                    viewModel: .init(
+                        router.windowRouter,
+                        useCase
+                    ),
                     searchModuleViewModel: .init(useCase),
                     addCustomModuleViewModel: .init(useCase),
                     themeViewModel: .init(useCase)
                 )
-            case .mypage(let profileInfo):
+            case .mypage:
                 MyPageView(
                     viewModel: MyPageViewModel(
                         navigationRouter: router.navigationRouter,
                         windowRouter: router.windowRouter,
-                        useCase: useCase.myPageUseCase,
-                        profileInfo: profileInfo
+                        useCase: useCase.myPageUseCase
                     )
                 )
             }

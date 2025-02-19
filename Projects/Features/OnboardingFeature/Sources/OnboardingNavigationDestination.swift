@@ -86,6 +86,21 @@ struct OnboardingNavigationRoutingView: View {
                     email: email
                 )
             )
+        case .selectGuestUniversity:
+            SelectGuestUnversityView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter
+                )
+            )
+        case .termsOfServiceAgreement(let university):
+            TermsOfServiceView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    windowRouter: router.windowRouter,
+                    useCase: useCase.onboardingUseCase,
+                    university: university
+                )
+            )
         default:
             EmptyView()
         }

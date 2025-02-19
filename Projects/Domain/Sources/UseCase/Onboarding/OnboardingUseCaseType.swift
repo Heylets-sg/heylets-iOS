@@ -51,4 +51,6 @@ public protocol OnboardingUseCaseType {
         _ email: String,
         _ newPassword: String
     ) -> AnyPublisher<Void, Never>
+    
+    func startGuestMode(university: String) -> AnyPublisher<Void, Never>
 }

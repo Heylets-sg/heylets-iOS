@@ -16,9 +16,12 @@ import Core
 public class MyPageViewModel: ObservableObject {
     struct State {
         var logoutAlertViewIsPresented: Bool = false
+//        var isGuestMode: Bool = false
     }
     
     enum Action {
+        case onAppear
+        
         case changePasswordButtonDidTap
         case privacyPolicyButtonDidTap
         case termsOfServiceButtonDidTap
@@ -26,33 +29,48 @@ public class MyPageViewModel: ObservableObject {
         case notificationSettingButtonDidTap
         case deleteAccountButtonDidTap
         
+        case signUpLogInButtonDidTap
+        case editSchoolButtonDidTap
+        
         case logout
         case logoutButtonDidTap
         case dismissLogoutAlertView
     }
     
     @Published var state = State()
-    var profileInfo: ProfileInfo
     public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType
     private let useCase: MyPageUseCaseType
+    @Published var profileInfo: ProfileInfo = .init()
+    @Published var isGuestMode: Bool = false
     
     public init(
         navigationRouter: NavigationRoutableType,
         windowRouter: WindowRoutableType,
-        useCase: MyPageUseCaseType,
-        profileInfo: ProfileInfo
+        useCase: MyPageUseCaseType
     ) {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
         self.useCase = useCase
-        self.profileInfo = profileInfo
     }
     
     private let cancelBag = CancelBag()
     
     func send(_ action: Action) {
         switch action {
+        case .onAppear:
+            useCase.checkGuesetMode()
+                .receive(on: RunLoop.main)
+                .handleEvents(receiveOutput: { [weak self] isGuestMode in
+                    print("isGuestMode: \(isGuestMode)")
+                    self?.isGuestMode = isGuestMode
+                })
+                .map { _ in }
+                .flatMap(useCase.getProfile)
+                .receive(on: RunLoop.main)
+                .assign(to: \.profileInfo, on: self)
+                .store(in: cancelBag)
+            
         case .changePasswordButtonDidTap:
             navigationRouter.push(to: .changePassword)
             
@@ -83,7 +101,12 @@ public class MyPageViewModel: ObservableObject {
             
         case .dismissLogoutAlertView:
             state.logoutAlertViewIsPresented = false
+            
+        case .signUpLogInButtonDidTap:
+            windowRouter.switch(to: .signUp)
+            
+        case .editSchoolButtonDidTap:
+            navigationRouter.push(to: .editSchool)
         }
-        
     }
 }

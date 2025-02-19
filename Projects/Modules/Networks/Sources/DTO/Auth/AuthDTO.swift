@@ -10,7 +10,7 @@ import Foundation
 
 public struct AuthResult: Decodable {
     public let access_token: String
-    public let refresh_token: String
+    public let refresh_token: String?
     let token_type: String
     let expires_in: Int
 }

@@ -15,7 +15,7 @@ public enum Paths {
     
     static let checkUserName = "api/v1/auth/username/check"
     static let refreshToken = "api/v1/auth/token/refresh"
-    static let signUp = "api/v1/auth/signup"
+    static let signUp = "api/v2/auth/signup"
     static let resetPassword = "api/v1/auth/password/reset"
     static let verifyResetPassword = "api/v1/auth/password/reset/verify"
     static let requestResetPassword = "api/v1/auth/password/reset/request"
@@ -24,6 +24,13 @@ public enum Paths {
     static let verifyEmail = "api/v1/auth/email/verify"
     static let requestVerifyEmail = "api/v1/auth/email/verification"
     static let deleteAccount = "api/v1/users/security/me/withdrawal"
+    
+    //MARK: Guest
+    
+    static let changeGuestUniversity = "api/v1/auth/guest/university"
+    static let startGuestMode = "api/v1/auth/guest/start/{university}"
+    static let convertToMember = "/api/v1/auth/guest/signup"
+    
     
     //MARK: Lecture
     
@@ -66,4 +73,10 @@ public enum Paths {
     static let patchNickName = "api/v1/users/profile/me/nickname"
     static let patchAcademicInfo = "api/v1/users/profile/me/academic-info"
     static let postProfileImg = "api/v1/users/profile/me/profile-image"
+    
+    //MARK: Test
+    
+    static let testSignUp = "api/v1/admin/auth/signup/test"
+    static let testGuestSignUp = "api/v1/admin/auth/guest/signup/test"
+    
 }

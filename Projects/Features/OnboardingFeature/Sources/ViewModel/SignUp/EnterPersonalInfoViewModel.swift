@@ -15,7 +15,7 @@ import Core
 
 enum Gender: String {
     case men = "M"
-    case women = "W"
+    case women = "F"
     case others = "O"
     
     var title: String {

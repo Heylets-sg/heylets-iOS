@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public struct User: Hashable {
+public struct User: Hashable, Equatable {
     public var email: String
     public var password: String
     public var gender: String
@@ -17,6 +17,7 @@ public struct User: Hashable {
     public var nickName: String
     public var university: String
     public var profileImage: UIImage?
+    public var agreements: [AgreementInfo]
     
     public init(
         email: String,
@@ -25,7 +26,8 @@ public struct User: Hashable {
         birth: Date,
         nickName: String,
         university: String,
-        profileImage: UIImage? = nil
+        profileImage: UIImage? = nil,
+        agreements: [AgreementInfo]
     ) {
         self.email = email
         self.password = password
@@ -34,6 +36,7 @@ public struct User: Hashable {
         self.nickName = nickName
         self.university = university
         self.profileImage = profileImage
+        self.agreements = agreements
     }
 }
 
@@ -50,5 +53,21 @@ public struct ProfileInfo: Hashable {
         self.nickName = nickName
         self.university = university
         self.imageURL = imageURL
+    }
+}
+
+public struct AgreementInfo: Hashable {
+    public var type: String
+    public var agreed: Bool
+    public var version: String
+    
+    public init(
+        _ type: String,
+        _ agreed: Bool,
+        _ version: String
+    ) {
+        self.type = type
+        self.agreed = agreed
+        self.version = version
     }
 }

@@ -21,6 +21,7 @@ public class HeyRepository: RepositoryType {
     public var scheduleRepository: ScheduleRepositoryType
     public var lectureRepository: LectureRepositoryType
     public var userRepository: UserRepositoryType
+    public var guestRepository: GuestRepositoryType
     
     public init(service: ServiceType) {
         self.service = service
@@ -45,6 +46,10 @@ public class HeyRepository: RepositoryType {
         )
         userRepository = UserRepository(
             service: service.userService
+        )
+        guestRepository = GuestRepository(
+            userService: service.userService,
+            guestService: service.guestService
         )
     }
 }

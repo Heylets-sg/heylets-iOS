@@ -14,17 +14,24 @@ import Core
 final public class MyPageUseCase: MyPageUseCaseType {
     private let userRepository: UserRepositoryType
     private let authRepository: AuthRepositoryType
+    private let guestRepository: GuestRepositoryType
     private var cancelBag = CancelBag()
     
     public init(
         userRepository: UserRepositoryType,
-        authRepository: AuthRepositoryType
+        authRepository: AuthRepositoryType,
+        guestRepository: GuestRepositoryType
     ) {
         self.userRepository = userRepository
         self.authRepository = authRepository
+        self.guestRepository = guestRepository
     }
     
     public var errMessage = PassthroughSubject<String, Never>()
+    
+    public func checkGuesetMode() -> AnyPublisher<Bool, Never> {
+        guestRepository.checkGuestMode()
+    }
     
     public func getProfile() -> AnyPublisher<ProfileInfo, Never> {
         userRepository.getProfile()
@@ -71,8 +78,17 @@ final public class MyPageUseCase: MyPageUseCaseType {
     
     public func deleteAccount(_ password: String) -> AnyPublisher<Void, Never> {
         authRepository.deleteAccount(password)
-            .catch { [weak self] Error in
+            .catch { [weak self] _ in
                 self?.errMessage.send("회원탈퇴에 실패했습니다")
+                return Empty<Void, Never>()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func changeGuestUniversity(university: String) -> AnyPublisher<Void, Never> {
+        guestRepository.changeGuestUniversity(university: university)
+            .catch { [weak self] error in
+                self?.errMessage.send("대학교 변경에 실패했습니다.")
                 return Empty<Void, Never>()
             }
             .eraseToAnyPublisher()
@@ -81,6 +97,11 @@ final public class MyPageUseCase: MyPageUseCaseType {
 
 final public class StubMyPageUseCase: MyPageUseCaseType {
     public var errMessage = PassthroughSubject<String, Never>()
+    public var profileInfo =  PassthroughSubject<ProfileInfo, Never>()
+    
+    public func checkGuesetMode() -> AnyPublisher<Bool, Never> {
+        Just(false).eraseToAnyPublisher()
+    }
     
     public func getProfile() -> AnyPublisher<ProfileInfo, Never> {
         Just(.init()).eraseToAnyPublisher()
@@ -99,6 +120,10 @@ final public class StubMyPageUseCase: MyPageUseCaseType {
     }
     
     public func deleteAccount(_ password: String) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
+    public func changeGuestUniversity(university: String) -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()
     }
 }

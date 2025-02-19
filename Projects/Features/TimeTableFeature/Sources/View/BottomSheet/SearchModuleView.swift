@@ -178,7 +178,7 @@ fileprivate struct ClassSearchListCellView: View {
     @State var stub: TimeTableViewType = .search
     let useCase = StubHeyUseCase.stub.timeTableUseCase
     return TimeTableView(
-        viewModel: .init(useCase),
+        viewModel: .init(Router.default.windowRouter,useCase),
         searchModuleViewModel: .init(useCase),
         addCustomModuleViewModel: .init(useCase),
         themeViewModel: .init(useCase)

@@ -36,6 +36,10 @@ public struct APIHeaders {
     static let xPlatform = "X-Platform"
     static let iOS = "IOS"
     
+    //MARK: Test용 삭제 필수
+    static let xadminkeyName = "X-Admin-Key"
+    static let xadminkey = "heylets-183ba62c-c51e-4d03-967e-0a95fe01a9fa"
+    
     static var accessToken: String {
         return "Bearer \(UserDefaultsManager.heyAccessToken)"
     }
@@ -55,6 +59,32 @@ public extension APIHeaders {
             OSVersionName: OSVersion,
             appVersionName: appVersion.versionString,
             xPlatform: iOS
+        ]
+    }
+    
+    //MARK: Test용 삭제 필수
+    static func testHeader(_ boundary: String) -> [String:String] {
+        return [
+            xadminkeyName: xadminkey,
+            contentType: multiPartFormData + "boundary=\(boundary)",
+            deviceIDName: deviceID,
+            deviceModelName: deviceModel,
+            OSVersionName: OSVersion,
+            appVersionName: appVersion.versionString,
+            xPlatform: iOS
+        ]
+    }
+    
+    static func testGuestHeader(_ boundary: String) -> [String:String] {
+        return [
+            xadminkeyName: xadminkey,
+            contentType: multiPartFormData + "boundary=\(boundary)",
+            deviceIDName: deviceID,
+            deviceModelName: deviceModel,
+            OSVersionName: OSVersion,
+            appVersionName: appVersion.versionString,
+            xPlatform: iOS,
+            auth: accessToken
         ]
     }
     

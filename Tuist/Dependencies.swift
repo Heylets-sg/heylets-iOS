@@ -12,7 +12,7 @@ import ConfigPlugin
 
 
 let spm = SwiftPackageManagerDependencies([
-    .remote(url: "https://github.com/firebase/firebase-ios-sdk.git",requirement: .exact("10.0.0"))
+//    .remote(url: "https://github.com/firebase/firebase-ios-sdk.git",requirement: .exact("10.0.0"))
 ], baseSettings: Settings.settings(
     configurations: XCConfig.configurations
 ))

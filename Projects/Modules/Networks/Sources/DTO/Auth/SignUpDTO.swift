@@ -25,6 +25,7 @@ public struct RequiredRequest: Encodable {
     let university: String
     let sex: String
     let birth: Int
+    let agreements: [AgreementRequest]
     
     public init(
         nickname: String,
@@ -32,7 +33,8 @@ public struct RequiredRequest: Encodable {
         password: String,
         university: String,
         sex: String,
-        birth: Int
+        birth: Int,
+        agreements: [AgreementRequest]
     ) {
         self.nickname = nickname
         self.email = email
@@ -40,5 +42,22 @@ public struct RequiredRequest: Encodable {
         self.university = university
         self.sex = sex
         self.birth = birth
+        self.agreements = agreements
+    }
+}
+
+public struct AgreementRequest: Encodable {
+    let type: String
+    let agreed: Bool
+    let version: String
+    
+    public init(
+        type: String,
+        agreed: Bool,
+        version: String
+    ) {
+        self.type = type
+        self.agreed = agreed
+        self.version = version
     }
 }

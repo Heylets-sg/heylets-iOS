@@ -40,6 +40,7 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
     
     public var tableId: Int = 0
     public var errMessage = PassthroughSubject<String, Never>()
+    public var guestSectionLimitExceeded = PassthroughSubject<Void, Never>()
     public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()
     public var sectionList = PassthroughSubject<[SectionInfo], Never>()
     public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()
@@ -106,7 +107,11 @@ extension TimeTableUseCase {
     public func addSection(_ sectionId: Int) -> AnyPublisher<Void, Never> {
         return sectionRepository.addSection(tableId, sectionId, "")
             .catch { [weak self] error in
-                self?.errMessage.send(error.description)
+                if error == .guestSectionLimitExceeded {
+                    self?.guestSectionLimitExceeded.send(())
+                } else {
+                    self?.errMessage.send(error.description)
+                }
                 return Empty<Void, Never>()
             }
             .flatMap(getTableDetailInfo)
@@ -216,6 +221,7 @@ extension TimeTableUseCase {
 final public class StubTimeTableUseCase: TimeTableUseCaseType {
     public var tableId: Int = 0
     public var errMessage = PassthroughSubject<String, Never>()
+    public var guestSectionLimitExceeded = PassthroughSubject<Void, Never>()
     public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()
     public var sectionList = PassthroughSubject<[SectionInfo], Never>()
     public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()

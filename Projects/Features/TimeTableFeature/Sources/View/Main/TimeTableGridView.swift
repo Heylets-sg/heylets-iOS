@@ -261,10 +261,3 @@ extension TimeTableGridView {
     }
 }
 
-#Preview {
-    @State var stub: TimeTableViewType = .main
-    return MainView(
-        viewModel: .init(StubHeyUseCase.stub.timeTableUseCase),
-        viewType: $stub
-    )
-}

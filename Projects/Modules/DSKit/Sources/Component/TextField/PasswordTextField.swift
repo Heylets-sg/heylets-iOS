@@ -45,7 +45,7 @@ public struct PasswordField: View {
                     "",
                     text: $password,
                     prompt: Text("Password")
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.heyGray3)
                 )
                 .heyTextFieldStyle()
             }

@@ -33,11 +33,13 @@ public final class HeyUseCase: UseCaseType {
         
         myPageUseCase = MyPageUseCase(
             userRepository: repository.userRepository,
-            authRepository: repository.authRepository
+            authRepository: repository.authRepository,
+            guestRepository: repository.guestRepository
         )
         
         onboardingUseCase = OnboardingUseCase(
-            authRepository: repository.authRepository
+            authRepository: repository.authRepository,
+            guestRepository: repository.guestRepository
         )
         
         timeTableUseCase = TimeTableUseCase(
@@ -47,7 +49,6 @@ public final class HeyUseCase: UseCaseType {
             sectionRepository: repository.sectionRepository,
             settingRepository: repository.settingRepository,
             timeTableRepository: repository.timeTableRepository
-        
         )
     }
 }
