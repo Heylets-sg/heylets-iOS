@@ -45,7 +45,6 @@ public struct AuthRepository: AuthRepositoryType {
     ) -> AnyPublisher<Void, SignUpError> {
         let request = user.toDTO()
         return authService.signUp(request)
-            .asVoid()
             .mapError { error in
                 if let errorCode = error.isInvalidStatusCode() {
                     return SignUpError.error(with: errorCode)
