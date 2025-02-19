@@ -23,7 +23,6 @@ public final class HeyUseCase: UseCaseType {
     public var myPageUseCase: MyPageUseCaseType
     public var onboardingUseCase: OnboardingUseCaseType
     public var timeTableUseCase: TimeTableUseCaseType
-    public var guestUseCase: GuestUseCaseType
     
     public init(repository: RepositoryType) {
         self.repository = repository
@@ -39,7 +38,8 @@ public final class HeyUseCase: UseCaseType {
         )
         
         onboardingUseCase = OnboardingUseCase(
-            authRepository: repository.authRepository
+            authRepository: repository.authRepository,
+            guestRepository: repository.guestRepository
         )
         
         timeTableUseCase = TimeTableUseCase(
@@ -49,10 +49,6 @@ public final class HeyUseCase: UseCaseType {
             sectionRepository: repository.sectionRepository,
             settingRepository: repository.settingRepository,
             timeTableRepository: repository.timeTableRepository
-        )
-        
-        guestUseCase = GuestUseCase(
-            guestRepository: repository.guestRepository
         )
     }
 }
@@ -64,7 +60,6 @@ public final class StubHeyUseCase: UseCaseType {
     public var myPageUseCase: MyPageUseCaseType = StubMyPageUseCase()
     public var onboardingUseCase: OnboardingUseCaseType = StubOnboardingUseCase()
     public var timeTableUseCase: TimeTableUseCaseType = StubTimeTableUseCase()
-    public var guestUseCase: GuestUseCaseType = StubGuestUseCase()
 }
 
 extension StubHeyUseCase {

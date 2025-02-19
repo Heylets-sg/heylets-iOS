@@ -34,7 +34,7 @@ public class TermsOfServiceViewModel: ObservableObject {
     @Published var state = State()
     public var windowRouter: WindowRoutableType
     public var navigationRouter: NavigationRoutableType
-    private var useCase: GuestUseCaseType
+    private var useCase: OnboardingUseCaseType
     private var university: String
     private let cancelBag = CancelBag()
     
@@ -42,7 +42,7 @@ public class TermsOfServiceViewModel: ObservableObject {
     public init(
         navigationRouter: NavigationRoutableType,
         windowRouter: WindowRoutableType,
-        useCase: GuestUseCaseType,
+        useCase: OnboardingUseCaseType,
         university: String
     ) {
         self.navigationRouter = navigationRouter

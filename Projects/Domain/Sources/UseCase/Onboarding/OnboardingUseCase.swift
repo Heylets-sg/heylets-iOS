@@ -13,15 +13,20 @@ import Core
 
 final public class OnboardingUseCase: OnboardingUseCaseType {
     private let authRepository: AuthRepositoryType
+    private let guestRepository: GuestRepositoryType
     private var cancelBag = CancelBag()
     
-    public init(authRepository: AuthRepositoryType) {
+    public var errMessage = PassthroughSubject<String, Never>()
+    
+    public init(
+        authRepository: AuthRepositoryType,
+        guestRepository: GuestRepositoryType
+    ) {
         self.authRepository = authRepository
+        self.guestRepository = guestRepository
     }
     
     public var userInfo: User = .empty
-    
-    public var errMessage = PassthroughSubject<String, Never>()
     
     public func logIn(
         _ email: String,
@@ -120,6 +125,16 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
             }
             .eraseToAnyPublisher()
     }
+    
+    public func startGuestMode(university: String) -> AnyPublisher<Void, Never> {
+        guestRepository.startGuestMode(university: university)
+            .map { _ in }
+            .catch { [weak self] error in
+                self?.errMessage.send("게스트 모드 시작에 실패했습니다.")
+                return Empty<Void, Never>()
+            }
+            .eraseToAnyPublisher()
+    }
 }
 
 final public class StubOnboardingUseCase: OnboardingUseCaseType {
@@ -162,6 +177,10 @@ final public class StubOnboardingUseCase: OnboardingUseCaseType {
         _ email: String,
         _ newPassword: String
     ) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
+    public func startGuestMode(university: String) -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()
     }
 }

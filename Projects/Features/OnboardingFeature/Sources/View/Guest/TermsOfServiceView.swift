@@ -141,7 +141,7 @@ struct TermsOfServiceView: View {
     TermsOfServiceView(viewModel: .init(
         navigationRouter: Router.default.navigationRouter,
         windowRouter: Router.default.windowRouter, 
-        useCase: StubHeyUseCase.stub.guestUseCase,
+        useCase: StubHeyUseCase.stub.onboardingUseCase,
         university: ""
     ))
     .environmentObject(Router.default)
