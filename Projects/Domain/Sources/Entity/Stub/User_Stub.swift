@@ -17,7 +17,8 @@ extension User {
             birth: Date(),
             nickName: "",
             university: "",
-            profileImage: nil
+            profileImage: nil,
+            agreements: []
         )
     }
 }

@@ -114,6 +114,7 @@ public struct AuthRepository: AuthRepositoryType {
         return authService.logIn(request)
             .handleEvents(receiveOutput: { token in
                 UserDefaultsManager.setToken(token)
+                UserDefaultsManager.isGuestMode = false
             })
             .map { $0.toEntity() }
             .mapError { error in

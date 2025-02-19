@@ -18,6 +18,8 @@ public struct MyPageView: View {
     
     public init(viewModel: MyPageViewModel) {
         self.viewModel = viewModel
+        
+        viewModel.send(.onAppear)
     }
     
     public var body: some View {
@@ -43,10 +45,10 @@ public struct MyPageView: View {
                                 .padding(.top, 44)
                                 .padding(.bottom, 32)
                             
-                            if viewModel.state.isGuestMode {
-                                MyPageContentView(viewModel: viewModel)
-                            } else {
+                            if viewModel.isGuestMode {
                                 MyPageGuestView(viewModel: viewModel)
+                            } else {
+                                MyPageContentView(viewModel: viewModel)
                             }
                             
                         }

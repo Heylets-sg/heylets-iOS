@@ -92,7 +92,7 @@ struct OnboardingNavigationRoutingView: View {
                     navigationRouter: router.navigationRouter
                 )
             )
-        case .termsOfGuestService(let university):
+        case .termsOfServiceAgreement(let university):
             TermsOfServiceView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,

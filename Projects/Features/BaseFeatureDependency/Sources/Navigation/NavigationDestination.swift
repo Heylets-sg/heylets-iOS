@@ -35,5 +35,5 @@ public enum NavigationDestination: Hashable {
     
     //Guest
     case selectGuestUniversity
-    case termsOfGuestService(String)
+    case termsOfServiceAgreement(String)
 }

@@ -55,12 +55,21 @@ public class TermsOfServiceViewModel: ObservableObject {
     func send(_ action: Action) {
         switch action {
         case .agreeButtonDidTap:
-            useCase.startGuestMode(university: university)
-                .sink(receiveValue: { [weak self] _ in
-                    self?.windowRouter.switch(to: .timetable)
-                })
-                .store(in: cancelBag)
-            
+            if useCase.userInfo.email.isEmpty {
+                useCase.startGuestMode(university: university)
+                    .sink(receiveValue: { [weak self] _ in
+                        self?.windowRouter.switch(to: .timetable)
+                    })
+                    .store(in: cancelBag)
+            } else {
+                let agreeInfo: [AgreementInfo] = [.init("TERMS_OF_SERVICE", true, "string")]
+                useCase.userInfo.agreements = agreeInfo
+                useCase.signUp()
+                    .sink(receiveValue: { [weak self] _ in
+                        self?.navigationRouter.popToRootView()
+                    })
+                    .store(in: cancelBag)
+            }
         case .termsOfServiceDidTap:
             state.termsOfServiceIsAgree.toggle()
             state.allAgree = state.termsOfServiceIsAgree && state.personalInformationIsAgree

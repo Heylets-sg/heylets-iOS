@@ -25,6 +25,10 @@ public protocol GuestServiceType {
     func convertToMember(
         _ request: SignUpRequest
     ) -> NetworkVoidResponse
+    
+    func testConvertToMember(
+        _ request: SignUpRequest
+    ) -> NetworkVoidResponse
 }
 
 extension GuestService: GuestServiceType {
@@ -42,6 +46,10 @@ extension GuestService: GuestServiceType {
     }
     
     public func convertToMember(_ request: SignUpRequest) -> NetworkVoidResponse {
-        <#code#>
+        requestWithNoResult(.convertToMember(request, UUID().uuidString))
+    }
+    
+    public func testConvertToMember(_ request: SignUpRequest) -> NetworkVoidResponse {
+        requestWithNoResult(.testConvertToMember(request, UUID().uuidString))
     }
 }

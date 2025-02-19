@@ -52,5 +52,5 @@ public protocol OnboardingUseCaseType {
         _ newPassword: String
     ) -> AnyPublisher<Void, Never>
     
-func startGuestMode(university: String) -> AnyPublisher<Void, Never>
+    func startGuestMode(university: String) -> AnyPublisher<Void, Never>
 }

@@ -21,7 +21,8 @@ extension User {
                 password: password,
                 university: university,
                 sex: gender,
-                birth: birth.toInt()
+                birth: birth.toInt(),
+                agreements: agreements.map { $0.toDTO() }
             ),
             profileImg: profileImage?.jpegData(compressionQuality: 0.1)
         )

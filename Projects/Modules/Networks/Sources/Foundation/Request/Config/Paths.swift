@@ -73,4 +73,10 @@ public enum Paths {
     static let patchNickName = "api/v1/users/profile/me/nickname"
     static let patchAcademicInfo = "api/v1/users/profile/me/academic-info"
     static let postProfileImg = "api/v1/users/profile/me/profile-image"
+    
+    //MARK: Test
+    
+    static let testSignUp = "api/v1/admin/auth/signup/test"
+    static let testGuestSignUp = "api/v1/admin/auth/guest/signup/test"
+    
 }

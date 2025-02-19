@@ -50,4 +50,14 @@ public struct AgreementRequest: Encodable {
     let type: String
     let agreed: Bool
     let version: String
+    
+    public init(
+        type: String,
+        agreed: Bool,
+        version: String
+    ) {
+        self.type = type
+        self.agreed = agreed
+        self.version = version
+    }
 }

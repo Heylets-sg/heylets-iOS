@@ -50,11 +50,7 @@ public class AddProfileViewModel: ObservableObject {
             navigationRouter.pop()
         case .nextButtonDidTap:
             useCase.userInfo.profileImage = profileImage
-            useCase.signUp()
-                .sink(receiveValue: { [weak self] _ in
-                    self?.navigationRouter.popToRootView()
-                })
-                .store(in: cancelBag)
+            navigationRouter.push(to: .termsOfServiceAgreement(useCase.userInfo.university))
             
         case .profileImageDidChange(let newPhoto):
             guard let newPhoto else { return }

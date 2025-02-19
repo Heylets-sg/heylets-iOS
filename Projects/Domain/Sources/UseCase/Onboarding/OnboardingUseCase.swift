@@ -45,8 +45,9 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         guestRepository.checkGuestMode()  // 게스트 모드 여부를 확인
                 .flatMap { [weak self] isGuest in
                     guard let self else { return Empty<Void, Never>().eraseToAnyPublisher() }
+                    print("isGuest: \(isGuest)")
                     if isGuest {
-                        return self.guestRepository.convertToMember(userInfo: userInfo)
+                        return self.guestRepository.convertToMember(userInfo)
                             .map { _ in }
                             .catch { [weak self] error in
                                 self?.errMessage.send(error.description)

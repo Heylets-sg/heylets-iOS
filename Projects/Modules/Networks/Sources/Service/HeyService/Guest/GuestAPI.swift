@@ -14,6 +14,7 @@ public enum GuestAPI {
     case changeGuestUniversity(UniversityRequest)
     case startGuestMode(String)
     case convertToMember(SignUpRequest, String)
+    case testConvertToMember(SignUpRequest, String)
 }
 
 extension GuestAPI: BaseAPI {
@@ -33,6 +34,8 @@ extension GuestAPI: BaseAPI {
                 )
         case .convertToMember:
             Paths.convertToMember
+        case .testConvertToMember:
+            Paths.testGuestSignUp
         }
     }
     
@@ -44,6 +47,8 @@ extension GuestAPI: BaseAPI {
             return .post
         case .convertToMember:
             return .post
+        case .testConvertToMember:
+            return .post
         }
     }
     
@@ -53,7 +58,7 @@ extension GuestAPI: BaseAPI {
             return .requestJSONEncodable(request)
         case .startGuestMode:
             return .requestPlain
-        case .convertToMember(let request, let boundary):
+        case .convertToMember(let request, let boundary), .testConvertToMember(let request, let boundary):
             var multipartData: [MultipartData] = []
             
             if let jsonData = try? JSONEncoder().encode(request.request),
@@ -88,6 +93,8 @@ extension GuestAPI: BaseAPI {
             return APIHeaders.defaultHeader
         case .convertToMember:
             return APIHeaders.headerWithAccessToken
+        case .testConvertToMember(_, let boundary):
+            return APIHeaders.testGuestHeader(boundary)
         }
     }
 }

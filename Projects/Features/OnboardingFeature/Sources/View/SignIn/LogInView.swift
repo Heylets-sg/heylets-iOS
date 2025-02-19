@@ -29,98 +29,101 @@ public struct LogInView: View {
     }
     
     public var body: some View {
-        VStack(alignment: .trailing) {
-            Image(uiImage: .logo)
-                .resizable()
-                .frame(height: 56)
-                .padding(.horizontal, 125)
-                .padding(.bottom, 32)
-            
-            HStack {
-                Text("Log In")
-                    .font(.semibold_18)
-                    .foregroundStyle(Color.heyGray1)
+        NavigationStack(path: $container.navigationRouter.destinations) {
+            VStack(alignment: .trailing) {
+                Image(uiImage: .logo)
+                    .resizable()
+                    .frame(height: 56)
+                    .padding(.horizontal, 125)
+                    .padding(.bottom, 32)
                 
-                Spacer()
-                
-                Text("New to Heylets?")
-                    .font(.regular_14)
-                    .foregroundStyle(Color.heyGray1)
-                    .padding(.trailing, 8)
-                
-                Button {
-                    viewModel.send(.signUpButtonDidTap)
-                } label: {
-                    Text("Sign Up")
-                        .font(.regular_12)
-                        .foregroundStyle(Color.heyMain)
-                }
-            }
-            .padding(.bottom, 29)
-            
-            HeyTextField(
-                text: $viewModel.id,
-                placeHolder: "ID"
-            )
-            .focused($isFocused, equals: .id)
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.heyGray3, lineWidth: 1)
-            )
-            .padding(.bottom, 21)
-            
-            PasswordField(
-                password: $viewModel.password,
-                showPassword: $showPassword, colorSystem: .white
-            )
-            .focused($isFocused, equals: .password)
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.heyGray3, lineWidth: 1)
-            )
-            .padding(.bottom, 14)
-            
-            HStack {
-                Text(viewModel.state.errMessage)
-                    .font(.regular_14)
-                    .foregroundColor(.heyError)
-                    .frame(width: 180)
-                
-                Spacer()
-                
-                Button {
-                    viewModel.send(.forgotPasswordButtonDidTap)
-                } label: {
-                    Text("Forgot password?")
-                        .font(.regular_12)
+                HStack {
+                    Text("Log In")
+                        .font(.semibold_18)
                         .foregroundStyle(Color.heyGray1)
+                    
+                    Spacer()
+                    
+                    Text("New to Heylets?")
+                        .font(.regular_14)
+                        .foregroundStyle(Color.heyGray1)
+                        .padding(.trailing, 8)
+                    
+                    Button {
+                        viewModel.send(.signUpButtonDidTap)
+                    } label: {
+                        Text("Sign Up")
+                            .font(.regular_12)
+                            .foregroundStyle(Color.heyMain)
+                    }
+                }
+                .padding(.bottom, 29)
+                
+                HeyTextField(
+                    text: $viewModel.id,
+                    placeHolder: "ID"
+                )
+                .focused($isFocused, equals: .id)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.heyGray3, lineWidth: 1)
+                )
+                .padding(.bottom, 21)
+                
+                PasswordField(
+                    password: $viewModel.password,
+                    showPassword: $showPassword, colorSystem: .white
+                )
+                .focused($isFocused, equals: .password)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.heyGray3, lineWidth: 1)
+                )
+                .padding(.bottom, 14)
+                
+                HStack {
+                    Text(viewModel.state.errMessage)
+                        .font(.regular_14)
+                        .foregroundColor(.heyError)
+                        .frame(width: 180)
+                    
+                    Spacer()
+                    
+                    Button {
+                        viewModel.send(.forgotPasswordButtonDidTap)
+                    } label: {
+                        Text("Forgot password?")
+                            .font(.regular_12)
+                            .foregroundStyle(Color.heyGray1)
+                    }
+                }
+                
+                Spacer()
+                
+                Button("Log In") {
+                    viewModel.send(.loginButtonDidTap)
+                }
+                .heyBottomButtonStyle()
+            }
+            .onSubmit {
+                switch isFocused {
+                case .id:
+                    isFocused = .password
+                default:
+                    isFocused = nil
                 }
             }
-            
-            Spacer()
-            
-            Button("Log In") {
-                viewModel.send(.loginButtonDidTap)
-            }
-            .heyBottomButtonStyle()
-        }
-        .onSubmit {
-            switch isFocused {
-            case .id:
-                isFocused = .password
-            default:
+            .padding(.top, 106)
+            .padding(.bottom, 65)
+            .padding(.horizontal, 16)
+            .background(Color.heyWhite)
+            .ignoresSafeArea(edges: .vertical)
+            .ignoresSafeArea(.keyboard)
+            .navigationBarBackButtonHidden()
+            .onTapGesture {
                 isFocused = nil
             }
-        }
-        .padding(.top, 106)
-        .padding(.bottom, 65)
-        .padding(.horizontal, 16)
-        .background(Color.heyWhite)
-        .ignoresSafeArea(edges: .vertical)
-        .ignoresSafeArea(.keyboard)
-        .navigationBarBackButtonHidden()
-        .onTapGesture {
-            isFocused = nil
+            .setOnboardingHeyNavigation()
         }
     }
 }
