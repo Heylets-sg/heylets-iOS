@@ -13,7 +13,7 @@ import Domain
 public enum GuestAPI {
     case changeGuestUniversity(UniversityRequest)
     case startGuestMode(String)
-    case convertToMember
+    case convertToMember(SignUpRequest, String)
 }
 
 extension GuestAPI: BaseAPI {
@@ -53,8 +53,30 @@ extension GuestAPI: BaseAPI {
             return .requestJSONEncodable(request)
         case .startGuestMode:
             return .requestPlain
-        case .convertToMember:
-            return .requestPlain
+        case .convertToMember(let request, let boundary):
+            var multipartData: [MultipartData] = []
+            
+            if let jsonData = try? JSONEncoder().encode(request.request),
+               let jsonString = String(data: jsonData, encoding: .utf8) {
+                let part: MultipartData = .init(
+                    name: "request",
+                    value: .text(jsonString),
+                    contentType: "application/json"
+                )
+                multipartData.append(part)
+            }
+            
+            // 프로필 이미지 추가
+            if let profileImageData = request.profileImg {
+                let part: MultipartData = .init(
+                    name: "profileImage",
+                    value: .file(profileImageData, "profile.jpeg"),
+                    contentType: "image/jpeg"
+                )
+                multipartData.append(part)
+            }
+            
+            return .uploadMultipartFormData(multipartData, boundary)
         }
     }
     
@@ -64,9 +86,8 @@ extension GuestAPI: BaseAPI {
             return APIHeaders.headerWithAccessToken
         case .startGuestMode:
             return APIHeaders.defaultHeader
-        default:
-            return APIHeaders.defaultHeader
-            
+        case .convertToMember:
+            return APIHeaders.headerWithAccessToken
         }
     }
 }

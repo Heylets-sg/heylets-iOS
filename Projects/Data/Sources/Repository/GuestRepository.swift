@@ -43,10 +43,9 @@ public struct GuestRepository: GuestRepositoryType {
             .map { $0.toEntity() }
             .mapToGeneralError()
     }
+    
+    public func convertToMember(userInfo: User) -> AnyPublisher<Void, SignUpError> {
+        Just(())
+            .eraseToAnyPublisher()
+    }
 }
-
-//    public func convertToMember() {
-//        <#code#>
-//    }
-
-

@@ -52,3 +52,9 @@ public struct ProfileInfo: Hashable {
         self.imageURL = imageURL
     }
 }
+
+public struct AgreementInfo: Hashable {
+    public var type: String
+    public var agreed: Bool
+    public var version: String
+}

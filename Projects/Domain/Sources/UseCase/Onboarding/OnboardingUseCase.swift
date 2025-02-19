@@ -42,13 +42,28 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     }
     
     public func signUp() -> AnyPublisher<Void, Never> {
-        authRepository.signUp(userInfo)
-            .map { _ in }
-            .catch { [weak self] error in
-                self?.errMessage.send(error.description)
-                return Empty<Void, Never>()
-            }
-            .eraseToAnyPublisher()
+        guestRepository.checkGuestMode()  // 게스트 모드 여부를 확인
+                .flatMap { [weak self] isGuest in
+                    guard let self else { return Empty<Void, Never>().eraseToAnyPublisher() }
+                    if isGuest {
+                        return self.guestRepository.convertToMember(userInfo: userInfo)
+                            .map { _ in }
+                            .catch { [weak self] error in
+                                self?.errMessage.send(error.description)
+                                return Empty<Void, Never>()
+                            }
+                            .eraseToAnyPublisher()
+                    } else {
+                        return self.authRepository.signUp(userInfo)
+                            .map { _ in }
+                            .catch { [weak self] error in
+                                self?.errMessage.send(error.description)
+                                return Empty<Void, Never>()
+                            }
+                            .eraseToAnyPublisher()
+                    }
+                }
+                .eraseToAnyPublisher()
     }
     
     public func requestEmailVerifyCode(

@@ -22,9 +22,9 @@ public protocol GuestServiceType {
         _ university: String
     ) -> NetworkDecodableResponse<AuthResult>
     
-//    func convertToMember(
-//        _ request: SignUpRequest
-//    ) -> NetworkVoidResponse
+    func convertToMember(
+        _ request: SignUpRequest
+    ) -> NetworkVoidResponse
 }
 
 extension GuestService: GuestServiceType {
@@ -41,7 +41,7 @@ extension GuestService: GuestServiceType {
         requestWithResult(.startGuestMode(university))
     }
     
-//    public func convertToMember(_ request: SignUpRequest) -> NetworkVoidResponse {
-//        <#code#>
-//    }
+    public func convertToMember(_ request: SignUpRequest) -> NetworkVoidResponse {
+        <#code#>
+    }
 }

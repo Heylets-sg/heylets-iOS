@@ -22,5 +22,5 @@ public protocol GuestRepositoryType {
     func startGuestMode(university: String) -> AnyPublisher<Auth, Error>
     
     // 게스트 -> 정식회원
-//    func convertToMember()
+    func convertToMember(userInfo: User) -> AnyPublisher<Void, SignUpError>
 }
