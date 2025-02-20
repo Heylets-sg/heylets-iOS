@@ -58,6 +58,7 @@ public class TermsOfServiceViewModel: ObservableObject {
             if useCase.userInfo.email.isEmpty {
                 useCase.startGuestMode(university: university)
                     .sink(receiveValue: { [weak self] _ in
+                        self?.navigationRouter.destinations = []
                         self?.windowRouter.switch(to: .timetable)
                     })
                     .store(in: cancelBag)
