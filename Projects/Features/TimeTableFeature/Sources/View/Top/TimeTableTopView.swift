@@ -43,6 +43,7 @@ public struct TopView: View {
                 .padding(.bottom, 8)
                 
                 Text(timeTableInfo.name)
+                    .lineLimit(1)
                     .font(.semibold_18)
                     .foregroundColor(.heyGray1)
             }
