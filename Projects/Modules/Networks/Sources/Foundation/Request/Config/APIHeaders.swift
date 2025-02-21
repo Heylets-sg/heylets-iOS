@@ -22,7 +22,9 @@ public struct APIHeaders {
     static let auth = "Authorization"
     
     static let deviceIDName = "Device-Id"
-    static let deviceID = AppService.getDeviceIdentifier()
+    //MARK: Test용 삭제 필수
+    //    static let deviceID = AppService.getDeviceIdentifier()
+    static let deviceID = "10DC5DA2-11CB-437D-ABC8-C6C222418B51"
     
     static let deviceModelName = "Device-Model"
     static let deviceModel = AppService.getDeviceModelName()
