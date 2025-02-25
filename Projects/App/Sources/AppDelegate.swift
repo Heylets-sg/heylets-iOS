@@ -73,6 +73,7 @@ import Foundation
 import UserNotifications
 import FirebaseCore
 import FirebaseMessaging
+import ThirdPartyLibs
 import UIKit
 import Networks
 

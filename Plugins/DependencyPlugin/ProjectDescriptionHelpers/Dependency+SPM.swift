@@ -16,5 +16,5 @@ public extension TargetDependency {
 }
 
 public extension TargetDependency.SPM {
-//    static let firebaseCore: TargetDependency = .external(name: "FirebaseCore")
+    static let firebaseCore: TargetDependency = .external(name: "FirebaseCore")
 }

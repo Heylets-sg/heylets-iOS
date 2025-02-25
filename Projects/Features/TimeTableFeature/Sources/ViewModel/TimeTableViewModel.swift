@@ -150,7 +150,7 @@ public class TimeTableViewModel: ObservableObject {
         case .notRightNowButtonDidTap:
             state.alerts.showGuestErrorAlert = false
         case .loginButtonDidTap:
-            windowRouter.switch(to: .signUp)
+            windowRouter.switch(to: .login)
         }
     }
     

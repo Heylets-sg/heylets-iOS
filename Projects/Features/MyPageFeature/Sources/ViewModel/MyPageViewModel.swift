@@ -103,7 +103,7 @@ public class MyPageViewModel: ObservableObject {
             state.logoutAlertViewIsPresented = false
             
         case .signUpLogInButtonDidTap:
-            windowRouter.switch(to: .signUp)
+            windowRouter.switch(to: .login)
             
         case .editSchoolButtonDidTap:
             navigationRouter.push(to: .editSchool)

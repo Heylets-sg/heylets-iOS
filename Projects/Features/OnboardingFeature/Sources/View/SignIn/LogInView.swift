@@ -31,6 +31,18 @@ public struct LogInView: View {
     public var body: some View {
         NavigationStack(path: $container.navigationRouter.destinations) {
             VStack(alignment: .trailing) {
+                HStack {
+                    Spacer()
+                    Button {
+                        viewModel.send(.closeButtonDidTap)
+                    } label: {
+                        Image(uiImage: .icClose)
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                    }
+                }
+                .padding(.bottom, 10)
+                
                 Image(uiImage: .logo)
                     .resizable()
                     .frame(height: 56)

@@ -35,11 +35,11 @@ public struct RootView: View {
                         navigationRouter: router.navigationRouter
                     )
                 )
-            case .signUp:
+            case .login:
                 LogInView(viewModel: .init(
-                    navigationRouter: router.navigationRouter,
-                    windowRouter: router.windowRouter,
-                    useCase: useCase.onboardingUseCase
+                        navigationRouter: router.navigationRouter,
+                        windowRouter: router.windowRouter,
+                        useCase: useCase.onboardingUseCase
                     )
                 )
             case .timetable:

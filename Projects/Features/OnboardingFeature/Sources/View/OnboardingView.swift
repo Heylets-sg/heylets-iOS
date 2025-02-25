@@ -129,16 +129,15 @@ public struct OnboardingView: View {
                                     let offsetX = value.translation.width // 드래그가 끝난 후 이동한 거리를 계산한 값
                                     
                                     let progress = -offsetX / 370 // 페이지의 이동 비율 (370은 페이지의 너비로 가정)
-                                    let threshold: CGFloat = 0.3
+                                    let threshold: CGFloat = 0.15
+                                    let minDragDistance: CGFloat = 50 // 최소 드래그 거리 추가
                                     
-                                    withAnimation {
-                                        if progress > threshold {
-                                            // 오른쪽에서 왼쪽으로 이동 (다음 페이지로)
-                                            currentIndex = min(currentIndex + 1, onboardingContent.count - 1) // 3-1 -> content.count로 수정
-                                        } else if progress < -threshold {
-                                            // 왼쪽에서 오른쪽으로 이동 (이전 페이지로)
-                                            currentIndex = max(currentIndex - 1, 0)
-                                        }
+                                    if progress > threshold || -offsetX > minDragDistance {
+                                        // 오른쪽에서 왼쪽으로 이동 (다음 페이지로)
+                                        currentIndex = min(currentIndex + 1, onboardingContent.count - 1) // 3-1 -> content.count로 수정
+                                    } else if progress < -threshold {
+                                        // 왼쪽에서 오른쪽으로 이동 (이전 페이지로)
+                                        currentIndex = max(currentIndex - 1, 0)
                                     }
                                 }
                         )

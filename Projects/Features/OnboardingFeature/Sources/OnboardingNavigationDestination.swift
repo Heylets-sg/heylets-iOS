@@ -57,13 +57,6 @@ struct OnboardingNavigationRoutingView: View {
                     useCase: useCase.onboardingUseCase
                 )
             )
-        case .addProfile:
-            AddProfileView(
-                viewModel: .init(
-                    navigationRouter: router.navigationRouter,
-                    useCase: useCase.onboardingUseCase
-                )
-            )
         case .login:
             LogInView(
                 viewModel: .init(
