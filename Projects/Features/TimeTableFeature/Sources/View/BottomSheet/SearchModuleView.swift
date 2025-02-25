@@ -149,25 +149,28 @@ fileprivate struct ClassSearchListCellView: View {
                 .foregroundColor(isSelected ? Color.heyGray2 : Color.heyGray8)
                 .padding(.bottom, 15)
             
-            HStack {
-                Button {
-                    viewModel.send(.addLectureButtonDidTap(section))
-                } label: {
-                    Text("Add")
-                        .font(.regular_12)
-                        .foregroundColor(Color.heyWhite)
-                        .padding(.vertical, 5)
-                        .frame(width: 46, height: 25)
-                        .background(Color.heyMain)
-                        .clipShape(RoundedRectangle(cornerRadius: 12.5))
-                        .padding(.trailing, 7)
+            if isSelected {
+                HStack {
+                    Button {
+                        viewModel.send(.addLectureButtonDidTap(section))
+                    } label: {
+                        Text("Add")
+                            .font(.regular_12)
+                            .foregroundColor(Color.heyWhite)
+                            .padding(.vertical, 5)
+                            .frame(width: 46, height: 25)
+                            .background(Color.heyMain)
+                            .clipShape(RoundedRectangle(cornerRadius: 12.5))
+                            .padding(.trailing, 7)
+                    }
                 }
-                .hidden(!isSelected)
+                .padding(.bottom, 10)
+            } else {
+                EmptyView()
             }
-            .padding(.bottom, 10)
         }
         .padding(.horizontal, 16)
-        .background(isSelected ? Color.heySubMain3 : Color.clear)
+        .background(isSelected ? Color.heySubMain3 : Color.black.opacity(0.0001))
         .onTapGesture {
             cellDidTap()
         }

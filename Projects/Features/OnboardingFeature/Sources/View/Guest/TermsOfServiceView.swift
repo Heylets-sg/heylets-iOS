@@ -57,13 +57,14 @@ struct TermsOfServiceView: View {
                 Rectangle()
                     .fill(Color.heyGray4)
                     .frame(height: 1)
+                    .padding(.horizontal, 16)
                     .padding(.bottom, 30)
                     
                 
                 HStack {
                     Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
                         .resizable()
-                        .frame(width: 14, height: 10)
+                        .frame(width: 16, height: 10)
                         .foregroundStyle(viewModel.state.termsOfServiceIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
                         .padding(.trailing, 12)
                         .onTapGesture {
@@ -91,7 +92,7 @@ struct TermsOfServiceView: View {
                 HStack {
                     Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
                         .resizable()
-                        .frame(width: 14, height: 10)
+                        .frame(width: 16, height: 10)
                         .foregroundStyle(viewModel.state.personalInformationIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
                         .padding(.trailing, 12)
                         .onTapGesture {
@@ -124,12 +125,12 @@ struct TermsOfServiceView: View {
                 }
                 .disabled(!viewModel.state.allAgree)
                 .heyBottomButtonStyle()
+                .padding(.horizontal, 16)
             }
             
             .padding(.top, 126)
             .padding(.bottom, 65)
         }
-        .padding(.horizontal, 16)
         .background(Color.heyWhite)
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)

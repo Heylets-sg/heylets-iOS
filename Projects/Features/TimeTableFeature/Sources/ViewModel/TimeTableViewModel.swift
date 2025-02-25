@@ -150,7 +150,7 @@ public class TimeTableViewModel: ObservableObject {
         case .notRightNowButtonDidTap:
             state.alerts.showGuestErrorAlert = false
         case .loginButtonDidTap:
-            windowRouter.switch(to: .signUp)
+            windowRouter.switch(to: .login)
         }
     }
     
@@ -256,7 +256,7 @@ public class TimeTableViewModel: ObservableObject {
             .assign(to: \.state.error, on: self)
             .store(in: cancelBag)
         
-        useCase.guestSectionLimitExceeded
+        useCase.guestModeError
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.viewType = .main

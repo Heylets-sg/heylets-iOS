@@ -74,7 +74,10 @@ public struct TimeTableGridView: View {
                                     cellHeight: rect.height
                                 )
                             }
-                            
+                            .onTapGesture {
+                                viewModel.send(.tableCellDidTap(cell.id))
+                            }
+                            .disabled(viewType != .main)
                         }
                     }
                     

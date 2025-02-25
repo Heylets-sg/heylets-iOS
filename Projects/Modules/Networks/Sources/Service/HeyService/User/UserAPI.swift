@@ -63,7 +63,7 @@ extension UserAPI: BaseAPI {
             return .requestJSONEncodable(request)
         case .patchAcademicInfo(let request):
             return .requestJSONEncodable(request)
-        case .postProfileImg(let request):
+        case .postProfileImg:
             return .requestPlain
 //            var multipartData: [MultipartFormData] = []
 //            multipartData.append(.file(

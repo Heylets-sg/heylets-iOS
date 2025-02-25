@@ -16,6 +16,7 @@ import Core
 public class LogInViewModel: ObservableObject {
     
     enum Action {
+        case closeButtonDidTap
         case loginButtonDidTap
         case dismissToastView
         case forgotPasswordButtonDidTap
@@ -54,6 +55,12 @@ public class LogInViewModel: ObservableObject {
     
     func send(_ action: Action) {
         switch action {
+        case .closeButtonDidTap:
+            if windowRouter.destination == WindowDestination.onboarding {
+                navigationRouter.pop()
+            } else {
+                windowRouter.switch(to: .timetable)
+            }
         case .loginButtonDidTap:
             useCase.logIn(id, password)
                 .receive(on: RunLoop.main)

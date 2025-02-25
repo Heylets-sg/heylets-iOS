@@ -32,7 +32,7 @@ struct AddCustomModuleTopView: View {
                 } label: {
                     Text("Save")
                         .font(.medium_16)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(viewModel.schedule.isEmpty ? .heyGray7 : .heyGray1)
                 }
                 .disabled(viewModel.schedule.isEmpty)
             }

@@ -63,27 +63,11 @@ public extension Project {
             name: name,
             hasResources: false,
             externalDependencies: [
-                .package(product: "FirebaseAnalytics"),
                 .package(product: "FirebaseMessaging"),
-                .package(product: "FirebaseCrashlytics"),
                 .package(product: "FirebaseCore")
             ], targets: [.dynamicFramework]
         )
-//        projectTargets.append(
-//            Target(
-//                name: name,
-//                platform: .iOS,
-//                product: .framework,
-//                bundleId: "\(env.bundlePrefix).\(name)",
-//                deploymentTarget: env.deploymentTarget,
-//                infoPlist: .default,
-//                dependencies: [
-//                    .package(product: "FirebaseAnalytics"),
-//                    .package(product: "FirebaseMessaging"),
-//                    .package(product: "FirebaseCrashlytics"),
-//                    .package(product: "FirebaseCore"),
-//                ]
-//            ))
+        
         let projcetScheme: [Scheme] = SchemeProvider.makeProjectScheme(targets: [.dynamicFramework], name: name)
         
         return Project(
