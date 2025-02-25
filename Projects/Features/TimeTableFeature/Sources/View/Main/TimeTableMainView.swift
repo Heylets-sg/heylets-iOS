@@ -75,7 +75,6 @@ extension MainView {
     private func scrollToPosition(proxy: ScrollViewProxy?, position: CGFloat? = nil) {
         guard let proxy = proxy else { return }
         
-        // 한 항목의 높이를 기준으로 인덱스 계산 (예시: cellHeight포인트 높이)
         let targetIndex = position != nil ? Int(position! / 52) : 0
         
         withAnimation {

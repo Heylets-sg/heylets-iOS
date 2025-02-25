@@ -186,6 +186,7 @@ extension TimeTableGridView {
                 .position(x: centerX, y: centerY)
         }
         .buttonStyle(PlainButtonStyle())
+        .disabled(viewType != .main)
     }
     
     
