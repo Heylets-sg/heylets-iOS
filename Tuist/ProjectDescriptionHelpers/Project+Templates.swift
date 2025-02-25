@@ -54,5 +54,46 @@ public extension Project {
             schemes: projcetScheme
         )
     }
+    
+    static func makeSPMModule(
+        name: String,
+        packages: [Package] = []
+    ) -> Project {
+        var projectTargets: [Target] = TargetHandler.makeProjectTargets(
+            name: name,
+            hasResources: false,
+            externalDependencies: [
+                .package(product: "FirebaseAnalytics"),
+                .package(product: "FirebaseMessaging"),
+                .package(product: "FirebaseCrashlytics"),
+                .package(product: "FirebaseCore")
+            ], targets: [.dynamicFramework]
+        )
+//        projectTargets.append(
+//            Target(
+//                name: name,
+//                platform: .iOS,
+//                product: .framework,
+//                bundleId: "\(env.bundlePrefix).\(name)",
+//                deploymentTarget: env.deploymentTarget,
+//                infoPlist: .default,
+//                dependencies: [
+//                    .package(product: "FirebaseAnalytics"),
+//                    .package(product: "FirebaseMessaging"),
+//                    .package(product: "FirebaseCrashlytics"),
+//                    .package(product: "FirebaseCore"),
+//                ]
+//            ))
+        let projcetScheme: [Scheme] = SchemeProvider.makeProjectScheme(targets: [.dynamicFramework], name: name)
+        
+        return Project(
+            name: name,
+            organizationName: env.workspaceName,
+            packages: packages,
+            settings: .settings(configurations: XCConfig.configurations),
+            targets: projectTargets,
+            schemes: projcetScheme
+        )
+    }
 }
 

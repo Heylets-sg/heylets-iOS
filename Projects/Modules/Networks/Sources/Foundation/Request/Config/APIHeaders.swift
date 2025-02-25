@@ -50,6 +50,9 @@ public struct APIHeaders {
     static var refreshToken: String {
         return "Bearer \(UserDefaultsManager.heyRefreshToken)"
     }
+    
+    static var pushTokenName = "Push-Token"
+    static var pushToken = UserDefaultsManager.fcmToken
 }
 
 public extension APIHeaders {
@@ -98,7 +101,8 @@ public extension APIHeaders {
             OSVersionName: OSVersion,
             appVersionName: appVersion.versionString,
             xPlatform: iOS,
-            auth: accessToken
+            auth: accessToken,
+            pushTokenName: pushToken
         ]
     }
     
@@ -110,7 +114,8 @@ public extension APIHeaders {
             OSVersionName: OSVersion,
             appVersionName: appVersion.versionString,
             xPlatform: iOS,
-            refreshTokenName: refreshToken
+            refreshTokenName: refreshToken,
+            pushTokenName: pushToken
         ]
     }
     
@@ -122,7 +127,7 @@ public extension APIHeaders {
             deviceModelName: deviceModel,
             OSVersionName: OSVersion,
             appVersionName: appVersion.versionString,
-            xPlatform: iOS,
+            xPlatform: iOS
         ]
     }
 }

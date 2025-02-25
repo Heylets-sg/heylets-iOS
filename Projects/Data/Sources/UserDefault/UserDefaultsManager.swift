@@ -24,4 +24,8 @@ extension UserDefaultsManager {
     static func isTokenExist() -> Bool {
         return heyAccessToken != ""
     }
+    
+    public static func setFCMTokne(_ fcmToken: String) {
+        UserDefaultsManager.fcmToken = fcmToken
+    }
 }

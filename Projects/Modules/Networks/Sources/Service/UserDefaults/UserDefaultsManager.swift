@@ -19,7 +19,7 @@ public struct UserDefaultsManager {
     public init() {}
     
     @UserDefaultWrapper<String>(key: UserDefaultKeys.fcmToken.rawValue, defaultValue: "none")
-    static var fcmToken: String
+    static public var fcmToken: String
     
     @UserDefaultWrapper<String>(key: UserDefaultKeys.heyAccessToken.rawValue, defaultValue: "")
     static public var heyAccessToken: String
