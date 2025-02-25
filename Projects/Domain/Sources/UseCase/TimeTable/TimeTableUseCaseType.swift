@@ -14,7 +14,7 @@ import Combine
 public protocol TimeTableUseCaseType {
     var tableId: Int { get }
     var errMessage: PassthroughSubject<String, Never> { get }
-    var guestSectionLimitExceeded: PassthroughSubject<Void, Never> { get }
+    var guestModeError: PassthroughSubject<Void, Never> { get }
     
     //MARK: Main
     

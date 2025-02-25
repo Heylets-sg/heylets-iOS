@@ -17,6 +17,7 @@ public enum AddSectionError: Error {
     case duplicateSection
     case timeConflict
     case guestSectionLimitExceeded
+    case guestAccessDenied
     case unknown
     
     var description: String {
@@ -37,10 +38,16 @@ public enum AddSectionError: Error {
             return "There are overlapping classes."
         case .guestSectionLimitExceeded:
             return "Guest section addition limit exceeded."
+        case .guestAccessDenied:
+            return "The guest user cannot access the custom module."
         case .unknown:
             return "An unknown error has occurred."
         
         }
+    }
+    
+    var isGuestModeError: Bool {
+        return self == .guestAccessDenied || self == .guestSectionLimitExceeded
     }
 }
 
@@ -63,6 +70,8 @@ extension AddSectionError {
             return .timeConflict
         case "게스트 섹션 추가 제한을 초과했습니다.":
             return .guestSectionLimitExceeded
+        case "게스트 사용자는 사용자 정의 모듈에 접근할 수 없습니다.":
+            return .guestAccessDenied
         default:
             return .unknown
         }

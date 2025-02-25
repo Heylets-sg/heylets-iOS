@@ -59,7 +59,7 @@ public class LogInViewModel: ObservableObject {
             if windowRouter.destination == WindowDestination.onboarding {
                 navigationRouter.pop()
             } else {
-                windowRouter.switch(to: .mypage)
+                windowRouter.switch(to: .timetable)
             }
         case .loginButtonDidTap:
             useCase.logIn(id, password)
