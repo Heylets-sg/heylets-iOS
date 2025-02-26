@@ -139,7 +139,7 @@ public class TimeTableViewModel: ObservableObject {
         case .addLecture(let lecture):
             useCase.addSection(lecture.id)
                 .receive(on: RunLoop.main)
-                .map { _ in TimeTableViewType.main }
+                .map { _ in TimeTableViewType.search }
                 .assign(to: \.viewType, on: self)
                 .store(in: cancelBag)
             
@@ -248,10 +248,6 @@ public class TimeTableViewModel: ObservableObject {
         
         useCase.errMessage
             .receive(on: RunLoop.main)
-            .handleEvents(receiveOutput: { [weak self] _ in
-                self?.viewType = .main
-                self?.state.alerts.settingAlertType = nil
-            })
             .map { message in (true, message)}
             .assign(to: \.state.error, on: self)
             .store(in: cancelBag)
