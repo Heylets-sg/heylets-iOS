@@ -14,10 +14,10 @@ public struct HeyAlertView: View {
         primaryAction: HeyAlertButtonType,
         secondaryAction: HeyAlertButtonType? = nil
     ) {
-            self.title = title
-            self.primaryAction = primaryAction
-            self.secondaryAction = secondaryAction
-        }
+        self.title = title
+        self.primaryAction = primaryAction
+        self.secondaryAction = secondaryAction
+    }
     
     var title: String
     var primaryAction: HeyAlertButtonType

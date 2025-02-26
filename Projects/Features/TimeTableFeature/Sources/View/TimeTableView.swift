@@ -83,6 +83,7 @@ public struct TimeTableView: View {
                     viewModel.send(.errorAlertViewCloseButtonDidTap)
                 })
             )
+            .zIndex(3)
             .heyAlert(
                 isPresented: viewModel.state.alerts.showDeleteAlert,
                 title: "Delete module?",

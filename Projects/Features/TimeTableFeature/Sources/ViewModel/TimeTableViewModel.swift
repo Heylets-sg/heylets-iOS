@@ -131,6 +131,7 @@ public class TimeTableViewModel: ObservableObject {
             state.alerts.showDeleteAlert = false
             
         case .errorAlertViewCloseButtonDidTap:
+            viewType = .search
             state.error = (false, "")
             
         case .selectLecture(let lecture):
@@ -248,6 +249,10 @@ public class TimeTableViewModel: ObservableObject {
         
         useCase.errMessage
             .receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: { [weak self] _ in
+                self?.viewType = .main
+                self?.state.alerts.settingAlertType = nil
+            })
             .map { message in (true, message)}
             .assign(to: \.state.error, on: self)
             .store(in: cancelBag)
