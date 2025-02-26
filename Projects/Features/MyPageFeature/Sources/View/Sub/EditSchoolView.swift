@@ -33,7 +33,7 @@ struct EditSchoolView: View {
                 .padding(.bottom, 10)
                 
                 HStack {
-                    Text("Whick school are you\n currently attending?")
+                    Text("Which school are you\n currently attending?")
                         .font(.bold_20)
                         .multilineTextAlignment(.leading)
                     Spacer()
@@ -69,6 +69,7 @@ struct EditSchoolView: View {
                     .frame(height: 64)
                     .padding(.horizontal, 8)
                     .background(isSelected ? Color.init(hex: "EFF1FA") : Color.heyGray4)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
                     .overlay(isSelected ? RoundedRectangle(cornerRadius: 8).stroke(Color.heyMain, lineWidth: 2) : nil)
                     .onTapGesture {
                         viewModel.send(.selectUniversity(university))

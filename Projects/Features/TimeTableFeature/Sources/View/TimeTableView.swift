@@ -62,6 +62,7 @@ public struct TimeTableView: View {
                     viewModel: viewModel,
                     viewType: $viewModel.viewType
                 )
+                
                 Spacer()
                     .frame(height: 1)
             }
@@ -112,20 +113,21 @@ public struct TimeTableView: View {
             SettingTimeTableAlertView(viewModel: viewModel)
         }
         
-        .overlay(
-            viewModel.viewType == .theme && !themeViewModel.state.isShowingSelectInfoView
-            || viewModel.viewType == .main
-            ? nil : AnyView(
+        .overlay {
+            let shouldShowOverlay = !(viewModel.viewType == .theme && !themeViewModel.state.isShowingSelectInfoView)
+                && viewModel.viewType != .main
+                && viewModel.viewType != .search
+
+            if shouldShowOverlay {
+                let opacity = (viewModel.viewType == .detail || viewModel.viewType == .setting
+                    || (viewModel.viewType == .theme && themeViewModel.state.isShowingSelectInfoView)) ? 1 : 0
+
                 Color.heyDimmed
-                    .opacity(
-                        viewModel.viewType == .detail ||
-                        viewModel.viewType == .setting
-                        || (viewModel.viewType == .theme && themeViewModel.state.isShowingSelectInfoView)
-                        ? 1 : 0)
+                    .opacity(Double(opacity))
                     .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
                     .ignoresSafeArea()
-            )
-        )
+            }
+        }
         .onTapGesture {
             withAnimation {
                 viewModel.send(.initMainView)
@@ -133,7 +135,6 @@ public struct TimeTableView: View {
         }
         
         createBottomSheetView(viewModel.viewType)
-//            .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
     }
 }
 
