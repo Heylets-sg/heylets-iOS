@@ -56,7 +56,6 @@ public struct SettingTimeTableAlertView: View {
                             title: "The timetable has been\nsaved as an image.",
                             primaryAction: ("Ok", .gray, {
                                 viewModel.send(.saveImage)
-//                                print("asdfasdf")
                             })
                         )
                         

@@ -28,8 +28,9 @@ public struct SearchModuleView: View {
                 .padding(.horizontal, 16)
             
             if viewModel.lectureList.isEmpty {
-                Text("We couldn’t find a match for\n‘Career and Enterpreneurial’.")
+                Text("We couldn’t find a match for\n‘\(viewModel.searchText)’.")
                     .font(.regular_16)
+                    .multilineTextAlignment(.center)
                     .foregroundColor(.heyGray2)
                     .padding(.bottom, 20)
                 

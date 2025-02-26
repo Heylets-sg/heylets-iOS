@@ -14,7 +14,7 @@ import BaseFeatureDependency
 public class OnboardingViewModel: ObservableObject {
     
     enum Action {
-        case signInButtonDidTap
+        case startButtonDidTap
         case alreadyRegisteredButtonDidTap
     }
     
@@ -27,10 +27,10 @@ public class OnboardingViewModel: ObservableObject {
     
     func send(_ action: Action) {
         switch action {
-        case .signInButtonDidTap:
-            navigationRouter.push(to: .login)
-        case .alreadyRegisteredButtonDidTap:
+        case .startButtonDidTap:
             navigationRouter.push(to: .selectGuestUniversity)
+        case .alreadyRegisteredButtonDidTap:
+            navigationRouter.push(to: .login)
         }
     }
 }

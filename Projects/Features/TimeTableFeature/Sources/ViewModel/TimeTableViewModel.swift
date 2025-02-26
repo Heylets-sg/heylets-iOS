@@ -131,6 +131,7 @@ public class TimeTableViewModel: ObservableObject {
             state.alerts.showDeleteAlert = false
             
         case .errorAlertViewCloseButtonDidTap:
+            viewType = .search
             state.error = (false, "")
             
         case .selectLecture(let lecture):
@@ -139,7 +140,7 @@ public class TimeTableViewModel: ObservableObject {
         case .addLecture(let lecture):
             useCase.addSection(lecture.id)
                 .receive(on: RunLoop.main)
-                .map { _ in TimeTableViewType.main }
+                .map { _ in TimeTableViewType.search }
                 .assign(to: \.viewType, on: self)
                 .store(in: cancelBag)
             

@@ -21,7 +21,7 @@ struct GenericResponse<T: Decodable>: Decodable {
         case metadata
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.success = ((try? container.decode(Int.self, forKey: .success)) != nil)
         self.message = (try? container.decode(String.self, forKey: .message)) ?? ""
