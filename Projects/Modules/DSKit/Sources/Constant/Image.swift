@@ -10,6 +10,7 @@ import SwiftUI
 
 public extension UIImage {
     static let icAdd = DSKitAsset.icAdd.image
+    static let icArrow = DSKitAsset.icArrow.image
     static let icCamera = DSKitAsset.icCamera.image
     static let icClose = DSKitAsset.icClose.image
     static let icError = DSKitAsset.icError.image

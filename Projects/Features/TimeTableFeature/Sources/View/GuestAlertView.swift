@@ -49,13 +49,20 @@ struct GuestAlertView: View {
             Button {
                 loginButtonAction()
             } label: {
-                Text("Log In")
-                    .font(.semibold_14)
-                    .foregroundColor(.heyWhite)
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 92)
+                HStack {
+                    Text("Log In")
+                        .font(.semibold_14)
+                        .foregroundColor(.heyWhite)
+                        .padding(.trailing, 8)
+                    
+                    Image(uiImage: .icArrow)
+                        .resizable()
+                        .frame(width: 10, height: 9)
+                }
+                .padding(.vertical, 15)
+                .padding(.horizontal, 92)
+                
             }
-            .padding(.horizontal, 20)
             .frame(height: 50)
             .background(Color.heyMain)
             .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -68,11 +75,7 @@ struct GuestAlertView: View {
                     .font(.regular_12)
                     .foregroundColor(.heyGray2)
             }
-            .padding(.horizontal, 20)
             .padding(.bottom, 22)
-            
-            
-            
         }
         .background(Color.heyWhite)
         .frame(height: 373)
