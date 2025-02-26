@@ -17,6 +17,10 @@ public extension Project {
         "NSAppTransportSecurity": .dictionary([
             "NSAllowsArbitraryLoads": .boolean(true)
         ]),
+        "UIBackgroundModes": .array([
+            .string("fetch"),
+            .string("remote-notification")
+        ]),
         "UIAppFonts": .array([
             .string("NotoSansKR-Medium.ttf"),
             .string("NotoSansKR-Regular.ttf"),
@@ -35,7 +39,7 @@ public extension Project {
             .string("UIInterfaceOrientationPortrait")
         ])
     ]
-
+    
     static let demoInfoPlist: [String: InfoPlist.Value] = [
         "BASE_URL": .string("$(BASE_URL)"),
         "NSAppTransportSecurity": .dictionary([
