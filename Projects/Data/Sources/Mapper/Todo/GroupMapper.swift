@@ -27,7 +27,7 @@ extension CustomGroupResult {
         .init(
             id: groupId,
             type: GroupType.toGroupType(from: type),
-            name: groupName,
+            name: name,
             items: items.map { $0.toEntity() }
         )
     }

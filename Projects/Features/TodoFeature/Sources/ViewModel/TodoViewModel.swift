@@ -17,12 +17,23 @@ public class TodoViewModel: ObservableObject {
     
     enum Action {
         case onAppear
+//        case deleteItem
+//        case deleteGroup
+    }
+    
+    enum WindowAction {
+        case gotoTimeTable
+        case gotoMyPage
     }
     
     public var windowRouter: WindowRoutable
     private let useCase: TodoUsecaseType
 
-    @Published var groupList: [TodoGroup] = []
+    @Published var groupList: [TodoGroup] = [] {
+        didSet {
+            print("💜💜💜💜💜 \(groupList)")
+        }
+    }
     
     private var cancelBag = CancelBag()
     
@@ -42,6 +53,15 @@ public class TodoViewModel: ObservableObject {
             useCase.getGroup()
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
+        }
+    }
+    
+    func send(_ action: WindowAction) {
+        switch action {
+        case .gotoTimeTable:
+            windowRouter.switch(to: .timetable)
+        case .gotoMyPage:
+            windowRouter.switch(to: .mypage)
         }
     }
     

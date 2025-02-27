@@ -17,5 +17,4 @@ public enum WindowDestination {
     case timetable
     case todo
     case mypage
-    case home
 }

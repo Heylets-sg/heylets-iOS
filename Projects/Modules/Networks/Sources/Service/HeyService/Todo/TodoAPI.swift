@@ -36,27 +36,27 @@ extension TodoAPI: BaseAPI {
                 with: "\(itemId)"
             )
         case .deleteGroup(let groupId):
-            return Paths.deleteItem.replacingOccurrences(
+            return Paths.deleteGroup.replacingOccurrences(
                 of: "{groupId}",
                 with: "\(groupId)"
             )
         case .getGroup(let timeTableId):
-            return Paths.deleteItem.replacingOccurrences(
+            return Paths.getGroup.replacingOccurrences(
                 of: "{timeTableId}",
                 with: "\(timeTableId)"
             )
         case .editItem(let itemId, _):
-            return Paths.deleteItem.replacingOccurrences(
+            return Paths.editItem.replacingOccurrences(
                 of: "{itemId}",
                 with: "\(itemId)"
             )
         case .toggleItemCompleted(let itemId):
-            return Paths.deleteItem.replacingOccurrences(
+            return Paths.toggleItemCompleted.replacingOccurrences(
                 of: "{itemId}",
                 with: "\(itemId)"
             )
         case .editGroupName(let groupId, _):
-            return Paths.deleteItem.replacingOccurrences(
+            return Paths.editGroupName.replacingOccurrences(
                 of: "{groupId}",
                 with: "\(groupId)"
             )
@@ -64,7 +64,7 @@ extension TodoAPI: BaseAPI {
             return Paths.createGroup
             
         case .createItem(let groupId, _):
-            return Paths.deleteItem.replacingOccurrences(
+            return Paths.createItem.replacingOccurrences(
                 of: "{groupId}",
                 with: "\(groupId)"
             )

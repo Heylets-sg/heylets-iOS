@@ -64,6 +64,9 @@ public extension TodoUseCase {
     func getGroup() -> AnyPublisher<Void, Never> {
         guard let tableId else { return Empty<Void, Never>().eraseToAnyPublisher() }
         return todoRepository.getGroup(tableId)
+            .handleEvents(receiveOutput: { [weak self] groupList in
+                self?.todoGroupList.send(groupList)
+            })
             .map { _ in }
             .catch {  _ in Empty() }
             .eraseToAnyPublisher()

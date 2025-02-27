@@ -21,36 +21,46 @@ public struct TodoView: View {
     
     
     public var body: some View {
-        VStack(alignment: .leading) {
-            Text("Things to do")
-                .font(.semibold_18)
-                .foregroundColor(.heyGray1)
-                .padding(.leading, 16)
-                .padding(.bottom, 41)
-                .padding(.top, 81)
-            
-            ScrollView {
-                VStack {
-                    ForEach(viewModel.groupList, id: \.self) { group in
-                        TodoGroupView(group: group)
-                            .padding(.bottom, 16)
+        ZStack {
+            VStack(alignment: .leading) {
+                Text("Things to do")
+                    .font(.semibold_18)
+                    .foregroundColor(.heyGray1)
+                    .padding(.leading, 16)
+                    .padding(.bottom, 41)
+                    .padding(.top, 81)
+                
+                ScrollView {
+                    VStack {
+                        ForEach(viewModel.groupList, id: \.self) { group in
+                            TodoGroupView(group: group)
+                                .padding(.bottom, 16)
+                        }
+                    }
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 36)
+                    
+                    Button {
+                        
+                    } label: {
+                        Image(uiImage: .icAddGroup)
+                            .resizable()
+                            .frame(width: 28, height: 28)
+                            .padding(.bottom, 123)
                     }
                 }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 36)
-                
-                Button {
-                    
-                } label: {
-                    Image(uiImage: .icAddGroup)
-                        .resizable()
-                        .frame(width: 28, height: 28)
-                        .padding(.bottom, 123)
-                }
+                .scrollIndicators(.hidden)
             }
-            .scrollIndicators(.hidden)
+            .ignoresSafeArea()
+            .onAppear {
+                viewModel.send(.onAppear)
+            }
+            
+            TabBarView(
+                timeTableAction: { viewModel.send(.gotoTimeTable) },
+                mypageAction: { viewModel.send(.gotoMyPage) }
+            )
         }
-        .ignoresSafeArea()
     }
 }
 

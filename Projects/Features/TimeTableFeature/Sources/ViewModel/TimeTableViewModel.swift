@@ -60,6 +60,11 @@ public class TimeTableViewModel: ObservableObject {
         case selectedTheme(String)
     }
     
+    enum WindowAction {
+        case gotoTodo
+        case gotoMyPage
+    }
+    
     @Published var state = State()
     private let cancelBag = CancelBag()
     public var windowRouter: WindowRoutableType
@@ -200,7 +205,15 @@ public class TimeTableViewModel: ObservableObject {
                 .assign(to: \.selectedThemeColor, on: self)
                 .store(in: cancelBag)
         }
+    }
     
+    func send(_ action: WindowAction) {
+        switch action {
+        case .gotoTodo:
+            windowRouter.switch(to: .todo)
+        case .gotoMyPage:
+            windowRouter.switch(to: .mypage)
+        }
     }
     
     private func bindState() {

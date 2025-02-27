@@ -70,9 +70,6 @@ public struct RootView: View {
                         useCase: useCase
                     )
                 )
-                
-            case .home:
-                HomeView()
             }
         }
     }

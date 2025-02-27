@@ -42,7 +42,7 @@ public struct SectionGroupResult: Decodable {
 
 public struct CustomGroupResult: Decodable {
     public let groupId: Int
-    public let groupName: String
+    public let name: String
     let displayOrder: Int
     public let items: [ItemResult]
     public let type: String

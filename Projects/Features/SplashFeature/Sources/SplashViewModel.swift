@@ -41,9 +41,9 @@ public class SplashViewModel: ObservableObject {
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: {[weak self] tokenExisted in
                     if tokenExisted {
-                        self?.windowRouter.switch(to: .home)
+                        self?.windowRouter.switch(to: .timetable)
                     } else {
-                        self?.windowRouter.switch(to: .home)
+                        self?.windowRouter.switch(to: .timetable)
                     }
                 })
                 .store(in: cancelBag)

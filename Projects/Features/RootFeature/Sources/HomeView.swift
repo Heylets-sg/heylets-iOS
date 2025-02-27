@@ -95,8 +95,9 @@ struct HomeView: View {
         }
     }
     
+    
     init() {
-        UITabBar.appearance().unselectedItemTintColor = .white
+        UITabBar.appearance().unselectedItemTintColor = .black
     }
 }
 
