@@ -118,8 +118,7 @@ public struct MyPageTopView: View {
             
             HStack {
                 Button {
-                    
-                    router.windowRouter.switch(to: .timetable)
+                    router.windowRouter.switch(to: .home)
                 } label: {
                     Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
                         .resizable()

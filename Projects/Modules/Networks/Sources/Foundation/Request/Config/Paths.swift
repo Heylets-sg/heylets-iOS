@@ -74,9 +74,23 @@ public enum Paths {
     static let patchAcademicInfo = "api/v1/users/profile/me/academic-info"
     static let postProfileImg = "api/v1/users/profile/me/profile-image"
     
+    //MARK: TODO
+    
+    static let deleteItem = "api/v1/todos/items/{itemId}"
+    static let deleteGroup = "api/v1/todos/groups/{groupId}"
+    static let getGroup = "api/v1/todos/{timeTableId}"
+    static let editItem = "api/v1/todos/items/{itemId}"
+    static let toggleItemCompleted = "api/v1/todos/items/{itemId}/toggle"
+    static let editGroupName = "api/v1/todos/groups/{groupId}/name"
+    static let createGroup = "api/v1/todos/groups"
+    static let createItem = "api/v1/todos/groups/{groupId}/items"
+    
+    
     //MARK: Test
     
     static let testSignUp = "api/v1/admin/auth/signup/test"
     static let testGuestSignUp = "api/v1/admin/auth/guest/signup/test"
+    
+    
     
 }

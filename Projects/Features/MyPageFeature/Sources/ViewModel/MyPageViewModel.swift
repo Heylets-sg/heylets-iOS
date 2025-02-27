@@ -16,7 +16,6 @@ import Core
 public class MyPageViewModel: ObservableObject {
     struct State {
         var logoutAlertViewIsPresented: Bool = false
-//        var isGuestMode: Bool = false
     }
     
     enum Action {
