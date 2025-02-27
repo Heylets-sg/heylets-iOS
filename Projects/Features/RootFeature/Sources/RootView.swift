@@ -64,6 +64,9 @@ public struct RootView: View {
                 )
             case .todo:
                 TodoView(viewModel: TodoViewModel(windowRouter: router.windowRouter))
+                
+            case .home:
+                HomeView()
             }
         }
     }

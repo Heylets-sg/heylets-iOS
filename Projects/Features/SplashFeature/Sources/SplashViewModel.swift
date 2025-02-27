@@ -41,23 +41,12 @@ public class SplashViewModel: ObservableObject {
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: {[weak self] tokenExisted in
                     if tokenExisted {
-                        self?.windowRouter.switch(to: .timetable)
+                        self?.windowRouter.switch(to: .home)
                     } else {
-                        self?.windowRouter.switch(to: .onboarding)
+                        self?.windowRouter.switch(to: .home)
                     }
                 })
                 .store(in: cancelBag)
-//                .flatMap { tokenExisted -> AnyPublisher<Void, Never> in
-//                    if tokenExisted {
-//                        return Just(()).eraseToAnyPublisher()
-//                    } else {
-//                        return self.useCase.tokenRefresh()
-//                    }
-//                }
-//                .sink(receiveValue: { [weak self] in
-//                    self?.windowRouter.switch(to: .timetable)
-//                })
-//                .store(in: cancelBag)
         case .goToOnboarding:
             windowRouter.switch(to: .onboarding)
         case .goToMyPage:
