@@ -63,7 +63,13 @@ public struct RootView: View {
                     )
                 )
             case .todo:
-                TodoView(viewModel: TodoViewModel(windowRouter: router.windowRouter))
+                let useCase = useCase.todoUseCase
+                TodoView(
+                    viewModel: TodoViewModel(
+                        windowRouter: router.windowRouter,
+                        useCase: useCase
+                    )
+                )
                 
             case .home:
                 HomeView()

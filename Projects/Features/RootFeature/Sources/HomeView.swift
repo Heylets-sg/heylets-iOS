@@ -69,7 +69,13 @@ struct HomeView: View {
                             themeViewModel: .init(useCase)
                         )
                     case .todo:
-                        TodoView(viewModel: TodoViewModel(windowRouter: router.windowRouter))
+                        let useCase = useCase.todoUseCase
+                        TodoView(
+                            viewModel: TodoViewModel(
+                                windowRouter: router.windowRouter,
+                                useCase: useCase
+                            )
+                        )
                     case .mypage:
                         MyPageView(
                             viewModel: MyPageViewModel(

@@ -19,6 +19,7 @@ extension TodoGroup {
     static public var group_stub1: Self {
         .init(
             id: 1,
+            type: .default,
             name: "1번 그룹",
             items: [
                 .init(
@@ -38,6 +39,7 @@ extension TodoGroup {
     static public var group_stub2: Self {
         .init(
             id: 2,
+            type: .default,
             name: "2번 그룹",
             items: [
                 .init(
@@ -57,6 +59,7 @@ extension TodoGroup {
     static public var group_stub3: Self {
         .init(
             id: 3,
+            type: .custom,
             name: "3번 그룹",
             items: [
                 .init(
@@ -76,6 +79,7 @@ extension TodoGroup {
     static public var group_stub4: Self {
         .init(
             id: 4,
+            type: .custom,
             name: "1번 그룹",
             items: [
                 .init(

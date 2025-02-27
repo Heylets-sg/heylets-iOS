@@ -17,4 +17,5 @@ public protocol RepositoryType {
     var lectureRepository: LectureRepositoryType { get }
     var userRepository: UserRepositoryType { get }
     var guestRepository: GuestRepositoryType { get }
+    var todoRepository: TodoRepositoryType { get }
 }

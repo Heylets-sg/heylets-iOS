@@ -12,21 +12,33 @@ import Combine
 import Core
 
 final public class TodoUseCase: TodoUsecaseType {
-    private let timeTableId: Int
+    private var tableId: Int? = nil
+    private let timeTableRepository: TimeTableRepositoryType
     private let todoRepository: TodoRepositoryType
     
     private var cancelBag = CancelBag()
     
     public init(
-        timeTableId: Int,
+        timeTableRepository: TimeTableRepositoryType,
         todoRepository: TodoRepositoryType
     ) {
-        self.timeTableId = timeTableId
+        self.timeTableRepository = timeTableRepository
         self.todoRepository = todoRepository
+        
+        getTableId()
     }
     
     public var todoGroupList = CurrentValueSubject<[TodoGroup], Never>([])
     
+    func getTableId() {
+        timeTableRepository.getTableList()
+            .catch { _ in Empty() }
+            .sink(receiveValue: { tableId in
+                guard let tableId  else { return }
+                self.tableId = tableId
+            })
+            .store(in: cancelBag)
+    }
 }
 
 public extension TodoUseCase {
@@ -50,7 +62,8 @@ public extension TodoUseCase {
     }
     
     func getGroup() -> AnyPublisher<Void, Never> {
-        todoRepository.getGroup(timeTableId)
+        guard let tableId else { return Empty<Void, Never>().eraseToAnyPublisher() }
+        return todoRepository.getGroup(tableId)
             .map { _ in }
             .catch {  _ in Empty() }
             .eraseToAnyPublisher()
@@ -89,7 +102,8 @@ public extension TodoUseCase {
         _ name: String,
         _ type: String
     ) -> AnyPublisher<Void, Never> {
-        todoRepository.createGroup(name, type, timeTableId)
+        guard let tableId else { return Empty<Void, Never>().eraseToAnyPublisher() }
+        return todoRepository.createGroup(name, type, tableId)
             .catch { _ in Empty() }
             .flatMap { [weak self] group in
                 guard let self else { return Empty<Void, Never>().eraseToAnyPublisher() }
@@ -142,6 +156,40 @@ public extension TodoUseCase {
         }
         return Empty().eraseToAnyPublisher()
     }
+}
 
-
+public class StubTodoUseCase: TodoUsecaseType {
+    public var todoGroupList = CurrentValueSubject<[TodoGroup], Never>([])
+    
+    public func deleteItem(_ itemId: Int) -> AnyPublisher<Void, Never> {
+        return Just(()).eraseToAnyPublisher()
+    }
+    
+    public func deleteGroup(_ groupId: Int) -> AnyPublisher<Void, Never> {
+        return Just(()).eraseToAnyPublisher()
+    }
+    
+    public func getGroup() -> AnyPublisher<Void, Never> {
+        return Just(()).eraseToAnyPublisher()
+    }
+    
+    public func editItem(_ itemId: Int, _ content: String) -> AnyPublisher<Void, Never> {
+        return Just(()).eraseToAnyPublisher()
+    }
+    
+    public func toggleItemCompleted(_ itemId: Int) -> AnyPublisher<Void, Never> {
+        return Just(()).eraseToAnyPublisher()
+    }
+    
+    public func editGroupName(_ groupId: Int, _ name: String) -> AnyPublisher<Void, Never> {
+        return Just(()).eraseToAnyPublisher()
+    }
+    
+    public func createGroup(_ name: String, _ type: String) -> AnyPublisher<Void, Never> {
+        return Just(()).eraseToAnyPublisher()
+    }
+    
+    public func createItem(_ groupId: Int, _ content: String) -> AnyPublisher<Void, Never> {
+        return Just(()).eraseToAnyPublisher()
+    }
 }

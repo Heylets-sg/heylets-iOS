@@ -31,7 +31,7 @@ public struct TodoView: View {
             
             ScrollView {
                 VStack {
-                    ForEach(viewModel.group, id: \.self) { group in
+                    ForEach(viewModel.groupList, id: \.self) { group in
                         TodoGroupView(group: group)
                             .padding(.bottom, 16)
                     }
@@ -239,7 +239,8 @@ public struct EtcGroupView: View {
 }
 
 
-#Preview {
-    TodoView(viewModel: .init(windowRouter: Router.default.windowRouter))
-        .environmentObject(Router.default)
-}
+//#Preview {
+//    let useCase = StubHeyUseCase.stub.todoUseCase
+//    TodoView(viewModel: .init(windowRouter: Router.default.windowRouter, useCase: useCase))
+//        .environmentObject(Router.default)
+//}
