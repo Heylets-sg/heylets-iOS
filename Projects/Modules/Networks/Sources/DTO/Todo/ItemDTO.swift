@@ -17,9 +17,9 @@ public struct ItemRequest: Encodable {
 }
 
 public struct ItemResult: Decodable {
-    let itemId: Int
-    let content: String
-    let completed: Bool
+    public let itemId: Int
+    public let content: String
+    public let completed: Bool
     let completedAt: String?
     let displayOrder: Int
 }

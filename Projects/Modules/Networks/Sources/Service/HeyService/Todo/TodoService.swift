@@ -38,13 +38,13 @@ public protocol TodoServiceType {
     func editGroupName(
         _ groupId: Int,
         _ name: String
-    ) -> NetworkDecodableResponse<SectionGroupResult>
+    ) -> NetworkDecodableResponse<CustomGroupResult>
     
     func createGroup(
         _ name: String,
         _ type: String,
         _ timeTableSectionId: Int
-    ) -> NetworkDecodableResponse<SectionGroupResult>
+    ) -> NetworkDecodableResponse<CustomGroupResult>
     
     func createItem(
         _ groupId: Int,
@@ -53,28 +53,42 @@ public protocol TodoServiceType {
 }
 
 extension TodoService: TodoServiceType {
-    public func deleteItem(_ itemId: Int) -> NetworkVoidResponse {
+    public func deleteItem(
+        _ itemId: Int
+    ) -> NetworkVoidResponse {
         requestWithNoResult(.deleteItem(itemId))
     }
     
-    public func deleteGroup(_ groupId: Int) -> NetworkVoidResponse {
+    public func deleteGroup(
+        _ groupId: Int
+    ) -> NetworkVoidResponse {
         requestWithNoResult(.deleteItem(groupId))
     }
     
-    public func getGroup(_ timeTableId: Int) -> NetworkDecodableResponse<TodoResult> {
+    public func getGroup(
+        _ timeTableId: Int
+    ) -> NetworkDecodableResponse<TodoResult> {
         requestWithResult(.getGroup(timeTableId))
     }
     
-    public func editItem(_ itemId: Int, _ content: String) -> NetworkDecodableResponse<ItemResult> {
+    public func editItem(
+        _ itemId: Int,
+        _ content: String
+    ) -> NetworkDecodableResponse<ItemResult> {
         let request = ItemRequest(content)
         return requestWithResult(.editItem(itemId, request))
     }
     
-    public func toggleItemCompleted(_ itemId: Int) -> NetworkDecodableResponse<ItemResult> {
+    public func toggleItemCompleted(
+        _ itemId: Int
+    ) -> NetworkDecodableResponse<ItemResult> {
         requestWithResult(.toggleItemCompleted(itemId))
     }
     
-    public func editGroupName(_ groupId: Int, _ groupName: String) -> NetworkDecodableResponse<SectionGroupResult> {
+    public func editGroupName(
+        _ groupId: Int,
+        _ groupName: String
+    ) -> NetworkDecodableResponse<CustomGroupResult> {
         let request = EditGroupNameRequest(groupName)
         return requestWithResult(.editGroupName(groupId, request))
     }
@@ -83,7 +97,7 @@ extension TodoService: TodoServiceType {
         _ groupName: String,
         _ type: String,
         _ timeTableSectionId: Int
-    ) -> NetworkDecodableResponse<SectionGroupResult> {
+    ) -> NetworkDecodableResponse<CustomGroupResult> {
         let request = CreateGroupRequest(
             groupName,
             type, 
@@ -92,7 +106,10 @@ extension TodoService: TodoServiceType {
         return requestWithResult(.createGroup(request))
     }
     
-    public func createItem(_ groupId: Int, _ content: String) -> NetworkDecodableResponse<ItemResult> {
+    public func createItem(
+        _ groupId: Int,
+        _ content: String
+    ) -> NetworkDecodableResponse<ItemResult> {
         let request = ItemRequest(content)
         return requestWithResult(.createItem(groupId, request))
     }

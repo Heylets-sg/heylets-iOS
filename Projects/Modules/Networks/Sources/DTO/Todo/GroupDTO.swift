@@ -34,16 +34,16 @@ public struct CreateGroupRequest: Encodable {
 
 
 public struct SectionGroupResult: Decodable {
-    let groupId: Int
-    let groupName: String
+    public let groupId: Int
+    public let groupName: String
     let sectionOrder: Int
-    let items: [ItemResult]
+    public let items: [ItemResult]
 }
 
 public struct CustomGroupResult: Decodable {
-    let groupId: Int
-    let groupName: String
+    public let groupId: Int
+    public let groupName: String
     let displayOrder: Int
-    let items: [ItemResult]
-    let type: String
+    public let items: [ItemResult]
+    public let type: String
 }
