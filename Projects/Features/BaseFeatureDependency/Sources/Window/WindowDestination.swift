@@ -15,5 +15,6 @@ public enum WindowDestination {
     case login
     case onboarding
     case timetable
+    case todo
     case mypage
 }
