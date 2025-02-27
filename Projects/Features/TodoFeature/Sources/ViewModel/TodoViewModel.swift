@@ -15,10 +15,11 @@ import Core
 
 public class TodoViewModel: ObservableObject {
     
-    enum Action {
-    }
+//    enum Action {
+//    }
     
     public var windowRouter: WindowRoutable
+    @Published var group: [TodoGroup] = TodoGroup.list
     private var cancelBag = CancelBag()
     
     public init(
@@ -27,11 +28,11 @@ public class TodoViewModel: ObservableObject {
         self.windowRouter = windowRouter
     }
     
-    func send(_ action: Action) {
-        switch action {
-            
-        }
-    }
+//    func send(_ action: Action) {
+//        switch action {
+//            
+//        }
+//    }
 }
 
 

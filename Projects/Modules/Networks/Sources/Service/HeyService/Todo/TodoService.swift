@@ -38,13 +38,13 @@ public protocol TodoServiceType {
     func editGroupName(
         _ groupId: Int,
         _ name: String
-    ) -> NetworkDecodableResponse<GroupResult>
+    ) -> NetworkDecodableResponse<SectionGroupResult>
     
     func createGroup(
         _ name: String,
         _ type: String,
         _ timeTableSectionId: Int
-    ) -> NetworkDecodableResponse<GroupResult>
+    ) -> NetworkDecodableResponse<SectionGroupResult>
     
     func createItem(
         _ groupId: Int,
@@ -74,7 +74,7 @@ extension TodoService: TodoServiceType {
         requestWithResult(.toggleItemCompleted(itemId))
     }
     
-    public func editGroupName(_ groupId: Int, _ groupName: String) -> NetworkDecodableResponse<GroupResult> {
+    public func editGroupName(_ groupId: Int, _ groupName: String) -> NetworkDecodableResponse<SectionGroupResult> {
         let request = EditGroupNameRequest(groupName)
         return requestWithResult(.editGroupName(groupId, request))
     }
@@ -83,7 +83,7 @@ extension TodoService: TodoServiceType {
         _ groupName: String,
         _ type: String,
         _ timeTableSectionId: Int
-    ) -> NetworkDecodableResponse<GroupResult> {
+    ) -> NetworkDecodableResponse<SectionGroupResult> {
         let request = CreateGroupRequest(
             groupName,
             type, 

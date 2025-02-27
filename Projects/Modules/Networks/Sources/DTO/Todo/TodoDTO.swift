@@ -9,6 +9,6 @@
 import Foundation
 
 public struct TodoResult: Decodable {
-    let sectionGroups: [GroupResult]
-    let customGroups: [GroupResult]
+    let sectionGroups: [SectionGroupResult]
+    let customGroups: [CustomGroupResult]
 }

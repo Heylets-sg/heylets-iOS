@@ -33,10 +33,17 @@ public struct CreateGroupRequest: Encodable {
 }
 
 
-public struct GroupResult: Decodable {
+public struct SectionGroupResult: Decodable {
     let groupId: Int
     let groupName: String
     let sectionOrder: Int
     let items: [ItemResult]
-    let type: String?
+}
+
+public struct CustomGroupResult: Decodable {
+    let groupId: Int
+    let groupName: String
+    let displayOrder: Int
+    let items: [ItemResult]
+    let type: String
 }
