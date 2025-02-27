@@ -21,7 +21,7 @@ public struct TodoGroup: Hashable {
     public let id: Int
     public let type: GroupType
     public let name: String
-    public let items: [TodoItem]
+    public var items: [TodoItem]
     
     public init(
         id: Int,
