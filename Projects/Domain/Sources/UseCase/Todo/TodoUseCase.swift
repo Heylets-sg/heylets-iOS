@@ -121,7 +121,10 @@ public extension TodoUseCase {
     ) -> AnyPublisher<Void, Never> {
         todoRepository.createItem(groupId, content)
             .catch { _ in Empty() }
-            .flatMap(updateTodoItem)
+            .flatMap { [weak self] item in
+                guard let self else { return Empty<Void, Never>().eraseToAnyPublisher() }
+                return self.addItem(item: item, groupId: groupId)
+            }
             .eraseToAnyPublisher()
     }
 }
@@ -134,8 +137,6 @@ public extension TodoUseCase {
             //아이디 있으면 변경, 없으면 추가
             if let itemIndex = groups[groupIndex].items.firstIndex(where: { $0.id == item.id }) {
                 groups[groupIndex].items[itemIndex] = item
-            } else {
-                groups[groupIndex].items.append(item)
             }
             todoGroupList.send(groups)
             return Just(()).eraseToAnyPublisher()
@@ -155,6 +156,19 @@ public extension TodoUseCase {
             }
         }
         return Empty().eraseToAnyPublisher()
+    }
+    
+    func addItem(item: TodoItem, groupId: Int) -> AnyPublisher<Void, Never> {
+        var groups = todoGroupList.value
+        
+        for groupIndex in groups.indices {
+            if groups[groupIndex].id == groupId {
+                groups[groupIndex].items.append(item)
+                todoGroupList.send(groups)
+                return Just(()).eraseToAnyPublisher()
+            }
+        }
+        return Empty<Void, Never>().eraseToAnyPublisher()
     }
 }
 

@@ -48,7 +48,7 @@ public struct TodoView: View {
                         Image(uiImage: .icAddGroup)
                             .resizable()
                             .frame(width: 28, height: 28)
-                            .padding(.bottom, 123)
+                            .padding(.bottom, 209)
                     }
                 }
                 .scrollIndicators(.hidden)
@@ -138,6 +138,7 @@ public struct TodoGroupView: View {
                         viewModel.send(.addTaskButtonDidTap(group.id))
                     }
                 }
+                Spacer()
             }
             
             EtcGroupView(
