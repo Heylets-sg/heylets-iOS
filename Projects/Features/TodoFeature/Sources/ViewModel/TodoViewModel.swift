@@ -16,18 +16,20 @@ import Core
 public class TodoViewModel: ObservableObject {
     struct State {
         var showItemAlertView: Bool = false
+        var addItem: (Int?, String) = (nil, "")
     }
     
     enum Action {
         case onAppear
         case addGroupButtonDidTap
-        case deleteItem(Int)
-        case deleteGroup(Int)
+        case deleteItemButtonDidTap(Int)
+        case deleteGroupButtonDidTap(Int)
         case toggleItemCompletedButtonDidTap(Int)
+        case changeGroupNameButtonDidTap(Int, String)
         
-        case addItem(Int, String)
+        case addItem
         case closeButtonDidTap
-        case addTaskButtonDidTap
+        case addTaskButtonDidTap(Int)
     }
     
     enum WindowAction {
@@ -64,12 +66,12 @@ public class TodoViewModel: ObservableObject {
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
             
-        case .deleteGroup(let groupId):
+        case .deleteGroupButtonDidTap(let groupId):
             useCase.deleteGroup(groupId)
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
             
-        case .deleteItem(let itemId):
+        case .deleteItemButtonDidTap(let itemId):
             useCase.deleteItem(itemId)
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
@@ -84,14 +86,26 @@ public class TodoViewModel: ObservableObject {
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
             
-        case .addTaskButtonDidTap:
+        case .addTaskButtonDidTap(let groupId):
             state.showItemAlertView = true
+            state.addItem.0 = groupId
             
         case .closeButtonDidTap:
             state.showItemAlertView = false
             
-        case .addItem(let groupId, let content):
+        case .addItem:
+            guard let groupId = state.addItem.0 else { return }
+            let content = state.addItem.1
             useCase.createItem(groupId, content)
+                .receive(on: RunLoop.main)
+                .sink(receiveValue: { [weak self] _ in
+                    self?.state.addItem = (nil, "")
+                    self?.state.showItemAlertView = false
+                })
+                .store(in: cancelBag)
+            
+        case .changeGroupNameButtonDidTap(let groupId, let groupName):
+            useCase.editGroupName(groupId, groupName)
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
         }

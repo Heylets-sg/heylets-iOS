@@ -65,10 +65,12 @@ public struct TodoView: View {
             
             TodoAddItemView(
                 title: "Enter name",
+                content: $viewModel.state.addItem.1,
+                groupId: 1,
                 primaryAction: ("Close", .gray, { viewModel.send(.closeButtonDidTap) }),
-                secondaryAction: ("Ok", .primary, { viewModel.send(.closeButtonDidTap) })
+                secondaryAction: ("Ok", .primary, { viewModel.send(.addItem) })
             )
-//            .hidden(!viewModel.state.showItemAlertView)
+            .hidden(!viewModel.state.showItemAlertView)
         }
     }
 }
@@ -110,6 +112,7 @@ public struct TodoGroupView: View {
                 VStack {
                     ForEach(group.items, id: \.id) { item in
                         TodoItemView(
+                            groupId: group.id,
                             item: item,
                             viewModel: viewModel
                         )
@@ -132,22 +135,30 @@ public struct TodoGroupView: View {
                     .background(Color.init(hex: "#F7F7F7"))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .onTapGesture {
-                        viewModel.send(.addTaskButtonDidTap)
+                        viewModel.send(.addTaskButtonDidTap(group.id))
                     }
                 }
             }
             
-            EtcGroupView()
-                .hidden(!showEtcView)
+            EtcGroupView(
+                deleteGroupAction: { viewModel.send(.deleteGroupButtonDidTap(group.id))}
+            )
+            .hidden(!showEtcView)
         }
     }
 }
 
 public struct TodoItemView: View {
+    private let groupId: Int
     private let item: TodoItem
     private let viewModel: TodoViewModel
     
-    public init(item: TodoItem, viewModel: TodoViewModel) {
+    public init(
+        groupId: Int,
+        item: TodoItem,
+        viewModel: TodoViewModel
+    ) {
+        self.groupId = groupId
         self.item = item
         self.viewModel = viewModel
     }
@@ -195,7 +206,7 @@ public struct TodoItemView: View {
                 HStack(spacing: 0) {
                     Spacer()
                     Button {
-                        viewModel.send(.deleteItem(item.id))
+                        viewModel.send(.deleteItemButtonDidTap(item.id))
                     } label: {
                         Text("Delete")
                             .font(.medium_14)
@@ -235,13 +246,19 @@ public struct TodoItemView: View {
 }
 
 public struct EtcGroupView: View {
+    private let deleteGroupAction: (() -> Void)
+    init(
+        deleteGroupAction: @escaping () -> Void
+    ) {
+        self.deleteGroupAction = deleteGroupAction
+    }
     public var body: some View {
         VStack {
             HStack {
                 Spacer()
                 VStack {
                     Button {
-                        
+                        deleteGroupAction()
                     } label: {
                         Text("Delete group")
                             .font(.medium_14)

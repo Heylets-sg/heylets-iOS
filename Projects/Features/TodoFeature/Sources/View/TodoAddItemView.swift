@@ -15,16 +15,21 @@ import BaseFeatureDependency
 public struct TodoAddItemView: View {
     public init(
         title: String,
+        content: Binding<String>,
+        groupId: Int,
         primaryAction: HeyAlertButtonType,
         secondaryAction: HeyAlertButtonType
     ) {
         self.title = title
+        self._content = content
+        self.groupId = groupId
         self.primaryAction = primaryAction
         self.secondaryAction = secondaryAction
     }
     
     var title: String
-    @State var text: String = ""
+    let groupId: Int
+    @Binding var content: String
     var primaryAction: HeyAlertButtonType
     var secondaryAction: HeyAlertButtonType
     
@@ -39,7 +44,7 @@ public struct TodoAddItemView: View {
                     .foregroundColor(.heyGray1)
                     .padding(.vertical, 24)
                 
-                TextField(text: $text, label: {
+                TextField(text: $content, label: {
                     
                 })
                 .font(.medium_12)

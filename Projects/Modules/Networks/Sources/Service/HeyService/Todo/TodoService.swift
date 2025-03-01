@@ -62,7 +62,7 @@ extension TodoService: TodoServiceType {
     public func deleteGroup(
         _ groupId: Int
     ) -> NetworkVoidResponse {
-        requestWithNoResult(.deleteItem(groupId))
+        requestWithNoResult(.deleteGroup(groupId))
     }
     
     public func getGroup(
