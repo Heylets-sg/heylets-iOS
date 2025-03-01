@@ -38,10 +38,7 @@ public protocol TodoUsecaseType {
         _ name: String
     ) -> AnyPublisher<Void, Never>
     
-    func createGroup(
-        _ name: String,
-        _ type: String
-    ) -> AnyPublisher<Void, Never>
+    func createGroup() -> AnyPublisher<Void, Never>
     
     func createItem(
         _ groupId: Int,

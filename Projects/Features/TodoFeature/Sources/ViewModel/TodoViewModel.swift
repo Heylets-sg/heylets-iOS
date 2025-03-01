@@ -14,11 +14,20 @@ import Domain
 import Core
 
 public class TodoViewModel: ObservableObject {
+    struct State {
+        var showItemAlertView: Bool = false
+    }
     
     enum Action {
         case onAppear
-//        case deleteItem
-//        case deleteGroup
+        case addGroupButtonDidTap
+        case deleteItem(Int)
+        case deleteGroup(Int)
+        case toggleItemCompletedButtonDidTap(Int)
+        
+        case addItem(Int, String)
+        case closeButtonDidTap
+        case addTaskButtonDidTap
     }
     
     enum WindowAction {
@@ -34,6 +43,7 @@ public class TodoViewModel: ObservableObject {
             print("💜💜💜💜💜 \(groupList)")
         }
     }
+    @Published var state = State()
     
     private var cancelBag = CancelBag()
     
@@ -51,6 +61,37 @@ public class TodoViewModel: ObservableObject {
         switch action {
         case .onAppear:
             useCase.getGroup()
+                .sink(receiveValue: { _ in })
+                .store(in: cancelBag)
+            
+        case .deleteGroup(let groupId):
+            useCase.deleteGroup(groupId)
+                .sink(receiveValue: { _ in })
+                .store(in: cancelBag)
+            
+        case .deleteItem(let itemId):
+            useCase.deleteItem(itemId)
+                .sink(receiveValue: { _ in })
+                .store(in: cancelBag)
+            
+        case .addGroupButtonDidTap:
+            useCase.createGroup()
+                .sink(receiveValue: { _ in })
+                .store(in: cancelBag)
+            
+        case .toggleItemCompletedButtonDidTap(let itemId):
+            useCase.toggleItemCompleted(itemId)
+                .sink(receiveValue: { _ in })
+                .store(in: cancelBag)
+            
+        case .addTaskButtonDidTap:
+            state.showItemAlertView = true
+            
+        case .closeButtonDidTap:
+            state.showItemAlertView = false
+            
+        case .addItem(let groupId, let content):
+            useCase.createItem(groupId, content)
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
         }

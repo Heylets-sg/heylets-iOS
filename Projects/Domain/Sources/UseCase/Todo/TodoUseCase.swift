@@ -101,12 +101,9 @@ public extension TodoUseCase {
             .eraseToAnyPublisher()
     }
     
-    func createGroup(
-        _ name: String,
-        _ type: String
-    ) -> AnyPublisher<Void, Never> {
+    func createGroup() -> AnyPublisher<Void, Never> {
         guard let tableId else { return Empty<Void, Never>().eraseToAnyPublisher() }
-        return todoRepository.createGroup(name, type, tableId)
+        return todoRepository.createGroup("New", "CUSTOM", tableId)
             .catch { _ in Empty() }
             .flatMap { [weak self] group in
                 guard let self else { return Empty<Void, Never>().eraseToAnyPublisher() }
@@ -188,7 +185,7 @@ public class StubTodoUseCase: TodoUsecaseType {
         return Just(()).eraseToAnyPublisher()
     }
     
-    public func createGroup(_ name: String, _ type: String) -> AnyPublisher<Void, Never> {
+    public func createGroup() -> AnyPublisher<Void, Never> {
         return Just(()).eraseToAnyPublisher()
     }
     

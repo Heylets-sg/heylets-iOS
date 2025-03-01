@@ -30,7 +30,7 @@ struct HeyAlertButtonStyle: ButtonStyle {
     }
 }
 
-extension View {
+public extension View {
     func heyAlertButtonStyle(_ colorStyle: HeyButtonColorStyle = .gray) -> some View {
         self.buttonStyle(HeyAlertButtonStyle(colorStyle))
     }

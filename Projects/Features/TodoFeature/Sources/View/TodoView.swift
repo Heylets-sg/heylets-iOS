@@ -27,21 +27,23 @@ public struct TodoView: View {
                     .font(.semibold_18)
                     .foregroundColor(.heyGray1)
                     .padding(.leading, 16)
-                    .padding(.bottom, 41)
                     .padding(.top, 81)
                 
                 ScrollView {
                     VStack {
                         ForEach(viewModel.groupList, id: \.self) { group in
-                            TodoGroupView(group: group)
-                                .padding(.bottom, 16)
+                            TodoGroupView(
+                                group: group,
+                                viewModel: viewModel
+                            )
+                            .padding(.bottom, 16)
                         }
                     }
                     .padding(.horizontal, 24)
                     .padding(.bottom, 36)
                     
                     Button {
-                        
+                        viewModel.send(.addGroupButtonDidTap)
                     } label: {
                         Image(uiImage: .icAddGroup)
                             .resizable()
@@ -60,15 +62,28 @@ public struct TodoView: View {
                 timeTableAction: { viewModel.send(.gotoTimeTable) },
                 mypageAction: { viewModel.send(.gotoMyPage) }
             )
+            
+            TodoAddItemView(
+                title: "Enter name",
+                primaryAction: ("Close", .gray, { viewModel.send(.closeButtonDidTap) }),
+                secondaryAction: ("Ok", .primary, { viewModel.send(.closeButtonDidTap) })
+            )
+//            .hidden(!viewModel.state.showItemAlertView)
         }
     }
 }
 
 public struct TodoGroupView: View {
     private var group: TodoGroup
+    private let viewModel: TodoViewModel
+    @State var showEtcView: Bool = false
     
-    public init(group: TodoGroup) {
+    public init(
+        group: TodoGroup,
+        viewModel: TodoViewModel
+    ) {
         self.group = group
+        self.viewModel = viewModel
     }
     
     public var body: some View {
@@ -82,6 +97,7 @@ public struct TodoGroupView: View {
                     Spacer()
                     
                     Button {
+                        showEtcView.toggle()
                     } label: {
                         Image(uiImage: .icEtc)
                             .frame(width: 13, height: 3)
@@ -90,10 +106,14 @@ public struct TodoGroupView: View {
                 }
                 .padding(.bottom, 8)
                 
+                
                 VStack {
                     ForEach(group.items, id: \.id) { item in
-                        TodoItemView(item: item)
-                            .padding(.bottom, 8)
+                        TodoItemView(
+                            item: item,
+                            viewModel: viewModel
+                        )
+                        .padding(.bottom, 8)
                     }
                     
                     HStack {
@@ -112,17 +132,25 @@ public struct TodoGroupView: View {
                     .background(Color.init(hex: "#F7F7F7"))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .onTapGesture {
-                        print("아이템 추가")
+                        viewModel.send(.addTaskButtonDidTap)
                     }
                 }
             }
+            
             EtcGroupView()
+                .hidden(!showEtcView)
         }
     }
 }
 
 public struct TodoItemView: View {
-    let item: TodoItem
+    private let item: TodoItem
+    private let viewModel: TodoViewModel
+    
+    public init(item: TodoItem, viewModel: TodoViewModel) {
+        self.item = item
+        self.viewModel = viewModel
+    }
     
     @State private var showDeleteButton: Bool = false
     @State private var offsetX: CGFloat = 0  // 드래그로 이동하는 거리
@@ -133,7 +161,7 @@ public struct TodoItemView: View {
             VStack {
                 HStack(spacing: 0) {
                     Button {
-                        
+                        viewModel.send(.toggleItemCompletedButtonDidTap(item.id))
                     } label: {
                         Image(uiImage: item.completed
                               ? .icCompleted
@@ -167,7 +195,7 @@ public struct TodoItemView: View {
                 HStack(spacing: 0) {
                     Spacer()
                     Button {
-                        print("delete")
+                        viewModel.send(.deleteItem(item.id))
                     } label: {
                         Text("Delete")
                             .font(.medium_14)
@@ -188,8 +216,7 @@ public struct TodoItemView: View {
                 .onChanged { value in
                     // 왼쪽으로 스와이프할 때만 offset을 업데이트 (value.translation.width < 0)
                     if value.translation.width < 0 {
-                        // threshold보다 더 이동하지 않도록 제한
-                        offsetX = max(value.translation.width, -threshold)
+                        offsetX = max(value.translation.width, -threshold) // threshold보다 더 이동하지 않도록 제한
                     }
                 }
                 .onEnded { value in
@@ -249,8 +276,13 @@ public struct EtcGroupView: View {
 }
 
 
-//#Preview {
-//    let useCase = StubHeyUseCase.stub.todoUseCase
-//    TodoView(viewModel: .init(windowRouter: Router.default.windowRouter, useCase: useCase))
-//        .environmentObject(Router.default)
-//}
+#Preview {
+    let useCase = StubHeyUseCase.stub.todoUseCase
+    return TodoView(
+        viewModel: .init(
+            windowRouter: Router.default.windowRouter,
+            useCase: useCase
+        )
+    )
+    .environmentObject(Router.default)
+}

@@ -43,7 +43,7 @@ public class SplashViewModel: ObservableObject {
                     if tokenExisted {
                         self?.windowRouter.switch(to: .timetable)
                     } else {
-                        self?.windowRouter.switch(to: .timetable)
+                        self?.windowRouter.switch(to: .onboarding)
                     }
                 })
                 .store(in: cancelBag)
