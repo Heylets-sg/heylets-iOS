@@ -114,6 +114,7 @@ public struct TimeTableView: View {
                 todoAction: { viewModel.send(.gotoTodo) },
                 mypageAction: { viewModel.send(.gotoMyPage) }
             )
+            .hidden(viewModel.viewType != .main)
             
             SettingTimeTableAlertView(viewModel: viewModel)
         }

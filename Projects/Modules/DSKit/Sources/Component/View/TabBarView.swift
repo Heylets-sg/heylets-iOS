@@ -24,6 +24,17 @@ enum TabType {
         }
     }
     
+    var selectedImage: UIImage {
+        switch self {
+        case .timeTable:
+            return .tabTimeTableFilled
+        case .todo:
+            return .tabTodoFilled
+        case .my:
+            return .tabMypage
+        }
+    }
+    
     var title: String {
         switch self {
         case .timeTable:
@@ -56,25 +67,30 @@ public struct TabBarView: View {
         VStack {
             Spacer()
             HStack {
-                TabItemView(.timeTable)
+                TabItemView(.timeTable, timeTableAction == nil)
                     .onTapGesture {
                         guard let timeTableAction else { return }
                         timeTableAction()
                     }
-                    .padding(.trailing, 88)
+                    .frame(width: 50)
+                    
+                Spacer()
                 
-                TabItemView(.todo)
+                TabItemView(.todo, todoAction == nil)
                     .onTapGesture {
                         guard let todoAction else { return }
                         todoAction()
                     }
-                    .padding(.trailing, 88)
+                    .frame(width: 27)
                 
-                TabItemView(.my)
+                Spacer()
+                
+                TabItemView(.my, false)
                     .onTapGesture {
                         guard let mypageAction else { return }
                         mypageAction()
                     }
+                    .frame(width: 23)
             }
             .shadow(
                 color: Color(hex: "#000000").opacity(0.06),
@@ -93,22 +109,35 @@ public struct TabBarView: View {
 }
 
 struct TabItemView: View {
+    private let isFilled: Bool
     private let tabType: TabType
     
-    init(_ tabType: TabType) {
+    init(
+        _ tabType: TabType,
+        _ isFilled: Bool
+    ) {
         self.tabType = tabType
+        self.isFilled = isFilled
     }
     
     var body: some View {
         VStack {
-            Image(uiImage: tabType.image)
-                .resizable()
-                .frame(width: 23, height: 23)
-                .padding(.bottom, 6)
+            Image(
+                uiImage: isFilled
+                ? tabType.selectedImage
+                : tabType.image
+            )
+            .resizable()
+            .frame(width: 23, height: 23)
+            .padding(.bottom, 6)
             
             Text(tabType.title)
                 .font(.semibold_10)
-                .foregroundColor(Color.init(hex: "#D2D2D2"))
+                .foregroundColor(
+                    isFilled
+                    ? Color.init(hex: "#1B1B1C")
+                    : Color.init(hex: "#D2D2D2")
+                )
         }
     }
 }

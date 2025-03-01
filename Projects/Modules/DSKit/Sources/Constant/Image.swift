@@ -31,7 +31,9 @@ public extension UIImage {
     static let icCheck = DSKitAsset.icCheck.image
     
     static let tabTimeTable = DSKitAsset.tabTimetable.image
-    static let tabTodo = DSKitAsset.tabTimetable.image
+    static let tabTimeTableFilled = DSKitAsset.tabTimetableFilled.image
+    static let tabTodo = DSKitAsset.tabTodo.image
+    static let tabTodoFilled = DSKitAsset.tabTodoFilled.image
     static let tabMypage = DSKitAsset.tabMypage.image
     
     static let timeTable = DSKitAsset.graphicsTimeTable.image
