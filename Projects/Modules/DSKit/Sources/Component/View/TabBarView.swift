@@ -92,18 +92,18 @@ public struct TabBarView: View {
                     }
                     .frame(width: 23)
             }
-            .shadow(
-                color: Color(hex: "#000000").opacity(0.06),
-                radius: 17.2,
-                x: 0,
-                y: 2
-            )
             .padding(.horizontal, 58)
             .padding(.top, 16)
             .padding(.bottom, 30)
             .frame(height: 86)
             .background(Color.heyWhite)
         }
+        .shadow(
+            color: Color(hex: "#000000").opacity(0.06),
+            radius: 17.2,
+            x: 0,
+            y: 2
+        )
     }
     
 }
