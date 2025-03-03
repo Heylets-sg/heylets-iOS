@@ -29,8 +29,10 @@ public class TodoViewModel: ObservableObject {
         case changeGroupNameButtonDidTap(Int)
         case changeGroupName
         
-        case addItem
+        case addItem(Int)
         case closeButtonDidTap
+        
+        case editItem(Int, String)
         
     }
     
@@ -96,6 +98,7 @@ public class TodoViewModel: ObservableObject {
             guard let groupId = state.editGroupName.0 else { return }
             let groupName = state.editGroupName.1
             useCase.editGroupName(groupId, groupName)
+                .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
                     self?.state.showItemAlertView = false
                 })
@@ -104,19 +107,17 @@ public class TodoViewModel: ObservableObject {
         case .closeButtonDidTap:
             state.showItemAlertView = false
             
-        case .addItem:
-            guard let groupId = state.editGroupName.0 else { return }
-            let content = state.editGroupName.1
-            useCase.createItem(groupId, content)
+        case .addItem(let groupId):
+            useCase.createItem(groupId, "임시적으로 일단 이렇게")
                 .receive(on: RunLoop.main)
-                .sink(receiveValue: { [weak self] _ in
-                    self?.state.editGroupName = (nil, "")
-                    self?.state.showItemAlertView = false
-                })
+                .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
             
-            
-
+        case .editItem(let itemId, let content):
+            useCase.editItem(itemId, content)
+                .receive(on: RunLoop.main)
+                .sink(receiveValue: { _ in })
+                .store(in: cancelBag)
         }
     }
     

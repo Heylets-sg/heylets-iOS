@@ -28,15 +28,15 @@ public struct TodoView: View {
                     .foregroundColor(.heyGray1)
                     .padding(.leading, 16)
                     .padding(.top, 81)
+                    .padding(.bottom, 41)
                 
                 ScrollView {
-                    VStack {
+                    VStack(spacing: 16) {
                         ForEach(viewModel.groupList, id: \.self) { group in
                             TodoGroupView(
                                 group: group,
                                 viewModel: viewModel
                             )
-                            .padding(.bottom, 16)
                         }
                     }
                     .padding(.horizontal, 24)
@@ -105,11 +105,15 @@ public struct TodoGroupView: View {
                             .frame(width: 13, height: 3)
                             .padding(.trailing, 4)
                     }
+                    .padding(.all, 5)
                 }
                 .padding(.bottom, 8)
                 
                 
-                VStack {
+                ScrollView {
+                    
+                
+//                VStack(spacing: 8) {
                     ForEach(group.items, id: \.id) { item in
                         TodoItemView(
                             groupId: group.id,
@@ -134,11 +138,12 @@ public struct TodoGroupView: View {
                     }
                     .background(Color.init(hex: "#F7F7F7"))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
-//                    .onTapGesture {
-//                        viewModel.send(.addTaskButtonDidTap(group.id))
-//                    }
-                }
+                    .onTapGesture {
+                        viewModel.send(.addItem(group.id))
+                    }
+//                }
                 Spacer()
+            }
             }
             
             EtcGroupView(
@@ -166,8 +171,10 @@ public struct TodoItemView: View {
     }
     
     @State private var showDeleteButton: Bool = false
-    @State private var offsetX: CGFloat = 0  // 드래그로 이동하는 거리
-    private let threshold: CGFloat = 72      // 스와이프해서 완전히 열리는 기준
+    @State private var editMode: Bool = false
+    @State private var content: String = ""  // ✅ 초기화 수정
+    @State private var offsetX: CGFloat = 0
+    private let threshold: CGFloat = 72
     
     public var body: some View {
         ZStack {
@@ -176,64 +183,80 @@ public struct TodoItemView: View {
                     Button {
                         viewModel.send(.toggleItemCompletedButtonDidTap(item.id))
                     } label: {
-                        Image(uiImage: item.completed
-                              ? .icCompleted
-                              : .icBlank
-                        )
-                        .frame(width: 16, height: 16)
+                        Image(uiImage: item.completed ? .icCompleted : .icBlank)
+                            .frame(width: 16, height: 16)
                     }
                     .padding(.leading, 20)
                     .padding(.trailing, 12)
-                    .offset(x: offsetX) // 드래그로 이동하는 거리만큼 x 좌표를 옮김
+                    .offset(x: offsetX)
                     
-                    Text(item.content)
+                    if editMode {
+                        TextField(
+                            "",
+                            text: $content,
+                            prompt: Text(item.content)
+                                .font(.medium_14)
+                                .foregroundColor(.init(hex: "#B8B8B8"))
+                        )
                         .font(.medium_14)
                         .foregroundStyle(Color.init(hex: "#4A4A4A"))
-                        .lineLimit(2)
-                        .multilineTextAlignment(.leading)
-                        .layoutPriority(1)
-                        .offset(x: offsetX) // 드래그로 이동하는 거리만큼 x 좌표를 옮김
-                    
-                    
+                        .offset(x: offsetX)
+                        .onSubmit {
+                            viewModel.send(.editItem(item.id, content))
+                            editMode = false
+                        }
+                        .submitLabel(.done) // ✅ 엔터 키 입력 가능하도록 설정
+                    } else {
+                        Text(item.content)
+                            .font(.medium_14)
+                            .foregroundStyle(Color.init(hex: "#4A4A4A"))
+//                            .lineLimit(2)
+                            .frame(width: 271, alignment: .leading)
+                            .multilineTextAlignment(.leading)
+                            .layoutPriority(1)
+                            .offset(x: offsetX)
+                    }
                     Spacer()
                         .frame(minWidth: 23)
-                        .offset(x: offsetX) // 드래그로 이동하는 거리만큼 x 좌표를 옮김
+                        .offset(x: offsetX)
                 }
                 .padding(.vertical, 20)
             }
+            .frame(minHeight: 56, maxHeight: 81)
             .background(Color.init(hex: "#F7F7F7"))
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
-            if showDeleteButton {
-                HStack(spacing: 0) {
-                    Spacer()
-                    Button {
-                        viewModel.send(.deleteItemButtonDidTap(item.id))
-                    } label: {
-                        Text("Delete")
-                            .font(.medium_14)
-                            .foregroundColor(.white)
-                            .frame(width: threshold)
-                            .frame(minHeight: 56, maxHeight: 80)
-                            .background(Color.red)
-                        
+            GeometryReader { geometry in
+                if showDeleteButton {
+                    HStack(spacing: 0) {
+                        Spacer()
+                        Button {
+                            viewModel.send(.deleteItemButtonDidTap(item.id))
+                        } label: {
+                            Text("Delete")
+                                .font(.medium_14)
+                                .foregroundColor(.white)
+                                .frame(width: threshold)
+                                .frame(minHeight: 56, maxHeight: 81)
+                                .background(Color.red)
+                        }
+                        .cornerRadius(8, corners: [.bottomRight, .topRight])
                     }
-                    .cornerRadius(8, corners: [.bottomRight, .topRight])
                 }
-            } else {
-                EmptyView()
             }
+            
         }
-        .gesture( // 드래그 제스처
+        .onTapGesture {
+            editMode = true // ✅ 한 번 탭하면 편집 모드로 전환
+        }
+        .gesture(
             DragGesture()
                 .onChanged { value in
-                    // 왼쪽으로 스와이프할 때만 offset을 업데이트 (value.translation.width < 0)
                     if value.translation.width < 0 {
-                        offsetX = max(value.translation.width, -threshold) // threshold보다 더 이동하지 않도록 제한
+                        offsetX = max(value.translation.width, -threshold)
                     }
                 }
                 .onEnded { value in
-                    // 일정 거리 이상(예: -threshold / 2) 스와이프하면 버튼이 고정되어 보이게
                     if value.translation.width < -threshold / 2 {
                         offsetX = -threshold
                         showDeleteButton = true
@@ -246,6 +269,7 @@ public struct TodoItemView: View {
         .animation(.easeOut, value: offsetX)
     }
 }
+
 
 public struct EtcGroupView: View {
     private let deleteGroupAction: (() -> Void)

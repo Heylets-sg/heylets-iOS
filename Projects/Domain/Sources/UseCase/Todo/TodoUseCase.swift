@@ -131,15 +131,16 @@ public extension TodoUseCase {
     
 public extension TodoUseCase {
     func updateTodoItem(item: TodoItem) -> AnyPublisher<Void, Never> {
+        print("💘 \(item)")
         var groups = todoGroupList.value
         
         for groupIndex in groups.indices {
             //아이디 있으면 변경, 없으면 추가
             if let itemIndex = groups[groupIndex].items.firstIndex(where: { $0.id == item.id }) {
                 groups[groupIndex].items[itemIndex] = item
+                todoGroupList.send(groups)
+                return Just(()).eraseToAnyPublisher()
             }
-            todoGroupList.send(groups)
-            return Just(()).eraseToAnyPublisher()
         }
         return Empty().eraseToAnyPublisher()
     }
