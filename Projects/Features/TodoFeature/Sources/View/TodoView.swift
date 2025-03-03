@@ -65,10 +65,10 @@ public struct TodoView: View {
             
             TodoAddItemView(
                 title: "Enter name",
-                content: $viewModel.state.addItem.1,
+                content: $viewModel.state.editGroupName.1,
                 groupId: 1,
                 primaryAction: ("Close", .gray, { viewModel.send(.closeButtonDidTap) }),
-                secondaryAction: ("Ok", .primary, { viewModel.send(.addItem) })
+                secondaryAction: ("Ok", .primary, { viewModel.send(.changeGroupName) })
             )
             .hidden(!viewModel.state.showItemAlertView)
         }
@@ -134,15 +134,16 @@ public struct TodoGroupView: View {
                     }
                     .background(Color.init(hex: "#F7F7F7"))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .onTapGesture {
-                        viewModel.send(.addTaskButtonDidTap(group.id))
-                    }
+//                    .onTapGesture {
+//                        viewModel.send(.addTaskButtonDidTap(group.id))
+//                    }
                 }
                 Spacer()
             }
             
             EtcGroupView(
-                deleteGroupAction: { viewModel.send(.deleteGroupButtonDidTap(group.id))}
+                deleteGroupAction: { viewModel.send(.deleteGroupButtonDidTap(group.id)) },
+                changeGroupNameAction: { viewModel.send(.changeGroupNameButtonDidTap(group.id)) }
             )
             .hidden(!showEtcView)
         }
@@ -248,10 +249,14 @@ public struct TodoItemView: View {
 
 public struct EtcGroupView: View {
     private let deleteGroupAction: (() -> Void)
+    private let changeGroupNameAction: (() -> Void)
+    
     init(
-        deleteGroupAction: @escaping () -> Void
+        deleteGroupAction: @escaping () -> Void,
+        changeGroupNameAction: @escaping () -> Void
     ) {
         self.deleteGroupAction = deleteGroupAction
+        self.changeGroupNameAction = changeGroupNameAction
     }
     public var body: some View {
         VStack {
@@ -268,7 +273,7 @@ public struct EtcGroupView: View {
                     .padding(.bottom, 27)
                     
                     Button {
-                        
+                        changeGroupNameAction()
                     } label: {
                         Text("Change name")
                             .font(.medium_14)

@@ -16,7 +16,7 @@ import Core
 public class TodoViewModel: ObservableObject {
     struct State {
         var showItemAlertView: Bool = false
-        var addItem: (Int?, String) = (nil, "")
+        var editGroupName: (Int?, String) = (nil, "")
     }
     
     enum Action {
@@ -25,11 +25,13 @@ public class TodoViewModel: ObservableObject {
         case deleteItemButtonDidTap(Int)
         case deleteGroupButtonDidTap(Int)
         case toggleItemCompletedButtonDidTap(Int)
-        case changeGroupNameButtonDidTap(Int, String)
+        
+        case changeGroupNameButtonDidTap(Int)
+        case changeGroupName
         
         case addItem
         case closeButtonDidTap
-        case addTaskButtonDidTap(Int)
+        
     }
     
     enum WindowAction {
@@ -86,28 +88,35 @@ public class TodoViewModel: ObservableObject {
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
             
-        case .addTaskButtonDidTap(let groupId):
+        case .changeGroupNameButtonDidTap(let groupId):
             state.showItemAlertView = true
-            state.addItem.0 = groupId
+            state.editGroupName.0 = groupId
+            
+        case .changeGroupName:
+            guard let groupId = state.editGroupName.0 else { return }
+            let groupName = state.editGroupName.1
+            useCase.editGroupName(groupId, groupName)
+                .sink(receiveValue: { [weak self] _ in
+                    self?.state.showItemAlertView = false
+                })
+                .store(in: cancelBag)
             
         case .closeButtonDidTap:
             state.showItemAlertView = false
             
         case .addItem:
-            guard let groupId = state.addItem.0 else { return }
-            let content = state.addItem.1
+            guard let groupId = state.editGroupName.0 else { return }
+            let content = state.editGroupName.1
             useCase.createItem(groupId, content)
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
-                    self?.state.addItem = (nil, "")
+                    self?.state.editGroupName = (nil, "")
                     self?.state.showItemAlertView = false
                 })
                 .store(in: cancelBag)
             
-        case .changeGroupNameButtonDidTap(let groupId, let groupName):
-            useCase.editGroupName(groupId, groupName)
-                .sink(receiveValue: { _ in })
-                .store(in: cancelBag)
+            
+
         }
     }
     
