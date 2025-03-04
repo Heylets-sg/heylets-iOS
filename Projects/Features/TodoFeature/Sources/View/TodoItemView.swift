@@ -57,6 +57,7 @@ public struct TodoItemView: View {
                         .focused($isKeyboardActive)
                         .font(.medium_14)
                         .foregroundStyle(Color.init(hex: "#4A4A4A"))
+                        .frame(width: 271, alignment: .leading)
                         .offset(x: offsetX)
                         .onSubmit {
                             viewModel.send(.editItem(item.id, content))
@@ -147,62 +148,62 @@ public struct TodoAddItemView: View {
     }
     
     public var body: some View {
-        if editMode {
-            HStack(spacing: 0) {
-                Button {
-                } label: {
-                    Image(uiImage: .icBlank)
-                        .frame(width: 16, height: 16)
-                }
-                .padding(.leading, 20)
-                .padding(.trailing, 12)
-                
-                TextField(
-                    "",
-                    text: $content,
-                    prompt: Text("할일을 입력해주세요")
-                        .font(.medium_14)
-                        .foregroundColor(.init(hex: "#B8B8B8"))
-                )
-                .focused($isKeyboardActive)
-                .font(.medium_14)
-                .foregroundStyle(Color.init(hex: "#4A4A4A"))
-                .onSubmit {
-                    viewModel.send(.addItem(groupId, content))
-                    editMode = false
-                }
-                .submitLabel(.done)
-            }
-            .onAppear {
-                isKeyboardActive = true
-            }
-            .padding(.vertical, 20)
-            .background(Color.init(hex: "#F7F7F7"))
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            Spacer()
-            
-        } else {
-            HStack {
-                Image(uiImage: .icPlus)
-                    .frame(width: 10, height: 10)
-                    .padding(.leading, 23)
+        VStack {
+            if editMode {
+                HStack(spacing: 0) {
+                    Button {
+                    } label: {
+                        Image(uiImage: .icBlank)
+                            .frame(width: 16, height: 16)
+                    }
+                    .padding(.leading, 20)
                     .padding(.trailing, 12)
-                    .padding(.vertical, 23)
-                
-                Text("Add a task")
+                    
+                    TextField(
+                        "",
+                        text: $content,
+                        prompt: Text("할일을 입력해주세요")
+                            .font(.medium_12)
+                            .foregroundColor(.init(hex: "#B8B8B8"))
+                    )
+                    .focused($isKeyboardActive)
                     .font(.medium_12)
-                    .foregroundStyle(Color.init(hex: "#B8B8B8"))
-                
-                Spacer()
+                    .foregroundStyle(Color.init(hex: "#4A4A4A"))
+                    .onSubmit {
+                        viewModel.send(.addItem(groupId, content))
+                        editMode = false
+                    }
+                    .submitLabel(.done)
+                }
+                .onAppear {
+                    isKeyboardActive = true
+                }
+                .padding(.vertical, 20)
+                .frame(height: 56)
+            } else {
+                HStack {
+                    Image(uiImage: .icPlus)
+                        .frame(width: 10, height: 10)
+                        .padding(.leading, 23)
+                        .padding(.trailing, 12)
+                        .padding(.vertical, 23)
+                    
+                    Text("Add a task")
+                        .font(.medium_12)
+                        .foregroundStyle(Color.init(hex: "#B8B8B8"))
+                    
+                    Spacer()
+                }
+                .onTapGesture {
+                    viewModel.state.hiddenTabBar = true
+                    editMode = true
+                }
             }
-            .background(Color.init(hex: "#F7F7F7"))
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            .onTapGesture {
-                viewModel.state.hiddenTabBar = true
-                editMode = true
-            }
-            Spacer()
         }
+        .background(Color.init(hex: "#F7F7F7"))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .frame(height: 56)
+        
     }
 }
 
