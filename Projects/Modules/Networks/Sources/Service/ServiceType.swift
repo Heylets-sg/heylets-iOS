@@ -16,6 +16,7 @@ public protocol ServiceType {
     var lectureService: LectureServiceType { get }
     var userService: UserServiceType { get }
     var guestService: GuestServiceType { get }
+    var todoService: TodoServiceType { get }
     
 }
 
@@ -30,6 +31,7 @@ final public class HeyService: ServiceType {
     public var lectureService: LectureServiceType = LectureService()
     public var userService: UserServiceType = UserService()
     public var guestService: GuestServiceType = GuestService()
+    public var todoService: TodoServiceType = TodoService()
     
 }
 

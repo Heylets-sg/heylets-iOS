@@ -12,6 +12,7 @@ import OnboardingFeature
 import TimeTableFeature
 import MyPageFeature
 import SplashFeature
+import TodoFeature
 import Domain
 
 public struct RootView: View {
@@ -61,8 +62,15 @@ public struct RootView: View {
                         useCase: useCase.myPageUseCase
                     )
                 )
+            case .todo:
+                let useCase = useCase.todoUseCase
+                TodoView(
+                    viewModel: TodoViewModel(
+                        windowRouter: router.windowRouter,
+                        useCase: useCase
+                    )
+                )
             }
-            
         }
     }
 }

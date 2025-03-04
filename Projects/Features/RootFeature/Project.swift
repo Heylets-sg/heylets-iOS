@@ -16,6 +16,7 @@ let project = Project.makeModule(
         .Features.Splash.Feature,
         .Features.Onboarding.Feature,
         .Features.MyPage.Feature,
-        .Features.TimeTable.Feature
+        .Features.TimeTable.Feature,
+        .Features.Todo.Feature
     ]
 )

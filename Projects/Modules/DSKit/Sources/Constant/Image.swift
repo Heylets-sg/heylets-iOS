@@ -30,10 +30,22 @@ public extension UIImage {
     static let icSelected = DSKitAsset.icSelected.image
     static let icCheck = DSKitAsset.icCheck.image
     
+    static let tabTimeTable = DSKitAsset.tabTimetable.image
+    static let tabTimeTableFilled = DSKitAsset.tabTimetableFilled.image
+    static let tabTodo = DSKitAsset.tabTodo.image
+    static let tabTodoFilled = DSKitAsset.tabTodoFilled.image
+    static let tabMypage = DSKitAsset.tabMypage.image
+    
     static let timeTable = DSKitAsset.graphicsTimeTable.image
     static let color = DSKitAsset.graphicsTheme.image
     static let alarm = DSKitAsset.graphicsAlarm.image
     static let guest = DSKitAsset.graphicsGuest.image
+    
+    static let icEtc = DSKitAsset.icEtc.image
+    static let icBlank = DSKitAsset.icBlank.image
+    static let icCompleted = DSKitAsset.icCompleted.image
+    static let icAddGroup = DSKitAsset.icAddGroup.image
+    
     
     static let logo = DSKitAsset.logo.image
     

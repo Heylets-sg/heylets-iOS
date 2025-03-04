@@ -16,6 +16,7 @@ public extension Dep {
         public struct Onboarding {}
         public struct MyPage {}
         public struct TimeTable {}
+        public struct Todo {}
         public struct Root {}
     }
     
@@ -97,6 +98,13 @@ public extension Dep.Features.TimeTable {
 
 public extension Dep.Features.MyPage {
     static let group = "MyPage"
+    
+    static let Feature = Dep.Features.project(name: "Feature", group: group)
+    static let Interface = Dep.Features.project(name: "\(group)FeatureInterface", group: group)
+}
+
+public extension Dep.Features.Todo {
+    static let group = "Todo"
     
     static let Feature = Dep.Features.project(name: "Feature", group: group)
     static let Interface = Dep.Features.project(name: "\(group)FeatureInterface", group: group)

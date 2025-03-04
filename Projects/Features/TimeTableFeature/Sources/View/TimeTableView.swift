@@ -83,7 +83,6 @@ public struct TimeTableView: View {
                     viewModel.send(.errorAlertViewCloseButtonDidTap)
                 })
             )
-            .zIndex(3)
             .heyAlert(
                 isPresented: viewModel.state.alerts.showDeleteAlert,
                 title: "Delete module?",
@@ -110,6 +109,12 @@ public struct TimeTableView: View {
                 .presentationDetents([.height(802)])
                 .presentationDragIndicator(.visible)
             }
+            
+            TabBarView(
+                todoAction: { viewModel.send(.gotoTodo) },
+                mypageAction: { viewModel.send(.gotoMyPage) }
+            )
+            .hidden(viewModel.viewType != .main)
             
             SettingTimeTableAlertView(viewModel: viewModel)
         }
