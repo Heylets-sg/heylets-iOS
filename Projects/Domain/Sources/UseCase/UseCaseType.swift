@@ -55,7 +55,8 @@ public final class HeyUseCase: UseCaseType {
         
         todoUseCase = TodoUseCase(
             timeTableRepository: repository.timeTableRepository,
-            todoRepository: repository.todoRepository
+            todoRepository: repository.todoRepository,
+            guestRepository: repository.guestRepository
         )
     }
 }

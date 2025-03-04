@@ -12,6 +12,7 @@ import Foundation
 import Combine
 
 public protocol TodoUsecaseType {
+    var isGuestMode: Bool { get }
     var todoGroupList: CurrentValueSubject<[TodoGroup], Never> { get }
     
     func deleteItem(

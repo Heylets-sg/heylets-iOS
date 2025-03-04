@@ -17,6 +17,7 @@ public class TodoViewModel: ObservableObject {
     struct State {
         var showItemAlertView: Bool = false
         var editGroupName: (Int?, String) = (nil, "")
+        var showGuestDeniedAlert: Bool = false
     }
     
     enum Action {
@@ -34,11 +35,13 @@ public class TodoViewModel: ObservableObject {
         
         case editItem(Int, String)
         
+        case notRightNowButtonDidTap
     }
     
     enum WindowAction {
         case gotoTimeTable
         case gotoMyPage
+        case gotoLogin
     }
     
     public var windowRouter: WindowRoutable
@@ -71,9 +74,13 @@ public class TodoViewModel: ObservableObject {
                 .store(in: cancelBag)
             
         case .deleteGroupButtonDidTap(let groupId):
-            useCase.deleteGroup(groupId)
-                .sink(receiveValue: { _ in })
-                .store(in: cancelBag)
+            if useCase.isGuestMode {
+                state.showGuestDeniedAlert = true
+            } else {
+                useCase.deleteGroup(groupId)
+                    .sink(receiveValue: { _ in })
+                    .store(in: cancelBag)
+            }
             
         case .deleteItemButtonDidTap(let itemId):
             useCase.deleteItem(itemId)
@@ -81,18 +88,26 @@ public class TodoViewModel: ObservableObject {
                 .store(in: cancelBag)
             
         case .addGroupButtonDidTap:
-            useCase.createGroup()
-                .sink(receiveValue: { _ in })
-                .store(in: cancelBag)
-            
+            if useCase.isGuestMode {
+                state.showGuestDeniedAlert = true
+            } else {
+                useCase.createGroup()
+                    .sink(receiveValue: { _ in })
+                    .store(in: cancelBag)
+            }
         case .toggleItemCompletedButtonDidTap(let itemId):
             useCase.toggleItemCompleted(itemId)
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
             
         case .changeGroupNameButtonDidTap(let groupId):
-            state.showItemAlertView = true
-            state.editGroupName.0 = groupId
+            if useCase.isGuestMode {
+                state.showGuestDeniedAlert = true
+            } else {
+                state.showItemAlertView = true
+                state.editGroupName.0 = groupId
+            }
+            
             
         case .changeGroupName:
             guard let groupId = state.editGroupName.0 else { return }
@@ -118,6 +133,9 @@ public class TodoViewModel: ObservableObject {
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
+            
+        case .notRightNowButtonDidTap:
+            state.showGuestDeniedAlert = false
         }
     }
     
@@ -127,6 +145,8 @@ public class TodoViewModel: ObservableObject {
             windowRouter.switch(to: .timetable)
         case .gotoMyPage:
             windowRouter.switch(to: .mypage)
+        case .gotoLogin:
+            windowRouter.switch(to: .login)
         }
     }
     

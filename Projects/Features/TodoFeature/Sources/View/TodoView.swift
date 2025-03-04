@@ -7,9 +7,11 @@
 //
 
 import SwiftUI
+
+import BaseFeatureDependency
 import DSKit
 import Domain
-import BaseFeatureDependency
+
 
 public struct TodoView: View {
     @EnvironmentObject var container: Router
@@ -72,6 +74,15 @@ public struct TodoView: View {
             )
             .hidden(!viewModel.state.showItemAlertView)
         }
+        .heyAlert(
+            isPresented: viewModel.state.showGuestDeniedAlert,
+            loginButtonAction: {
+                viewModel.send(.gotoLogin)
+            },
+            notRightNowButton: {
+                viewModel.send(.notRightNowButtonDidTap)
+            })
+        
     }
 }
 

@@ -13,29 +13,43 @@ import Core
 
 final public class TodoUseCase: TodoUsecaseType {
     private var tableId: Int? = nil
+    
+    public var isGuestMode: Bool = false
+    public var todoGroupList = CurrentValueSubject<[TodoGroup], Never>([])
+    
     private let timeTableRepository: TimeTableRepositoryType
     private let todoRepository: TodoRepositoryType
+    private let guestRepository: GuestRepositoryType
     
     private var cancelBag = CancelBag()
     
     public init(
         timeTableRepository: TimeTableRepositoryType,
-        todoRepository: TodoRepositoryType
+        todoRepository: TodoRepositoryType,
+        guestRepository: GuestRepositoryType
     ) {
         self.timeTableRepository = timeTableRepository
         self.todoRepository = todoRepository
+        self.guestRepository = guestRepository
         
         getTableId()
+        checkGuestMode()
     }
-    
-    public var todoGroupList = CurrentValueSubject<[TodoGroup], Never>([])
     
     func getTableId() {
         timeTableRepository.getTableList()
             .catch { _ in Empty() }
-            .sink(receiveValue: { tableId in
+            .sink(receiveValue: { [weak self] tableId in
                 guard let tableId  else { return }
-                self.tableId = tableId
+                self?.tableId = tableId
+            })
+            .store(in: cancelBag)
+    }
+    
+    func checkGuestMode() {
+        guestRepository.checkGuestMode()
+            .sink(receiveValue: { [weak self] isGuest in
+                self?.isGuestMode = isGuest
             })
             .store(in: cancelBag)
     }
@@ -49,7 +63,6 @@ public extension TodoUseCase {
             .catch { _ in Empty() }
             .flatMap(getGroup)
             .eraseToAnyPublisher()
-            
     }
     
     func deleteGroup(
@@ -128,7 +141,7 @@ public extension TodoUseCase {
             .eraseToAnyPublisher()
     }
 }
-    
+
 public extension TodoUseCase {
     func updateTodoItem(item: TodoItem) -> AnyPublisher<Void, Never> {
         print("💘 \(item)")
@@ -145,7 +158,7 @@ public extension TodoUseCase {
         return Empty().eraseToAnyPublisher()
     }
     
-
+    
     func updateTodoGroup(group: TodoGroup) -> AnyPublisher<Void, Never> {
         var groups = todoGroupList.value
         
@@ -175,6 +188,7 @@ public extension TodoUseCase {
 
 public class StubTodoUseCase: TodoUsecaseType {
     public var todoGroupList = CurrentValueSubject<[TodoGroup], Never>([])
+    public var isGuestMode: Bool = false
     
     public func deleteItem(_ itemId: Int) -> AnyPublisher<Void, Never> {
         return Just(()).eraseToAnyPublisher()
