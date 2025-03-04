@@ -29,7 +29,7 @@ public class TodoViewModel: ObservableObject {
         case changeGroupNameButtonDidTap(Int)
         case changeGroupName
         
-        case addItem(Int)
+        case addItem(Int, String)
         case closeButtonDidTap
         
         case editItem(Int, String)
@@ -107,8 +107,8 @@ public class TodoViewModel: ObservableObject {
         case .closeButtonDidTap:
             state.showItemAlertView = false
             
-        case .addItem(let groupId):
-            useCase.createItem(groupId, "임시적으로 일단 이렇게")
+        case .addItem(let groupId, let content):
+            useCase.createItem(groupId, content)
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)

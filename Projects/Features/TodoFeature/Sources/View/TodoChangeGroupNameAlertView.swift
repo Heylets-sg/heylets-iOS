@@ -12,7 +12,7 @@ import DSKit
 import Domain
 import BaseFeatureDependency
 
-public struct TodoAddItemView: View {
+public struct TodoChangeGroupNameAlertView: View {
     public init(
         title: String,
         content: Binding<String>,
