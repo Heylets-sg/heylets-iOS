@@ -30,6 +30,7 @@ public struct TodoItemView: View {
     @State private var content: String = ""
     @State private var offsetX: CGFloat = 0
     private let threshold: CGFloat = 72
+    @FocusState private var isKeyboardActive: Bool
     
     public var body: some View {
         ZStack {
@@ -53,6 +54,7 @@ public struct TodoItemView: View {
                                 .font(.medium_14)
                                 .foregroundColor(.init(hex: "#B8B8B8"))
                         )
+                        .focused($isKeyboardActive)
                         .font(.medium_14)
                         .foregroundStyle(Color.init(hex: "#4A4A4A"))
                         .offset(x: offsetX)
@@ -61,6 +63,9 @@ public struct TodoItemView: View {
                             editMode = false
                         }
                         .submitLabel(.done)
+                        .onAppear {
+                            isKeyboardActive = true
+                        }
                     } else {
                         Text(item.content)
                             .font(.medium_14)
@@ -101,7 +106,10 @@ public struct TodoItemView: View {
             }
             
         }
-        .onTapGesture { editMode = true }
+        .onTapGesture {
+            editMode = true
+            viewModel.state.hiddenTabBar = true
+        }
         .gesture(
             DragGesture()
                 .onChanged { value in
@@ -124,12 +132,18 @@ public struct TodoItemView: View {
 }
 
 public struct TodoAddItemView: View {
-    private let addItemAction: ((String) -> Void)
+    private let viewModel: TodoViewModel
+    private let groupId: Int
     @State private var editMode: Bool = false
     @State private var content: String = ""
+    @FocusState private var isKeyboardActive: Bool
     
-    init(addItemAction: @escaping (String) -> Void) {
-        self.addItemAction = addItemAction
+    init(
+        viewModel: TodoViewModel,
+        groupId: Int
+    ) {
+        self.viewModel = viewModel
+        self.groupId = groupId
     }
     
     public var body: some View {
@@ -150,13 +164,17 @@ public struct TodoAddItemView: View {
                         .font(.medium_14)
                         .foregroundColor(.init(hex: "#B8B8B8"))
                 )
+                .focused($isKeyboardActive)
                 .font(.medium_14)
                 .foregroundStyle(Color.init(hex: "#4A4A4A"))
                 .onSubmit {
-                    addItemAction(content)
+                    viewModel.send(.addItem(groupId, content))
                     editMode = false
                 }
                 .submitLabel(.done)
+            }
+            .onAppear {
+                isKeyboardActive = true
             }
             .padding(.vertical, 20)
             .background(Color.init(hex: "#F7F7F7"))
@@ -180,7 +198,8 @@ public struct TodoAddItemView: View {
             .background(Color.init(hex: "#F7F7F7"))
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .onTapGesture {
-                editMode.toggle()
+                viewModel.state.hiddenTabBar = true
+                editMode = true
             }
             Spacer()
         }

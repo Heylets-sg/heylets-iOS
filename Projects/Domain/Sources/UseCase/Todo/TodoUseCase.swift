@@ -32,18 +32,16 @@ final public class TodoUseCase: TodoUsecaseType {
         self.todoRepository = todoRepository
         self.guestRepository = guestRepository
         
-        getTableId()
         checkGuestMode()
     }
     
-    func getTableId() {
+    func getTableId() -> AnyPublisher<Int?, Never> {
         timeTableRepository.getTableList()
-            .catch { _ in Empty() }
-            .sink(receiveValue: { [weak self] tableId in
-                guard let tableId  else { return }
-                self?.tableId = tableId
+            .catch { _ in Empty() } // 에러 발생 시 Empty() 반환
+            .handleEvents(receiveOutput: { [weak self] tableId in
+                self?.tableId = tableId // 내부적으로 tableId 저장
             })
-            .store(in: cancelBag)
+            .eraseToAnyPublisher()
     }
     
     func checkGuestMode() {
@@ -53,6 +51,17 @@ final public class TodoUseCase: TodoUsecaseType {
             })
             .store(in: cancelBag)
     }
+    
+    private func fetchGroup() -> AnyPublisher<Void, Never> {
+        guard let tableId = self.tableId else { return Empty<Void,Never>().eraseToAnyPublisher() }
+        return todoRepository.getGroup(tableId)
+            .handleEvents(receiveOutput: { [weak self] groupList in
+                self?.todoGroupList.send(groupList)
+            })
+            .map { _ in }
+            .catch { _ in Empty() }
+            .eraseToAnyPublisher()
+    }
 }
 
 public extension TodoUseCase {
@@ -61,7 +70,7 @@ public extension TodoUseCase {
     ) -> AnyPublisher<Void, Never> {
         todoRepository.deleteItem(itemId)
             .catch { _ in Empty() }
-            .flatMap(getGroup)
+            .flatMap(fetchGroup)
             .eraseToAnyPublisher()
     }
     
@@ -70,19 +79,21 @@ public extension TodoUseCase {
     ) -> AnyPublisher<Void, Never> {
         todoRepository.deleteGroup(groupId)
             .catch { _ in Empty() }
-            .flatMap(getGroup)
+            .flatMap(fetchGroup)
             .eraseToAnyPublisher()
     }
     
     func getGroup() -> AnyPublisher<Void, Never> {
-        guard let tableId else { return Empty<Void, Never>().eraseToAnyPublisher() }
-        return todoRepository.getGroup(tableId)
-            .handleEvents(receiveOutput: { [weak self] groupList in
-                self?.todoGroupList.send(groupList)
-            })
-            .map { _ in }
-            .catch {  _ in Empty() }
-            .eraseToAnyPublisher()
+        if let tableId {
+            return fetchGroup()
+        } else {
+            return getTableId()
+                .flatMap { [weak self] _ in
+                    guard let self else { return Empty<Void,Never>().eraseToAnyPublisher() }
+                    return fetchGroup()
+                }
+                .eraseToAnyPublisher()
+        }
     }
     
     func editItem(

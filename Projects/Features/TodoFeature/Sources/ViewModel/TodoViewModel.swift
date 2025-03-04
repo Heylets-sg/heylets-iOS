@@ -18,6 +18,7 @@ public class TodoViewModel: ObservableObject {
         var showItemAlertView: Bool = false
         var editGroupName: (Int?, String) = (nil, "")
         var showGuestDeniedAlert: Bool = false
+        var hiddenTabBar: Bool = false
     }
     
     enum Action {
@@ -125,13 +126,17 @@ public class TodoViewModel: ObservableObject {
         case .addItem(let groupId, let content):
             useCase.createItem(groupId, content)
                 .receive(on: RunLoop.main)
-                .sink(receiveValue: { _ in })
+                .sink(receiveValue: { [weak self] _ in
+                    self?.state.hiddenTabBar = false
+                })
                 .store(in: cancelBag)
             
         case .editItem(let itemId, let content):
             useCase.editItem(itemId, content)
                 .receive(on: RunLoop.main)
-                .sink(receiveValue: { _ in })
+                .sink(receiveValue: { [weak self] _ in
+                    self?.state.hiddenTabBar = false
+                })
                 .store(in: cancelBag)
             
         case .notRightNowButtonDidTap:

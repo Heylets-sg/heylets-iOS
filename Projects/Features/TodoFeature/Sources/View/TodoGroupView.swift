@@ -55,9 +55,10 @@ public struct TodoGroupView: View {
                         .padding(.bottom, 8)
                     }
                     
-                    TodoAddItemView(addItemAction: { content in
-                        viewModel.send(.addItem(group.id, content))
-                    })
+                    TodoAddItemView(
+                        viewModel: viewModel,
+                        groupId: group.id
+                    )
                     Spacer()
                 }
             }

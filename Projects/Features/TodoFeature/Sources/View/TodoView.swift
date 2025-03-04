@@ -59,11 +59,13 @@ public struct TodoView: View {
             .onAppear {
                 viewModel.send(.onAppear)
             }
+            .scrollToMinDistance(minDisntance: 32)
             
             TabBarView(
                 timeTableAction: { viewModel.send(.gotoTimeTable) },
                 mypageAction: { viewModel.send(.gotoMyPage) }
             )
+            .hidden(viewModel.state.hiddenTabBar)
             
             TodoChangeGroupNameAlertView(
                 title: "Enter name",
@@ -81,9 +83,10 @@ public struct TodoView: View {
             },
             notRightNowButton: {
                 viewModel.send(.notRightNowButtonDidTap)
-            })
-        
+            }
+        )
     }
+        
 }
 
 #Preview {
