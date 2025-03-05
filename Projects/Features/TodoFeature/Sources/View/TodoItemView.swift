@@ -109,7 +109,7 @@ public struct TodoItemView: View {
         }
         .onTapGesture {
             editMode = true
-            viewModel.state.hiddenTabBar = true
+            viewModel.state.hiddenTabBar = false
         }
         .gesture(
             DragGesture()

@@ -23,20 +23,22 @@ public class TodoViewModel: ObservableObject {
     
     enum Action {
         case onAppear
+        case closeButtonDidTap
+        case notRightNowButtonDidTap
+    }
+    
+    enum GroupAction {
         case addGroupButtonDidTap
-        case deleteItemButtonDidTap(Int)
         case deleteGroupButtonDidTap(Int)
-        case toggleItemCompletedButtonDidTap(Int)
-        
         case changeGroupNameButtonDidTap(Int)
         case changeGroupName
-        
+    }
+    
+    enum ItemAction {
         case addItem(Int, String)
-        case closeButtonDidTap
-        
         case editItem(Int, String)
-        
-        case notRightNowButtonDidTap
+        case toggleItemCompletedButtonDidTap(Int)
+        case deleteItemButtonDidTap(Int)
     }
     
     enum WindowAction {
@@ -47,7 +49,7 @@ public class TodoViewModel: ObservableObject {
     
     public var windowRouter: WindowRoutable
     private let useCase: TodoUsecaseType
-
+    
     @Published var groupList: [TodoGroup] = [] {
         didSet {
             print("💜💜💜💜💜 \(groupList)")
@@ -67,12 +69,16 @@ public class TodoViewModel: ObservableObject {
         bindState()
     }
     
-    func send(_ action: Action) {
+    func send(_ action: GroupAction) {
         switch action {
-        case .onAppear:
-            useCase.getGroup()
-                .sink(receiveValue: { _ in })
-                .store(in: cancelBag)
+        case .addGroupButtonDidTap:
+            if useCase.isGuestMode {
+                state.showGuestDeniedAlert = true
+            } else {
+                useCase.createGroup()
+                    .sink(receiveValue: { _ in })
+                    .store(in: cancelBag)
+            }
             
         case .deleteGroupButtonDidTap(let groupId):
             if useCase.isGuestMode {
@@ -82,24 +88,6 @@ public class TodoViewModel: ObservableObject {
                     .sink(receiveValue: { _ in })
                     .store(in: cancelBag)
             }
-            
-        case .deleteItemButtonDidTap(let itemId):
-            useCase.deleteItem(itemId)
-                .sink(receiveValue: { _ in })
-                .store(in: cancelBag)
-            
-        case .addGroupButtonDidTap:
-            if useCase.isGuestMode {
-                state.showGuestDeniedAlert = true
-            } else {
-                useCase.createGroup()
-                    .sink(receiveValue: { _ in })
-                    .store(in: cancelBag)
-            }
-        case .toggleItemCompletedButtonDidTap(let itemId):
-            useCase.toggleItemCompleted(itemId)
-                .sink(receiveValue: { _ in })
-                .store(in: cancelBag)
             
         case .changeGroupNameButtonDidTap(let groupId):
             if useCase.isGuestMode {
@@ -119,28 +107,49 @@ public class TodoViewModel: ObservableObject {
                     self?.state.showItemAlertView = false
                 })
                 .store(in: cancelBag)
+        }
+    }
+    
+    func send(_ action: Action) {
+        switch action {
+        case .onAppear:
+            useCase.getGroup()
+                .sink(receiveValue: { _ in })
+                .store(in: cancelBag)
             
         case .closeButtonDidTap:
             state.showItemAlertView = false
             
+        case .notRightNowButtonDidTap:
+            state.showGuestDeniedAlert = false
+        }
+    }
+    
+    func send(_ action: ItemAction) {
+        switch action {
+        case .deleteItemButtonDidTap(let itemId):
+            useCase.deleteItem(itemId)
+                .sink(receiveValue: { _ in })
+                .store(in: cancelBag)
+            
+        case .toggleItemCompletedButtonDidTap(let itemId):
+            useCase.toggleItemCompleted(itemId)
+                .sink(receiveValue: { _ in })
+                .store(in: cancelBag)
+            
         case .addItem(let groupId, let content):
+            state.hiddenTabBar = false
             useCase.createItem(groupId, content)
                 .receive(on: RunLoop.main)
-                .sink(receiveValue: { [weak self] _ in
-                    self?.state.hiddenTabBar = false
-                })
+                .sink(receiveValue: {  _ in })
                 .store(in: cancelBag)
             
         case .editItem(let itemId, let content):
+            state.hiddenTabBar = false
             useCase.editItem(itemId, content)
                 .receive(on: RunLoop.main)
-                .sink(receiveValue: { [weak self] _ in
-                    self?.state.hiddenTabBar = false
-                })
+                .sink(receiveValue: {  _ in })
                 .store(in: cancelBag)
-            
-        case .notRightNowButtonDidTap:
-            state.showGuestDeniedAlert = false
         }
     }
     
@@ -162,6 +171,3 @@ public class TodoViewModel: ObservableObject {
             .store(in: cancelBag)
     }
 }
-
-
-

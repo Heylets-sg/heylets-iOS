@@ -86,6 +86,9 @@ public struct TodoView: View {
                 viewModel.send(.notRightNowButtonDidTap)
             }
         )
+        .onTapGesture {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
     }
         
 }
