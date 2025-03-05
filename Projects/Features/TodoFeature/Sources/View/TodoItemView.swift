@@ -162,7 +162,7 @@ public struct TodoAddItemView: View {
                     TextField(
                         "",
                         text: $content,
-                        prompt: Text("할일을 입력해주세요")
+                        prompt: Text("Add a task")
                             .font(.medium_12)
                             .foregroundColor(.init(hex: "#B8B8B8"))
                     )
