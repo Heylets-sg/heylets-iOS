@@ -76,6 +76,7 @@ public struct TodoView: View {
             )
             .hidden(!viewModel.state.showItemAlertView)
         }
+        .ignoresSafeArea()
         .heyAlert(
             isPresented: viewModel.state.showGuestDeniedAlert,
             loginButtonAction: {

@@ -118,6 +118,7 @@ public struct TimeTableView: View {
             
             SettingTimeTableAlertView(viewModel: viewModel)
         }
+        .ignoresSafeArea()
         
         .overlay {
             let shouldShowOverlay = !(viewModel.viewType == .theme && !themeViewModel.state.isShowingSelectInfoView)

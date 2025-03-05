@@ -97,6 +97,7 @@ public struct TabBarView: View {
             .padding(.bottom, 30)
             .frame(height: 86)
             .background(Color.heyWhite)
+            .ignoresSafeArea()
         }
         .shadow(
             color: Color(hex: "#000000").opacity(0.06),
@@ -129,7 +130,7 @@ struct TabItemView: View {
             )
             .resizable()
             .frame(width: 23, height: 23)
-            .padding(.bottom, 6)
+//            .padding(.bottom, 6)
             
             Text(tabType.title)
                 .font(.semibold_10)
