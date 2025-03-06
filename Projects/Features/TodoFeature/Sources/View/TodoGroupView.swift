@@ -26,7 +26,7 @@ public struct TodoGroupView: View {
     public var body: some View {
         ZStack {
             VStack {
-                HStack {
+                HStack(spacing: 0) {
                     Text(group.name)
                         .font(.semibold_14)
                         .foregroundStyle(Color.init(hex: "#3D3D3D"))
@@ -60,16 +60,23 @@ public struct TodoGroupView: View {
                         viewModel: viewModel,
                         groupId: group.id
                     )
-                    Spacer()
                 }
+                .frame(minWidth: 342)
             }
             
-            EtcGroupView(
-                deleteGroupAction: { viewModel.send(.deleteGroupButtonDidTap(group.id)) },
-                changeGroupNameAction: { viewModel.send(.changeGroupNameButtonDidTap(group.id)) }
-            )
-            .hidden(!showEtcView)
+            if showEtcView {
+                EtcGroupView(
+                    deleteGroupAction: { viewModel.send(.deleteGroupButtonDidTap(group.id)) },
+                    changeGroupNameAction: { viewModel.send(.changeGroupNameButtonDidTap(group.id)) }
+                )
+                .hidden(!showEtcView)
+                .frame(height: 108)
+                .padding(.top, 36)
+            } else {
+                EmptyView()
+            }
         }
+        .padding(.horizontal, 24)
     }
 }
 
@@ -119,8 +126,6 @@ public struct EtcGroupView: View {
                     y: 4
                 )
             }
-            Spacer()
         }
-        .padding(.top, 36)
     }
 }

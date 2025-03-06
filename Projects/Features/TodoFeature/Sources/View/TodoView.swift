@@ -40,7 +40,6 @@ public struct TodoView: View {
                             )
                         }
                     }
-                    .padding(.horizontal, 24)
                     .padding(.bottom, 36)
                     
                     Button {
@@ -55,10 +54,10 @@ public struct TodoView: View {
                 .scrollIndicators(.hidden)
             }
             .ignoresSafeArea()
+//            .padding(.horizontal, 16)
             .onAppear {
                 viewModel.send(.onAppear)
             }
-            .scrollToMinDistance(minDisntance: 32)
             
             TabBarView(
                 timeTableAction: { viewModel.send(.gotoTimeTable) },

@@ -37,7 +37,7 @@ public struct TodoItemView: View {
     
     public var body: some View {
         ZStack {
-            VStack {
+            VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Button {
                         viewModel.send(.toggleItemCompletedButtonDidTap(item.id))
@@ -90,24 +90,23 @@ public struct TodoItemView: View {
             .background(Color.init(hex: "#F7F7F7"))
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
-            GeometryReader { geometry in
-                if showDeleteButton {
-                    HStack(spacing: 0) {
-                        Spacer()
-                        Button {
-                            viewModel.send(.deleteItemButtonDidTap(item.id))
-                        } label: {
-                            Text("Delete")
-                                .font(.medium_14)
-                                .foregroundColor(.white)
-                                .frame(width: threshold)
-                                .frame(minHeight: 56, maxHeight: 81)
-                                .background(Color.red)
-                        }
-                        .cornerRadius(8, corners: [.bottomRight, .topRight])
+            if showDeleteButton {
+                HStack(spacing: 0) {
+                    Spacer()
+                    Button {
+                        viewModel.send(.deleteItemButtonDidTap(item.id))
+                    } label: {
+                        Text("Delete")
+                            .font(.medium_14)
+                            .foregroundColor(.white)
+                            .frame(width: threshold)
+                            .frame(minHeight: 56, maxHeight: 81)
+                            .background(.red)
                     }
+                    .cornerRadius(8, corners: [.bottomRight, .topRight])
                 }
             }
+            
             
         }
         .onTapGesture {
@@ -206,7 +205,6 @@ public struct TodoAddItemView: View {
         .background(Color.init(hex: "#F7F7F7"))
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .frame(height: 56)
-        
     }
 }
 
