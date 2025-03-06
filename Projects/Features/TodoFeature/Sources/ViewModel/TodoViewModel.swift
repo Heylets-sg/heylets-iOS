@@ -129,14 +129,7 @@ public class TodoViewModel: ObservableObject {
             
         case .hideKeyboard:
             resetEditMode()
-            guard let groupId = newItem.groupId else { return }
-            useCase.createItem(groupId, newItem.content)
-                .receive(on: RunLoop.main)
-                .sink(receiveValue: {  [weak self] _ in
-                    self?.state.hiddenTabBar = false
-                    self?.newItem = (nil, "")
-                })
-                .store(in: cancelBag)
+            addItem()
         }
     }
     
@@ -152,14 +145,9 @@ public class TodoViewModel: ObservableObject {
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
             
-        case .addItem(let groupId, let content):
+        case .addItem:
             state.hiddenTabBar = false
-            useCase.createItem(groupId, content)
-                .receive(on: RunLoop.main)
-                .sink(receiveValue: {  [weak self] _ in
-                    self?.newItem = (nil, "")
-                })
-                .store(in: cancelBag)
+            addItem()
             
         case .editItem(let itemId, let content):
             state.hiddenTabBar = false
@@ -198,6 +186,19 @@ public class TodoViewModel: ObservableObject {
 }
 
 extension TodoViewModel {
+    private func addItem() {
+        guard let groupId = newItem.groupId else { return }
+        useCase.createItem(groupId, newItem.content)
+            .receive(on: RunLoop.main)
+            .handleEvents(receiveRequest: { [weak self] _ in
+                self?.resetAddEditMode()
+            })
+            .sink(receiveValue: {  [weak self] _ in
+                self?.newItem = (nil, "")
+            })
+            .store(in: cancelBag)
+    }
+    
     private func resetEditMode() {
         groupList.indices.forEach { groupIndex in
             groupList[groupIndex].items.indices.forEach { itemIndex in

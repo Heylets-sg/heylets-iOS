@@ -167,7 +167,6 @@ public struct TodoAddItemView: View {
                     .foregroundStyle(Color.init(hex: "#4A4A4A"))
                     .onSubmit {
                         viewModel.send(.addItem(groupId, content))
-//                        isEditMode = false
                     }
                     .submitLabel(.done)
                 }
@@ -192,7 +191,6 @@ public struct TodoAddItemView: View {
                 }
                 .onTapGesture {
                     viewModel.send(.addTaskButtonDidTap(groupId: groupId))
-//                    isEditMode = true
                 }
             }
         }
