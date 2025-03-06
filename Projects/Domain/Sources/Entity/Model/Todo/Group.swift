@@ -22,17 +22,20 @@ public struct TodoGroup: Hashable {
     public let type: GroupType
     public let name: String
     public var items: [TodoItem]
+    public var isAddItemMode: Bool
     
     public init(
         id: Int,
         type: GroupType,
         name: String,
-        items: [TodoItem]
+        items: [TodoItem],
+        isAddItemMode: Bool = false
     ) {
         self.id = id
         self.type = type
         self.name = name
         self.items = items
+        self.isAddItemMode = isAddItemMode
     }
 }
 

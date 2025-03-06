@@ -50,14 +50,21 @@ public struct TodoGroupView: View {
                         TodoItemView(
                             groupId: group.id,
                             item: item,
-                            viewModel: viewModel,
-                            isEditing: item.isEditing
+                            viewModel: viewModel
                         )
+                        .onTapGesture {
+                            viewModel.send(.itemDidTap(item.id))
+                        }
                         .padding(.bottom, 8)
                     }
                     
                     TodoAddItemView(
                         viewModel: viewModel,
+                        content: Binding(
+                            get: { viewModel.newItem.content },
+                            set: { viewModel.newItem.content = $0 }
+                            ),
+                        isEditMode: group.isAddItemMode,
                         groupId: group.id
                     )
                 }
@@ -70,8 +77,8 @@ public struct TodoGroupView: View {
                     changeGroupNameAction: { viewModel.send(.changeGroupNameButtonDidTap(group.id)) }
                 )
                 .hidden(!showEtcView)
-                .frame(height: 108)
                 .padding(.top, 36)
+
             } else {
                 EmptyView()
             }
@@ -126,6 +133,7 @@ public struct EtcGroupView: View {
                     y: 4
                 )
             }
+            Spacer()
         }
     }
 }

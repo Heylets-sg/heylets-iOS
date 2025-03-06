@@ -19,12 +19,14 @@ public class TodoViewModel: ObservableObject {
         var editGroupName: (Int?, String) = (nil, "")
         var showGuestDeniedAlert: Bool = false
         var hiddenTabBar: Bool = false
+        var addItemEditMode: [Bool] = []
     }
     
     enum Action {
         case onAppear
         case closeButtonDidTap
         case notRightNowButtonDidTap
+        case hideKeyboard
     }
     
     enum GroupAction {
@@ -39,6 +41,8 @@ public class TodoViewModel: ObservableObject {
         case editItem(Int, String)
         case toggleItemCompletedButtonDidTap(Int)
         case deleteItemButtonDidTap(Int)
+        case itemDidTap(Int)
+        case addTaskButtonDidTap(groupId: Int)
     }
     
     enum WindowAction {
@@ -50,12 +54,13 @@ public class TodoViewModel: ObservableObject {
     public var windowRouter: WindowRoutable
     private let useCase: TodoUsecaseType
     
-    @Published var groupList: [TodoGroup] = [] {
+    @Published var groupList: [TodoGroup] = []
+    @Published var state = State()
+    @Published var newItem: (groupId: Int?, content: String) = (nil, "") {
         didSet {
-            print("💜💜💜💜💜 \(groupList)")
+            print(newItem.groupId, newItem.content)
         }
     }
-    @Published var state = State()
     
     private var cancelBag = CancelBag()
     
@@ -121,6 +126,17 @@ public class TodoViewModel: ObservableObject {
             
         case .notRightNowButtonDidTap:
             state.showGuestDeniedAlert = false
+            
+        case .hideKeyboard:
+            resetEditMode()
+            guard let groupId = newItem.groupId else { return }
+            useCase.createItem(groupId, newItem.content)
+                .receive(on: RunLoop.main)
+                .sink(receiveValue: {  [weak self] _ in
+                    self?.state.hiddenTabBar = false
+                    self?.newItem = (nil, "")
+                })
+                .store(in: cancelBag)
         }
     }
     
@@ -140,7 +156,9 @@ public class TodoViewModel: ObservableObject {
             state.hiddenTabBar = false
             useCase.createItem(groupId, content)
                 .receive(on: RunLoop.main)
-                .sink(receiveValue: {  _ in })
+                .sink(receiveValue: {  [weak self] _ in
+                    self?.newItem = (nil, "")
+                })
                 .store(in: cancelBag)
             
         case .editItem(let itemId, let content):
@@ -149,7 +167,47 @@ public class TodoViewModel: ObservableObject {
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: {  _ in })
                 .store(in: cancelBag)
+            
+        case .itemDidTap(let itemId):
+            resetAddEditMode()
+            for groupIndex in groupList.indices {
+                for itemIndex in groupList[groupIndex].items.indices {
+                    groupList[groupIndex].items[itemIndex].isEditing = (groupList[groupIndex].items[itemIndex].id == itemId)
+                }
+            }
+            
+        case .addTaskButtonDidTap(let groupId):
+            for groupIndex in groupList.indices {
+                groupList[groupIndex].isAddItemMode = (groupList[groupIndex].id == groupId)
+            }
+            state.hiddenTabBar = true
+            resetEditMode()
+            newItem.groupId = groupId
         }
+    }
+    
+    private func bindState() {
+        useCase.todoGroupList
+            .receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: { [weak self] groupList in
+                self?.state.addItemEditMode = Array(repeating: false, count: groupList.count)
+            })
+            .assign(to: \.groupList, on: self)
+            .store(in: cancelBag)
+    }
+}
+
+extension TodoViewModel {
+    private func resetEditMode() {
+        groupList.indices.forEach { groupIndex in
+            groupList[groupIndex].items.indices.forEach { itemIndex in
+                groupList[groupIndex].items[itemIndex].isEditing = false
+            }
+        }
+    }
+    
+    private func resetAddEditMode() {
+        groupList.indices.forEach { groupList[$0].isAddItemMode = false }
     }
     
     func send(_ action: WindowAction) {
@@ -161,12 +219,5 @@ public class TodoViewModel: ObservableObject {
         case .gotoLogin:
             windowRouter.switch(to: .login)
         }
-    }
-    
-    private func bindState() {
-        useCase.todoGroupList
-            .receive(on: RunLoop.main)
-            .assign(to: \.groupList, on: self)
-            .store(in: cancelBag)
     }
 }

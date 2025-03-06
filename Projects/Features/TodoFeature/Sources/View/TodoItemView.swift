@@ -15,18 +15,15 @@ public struct TodoItemView: View {
     private let groupId: Int
     private let item: TodoItem
     private let viewModel: TodoViewModel
-    @State private var isEditing: Bool
     
     public init(
         groupId: Int,
         item: TodoItem,
-        viewModel: TodoViewModel,
-        isEditing: Bool
+        viewModel: TodoViewModel
     ) {
         self.groupId = groupId
         self.item = item
         self.viewModel = viewModel
-        self.isEditing = isEditing
     }
     
     @State private var showDeleteButton: Bool = false
@@ -49,7 +46,7 @@ public struct TodoItemView: View {
                     .padding(.trailing, 12)
                     .offset(x: offsetX)
                     
-                    if isEditing {
+                    if item.isEditing {
                         TextField(
                             "",
                             text: $content,
@@ -64,7 +61,6 @@ public struct TodoItemView: View {
                         .offset(x: offsetX)
                         .onSubmit {
                             viewModel.send(.editItem(item.id, content))
-                            isEditing = false
                         }
                         .submitLabel(.done)
                         .onAppear {
@@ -106,12 +102,6 @@ public struct TodoItemView: View {
                     .cornerRadius(8, corners: [.bottomRight, .topRight])
                 }
             }
-            
-            
-        }
-        .onTapGesture {
-            isEditing = true
-            viewModel.state.hiddenTabBar = false
         }
         .gesture(
             DragGesture()
@@ -121,7 +111,7 @@ public struct TodoItemView: View {
                     }
                 }
                 .onEnded { value in
-                    if value.translation.width < -threshold / 2 {
+                    if value.translation.width < -threshold / 3 {
                         offsetX = -threshold
                         showDeleteButton = true
                     } else {
@@ -137,21 +127,25 @@ public struct TodoItemView: View {
 public struct TodoAddItemView: View {
     private let viewModel: TodoViewModel
     private let groupId: Int
-    @State private var editMode: Bool = false
-    @State private var content: String = ""
+    private var isEditMode: Bool
+    @Binding private var content: String
     @FocusState private var isKeyboardActive: Bool
     
     init(
         viewModel: TodoViewModel,
+        content: Binding<String>,
+        isEditMode: Bool,
         groupId: Int
     ) {
         self.viewModel = viewModel
+        self._content = content
+        self.isEditMode = isEditMode
         self.groupId = groupId
     }
     
     public var body: some View {
         VStack {
-            if editMode {
+            if isEditMode {
                 HStack(spacing: 0) {
                     Button {
                     } label: {
@@ -169,11 +163,11 @@ public struct TodoAddItemView: View {
                             .foregroundColor(.init(hex: "#B8B8B8"))
                     )
                     .focused($isKeyboardActive)
-                    .font(.medium_12)
+                    .font(.medium_14)
                     .foregroundStyle(Color.init(hex: "#4A4A4A"))
                     .onSubmit {
                         viewModel.send(.addItem(groupId, content))
-                        editMode = false
+//                        isEditMode = false
                     }
                     .submitLabel(.done)
                 }
@@ -197,8 +191,8 @@ public struct TodoAddItemView: View {
                     Spacer()
                 }
                 .onTapGesture {
-                    viewModel.state.hiddenTabBar = true
-                    editMode = true
+                    viewModel.send(.addTaskButtonDidTap(groupId: groupId))
+//                    isEditMode = true
                 }
             }
         }
