@@ -8,25 +8,28 @@
 
 import SwiftUI
 
+import BaseFeatureDependency
 import Domain
 
 public struct TodoItemView: View {
     private let groupId: Int
     private let item: TodoItem
     private let viewModel: TodoViewModel
+    @State private var isEditing: Bool
     
     public init(
         groupId: Int,
         item: TodoItem,
-        viewModel: TodoViewModel
+        viewModel: TodoViewModel,
+        isEditing: Bool
     ) {
         self.groupId = groupId
         self.item = item
         self.viewModel = viewModel
+        self.isEditing = isEditing
     }
     
     @State private var showDeleteButton: Bool = false
-    @State private var editMode: Bool = false
     @State private var content: String = ""
     @State private var offsetX: CGFloat = 0
     private let threshold: CGFloat = 72
@@ -46,7 +49,7 @@ public struct TodoItemView: View {
                     .padding(.trailing, 12)
                     .offset(x: offsetX)
                     
-                    if editMode {
+                    if isEditing {
                         TextField(
                             "",
                             text: $content,
@@ -61,7 +64,7 @@ public struct TodoItemView: View {
                         .offset(x: offsetX)
                         .onSubmit {
                             viewModel.send(.editItem(item.id, content))
-                            editMode = false
+                            isEditing = false
                         }
                         .submitLabel(.done)
                         .onAppear {
@@ -108,7 +111,7 @@ public struct TodoItemView: View {
             
         }
         .onTapGesture {
-            editMode = true
+            isEditing = true
             viewModel.state.hiddenTabBar = false
         }
         .gesture(
@@ -207,3 +210,13 @@ public struct TodoAddItemView: View {
     }
 }
 
+#Preview {
+    let useCase = StubHeyUseCase.stub.todoUseCase
+    return TodoView(
+        viewModel: .init(
+            windowRouter: Router.default.windowRouter,
+            useCase: useCase
+        )
+    )
+    .environmentObject(Router.default)
+}

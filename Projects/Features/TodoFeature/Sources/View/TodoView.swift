@@ -21,7 +21,6 @@ public struct TodoView: View {
         self.viewModel = viewModel
     }
     
-    
     public var body: some View {
         ZStack {
             VStack(alignment: .leading) {
@@ -70,7 +69,6 @@ public struct TodoView: View {
             TodoChangeGroupNameAlertView(
                 title: "Enter name",
                 content: $viewModel.state.editGroupName.1,
-                groupId: 1,
                 primaryAction: ("Close", .gray, { viewModel.send(.closeButtonDidTap) }),
                 secondaryAction: ("Ok", .primary, { viewModel.send(.changeGroupName) })
             )
@@ -93,13 +91,13 @@ public struct TodoView: View {
         
 }
 
-#Preview {
-    let useCase = StubHeyUseCase.stub.todoUseCase
-    return TodoView(
-        viewModel: .init(
-            windowRouter: Router.default.windowRouter,
-            useCase: useCase
-        )
-    )
-    .environmentObject(Router.default)
-}
+//#Preview {
+//    let useCase = StubHeyUseCase.stub.todoUseCase
+//    return TodoView(
+//        viewModel: .init(
+//            windowRouter: Router.default.windowRouter,
+//            useCase: useCase
+//        )
+//    )
+//    .environmentObject(Router.default)
+//}

@@ -97,7 +97,6 @@ public class TodoViewModel: ObservableObject {
                 state.editGroupName.0 = groupId
             }
             
-            
         case .changeGroupName:
             guard let groupId = state.editGroupName.0 else { return }
             let groupName = state.editGroupName.1

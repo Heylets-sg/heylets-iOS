@@ -50,7 +50,8 @@ public struct TodoGroupView: View {
                         TodoItemView(
                             groupId: group.id,
                             item: item,
-                            viewModel: viewModel
+                            viewModel: viewModel,
+                            isEditing: item.isEditing
                         )
                         .padding(.bottom, 8)
                     }

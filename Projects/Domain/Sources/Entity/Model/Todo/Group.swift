@@ -40,14 +40,17 @@ public struct TodoItem: Hashable {
     public let id: Int
     public let content: String
     public let completed: Bool
+    public var isEditing: Bool
     
     public init(
         id: Int,
         content: String,
-        completed: Bool
+        completed: Bool,
+        isEditing: Bool = false
     ) {
         self.id = id
         self.content = content
         self.completed = completed
+        self.isEditing = isEditing
     }
 }
