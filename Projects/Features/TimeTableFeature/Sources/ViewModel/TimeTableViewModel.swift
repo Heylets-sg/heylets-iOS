@@ -146,7 +146,10 @@ public class TimeTableViewModel: ObservableObject {
             useCase.addSection(lecture.id)
                 .receive(on: RunLoop.main)
                 .map { _ in TimeTableViewType.search }
-                .assign(to: \.viewType, on: self)
+                .sink(receiveValue: { [weak self] viewType in
+                    self?.viewType = viewType
+                    self?.selectLecture = []
+                })
                 .store(in: cancelBag)
             
         case .initMainView:

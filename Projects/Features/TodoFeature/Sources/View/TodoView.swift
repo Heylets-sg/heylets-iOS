@@ -32,7 +32,7 @@ public struct TodoView: View {
                         .padding(.bottom, 41)
                     
                     ScrollView {
-                        VStack(spacing: 16) {
+                        VStack(spacing: 32) {
                             ForEach(viewModel.groupList, id: \.self) { group in
                                 TodoGroupView(
                                     group: group,
