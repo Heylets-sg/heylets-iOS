@@ -146,7 +146,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
         guestRepository.startGuestMode(university: university)
             .map { _ in }
             .catch { [weak self] error in
-                self?.errMessage.send("게스트 모드 시작에 실패했습니다.")
+                self?.errMessage.send("게스트 모드 시작에 실패했습니다. \(error)")
                 return Empty<Void, Never>()
             }
             .eraseToAnyPublisher()

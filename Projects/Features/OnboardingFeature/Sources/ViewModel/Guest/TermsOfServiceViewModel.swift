@@ -49,6 +49,8 @@ public class TermsOfServiceViewModel: ObservableObject {
         self.windowRouter = windowRouter
         self.useCase = useCase
         self.university = university
+        
+        bindState()
     }
     
     // MARK: - Methods
@@ -85,6 +87,13 @@ public class TermsOfServiceViewModel: ObservableObject {
             state.termsOfServiceIsAgree = state.allAgree
             state.personalInformationIsAgree =  state.allAgree
         }
+    }
+    
+    private func bindState() {
+        useCase.errMessage
+            .receive(on: RunLoop.main)
+            .assign(to: \.state.errMessage, on: self)
+            .store(in: cancelBag)
     }
 }
 

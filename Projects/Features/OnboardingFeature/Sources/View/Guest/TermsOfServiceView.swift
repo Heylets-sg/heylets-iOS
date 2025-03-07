@@ -117,6 +117,9 @@ struct TermsOfServiceView: View {
                 }
                 .padding(.horizontal, 24)
                 
+                Text(viewModel.state.errMessage)
+                    .font(.title)
+                    .foregroundColor(.red)
                 
                 Spacer()
                 

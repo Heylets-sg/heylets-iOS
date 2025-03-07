@@ -12,7 +12,6 @@ import BaseFeatureDependency
 import DSKit
 import Domain
 
-
 public struct TodoView: View {
     @EnvironmentObject var container: Router
     @ObservedObject var viewModel: TodoViewModel
@@ -22,73 +21,78 @@ public struct TodoView: View {
     }
     
     public var body: some View {
-        ZStack {
-            VStack(alignment: .leading) {
-                Text("Things to do")
-                    .font(.semibold_18)
-                    .foregroundColor(.heyGray1)
-                    .padding(.leading, 16)
-                    .padding(.top, 81)
-                    .padding(.bottom, 41)
-                
-                ScrollView {
-                    VStack(spacing: 16) {
-                        ForEach(viewModel.groupList, id: \.self) { group in
-                            TodoGroupView(
-                                group: group,
-                                viewModel: viewModel
-                            )
+        VStack {
+            ZStack {
+                VStack(alignment: .leading) {
+                    Text("Things to do")
+                        .font(.semibold_18)
+                        .foregroundColor(.heyGray1)
+                        .padding(.leading, 16)
+                        .padding(.top, 81)
+                        .padding(.bottom, 41)
+                    
+                    ScrollView {
+                        VStack(spacing: 16) {
+                            ForEach(viewModel.groupList, id: \.self) { group in
+                                TodoGroupView(
+                                    group: group,
+                                    viewModel: viewModel
+                                )                                
+                            }
+                            .keyboardAdaptive()
+                        }
+                        .padding(.bottom, 36)
+                        
+                        Button {
+                            viewModel.send(.addGroupButtonDidTap)
+                        } label: {
+                            Image(uiImage: .icAddGroup)
+                                .resizable()
+                                .frame(width: 28, height: 28)
+                                .padding(.bottom, 209)
                         }
                     }
-                    .padding(.bottom, 36)
                     
-                    Button {
-                        viewModel.send(.addGroupButtonDidTap)
-                    } label: {
-                        Image(uiImage: .icAddGroup)
-                            .resizable()
-                            .frame(width: 28, height: 28)
-                            .padding(.bottom, 209)
-                    }
+                    .scrollIndicators(.hidden)
                 }
-                .scrollIndicators(.hidden)
+                
+                .ignoresSafeArea()
+                //            .padding(.horizontal, 16)
+                .onAppear {
+                    viewModel.send(.onAppear)
+                }
+                
+                
+                TabBarView(
+                    timeTableAction: { viewModel.send(.gotoTimeTable) },
+                    mypageAction: { viewModel.send(.gotoMyPage) }
+                )
+                .hidden(viewModel.state.hiddenTabBar)
+                
+                TodoChangeGroupNameAlertView(
+                    title: "Enter name",
+                    content: $viewModel.state.editGroupName.1,
+                    primaryAction: ("Close", .gray, { viewModel.send(.closeButtonDidTap) }),
+                    secondaryAction: ("Ok", .primary, { viewModel.send(.changeGroupName) })
+                )
+                .hidden(!viewModel.state.showItemAlertView)
             }
             .ignoresSafeArea()
-//            .padding(.horizontal, 16)
-            .onAppear {
-                viewModel.send(.onAppear)
-            }
-            
-            TabBarView(
-                timeTableAction: { viewModel.send(.gotoTimeTable) },
-                mypageAction: { viewModel.send(.gotoMyPage) }
+            .heyAlert(
+                isPresented: viewModel.state.showGuestDeniedAlert,
+                loginButtonAction: {
+                    viewModel.send(.gotoLogin)
+                },
+                notRightNowButton: {
+                    viewModel.send(.notRightNowButtonDidTap)
+                }
             )
-            .hidden(viewModel.state.hiddenTabBar)
-            
-            TodoChangeGroupNameAlertView(
-                title: "Enter name",
-                content: $viewModel.state.editGroupName.1,
-                primaryAction: ("Close", .gray, { viewModel.send(.closeButtonDidTap) }),
-                secondaryAction: ("Ok", .primary, { viewModel.send(.changeGroupName) })
-            )
-            .hidden(!viewModel.state.showItemAlertView)
-        }
-        .ignoresSafeArea()
-        .heyAlert(
-            isPresented: viewModel.state.showGuestDeniedAlert,
-            loginButtonAction: {
-                viewModel.send(.gotoLogin)
-            },
-            notRightNowButton: {
-                viewModel.send(.notRightNowButtonDidTap)
+            .onTapGesture {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                viewModel.send(.hideKeyboard)
             }
-        )
-        .onTapGesture {
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-            viewModel.send(.hideKeyboard)
         }
     }
-        
 }
 
 //#Preview {

@@ -9,6 +9,7 @@
 import SwiftUI
 
 import Domain
+import DSKit
 
 public struct TodoGroupView: View {
     private var group: TodoGroup
@@ -135,5 +136,11 @@ public struct EtcGroupView: View {
             }
             Spacer()
         }
+    }
+}
+
+extension UIResponder {
+    @objc static func resignFirstResponder() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

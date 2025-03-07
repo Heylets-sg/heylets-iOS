@@ -7,14 +7,17 @@
 //
 
 import SwiftUI
+import Combine
 
 import BaseFeatureDependency
 import Domain
+import Core
 
 public struct TodoItemView: View {
     private let groupId: Int
     private let item: TodoItem
     private let viewModel: TodoViewModel
+    private let cancelBag = CancelBag()
     
     public init(
         groupId: Int,

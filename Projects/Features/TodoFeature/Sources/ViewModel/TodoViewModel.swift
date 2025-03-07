@@ -56,11 +56,7 @@ public class TodoViewModel: ObservableObject {
     
     @Published var groupList: [TodoGroup] = []
     @Published var state = State()
-    @Published var newItem: (groupId: Int?, content: String) = (nil, "") {
-        didSet {
-            print(newItem.groupId, newItem.content)
-        }
-    }
+    @Published var newItem: (groupId: Int?, content: String) = (nil, "")
     
     private var cancelBag = CancelBag()
     
