@@ -115,9 +115,9 @@ public class TimeTableViewModel: ObservableObject {
                 .store(in: cancelBag)
             
         case .tableCellDidTap(let sectionId):
+            viewType = .detail
             if let detailInfo = sectionList.first(where: { $0.id == sectionId }) {
                 detailSectionInfo = detailInfo
-                viewType = .detail
             } else {
                 state.error = (true, "선택한 섹션 정보를 찾을 수 없습니다.")
             }

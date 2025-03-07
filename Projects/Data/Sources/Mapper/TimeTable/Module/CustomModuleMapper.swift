@@ -29,7 +29,7 @@ extension CustomModuleResult {
                 location: location ?? ""
             )],
             professor: professor ?? "",
-            unit: endTimeComponents.hour - startTimeComponents.hour, //그냥 시간으로 표시
+            unit: nil,
             memo: memo,
             backgroundColor: displayStyle?.backgroundColor ?? "#CAD0ED",
             textColor: displayStyle?.textColor ?? "#FFFFFF",

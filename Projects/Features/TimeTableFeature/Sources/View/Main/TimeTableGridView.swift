@@ -180,7 +180,9 @@ extension TimeTableGridView {
         backgroundColor: Color
     ) -> some View {
         return Button {
-            viewModel.send(.tableCellDidTap(cell.id))
+            withAnimation {
+                viewModel.send(.tableCellDidTap(cell.id))
+            }
         } label: {
             Rectangle()
                 .fill(backgroundColor)

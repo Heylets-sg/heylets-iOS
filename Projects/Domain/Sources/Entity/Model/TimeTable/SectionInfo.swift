@@ -17,7 +17,7 @@ public struct SectionInfo: Hashable, Equatable {
     public var name: String
     public var schedule: [ScheduleInfo]
     public var professor: String
-    public var unit: Int
+    public var unit: Int?
     public var memo: String?
     public var backgroundColor: String
     public var textColor: String
@@ -80,7 +80,7 @@ public struct SectionInfo: Hashable, Equatable {
         name: String,
         schedule: [ScheduleInfo] = [],
         professor: String,
-        unit: Int,
+        unit: Int?,
         memo: String? = nil,
         backgroundColor: String = "#CAD0ED", // heySubMain
         textColor: String = "#FFFFFF", //black,

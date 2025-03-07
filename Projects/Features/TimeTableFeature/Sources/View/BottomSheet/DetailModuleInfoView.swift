@@ -13,7 +13,7 @@ import BaseFeatureDependency
 public struct DetailModuleInfoView: View {
     @Binding var viewType: TimeTableViewType
     @Binding var deleteModuleAlertIsPresented: Bool
-    private var sectionInfo: SectionInfo = .timetable_stub1
+    private var sectionInfo: SectionInfo = .empty
     
     init(
         viewType: Binding<TimeTableViewType>,
@@ -58,7 +58,7 @@ public struct DetailModuleInfoView: View {
                         .font(.regular_14)
                         .foregroundColor(.heyGray2)
                     
-                    Text("\(sectionInfo.location) / \(sectionInfo.unit) unit")
+                    Text("\(sectionInfo.location)\(sectionInfo.unit.map { " / \($0) unit" } ?? "")")
                         .font(.regular_14)
                         .foregroundColor(.heyGray2)
                 }

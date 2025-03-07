@@ -41,7 +41,13 @@ public struct RoundedCorner: Shape {
 extension View {
     public func bottomSheetTransition() -> some View {
         self.zIndex(2)
-            .transition(.move(edge: .bottom))
+            .transition(
+                .asymmetric(
+                    insertion: .move(edge: .bottom)
+                        .animation(.easeOut(duration: 10)), // ⬅️ 천천히 올라오도록 설정
+                    removal: .opacity.animation(.easeIn(duration: 0.3)) // ⬅️ 사라질 때 자연스럽게
+                )
+            )
     }
 }
 
@@ -57,10 +63,10 @@ extension View {
     public func captureAsImage(size: CGSize) -> UIImage {
         let controller = UIHostingController(rootView: self)
         let view = controller.view
-
+        
         view?.bounds = CGRect(origin: .zero, size: size)
         view?.backgroundColor = .clear
-
+        
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { context in
             view?.drawHierarchy(in: view!.bounds, afterScreenUpdates: true)
