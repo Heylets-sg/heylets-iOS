@@ -12,6 +12,8 @@ public struct Theme: Hashable {
     public var colorList: [String]
     public var name: String
     
+    public var themeName: String { name.formatName() }
+    
     public init(
         colorList: [String],
         name: String

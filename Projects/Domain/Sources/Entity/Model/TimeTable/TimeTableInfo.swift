@@ -21,7 +21,6 @@ public struct TimeTableDetailInfo {
     }
 }
 
-
 public struct TimeTableInfo {
     public var id: Int
     public var name: String
@@ -30,7 +29,7 @@ public struct TimeTableInfo {
     public var displayType: DisplayTypeInfo?
     
     public var fullSemester: String {
-        return "AY\(academicYear)/\(academicYear+1) \(semester.formatSemester())"
+        return "AY\(academicYear)/\(academicYear+1) \(semester.formatName())"
     }
     
     public init(
@@ -45,15 +44,5 @@ public struct TimeTableInfo {
         self.semester = semester
         self.academicYear = academicYear
         self.displayType = displayType
-    }
-}
-
-extension String {
-    func formatSemester() -> String {
-        let components = self.lowercased().split(separator: "_")
-        let formatted = components.enumerated().map { index, word in
-            index == 0 ? String(word.capitalized) : String(word)
-        }.joined(separator: " ")
-        return formatted
     }
 }

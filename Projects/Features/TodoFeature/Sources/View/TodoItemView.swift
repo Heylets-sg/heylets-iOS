@@ -78,6 +78,7 @@ public struct TodoItemView: View {
                             .multilineTextAlignment(.leading)
                             .layoutPriority(1)
                             .offset(x: offsetX)
+                            .strikethrough(item.completed)
                     }
                     Spacer()
                         .frame(minWidth: 23)
