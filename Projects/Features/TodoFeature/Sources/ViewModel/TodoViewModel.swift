@@ -152,13 +152,14 @@ public class TodoViewModel: ObservableObject {
                     .store(in: cancelBag)
             }
         case .itemDidTap(let itemId):
-            resetAddEditMode()
-            for groupIndex in groupList.indices {
-                for itemIndex in groupList[groupIndex].items.indices {
-                    groupList[groupIndex].items[itemIndex].isEditing = (groupList[groupIndex].items[itemIndex].id == itemId)
+            if !checkGuestMode() {
+                resetAddEditMode()
+                for groupIndex in groupList.indices {
+                    for itemIndex in groupList[groupIndex].items.indices {
+                        groupList[groupIndex].items[itemIndex].isEditing = (groupList[groupIndex].items[itemIndex].id == itemId)
+                    }
                 }
             }
-            
         case .addTaskButtonDidTap(let groupId):
             if !checkGuestMode() {
                 for groupIndex in groupList.indices {
