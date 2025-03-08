@@ -10,10 +10,13 @@ import Foundation
 
 public struct ThemePreviewResult: Decodable {
     public let themes: [ThemeResult]
+    let totalThemes: Int
+    let unlockedThemes: Int
 }
 
 public struct ThemeResult: Decodable {
     public let name: String
     let description: String
     public let previewColors: [String]
+    let unlocked: Bool
 }
