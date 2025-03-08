@@ -76,7 +76,6 @@ public struct TimeTableView: View {
                     viewModel.send(.addLecture(lecture))
                 }
             }
-            
             .heyAlert(
                 isPresented: viewModel.state.error.0,
                 title: viewModel.state.error.1,
@@ -143,7 +142,6 @@ public struct TimeTableView: View {
         }
         
         createBottomSheetView(viewModel.viewType)
-            .background(.yellow)
     }
 }
 
@@ -158,9 +156,11 @@ extension TimeTableView {
                 viewModel: searchModuleViewModel
             )
             .bottomSheetTransition()
+            
         case .theme:
             SettingTimeTableInfoView(viewModel: themeViewModel)
                 .bottomSheetTransition()
+            
         case .detail:
             DetailModuleInfoView(
                 viewType: $viewModel.viewType,
@@ -168,6 +168,7 @@ extension TimeTableView {
                 sectionInfo: viewModel.detailSectionInfo
             )
             .bottomSheetTransition()
+            
         case .addCustom:
             AddCustomModuleView(viewModel: addCustomModuleViewModel)
                 .bottomSheetTransition()

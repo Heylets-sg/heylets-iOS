@@ -24,13 +24,17 @@ public struct TodoView: View {
         VStack {
             ZStack {
                 VStack(alignment: .leading) {
-                    Text("Things to do")
-                        .font(.semibold_18)
-                        .foregroundColor(.heyGray1)
-                        .padding(.leading, 16)
-                        .padding(.top, 81)
-                        .padding(.bottom, 12)
-                    
+                    HStack {
+                        Text("Things to do")
+                            .font(.semibold_18)
+                            .foregroundColor(.heyGray1)
+                            .padding(.leading, 16)
+                            .padding(.top, 81)
+                            .padding(.bottom, 12)
+                        
+                        Spacer()
+                    }
+
                     ScrollView {
                         VStack(spacing: 16) {
                             ForEach(viewModel.groupList, id: \.self) { group in
@@ -40,18 +44,23 @@ public struct TodoView: View {
                                 )
                             }
                         }
+                        .loading(viewModel.state.isLoading)
                         .padding(.bottom, 36)
                         
-                        Button {
-                            viewModel.send(.addGroupButtonDidTap)
-                        } label: {
-                            Image(uiImage: .icAddGroup)
-                                .resizable()
-                                .frame(width: 28, height: 28)
-                                .padding(.bottom, 209)
+                        HStack {
+                            Spacer()
+                            Button {
+                                viewModel.send(.addGroupButtonDidTap)
+                            } label: {
+                                Image(uiImage: .icAddGroup)
+                                    .resizable()
+                                    .frame(width: 28, height: 28)
+                            }
+                            Spacer()
                         }
+                        .padding(.bottom, 209)
+                        
                     }
-                    
                     .scrollIndicators(.hidden)
                 }
                 

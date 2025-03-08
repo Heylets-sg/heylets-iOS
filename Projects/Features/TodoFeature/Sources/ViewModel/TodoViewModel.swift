@@ -21,6 +21,11 @@ public class TodoViewModel: ObservableObject {
         var hiddenTabBar: Bool = false
         var addItemEditMode: [Bool] = []
         var showEtcView: Bool = false
+        var isLoading = false {
+            didSet {
+                print("isLoading: \(isLoading)")
+            }
+        }
     }
     
     enum Action {
@@ -109,6 +114,8 @@ public class TodoViewModel: ObservableObject {
         switch action {
         case .onAppear:
             useCase.getGroup()
+                .receive(on: RunLoop.main)
+                .assignLoading(to: \.state.isLoading, on: self)
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
             
