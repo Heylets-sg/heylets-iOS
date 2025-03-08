@@ -173,7 +173,7 @@ extension TimeTableUseCase {
     
     public func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never> {
         return settingRepository.getThemeDetailInfo(themeName)
-            .map { $0.core + $0.gradient + [$0.defaultColor]}
+            .map { [$0.defaultColor] + $0.core + $0.gradient}
             .catch { _ in
                 return Just([]).eraseToAnyPublisher()
             }
