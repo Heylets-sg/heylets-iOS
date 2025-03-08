@@ -71,3 +71,14 @@ public struct AgreementInfo: Hashable {
         self.version = version
     }
 }
+
+extension AgreementInfo {
+    static public var termsOfService: Self { .init("TERMS_OF_SERVICE", true, "1.0.0") }
+    static public var privacyPolicy: Self { .init("PRIVACY_POLICY", true, "1.0.0") }
+    static public var marketing: Self { .init("MARKETING", true, "1.0.0") }
+    
+    static public var agreementList: [AgreementInfo] = [
+        .termsOfService,
+        .privacyPolicy
+    ]
+}

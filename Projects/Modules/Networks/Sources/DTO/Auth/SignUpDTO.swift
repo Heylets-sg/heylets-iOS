@@ -46,6 +46,14 @@ public struct RequiredRequest: Encodable {
     }
 }
 
+public struct GuestAgreementRequest: Encodable {
+    let agreements: [AgreementRequest]
+    
+    public init(agreements: [AgreementRequest]) {
+        self.agreements = agreements
+    }
+}
+
 public struct AgreementRequest: Encodable {
     let type: String
     let agreed: Bool

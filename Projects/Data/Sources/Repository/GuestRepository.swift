@@ -34,12 +34,15 @@ public struct GuestRepository: GuestRepositoryType {
             .asVoidWithGeneralError()
     }
     
-    public func startGuestMode(university: String) -> AnyPublisher<Auth, Error> {
-        guestService.startGuestMode(university)
+    public func startGuestMode(
+        university: String,
+        agreements: [AgreementInfo]
+    ) -> AnyPublisher<Auth, Error> {
+        let request = GuestAgreementRequest(agreements: agreements.map { $0.toDTO() })
+        return guestService.startGuestMode(university, request)
             .handleEvents(receiveOutput: { token in
                 UserDefaultsManager.setToken(token)
                 UserDefaultsManager.isGuestMode = true
-                print(UserDefaultsManager.isGuestMode)
             })
             .map { $0.toEntity() }
             .mapToGeneralError()

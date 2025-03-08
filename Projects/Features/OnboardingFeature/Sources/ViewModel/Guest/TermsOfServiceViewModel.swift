@@ -57,8 +57,9 @@ public class TermsOfServiceViewModel: ObservableObject {
     func send(_ action: Action) {
         switch action {
         case .agreeButtonDidTap:
+            let agreementList = AgreementInfo.agreementList
             if useCase.userInfo.email.isEmpty {
-                useCase.startGuestMode(university: university)
+                useCase.startGuestMode(university: university, agreements: agreementList)
                     .receive(on: RunLoop.main)
                     .sink(receiveValue: { [weak self] _ in
                         self?.windowRouter.switch(to: .timetable)
@@ -66,8 +67,7 @@ public class TermsOfServiceViewModel: ObservableObject {
                     })
                     .store(in: cancelBag)
             } else {
-                let agreeInfo: [AgreementInfo] = [.init("TERMS_OF_SERVICE", true, "string")]
-                useCase.userInfo.agreements = agreeInfo
+                useCase.userInfo.agreements = agreementList
                 useCase.signUp()
                     .sink(receiveValue: { [weak self] _ in
                         self?.navigationRouter.popToRootView()
