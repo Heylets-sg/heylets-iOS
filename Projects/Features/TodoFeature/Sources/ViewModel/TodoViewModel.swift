@@ -20,6 +20,7 @@ public class TodoViewModel: ObservableObject {
         var showGuestDeniedAlert: Bool = false
         var hiddenTabBar: Bool = false
         var addItemEditMode: [Bool] = []
+        var showEtcView: Bool = false
     }
     
     enum Action {
@@ -55,8 +56,11 @@ public class TodoViewModel: ObservableObject {
     private let useCase: TodoUsecaseType
     
     @Published var groupList: [TodoGroup] = []
-    @Published var state = State()
+    @Published var etcViewList: [(groupId: Int, isVisible: Bool)] = [] {
+        didSet { print(etcViewList) }
+    }
     @Published var newItem: (groupId: Int?, content: String) = (nil, "")
+    @Published var state = State()
     
     private var cancelBag = CancelBag()
     
@@ -175,6 +179,7 @@ public class TodoViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] groupList in
                 self?.state.addItemEditMode = Array(repeating: false, count: groupList.count)
+                self?.etcViewList = groupList.map { (groupId: $0.id, isVisible: false) }
             })
             .assign(to: \.groupList, on: self)
             .store(in: cancelBag)

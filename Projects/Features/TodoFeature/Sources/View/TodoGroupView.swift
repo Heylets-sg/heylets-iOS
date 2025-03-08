@@ -34,14 +34,29 @@ public struct TodoGroupView: View {
                     
                     Spacer()
                     
-                    Button {
-                        showEtcView.toggle()
+                    Menu {
+                        Button {
+                            viewModel.send(.deleteGroupButtonDidTap(group.id))
+                        } label: {
+                            Text("Delete group")
+                                .font(.medium_14)
+                                .foregroundColor(.heyGray1)
+                        }
+                        .padding(.bottom, 27)
+                        
+                        Button {
+                            viewModel.send(.changeGroupNameButtonDidTap(group.id))
+                        } label: {
+                            Text("Change name")
+                                .font(.medium_14)
+                                .foregroundColor(.heyGray1)
+                        }
+                        
                     } label: {
                         Image(uiImage: .icEtc)
+                            .resizable()
                             .frame(width: 13, height: 3)
-                            .padding(.trailing, 4)
                     }
-                    .padding(.all, 5)
                 }
                 .padding(.bottom, 8)
                 
@@ -72,17 +87,17 @@ public struct TodoGroupView: View {
                 .frame(minWidth: 342)
             }
             
-            if showEtcView {
-                EtcGroupView(
-                    deleteGroupAction: { viewModel.send(.deleteGroupButtonDidTap(group.id)) },
-                    changeGroupNameAction: { viewModel.send(.changeGroupNameButtonDidTap(group.id)) }
-                )
-                .hidden(!showEtcView)
-                .padding(.top, 36)
-
-            } else {
-                EmptyView()
-            }
+//            if showEtcView {
+//                EtcGroupView(
+//                    deleteGroupAction: { viewModel.send(.deleteGroupButtonDidTap(group.id)) },
+//                    changeGroupNameAction: { viewModel.send(.changeGroupNameButtonDidTap(group.id)) }
+//                )
+//                .hidden(!showEtcView)
+//                .padding(.top, 36)
+//
+//            } else {
+//                EmptyView()
+//            }
         }
         .padding(.horizontal, 24)
     }
@@ -104,24 +119,42 @@ public struct EtcGroupView: View {
         VStack {
             HStack {
                 Spacer()
-                VStack {
-                    Button {
-                        deleteGroupAction()
-                    } label: {
-                        Text("Delete group")
-                            .font(.medium_14)
-                            .foregroundColor(.heyGray1)
-                    }
-                    .padding(.bottom, 27)
-                    
-                    Button {
-                        changeGroupNameAction()
-                    } label: {
-                        Text("Change name")
-                            .font(.medium_14)
-                            .foregroundColor(.heyGray1)
-                    }
-                }
+//                Menu {
+//                    Button {
+//                        deleteGroupAction()
+//                    } label: {
+//                        Text("Delete group")
+//                            .font(.medium_14)
+//                            .foregroundColor(.heyGray1)
+//                    }
+//                    .padding(.bottom, 27)
+//                    
+//                    Button {
+//                        changeGroupNameAction()
+//                    } label: {
+//                        Text("Change name")
+//                            .font(.medium_14)
+//                            .foregroundColor(.heyGray1)
+//                    }
+//                }
+//                VStack {
+//                    Button {
+//                        deleteGroupAction()
+//                    } label: {
+//                        Text("Delete group")
+//                            .font(.medium_14)
+//                            .foregroundColor(.heyGray1)
+//                    }
+//                    .padding(.bottom, 27)
+//                    
+//                    Button {
+//                        changeGroupNameAction()
+//                    } label: {
+//                        Text("Change name")
+//                            .font(.medium_14)
+//                            .foregroundColor(.heyGray1)
+//                    }
+//                }
                 .padding(.leading, 16)
                 .padding(.trailing, 32)
                 .padding(.vertical, 20)

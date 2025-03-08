@@ -29,17 +29,16 @@ public struct TodoView: View {
                         .foregroundColor(.heyGray1)
                         .padding(.leading, 16)
                         .padding(.top, 81)
-                        .padding(.bottom, 41)
+                        .padding(.bottom, 12)
                     
                     ScrollView {
-                        VStack(spacing: 32) {
+                        VStack(spacing: 16) {
                             ForEach(viewModel.groupList, id: \.self) { group in
                                 TodoGroupView(
                                     group: group,
                                     viewModel: viewModel
-                                )                                
+                                )
                             }
-                            .keyboardAdaptive()
                         }
                         .padding(.bottom, 36)
                         
