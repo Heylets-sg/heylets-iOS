@@ -11,7 +11,7 @@ import DependencyPlugin
 
 let project = Project.makeModule(
     name: "RootFeature",
-    targets: [.staticFramework], //, .demo
+    targets: [.dynamicFramework], //, .demo
     internalDependencies: [
         .Features.Splash.Feature,
         .Features.Onboarding.Feature,

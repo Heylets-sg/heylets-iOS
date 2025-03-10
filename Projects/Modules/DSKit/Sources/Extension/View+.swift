@@ -40,7 +40,7 @@ public struct RoundedCorner: Shape {
 // 바텀시트
 extension View {
     public func bottomSheetTransition() -> some View {
-        self.zIndex(2)
+        self.zIndex(1)
             .transition(
                 .asymmetric(
                     insertion: .move(edge: .bottom)
