@@ -129,7 +129,6 @@ public struct TimeTableView: View {
             SettingTimeTableAlertView(viewModel: viewModel)
         }
         .ignoresSafeArea()
-        
         .overlay {
             let shouldShowOverlay = !(viewModel.viewType == .theme && !themeViewModel.state.isShowingSelectInfoView)
                 && viewModel.viewType != .main
@@ -173,14 +172,6 @@ extension TimeTableView {
         case .theme:
             SettingTimeTableInfoView(viewModel: themeViewModel)
                 .bottomSheetTransition()
-            
-//        case .detail:
-//            DetailModuleInfoView(
-//                viewType: $viewModel.viewType,
-//                deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
-//                sectionInfo: viewModel.detailSectionInfo
-//            )
-//            .bottomSheetTransition()
             
         case .addCustom:
             AddCustomModuleView(viewModel: addCustomModuleViewModel)

@@ -38,11 +38,7 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
         self.timeTableRepository = timeTableRepository
     }
     
-    public var tableId: Int = 0 {
-        didSet {
-            print("🐘🐘🐘🐘🐘tableId: \(tableId)🐘🐘🐘🐘🐘")
-        }
-    }
+    public var tableId: Int = 0
     public var errMessage = PassthroughSubject<String, Never>()
     public var guestModeError = PassthroughSubject<Void, Never>()
     public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()
@@ -203,7 +199,11 @@ extension TimeTableUseCase {
         _ theme: String
     ) -> AnyPublisher<Void, Never> {
         return settingRepository.patchTimeTableSettingInfo(displayType, theme)
-            .catch { _ in Empty() }
+            .catch { [weak self] error in
+                if error.isGuestModeError { self?.guestModeError.send(()) }
+                else { self?.errMessage.send(error.description) }
+                return Empty<Void, Never>()
+            }
             .flatMap(getTableDetailInfo)
             .eraseToAnyPublisher()
     }

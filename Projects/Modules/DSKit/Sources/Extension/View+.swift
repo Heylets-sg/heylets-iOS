@@ -40,12 +40,12 @@ public struct RoundedCorner: Shape {
 // 바텀시트
 extension View {
     public func bottomSheetTransition() -> some View {
-        self.zIndex(1)
+        self.zIndex(2)
             .transition(
                 .asymmetric(
                     insertion: .move(edge: .bottom)
-                        .animation(.easeOut(duration: 10)), // ⬅️ 천천히 올라오도록 설정
-                    removal: .opacity.animation(.easeIn(duration: 0.3)) // ⬅️ 사라질 때 자연스럽게
+                        .animation(.easeOut(duration: 10)),
+                    removal: .opacity.animation(.easeIn(duration: 0.3))
                 )
             )
     }
