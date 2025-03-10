@@ -27,10 +27,9 @@ public class LogInViewModel: ObservableObject {
     struct State {
         var loginButtonEnabled = true
         var errMessage: String = ""
-        var showToast: Bool {
-            return !errMessage.isEmpty
-        }
+        var showToast: Bool { return !errMessage.isEmpty }
         var showCloseBtn: Bool = false
+        var isLoading = false
     }
     
     @Published var id: String = ""
@@ -76,6 +75,7 @@ public class LogInViewModel: ObservableObject {
         case .loginButtonDidTap:
             useCase.logIn(id, password)
                 .receive(on: RunLoop.main)
+                .assignLoading(to: \.state.isLoading, on: self)
                 .sink(receiveValue: { [weak self] _ in
                     self?.windowRouter.switch(to: .timetable)
                 })

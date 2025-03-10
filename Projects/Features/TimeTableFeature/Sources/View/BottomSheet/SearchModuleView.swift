@@ -145,7 +145,7 @@ fileprivate struct ClassSearchListCellView: View {
                 .font(.regular_12)
                 .foregroundColor(isSelected ? Color.heyGray2 : Color.heyGray8)
             
-            Text("\(section.professor) / \(section.location) / \(section.unit) unit")
+            Text("\(section.professor) / \(section.location) \(section.unit.map { " / \($0) unit" } ?? "")")
                 .font(.regular_12)
                 .foregroundColor(isSelected ? Color.heyGray2 : Color.heyGray8)
                 .padding(.bottom, 15)

@@ -36,6 +36,7 @@ public class TimeTableViewModel: ObservableObject {
         var timeTableName: String = ""
         var profile: ProfileInfo = .init()
         var error: (Bool, String) = (false, "")
+        var isLoading: Bool = false
     }
     
     enum Action {
@@ -111,6 +112,8 @@ public class TimeTableViewModel: ObservableObject {
                 .store(in: cancelBag)
             
             useCase.fetchTableInfo()
+                .receive(on: RunLoop.main)
+                .assignLoading(to: \.state.isLoading, on: self)
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
             

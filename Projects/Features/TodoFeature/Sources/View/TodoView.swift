@@ -36,6 +36,8 @@ public struct TodoView: View {
                     }
 
                     ScrollView {
+                        Spacer()
+                            .frame(height: 20)
                         VStack(spacing: 16) {
                             ForEach(viewModel.groupList, id: \.self) { group in
                                 TodoGroupView(
@@ -65,7 +67,6 @@ public struct TodoView: View {
                 }
                 
                 .ignoresSafeArea()
-                //            .padding(.horizontal, 16)
                 .onAppear {
                     viewModel.send(.onAppear)
                 }

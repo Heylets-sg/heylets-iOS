@@ -21,11 +21,7 @@ public class TodoViewModel: ObservableObject {
         var hiddenTabBar: Bool = false
         var addItemEditMode: [Bool] = []
         var showEtcView: Bool = false
-        var isLoading = false {
-            didSet {
-                print("isLoading: \(isLoading)")
-            }
-        }
+        var isLoading = false
     }
     
     enum Action {

@@ -139,6 +139,7 @@ public struct LogInView: View {
             .onTapGesture {
                 isFocused = nil
             }
+            .loading(viewModel.state.isLoading)
             .setOnboardingHeyNavigation()
         }
     }

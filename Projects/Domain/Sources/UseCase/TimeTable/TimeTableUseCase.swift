@@ -38,7 +38,11 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
         self.timeTableRepository = timeTableRepository
     }
     
-    public var tableId: Int = 0
+    public var tableId: Int = 0 {
+        didSet {
+            print("🐘🐘🐘🐘🐘tableId: \(tableId)🐘🐘🐘🐘🐘")
+        }
+    }
     public var errMessage = PassthroughSubject<String, Never>()
     public var guestModeError = PassthroughSubject<Void, Never>()
     public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()

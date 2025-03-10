@@ -63,6 +63,7 @@ public struct MainView: View {
                     }
                 }
             }
+            .loading(viewModel.state.isLoading)
             .scrollIndicators(.hidden)
             .scrollDisabled(!viewModel.state.timeTable.isScrollEnabled)
         }
