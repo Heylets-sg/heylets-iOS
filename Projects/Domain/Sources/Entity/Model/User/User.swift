@@ -45,12 +45,12 @@ public struct User: Hashable, Equatable {
 
 public struct ProfileInfo: Hashable {
     public var nickName: String
-    public var university: String
+    public var university: UniversityInfo
     public var imageURL: String?
     
     public init(
         nickName: String = "",
-        university: String = "",
+        university: UniversityInfo = .empty,
         imageURL: String? = nil
     ) {
         self.nickName = nickName

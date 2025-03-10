@@ -12,4 +12,20 @@ public enum UniversityInfo: String {
     case NUS
     case NTU
     case SMU
+    case empty
+}
+
+extension UniversityInfo {
+    static public func toEntity(with university: String) -> UniversityInfo {
+        switch university {
+        case "NUS":
+            return .NUS
+        case "NTU":
+            return .NTU
+        case "SMU":
+            return .SMU
+        default:
+            return .empty
+        }
+    }
 }

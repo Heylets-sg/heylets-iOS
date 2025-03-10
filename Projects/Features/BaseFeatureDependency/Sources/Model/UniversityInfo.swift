@@ -21,6 +21,8 @@ extension UniversityInfo {
             return .ntu
         case .SMU:
             return .smu
+        case .empty:
+            return .icSchool
         }
     }
     
@@ -31,6 +33,8 @@ extension UniversityInfo {
         case .NTU:
             return "#FFFFFF"
         case .SMU:
+            return "#FFFFFF"
+        case .empty:
             return "#FFFFFF"
         }
     }
@@ -43,6 +47,8 @@ extension UniversityInfo {
             return "#E01932"
         case .SMU:
             return "#1B286A"
+        case .empty:
+            return "#FFFFFF"
         }
     }
 }
