@@ -40,6 +40,7 @@ public struct LogInView: View {
                             .resizable()
                             .frame(width: 18, height: 18)
                     }
+                    .hidden(!viewModel.state.showCloseBtn)
                 }
                 .padding(.bottom, 10)
                 
@@ -124,6 +125,9 @@ public struct LogInView: View {
                 default:
                     isFocused = nil
                 }
+            }
+            .onAppear {
+                viewModel.send(.onAppear)
             }
             .padding(.top, 106)
             .padding(.bottom, 65)

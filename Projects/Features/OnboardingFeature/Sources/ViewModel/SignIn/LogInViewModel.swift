@@ -16,6 +16,7 @@ import Core
 public class LogInViewModel: ObservableObject {
     
     enum Action {
+        case onAppear
         case closeButtonDidTap
         case loginButtonDidTap
         case dismissToastView
@@ -29,6 +30,7 @@ public class LogInViewModel: ObservableObject {
         var showToast: Bool {
             return !errMessage.isEmpty
         }
+        var showCloseBtn: Bool = false
     }
     
     @Published var id: String = ""
@@ -55,6 +57,16 @@ public class LogInViewModel: ObservableObject {
     
     func send(_ action: Action) {
         switch action {
+        case .onAppear:
+            useCase.checkAccessTokenExisted()
+                .receive(on: RunLoop.main)
+                .map { [weak self] isTokenExisted in
+                    guard let self else { return false }
+                    return !(windowRouter.destination != WindowDestination.onboarding && !isTokenExisted)
+                }
+                .assign(to: \.state.showCloseBtn, on: self)
+                .store(in: cancelBag)
+            
         case .closeButtonDidTap:
             if windowRouter.destination == WindowDestination.onboarding {
                 navigationRouter.pop()

@@ -10,8 +10,8 @@ import Foundation
 import Combine
 
 public protocol AuthRepositoryType {
-    // 자동로그인
-    func autoLogin() -> AnyPublisher<Bool, Never>
+    // 자동로그인 & 토큰 존재여부
+    func isTokenExisted() -> AnyPublisher<Bool, Never>
     
     // 토큰 리프레서
     func tokenRefresh() -> AnyPublisher<Void, Error>

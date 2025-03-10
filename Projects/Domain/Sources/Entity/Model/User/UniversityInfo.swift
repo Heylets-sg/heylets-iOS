@@ -12,7 +12,7 @@ public enum UniversityInfo: String {
     case NUS
     case NTU
     case SMU
-    case empty
+    case empty = ""
 }
 
 extension UniversityInfo {

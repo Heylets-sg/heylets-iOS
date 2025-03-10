@@ -19,7 +19,7 @@ public struct AuthRepository: AuthRepositoryType {
         self.authService = authService
     }
     
-    public func autoLogin() -> AnyPublisher<Bool, Never> {
+    public func isTokenExisted() -> AnyPublisher<Bool, Never> {
         return Just(UserDefaultsManager.isTokenExist())
             .eraseToAnyPublisher()
     }

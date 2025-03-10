@@ -28,6 +28,10 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     
     public var userInfo: User = .empty
     
+    public func checkAccessTokenExisted() -> AnyPublisher<Bool, Never> {
+        authRepository.isTokenExisted()
+    }
+    
     public func logIn(
         _ email: String,
         _ password: String
@@ -157,6 +161,10 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
 }
 
 final public class StubOnboardingUseCase: OnboardingUseCaseType {
+    public func checkAccessTokenExisted() -> AnyPublisher<Bool, Never> {
+        Just(true).eraseToAnyPublisher()
+    }
+    
     public var userInfo: User = .empty
     public var errMessage = PassthroughSubject<String, Never>()
     

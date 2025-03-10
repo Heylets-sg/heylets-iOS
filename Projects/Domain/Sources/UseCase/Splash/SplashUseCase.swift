@@ -20,7 +20,7 @@ final public class SplashUseCase: SplashUseCaseType {
     }
     
     public func autoLogin() -> AnyPublisher<Bool, Never> {
-        return authRepository.autoLogin()
+        return authRepository.isTokenExisted()
     }
     
     public func tokenRefresh() -> AnyPublisher<Void, Never> {

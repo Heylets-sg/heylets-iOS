@@ -21,6 +21,8 @@ public protocol OnboardingUseCaseType {
     
     var errMessage: PassthroughSubject<String, Never> { get }
     
+    func checkAccessTokenExisted() -> AnyPublisher<Bool, Never>
+    
     func logIn(
         _ email: String,
         _ password: String

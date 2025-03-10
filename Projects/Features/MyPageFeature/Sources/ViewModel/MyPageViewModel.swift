@@ -95,7 +95,8 @@ public class MyPageViewModel: ObservableObject {
             useCase.logout()
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
-                    self?.windowRouter.switch(to: .onboarding)
+                    self?.navigationRouter.destinations = []
+                    self?.windowRouter.switch(to: .login)
                 }).store(in: cancelBag)
             
         case .dismissLogoutAlertView:
