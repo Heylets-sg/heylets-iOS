@@ -79,13 +79,14 @@ public struct DetailModuleInfoView: View {
                 }
                 Spacer()
             }
-            
-            Spacer()
-                .frame(height: 36)
         }
         .background(Color.heyWhite)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .frame(height: 220)
+        .onDisappear {
+            if viewType == .detail {
+                viewType = .main
+            }
+        }
     }
 }
 

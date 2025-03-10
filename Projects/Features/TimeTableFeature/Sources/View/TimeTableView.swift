@@ -109,6 +109,16 @@ public struct TimeTableView: View {
                 .presentationDetents([.height(802)])
                 .presentationDragIndicator(.visible)
             }
+            .sheet(isPresented: .constant(viewModel.viewType == .detail)) {
+                DetailModuleInfoView(
+                    viewType: $viewModel.viewType,
+                    deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
+                    sectionInfo: viewModel.detailSectionInfo
+                )
+                .presentationDetents([.height(270)])
+                .presentationDragIndicator(.hidden)
+                .ignoresSafeArea(.container, edges: .bottom)
+            }
             
             TabBarView(
                 todoAction: { viewModel.send(.gotoTodo) },
@@ -126,8 +136,11 @@ public struct TimeTableView: View {
                 && viewModel.viewType != .search
 
             if shouldShowOverlay {
-                let opacity = (viewModel.viewType == .detail || viewModel.viewType == .setting
-                    || (viewModel.viewType == .theme && themeViewModel.state.isShowingSelectInfoView)) ? 1 : 0
+                let opacity = (
+                    viewModel.viewType == .detail 
+                    || viewModel.viewType == .setting
+                    || (viewModel.viewType == .theme && themeViewModel.state.isShowingSelectInfoView)
+                ) ? 1 : 0
 
                 Color.heyDimmed
                     .opacity(Double(opacity))
@@ -161,13 +174,13 @@ extension TimeTableView {
             SettingTimeTableInfoView(viewModel: themeViewModel)
                 .bottomSheetTransition()
             
-        case .detail:
-            DetailModuleInfoView(
-                viewType: $viewModel.viewType,
-                deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
-                sectionInfo: viewModel.detailSectionInfo
-            )
-            .bottomSheetTransition()
+//        case .detail:
+//            DetailModuleInfoView(
+//                viewType: $viewModel.viewType,
+//                deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
+//                sectionInfo: viewModel.detailSectionInfo
+//            )
+//            .bottomSheetTransition()
             
         case .addCustom:
             AddCustomModuleView(viewModel: addCustomModuleViewModel)
