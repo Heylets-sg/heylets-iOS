@@ -57,9 +57,7 @@ public class TodoViewModel: ObservableObject {
     private let useCase: TodoUsecaseType
     
     @Published var groupList: [TodoGroup] = []
-    @Published var etcViewList: [(groupId: Int, isVisible: Bool)] = [] {
-        didSet { print(etcViewList) }
-    }
+    @Published var etcViewList: [(groupId: Int, isVisible: Bool)] = []
     @Published var newItem: (groupId: Int?, content: String) = (nil, "")
     @Published var state = State()
     
@@ -122,6 +120,7 @@ public class TodoViewModel: ObservableObject {
             state.showGuestDeniedAlert = false
             
         case .hideKeyboard:
+            state.hiddenTabBar = false
             resetEditMode()
             addItem()
         }

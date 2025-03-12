@@ -24,7 +24,7 @@ public class AddCustomModuleViewModel: ObservableObject {
     enum Action {
         case weekPickerButtonDidTap(Week)
         case timePickerButtonDidTap(String)
-        case addCustomModuleButtonDidTap
+        case saveCustomModuleButtonDidTap
     }
     
     
@@ -35,10 +35,14 @@ public class AddCustomModuleViewModel: ObservableObject {
     @Published var location: String = ""
     @Published var professor: String  = ""
     
-    let timeList: [String] = (1...22).map { hour in
-        let start = String(format: "%02d:00", hour)
-        let end = String(format: "%02d:00", hour + 1)
-        return "\(start) - \(end)"
+    let timeList: [String] = (1...22).flatMap { hour in
+        [0, 30].map { minute in
+            let start = String(format: "%02d:%02d", hour, minute)
+            let endHour = hour + (minute == 30 ? 1 : 0)  // 30분이면 다음 시간으로 넘어감
+            let endMinute = (minute + 30) % 60
+            let end = String(format: "%02d:%02d", endHour, endMinute)
+            return "\(start) - \(end)"
+        }
     }
     
     private let cancelBag = CancelBag()
@@ -60,7 +64,7 @@ public class AddCustomModuleViewModel: ObservableObject {
             state.weekPickerIsHidden = true
             state.timePickerIsHidden.toggle()
             
-        case .addCustomModuleButtonDidTap:
+        case .saveCustomModuleButtonDidTap:
             let splitTime = splitTimeRange(time)
             let customModule: CustomModuleInfo = .init(
                 title: schedule,

@@ -16,6 +16,9 @@ public struct TodoView: View {
     @EnvironmentObject var container: Router
     @ObservedObject var viewModel: TodoViewModel
     
+    @State var text = ""
+    @State private var keyboardHeight: CGFloat = 0
+    
     public init(viewModel: TodoViewModel) {
         self.viewModel = viewModel
     }
@@ -34,7 +37,7 @@ public struct TodoView: View {
                         
                         Spacer()
                     }
-
+                    
                     ScrollView {
                         Spacer()
                             .frame(height: 20)
@@ -65,7 +68,6 @@ public struct TodoView: View {
                     }
                     .scrollIndicators(.hidden)
                 }
-                
                 .ignoresSafeArea()
                 .onAppear {
                     viewModel.send(.onAppear)
@@ -87,6 +89,7 @@ public struct TodoView: View {
                 .hidden(!viewModel.state.showItemAlertView)
             }
             .ignoresSafeArea()
+            
             .heyAlert(
                 isPresented: viewModel.state.showGuestDeniedAlert,
                 loginButtonAction: {
@@ -100,7 +103,27 @@ public struct TodoView: View {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 viewModel.send(.hideKeyboard)
             }
+            .onReceive(Publishers.keyboardHeight) { height in
+                keyboardHeight = height
+            }
         }
+    }
+}
+
+// ✅ 키보드 높이를 감지하는 Publisher
+import Combine
+
+extension Publishers {
+    static var keyboardHeight: AnyPublisher<CGFloat, Never> {
+        Publishers.Merge(
+            NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
+                .compactMap { $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect }
+                .map { $0.height },
+            
+            NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
+                .map { _ in CGFloat(0) }
+        )
+        .eraseToAnyPublisher()
     }
 }
 

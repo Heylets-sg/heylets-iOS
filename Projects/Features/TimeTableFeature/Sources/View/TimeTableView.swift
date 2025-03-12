@@ -187,7 +187,9 @@ extension TimeTableView {
         case .search:
             SearchModuleTopView(
                 viewType: $viewModel.viewType,
-                isShowingAddCustomModuleView: $viewModel.state.alerts.showAddCustomAlert
+                addCustomModuleButtonDidTapEvent: {
+                    viewModel.send(.addCustomModuleButtonDidTap)
+                }
             )
         case .theme:
             ThemeTopView(

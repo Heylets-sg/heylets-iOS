@@ -10,7 +10,8 @@ import SwiftUI
 
 public struct SearchModuleTopView: View {
     @Binding var viewType: TimeTableViewType
-    @Binding var isShowingAddCustomModuleView: Bool
+    var addCustomModuleButtonDidTapEvent: (() -> Void)
+    
     
     public var body: some View {
         HStack {
@@ -28,8 +29,7 @@ public struct SearchModuleTopView: View {
             
             Button {
                 withAnimation {
-                    viewType = .addCustom
-                    isShowingAddCustomModuleView = true
+                    addCustomModuleButtonDidTapEvent()
                 }
             } label: {
                 Image(uiImage: .icPencil)

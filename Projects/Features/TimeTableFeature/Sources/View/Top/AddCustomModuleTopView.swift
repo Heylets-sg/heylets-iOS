@@ -28,7 +28,7 @@ struct AddCustomModuleTopView: View {
                 Spacer()
                 
                 Button {
-                    viewModel.send(.addCustomModuleButtonDidTap)
+                    viewModel.send(.saveCustomModuleButtonDidTap)
                 } label: {
                     Text("Save")
                         .font(.medium_16)

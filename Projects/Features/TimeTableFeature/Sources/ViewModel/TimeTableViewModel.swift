@@ -47,6 +47,7 @@ public class TimeTableViewModel: ObservableObject {
         case addLecture(SectionInfo)
         case deleteModuleAlertCloseButtonDidTap
         case errorAlertViewCloseButtonDidTap
+        case addCustomModuleButtonDidTap
         case initMainView
         case notRightNowButtonDidTap
         case loginButtonDidTap
@@ -159,8 +160,15 @@ public class TimeTableViewModel: ObservableObject {
             if !(viewType == .search || viewType == .theme || viewType == .addCustom) {
                 viewType = .main
             }
+            
+        case .addCustomModuleButtonDidTap:
+            viewType = .addCustom
+            state.alerts.showAddCustomAlert = true
+            selectLecture = []
+            
         case .notRightNowButtonDidTap:
             state.alerts.showGuestErrorAlert = false
+            
         case .loginButtonDidTap:
             windowRouter.switch(to: .login)
         }

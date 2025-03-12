@@ -44,7 +44,7 @@ public struct HeyAlertEnterNameView: View {
             .font(.medium_12)
             .foregroundColor(.heyGray1)
             .frame(height: 51)
-            .background(Color.heyGray3)
+            .background(Color.init(hex: "#F4F4F4"))
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.bottom, 26)
             HStack {
