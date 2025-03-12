@@ -40,11 +40,7 @@ public struct TimeTableGridView: View {
                     // 📌 수업 버튼 배치
                     ForEach($viewModel.timeTable, id: \.self) { $cell in
                         if let dayIndex = viewModel.weekList.firstIndex(of: cell.schedule.day) {
-                            let rect: (
-                                centerX: CGFloat,
-                                centerY: CGFloat,
-                                height: CGFloat
-                            ) = configButtonLayout(
+                            let rect: (centerX: CGFloat, centerY: CGFloat, height: CGFloat) = configButtonLayout(
                                 viewModel.hourList[0],
                                 for: cell,
                                 at: dayIndex,

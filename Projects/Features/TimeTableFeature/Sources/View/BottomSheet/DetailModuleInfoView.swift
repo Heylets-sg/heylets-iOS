@@ -43,7 +43,7 @@ public struct DetailModuleInfoView: View {
                     .foregroundColor(.heyGray1)
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
+//                    .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
                     .padding(.top, 12)
                     .padding(.bottom, 16)
                     .padding(.trailing, 120)

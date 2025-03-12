@@ -61,6 +61,7 @@ public struct MainView: View {
                             }
                         }
                     }
+                    .padding(.bottom, 50)
                 }
             }
             .loading(viewModel.state.isLoading)
