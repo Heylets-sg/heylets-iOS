@@ -32,7 +32,7 @@ public struct HeyAlertEnterNameView: View {
             Spacer()
             
             Text(title)
-                .font(.medium_18)
+//                .font(.medium_18)
                 .foregroundColor(.heyBlack)
                 .multilineTextAlignment(.center)
             
@@ -41,7 +41,7 @@ public struct HeyAlertEnterNameView: View {
             TextField(text: $text, label: {
                 
             })
-            .font(.medium_12)
+//            .font(.medium_12)
             .foregroundColor(.heyGray1)
             .frame(height: 51)
             .background(Color.init(hex: "#F4F4F4"))

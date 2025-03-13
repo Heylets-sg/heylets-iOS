@@ -8,10 +8,6 @@
 
 import SwiftUI
 
-import RootFeature
-import BaseFeatureDependency
-import Domain
-
 @main
 struct Heylets_iOSAPP: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate 

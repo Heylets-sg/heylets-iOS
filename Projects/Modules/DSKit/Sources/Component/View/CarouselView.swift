@@ -117,9 +117,9 @@ enum OnboardingType {
     var image: UIImage {
         switch self {
         case .timeTable:
-            return .timeTable
+            return .graphicsTimeTable
         case .theme:
-            return .color
+            return .graphicsTheme
         }
     }
 }
@@ -131,7 +131,7 @@ struct ContentView2: View {
         CarouselView(pageCount: onboardingContent.count, visibleEdgeSpace: 0, spacing: 0) { index in
             VStack(alignment: .leading) {
                 Text(onboardingContent[index].title)
-                    .font(.regular_16)
+//                    .font(.regular_16)
                     .foregroundColor(.heyBlack)
                     .lineSpacing(3.5)
                     .padding(.bottom, 12)
@@ -139,7 +139,7 @@ struct ContentView2: View {
                     .lineLimit(2)
                 
                 Text(onboardingContent[index].description)
-                    .font(.medium_14)
+//                    .font(.medium_14)
                     .foregroundColor(.heyBlack)
                     .padding(.leading, 16)
                     .lineLimit(2)

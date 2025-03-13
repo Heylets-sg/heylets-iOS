@@ -7,12 +7,7 @@
 //
 
 import Foundation
-import UserNotifications
-import FirebaseCore
-import FirebaseMessaging
-import ThirdPartyLibs
 import UIKit
-import Networks
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
