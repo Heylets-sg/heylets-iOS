@@ -17,7 +17,7 @@ public struct ErrorMessageToastView: View {
     
     public var body: some View {
         Text(message)
-//            .font(.bold_20)
+            .font(.bold_20)
             .multilineTextAlignment(.center)
             .foregroundColor(.heyError)
             .animation(.easeInOut, value: message)

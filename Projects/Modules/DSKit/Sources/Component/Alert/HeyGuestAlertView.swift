@@ -26,12 +26,12 @@ struct GuestAlertView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 0) {
                     Text("To use more tools!")
-//                        .font(.semibold_18)
+                        .font(.semibold_18)
                         .foregroundColor(.heyGray1)
                         .padding(.bottom, 6)
                     
                     Text("Manage everything about\nyour school life with the Heylets")
-//                        .font(.regular_12)
+                        .font(.regular_12)
                         .foregroundColor(Color.init(hex: "#646464"))
                 }
                 Spacer()
@@ -40,7 +40,7 @@ struct GuestAlertView: View {
             .padding(.bottom, 25)
             .padding(.leading, 24)
             
-            Image(.graphicsGuest)
+            Image(uiImage: .guest)
                 .resizable()
                 .frame(width: 160, height: 120)
                 .padding(.leading, 76)
@@ -52,7 +52,7 @@ struct GuestAlertView: View {
             } label: {
                 HStack {
                     Text("Log In")
-//                        .font(.semibold_14)
+                        .font(.semibold_14)
                         .foregroundColor(.heyWhite)
                         .padding(.trailing, 8)
                     
@@ -73,7 +73,7 @@ struct GuestAlertView: View {
                 notRightNowAction()
             } label: {
                 Text("Not right now")
-//                    .font(.regular_12)
+                    .font(.regular_12)
                     .foregroundColor(.heyGray2)
             }
             .padding(.bottom, 22)

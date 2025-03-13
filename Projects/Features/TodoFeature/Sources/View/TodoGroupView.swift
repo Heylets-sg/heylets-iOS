@@ -53,9 +53,14 @@ public struct TodoGroupView: View {
                         }
                         
                     } label: {
-                        Image(uiImage: .icEtc)
-                            .resizable()
-                            .frame(width: 13, height: 3)
+                        HStack {
+                            Image(uiImage: .icEtc)
+                                .resizable()
+                                .frame(width: 13, height: 3)
+                        }
+                        .padding(.leading, 20)
+                        .padding(.vertical, 20)
+                        
                     }
                 }
                 .padding(.bottom, 8)
@@ -86,18 +91,6 @@ public struct TodoGroupView: View {
                 }
                 .frame(minWidth: 342)
             }
-            
-//            if showEtcView {
-//                EtcGroupView(
-//                    deleteGroupAction: { viewModel.send(.deleteGroupButtonDidTap(group.id)) },
-//                    changeGroupNameAction: { viewModel.send(.changeGroupNameButtonDidTap(group.id)) }
-//                )
-//                .hidden(!showEtcView)
-//                .padding(.top, 36)
-//
-//            } else {
-//                EmptyView()
-//            }
         }
         .padding(.horizontal, 24)
     }

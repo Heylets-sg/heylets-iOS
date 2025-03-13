@@ -16,7 +16,7 @@ enum TabType {
     var image: UIImage {
         switch self {
         case .timeTable:
-            return .tabTimetable
+            return .tabTimeTable
         case .todo:
             return .tabTodo
         case .my:
@@ -27,7 +27,7 @@ enum TabType {
     var selectedImage: UIImage {
         switch self {
         case .timeTable:
-            return .tabTimetableFilled
+            return .tabTimeTableFilled
         case .todo:
             return .tabTodoFilled
         case .my:
@@ -133,7 +133,7 @@ struct TabItemView: View {
 //            .padding(.bottom, 6)
             
             Text(tabType.title)
-//                .font(.semibold_10)
+                .font(.semibold_10)
                 .foregroundColor(
                     isFilled
                     ? Color.init(hex: "#1B1B1C")
