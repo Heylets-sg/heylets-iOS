@@ -18,6 +18,7 @@ import Core
 public class SearchModuleViewModel: ObservableObject {
     struct State {
         var selectedLecture: SectionInfo? = nil
+        var isLoading: Bool = false
     }
     
     enum Action {
@@ -46,6 +47,7 @@ public class SearchModuleViewModel: ObservableObject {
         case .onAppear:
             useCase.getLectureList(searchText)
                 .receive(on: RunLoop.main)
+                .assignLoading(to: \.state.isLoading, on: self)
                 .assign(to: \.lectureList, on: self)
                 .store(in: cancelBag)
             

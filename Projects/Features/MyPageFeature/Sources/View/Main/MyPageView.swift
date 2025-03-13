@@ -39,18 +39,19 @@ public struct MyPageView: View {
                             .frame(height:90)
                         
                         VStack {
-                            Text("\(viewModel.profileInfo.nickName) / \(viewModel.profileInfo.university)")
+                            Text("\(viewModel.profileInfo.nickName) / \(viewModel.profileInfo.university.rawValue)")
                                 .font(.medium_16)
                                 .foregroundColor(Color.heyBlack)
                                 .padding(.top, 44)
                                 .padding(.bottom, 32)
+                                .hidden(viewModel.state.isLoading)
+                                .loading(viewModel.state.isLoading)
                             
                             if viewModel.isGuestMode {
                                 MyPageGuestView(viewModel: viewModel)
                             } else {
                                 MyPageContentView(viewModel: viewModel)
                             }
-                            
                         }
                         .padding(.horizontal, 16)
                         .background(Color.heyWhite)

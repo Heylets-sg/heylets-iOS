@@ -16,6 +16,7 @@ import Core
 public class MyPageViewModel: ObservableObject {
     struct State {
         var logoutAlertViewIsPresented: Bool = false
+        var isLoading: Bool = false
     }
     
     enum Action {
@@ -61,12 +62,12 @@ public class MyPageViewModel: ObservableObject {
             useCase.checkGuesetMode()
                 .receive(on: RunLoop.main)
                 .handleEvents(receiveOutput: { [weak self] isGuestMode in
-                    print("isGuestMode: \(isGuestMode)")
                     self?.isGuestMode = isGuestMode
                 })
                 .map { _ in }
                 .flatMap(useCase.getProfile)
                 .receive(on: RunLoop.main)
+                .assignLoading(to: \.state.isLoading, on: self)
                 .assign(to: \.profileInfo, on: self)
                 .store(in: cancelBag)
             
