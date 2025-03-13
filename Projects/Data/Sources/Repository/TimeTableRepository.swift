@@ -45,10 +45,18 @@ public struct TimeTableRepository: TimeTableRepositoryType {
     public func patchTableName(
         _ tableId: Int,
         _ tableName: String
-    ) -> AnyPublisher<Void, Error> {
+    ) -> AnyPublisher<Void, ChangeTimeTableNameError> {
         let request: TimeTableEditNameRequest = .init(tableName)
         return service.patchTableName(tableId, request)
-            .asVoidWithGeneralError()
+            .asVoid()
+            .mapError { error in
+                if let errorMessage = error.isInvalidStatusCodeWithMessage() {
+                    return ChangeTimeTableNameError.error(with: errorMessage)
+                } else {
+                    return .unknown
+                }
+            }
+            .eraseToAnyPublisher()
     }
     
     public func postTable() -> AnyPublisher<Int, Error> {

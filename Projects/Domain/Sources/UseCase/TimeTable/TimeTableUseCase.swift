@@ -166,7 +166,11 @@ extension TimeTableUseCase {
 extension TimeTableUseCase {
     public func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never> {
         return timeTableRepository.patchTableName(tableId, name)
-            .catch { _ in Empty() }
+            .catch { [weak self] error in
+                if error.isGuestModeError { self?.guestModeError.send(()) }
+                else { self?.errMessage.send(error.description) }
+                return Empty<Void, Never>()
+            }
             .flatMap(getTableDetailInfo)
             .eraseToAnyPublisher()
     }

@@ -25,7 +25,7 @@ public protocol TimeTableRepositoryType {
     func patchTableName(
         _ tableId: Int,
         _ tableName: String
-    ) -> AnyPublisher<Void, Error>
+    ) -> AnyPublisher<Void, ChangeTimeTableNameError>
     
     // 현재는 테이블 아이디를 가져오는 용도로만 사용됨
     func postTable() -> AnyPublisher<Int, Error>

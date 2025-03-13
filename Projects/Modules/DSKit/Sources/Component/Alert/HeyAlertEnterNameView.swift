@@ -58,6 +58,7 @@ public struct HeyAlertEnterNameView: View {
                     .frame(width: 24)
                 
                 Button(secondaryAction.title) {
+                    text = ""
                     secondaryAction.action()
                 }
                 .heyAlertButtonStyle(secondaryAction.colorSystem)

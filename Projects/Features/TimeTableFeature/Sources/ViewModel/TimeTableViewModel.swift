@@ -209,7 +209,7 @@ public class TimeTableViewModel: ObservableObject {
         case .editTimeTableName:
             useCase.changeTimeTableName(state.timeTableName)
                 .receive(on: RunLoop.main)
-                .map { _ in nil }
+                .map {  _ in nil }
                 .assign(to: \.state.alerts.settingAlertType, on: self)
                 .store(in: cancelBag)
             

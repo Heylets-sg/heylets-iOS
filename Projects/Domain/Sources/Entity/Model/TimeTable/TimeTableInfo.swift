@@ -28,6 +28,9 @@ public struct TimeTableInfo {
     public var academicYear: Int
     public var displayType: DisplayTypeInfo?
     
+    public var timeTableName: String {
+        return name == "TimeTable" ? "Set your time table name" : name
+    }
     public var fullSemester: String {
         return "AY\(academicYear)/\(academicYear+1) \(semester.formatName())"
     }
