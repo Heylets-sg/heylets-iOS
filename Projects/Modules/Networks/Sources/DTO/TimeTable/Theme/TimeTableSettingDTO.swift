@@ -23,4 +23,5 @@ public struct TimeTableSettingResult: Decodable {
     let displayTypeDescription: String
     public let theme: String
     let themeDescription: String
+    let availableThemes: [String]
 }
