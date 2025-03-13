@@ -22,7 +22,7 @@ public struct SettingTimeTableAlertView: View {
     public var body: some View {
         ZStack {
             if let type = viewModel.state.alerts.settingAlertType {
-                Color.black.opacity(0.5)
+                Color.heyDimmed
                     .ignoresSafeArea()
                 
                 Group {
@@ -61,7 +61,7 @@ public struct SettingTimeTableAlertView: View {
                         
                     case .removeTimeTable:
                         HeyAlertView(
-                            title: "Are you sure you want to delete\nthe timetable?",
+                            title: "Delete this timetable?",
                             primaryAction: ("Delete", .primary, { viewModel.send(.deleteTimeTable) }),
                             secondaryAction: ("Close", .gray, { viewModel.send(.settingAlertDismiss) })
                         )

@@ -8,19 +8,19 @@
 
 import SwiftUI
 
-struct LoadingView: View {
-    var body: some View {
+public struct LoadingView: View {
+    public init() {} 
+    public var body: some View {
         ProgressView()
     }
 }
 
 extension View {
-    func loading(_ isLoading: Bool) -> some View {
+    public func loading(_ isLoading: Bool) -> some View {
         self.overlay {
             if isLoading {
                 LoadingView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(.black.opacity(0.2))
             }
         }
     }

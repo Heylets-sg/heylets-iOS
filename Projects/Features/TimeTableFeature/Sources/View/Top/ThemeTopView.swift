@@ -18,39 +18,40 @@ struct ThemeTopView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Button {
-                    withAnimation {
-                        viewType = .main
-                    }
-                } label: {
-                    Image(uiImage: .icClose)
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                }
-                
-                Spacer()
-                
+            ZStack {
                 Text("Theme")
                     .font(.semibold_16)
                     .foregroundColor(.heyGray1)
-                
-                Spacer()
-                
-                Button {
-                    viewModel.send(.saveButtonDidTap)
-                    withAnimation {
-                        viewType = .main
+
+                HStack {
+                    Button {
+                        withAnimation {
+                            viewType = .main
+                        }
+                    } label: {
+                        Image(uiImage: .icClose)
+                            .resizable()
+                            .frame(width: 16, height: 16)
                     }
-                } label: {
-                    Text("Save")
-                        .font(.medium_16)
-                        .foregroundColor(.heyGray7)
+
+                    Spacer()
+
+                    Button {
+                        viewModel.send(.saveButtonDidTap)
+                        withAnimation {
+                            viewType = .main
+                        }
+                    } label: {
+                        Text("Save")
+                            .font(.medium_16)
+                            .foregroundColor(.heyGray7)
+                    }
                 }
             }
             .padding(.horizontal, 16)
             .padding(.top, 25)
             .padding(.bottom, 23)
+
             
             ScrollView(.horizontal) {
                 HStack {
@@ -101,7 +102,7 @@ fileprivate struct ThemeListCellView: View {
             .padding(.bottom, 6)
             
             
-            Text(theme.name)
+            Text(theme.themeName)
                 .font(.medium_10)
                 .foregroundColor(.heyGray1)
         }

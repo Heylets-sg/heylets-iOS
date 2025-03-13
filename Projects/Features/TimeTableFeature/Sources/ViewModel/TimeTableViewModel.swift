@@ -36,6 +36,7 @@ public class TimeTableViewModel: ObservableObject {
         var timeTableName: String = ""
         var profile: ProfileInfo = .init()
         var error: (Bool, String) = (false, "")
+        var isLoading: Bool = false
     }
     
     enum Action {
@@ -46,6 +47,7 @@ public class TimeTableViewModel: ObservableObject {
         case addLecture(SectionInfo)
         case deleteModuleAlertCloseButtonDidTap
         case errorAlertViewCloseButtonDidTap
+        case addCustomModuleButtonDidTap
         case initMainView
         case notRightNowButtonDidTap
         case loginButtonDidTap
@@ -111,13 +113,15 @@ public class TimeTableViewModel: ObservableObject {
                 .store(in: cancelBag)
             
             useCase.fetchTableInfo()
+                .receive(on: RunLoop.main)
+                .assignLoading(to: \.state.isLoading, on: self)
                 .sink(receiveValue: { _ in })
                 .store(in: cancelBag)
             
         case .tableCellDidTap(let sectionId):
+            viewType = .detail
             if let detailInfo = sectionList.first(where: { $0.id == sectionId }) {
                 detailSectionInfo = detailInfo
-                viewType = .detail
             } else {
                 state.error = (true, "선택한 섹션 정보를 찾을 수 없습니다.")
             }
@@ -146,15 +150,25 @@ public class TimeTableViewModel: ObservableObject {
             useCase.addSection(lecture.id)
                 .receive(on: RunLoop.main)
                 .map { _ in TimeTableViewType.search }
-                .assign(to: \.viewType, on: self)
+                .sink(receiveValue: { [weak self] viewType in
+                    self?.viewType = viewType
+                    self?.selectLecture = []
+                })
                 .store(in: cancelBag)
             
         case .initMainView:
             if !(viewType == .search || viewType == .theme || viewType == .addCustom) {
                 viewType = .main
             }
+            
+        case .addCustomModuleButtonDidTap:
+            viewType = .addCustom
+            state.alerts.showAddCustomAlert = true
+            selectLecture = []
+            
         case .notRightNowButtonDidTap:
             state.alerts.showGuestErrorAlert = false
+            
         case .loginButtonDidTap:
             windowRouter.switch(to: .login)
         }

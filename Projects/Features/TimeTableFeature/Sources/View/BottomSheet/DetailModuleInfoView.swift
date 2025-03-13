@@ -13,7 +13,7 @@ import BaseFeatureDependency
 public struct DetailModuleInfoView: View {
     @Binding var viewType: TimeTableViewType
     @Binding var deleteModuleAlertIsPresented: Bool
-    private var sectionInfo: SectionInfo = .timetable_stub1
+    private var sectionInfo: SectionInfo = .empty
     
     init(
         viewType: Binding<TimeTableViewType>,
@@ -43,7 +43,7 @@ public struct DetailModuleInfoView: View {
                     .foregroundColor(.heyGray1)
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
+//                    .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
                     .padding(.top, 12)
                     .padding(.bottom, 16)
                     .padding(.trailing, 120)
@@ -58,7 +58,7 @@ public struct DetailModuleInfoView: View {
                         .font(.regular_14)
                         .foregroundColor(.heyGray2)
                     
-                    Text("\(sectionInfo.location) / \(sectionInfo.unit) unit")
+                    Text("\(sectionInfo.location)\(sectionInfo.unit.map { " / \($0) unit" } ?? "")")
                         .font(.regular_14)
                         .foregroundColor(.heyGray2)
                 }
@@ -79,13 +79,14 @@ public struct DetailModuleInfoView: View {
                 }
                 Spacer()
             }
-            
-            Spacer()
-                .frame(height: 36)
         }
         .background(Color.heyWhite)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .frame(height: 220)
+        .onDisappear {
+            if viewType == .detail {
+                viewType = .main
+            }
+        }
     }
 }
 

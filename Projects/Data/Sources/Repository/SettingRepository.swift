@@ -39,9 +39,17 @@ public struct SettingRepository: SettingRepositoryType {
             .mapToGeneralError()
     }
     
-    public func patchTimeTableSettingInfo(_ displayType: DisplayTypeInfo, _ theme: String) -> AnyPublisher<Void, Error> {
+    public func patchTimeTableSettingInfo(_ displayType: DisplayTypeInfo, _ theme: String) -> AnyPublisher<Void, ThemeSettingError> {
         let request: TimeTableSettingRequest = .init(displayType.rawValue, theme)
         return service.patchTimeTableSettingInfo(request)
-            .asVoidWithGeneralError()
+            .asVoid()
+            .mapError { error in
+                if let errorMessage = error.isInvalidStatusCodeWithMessage() {
+                    return ThemeSettingError.error(with: errorMessage)
+                } else {
+                    return .unknown
+                }
+            }
+            .eraseToAnyPublisher()
     }
 }

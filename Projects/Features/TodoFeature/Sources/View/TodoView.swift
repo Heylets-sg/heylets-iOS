@@ -12,90 +12,128 @@ import BaseFeatureDependency
 import DSKit
 import Domain
 
-
 public struct TodoView: View {
     @EnvironmentObject var container: Router
     @ObservedObject var viewModel: TodoViewModel
+    
+    @State var text = ""
+    @State private var keyboardHeight: CGFloat = 0
     
     public init(viewModel: TodoViewModel) {
         self.viewModel = viewModel
     }
     
-    
     public var body: some View {
-        ZStack {
-            VStack(alignment: .leading) {
-                Text("Things to do")
-                    .font(.semibold_18)
-                    .foregroundColor(.heyGray1)
-                    .padding(.leading, 16)
-                    .padding(.top, 81)
-                    .padding(.bottom, 41)
-                
-                ScrollView {
-                    VStack(spacing: 16) {
-                        ForEach(viewModel.groupList, id: \.self) { group in
-                            TodoGroupView(
-                                group: group,
-                                viewModel: viewModel
-                            )
-                        }
+        VStack {
+            ZStack {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("Things to do")
+                            .font(.semibold_18)
+                            .foregroundColor(.heyGray1)
+                            .padding(.leading, 16)
+                            .padding(.top, 81)
+                            .padding(.bottom, 12)
+                        
+                        Spacer()
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 36)
                     
-                    Button {
-                        viewModel.send(.addGroupButtonDidTap)
-                    } label: {
-                        Image(uiImage: .icAddGroup)
-                            .resizable()
-                            .frame(width: 28, height: 28)
-                            .padding(.bottom, 209)
+                    ScrollView {
+                        Spacer()
+                            .frame(height: 20)
+                        VStack(spacing: 16) {
+                            ForEach(viewModel.groupList, id: \.self) { group in
+                                TodoGroupView(
+                                    group: group,
+                                    viewModel: viewModel
+                                )
+                            }
+                        }
+                        .loading(viewModel.state.isLoading)
+                        .padding(.bottom, 36)
+                        
+                        HStack {
+                            Spacer()
+                            Button {
+                                viewModel.send(.addGroupButtonDidTap)
+                            } label: {
+                                Image(uiImage: .icAddGroup)
+                                    .resizable()
+                                    .frame(width: 28, height: 28)
+                            }
+                            Spacer()
+                        }
+                        .padding(.bottom, 209)
+                        
                     }
+                    .scrollIndicators(.hidden)
                 }
-                .scrollIndicators(.hidden)
+                .ignoresSafeArea()
+                .onAppear {
+                    viewModel.send(.onAppear)
+                }
+                
+                
+                TabBarView(
+                    timeTableAction: { viewModel.send(.gotoTimeTable) },
+                    mypageAction: { viewModel.send(.gotoMyPage) }
+                )
+                .hidden(viewModel.state.hiddenTabBar)
+                
+                TodoChangeGroupNameAlertView(
+                    title: "Enter name",
+                    content: $viewModel.state.editGroupName.1,
+                    primaryAction: ("Close", .gray, { viewModel.send(.closeButtonDidTap) }),
+                    secondaryAction: ("Ok", .primary, { viewModel.send(.changeGroupName) })
+                )
+                .hidden(!viewModel.state.showItemAlertView)
             }
             .ignoresSafeArea()
-            .onAppear {
-                viewModel.send(.onAppear)
+            
+            .heyAlert(
+                isPresented: viewModel.state.showGuestDeniedAlert,
+                loginButtonAction: {
+                    viewModel.send(.gotoLogin)
+                },
+                notRightNowButton: {
+                    viewModel.send(.notRightNowButtonDidTap)
+                }
+            )
+            .onTapGesture {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                viewModel.send(.hideKeyboard)
             }
-            .scrollToMinDistance(minDisntance: 32)
-            
-            TabBarView(
-                timeTableAction: { viewModel.send(.gotoTimeTable) },
-                mypageAction: { viewModel.send(.gotoMyPage) }
-            )
-            .hidden(viewModel.state.hiddenTabBar)
-            
-            TodoChangeGroupNameAlertView(
-                title: "Enter name",
-                content: $viewModel.state.editGroupName.1,
-                groupId: 1,
-                primaryAction: ("Close", .gray, { viewModel.send(.closeButtonDidTap) }),
-                secondaryAction: ("Ok", .primary, { viewModel.send(.changeGroupName) })
-            )
-            .hidden(!viewModel.state.showItemAlertView)
+            .onReceive(Publishers.keyboardHeight) { height in
+                keyboardHeight = height
+            }
         }
-        .heyAlert(
-            isPresented: viewModel.state.showGuestDeniedAlert,
-            loginButtonAction: {
-                viewModel.send(.gotoLogin)
-            },
-            notRightNowButton: {
-                viewModel.send(.notRightNowButtonDidTap)
-            }
-        )
     }
-        
 }
 
-#Preview {
-    let useCase = StubHeyUseCase.stub.todoUseCase
-    return TodoView(
-        viewModel: .init(
-            windowRouter: Router.default.windowRouter,
-            useCase: useCase
+// ✅ 키보드 높이를 감지하는 Publisher
+import Combine
+
+extension Publishers {
+    static var keyboardHeight: AnyPublisher<CGFloat, Never> {
+        Publishers.Merge(
+            NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
+                .compactMap { $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect }
+                .map { $0.height },
+            
+            NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
+                .map { _ in CGFloat(0) }
         )
-    )
-    .environmentObject(Router.default)
+        .eraseToAnyPublisher()
+    }
 }
+
+//#Preview {
+//    let useCase = StubHeyUseCase.stub.todoUseCase
+//    return TodoView(
+//        viewModel: .init(
+//            windowRouter: Router.default.windowRouter,
+//            useCase: useCase
+//        )
+//    )
+//    .environmentObject(Router.default)
+//}

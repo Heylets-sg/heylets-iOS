@@ -7,8 +7,6 @@
 //
 
 import Foundation
-
-import Foundation
 import Combine
 
 public typealias GuestService = BaseService<GuestAPI>
@@ -19,7 +17,8 @@ public protocol GuestServiceType {
     ) -> NetworkVoidResponse
     
     func startGuestMode(
-        _ university: String
+        _ university: String,
+        _ request: GuestAgreementRequest
     ) -> NetworkDecodableResponse<AuthResult>
     
     func convertToMember(
@@ -40,9 +39,10 @@ extension GuestService: GuestServiceType {
     }
     
     public func startGuestMode(
-        _ university: String
+        _ university: String,
+        _ request: GuestAgreementRequest
     ) -> NetworkDecodableResponse<AuthResult> {
-        requestWithResult(.startGuestMode(university))
+        requestWithResult(.startGuestMode(university, request))
     }
     
     public func convertToMember(_ request: SignUpRequest) -> NetworkVoidResponse {

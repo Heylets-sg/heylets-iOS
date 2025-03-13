@@ -84,16 +84,24 @@ public extension TodoUseCase {
     }
     
     func getGroup() -> AnyPublisher<Void, Never> {
-        if let tableId {
-            return fetchGroup()
-        } else {
-            return getTableId()
-                .flatMap { [weak self] _ in
-                    guard let self else { return Empty<Void,Never>().eraseToAnyPublisher() }
-                    return fetchGroup()
-                }
-                .eraseToAnyPublisher()
-        }
+        
+        return getTableId()
+            .flatMap { [weak self] _ in
+                guard let self else { return Empty<Void,Never>().eraseToAnyPublisher() }
+                return fetchGroup()
+            }
+            .eraseToAnyPublisher()
+        
+        //        if tableId != nil {
+        //            return fetchGroup()
+        //        } else {
+        //            return getTableId()
+        //                .flatMap { [weak self] _ in
+        //                    guard let self else { return Empty<Void,Never>().eraseToAnyPublisher() }
+        //                    return fetchGroup()
+        //                }
+        //                .eraseToAnyPublisher()
+        //        }
     }
     
     func editItem(

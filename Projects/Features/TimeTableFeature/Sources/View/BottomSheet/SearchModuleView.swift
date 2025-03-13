@@ -27,7 +27,7 @@ public struct SearchModuleView: View {
                 .padding(.bottom, 18)
                 .padding(.horizontal, 16)
             
-            if viewModel.lectureList.isEmpty {
+            if viewModel.lectureList.isEmpty && !viewModel.searchText.isEmpty {
                 Text("We couldn’t find a match for\n‘\(viewModel.searchText)’.")
                     .font(.regular_16)
                     .multilineTextAlignment(.center)
@@ -69,6 +69,7 @@ public struct SearchModuleView: View {
                         .padding(.bottom, 3)
                     }
                 }
+                .loading(viewModel.state.isLoading)
                 .scrollIndicators(.hidden)
             }
         }
@@ -145,7 +146,7 @@ fileprivate struct ClassSearchListCellView: View {
                 .font(.regular_12)
                 .foregroundColor(isSelected ? Color.heyGray2 : Color.heyGray8)
             
-            Text("\(section.professor) / \(section.location) / \(section.unit) unit")
+            Text("\(section.professor) / \(section.location) \(section.unit.map { " / \($0) unit" } ?? "")")
                 .font(.regular_12)
                 .foregroundColor(isSelected ? Color.heyGray2 : Color.heyGray8)
                 .padding(.bottom, 15)

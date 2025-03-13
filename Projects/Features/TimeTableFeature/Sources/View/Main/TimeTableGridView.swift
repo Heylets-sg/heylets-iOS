@@ -40,11 +40,7 @@ public struct TimeTableGridView: View {
                     // 📌 수업 버튼 배치
                     ForEach($viewModel.timeTable, id: \.self) { $cell in
                         if let dayIndex = viewModel.weekList.firstIndex(of: cell.schedule.day) {
-                            let rect: (
-                                centerX: CGFloat,
-                                centerY: CGFloat,
-                                height: CGFloat
-                            ) = configButtonLayout(
+                            let rect: (centerX: CGFloat, centerY: CGFloat, height: CGFloat) = configButtonLayout(
                                 viewModel.hourList[0],
                                 for: cell,
                                 at: dayIndex,
@@ -66,8 +62,13 @@ public struct TimeTableGridView: View {
                                     backgroundColor: backgroundColor
                                 )
                                 
+                                let textColor: Color = viewModel.selectedThemeColor.isEmpty
+                                ? cell.textColor
+                                : Color.init(hex: viewModel.selectedThemeColor[0])
+                                
                                 createClassInfoText(
                                     for: cell,
+                                    textColor: textColor,
                                     centerX: rect.centerX,
                                     centerY: rect.centerY,
                                     cellWidth: cellWidth,
@@ -180,12 +181,14 @@ extension TimeTableGridView {
         backgroundColor: Color
     ) -> some View {
         return Button {
-            viewModel.send(.tableCellDidTap(cell.id))
+            withAnimation {
+                viewModel.send(.tableCellDidTap(cell.id))
+            }
         } label: {
             Rectangle()
                 .fill(backgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: 2))
-                .frame(width: cellWidth-1, height: cellHeight)
+                .frame(width: cellWidth-1, height: cellHeight-1)
                 .position(x: centerX, y: centerY)
         }
         .buttonStyle(PlainButtonStyle())
@@ -194,6 +197,7 @@ extension TimeTableGridView {
     
     private func createClassInfoText(
         for cell: TimeTableCellInfo,
+        textColor: Color,
         centerX: CGFloat,
         centerY: CGFloat,
         cellWidth: CGFloat,
@@ -202,19 +206,19 @@ extension TimeTableGridView {
         return VStack(alignment: .leading, spacing: 0) {
             Text(cell.code)
                 .font(.medium_12)
-                .foregroundColor(cell.textColor)
+                .foregroundColor(textColor)
                 .multilineTextAlignment(.leading)
             
             if displayType.classRoomIsVisible {
                 Text(cell.schedule.location)
                     .font(.regular_10)
-                    .foregroundColor(cell.textColor)
+                    .foregroundColor(textColor)
             }
             
             if displayType.creditIsVisible, let unit = cell.unit {
                 Text("unit: \(unit)")
                     .font(.regular_10)
-                    .foregroundColor(cell.textColor)
+                    .foregroundColor(textColor)
             }
         }
         .frame(width: 56, height: cellHeight ,alignment: .topLeading)

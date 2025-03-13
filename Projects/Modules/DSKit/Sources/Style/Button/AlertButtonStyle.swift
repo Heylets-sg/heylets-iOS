@@ -22,7 +22,7 @@ struct HeyAlertButtonStyle: ButtonStyle {
         configuration.label
             .frame(height: 46)
             .frame(maxWidth: .infinity)
-            .font(.medium_16)
+//            .font(.medium_16)
             .background(colorStyle.background)
             .foregroundStyle(colorStyle.foreground)
             .clipShape(RoundedRectangle(cornerRadius: 8))

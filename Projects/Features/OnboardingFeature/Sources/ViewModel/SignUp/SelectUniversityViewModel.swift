@@ -13,23 +13,6 @@ import BaseFeatureDependency
 import Domain
 import Core
 
-public enum UniversityInfo: String {
-    case NUS
-    case NTU
-    case SMU
-    
-    var icon: UIImage {
-        switch self {
-        case .NUS:
-            return .nus
-        case .NTU:
-            return .ntu
-        case .SMU:
-            return .smu
-        }
-    }
-}
-
 public class SelectUniversityViewModel: ObservableObject {
     struct State {
         var filteredItems: [UniversityInfo] = []

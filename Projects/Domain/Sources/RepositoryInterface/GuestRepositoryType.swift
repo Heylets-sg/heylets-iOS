@@ -17,7 +17,10 @@ public protocol GuestRepositoryType {
     func changeGuestUniversity(university: String) -> AnyPublisher<Void, Error>
     
     // 게스트모드 시작하기
-    func startGuestMode(university: String) -> AnyPublisher<Auth, Error>
+    func startGuestMode(
+        university: String,
+        agreements: [AgreementInfo]
+    ) -> AnyPublisher<Auth, Error>
     
     // 게스트 -> 정식회원
     func convertToMember(_ user: User) -> AnyPublisher<Void, SignUpError>

@@ -1,5 +1,5 @@
 //
-//  TodoAddItemView.swift
+//  TodoChangeGroupNameAlertView.swift
 //  TodoFeature
 //
 //  Created by 류희재 on 3/2/25.
@@ -16,19 +16,16 @@ public struct TodoChangeGroupNameAlertView: View {
     public init(
         title: String,
         content: Binding<String>,
-        groupId: Int,
         primaryAction: HeyAlertButtonType,
         secondaryAction: HeyAlertButtonType
     ) {
         self.title = title
         self._content = content
-        self.groupId = groupId
         self.primaryAction = primaryAction
         self.secondaryAction = secondaryAction
     }
     
     var title: String
-    let groupId: Int
     @Binding var content: String
     var primaryAction: HeyAlertButtonType
     var secondaryAction: HeyAlertButtonType

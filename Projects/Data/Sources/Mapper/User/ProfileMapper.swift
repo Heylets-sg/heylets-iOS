@@ -16,7 +16,7 @@ extension MyProfileResult {
     func toEntity() -> ProfileInfo {
         .init(
             nickName: nickname,
-            university: university,
+            university: UniversityInfo.toEntity(with: university),
             imageURL: profileImageUrl
         )
     }

@@ -40,6 +40,7 @@ public struct LogInView: View {
                             .resizable()
                             .frame(width: 18, height: 18)
                     }
+                    .hidden(!viewModel.state.showCloseBtn)
                 }
                 .padding(.bottom, 10)
                 
@@ -125,6 +126,9 @@ public struct LogInView: View {
                     isFocused = nil
                 }
             }
+            .onAppear {
+                viewModel.send(.onAppear)
+            }
             .padding(.top, 106)
             .padding(.bottom, 65)
             .padding(.horizontal, 16)
@@ -135,6 +139,7 @@ public struct LogInView: View {
             .onTapGesture {
                 isFocused = nil
             }
+            .loading(viewModel.state.isLoading)
             .setOnboardingHeyNavigation()
         }
     }

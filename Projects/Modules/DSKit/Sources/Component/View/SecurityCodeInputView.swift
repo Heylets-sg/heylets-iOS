@@ -57,7 +57,7 @@ public struct SecurityCodeInputView: View {
                         ForEach(0..<6) { index in
                             VStack {
                                 Text(self.getPin(at: index))
-                                    .font(.semibold_28)
+//                                    .font(.semibold_28)
                                     .foregroundColor(Color.heyGray1)
                                 Rectangle()
                                     .frame(width: 32, height: 2)
@@ -104,28 +104,5 @@ extension String {
     subscript(idx: Int) -> String {
         String(self[index(startIndex, offsetBy: idx)])
     }
-}
-
-import SwiftUI
-
-struct ContentView: View {
-    @State var otpCode: String = ""
-    
-    var body: some View {
-        VStack {
-            Text("Enter OTP")
-                .font(.headline)
-                .padding(.bottom, 8)
-            
-            SecurityCodeInputView(otpCode: $otpCode)
-                .frame(height: 50)
-                .padding(.horizontal, 40)
-        }
-        .padding()
-    }
-}
-
-#Preview {
-    ContentView()
 }
 

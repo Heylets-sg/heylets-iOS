@@ -12,7 +12,7 @@ import Domain
 
 public enum GuestAPI {
     case changeGuestUniversity(UniversityRequest)
-    case startGuestMode(String)
+    case startGuestMode(String, GuestAgreementRequest)
     case convertToMember(SignUpRequest, String)
     case testConvertToMember(SignUpRequest, String)
 }
@@ -26,7 +26,7 @@ extension GuestAPI: BaseAPI {
         switch self {
         case .changeGuestUniversity:
             Paths.changeGuestUniversity
-        case .startGuestMode(let university):
+        case .startGuestMode(let university, _):
             Paths.startGuestMode
                 .replacingOccurrences(
                     of: "{university}",
@@ -56,8 +56,9 @@ extension GuestAPI: BaseAPI {
         switch self {
         case .changeGuestUniversity(let request):
             return .requestJSONEncodable(request)
-        case .startGuestMode:
-            return .requestPlain
+        case .startGuestMode(_, let request):
+            return .requestJSONEncodable(request)
+            
         case .convertToMember(let request, let boundary), .testConvertToMember(let request, let boundary):
             var multipartData: [MultipartData] = []
             

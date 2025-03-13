@@ -18,6 +18,7 @@ public struct User: Hashable, Equatable {
     public var university: String
     public var profileImage: UIImage?
     public var agreements: [AgreementInfo]
+    public var referralCode: String?
     
     public init(
         email: String,
@@ -27,7 +28,8 @@ public struct User: Hashable, Equatable {
         nickName: String,
         university: String,
         profileImage: UIImage? = nil,
-        agreements: [AgreementInfo]
+        agreements: [AgreementInfo],
+        referralCode: String? = nil
     ) {
         self.email = email
         self.password = password
@@ -37,17 +39,18 @@ public struct User: Hashable, Equatable {
         self.university = university
         self.profileImage = profileImage
         self.agreements = agreements
+        self.referralCode = referralCode
     }
 }
 
 public struct ProfileInfo: Hashable {
     public var nickName: String
-    public var university: String
+    public var university: UniversityInfo
     public var imageURL: String?
     
     public init(
         nickName: String = "",
-        university: String = "",
+        university: UniversityInfo = .empty,
         imageURL: String? = nil
     ) {
         self.nickName = nickName
@@ -70,4 +73,15 @@ public struct AgreementInfo: Hashable {
         self.agreed = agreed
         self.version = version
     }
+}
+
+extension AgreementInfo {
+    static public var termsOfService: Self { .init("TERMS_OF_SERVICE", true, "1.0.0") }
+    static public var privacyPolicy: Self { .init("PRIVACY_POLICY", true, "1.0.0") }
+    static public var marketing: Self { .init("MARKETING", true, "1.0.0") }
+    
+    static public var agreementList: [AgreementInfo] = [
+        .termsOfService,
+        .privacyPolicy
+    ]
 }

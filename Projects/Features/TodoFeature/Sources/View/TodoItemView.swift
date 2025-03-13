@@ -7,13 +7,17 @@
 //
 
 import SwiftUI
+import Combine
 
+import BaseFeatureDependency
 import Domain
+import Core
 
 public struct TodoItemView: View {
     private let groupId: Int
     private let item: TodoItem
     private let viewModel: TodoViewModel
+    private let cancelBag = CancelBag()
     
     public init(
         groupId: Int,
@@ -26,7 +30,6 @@ public struct TodoItemView: View {
     }
     
     @State private var showDeleteButton: Bool = false
-    @State private var editMode: Bool = false
     @State private var content: String = ""
     @State private var offsetX: CGFloat = 0
     private let threshold: CGFloat = 72
@@ -34,7 +37,7 @@ public struct TodoItemView: View {
     
     public var body: some View {
         ZStack {
-            VStack {
+            VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Button {
                         viewModel.send(.toggleItemCompletedButtonDidTap(item.id))
@@ -46,7 +49,7 @@ public struct TodoItemView: View {
                     .padding(.trailing, 12)
                     .offset(x: offsetX)
                     
-                    if editMode {
+                    if item.isEditing {
                         TextField(
                             "",
                             text: $content,
@@ -61,7 +64,6 @@ public struct TodoItemView: View {
                         .offset(x: offsetX)
                         .onSubmit {
                             viewModel.send(.editItem(item.id, content))
-                            editMode = false
                         }
                         .submitLabel(.done)
                         .onAppear {
@@ -76,6 +78,7 @@ public struct TodoItemView: View {
                             .multilineTextAlignment(.leading)
                             .layoutPriority(1)
                             .offset(x: offsetX)
+                            .strikethrough(item.completed)
                     }
                     Spacer()
                         .frame(minWidth: 23)
@@ -87,29 +90,22 @@ public struct TodoItemView: View {
             .background(Color.init(hex: "#F7F7F7"))
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
-            GeometryReader { geometry in
-                if showDeleteButton {
-                    HStack(spacing: 0) {
-                        Spacer()
-                        Button {
-                            viewModel.send(.deleteItemButtonDidTap(item.id))
-                        } label: {
-                            Text("Delete")
-                                .font(.medium_14)
-                                .foregroundColor(.white)
-                                .frame(width: threshold)
-                                .frame(minHeight: 56, maxHeight: 81)
-                                .background(Color.red)
-                        }
-                        .cornerRadius(8, corners: [.bottomRight, .topRight])
+            if showDeleteButton {
+                HStack(spacing: 0) {
+                    Spacer()
+                    Button {
+                        viewModel.send(.deleteItemButtonDidTap(item.id))
+                    } label: {
+                        Text("Delete")
+                            .font(.medium_14)
+                            .foregroundColor(.white)
+                            .frame(width: threshold)
+                            .frame(minHeight: 56, maxHeight: 81)
+                            .background(.red)
                     }
+                    .cornerRadius(8, corners: [.bottomRight, .topRight])
                 }
             }
-            
-        }
-        .onTapGesture {
-            editMode = true
-            viewModel.state.hiddenTabBar = true
         }
         .gesture(
             DragGesture()
@@ -119,7 +115,7 @@ public struct TodoItemView: View {
                     }
                 }
                 .onEnded { value in
-                    if value.translation.width < -threshold / 2 {
+                    if value.translation.width < -threshold / 3 {
                         offsetX = -threshold
                         showDeleteButton = true
                     } else {
@@ -135,21 +131,25 @@ public struct TodoItemView: View {
 public struct TodoAddItemView: View {
     private let viewModel: TodoViewModel
     private let groupId: Int
-    @State private var editMode: Bool = false
-    @State private var content: String = ""
+    private var isEditMode: Bool
+    @Binding private var content: String
     @FocusState private var isKeyboardActive: Bool
     
     init(
         viewModel: TodoViewModel,
+        content: Binding<String>,
+        isEditMode: Bool,
         groupId: Int
     ) {
         self.viewModel = viewModel
+        self._content = content
+        self.isEditMode = isEditMode
         self.groupId = groupId
     }
     
     public var body: some View {
         VStack {
-            if editMode {
+            if isEditMode {
                 HStack(spacing: 0) {
                     Button {
                     } label: {
@@ -162,16 +162,15 @@ public struct TodoAddItemView: View {
                     TextField(
                         "",
                         text: $content,
-                        prompt: Text("할일을 입력해주세요")
+                        prompt: Text("Add a task")
                             .font(.medium_12)
                             .foregroundColor(.init(hex: "#B8B8B8"))
                     )
                     .focused($isKeyboardActive)
-                    .font(.medium_12)
+                    .font(.medium_14)
                     .foregroundStyle(Color.init(hex: "#4A4A4A"))
                     .onSubmit {
                         viewModel.send(.addItem(groupId, content))
-                        editMode = false
                     }
                     .submitLabel(.done)
                 }
@@ -195,15 +194,23 @@ public struct TodoAddItemView: View {
                     Spacer()
                 }
                 .onTapGesture {
-                    viewModel.state.hiddenTabBar = true
-                    editMode = true
+                    viewModel.send(.addTaskButtonDidTap(groupId: groupId))
                 }
             }
         }
         .background(Color.init(hex: "#F7F7F7"))
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .frame(height: 56)
-        
     }
 }
 
+#Preview {
+    let useCase = StubHeyUseCase.stub.todoUseCase
+    return TodoView(
+        viewModel: .init(
+            windowRouter: Router.default.windowRouter,
+            useCase: useCase
+        )
+    )
+    .environmentObject(Router.default)
+}

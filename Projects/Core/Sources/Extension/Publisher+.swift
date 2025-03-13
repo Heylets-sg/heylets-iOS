@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-extension Publisher {
+public extension Publisher {
     func assignLoading<Root>(to keyPath: ReferenceWritableKeyPath<Root, Bool>, on object: Root) -> Publishers.HandleEvents<Self> {
         handleEvents(
             receiveCompletion: { _ in object[keyPath: keyPath] = false },

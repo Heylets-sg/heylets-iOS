@@ -104,7 +104,7 @@ final public class StubMyPageUseCase: MyPageUseCaseType {
     }
     
     public func getProfile() -> AnyPublisher<ProfileInfo, Never> {
-        Just(.init()).eraseToAnyPublisher()
+        Just(.init(university: .NUS)).eraseToAnyPublisher()
     }
     
     public func changePassword(

@@ -21,5 +21,5 @@ public protocol SettingRepositoryType {
     func patchTimeTableSettingInfo(
         _ displayType: DisplayTypeInfo,
         _ theme: String
-    ) -> AnyPublisher<Void, Error>
+    ) -> AnyPublisher<Void, ThemeSettingError>
 }

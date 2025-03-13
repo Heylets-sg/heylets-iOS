@@ -26,12 +26,12 @@ public struct TopView: View {
                     .frame(height: 34)
                 
                 HStack {
-                    Text(profileInfo.university)
+                    Text(profileInfo.university.rawValue)
                         .font(.bold_8)
-                        .foregroundColor(.heyGray6)
+                        .foregroundColor(Color.init(hex: profileInfo.university.textColor))
                         .padding(.horizontal, 5)
                         .padding(.vertical, 2)
-                        .background(Color.heyDarkBlue)
+                        .background(Color.init(hex: profileInfo.university.backgroundColor))
                         .clipShape(RoundedRectangle(cornerRadius: 1.2))
                         .frame(width: 28, height: 14)
                         
@@ -73,29 +73,6 @@ public struct TopView: View {
                         .frame(width: 20, height: 20)
                         .tint(.heyGray2)
                         .padding(.trailing, 23)
-                }
-                
-                Button {
-                    container.navigationRouter.destinations = []
-                    container.windowRouter.switch(to: .mypage)
-                } label: {
-                    if let imageURL = profileInfo.imageURL {
-                        AsyncImage(url: URL(string: imageURL)) { image in
-                            image
-                                .resizable()
-                                .frame(width: 31, height: 31)
-                                .background(Color.heyWhite)
-                                .clipShape(Circle())
-                        } placeholder: {
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle())
-                        }
-                    } else {
-                        Circle()
-                            .fill(Color.heyBlack)
-                            .frame(width: 31, height: 31)
-                    }
-                
                 }
             }
             .padding(.top, 38)

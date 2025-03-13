@@ -28,6 +28,10 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     
     public var userInfo: User = .empty
     
+    public func checkAccessTokenExisted() -> AnyPublisher<Bool, Never> {
+        authRepository.isTokenExisted()
+    }
+    
     public func logIn(
         _ email: String,
         _ password: String
@@ -43,28 +47,28 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     
     public func signUp() -> AnyPublisher<Void, Never> {
         guestRepository.checkGuestMode()  // 게스트 모드 여부를 확인
-                .flatMap { [weak self] isGuest in
-                    guard let self else { return Empty<Void, Never>().eraseToAnyPublisher() }
-                    print("isGuest: \(isGuest)")
-                    if isGuest {
-                        return self.guestRepository.convertToMember(userInfo)
-                            .map { _ in }
-                            .catch { [weak self] error in
-                                self?.errMessage.send(error.description)
-                                return Empty<Void, Never>()
-                            }
-                            .eraseToAnyPublisher()
-                    } else {
-                        return self.authRepository.signUp(userInfo)
-                            .map { _ in }
-                            .catch { [weak self] error in
-                                self?.errMessage.send(error.description)
-                                return Empty<Void, Never>()
-                            }
-                            .eraseToAnyPublisher()
-                    }
+            .flatMap { [weak self] isGuest in
+                guard let self else { return Empty<Void, Never>().eraseToAnyPublisher() }
+                print("isGuest: \(isGuest)")
+                if isGuest {
+                    return self.guestRepository.convertToMember(userInfo)
+                        .map { _ in }
+                        .catch { [weak self] error in
+                            self?.errMessage.send(error.description)
+                            return Empty<Void, Never>()
+                        }
+                        .eraseToAnyPublisher()
+                } else {
+                    return self.authRepository.signUp(userInfo)
+                        .map { _ in }
+                        .catch { [weak self] error in
+                            self?.errMessage.send(error.description)
+                            return Empty<Void, Never>()
+                        }
+                        .eraseToAnyPublisher()
                 }
-                .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
     
     public func requestEmailVerifyCode(
@@ -142,18 +146,25 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
             .eraseToAnyPublisher()
     }
     
-    public func startGuestMode(university: String) -> AnyPublisher<Void, Never> {
-        guestRepository.startGuestMode(university: university)
-            .map { _ in }
-            .catch { [weak self] error in
-                self?.errMessage.send("게스트 모드 시작에 실패했습니다.")
-                return Empty<Void, Never>()
-            }
-            .eraseToAnyPublisher()
+    public func startGuestMode(university: String, agreements: [AgreementInfo]) -> AnyPublisher<Void, Never> {
+        guestRepository.startGuestMode(
+            university: university,
+            agreements: agreements
+        )
+        .map { _ in }
+        .catch { [weak self] error in
+            self?.errMessage.send("게스트 모드 시작에 실패했습니다. \(error)")
+            return Empty<Void, Never>()
+        }
+        .eraseToAnyPublisher()
     }
 }
 
 final public class StubOnboardingUseCase: OnboardingUseCaseType {
+    public func checkAccessTokenExisted() -> AnyPublisher<Bool, Never> {
+        Just(true).eraseToAnyPublisher()
+    }
+    
     public var userInfo: User = .empty
     public var errMessage = PassthroughSubject<String, Never>()
     
@@ -196,7 +207,10 @@ final public class StubOnboardingUseCase: OnboardingUseCaseType {
         Just(()).eraseToAnyPublisher()
     }
     
-    public func startGuestMode(university: String) -> AnyPublisher<Void, Never> {
+    public func startGuestMode(
+        university: String,
+        agreements: [AgreementInfo]
+    ) -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()
     }
 }

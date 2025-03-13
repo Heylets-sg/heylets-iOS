@@ -28,7 +28,7 @@ public enum Paths {
     //MARK: Guest
     
     static let changeGuestUniversity = "api/v1/auth/guest/university"
-    static let startGuestMode = "api/v1/auth/guest/start/{university}"
+    static let startGuestMode = "api/v2/auth/guest/start/{university}"
     static let convertToMember = "/api/v1/auth/guest/signup"
     
     

@@ -109,6 +109,16 @@ public struct TimeTableView: View {
                 .presentationDetents([.height(802)])
                 .presentationDragIndicator(.visible)
             }
+            .sheet(isPresented: .constant(viewModel.viewType == .detail)) {
+                DetailModuleInfoView(
+                    viewType: $viewModel.viewType,
+                    deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
+                    sectionInfo: viewModel.detailSectionInfo
+                )
+                .presentationDetents([.height(270)])
+                .presentationDragIndicator(.hidden)
+                .ignoresSafeArea(.container, edges: .bottom)
+            }
             
             TabBarView(
                 todoAction: { viewModel.send(.gotoTodo) },
@@ -118,15 +128,18 @@ public struct TimeTableView: View {
             
             SettingTimeTableAlertView(viewModel: viewModel)
         }
-        
+        .ignoresSafeArea()
         .overlay {
             let shouldShowOverlay = !(viewModel.viewType == .theme && !themeViewModel.state.isShowingSelectInfoView)
                 && viewModel.viewType != .main
                 && viewModel.viewType != .search
 
             if shouldShowOverlay {
-                let opacity = (viewModel.viewType == .detail || viewModel.viewType == .setting
-                    || (viewModel.viewType == .theme && themeViewModel.state.isShowingSelectInfoView)) ? 1 : 0
+                let opacity = (
+                    viewModel.viewType == .detail 
+                    || viewModel.viewType == .setting
+                    || (viewModel.viewType == .theme && themeViewModel.state.isShowingSelectInfoView)
+                ) ? 1 : 0
 
                 Color.heyDimmed
                     .opacity(Double(opacity))
@@ -155,16 +168,11 @@ extension TimeTableView {
                 viewModel: searchModuleViewModel
             )
             .bottomSheetTransition()
+            
         case .theme:
             SettingTimeTableInfoView(viewModel: themeViewModel)
                 .bottomSheetTransition()
-        case .detail:
-            DetailModuleInfoView(
-                viewType: $viewModel.viewType,
-                deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
-                sectionInfo: viewModel.detailSectionInfo
-            )
-            .zIndex(2)
+            
         case .addCustom:
             AddCustomModuleView(viewModel: addCustomModuleViewModel)
                 .bottomSheetTransition()
@@ -179,7 +187,9 @@ extension TimeTableView {
         case .search:
             SearchModuleTopView(
                 viewType: $viewModel.viewType,
-                isShowingAddCustomModuleView: $viewModel.state.alerts.showAddCustomAlert
+                addCustomModuleButtonDidTapEvent: {
+                    viewModel.send(.addCustomModuleButtonDidTap)
+                }
             )
         case .theme:
             ThemeTopView(

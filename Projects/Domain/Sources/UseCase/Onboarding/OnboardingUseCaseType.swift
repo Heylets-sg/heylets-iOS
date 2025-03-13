@@ -21,6 +21,8 @@ public protocol OnboardingUseCaseType {
     
     var errMessage: PassthroughSubject<String, Never> { get }
     
+    func checkAccessTokenExisted() -> AnyPublisher<Bool, Never>
+    
     func logIn(
         _ email: String,
         _ password: String
@@ -52,5 +54,8 @@ public protocol OnboardingUseCaseType {
         _ newPassword: String
     ) -> AnyPublisher<Void, Never>
     
-    func startGuestMode(university: String) -> AnyPublisher<Void, Never>
+    func startGuestMode(
+        university: String,
+        agreements: [AgreementInfo]
+    ) -> AnyPublisher<Void, Never>
 }

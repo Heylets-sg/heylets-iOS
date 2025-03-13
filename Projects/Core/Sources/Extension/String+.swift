@@ -60,3 +60,13 @@ extension String {
     }
 }
 
+//Theme & 학기 이름 format
+public extension String {
+    func formatName() -> String {
+        let components = self.lowercased().split(separator: "_")
+        let formatted = components.enumerated().map { index, word in
+            index == 0 ? String(word.capitalized) : String(word)
+        }.joined(separator: " ")
+        return formatted
+    }
+}

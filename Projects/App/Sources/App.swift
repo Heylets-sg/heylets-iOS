@@ -7,10 +7,9 @@
 //
 
 import SwiftUI
-
-import RootFeature
 import BaseFeatureDependency
 import Domain
+import RootFeature
 
 @main
 struct Heylets_iOSAPP: App {

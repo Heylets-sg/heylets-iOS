@@ -12,7 +12,7 @@ extension ProfileInfo {
     static public var stub: Self {
         .init(
             nickName: "류희재",
-            university: "NUS"
+            university: .NUS
         )
     }
 }
