@@ -68,8 +68,8 @@ extension AuthService: AuthServiceType {
         _ request: SignUpRequest
     ) -> NetworkVoidResponse {
         //MARK: Test용
-//        requestWithNoResult(.signUp(request, UUID().uuidString))
-        requestWithNoResult(.testSignUp(request, UUID().uuidString))
+        requestWithNoResult(.signUp(request, UUID().uuidString))
+//        requestWithNoResult(.testSignUp(request, UUID().uuidString))
     }
     
     public func resetPassword(
