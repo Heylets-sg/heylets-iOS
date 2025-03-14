@@ -7,12 +7,20 @@
 //
 
 import Foundation
-import Core
 
 public extension AnalyticsTaxonomy {
-    static let clickAddTask = AnalyticsTaxonomy(
-        eventName: "click_add_task"
-    )
+    static func clickAddTask(
+        groupName: String,
+        content: String
+    ) -> AnalyticsTaxonomy{
+        return AnalyticsTaxonomy(
+            eventName: "click_add_task",
+            properties: [
+                "todo_group_name": groupName,
+                "task_content": content
+            ]
+        )
+    }
 
     static let taskAdded = AnalyticsTaxonomy(
         eventName: "task_added"

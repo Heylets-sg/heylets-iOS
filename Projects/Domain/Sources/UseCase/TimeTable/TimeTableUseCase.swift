@@ -41,7 +41,7 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
     public var tableId: Int = 0
     public var errMessage = PassthroughSubject<String, Never>()
     public var guestModeError = PassthroughSubject<Void, Never>()
-    public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()
+    public var timeTableInfo = CurrentValueSubject<TimeTableInfo, Never>(.empty)
     public var sectionList = PassthroughSubject<[SectionInfo], Never>()
     public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()
 }
@@ -134,13 +134,18 @@ extension TimeTableUseCase {
 extension TimeTableUseCase {
     public func getLectureList(_ keyword: String) -> AnyPublisher<[SectionInfo], Never> {
         if keyword != "" {
-            lectureRepository.getLectureListWithKeyword(keyword)
+            return lectureRepository.getLectureListWithKeyword(keyword)
                 .catch { _ in
                     return Just([]).eraseToAnyPublisher()
                 }
                 .eraseToAnyPublisher()
         } else {
-            lectureRepository.getLectureList()
+            Analytics.shared.track(.clickSearchModule(
+                keyword: keyword,
+                semester: timeTableInfo.value.semester
+            )
+            )
+            return lectureRepository.getLectureList()
                 .catch { _ in
                     return Just([]).eraseToAnyPublisher()
                 }
@@ -228,10 +233,10 @@ final public class StubTimeTableUseCase: TimeTableUseCaseType {
     public var tableId: Int = 0
     public var errMessage = PassthroughSubject<String, Never>()
     public var guestModeError = PassthroughSubject<Void, Never>()
-    public var timeTableInfo = PassthroughSubject<TimeTableInfo, Never>()
+    public var timeTableInfo = CurrentValueSubject<TimeTableInfo, Never>(.empty)
     public var sectionList = PassthroughSubject<[SectionInfo], Never>()
     public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()
-
+    
     public init() {
         timeTableInfo.send(TimeTableInfo.stub)
         sectionList.send([
@@ -272,7 +277,7 @@ extension StubTimeTableUseCase {
     public func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()
     }
-
+    
     public func getLectureList(_ keyword: String) -> AnyPublisher<[SectionInfo], Never> {
         Just([]).eraseToAnyPublisher()
     }
@@ -282,7 +287,7 @@ extension StubTimeTableUseCase {
     ) -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()
     }
-
+    
     public func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()
     }

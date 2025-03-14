@@ -151,6 +151,13 @@ public class TimeTableViewModel: ObservableObject {
             selectLecture = lecture.timeTableCellInfo
             
         case .addLecture(let lecture):
+            Analytics.shared.track(.clickAddModule(
+                courseCode: lecture.code ?? "",
+                courseName: lecture.name,
+                sectionId: lecture.id,
+                professor: lecture.professor
+            )
+            )
             useCase.addSection(lecture.id)
                 .receive(on: RunLoop.main)
                 .map { _ in TimeTableViewType.search }
@@ -214,8 +221,12 @@ public class TimeTableViewModel: ObservableObject {
             state.alerts.settingAlertType = nil
             
         case .editTimeTableName:
+            Analytics.shared.track(.clickChangeTimetableName(state.timeTableName))
             useCase.changeTimeTableName(state.timeTableName)
                 .receive(on: RunLoop.main)
+                .handleEvents(receiveOutput: {
+                    Analytics.shared.track(.timetableNameChanged)
+                })
                 .map {  _ in nil }
                 .assign(to: \.state.alerts.settingAlertType, on: self)
                 .store(in: cancelBag)

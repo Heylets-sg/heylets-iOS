@@ -7,20 +7,35 @@
 //
 
 import Foundation
-import Core
 
 public extension AnalyticsTaxonomy {
-    static let clickSaveTimetableSetting = AnalyticsTaxonomy(
-        eventName: "click_save_timetable_setting"
-    )
+    static func clickSaveTimetableSetting(
+        theme: String,
+        displayType: String
+    ) -> AnalyticsTaxonomy {
+        return AnalyticsTaxonomy(
+            eventName: "click_save_timetable_setting",
+            properties: [
+                "timetable_theme": theme,
+                "module_info_setting": displayType
+            ]
+        )
+    }
 
     static let timetableSettingSaved = AnalyticsTaxonomy(
         eventName: "timetable_setting_saved"
     )
 
-    static let clickChangeTimetableName = AnalyticsTaxonomy(
-        eventName: "click_change_timetable_name"
-    )
+    static func clickChangeTimetableName(
+        _ timeTableName: String
+    ) -> AnalyticsTaxonomy {
+        return AnalyticsTaxonomy(
+            eventName: "click_change_timetable_name",
+            properties: [
+                "timetable_name": timeTableName
+            ]
+        )
+    }
 
     static let timetableNameChanged = AnalyticsTaxonomy(
         eventName: "timetable_name_changed"

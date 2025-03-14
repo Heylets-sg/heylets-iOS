@@ -146,7 +146,7 @@ public class TodoViewModel: ObservableObject {
             }
         case .addItem:
             if !checkGuestMode() {
-                Analytics.shared.track(.taskAdded)
+//                Analytics.shared.track(.taskAdded)
                 state.hiddenTabBar = false
                 addItem()
             }
@@ -194,12 +194,17 @@ public class TodoViewModel: ObservableObject {
 extension TodoViewModel {
     private func addItem() {
         guard let groupId = newItem.groupId else { return }
+        Analytics.shared.track(.clickAddTask(
+            groupName: "", 
+            content: newItem.content
+        ))
         useCase.createItem(groupId, newItem.content)
             .receive(on: RunLoop.main)
             .handleEvents(receiveRequest: { [weak self] _ in
                 self?.resetAddEditMode()
             })
             .sink(receiveValue: {  [weak self] _ in
+                Analytics.shared.track(.taskAdded)
                 self?.newItem = (nil, "")
             })
             .store(in: cancelBag)
