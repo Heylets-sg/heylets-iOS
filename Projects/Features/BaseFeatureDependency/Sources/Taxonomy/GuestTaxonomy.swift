@@ -12,44 +12,30 @@ import Core
 
 public extension AnalyticsTaxonomy {
     static let clickStartHeylets = AnalyticsTaxonomy(
-        category: .Guest,
-        eventName: "click_start_heylets",
-        tags: ""
+        eventName: "click_start_heylets"
     )
 
     static let guestModeStarted = AnalyticsTaxonomy(
-        category: .Guest,
-        eventName: "guest_mode_started",
-        tags: ""
+        eventName: "guest_mode_started"
     )
 
     static let clickEditSchool = AnalyticsTaxonomy(
-        category: .Guest,
-        eventName: "click_edit_school",
-        tags: ""
+        eventName: "click_edit_school"
     )
 
     static let schoolEdited = AnalyticsTaxonomy(
-        category: .Guest,
-        eventName: "school_edited",
-        tags: ""
+        eventName: "school_edited"
     )
 
     static let clickGuestConfirmReject = AnalyticsTaxonomy(
-        category: .Guest,
-        eventName: "click_guest_confirm_reject",
-        tags: ""
+        eventName: "click_guest_confirm_reject"
     )
 
     static let clickGuestConfirmLogin = AnalyticsTaxonomy(
-        category: .Guest,
-        eventName: "click_guest_confirm_login",
-        tags: "primary"
+        eventName: "click_guest_confirm_login"
     )
 
     static let guestConverted = AnalyticsTaxonomy(
-        category: .Guest,
-        eventName: "guest_converted",
-        tags: "primary"
+        eventName: "guest_converted"
     )
 }

@@ -11,27 +11,19 @@ import Core
 
 extension AnalyticsTaxonomy {
     static let clickPasteCode = AnalyticsTaxonomy(
-        category: .SignUp,
-        eventName: "click_paste_code",
-        tags: ""
+        eventName: "click_paste_code"
     )
 
     static let marketingCommunicationAgreed = AnalyticsTaxonomy(
-        category: .SignUp,
-        eventName: "marketing_communication_agreed",
-        tags: ""
+        eventName: "marketing_communication_agreed"
     )
 
     static let clickFinishSignUp = AnalyticsTaxonomy(
-        category: .SignUp,
-        eventName: "click_finish_sign_up",
-        tags: "primary"
+        eventName: "click_finish_sign_up"
     )
 
     static let userSignedUp = AnalyticsTaxonomy(
-        category: .SignUp,
-        eventName: "user_signed_up",
-        tags: ""
+        eventName: "user_signed_up"
     )
 }
 

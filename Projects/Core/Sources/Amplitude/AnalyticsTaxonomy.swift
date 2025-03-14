@@ -9,38 +9,16 @@
 import Foundation
 
 public struct AnalyticsTaxonomy {
-    
-    public enum EventCategory: String {
-        case Onboarding
-        case Guest
-        case SignUp
-        case LogIn
-        case ModuleManagement
-        case LectureReview
-        case TimetableSetting
-        case Todo
-        case MyAccount
-        case PushAlarm
-        case Common
-        case AppStart
-    }
-    
-    public let category: EventCategory
-    public let eventName: String
-    public let tags: String
+    public let eventName: String    
     public let channel: String
     public var properties: [String: Any?]
     
     public init(
-        category: EventCategory,
         eventName: String,
-        tags: String,
         channel: String = "APP",
         properties: [String: Any?] = [:]
     ) {
-        self.tags = tags
         self.eventName = eventName
-        self.category = category
         self.channel = channel
         self.properties = properties
     }

@@ -90,10 +90,10 @@ public class TermsOfServiceViewModel: ObservableObject {
     }
     
     private func bindState() {
-        useCase.errMessage
-            .receive(on: RunLoop.main)
-            .assign(to: \.state.errMessage, on: self)
-            .store(in: cancelBag)
+//        useCase.errMessage
+//            .receive(on: RunLoop.main)
+//            .assign(to: \.state.errMessage, on: self)
+//            .store(in: cancelBag)
     }
 }
 

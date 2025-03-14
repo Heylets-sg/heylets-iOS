@@ -7,3 +7,15 @@
 //
 
 import Foundation
+import Core
+
+extension AnalyticsTaxonomy {
+    static let clickPushAlarm = AnalyticsTaxonomy(
+        eventName: "click_push_alarm"
+    )
+
+    static let pushAlarmReceived = AnalyticsTaxonomy(
+        eventName: "push_alarm_received"
+    )
+}
+
