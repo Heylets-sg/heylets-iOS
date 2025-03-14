@@ -78,6 +78,7 @@ public class AddCustomModuleViewModel: ObservableObject {
             useCase.addCustomModule(customModule)
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
+                    Analytics.shared.track(.customModuleAdded)
                     self?.initInfo()
                     self?.state.isAddSuccess = true
                 })

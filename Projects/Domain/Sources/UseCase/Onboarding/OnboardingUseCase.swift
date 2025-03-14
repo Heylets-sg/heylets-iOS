@@ -52,6 +52,9 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
                 print("isGuest: \(isGuest)")
                 if isGuest {
                     return self.guestRepository.convertToMember(userInfo)
+                        .handleEvents(receiveOutput: { _ in
+                            Analytics.shared.track(.userSignedUp)
+                        })
                         .map { _ in }
                         .catch { [weak self] error in
                             self?.errMessage.send(error.description)
@@ -59,6 +62,7 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
                         }
                         .eraseToAnyPublisher()
                 } else {
+                    Analytics.shared.track(.clickFinishSignUp)
                     return self.authRepository.signUp(userInfo)
                         .handleEvents(receiveOutput: { _ in
                             Analytics.shared.track(.guestConverted)

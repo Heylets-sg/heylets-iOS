@@ -62,6 +62,7 @@ public class DeleteAccountViewModel: ObservableObject {
                 .receive(on: RunLoop.main)
                 //TODO: 실패처리
                 .sink(receiveValue: { [weak self] _ in
+                    Analytics.shared.track(.accountDeleted)
                     self?.windowRouter.switch(to: .onboarding)
                 })
                 .store(in: cancelBag)

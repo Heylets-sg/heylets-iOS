@@ -59,6 +59,9 @@ public class SearchModuleViewModel: ObservableObject {
         case .searchButtonDidTap:
             useCase.getLectureList(searchText)
                 .receive(on: RunLoop.main)
+                .handleEvents(receiveOutput: { _ in
+                    Analytics.shared.track(.moduleSearched)
+                })
                 .assign(to: \.lectureList, on: self)
                 .store(in: cancelBag)
             

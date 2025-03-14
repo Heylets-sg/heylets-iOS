@@ -76,9 +76,12 @@ public class TodoViewModel: ObservableObject {
     func send(_ action: GroupAction) {
         switch action {
         case .addGroupButtonDidTap:
+            Analytics.shared.track(.clickAddTodoGroup)
             if !checkGuestMode() {
                 useCase.createGroup()
-                    .sink(receiveValue: { _ in })
+                    .sink(receiveValue: { _ in
+                        Analytics.shared.track(.todoGroupAdded)
+                    })
                     .store(in: cancelBag)
             }
         case .deleteGroupButtonDidTap(let groupId):
@@ -143,6 +146,7 @@ public class TodoViewModel: ObservableObject {
             }
         case .addItem:
             if !checkGuestMode() {
+                Analytics.shared.track(.taskAdded)
                 state.hiddenTabBar = false
                 addItem()
             }

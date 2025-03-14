@@ -87,15 +87,18 @@ public class MyPageViewModel: ObservableObject {
             navigationRouter.push(to: .notificationSetting)
             
         case .deleteAccountButtonDidTap:
+            Analytics.shared.track(.clickDeleteAccount)
             navigationRouter.push(to: .deleteAccount)
             
         case .logoutButtonDidTap:
+            Analytics.shared.track(.clickLogOut)
             state.logoutAlertViewIsPresented = true
             
         case .logout:
             useCase.logout()
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
+                    Analytics.shared.track(.userLoggedOut)
                     self?.navigationRouter.destinations = []
                     self?.windowRouter.switch(to: .login)
                 }).store(in: cancelBag)

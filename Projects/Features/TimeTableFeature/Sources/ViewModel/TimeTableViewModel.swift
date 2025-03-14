@@ -127,12 +127,16 @@ public class TimeTableViewModel: ObservableObject {
             }
             
         case .deleteModule:
+            Analytics.shared.track(.clickDeleteModule)
             useCase.deleteSection(
                 detailSectionInfo.isCustom,
                 detailSectionInfo.id
             )
             .receive(on: RunLoop.main)
-            .map { _ in false}
+            .handleEvents(receiveOutput: {
+                Analytics.shared.track(.moduleDeleted)
+            })
+            .map { _ in false }
             .assign(to: \.state.alerts.showDeleteAlert, on: self)
             .store(in: cancelBag)
             
@@ -151,6 +155,7 @@ public class TimeTableViewModel: ObservableObject {
                 .receive(on: RunLoop.main)
                 .map { _ in TimeTableViewType.search }
                 .sink(receiveValue: { [weak self] viewType in
+                    Analytics.shared.track(.moduleAdded)
                     self?.viewType = viewType
                     self?.selectLecture = []
                 })
