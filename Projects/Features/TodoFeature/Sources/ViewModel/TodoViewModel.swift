@@ -50,7 +50,7 @@ public class TodoViewModel: ObservableObject {
     enum WindowAction {
         case gotoTimeTable
         case gotoMyPage
-        case gotoLogin
+        case loginButtonDidTap
     }
     
     public var windowRouter: WindowRoutable
@@ -117,6 +117,7 @@ public class TodoViewModel: ObservableObject {
             state.showItemAlertView = false
             
         case .notRightNowButtonDidTap:
+            Analytics.shared.track(.clickGuestConfirmReject)
             state.showGuestDeniedAlert = false
             
         case .hideKeyboard:
@@ -225,7 +226,8 @@ extension TodoViewModel {
             windowRouter.switch(to: .timetable)
         case .gotoMyPage:
             windowRouter.switch(to: .mypage)
-        case .gotoLogin:
+        case .loginButtonDidTap:
+            Analytics.shared.track(.clickGuestConfirmReject)
             windowRouter.switch(to: .login)
         }
     }

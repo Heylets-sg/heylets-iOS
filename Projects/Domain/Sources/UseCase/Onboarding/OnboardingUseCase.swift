@@ -60,6 +60,9 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
                         .eraseToAnyPublisher()
                 } else {
                     return self.authRepository.signUp(userInfo)
+                        .handleEvents(receiveOutput: { _ in
+                            Analytics.shared.track(.guestConverted)
+                        })
                         .map { _ in }
                         .catch { [weak self] error in
                             self?.errMessage.send(error.description)

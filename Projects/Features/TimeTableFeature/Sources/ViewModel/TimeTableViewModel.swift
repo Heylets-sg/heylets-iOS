@@ -167,9 +167,11 @@ public class TimeTableViewModel: ObservableObject {
             selectLecture = []
             
         case .notRightNowButtonDidTap:
+            Analytics.shared.track(.clickGuestConfirmReject)
             state.alerts.showGuestErrorAlert = false
             
         case .loginButtonDidTap:
+            Analytics.shared.track(.clickGuestConfirmLogin)
             windowRouter.switch(to: .login)
         }
     }

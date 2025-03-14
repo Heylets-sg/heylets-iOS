@@ -93,7 +93,7 @@ public struct TodoView: View {
             .heyAlert(
                 isPresented: viewModel.state.showGuestDeniedAlert,
                 loginButtonAction: {
-                    viewModel.send(.gotoLogin)
+                    viewModel.send(.loginButtonDidTap)
                 },
                 notRightNowButton: {
                     viewModel.send(.notRightNowButtonDidTap)

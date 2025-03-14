@@ -59,9 +59,11 @@ public class TermsOfServiceViewModel: ObservableObject {
         case .agreeButtonDidTap:
             let agreementList = AgreementInfo.agreementList
             if useCase.userInfo.email.isEmpty {
+                Analytics.shared.track(.clickStartHeylets)
                 useCase.startGuestMode(university: university, agreements: agreementList)
                     .receive(on: RunLoop.main)
                     .sink(receiveValue: { [weak self] _ in
+                        Analytics.shared.track(.guestModeStarted)
                         self?.windowRouter.switch(to: .timetable)
                         self?.navigationRouter.destinations = []
                     })

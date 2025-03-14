@@ -51,10 +51,12 @@ public class EditSchoolViewModel: ObservableObject {
             navigationRouter.pop()
             
         case .continueButtonDidTap:
+            Analytics.shared.track(.clickEditSchool)
             guard let university = university else { return }
             state.continueButtonIsEnabled = false
             useCase.changeGuestUniversity(university: university.rawValue)
                 .sink(receiveValue: { [weak self] _ in
+                    Analytics.shared.track(.schoolEdited)
                     self?.navigationRouter.pop()
                 })
                 .store(in: cancelBag)
