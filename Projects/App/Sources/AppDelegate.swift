@@ -13,6 +13,8 @@ import UserNotifications
 import Networks
 import UIKit
 import FirebaseCore
+import Core
+
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
@@ -35,6 +37,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         // 파이어베이스 Meesaging 설정
         Messaging.messaging().delegate = self
+        
+        Analytics.shared.track(.appStart)
         
         return true
     }

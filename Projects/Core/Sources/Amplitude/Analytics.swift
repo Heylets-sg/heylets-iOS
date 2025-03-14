@@ -13,13 +13,13 @@ protocol Analyzable {
     func reset()
 }
 
-final class Analytics {
-    static let shared = Analytics()
+public final class Analytics {
+    public static let shared = Analytics()
     private init() { }
 }
 
 extension Analytics: Analyzable {
-    func track(_ taxonomy: AnalyticsTaxonomy) {
+    public func track(_ taxonomy: AnalyticsTaxonomy) {
         AmplitudeAnalytics.shared.track(taxonomy)
     }
     

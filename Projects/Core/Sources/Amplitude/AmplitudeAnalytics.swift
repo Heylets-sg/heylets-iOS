@@ -9,7 +9,7 @@
 import Foundation
 import AmplitudeSwift
 
-final class AmplitudeAnalytics {
+public final class AmplitudeAnalytics {
     static let shared = AmplitudeAnalytics()
     private let amplitude = Amplitude(configuration: Configuration(apiKey: Config.amplitudeAPIKey))
     
@@ -32,11 +32,12 @@ extension AmplitudeAnalytics: Analyzable {
 }
 
 extension AnalyticsTaxonomy {
-    func toAmplitudeEvent() -> BaseEvent {
-        let eventType = self.type.rawValue
+    public func toAmplitudeEvent() -> BaseEvent {
+        let eventType = self.category.rawValue
         var eventProperties: [String: Any?] = [
-            "tag" : self.tag,
-            "tag_eng": self.tagEng,
+            "category" : self.category,
+            "eventName" : self.eventName,
+            "tags": self.tags,
             "channel": self.channel,
         ]
         properties.forEach {

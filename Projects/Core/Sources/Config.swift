@@ -12,7 +12,7 @@ public enum Config {
     enum Keys {
         enum Plist {
             static let baseURL = "BASE_URL"
-            static let amplitudeAPIKey = "AMPLITUDE_APIKEY"
+            static let amplitudeAPIKey = "AMPLITUDE_API_KEY"
         }
     }
     
