@@ -73,10 +73,12 @@ public class LogInViewModel: ObservableObject {
                 windowRouter.switch(to: .timetable)
             }
         case .loginButtonDidTap:
+            Analytics.shared.track(.clickLogin)
             useCase.logIn(id, password)
                 .receive(on: RunLoop.main)
                 .assignLoading(to: \.state.isLoading, on: self)
                 .sink(receiveValue: { [weak self] _ in
+                    Analytics.shared.track(.userLoggedIn)
                     self?.windowRouter.switch(to: .timetable)
                 })
                 .store(in: cancelBag)
@@ -85,6 +87,7 @@ public class LogInViewModel: ObservableObject {
         case .forgotPasswordButtonDidTap:
             navigationRouter.push(to: .enterEmail)
         case .signUpButtonDidTap:
+            Analytics.shared.track(.clickSignUp)
             navigationRouter.push(to: .selectUniversity)
         }
     }
