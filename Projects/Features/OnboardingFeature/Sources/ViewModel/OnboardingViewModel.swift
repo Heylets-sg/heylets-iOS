@@ -10,6 +10,7 @@ import Foundation
 import Combine
 
 import BaseFeatureDependency
+import Core
 
 public class OnboardingViewModel: ObservableObject {
     
@@ -28,8 +29,10 @@ public class OnboardingViewModel: ObservableObject {
     func send(_ action: Action) {
         switch action {
         case .startButtonDidTap:
+            Analytics.shared.track(.clickExplore)
             navigationRouter.push(to: .selectGuestUniversity)
         case .alreadyRegisteredButtonDidTap:
+            Analytics.shared.track(.clickAlreadyRegistered)
             navigationRouter.push(to: .login)
         }
     }

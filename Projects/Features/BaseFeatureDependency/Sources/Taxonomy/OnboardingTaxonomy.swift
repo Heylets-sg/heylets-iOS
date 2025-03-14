@@ -10,7 +10,11 @@ import Foundation
 import Core
 
 public extension AnalyticsTaxonomy {
-    static let appStart = AnalyticsTaxonomy(
-        eventName: "app start"
+    static let clickExplore = AnalyticsTaxonomy(
+        eventName: "click_explore"
+    )
+    
+    static let clickAlreadyRegistered = AnalyticsTaxonomy(
+        eventName: "click_already_registered"
     )
 }

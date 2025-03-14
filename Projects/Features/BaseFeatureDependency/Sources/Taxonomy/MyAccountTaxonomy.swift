@@ -9,7 +9,7 @@
 import Foundation
 import Core
 
-extension AnalyticsTaxonomy {
+public extension AnalyticsTaxonomy {
     static let clickLogOut = AnalyticsTaxonomy(
         eventName: "click_log_out"
     )

@@ -9,7 +9,7 @@
 import Foundation
 import Core
 
-extension AnalyticsTaxonomy {
+public extension AnalyticsTaxonomy {
     static let clickSaveTimetableSetting = AnalyticsTaxonomy(
         eventName: "click_save_timetable_setting"
     )

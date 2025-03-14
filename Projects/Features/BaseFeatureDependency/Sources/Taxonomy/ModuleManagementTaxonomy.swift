@@ -9,7 +9,7 @@
 import Foundation
 import Core
 
-extension AnalyticsTaxonomy {
+public extension AnalyticsTaxonomy {
     static let clickDeleteModule = AnalyticsTaxonomy(
         eventName: "click_delete_module"
     )

@@ -9,7 +9,7 @@
 import Foundation
 import Core
 
-extension AnalyticsTaxonomy {
+public extension AnalyticsTaxonomy {
     static let screenView = AnalyticsTaxonomy(
         eventName: "screen_view"
     )

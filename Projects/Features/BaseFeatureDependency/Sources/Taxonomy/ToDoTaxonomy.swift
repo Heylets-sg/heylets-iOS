@@ -9,7 +9,7 @@
 import Foundation
 import Core
 
-extension AnalyticsTaxonomy {
+public extension AnalyticsTaxonomy {
     static let clickAddTask = AnalyticsTaxonomy(
         eventName: "click_add_task"
     )

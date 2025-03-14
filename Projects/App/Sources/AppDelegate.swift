@@ -38,7 +38,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // 파이어베이스 Meesaging 설정
         Messaging.messaging().delegate = self
         
-        Analytics.shared.track(.appStart)
+//        Analytics.shared.track(.appStart)
         
         return true
     }

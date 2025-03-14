@@ -9,7 +9,7 @@
 import Foundation
 import Core
 
-extension AnalyticsTaxonomy {
+public extension AnalyticsTaxonomy {
     static let clickPasteCode = AnalyticsTaxonomy(
         eventName: "click_paste_code"
     )

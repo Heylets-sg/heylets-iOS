@@ -9,7 +9,7 @@
 import Foundation
 import Core
 
-extension AnalyticsTaxonomy {
+public extension AnalyticsTaxonomy {
     static let clickPushAlarm = AnalyticsTaxonomy(
         eventName: "click_push_alarm"
     )
