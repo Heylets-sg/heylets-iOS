@@ -68,9 +68,15 @@ public class ThemeViewModel: ObservableObject {
                 .store(in: cancelBag)
             
         case .saveButtonDidTap:
+            Analytics.shared.track(.clickSaveTimetableSetting(
+                theme: theme,
+                displayType: displayType.rawValue
+            ))
             useCase.patchSettingInfo(displayType, theme)
                 .receive(on: RunLoop.main)
-                .sink(receiveValue: {  _ in })
+                .sink(receiveValue: {  _ in
+                    Analytics.shared.track(.timetableSettingSaved)
+                })
                 .store(in: cancelBag)
             
         case .themeButtonDidTap(let selectedTheme):

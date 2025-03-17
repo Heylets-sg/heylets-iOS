@@ -33,12 +33,12 @@ public class ResetPasswordViewModel: ObservableObject {
     
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
-    private var useCase: OnboardingUseCaseType
+    private var useCase: SignInUseCaseType
     private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: NavigationRoutableType,
-        useCase: OnboardingUseCaseType,
+        useCase: SignInUseCaseType,
         email: String
     ) {
         self.navigationRouter = navigationRouter

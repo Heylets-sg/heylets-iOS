@@ -1,44 +1,46 @@
 //
-//  EnterEmailViewModel.swift
+//  ResetEnterSecurityCodeViewModel.swift
 //  OnboardingFeature
 //
-//  Created by 류희재 on 12/19/24.
-//  Copyright © 2024 Heylets-iOS. All rights reserved.
+//  Created by 류희재 on 3/17/25.
+//  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
 import Foundation
 import Combine
 
 import BaseFeatureDependency
-import DSKit
-import Core
 import Domain
+import Core
 
-public class EnterEmailViewModel: ObservableObject {
+public class ResetEnterSecurityCodeViewModel: ObservableObject {
     struct State {
-        var emailIsValid: TextFieldState = .idle
+        var hiddenEmail: String = ""
         var continueButtonIsEnabled: Bool = false
-        var errMessage: String = ""
+        var errMessage = ""
     }
     
     enum Action {
-        case closeButtonDidTap
+        case backButtonDidTap
         case nextButtonDidTap
     }
     
+    @Published var otpCode: String = ""
+    
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
-    private var useCase: OnboardingUseCaseType
+    private var useCase: SignUpUseCaseType
+    private var email: String
     private let cancelBag = CancelBag()
-    
-    @Published var email: String = ""
     
     public init(
         navigationRouter: NavigationRoutableType,
-        useCase: OnboardingUseCaseType
+        useCase: SignUpUseCaseType,
+        email: String
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
+        self.email = email
         
         observe()
         bindState()
@@ -49,12 +51,12 @@ public class EnterEmailViewModel: ObservableObject {
         guard let owner else { return }
         
         switch action {
-        case .closeButtonDidTap:
-            navigationRouter.popToRootView()
+        case .backButtonDidTap:
+            navigationRouter.pop()
         case .nextButtonDidTap:
-            useCase.requestEmailVerifyCode(.resetPassword, email)
-                .sink(receiveValue: { _ in
-                    owner.navigationRouter.push(to: .enterSecurityCode(.resetPassword, owner.email))
+            useCase.verifyEmail(email, Int(otpCode)!)
+                .sink(receiveValue: {  _ in
+                    owner.navigationRouter.push(to: .resetPassword(owner.email))
                 })
                 .store(in: cancelBag)
         }
@@ -64,20 +66,22 @@ public class EnterEmailViewModel: ObservableObject {
         weak var owner = self
         guard let owner else { return }
         
-        $email
-            .map { $0.isEmpty ? .idle : ($0.isValidEmail() ? .valid : .invalid) }
-            .sink {
-                owner.state.emailIsValid = $0
-                owner.state.continueButtonIsEnabled = $0 == .valid
-            }
+        $otpCode
+            .map { $0.count >= 6 }
+            .assign(to: \.state.continueButtonIsEnabled, on: owner)
             .store(in: cancelBag)
     }
     
     private func bindState() {
+        weak var owner = self
+        guard let owner else { return }
+        
         useCase.errMessage
             .receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: { _ in
+                owner.otpCode = ""
+            })
             .assign(to: \.state.errMessage, on: self)
             .store(in: cancelBag)
     }
 }
-

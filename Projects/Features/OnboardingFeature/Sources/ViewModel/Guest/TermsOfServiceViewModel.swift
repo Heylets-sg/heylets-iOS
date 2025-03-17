@@ -34,7 +34,7 @@ public class TermsOfServiceViewModel: ObservableObject {
     @Published var state = State()
     public var windowRouter: WindowRoutableType
     public var navigationRouter: NavigationRoutableType
-    private var useCase: OnboardingUseCaseType
+    private var useCase: SignUpUseCaseType
     private var university: String
     private let cancelBag = CancelBag()
     
@@ -42,7 +42,7 @@ public class TermsOfServiceViewModel: ObservableObject {
     public init(
         navigationRouter: NavigationRoutableType,
         windowRouter: WindowRoutableType,
-        useCase: OnboardingUseCaseType,
+        useCase: SignUpUseCaseType,
         university: String
     ) {
         self.navigationRouter = navigationRouter
@@ -59,9 +59,11 @@ public class TermsOfServiceViewModel: ObservableObject {
         case .agreeButtonDidTap:
             let agreementList = AgreementInfo.agreementList
             if useCase.userInfo.email.isEmpty {
+                Analytics.shared.track(.clickStartHeylets)
                 useCase.startGuestMode(university: university, agreements: agreementList)
                     .receive(on: RunLoop.main)
                     .sink(receiveValue: { [weak self] _ in
+                        Analytics.shared.track(.guestModeStarted)
                         self?.windowRouter.switch(to: .timetable)
                         self?.navigationRouter.destinations = []
                     })
@@ -90,10 +92,10 @@ public class TermsOfServiceViewModel: ObservableObject {
     }
     
     private func bindState() {
-        useCase.errMessage
-            .receive(on: RunLoop.main)
-            .assign(to: \.state.errMessage, on: self)
-            .store(in: cancelBag)
+//        useCase.errMessage
+//            .receive(on: RunLoop.main)
+//            .assign(to: \.state.errMessage, on: self)
+//            .store(in: cancelBag)
     }
 }
 

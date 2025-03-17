@@ -38,13 +38,13 @@ public class LogInViewModel: ObservableObject {
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType
-    private var useCase: OnboardingUseCaseType
+    private var useCase: SignInUseCaseType
     private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: NavigationRoutableType,
         windowRouter: WindowRoutableType,
-        useCase: OnboardingUseCaseType
+        useCase: SignInUseCaseType
     ) {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
@@ -73,18 +73,21 @@ public class LogInViewModel: ObservableObject {
                 windowRouter.switch(to: .timetable)
             }
         case .loginButtonDidTap:
+            Analytics.shared.track(.clickLogin)
             useCase.logIn(id, password)
                 .receive(on: RunLoop.main)
                 .assignLoading(to: \.state.isLoading, on: self)
                 .sink(receiveValue: { [weak self] _ in
+                    Analytics.shared.track(.userLoggedIn)
                     self?.windowRouter.switch(to: .timetable)
                 })
                 .store(in: cancelBag)
         case .dismissToastView:
             state.errMessage = ""
         case .forgotPasswordButtonDidTap:
-            navigationRouter.push(to: .enterEmail)
+            navigationRouter.push(to: .resetPWVerifyEmail)
         case .signUpButtonDidTap:
+            Analytics.shared.track(.clickSignUp)
             navigationRouter.push(to: .selectUniversity)
         }
     }

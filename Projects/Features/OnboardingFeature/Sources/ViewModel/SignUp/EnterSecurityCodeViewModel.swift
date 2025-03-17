@@ -29,20 +29,17 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
-    private var useCase: OnboardingUseCaseType
-    private var type: VerifyCodeType
+    private var useCase: SignUpUseCaseType
     private var email: String
     private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: NavigationRoutableType,
-        useCase: OnboardingUseCaseType,
-        type: VerifyCodeType,
+        useCase: SignUpUseCaseType,
         email: String
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
-        self.type = type
         self.email = email
         
         observe()
@@ -57,14 +54,9 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            useCase.verifyEmail(type, email, Int(otpCode)!)
+            useCase.verifyEmail(email, Int(otpCode)!)
                 .sink(receiveValue: {  _ in
-                    switch owner.type {
-                    case .email:
-                        owner.navigationRouter.push(to: .enterPersonalInfo)
-                    case .resetPassword:
-                        owner.navigationRouter.push(to: .resetPassword(owner.email))
-                    }
+                    owner.navigationRouter.push(to: .enterPersonalInfo)
                 })
                 .store(in: cancelBag)
         }

@@ -1,5 +1,7 @@
 import SwiftUI
 
+import Core
+
 struct SettingTimeTableInfoView: View {
     @ObservedObject var viewModel: ThemeViewModel
     
@@ -102,5 +104,8 @@ struct SelectDisplayModuleView: View {
         }
         .padding(.horizontal, 16)
         .background(Color.clear)
+        .onAppear {
+            Analytics.shared.track(.screenView("module_info_setting", .bottom_sheet))
+        }
     }
 }

@@ -81,7 +81,7 @@ fileprivate struct GenderButton: View {
     EnterPersonalInfoView(
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
-            useCase: StubHeyUseCase.stub.onboardingUseCase
+            useCase: StubHeyUseCase.stub.signUpUseCase
         )
     )
     .environmentObject(Router.default)

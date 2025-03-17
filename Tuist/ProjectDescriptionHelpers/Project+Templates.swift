@@ -64,7 +64,8 @@ public extension Project {
             hasResources: false,
             externalDependencies: [
                 .package(product: "FirebaseMessaging"),
-                .package(product: "FirebaseCore")
+                .package(product: "FirebaseCore"),
+                .package(product: "AmplitudeSwift")
             ], targets: [.dynamicFramework]
         )
         

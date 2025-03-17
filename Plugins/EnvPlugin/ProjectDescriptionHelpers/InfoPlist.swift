@@ -14,9 +14,11 @@ import ProjectDescription
 public extension Project {
     static let appInfoPlist: [String: InfoPlist.Value] = [
         "BASE_URL": "$(BASE_URL)",
+        "AMPLITUDE_API_KEY": "$(AMPLITUDE_API_KEY)",
         "NSAppTransportSecurity": .dictionary([
             "NSAllowsArbitraryLoads": .boolean(true)
         ]),
+        "CFBundleDisplayName": .string("HeyLets"),
         "UIBackgroundModes": .array([
             .string("fetch"),
             .string("remote-notification")
@@ -42,6 +44,7 @@ public extension Project {
     
     static let demoInfoPlist: [String: InfoPlist.Value] = [
         "BASE_URL": .string("$(BASE_URL)"),
+        "AMPLITUDE_API_KEY": "$(AMPLITUDE_API_KEY)",
         "NSAppTransportSecurity": .dictionary([
             "NSAllowsArbitraryLoads": .boolean(true)
         ]),

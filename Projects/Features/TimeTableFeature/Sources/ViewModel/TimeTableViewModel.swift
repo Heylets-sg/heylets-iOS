@@ -119,6 +119,7 @@ public class TimeTableViewModel: ObservableObject {
                 .store(in: cancelBag)
             
         case .tableCellDidTap(let sectionId):
+            Analytics.shared.track(.screenView("module_info", .bottom_sheet))
             viewType = .detail
             if let detailInfo = sectionList.first(where: { $0.id == sectionId }) {
                 detailSectionInfo = detailInfo
@@ -127,12 +128,16 @@ public class TimeTableViewModel: ObservableObject {
             }
             
         case .deleteModule:
+            Analytics.shared.track(.clickDeleteModule)
             useCase.deleteSection(
                 detailSectionInfo.isCustom,
                 detailSectionInfo.id
             )
             .receive(on: RunLoop.main)
-            .map { _ in false}
+            .handleEvents(receiveOutput: {
+                Analytics.shared.track(.moduleDeleted)
+            })
+            .map { _ in false }
             .assign(to: \.state.alerts.showDeleteAlert, on: self)
             .store(in: cancelBag)
             
@@ -147,10 +152,18 @@ public class TimeTableViewModel: ObservableObject {
             selectLecture = lecture.timeTableCellInfo
             
         case .addLecture(let lecture):
+            Analytics.shared.track(.clickAddModule(
+                courseCode: lecture.code ?? "",
+                courseName: lecture.name,
+                sectionId: lecture.id,
+                professor: lecture.professor
+            )
+            )
             useCase.addSection(lecture.id)
                 .receive(on: RunLoop.main)
                 .map { _ in TimeTableViewType.search }
                 .sink(receiveValue: { [weak self] viewType in
+                    Analytics.shared.track(.moduleAdded)
                     self?.viewType = viewType
                     self?.selectLecture = []
                 })
@@ -162,14 +175,17 @@ public class TimeTableViewModel: ObservableObject {
             }
             
         case .addCustomModuleButtonDidTap:
+            Analytics.shared.track(.screenView("add_custom_module", .bottom_sheet))
             viewType = .addCustom
             state.alerts.showAddCustomAlert = true
             selectLecture = []
             
         case .notRightNowButtonDidTap:
+            Analytics.shared.track(.clickGuestConfirmReject)
             state.alerts.showGuestErrorAlert = false
             
         case .loginButtonDidTap:
+            Analytics.shared.track(.clickGuestConfirmLogin)
             windowRouter.switch(to: .login)
         }
     }
@@ -207,8 +223,12 @@ public class TimeTableViewModel: ObservableObject {
             state.alerts.settingAlertType = nil
             
         case .editTimeTableName:
+            Analytics.shared.track(.clickChangeTimetableName(state.timeTableName))
             useCase.changeTimeTableName(state.timeTableName)
                 .receive(on: RunLoop.main)
+                .handleEvents(receiveOutput: {
+                    Analytics.shared.track(.timetableNameChanged)
+                })
                 .map {  _ in nil }
                 .assign(to: \.state.alerts.settingAlertType, on: self)
                 .store(in: cancelBag)

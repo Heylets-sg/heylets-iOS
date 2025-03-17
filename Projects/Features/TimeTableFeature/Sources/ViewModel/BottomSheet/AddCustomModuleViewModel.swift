@@ -75,9 +75,18 @@ public class AddCustomModuleViewModel: ObservableObject {
                 professor: professor == "" ? nil : professor,
                 memo: nil
             )
+            Analytics.shared.track(.clickAddCustomModule(
+                customModuleName: schedule,
+                professor: professor ,
+                location: location,
+                day: day.fromWeek(),
+                schedule: "\(splitTime.0) ~ \(splitTime.1)"
+            )
+            )
             useCase.addCustomModule(customModule)
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
+                    Analytics.shared.track(.customModuleAdded)
                     self?.initInfo()
                     self?.state.isAddSuccess = true
                 })

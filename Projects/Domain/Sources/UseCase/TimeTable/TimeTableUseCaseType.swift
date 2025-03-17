@@ -19,7 +19,7 @@ public protocol TimeTableUseCaseType {
     //MARK: Main
     
     //시간표 상세조회 불러오기
-    var timeTableInfo: PassthroughSubject<TimeTableInfo, Never> { get }
+    var timeTableInfo: CurrentValueSubject<TimeTableInfo, Never> { get }
     var displayInfo: PassthroughSubject<DisplayTypeInfo, Never> { get }
     var sectionList: PassthroughSubject<[SectionInfo], Never> { get }
     

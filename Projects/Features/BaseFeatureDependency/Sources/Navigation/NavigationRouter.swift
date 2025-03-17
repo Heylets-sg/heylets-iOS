@@ -32,6 +32,7 @@ public class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
     }
     
     public func push(to view: NavigationDestination) {
+        Analytics.shared.track(.screenView(view.screenName, .screen))
         destinations.append(view)
     }
     

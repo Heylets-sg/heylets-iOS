@@ -56,8 +56,7 @@ public struct EnterSecurityCodeView: View {
     EnterSecurityCodeView(
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
-            useCase: StubHeyUseCase.stub.onboardingUseCase,
-            type: .email,
+            useCase: StubHeyUseCase.stub.signUpUseCase,
             email: ""
         )
     )

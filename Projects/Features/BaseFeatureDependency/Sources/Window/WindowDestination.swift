@@ -18,3 +18,22 @@ public enum WindowDestination {
     case todo
     case mypage
 }
+
+extension WindowDestination {
+    var screenName: String {
+        switch self {
+        case .splash:
+            return "splash"
+        case .login:
+            return "log_in"
+        case .onboarding:
+            return "onboarding"
+        case .timetable:
+            return "timetable"
+        case .todo:
+            return "todo"
+        case .mypage:
+            return "my_page"
+        }
+    }
+}

@@ -50,7 +50,7 @@ public class TodoViewModel: ObservableObject {
     enum WindowAction {
         case gotoTimeTable
         case gotoMyPage
-        case gotoLogin
+        case loginButtonDidTap
     }
     
     public var windowRouter: WindowRoutable
@@ -76,9 +76,12 @@ public class TodoViewModel: ObservableObject {
     func send(_ action: GroupAction) {
         switch action {
         case .addGroupButtonDidTap:
+            Analytics.shared.track(.clickAddTodoGroup)
             if !checkGuestMode() {
                 useCase.createGroup()
-                    .sink(receiveValue: { _ in })
+                    .sink(receiveValue: { _ in
+                        Analytics.shared.track(.todoGroupAdded)
+                    })
                     .store(in: cancelBag)
             }
         case .deleteGroupButtonDidTap(let groupId):
@@ -117,6 +120,7 @@ public class TodoViewModel: ObservableObject {
             state.showItemAlertView = false
             
         case .notRightNowButtonDidTap:
+            Analytics.shared.track(.clickGuestConfirmReject)
             state.showGuestDeniedAlert = false
             
         case .hideKeyboard:
@@ -142,6 +146,7 @@ public class TodoViewModel: ObservableObject {
             }
         case .addItem:
             if !checkGuestMode() {
+//                Analytics.shared.track(.taskAdded)
                 state.hiddenTabBar = false
                 addItem()
             }
@@ -189,12 +194,17 @@ public class TodoViewModel: ObservableObject {
 extension TodoViewModel {
     private func addItem() {
         guard let groupId = newItem.groupId else { return }
+        Analytics.shared.track(.clickAddTask(
+            groupName: "", 
+            content: newItem.content
+        ))
         useCase.createItem(groupId, newItem.content)
             .receive(on: RunLoop.main)
             .handleEvents(receiveRequest: { [weak self] _ in
                 self?.resetAddEditMode()
             })
             .sink(receiveValue: {  [weak self] _ in
+                Analytics.shared.track(.taskAdded)
                 self?.newItem = (nil, "")
             })
             .store(in: cancelBag)
@@ -225,7 +235,8 @@ extension TodoViewModel {
             windowRouter.switch(to: .timetable)
         case .gotoMyPage:
             windowRouter.switch(to: .mypage)
-        case .gotoLogin:
+        case .loginButtonDidTap:
+            Analytics.shared.track(.clickGuestConfirmReject)
             windowRouter.switch(to: .login)
         }
     }

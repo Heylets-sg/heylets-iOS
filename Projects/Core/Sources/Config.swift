@@ -1,8 +1,8 @@
 //
 //  Config.swift
-//  Networks
+//  Core
 //
-//  Created by 류희재 on 1/8/25.
+//  Created by 류희재 on 3/14/25.
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
@@ -12,6 +12,7 @@ public enum Config {
     enum Keys {
         enum Plist {
             static let baseURL = "BASE_URL"
+            static let amplitudeAPIKey = "AMPLITUDE_API_KEY"
         }
     }
     
@@ -28,5 +29,11 @@ public enum Config {
         }
         return key
     }()
+    
+    static public let amplitudeAPIKey: String = {
+        guard let key = Config.infoDictionary[Keys.Plist.amplitudeAPIKey] as? String else {
+            fatalError("Base URL is not set in plist for this configuration.")
+        }
+        return key
+    }()
 }
-

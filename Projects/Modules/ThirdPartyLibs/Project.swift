@@ -15,6 +15,10 @@ let project = Project.makeSPMModule(
         .remote(
             url: "https://github.com/firebase/firebase-ios-sdk.git",
             requirement: .exact("11.8.1")
+        ),
+        .remote(
+            url: "https://github.com/amplitude/Amplitude-Swift.git",
+            requirement: .exact("1.11.7")
         )
     ]
 )

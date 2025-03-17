@@ -29,6 +29,7 @@ final public class WindowRouter: WindowRoutable, ObservableObjectSettable {
     }
     
     public func `switch`(to destination: WindowDestination) {
+        Analytics.shared.track(.screenView(destination.screenName, .screen))
         self.destination = destination
     }
 }

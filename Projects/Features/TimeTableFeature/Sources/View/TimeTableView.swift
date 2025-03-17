@@ -11,21 +11,22 @@ import SwiftUI
 import DSKit
 import BaseFeatureDependency
 import Domain
+import Core
 
-public enum TimeTableViewType: Equatable {
-    case main
-    case detail
-    case search
-    case setting
-    case theme
-    case addCustom
+public enum TimeTableViewType: String, Equatable {
+    case main = "timetable"
+    case detail = "module_info"
+    case search = "add_module"
+    case setting = "timetable_setting"
+    case theme = "timetable_theme"
+    case addCustom = "add_custom_module"
 }
 
-public enum TimeTableSettingAlertType {
-    case editTimeTableName
-    case shareURL
-    case saveImage
-    case removeTimeTable
+public enum TimeTableSettingAlertType: String {
+    case editTimeTableName = "change_timetable_name"
+    case shareURL = ""
+    case saveImage = "save_image"
+    case removeTimeTable = "remove_all_modules"
 }
 
 public struct TimeTableView: View {
@@ -93,6 +94,9 @@ public struct TimeTableView: View {
                     viewModel.send(.deleteModuleAlertCloseButtonDidTap)
                 })
             )
+            .onAppear {
+                Analytics.shared.track(.screenView("delete_module", .modal))
+            }
             .heyAlert(
                 isPresented: viewModel.state.alerts.showGuestErrorAlert,
                 loginButtonAction: {
@@ -154,6 +158,9 @@ public struct TimeTableView: View {
         }
         
         createBottomSheetView(viewModel.viewType)
+            .onAppear {
+                Analytics.shared.track(.screenView(viewModel.viewType.rawValue, .bottom_sheet))
+            }
     }
 }
 

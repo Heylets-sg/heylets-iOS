@@ -11,6 +11,7 @@ import SwiftUI
 import DSKit
 import Domain
 import BaseFeatureDependency
+import Core
 
 public struct MyPageView: View {
     @EnvironmentObject var container: Router
@@ -100,6 +101,9 @@ public struct MyPageView: View {
                 viewModel.send(.logout)
             })
         )
+        .onAppear {
+            Analytics.shared.track(.screenView("log_out", .modal))
+        }
     }
 }
 

@@ -99,7 +99,7 @@ fileprivate struct SelectUniversityListCellView: View {
     SelectUniversityView(
         viewModel: SelectUniversityViewModel(
             navigationRouter: Router.default.navigationRouter,
-            useCase: StubHeyUseCase.stub.onboardingUseCase
+            useCase: StubHeyUseCase.stub.signUpUseCase
         )
     )
     .environmentObject(Router.default)
