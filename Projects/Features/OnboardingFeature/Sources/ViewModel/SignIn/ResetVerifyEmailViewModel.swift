@@ -54,7 +54,7 @@ public class ResetVerifyEmailViewModel: ObservableObject {
         case .nextButtonDidTap:
             useCase.requestResetPWEmailVerifyCode(email)
                 .sink(receiveValue: { _ in
-                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email))
+                    owner.navigationRouter.push(to: .resetEnterPWSecurityCode(owner.email))
                 })
                 .store(in: cancelBag)
         }
