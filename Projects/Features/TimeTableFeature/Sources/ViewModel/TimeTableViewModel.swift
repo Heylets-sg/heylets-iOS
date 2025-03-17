@@ -119,6 +119,7 @@ public class TimeTableViewModel: ObservableObject {
                 .store(in: cancelBag)
             
         case .tableCellDidTap(let sectionId):
+            Analytics.shared.track(.screenView("module_info", .bottom_sheet))
             viewType = .detail
             if let detailInfo = sectionList.first(where: { $0.id == sectionId }) {
                 detailSectionInfo = detailInfo
@@ -174,6 +175,7 @@ public class TimeTableViewModel: ObservableObject {
             }
             
         case .addCustomModuleButtonDidTap:
+            Analytics.shared.track(.screenView("add_custom_module", .bottom_sheet))
             viewType = .addCustom
             state.alerts.showAddCustomAlert = true
             selectLecture = []

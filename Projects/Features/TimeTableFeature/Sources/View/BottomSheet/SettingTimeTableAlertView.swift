@@ -9,6 +9,7 @@
 import SwiftUI
 
 import DSKit
+import Core
 
 public struct SettingTimeTableAlertView: View {
     @ObservedObject var viewModel: TimeTableViewModel
@@ -69,6 +70,11 @@ public struct SettingTimeTableAlertView: View {
                 }
                 .padding(.horizontal, 44)
                 .shadow(radius: 10)
+                .onAppear {
+                    if type != .shareURL {
+                        Analytics.shared.track(.screenView(type.rawValue, .modal))
+                    }
+                }
             }
         }
     }

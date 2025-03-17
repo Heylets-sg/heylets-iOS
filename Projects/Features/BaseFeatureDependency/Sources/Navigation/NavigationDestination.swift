@@ -57,7 +57,7 @@ extension NavigationDestination {
         case .termsOfService:
             return "terms"
         case .contactUs:
-            return ""
+            return "Inquiry"
         case .notificationSetting:
             return "notification_setting"
         case .deleteAccount:
