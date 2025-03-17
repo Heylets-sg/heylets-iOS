@@ -36,7 +36,8 @@ final public class TodoUseCase: TodoUsecaseType {
     }
     
     func getTableId() -> AnyPublisher<Int?, Never> {
-        timeTableRepository.getTableList()
+        checkGuestMode()
+        return timeTableRepository.getTableList()
             .catch { _ in Empty() } // 에러 발생 시 Empty() 반환
             .handleEvents(receiveOutput: { [weak self] tableId in
                 self?.tableId = tableId // 내부적으로 tableId 저장
