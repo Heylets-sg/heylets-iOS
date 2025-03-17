@@ -18,6 +18,7 @@ public extension Project {
         "NSAppTransportSecurity": .dictionary([
             "NSAllowsArbitraryLoads": .boolean(true)
         ]),
+        "CFBundleDisplayName": .string("HeyLets"),
         "UIBackgroundModes": .array([
             .string("fetch"),
             .string("remote-notification")
