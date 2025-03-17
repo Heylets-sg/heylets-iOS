@@ -40,7 +40,7 @@ public struct RootView: View {
                 LogInView(viewModel: .init(
                         navigationRouter: router.navigationRouter,
                         windowRouter: router.windowRouter,
-                        useCase: useCase.onboardingUseCase
+                        useCase: useCase.signInUseCase
                     )
                 )
             case .timetable:

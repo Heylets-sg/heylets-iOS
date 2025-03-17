@@ -47,12 +47,12 @@ public class EnterPersonalInfoViewModel: ObservableObject {
     
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
-    private var useCase: OnboardingUseCaseType
+    private var useCase: SignUpUseCaseType
     private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: NavigationRoutableType,
-        useCase: OnboardingUseCaseType
+        useCase: SignUpUseCaseType
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase

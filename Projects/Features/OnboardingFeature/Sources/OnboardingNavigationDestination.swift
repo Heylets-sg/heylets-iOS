@@ -23,7 +23,7 @@ struct OnboardingNavigationRoutingView: View {
             SelectUniversityView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    useCase: useCase.onboardingUseCase
+                    useCase: useCase.signUpUseCase
                     
                 )
             )
@@ -31,14 +31,14 @@ struct OnboardingNavigationRoutingView: View {
             VerifyEmailView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    useCase: useCase.onboardingUseCase
+                    useCase: useCase.signUpUseCase
                 )
             )
-        case .signUpEnterSecurityCode(let type, let email):
+        case .signUpEnterSecurityCode(let email):
             EnterSecurityCodeView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    useCase: useCase.onboardingUseCase,
+                    useCase: useCase.signUpUseCase,
                     email: email
                 )
             )
@@ -46,14 +46,14 @@ struct OnboardingNavigationRoutingView: View {
             EnterPersonalInfoView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    useCase: useCase.onboardingUseCase
+                    useCase: useCase.signUpUseCase
                 )
             )
         case .enterIdPassword:
             EnterIdPasswordView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    useCase: useCase.onboardingUseCase
+                    useCase: useCase.signUpUseCase
                 )
             )
             
@@ -63,20 +63,21 @@ struct OnboardingNavigationRoutingView: View {
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
                     windowRouter: router.windowRouter, 
-                    useCase: useCase.onboardingUseCase
+                    useCase: useCase.signInUseCase
                 )
             )
         case .resetPWVerifyEmail:
             ResetVerifyEmailView(
                 viewModel: .init(
-                    navigationRouter: router.navigationRouter, useCase: useCase.onboardingUseCase
+                    navigationRouter: router.navigationRouter, 
+                    useCase: useCase.signInUseCase
                 )
             )
         case .resetPassword(let email):
             ResetPasswordView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    useCase: useCase.onboardingUseCase, 
+                    useCase: useCase.signInUseCase,
                     email: email
                 )
             )
@@ -84,7 +85,7 @@ struct OnboardingNavigationRoutingView: View {
         case .resetEnterPWSecurityCode(let email):
             ResetEnterSecurityCodeView(viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    useCase: useCase.onboardingUseCase,
+                    useCase: useCase.signUpUseCase,
                     email: email
                 )
             )
@@ -99,7 +100,7 @@ struct OnboardingNavigationRoutingView: View {
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
                     windowRouter: router.windowRouter,
-                    useCase: useCase.onboardingUseCase,
+                    useCase: useCase.signUpUseCase,
                     university: university
                 )
             )

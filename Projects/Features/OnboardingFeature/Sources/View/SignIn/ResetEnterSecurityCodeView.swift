@@ -56,7 +56,7 @@ public struct ResetEnterSecurityCodeView: View {
     EnterSecurityCodeView(
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
-            useCase: StubHeyUseCase.stub.onboardingUseCase,
+            useCase: StubHeyUseCase.stub.signUpUseCase,
             email: ""
         )
     )

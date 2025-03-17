@@ -38,13 +38,13 @@ public class LogInViewModel: ObservableObject {
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType
-    private var useCase: OnboardingUseCaseType
+    private var useCase: SignInUseCaseType
     private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: NavigationRoutableType,
         windowRouter: WindowRoutableType,
-        useCase: OnboardingUseCaseType
+        useCase: SignInUseCaseType
     ) {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter

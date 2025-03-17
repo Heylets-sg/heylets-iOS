@@ -150,7 +150,7 @@ public struct LogInView: View {
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
             windowRouter: Router.default.windowRouter,
-            useCase: StubHeyUseCase.stub.onboardingUseCase
+            useCase: StubHeyUseCase.stub.signInUseCase
         )
     )
     .environmentObject(Router.default)

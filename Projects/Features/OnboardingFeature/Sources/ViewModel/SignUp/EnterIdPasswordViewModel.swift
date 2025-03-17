@@ -37,11 +37,11 @@ public class EnterIdPasswordViewModel: ObservableObject {
     @Published var password = ""
     @Published var checkPassword = ""
     
-    private var useCase: OnboardingUseCaseType
+    private var useCase: SignUpUseCaseType
     
     public init(
         navigationRouter: NavigationRoutableType,
-        useCase: OnboardingUseCaseType
+        useCase: SignUpUseCaseType
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase

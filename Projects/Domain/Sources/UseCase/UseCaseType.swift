@@ -10,7 +10,8 @@ import Foundation
 
 public protocol UseCaseType: ObservableObject {
     var myPageUseCase: MyPageUseCaseType { get }
-    var onboardingUseCase: OnboardingUseCaseType { get }
+    var signUpUseCase: SignUpUseCaseType { get }
+    var signInUseCase: SignInUseCaseType { get }
     var timeTableUseCase: TimeTableUseCaseType { get }
     var splashUseCase: SplashUseCaseType { get }
     var todoUseCase: TodoUsecaseType { get }
@@ -22,7 +23,8 @@ public final class HeyUseCase: UseCaseType {
     
     public var splashUseCase: SplashUseCaseType
     public var myPageUseCase: MyPageUseCaseType
-    public var onboardingUseCase: OnboardingUseCaseType
+    public var signUpUseCase: SignUpUseCaseType
+    public var signInUseCase: SignInUseCaseType
     public var timeTableUseCase: TimeTableUseCaseType
     public var todoUseCase: TodoUsecaseType
     
@@ -39,7 +41,12 @@ public final class HeyUseCase: UseCaseType {
             guestRepository: repository.guestRepository
         )
         
-        onboardingUseCase = OnboardingUseCase(
+        signUpUseCase = SignUpUseCase(
+            authRepository: repository.authRepository,
+            guestRepository: repository.guestRepository
+        )
+        
+        signInUseCase = SignInUseCase(
             authRepository: repository.authRepository,
             guestRepository: repository.guestRepository
         )
@@ -66,7 +73,8 @@ public final class StubHeyUseCase: UseCaseType {
     
     public var splashUseCase: SplashUseCaseType = StubSplashUseCase()
     public var myPageUseCase: MyPageUseCaseType = StubMyPageUseCase()
-    public var onboardingUseCase: OnboardingUseCaseType = StubOnboardingUseCase()
+    public var signUpUseCase: SignUpUseCaseType = StubSignUpUseCase()
+    public var signInUseCase: SignInUseCaseType = StubSignInUseCase()
     public var timeTableUseCase: TimeTableUseCaseType = StubTimeTableUseCase()
     public var todoUseCase: TodoUsecaseType = StubTodoUseCase()
 }

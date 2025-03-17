@@ -29,13 +29,13 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
-    private var useCase: OnboardingUseCaseType
+    private var useCase: SignUpUseCaseType
     private var email: String
     private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: NavigationRoutableType,
-        useCase: OnboardingUseCaseType,
+        useCase: SignUpUseCaseType,
         email: String
     ) {
         self.navigationRouter = navigationRouter

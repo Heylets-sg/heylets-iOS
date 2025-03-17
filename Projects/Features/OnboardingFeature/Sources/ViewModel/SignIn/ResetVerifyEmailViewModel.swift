@@ -28,14 +28,14 @@ public class ResetVerifyEmailViewModel: ObservableObject {
     
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
-    private var useCase: OnboardingUseCaseType
+    private var useCase: SignInUseCaseType
     private let cancelBag = CancelBag()
     
     @Published var email: String = ""
     
     public init(
         navigationRouter: NavigationRoutableType,
-        useCase: OnboardingUseCaseType
+        useCase: SignInUseCaseType
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
@@ -52,9 +52,9 @@ public class ResetVerifyEmailViewModel: ObservableObject {
         case .closeButtonDidTap:
             navigationRouter.popToRootView()
         case .nextButtonDidTap:
-            useCase.requestEmailVerifyCode(.resetPassword, email)
+            useCase.requestResetPWEmailVerifyCode(email)
                 .sink(receiveValue: { _ in
-                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(.resetPassword, owner.email))
+                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email))
                 })
                 .store(in: cancelBag)
         }
