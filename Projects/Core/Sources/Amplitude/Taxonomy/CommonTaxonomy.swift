@@ -7,10 +7,21 @@
 //
 
 import Foundation
-import Core
+
+public enum ViewType: String {
+    case screen
+    case modal
+    case bottom_sheet
+}
 
 public extension AnalyticsTaxonomy {
-    static let screenView = AnalyticsTaxonomy(
-        eventName: "screen_view"
-    )
+    static func screenView(_ name: String, _ viewType: ViewType) -> AnalyticsTaxonomy {
+        return AnalyticsTaxonomy(
+            eventName: "screen_view",
+            properties: [
+                "screen_name" : name,
+                "view_type": viewType
+            ]
+        )
+    }
 }

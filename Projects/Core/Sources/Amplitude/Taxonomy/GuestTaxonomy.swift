@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Core
-
 public extension AnalyticsTaxonomy {
     static let clickStartHeylets = AnalyticsTaxonomy(
         eventName: "click_start_heylets"

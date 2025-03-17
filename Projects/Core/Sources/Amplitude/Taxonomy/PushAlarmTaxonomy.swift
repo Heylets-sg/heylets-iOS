@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Core
 
 public extension AnalyticsTaxonomy {
     static let clickPushAlarm = AnalyticsTaxonomy(
