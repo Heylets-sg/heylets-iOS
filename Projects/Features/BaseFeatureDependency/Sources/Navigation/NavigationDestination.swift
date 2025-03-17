@@ -11,7 +11,7 @@ import Domain
 import SwiftUI
 
 public enum NavigationDestination: Hashable {
-    // MyPage destinations
+    // MyPage
     case myPage(ProfileInfo)
     case changePassword
     case privacyPolicy
@@ -21,18 +21,66 @@ public enum NavigationDestination: Hashable {
     case deleteAccount
     case editSchool
     
-    // Onboarding destinations
+    // Onboarding
     case onboarding
     case selectUniversity
     case verifyEmail
-    case enterSecurityCode(VerifyCodeType, String)
+    case signUpEnterSecurityCode(String)
     case enterPersonalInfo
     case enterIdPassword
+    
+    // Log IN
     case login
-    case enterEmail
+    case resetPWVerifyEmail
+    case resetEnterPWSecurityCode(String)
     case resetPassword(String)
     
     //Guest
     case selectGuestUniversity
     case termsOfServiceAgreement(String)
 }
+
+//extension NavigationDestination {
+//    var screenName: String {
+//        switch self {
+//        case .myPage(let profileInfo):
+//            <#code#>
+//        case .changePassword:
+//            <#code#>
+//        case .privacyPolicy:
+//            <#code#>
+//        case .termsOfService:
+//            <#code#>
+//        case .contactUs:
+//            <#code#>
+//        case .notificationSetting:
+//            <#code#>
+//        case .deleteAccount:
+//            <#code#>
+//        case .editSchool:
+//            <#code#>
+//        case .onboarding:
+//            <#code#>
+//        case .selectUniversity:
+//            return "select_school"
+//        case .verifyEmail:
+//            return "verify_email"
+//        case .signUpEnterSecurityCode:
+//            return "enter_security_code"
+//        case .enterPersonalInfo:
+//            return "enter_pll"
+//        case .enterIdPassword:
+//            return "enter_account_info"
+//        case .login:
+//            return "log_in"
+//        case .resetPWVerifyEmail:
+//            return "reset_pw_verify_email"
+//        case .resetPassword:
+//            return "reset_pw_verify_email"
+//        case .selectGuestUniversity:
+//            <#code#>
+//        case .termsOfServiceAgreement:
+//            return "terms_of_service"
+//        }
+//    }
+//}

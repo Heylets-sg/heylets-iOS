@@ -11,11 +11,11 @@ import SwiftUI
 import BaseFeatureDependency
 import DSKit
 
-public struct EnterEmailView: View {
+public struct ResetVerifyEmailView: View {
     @EnvironmentObject var container: Router
-    @ObservedObject var viewModel: EnterEmailViewModel
+    @ObservedObject var viewModel: ResetVerifyEmailViewModel
     
-    public init(viewModel: EnterEmailViewModel) {
+    public init(viewModel: ResetVerifyEmailViewModel) {
         self.viewModel = viewModel
     }
     

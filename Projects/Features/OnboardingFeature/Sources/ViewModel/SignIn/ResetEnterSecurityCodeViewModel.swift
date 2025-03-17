@@ -1,9 +1,9 @@
 //
-//  EnterSecurityCodeViewModel.swift
+//  ResetEnterSecurityCodeViewModel.swift
 //  OnboardingFeature
 //
-//  Created by 류희재 on 12/19/24.
-//  Copyright © 2024 Heylets-iOS. All rights reserved.
+//  Created by 류희재 on 3/17/25.
+//  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ import BaseFeatureDependency
 import Domain
 import Core
 
-public class EnterSecurityCodeViewModel: ObservableObject {
+public class ResetEnterSecurityCodeViewModel: ObservableObject {
     struct State {
         var hiddenEmail: String = ""
         var continueButtonIsEnabled: Bool = false
@@ -54,9 +54,9 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            useCase.verifyEmail(email, Int(otpCode)!)
+            useCase.verifyEmail(type, email, Int(otpCode)!)
                 .sink(receiveValue: {  _ in
-                    owner.navigationRouter.push(to: .enterPersonalInfo)
+                    owner.navigationRouter.push(to: .resetPassword(owner.email))
                 })
                 .store(in: cancelBag)
         }
@@ -85,4 +85,3 @@ public class EnterSecurityCodeViewModel: ObservableObject {
             .store(in: cancelBag)
     }
 }
-

@@ -104,29 +104,34 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
     }
     
     public func verifyEmail(
-        _ type: VerifyCodeType,
         _ email: String,
         _ otpCode: Int
     ) -> AnyPublisher<Void, Never> {
-        switch type {
-        case .email:
-            authRepository.verifyEmail(email, otpCode)
-                .map { _ in }
-                .catch { [weak self] _ in
-                    self?.errMessage.send("Incorrect security code. Check your code and try again")
-                    return Empty<Void, Never>()
-                }
-                .eraseToAnyPublisher()
-        case .resetPassword:
-            authRepository.verifyResetPassword(email, otpCode)
-                .map { _ in }
-                .catch { [weak self] _ in
-                    self?.errMessage.send("Incorrect security code. Check your code and try again")
-                    return Empty<Void, Never>()
-                }
-                .eraseToAnyPublisher()
-        }
+        authRepository.verifyEmail(email, otpCode)
+            .map { _ in }
+            .catch { [weak self] _ in
+                self?.errMessage.send("Incorrect security code. Check your code and try again")
+                return Empty<Void, Never>()
+            }
+            .eraseToAnyPublisher()
+        
     }
+    
+    
+    public func verifyResetPWEmail(
+        _ email: String,
+        _ otpCode: Int
+    ) -> AnyPublisher<Void, Never> {
+        authRepository.verifyResetPassword(email, otpCode)
+            .map { _ in }
+            .catch { [weak self] _ in
+                self?.errMessage.send("Incorrect security code. Check your code and try again")
+                return Empty<Void, Never>()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    
     
     public func checkUserName(
         _ userName: String
@@ -168,6 +173,10 @@ final public class OnboardingUseCase: OnboardingUseCaseType {
 }
 
 final public class StubOnboardingUseCase: OnboardingUseCaseType {
+    public func verifyResetPWEmail(_ email: String, _ otpCode: Int) -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
+    }
+    
     public func checkAccessTokenExisted() -> AnyPublisher<Bool, Never> {
         Just(true).eraseToAnyPublisher()
     }
@@ -194,7 +203,6 @@ final public class StubOnboardingUseCase: OnboardingUseCaseType {
     }
     
     public func verifyEmail(
-        _ type: VerifyCodeType,
         _ email: String,
         _ otpCode: Int
     ) -> AnyPublisher<Void, Never> {

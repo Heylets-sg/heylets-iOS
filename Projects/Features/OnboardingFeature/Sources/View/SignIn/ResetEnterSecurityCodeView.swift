@@ -1,9 +1,9 @@
 //
-//  EnterSecurityCodeView.swift
+//  ResetEnterSecurityCodeView.swift
 //  OnboardingFeature
 //
-//  Created by 류희재 on 12/18/24.
-//  Copyright © 2024 Heylets-iOS. All rights reserved.
+//  Created by 류희재 on 3/17/25.
+//  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
 import SwiftUI
@@ -12,11 +12,11 @@ import BaseFeatureDependency
 import Domain
 import DSKit
 
-public struct EnterSecurityCodeView: View {
+public struct ResetEnterSecurityCodeView: View {
     @EnvironmentObject var container: Router
-    @ObservedObject var viewModel: EnterSecurityCodeViewModel
+    @ObservedObject var viewModel: ResetEnterSecurityCodeViewModel
     
-    public init(viewModel: EnterSecurityCodeViewModel) {
+    public init(viewModel: ResetEnterSecurityCodeViewModel) {
         self.viewModel = viewModel
     }
     
@@ -62,3 +62,4 @@ public struct EnterSecurityCodeView: View {
     )
     .environmentObject(Router.default)
 }
+

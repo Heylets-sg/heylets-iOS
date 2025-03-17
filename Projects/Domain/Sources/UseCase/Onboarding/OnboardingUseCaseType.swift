@@ -37,7 +37,6 @@ public protocol OnboardingUseCaseType {
     ) -> AnyPublisher<Void, Never>
     
     func verifyEmail(
-        _ type: VerifyCodeType,
         _ email: String,
         _ otpCode: Int
     ) -> AnyPublisher<Void, Never>
@@ -57,5 +56,10 @@ public protocol OnboardingUseCaseType {
     func startGuestMode(
         university: String,
         agreements: [AgreementInfo]
+    ) -> AnyPublisher<Void, Never>
+    
+    func verifyResetPWEmail(
+        _ email: String,
+        _ otpCode: Int
     ) -> AnyPublisher<Void, Never>
 }

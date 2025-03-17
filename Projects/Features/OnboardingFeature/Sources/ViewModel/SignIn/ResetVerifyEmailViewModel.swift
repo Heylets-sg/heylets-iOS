@@ -14,7 +14,7 @@ import DSKit
 import Core
 import Domain
 
-public class EnterEmailViewModel: ObservableObject {
+public class ResetVerifyEmailViewModel: ObservableObject {
     struct State {
         var emailIsValid: TextFieldState = .idle
         var continueButtonIsEnabled: Bool = false
@@ -54,7 +54,7 @@ public class EnterEmailViewModel: ObservableObject {
         case .nextButtonDidTap:
             useCase.requestEmailVerifyCode(.resetPassword, email)
                 .sink(receiveValue: { _ in
-                    owner.navigationRouter.push(to: .enterSecurityCode(.resetPassword, owner.email))
+                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(.resetPassword, owner.email))
                 })
                 .store(in: cancelBag)
         }

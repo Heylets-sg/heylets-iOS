@@ -14,7 +14,7 @@ struct OnboardingNavigationRoutingView: View {
     var body: some View {
         switch destination {
         
-        // Onboarding Feature
+        // Onboarding
         case .onboarding:
             OnboardingView(
                 viewModel: .init(navigationRouter: router.navigationRouter)
@@ -34,12 +34,11 @@ struct OnboardingNavigationRoutingView: View {
                     useCase: useCase.onboardingUseCase
                 )
             )
-        case .enterSecurityCode(let type, let email):
+        case .signUpEnterSecurityCode(let type, let email):
             EnterSecurityCodeView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    useCase: useCase.onboardingUseCase, 
-                    type: type,
+                    useCase: useCase.onboardingUseCase,
                     email: email
                 )
             )
@@ -57,6 +56,8 @@ struct OnboardingNavigationRoutingView: View {
                     useCase: useCase.onboardingUseCase
                 )
             )
+            
+        // LogIn
         case .login:
             LogInView(
                 viewModel: .init(
@@ -65,8 +66,8 @@ struct OnboardingNavigationRoutingView: View {
                     useCase: useCase.onboardingUseCase
                 )
             )
-        case .enterEmail:
-            EnterEmailView(
+        case .resetPWVerifyEmail:
+            ResetVerifyEmailView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter, useCase: useCase.onboardingUseCase
                 )
@@ -76,6 +77,14 @@ struct OnboardingNavigationRoutingView: View {
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
                     useCase: useCase.onboardingUseCase, 
+                    email: email
+                )
+            )
+            
+        case .resetEnterPWSecurityCode(let email):
+            ResetEnterSecurityCodeView(viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    useCase: useCase.onboardingUseCase,
                     email: email
                 )
             )

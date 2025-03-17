@@ -85,7 +85,7 @@ public class LogInViewModel: ObservableObject {
         case .dismissToastView:
             state.errMessage = ""
         case .forgotPasswordButtonDidTap:
-            navigationRouter.push(to: .enterEmail)
+            navigationRouter.push(to: .resetPWVerifyEmail)
         case .signUpButtonDidTap:
             Analytics.shared.track(.clickSignUp)
             navigationRouter.push(to: .selectUniversity)
