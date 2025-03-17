@@ -75,7 +75,20 @@ enum OnboardingType {
 public struct OnboardingView: View {
     @EnvironmentObject var container: Router
     var viewModel: OnboardingViewModel
-    @State var currentIndex = 0
+    @State var currentIndex = 0 {
+        didSet {
+            switch currentIndex {
+            case 0:
+                Analytics.shared.track(.screenView("onboarding_time", .screen))
+            case 1:
+                Analytics.shared.track(.screenView("onboarding_theme", .screen))
+            case 2:
+                Analytics.shared.track(.screenView("onboarding_alarm", .screen))
+            default:
+                break
+            }
+        }
+    }
     
     let onboardingContent: [OnboardingType] = [.timeTable, .theme, .alarm]
     

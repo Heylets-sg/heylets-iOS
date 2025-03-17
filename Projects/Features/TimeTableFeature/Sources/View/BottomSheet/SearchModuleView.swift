@@ -11,7 +11,7 @@ import SwiftUI
 import Domain
 import DSKit
 import BaseFeatureDependency
-
+import Core
 
 public struct SearchModuleView: View {
     @Binding var viewType: TimeTableViewType
@@ -33,6 +33,9 @@ public struct SearchModuleView: View {
                     .multilineTextAlignment(.center)
                     .foregroundColor(.heyGray2)
                     .padding(.bottom, 20)
+                    .onAppear {
+                        Analytics.shared.track(.screenView("missing_module", .modal))
+                    }
                 
                 Button {
                     reportMissingModuleAlertIsPresented = true

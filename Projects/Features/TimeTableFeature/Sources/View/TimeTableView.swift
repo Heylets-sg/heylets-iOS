@@ -94,6 +94,9 @@ public struct TimeTableView: View {
                     viewModel.send(.deleteModuleAlertCloseButtonDidTap)
                 })
             )
+            .onAppear {
+                Analytics.shared.track(.screenView("delete_module", .modal))
+            }
             .heyAlert(
                 isPresented: viewModel.state.alerts.showGuestErrorAlert,
                 loginButtonAction: {
