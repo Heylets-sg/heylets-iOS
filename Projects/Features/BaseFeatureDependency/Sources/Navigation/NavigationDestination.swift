@@ -26,7 +26,7 @@ public enum NavigationDestination: Hashable {
     
     // Sign Up
     case selectUniversity
-    case verifyEmail
+    case verifyEmail(NationalityInfo)
     case signUpEnterSecurityCode(String)
     
     // 싱가폴

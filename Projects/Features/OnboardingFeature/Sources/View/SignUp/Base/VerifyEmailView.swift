@@ -143,7 +143,8 @@ fileprivate struct EmailDomainListCellView: View {
     VerifyEmailView(
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
-            useCase: StubHeyUseCase.stub.signUpUseCase
+            useCase: StubHeyUseCase.stub.signUpUseCase,
+            nationality: .Malaysia
         )
     )
     .environmentObject(Router.default)

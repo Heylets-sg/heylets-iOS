@@ -16,6 +16,8 @@ public protocol SignUpUseCaseType {
     
     var errMessage: PassthroughSubject<String, Never> { get }
     
+    func checkGuestMode() -> AnyPublisher<Bool, Never>
+    
     func signUp() -> AnyPublisher<Void, Never>
     
     // 이메일 인증코드 요청 & 인증코드

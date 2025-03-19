@@ -31,6 +31,10 @@ final public class SignUpUseCase: SignUpUseCaseType {
     
     public var userInfo: User = .empty
     
+    public func checkGuestMode() -> AnyPublisher<Bool, Never> {
+        return guestRepository.checkGuestMode()
+    }
+    
     public func signUp() -> AnyPublisher<Void, Never> {
         guestRepository.checkGuestMode()  // 게스트 모드 여부를 확인
             .flatMap { [weak self] isGuest in
@@ -121,7 +125,7 @@ final public class SignUpUseCase: SignUpUseCaseType {
             .map { $0.university }
             .catch { [weak self] error in
                 self?.errMessage.send("대학교를 찾지 못했습니다 \(error)")
-                return Empty<UniversityInfo, Never>()
+                return Just(UniversityInfo.empty).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
@@ -130,6 +134,10 @@ final public class SignUpUseCase: SignUpUseCaseType {
 final public class StubSignUpUseCase: SignUpUseCaseType {
     public var userInfo: User = .empty
     public var errMessage = PassthroughSubject<String, Never>()
+    
+    public func checkGuestMode() -> AnyPublisher<Bool, Never> {
+        Just(true).eraseToAnyPublisher()
+    }
     
     public func signUp() -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()

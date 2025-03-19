@@ -31,6 +31,36 @@ public enum NationalityInfo: String {
             return []
         }
     }
+    
+    public var domainList: [String] {
+        switch self {
+        case .Malaysia:
+            return [
+                "student.uitm.edu.my",
+                "siswa.um.edu.my",
+                "live.iium.edu.my "
+            ]
+        case .Singapore:
+            return [
+                "u.nus.edu",
+                "e.ntu.edu.sg",
+                "smu.edu.sg",
+                "smu.edu.sg",
+                "accountancy.smu.edu.sg",
+                "computing.smu.edu.sg",
+                "economics.smu.edu.sg",
+                "scis.smu.edu.sg",
+                "law.smu.edu.sg",
+                "business.edu.sg",
+                "socsc.smu.edu.sg",
+                "business.smu.edu.sg",
+                "gmail.com",
+                "naver.com"
+            ]
+        case .empty:
+            return []
+        }
+    }
 }
 
 extension NationalityInfo {

@@ -60,9 +60,18 @@ public class SelectNationalityViewModel: ObservableObject {
             
         case .nextButtonDidTap:
             guard let nationality else { return }
-            if nationality == .Malaysia { navigationRouter.push(to: .verifyEmail) }
-            else { navigationRouter.push(to: .selectGuestUniversity(nationality.universityList)) }
             
+            useCase.checkGuestMode()
+                .receive(on: RunLoop.main)
+                .sink(receiveValue: { [weak self] isGuestMode in
+                    if isGuestMode {
+                        if nationality == .Malaysia { self?.navigationRouter.push(to: .verifyEmail(nationality)) }
+                        else { self?.navigationRouter.push(to: .selectGuestUniversity(nationality.universityList)) }
+                    } else {
+                        self?.navigationRouter.push(to: .selectGuestUniversity(nationality.universityList))
+                    }
+                })
+                .store(in: cancelBag)
             
         case .selectNationality(let nationality):
             self.nationality = nationality
