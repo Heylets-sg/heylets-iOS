@@ -13,6 +13,7 @@ import Core
 
 final public class SignUpUseCase: SignUpUseCaseType {
     private let authRepository: AuthRepositoryType
+    private let userRepository: UserRepositoryType
     private let guestRepository: GuestRepositoryType
     private var cancelBag = CancelBag()
     
@@ -20,9 +21,11 @@ final public class SignUpUseCase: SignUpUseCaseType {
     
     public init(
         authRepository: AuthRepositoryType,
+        userRepository: UserRepositoryType,
         guestRepository: GuestRepositoryType
     ) {
         self.authRepository = authRepository
+        self.userRepository = userRepository
         self.guestRepository = guestRepository
     }
     
@@ -112,6 +115,16 @@ final public class SignUpUseCase: SignUpUseCaseType {
         }
         .eraseToAnyPublisher()
     }
+    
+    public func getUniversityInfo() -> AnyPublisher<UniversityInfo, Never> {
+        userRepository.getProfile()
+            .map { $0.university }
+            .catch { [weak self] error in
+                self?.errMessage.send("대학교를 찾지 못했습니다 \(error)")
+                return Empty<UniversityInfo, Never>()
+            }
+            .eraseToAnyPublisher()
+    }
 }
 
 final public class StubSignUpUseCase: SignUpUseCaseType {
@@ -146,5 +159,9 @@ final public class StubSignUpUseCase: SignUpUseCaseType {
         agreements: [AgreementInfo]
     ) -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()
+    }
+    
+    public func getUniversityInfo() -> AnyPublisher<UniversityInfo, Never> {
+        Just(.empty).eraseToAnyPublisher()
     }
 }

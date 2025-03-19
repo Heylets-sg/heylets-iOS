@@ -106,7 +106,8 @@ struct OnboardingNavigationRoutingView: View {
         case .selectNationality:
             SelectNationalityView(
                 viewModel: .init(
-                    navigationRouter: router.navigationRouter
+                    navigationRouter: router.navigationRouter,
+                    useCase: useCase.signUpUseCase
                 )
             )
             

@@ -20,6 +20,7 @@ public class SelectNationalityViewModel: ObservableObject {
     }
     
     enum Action {
+        case onAppear
         case closeButtonDidTap
         case nextButtonDidTap
         case selectNationality(NationalityInfo?)
@@ -32,24 +33,36 @@ public class SelectNationalityViewModel: ObservableObject {
     
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
+    public var useCase: SignUpUseCaseType
     private let cancelBag = CancelBag()
     
     // MARK: - Init
     public init(
-        navigationRouter: NavigationRoutableType
+        navigationRouter: NavigationRoutableType,
+        useCase: SignUpUseCaseType
     ) {
         self.navigationRouter = navigationRouter
+        self.useCase = useCase
     }
     
     // MARK: - Methods
     func send(_ action: Action) {
         switch action {
+        case .onAppear:
+            useCase.getUniversityInfo()
+                .receive(on: RunLoop.main)
+                .map { $0.nationality }
+                .assign(to: \.nationality, on: self)
+                .store(in: cancelBag)
+            
         case .closeButtonDidTap:
             navigationRouter.pop()
             
         case .nextButtonDidTap:
             guard let nationality else { return }
-            navigationRouter.push(to: .selectGuestUniversity(nationality.universityList))
+            if nationality == .Malaysia { navigationRouter.push(to: .verifyEmail) }
+            else { navigationRouter.push(to: .selectGuestUniversity(nationality.universityList)) }
+            
             
         case .selectNationality(let nationality):
             self.nationality = nationality

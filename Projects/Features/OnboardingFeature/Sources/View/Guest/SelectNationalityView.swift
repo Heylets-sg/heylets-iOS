@@ -7,7 +7,9 @@
 //
 
 import SwiftUI
+
 import BaseFeatureDependency
+import Domain
 
 struct SelectNationalityView: View {
     @EnvironmentObject var container: Router
@@ -96,12 +98,18 @@ struct SelectNationalityView: View {
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()
+        .onAppear {
+            viewModel.send(.onAppear)
+        }
     }
 }
 
 #Preview {
     SelectNationalityView(
-        viewModel: .init(navigationRouter: Router.default.navigationRouter)
+        viewModel: .init(
+            navigationRouter: Router.default.navigationRouter,
+            useCase: StubHeyUseCase.stub.signUpUseCase
+        )
     )
     .environmentObject(Router.default)
 }

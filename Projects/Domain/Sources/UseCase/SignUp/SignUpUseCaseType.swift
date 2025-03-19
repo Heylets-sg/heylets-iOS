@@ -37,4 +37,6 @@ public protocol SignUpUseCaseType {
         university: UniversityInfo,
         agreements: [AgreementInfo]
     ) -> AnyPublisher<Void, Never>
+    
+    func getUniversityInfo() -> AnyPublisher<UniversityInfo, Never>
 }

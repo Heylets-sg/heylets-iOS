@@ -60,6 +60,7 @@ public class TermsOfServiceViewModel: ObservableObject {
         switch action {
         case .agreeButtonDidTap:
             let agreementList = AgreementInfo.agreementList
+            useCase.userInfo.university = university
             if useCase.userInfo.email.isEmpty {
                 Analytics.shared.track(.clickStartHeylets)
                 useCase.startGuestMode(university: university, agreements: agreementList)
