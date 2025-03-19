@@ -13,12 +13,12 @@ import Domain
 
 public struct SGEnterPersonalInfoView: View {
     @EnvironmentObject var container: Router
-    @ObservedObject var viewModel: EnterPersonalInfoViewModel
+    @ObservedObject var viewModel: SGEnterPersonalInfoViewModel
     var genderList: [Gender] = [.men, .women, .others]
     
     @State var date = Date()
     
-    public init(viewModel: EnterPersonalInfoViewModel) {
+    public init(viewModel: SGEnterPersonalInfoViewModel) {
         self.viewModel = viewModel
     }
     

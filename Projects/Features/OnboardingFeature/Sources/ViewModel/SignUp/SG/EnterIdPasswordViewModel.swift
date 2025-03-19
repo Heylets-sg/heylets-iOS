@@ -54,10 +54,12 @@ public class EnterIdPasswordViewModel: ObservableObject {
         switch action {
         case .backButtonDidTap:
             navigationRouter.pop()
+            
         case .nextButtonDidTap:
             useCase.userInfo.nickName = nickName
             useCase.userInfo.password = password
             navigationRouter.push(to: .termsOfServiceAgreement(useCase.userInfo.university))
+            
         case .checkIDAvailabilityButtonDidTap:
             useCase.checkUserName(nickName)
                 .receive(on: RunLoop.main)

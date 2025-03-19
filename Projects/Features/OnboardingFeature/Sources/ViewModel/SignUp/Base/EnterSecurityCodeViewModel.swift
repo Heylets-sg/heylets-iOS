@@ -55,8 +55,15 @@ public class EnterSecurityCodeViewModel: ObservableObject {
             navigationRouter.pop()
         case .nextButtonDidTap:
             useCase.verifyEmail(email, Int(otpCode)!)
-                .sink(receiveValue: {  _ in
-                    owner.navigationRouter.push(to: .enterPersonalInfo)
+                .sink(receiveValue: { _ in
+                    switch owner.useCase.userInfo.university.nationality {
+                    case .Singapore:
+                        owner.navigationRouter.push(to: .enterPersonalInfo_SG)
+                    case .Malaysia:
+                        owner.navigationRouter.push(to: .enterPersonalInfo_MYS)
+                    default:
+                        break
+                    }
                 })
                 .store(in: cancelBag)
         }

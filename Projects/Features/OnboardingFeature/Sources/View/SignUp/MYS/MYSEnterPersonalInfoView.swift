@@ -12,15 +12,16 @@ import SwiftUI
 
 import BaseFeatureDependency
 import Domain
+import DSKit
 
 public struct MYSEnterPersonalInfoView: View {
     @EnvironmentObject var container: Router
-    @ObservedObject var viewModel: EnterPersonalInfoViewModel
-    var genderList: [Gender] = [.men, .women, .others]
+    @ObservedObject var viewModel: MYSEnterPersonalInfoViewModel
     
     @State var date = Date()
+    @State var showPassword = false
     
-    public init(viewModel: EnterPersonalInfoViewModel) {
+    public init(viewModel: MYSEnterPersonalInfoViewModel) {
         self.viewModel = viewModel
     }
     
@@ -29,8 +30,22 @@ public struct MYSEnterPersonalInfoView: View {
             Spacer()
                 .frame(height: 8)
             
+            VStack(spacing: 32) {
+                PasswordField(
+                    password: $viewModel.password,
+                    showPassword: $showPassword,
+                    textFieldState: $viewModel.state.passwordIsValid
+                )
+                
+                SecurityPasswordField(
+                    password: $viewModel.checkPassword,
+                    placeHolder: "Confirm Password",
+                    textFieldState: $viewModel.state.checkPasswordIsValid
+                )
+            }
+            
             HStack(spacing: 16) {
-                ForEach(genderList, id: \.self) { gender in
+                ForEach(Gender.allCases, id: \.self) { gender in
                     GenderButton(
                         title: gender.title,
                         isSelected: gender == viewModel.gender,

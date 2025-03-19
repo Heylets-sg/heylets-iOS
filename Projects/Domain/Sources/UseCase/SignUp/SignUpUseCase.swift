@@ -100,9 +100,9 @@ final public class SignUpUseCase: SignUpUseCaseType {
             .eraseToAnyPublisher()
     }
     
-    public func startGuestMode(university: String, agreements: [AgreementInfo]) -> AnyPublisher<Void, Never> {
+    public func startGuestMode(university: UniversityInfo, agreements: [AgreementInfo]) -> AnyPublisher<Void, Never> {
         guestRepository.startGuestMode(
-            university: university,
+            university: university.rawValue,
             agreements: agreements
         )
         .map { _ in }
@@ -142,7 +142,7 @@ final public class StubSignUpUseCase: SignUpUseCaseType {
     }
     
     public func startGuestMode(
-        university: String,
+        university: UniversityInfo,
         agreements: [AgreementInfo]
     ) -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()

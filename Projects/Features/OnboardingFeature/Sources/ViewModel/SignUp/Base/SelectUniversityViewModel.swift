@@ -60,7 +60,7 @@ public class SelectUniversityViewModel: ObservableObject {
             
         case .nextButtonDidTap:
             guard let university = university else { return }
-            useCase.userInfo.university = university.rawValue
+            useCase.userInfo.university = university
             navigationRouter.push(to: .verifyEmail)
             
         case .selectUniversity(let university):

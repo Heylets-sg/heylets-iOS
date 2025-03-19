@@ -20,6 +20,17 @@ public enum UniversityInfo: String {
     case UM
     
     case empty = ""
+    
+    public var nationality: NationalityInfo {
+        switch self {
+        case .NUS, .NTU, .SMU:
+            return .Singapore
+        case .UiTM, .IIUM,.UM:
+            return .Malaysia
+        case .empty:
+            return .empty
+        }
+    }
 }
 
 extension UniversityInfo {

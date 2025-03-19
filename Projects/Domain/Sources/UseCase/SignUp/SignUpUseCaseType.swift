@@ -34,7 +34,7 @@ public protocol SignUpUseCaseType {
     ) -> AnyPublisher<Bool, Never>
 
     func startGuestMode(
-        university: String,
+        university: UniversityInfo,
         agreements: [AgreementInfo]
     ) -> AnyPublisher<Void, Never>
 }

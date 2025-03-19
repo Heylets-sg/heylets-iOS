@@ -13,24 +13,7 @@ import BaseFeatureDependency
 import Domain
 import Core
 
-enum Gender: String {
-    case men = "M"
-    case women = "F"
-    case others = "O"
-    
-    var title: String {
-        switch self {
-        case .men:
-            return "Men"
-        case .women:
-            return "Women"
-        case .others:
-            return "Others"
-        }
-    }
-}
-
-public class EnterPersonalInfoViewModel: ObservableObject {
+public class SGEnterPersonalInfoViewModel: ObservableObject {
     struct State {
         var continueButtonIsEnabled: Bool = false
     }

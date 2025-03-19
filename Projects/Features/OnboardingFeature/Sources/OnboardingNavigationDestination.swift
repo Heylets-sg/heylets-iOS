@@ -24,7 +24,6 @@ struct OnboardingNavigationRoutingView: View {
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
                     useCase: useCase.signUpUseCase
-                    
                 )
             )
         case .verifyEmail:
@@ -42,7 +41,9 @@ struct OnboardingNavigationRoutingView: View {
                     email: email
                 )
             )
-        case .enterPersonalInfo:
+            
+        // 싱가폴
+        case .enterPersonalInfo_SG:
             SGEnterPersonalInfoView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
@@ -56,6 +57,18 @@ struct OnboardingNavigationRoutingView: View {
                     useCase: useCase.signUpUseCase
                 )
             )
+        
+        // 말레이시아
+        case .enterPersonalInfo_MYS:
+            MYSEnterPersonalInfoView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    useCase: useCase.signUpUseCase
+                )
+            )
+            
+        case .enterReferralCode:
+            EmptyView()
             
         // LogIn
         case .login:

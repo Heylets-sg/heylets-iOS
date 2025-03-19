@@ -37,7 +37,7 @@ public class TermsOfServiceViewModel: ObservableObject {
     public var windowRouter: WindowRoutableType
     public var navigationRouter: NavigationRoutableType
     private var useCase: SignUpUseCaseType
-    private var university: String
+    private var university: UniversityInfo
     private let cancelBag = CancelBag()
     
     // MARK: - Init
@@ -45,7 +45,7 @@ public class TermsOfServiceViewModel: ObservableObject {
         navigationRouter: NavigationRoutableType,
         windowRouter: WindowRoutableType,
         useCase: SignUpUseCaseType,
-        university: String
+        university: UniversityInfo
     ) {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter

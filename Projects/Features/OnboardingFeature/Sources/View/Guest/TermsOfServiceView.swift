@@ -176,7 +176,7 @@ struct TermsOfServiceView: View {
         navigationRouter: Router.default.navigationRouter,
         windowRouter: Router.default.windowRouter, 
         useCase: StubHeyUseCase.stub.signUpUseCase,
-        university: ""
+        university: UniversityInfo.empty
     ))
     .environmentObject(Router.default)
 }
