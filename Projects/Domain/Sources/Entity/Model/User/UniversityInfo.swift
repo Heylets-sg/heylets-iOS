@@ -31,6 +31,12 @@ extension UniversityInfo {
             return .NTU
         case "SMU":
             return .SMU
+        case "UiTM":
+            return .UiTM
+        case "IIUM":
+            return .IIUM
+        case "UM":
+            return .UM
         default:
             return .empty
         }

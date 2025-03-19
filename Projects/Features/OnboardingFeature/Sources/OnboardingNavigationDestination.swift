@@ -43,7 +43,7 @@ struct OnboardingNavigationRoutingView: View {
                 )
             )
         case .enterPersonalInfo:
-            EnterPersonalInfoView(
+            SGEnterPersonalInfoView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
                     useCase: useCase.signUpUseCase

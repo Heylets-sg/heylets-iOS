@@ -22,31 +22,15 @@ extension UniversityInfo {
         }
     }
     
-    public var textColor: String {
+    public var badgeImage: UIImage {
         switch self {
-        case .NUS: return "#DB812E"
-        case .NTU: return "#FFFFFF"
-        case .SMU: return "#FFFFFF"
-            
-        case .UiTM: return "#FFCB00"
-        case .IIUM: return "#000000"
-        case .UM: return "#DCD91B"
-            
-        default: return "#FFFFFF"
-        }
-    }
-    
-    public var backgroundColor: String {
-        switch self {
-        case .NUS: return "#1B3D76"
-        case .NTU: return "#E01932"
-        case .SMU: return "#1B286A"
-            
-        case .UiTM: return "#653980"
-        case .IIUM: return "#D59F0F"
-        case .UM: return "#223E99"
-            
-        default: return "#FFFFFF"
+        case .NUS: return .badgeNUS
+        case .NTU: return .badgeNTU
+        case .SMU: return .badgeSMU
+        case .UiTM: return .badgeUiTM
+        case .IIUM: return .badgeIIUM
+        case .UM: return .badgeUM
+        default: return .logo
         }
     }
 }

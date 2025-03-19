@@ -1,17 +1,19 @@
 //
-//  EnterPersonalInfoView.swift
+//  MYSEnterPersonalInfoView.swift
 //  OnboardingFeature
 //
-//  Created by 류희재 on 12/18/24.
-//  Copyright © 2024 Heylets-iOS. All rights reserved.
+//  Created by 류희재 on 3/19/25.
+//  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
+
+import Foundation
 
 import SwiftUI
 
 import BaseFeatureDependency
 import Domain
 
-public struct EnterPersonalInfoView: View {
+public struct MYSEnterPersonalInfoView: View {
     @EnvironmentObject var container: Router
     @ObservedObject var viewModel: EnterPersonalInfoViewModel
     var genderList: [Gender] = [.men, .women, .others]
@@ -50,7 +52,7 @@ public struct EnterPersonalInfoView: View {
                 }
                 .labelsHidden()
             }
-        }, titleText: "Please check your gender/birth", 
+        }, titleText: "Please check your gender/birth",
         nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
         nextButtonAction: { viewModel.send(.nextButtonDidTap) }
         )
@@ -78,7 +80,7 @@ fileprivate struct GenderButton: View {
 }
 
 #Preview {
-    EnterPersonalInfoView(
+    SGEnterPersonalInfoView(
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
             useCase: StubHeyUseCase.stub.signUpUseCase
