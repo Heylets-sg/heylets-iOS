@@ -89,10 +89,19 @@ struct OnboardingNavigationRoutingView: View {
                     email: email
                 )
             )
-        case .selectGuestUniversity:
-            SelectGuestUnversityView(
+            
+        case .selectNationality:
+            SelectNationalityView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter
+                )
+            )
+            
+        case .selectGuestUniversity(let universityList):
+            SelectGuestUnversityView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    universityList: universityList
                 )
             )
         case .termsOfServiceAgreement(let university):

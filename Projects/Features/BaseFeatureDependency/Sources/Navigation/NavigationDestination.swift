@@ -38,7 +38,8 @@ public enum NavigationDestination: Hashable {
     case resetPassword(String)
     
     //Guest
-    case selectGuestUniversity
+    case selectNationality
+    case selectGuestUniversity([UniversityInfo])
     case termsOfServiceAgreement(String)
 }
 
@@ -92,6 +93,8 @@ extension NavigationDestination {
             return "reset_pw_verify_email"
             
         // Guest
+        case .selectNationality:
+            return ""
         case .selectGuestUniversity:
             return "guest_select_school"
         case .editSchool:

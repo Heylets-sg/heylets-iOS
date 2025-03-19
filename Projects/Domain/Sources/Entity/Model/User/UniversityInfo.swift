@@ -9,9 +9,16 @@
 import Foundation
 
 public enum UniversityInfo: String {
+    //싱가포르
     case NUS
     case NTU
     case SMU
+    
+    //말레이시아
+    case UiTM
+    case IIUM
+    case UM
+    
     case empty = ""
 }
 

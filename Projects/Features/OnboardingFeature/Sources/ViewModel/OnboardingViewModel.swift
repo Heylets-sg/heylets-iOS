@@ -30,7 +30,7 @@ public class OnboardingViewModel: ObservableObject {
         switch action {
         case .startButtonDidTap:
             Analytics.shared.track(.clickExplore)
-            navigationRouter.push(to: .selectGuestUniversity)
+            navigationRouter.push(to: .selectNationality)
         case .alreadyRegisteredButtonDidTap:
             Analytics.shared.track(.clickAlreadyRegistered)
             navigationRouter.push(to: .login)

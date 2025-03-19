@@ -20,6 +20,17 @@ public enum NationalityInfo: String {
         case .empty: return ""
         }
     }
+    
+    public var universityList: [UniversityInfo] {
+        switch self {
+        case .Malaysia:
+            return [.UiTM, .IIUM, .UM]
+        case .Singapore:
+            return [.NTU, .NUS, .SMU]
+        case .empty:
+            return []
+        }
+    }
 }
 
 extension NationalityInfo {

@@ -49,7 +49,7 @@ public class SelectNationalityViewModel: ObservableObject {
             
         case .nextButtonDidTap:
             guard let nationality else { return }
-//            navigationRouter.push(to: .termsOfServiceAgreement(university.rawValue))
+            navigationRouter.push(to: .selectGuestUniversity(nationality.universityList))
             
         case .selectNationality(let nationality):
             self.nationality = nationality

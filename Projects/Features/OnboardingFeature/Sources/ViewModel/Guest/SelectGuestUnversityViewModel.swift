@@ -27,7 +27,7 @@ public class SelectGuestUnversityViewModel: ObservableObject {
     
     // MARK: - Properties
     
-    let allUniversityItems: [UniversityInfo] = [.NTU, .NUS, .SMU]
+    var universityList: [UniversityInfo] = []
     @Published var university: UniversityInfo? = nil
     
     @Published var state = State()
@@ -36,9 +36,11 @@ public class SelectGuestUnversityViewModel: ObservableObject {
     
     // MARK: - Init
     public init(
-        navigationRouter: NavigationRoutableType
+        navigationRouter: NavigationRoutableType,
+        universityList: [UniversityInfo]
     ) {
         self.navigationRouter = navigationRouter
+        self.universityList = universityList
     }
     
     // MARK: - Methods

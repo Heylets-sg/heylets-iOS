@@ -116,6 +116,36 @@ struct TermsOfServiceView: View {
                             }
                 }
                 .padding(.horizontal, 24)
+                .padding(.bottom, 20)
+                
+                
+                HStack {
+                    Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
+                        .resizable()
+                        .frame(width: 16, height: 10)
+                        .foregroundStyle(viewModel.state.marketingIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
+                        .padding(.trailing, 12)
+                        .onTapGesture {
+                            viewModel.send(.marketingDidTap)
+                        }
+
+                    Text("Agree to receive ads and marketing communications.")
+                        .multilineTextAlignment(.leading)
+                        .font(.regular_14)
+                        .foregroundColor(.heyGray2)
+                    
+                    Spacer()
+                
+                    
+                    Link(destination: URL(string: "https://melon-pawpaw-a40.notion.site/Marketing-Consent-for-Email-Communication-1b4bef466352819dab2df02918a53e50")!) {
+                                HStack {
+                                    Text("View")
+                                        .font(.regular_12)
+                                        .foregroundColor(Color.init(hex: "#B8B8B8"))
+                                } .foregroundColor(.black)
+                            }
+                }
+                .padding(.horizontal, 24)
                 
                 Text(viewModel.state.errMessage)
                     .font(.title)
@@ -126,7 +156,7 @@ struct TermsOfServiceView: View {
                 Button("Agree") {
                     viewModel.send(.agreeButtonDidTap)
                 }
-                .disabled(!viewModel.state.allAgree)
+                .disabled(!viewModel.state.continueButtonIsEnabled)
                 .heyBottomButtonStyle()
                 .padding(.horizontal, 16)
             }
