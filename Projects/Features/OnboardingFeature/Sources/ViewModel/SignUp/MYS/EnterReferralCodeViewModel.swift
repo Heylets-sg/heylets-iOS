@@ -59,9 +59,6 @@ public class EnterReferralCodeViewModel: ObservableObject {
     }
     
     private func observe() {
-        weak var owner = self
-        guard let owner else { return }
-        
         $referralCode
             .filter { $0.count == 6}
             .flatMap(useCase.checkReferraalCode)

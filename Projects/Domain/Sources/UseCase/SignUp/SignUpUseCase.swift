@@ -39,10 +39,9 @@ final public class SignUpUseCase: SignUpUseCaseType {
     }
     
     public func signUp() -> AnyPublisher<Void, Never> {
-        guestRepository.checkGuestMode()  // 게스트 모드 여부를 확인
+        guestRepository.checkGuestMode()
             .flatMap { [weak self] isGuest in
                 guard let self else { return Empty<Void, Never>().eraseToAnyPublisher() }
-                print("isGuest: \(isGuest)")
                 if isGuest {
                     return self.guestRepository.convertToMember(userInfo)
                         .handleEvents(receiveOutput: { _ in
