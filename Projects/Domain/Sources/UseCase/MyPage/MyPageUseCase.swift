@@ -15,16 +15,19 @@ final public class MyPageUseCase: MyPageUseCaseType {
     private let userRepository: UserRepositoryType
     private let authRepository: AuthRepositoryType
     private let guestRepository: GuestRepositoryType
+    private let referralRepository: ReferralRepositoryType
     private var cancelBag = CancelBag()
     
     public init(
         userRepository: UserRepositoryType,
         authRepository: AuthRepositoryType,
-        guestRepository: GuestRepositoryType
+        guestRepository: GuestRepositoryType,
+        referralRepository: ReferralRepositoryType
     ) {
         self.userRepository = userRepository
         self.authRepository = authRepository
         self.guestRepository = guestRepository
+        self.referralRepository = referralRepository
     }
     
     public var errMessage = PassthroughSubject<String, Never>()
@@ -93,6 +96,15 @@ final public class MyPageUseCase: MyPageUseCaseType {
             }
             .eraseToAnyPublisher()
     }
+    
+    public func getReferralCode() -> AnyPublisher<String, Never> {
+        referralRepository.getReferralCode()
+            .catch { [weak self] _ in
+                self?.errMessage.send("회원탈퇴에 실패했습니다")
+                return Empty<String, Never>()
+            }
+            .eraseToAnyPublisher()
+    }
 }
 
 final public class StubMyPageUseCase: MyPageUseCaseType {
@@ -125,5 +137,9 @@ final public class StubMyPageUseCase: MyPageUseCaseType {
     
     public func changeGuestUniversity(university: String) -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()
+    }
+    
+    public func getReferralCode() -> AnyPublisher<String, Never> {
+        Just("").eraseToAnyPublisher()
     }
 }

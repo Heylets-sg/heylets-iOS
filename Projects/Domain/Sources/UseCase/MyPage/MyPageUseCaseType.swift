@@ -36,4 +36,6 @@ public protocol MyPageUseCaseType {
     // AuthRepository 회원탈퇴 API
     
     func changeGuestUniversity(university: String) -> AnyPublisher<Void, Never>
+    
+    func getReferralCode() -> AnyPublisher<String, Never>
 }

@@ -38,7 +38,8 @@ public final class HeyUseCase: UseCaseType {
         myPageUseCase = MyPageUseCase(
             userRepository: repository.userRepository,
             authRepository: repository.authRepository,
-            guestRepository: repository.guestRepository
+            guestRepository: repository.guestRepository,
+            referralRepository: repository.referralRepository
         )
         
         signUpUseCase = SignUpUseCase(

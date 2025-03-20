@@ -47,6 +47,10 @@ public enum NavigationDestination: Hashable {
     case selectNationality
     case selectGuestUniversity([UniversityInfo])
     case termsOfServiceAgreement(UniversityInfo)
+    
+    //TimeTable
+    case timeTable
+    case inviteCode
 }
 
 extension NavigationDestination {
@@ -107,6 +111,12 @@ extension NavigationDestination {
             return "guest_select_school"
         case .editSchool:
             return "guest_edit_school"
+            
+        //TimeTable
+        case .timeTable:
+            return ""
+        case .inviteCode:
+            return ""
         }
     }
 }

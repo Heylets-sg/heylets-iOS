@@ -25,6 +25,7 @@ public extension Font {
     static let semibold_8: Font = Font(DSKitFontFamily.NotoSansKR.semiBold.font(size: 8))
     
     // medium
+    static let medium_30: Font = Font(DSKitFontFamily.NotoSansKR.medium.font(size: 30))
     static let medium_18: Font = Font(DSKitFontFamily.NotoSansKR.medium.font(size: 18))
     static let medium_16: Font = Font(DSKitFontFamily.NotoSansKR.medium.font(size: 16))
     static let medium_14: Font = Font(DSKitFontFamily.NotoSansKR.medium.font(size: 14))
