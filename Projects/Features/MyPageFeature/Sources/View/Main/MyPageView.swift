@@ -44,9 +44,14 @@ public struct MyPageView: View {
                                 .font(.medium_16)
                                 .foregroundColor(Color.heyBlack)
                                 .padding(.top, 44)
-                                .padding(.bottom, 32)
+                                .padding(.bottom, 12)
                                 .hidden(viewModel.state.isLoading)
                                 .loading(viewModel.state.isLoading)
+                            
+                            MyReferalCodeView(viewModel.referralCode)
+                                .onTapGesture {
+                                    viewModel.send(.copyReferralCodeButtonDidTap)
+                                }
                             
                             if viewModel.isGuestMode {
                                 MyPageGuestView(viewModel: viewModel)
@@ -139,6 +144,36 @@ public struct MyPageTopView: View {
     }
 }
 
+public struct MyReferalCodeView: View {
+    private var code: String?
+    
+    public init(_ code: String?) {
+        self.code = code
+    }
+    public var body: some View {
+        if let code {
+            HStack {
+                Text("Referal code   \(code)")
+                    .font(.regular_12)
+                    .padding(.trailing, 12)
+                
+                Image(uiImage: .icCopy)
+                    .resizable()
+                    .frame(width: 12, height: 12)
+            }
+            .padding(.vertical, 8)
+            .padding(.horizontal, 34)
+            .background(.blue)
+            .clipShape(RoundedRectangle(cornerRadius: 15.5))
+            .padding(.bottom, 30)
+            
+        } else {
+            Spacer()
+                .frame(height: 60)
+        }
+    }
+}
+
 
 
 #Preview {
@@ -147,7 +182,7 @@ public struct MyPageTopView: View {
             navigationRouter: Router.default.navigationRouter,
             windowRouter: Router.default.windowRouter,
             useCase: StubHeyUseCase.stub.myPageUseCase
-//            profileInfo: .init()
+            //            profileInfo: .init()
         )
     )
     .environmentObject(Router.default)

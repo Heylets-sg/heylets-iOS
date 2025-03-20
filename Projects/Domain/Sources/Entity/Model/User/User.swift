@@ -82,6 +82,7 @@ extension AgreementInfo {
     
     static public var agreementList: [AgreementInfo] = [
         .termsOfService,
-        .privacyPolicy
+        .privacyPolicy,
+        .marketing
     ]
 }
