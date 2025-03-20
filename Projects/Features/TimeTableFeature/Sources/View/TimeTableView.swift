@@ -203,22 +203,10 @@ extension TimeTableView {
             TopView(
                 timeTableInfo: $viewModel.timeTableInfo,
                 viewType: $viewModel.viewType,
-                settingAlertType: $viewModel.state.alerts.settingAlertType,
-                profileInfo: $viewModel.state.profile
+//                settingAlertType: $viewModel.state.alerts.settingAlertType,
+                viewModel: viewModel, profileInfo: $viewModel.state.profile
             )
             .environmentObject(container)
         }
     }
 }
-//
-//#Preview {
-//    @State var stub: TimeTableViewType = .main
-//    let useCase = StubHeyUseCase.stub.timeTableUseCase
-//    return TimeTableView(
-//        viewModel: .init(Router.default.windowRouter,useCase),
-//        searchModuleViewModel: .init(useCase),
-//        addCustomModuleViewModel: .init(useCase),
-//        themeViewModel: .init(useCase)
-//    )
-//    .environmentObject(Router.default)
-//}

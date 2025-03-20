@@ -16,7 +16,7 @@ public struct TopView: View {
     @EnvironmentObject var container: Router
     @Binding var timeTableInfo: TimeTableInfo
     @Binding var viewType: TimeTableViewType
-    @Binding var settingAlertType: TimeTableSettingAlertType?
+     var viewModel: TimeTableViewModel
     @Binding var profileInfo: ProfileInfo
     
     public var body: some View {
@@ -60,7 +60,9 @@ public struct TopView: View {
                 
                 Button {
                     withAnimation {
-                        viewType = .setting
+                        viewModel.navigationRouter.push(to: .settingTimeTable)
+                        
+//                        viewType = .setting
                     }
                 } label: {
                     Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
@@ -73,15 +75,15 @@ public struct TopView: View {
             .padding(.top, 38)
         }
         .padding(.horizontal, 16)
-        .sheet(isPresented: .constant(viewType == .setting)) {
-            SettingTimeTableView(
-                viewType: $viewType,
-                settingAlertType: $settingAlertType
-            )
-            .presentationDetents([.fraction(0.37)])
-            .presentationDragIndicator(.hidden)
-            .ignoresSafeArea(.container, edges: .bottom)
-        }
+//        .sheet(isPresented: .constant(viewType == .setting)) {
+//            SettingTimeTableView(
+//                viewType: $viewType,
+//                settingAlertType: $settingAlertType
+//            )
+//            .presentationDetents([.fraction(0.37)])
+//            .presentationDragIndicator(.hidden)
+//            .ignoresSafeArea(.container, edges: .bottom)
+//        }
     }
 }
 

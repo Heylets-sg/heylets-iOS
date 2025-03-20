@@ -6,8 +6,8 @@ import DSKit
 import Core
 
 struct SettingTimeTableView: View {
-    @Binding var viewType: TimeTableViewType
-    @Binding var settingAlertType: TimeTableSettingAlertType?
+//    @Binding var viewType: TimeTableViewType
+//    @Binding var settingAlertType: TimeTableSettingAlertType?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -25,7 +25,7 @@ struct SettingTimeTableView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Button {
                     withAnimation {
-                        viewType = .theme
+//                        viewType = .theme
                     }
                 } label: {
                     Text("Theme")
@@ -35,8 +35,8 @@ struct SettingTimeTableView: View {
                 .padding(.bottom, 25)
                 
                 Button {
-                    settingAlertType = .editTimeTableName
-                    viewType = .main
+//                    settingAlertType = .editTimeTableName
+//                    viewType = .main
                 } label: {
                     Text("Timetable name")
                         .font(.medium_14)
@@ -45,8 +45,8 @@ struct SettingTimeTableView: View {
                 .padding(.bottom, 25)
                 
                 Button {
-                    settingAlertType = .shareURL
-                    viewType = .main
+//                    settingAlertType = .shareURL
+//                    viewType = .main
                 } label: {
                     Text("Share URL")
                         .font(.medium_14)
@@ -55,8 +55,8 @@ struct SettingTimeTableView: View {
                 .padding(.bottom, 25)
                 
                 Button {
-                    settingAlertType = .saveImage
-                    viewType = .main
+//                    settingAlertType = .saveImage
+//                    viewType = .main
                 } label: {
                     Text("Save image")
                         .font(.medium_14)
@@ -65,8 +65,8 @@ struct SettingTimeTableView: View {
                 .padding(.bottom, 25)
                 
                 Button {
-                    settingAlertType = .removeTimeTable
-                    viewType = .main
+//                    settingAlertType = .removeTimeTable
+//                    viewType = .main
                 } label: {
                     Text("Remove all")
                         .font(.medium_14)
@@ -75,28 +75,13 @@ struct SettingTimeTableView: View {
             }
             .padding(.leading, 32)
             .padding(.trailing, 220)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
         }
-        .animation(.easeInOut, value: viewType)
-        .onDisappear {
-            if viewType == .setting {
-                viewType = .main
-            }
-        }
+//        .animation(.easeInOut, value: viewType)
+//        .onDisappear {
+//            if viewType == .setting {
+//                viewType = .main
+//            }
+//        }
     }
 }
-
-//#Preview {
-//    @State var stub: TimeTableViewType = .setting
-//    let useCase = StubHeyUseCase.stub.timeTableUseCase
-//    return TimeTableView(
-//        viewModel: .init(
-//            Router.default.windowRouter,
-//            useCase
-//        ),
-//        searchModuleViewModel: .init(useCase),
-//        addCustomModuleViewModel: .init(useCase),
-//        themeViewModel: .init(
-//            useCase)
-//    )
-//    .environmentObject(Router.default)
-//}

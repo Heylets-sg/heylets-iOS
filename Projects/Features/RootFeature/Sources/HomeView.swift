@@ -61,6 +61,7 @@ struct HomeView: View {
                         let useCase = useCase.timeTableUseCase
                         TimeTableView(
                             viewModel: .init(
+                                router.navigationRouter,
                                 router.windowRouter,
                                 useCase
                             ),

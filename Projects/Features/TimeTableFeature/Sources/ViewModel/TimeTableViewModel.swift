@@ -69,6 +69,7 @@ public class TimeTableViewModel: ObservableObject {
     
     @Published var state = State()
     private let cancelBag = CancelBag()
+    public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType
     private let useCase: TimeTableUseCaseType
     @Published var viewType: TimeTableViewType = .main {
@@ -93,11 +94,13 @@ public class TimeTableViewModel: ObservableObject {
     
     
     public init(
+        _ navigationRouter: NavigationRoutableType,
         _ windowRouter: WindowRoutableType,
         _ useCase: TimeTableUseCaseType
     ) {
         self.useCase = useCase
         self.windowRouter = windowRouter
+        self.navigationRouter = navigationRouter
         
         bindState()
         

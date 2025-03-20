@@ -19,6 +19,7 @@ public class ThemeViewModel: ObservableObject {
         var isShowingSelectInfoView: Bool = false
         var saveSettingInfoSucced: Bool = false
         var selectedTheme: Theme? = nil
+        var isShowingSelectView: Bool = false
     }
     
     enum Action {
