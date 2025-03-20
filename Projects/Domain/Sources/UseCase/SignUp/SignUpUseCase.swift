@@ -15,6 +15,7 @@ final public class SignUpUseCase: SignUpUseCaseType {
     private let authRepository: AuthRepositoryType
     private let userRepository: UserRepositoryType
     private let guestRepository: GuestRepositoryType
+    private let referralRepository: ReferralRepositoryType
     private var cancelBag = CancelBag()
     
     public var errMessage = PassthroughSubject<String, Never>()
@@ -22,11 +23,13 @@ final public class SignUpUseCase: SignUpUseCaseType {
     public init(
         authRepository: AuthRepositoryType,
         userRepository: UserRepositoryType,
-        guestRepository: GuestRepositoryType
+        guestRepository: GuestRepositoryType,
+        referralRepository: ReferralRepositoryType
     ) {
         self.authRepository = authRepository
         self.userRepository = userRepository
         self.guestRepository = guestRepository
+        self.referralRepository = referralRepository
     }
     
     public var userInfo: User = .empty
@@ -129,6 +132,13 @@ final public class SignUpUseCase: SignUpUseCaseType {
             }
             .eraseToAnyPublisher()
     }
+    
+    public func checkReferraalCode(_ code: String) -> AnyPublisher<Bool, Never> {
+        referralRepository.validateReferralCode(code)
+            .map { $0 }
+            .catch { _ in Just(false).eraseToAnyPublisher() }
+            .eraseToAnyPublisher()
+    }
 }
 
 final public class StubSignUpUseCase: SignUpUseCaseType {
@@ -171,5 +181,9 @@ final public class StubSignUpUseCase: SignUpUseCaseType {
     
     public func getUniversityInfo() -> AnyPublisher<UniversityInfo, Never> {
         Just(.empty).eraseToAnyPublisher()
+    }
+    
+    public func checkReferraalCode(_ code: String) -> AnyPublisher<Bool, Never> {
+        Just(true).eraseToAnyPublisher()
     }
 }

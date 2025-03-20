@@ -9,16 +9,20 @@
 import Foundation
 
 public struct ReferralCodeResult: Decodable {
-    let code: String
+    public let code: String
     let referralCount: Int
 }
 
 public struct ValidateReferralCodeResult: Decodable {
-    let isValid: Bool
+    public let isValid: Bool
     let code: String
     let type: String
 }
 
 public struct ValidateReferralCodeRequest: Encodable {
     let code: String
+    
+    public init(_ code: String) {
+        self.code = code
+    }
 }

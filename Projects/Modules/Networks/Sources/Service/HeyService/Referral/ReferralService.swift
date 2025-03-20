@@ -7,3 +7,27 @@
 //
 
 import Foundation
+import Combine
+
+public typealias ReferralService = BaseService<ReferralAPI>
+
+public protocol ReferralServiceType {
+    func getReferralCode() -> NetworkDecodableResponse<ReferralCodeResult>
+    
+    func validateReferralCode(
+        _ request: ValidateReferralCodeRequest
+    ) -> NetworkDecodableResponse<ValidateReferralCodeResult>
+}
+
+extension ReferralService: ReferralServiceType {
+    public func getReferralCode() -> NetworkDecodableResponse<ReferralCodeResult> {
+        requestWithResult(.getReferralCode)
+    }
+    
+    public func validateReferralCode(
+        _ request: ValidateReferralCodeRequest
+    ) -> NetworkDecodableResponse<ValidateReferralCodeResult> {
+        requestWithResult(.validateReferralCode(request))
+    }
+}
+

@@ -41,4 +41,6 @@ public protocol SignUpUseCaseType {
     ) -> AnyPublisher<Void, Never>
     
     func getUniversityInfo() -> AnyPublisher<UniversityInfo, Never>
+    
+    func checkReferraalCode(_ code: String) -> AnyPublisher<Bool, Never>
 }
