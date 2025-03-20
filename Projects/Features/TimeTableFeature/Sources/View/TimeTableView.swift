@@ -120,7 +120,7 @@ public struct TimeTableView: View {
             .setTimeTableHeyNavigation()
             .ignoresSafeArea()
             .overlay {
-                let shouldShowOverlay = !(viewModel.viewType == .theme && !themeViewModel.state.isShowingSelectInfoView)
+                let shouldShowOverlay = !( !themeViewModel.state.isShowingSelectInfoView)
                 && viewModel.viewType != .main
                 && viewModel.viewType != .search
                 
@@ -128,7 +128,7 @@ public struct TimeTableView: View {
                     let opacity = (
                         viewModel.viewType == .detail
                         || viewModel.viewType == .setting
-                        || (viewModel.viewType == .theme && themeViewModel.state.isShowingSelectInfoView)
+                        || ( themeViewModel.state.isShowingSelectInfoView)
                     ) ? 1 : 0
                     
                     Color.heyDimmed
@@ -162,9 +162,9 @@ extension TimeTableView {
             )
             .bottomSheetTransition()
             
-        case .theme:
-            SettingTimeTableInfoView(viewModel: themeViewModel)
-                .bottomSheetTransition()
+//        case .theme:
+//            SettingTimeTableInfoView(viewModel: themeViewModel)
+//                .bottomSheetTransition()
             
         case .addCustom:
             AddCustomModuleView(viewModel: addCustomModuleViewModel)
@@ -184,16 +184,16 @@ extension TimeTableView {
                     viewModel.send(.addCustomModuleButtonDidTap)
                 }
             )
-        case .theme:
-            ThemeTopView(
-//                viewType: $viewModel.viewType,
-                viewModel: themeViewModel
-            )
-            .onAppear {
-                themeViewModel.selectThemeClosure = { themeName in
-                    themeViewModel.send(.selectedTheme(themeName))
-                }
-            }
+//        case .theme:
+//            ThemeTopView(
+////                viewType: $viewModel.viewType,
+//                viewModel: themeViewModel
+//            )
+//            .onAppear {
+//                themeViewModel.selectThemeClosure = { themeName in
+//                    settingViewModel.send(.selectedTheme(themeName))
+//                }
+//            }
         case .addCustom:
             AddCustomModuleTopView(
                 viewType: $viewModel.viewType,

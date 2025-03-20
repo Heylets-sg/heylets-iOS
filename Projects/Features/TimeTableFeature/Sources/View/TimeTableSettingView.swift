@@ -20,10 +20,14 @@ public enum TimeTableSettingViewType: Equatable {
 
 public struct TimeTableSettingView: View {
     @EnvironmentObject var container: Router
+    @ObservedObject var settingViewModel: TimeTableSettingViewModel
     @ObservedObject var themeViewModel: ThemeViewModel
-    @State var viewType: TimeTableSettingViewType = .main
     
-    public init(themeViewModel: ThemeViewModel) {
+    public init(
+        settingViewModel: TimeTableSettingViewModel,
+        themeViewModel: ThemeViewModel
+    ) {
+        self.settingViewModel = settingViewModel
         self.themeViewModel = themeViewModel
     }
     
@@ -33,7 +37,7 @@ public struct TimeTableSettingView: View {
                 Spacer()
                     .frame(height: 60)
                 
-                createTopView(viewType)
+                createTopView(settingViewModel.viewType)
                 
                 Spacer()
                     .frame(height: 19)
@@ -49,31 +53,31 @@ public struct TimeTableSettingView: View {
                     .frame(height: 1)
             }
             .ignoresSafeArea()
+            .overlay {
+                let opacity = settingViewModel.state.dimmed ? 1 : 0
+                
+                Color.heyDimmed
+                    .opacity(Double(opacity))
+                    .ignoresSafeArea()
+            }
             
-            
-            SettingTimeTableAlertView(viewModel: themeViewModel)
+            SettingTimeTableAlertView(viewModel: settingViewModel)
         }
-        .setTimeTableHeyNavigation()
+//        .setTimeTableHeyNavigation()
+        
         .navigationBarBackButtonHidden()
         .ignoresSafeArea()
-        .overlay {
-            Color.heyDimmed
-                .ignoresSafeArea()
+        
+       
+        if settingViewModel.state.hiddenSetUpBottomView {
+            EmptyView()
+        } else {
+            SettingTimeTableView(
+                viewType: $settingViewModel.viewType,
+                settingAlertType: $settingViewModel.settingAlertType
+            )
         }
-        //        .sheet(isPresented: $themeViewModel.state.isShowingSelectView) {
-        //            SettingTimeTableView(
-        ////                viewType: $viewType,
-        ////                settingAlertType: $settingAlertType
-        //            )
-        //            .presentationDetents([.fraction(0.37)])
-        //            .presentationDragIndicator(.hidden)
-        //            .ignoresSafeArea(.container, edges: .bottom)
-        //        }
         
-        //        SettingTimeTableInfoView(viewModel: themeViewModel)
-        //            .bottomSheetTransition()
-        
-        SettingTimeTableView(settingAlertType: $themeViewModel.state.settingAlertType)
     }
 }
 
@@ -88,7 +92,7 @@ extension TimeTableSettingView {
             )
             .onAppear {
                 themeViewModel.selectThemeClosure = { themeName in
-                    themeViewModel.send(.selectedTheme(themeName))
+                    settingViewModel.send(.selectedTheme(themeName))
                 }
             }
         default:
@@ -159,7 +163,22 @@ public struct SettingTopView: View {
     @State var stub: TimeTableViewType = .main
     let useCase = StubHeyUseCase.stub.timeTableUseCase
     return TimeTableSettingView(
+        settingViewModel: .init(useCase, Router.default.navigationRouter),
         themeViewModel: .init(useCase, Router.default.navigationRouter)
     )
     .environmentObject(Router.default)
 }
+
+
+//        .sheet(isPresented: $themeViewModel.state.isShowingSelectView) {
+//            SettingTimeTableView(
+////                viewType: $viewType,
+////                settingAlertType: $settingAlertType
+//            )
+//            .presentationDetents([.fraction(0.37)])
+//            .presentationDragIndicator(.hidden)
+//            .ignoresSafeArea(.container, edges: .bottom)
+//        }
+
+//        SettingTimeTableInfoView(viewModel: themeViewModel)
+//            .bottomSheetTransition()

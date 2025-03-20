@@ -65,9 +65,9 @@ public class TimeTableCoordinator: ObservableObject {
     }
     
     func showThemeView() {
-        withAnimation {
-            viewType = .theme
-        }
+//        withAnimation {
+//            viewType = .theme
+//        }
     }
     
     // 테마 관련 함수들

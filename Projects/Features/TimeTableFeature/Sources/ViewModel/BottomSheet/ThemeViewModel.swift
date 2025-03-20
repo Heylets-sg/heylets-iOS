@@ -16,12 +16,12 @@ import Core
 
 public class ThemeViewModel: ObservableObject {
     struct State {
+        var hiddenSetUpBottomView: Bool = false
         var isShowingSelectInfoView: Bool = false
         var saveSettingInfoSucced: Bool = false
         var selectedTheme: Theme? = nil
         var timeTableName: String = ""
         var isShowingSelectView: Bool = false
-        var settingAlertType: TimeTableSettingAlertType? = nil
     }
     
     enum Action {
@@ -33,19 +33,11 @@ public class ThemeViewModel: ObservableObject {
         case reportButtonDidTap
     }
     
-    enum SettingAction {
-        case saveImage
-        case settingAlertDismiss
-        case editTimeTableName
-        case deleteTimeTable
-        case shareURL
-        case selectedTheme(String)
-    }
-    
     private let useCase: TimeTableUseCaseType
     public var navigationRouter: NavigationRoutableType
     var selectThemeClosure: ((String) -> Void)?
     @Published var selectedThemeColor: [String] = []
+    @Published var viewType: TimeTableSettingViewType = .main
     
     @Published var state = State()
     @Published var themeList: [Theme] = []
@@ -114,57 +106,6 @@ public class ThemeViewModel: ObservableObject {
             
         case .reportButtonDidTap:
             state.isShowingSelectInfoView = false
-        }
-    }
-    
-    func send(_ action: SettingAction) {
-        switch action {
-        case .saveImage:
-            let mainView = MainCaptureContentView(
-                weekList: Week.weekDay,
-                hourList: Array(8...21),
-                timeTable: [],
-                displayType: .MODULE_CODE
-            )
-            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                let image = mainView.captureAsImage(size: CGSize(
-//                    width: CGFloat(self.Week.weekDaY.count * 100),
-//                    height: CGFloat(self.hourList.count * 52)
-//                ))
-//                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-//            }
-            state.settingAlertType = nil
-            
-        case .deleteTimeTable:
-            useCase.deleteAllSection()
-                .receive(on: RunLoop.main)
-                .map { _ in nil}
-                .assign(to: \.state.settingAlertType, on: self)
-                .store(in: cancelBag)
-            
-        case .shareURL:
-            state.settingAlertType = nil
-            
-        case .settingAlertDismiss:
-            state.settingAlertType = nil
-            
-        case .editTimeTableName:
-            Analytics.shared.track(.clickChangeTimetableName(state.timeTableName))
-            useCase.changeTimeTableName(state.timeTableName)
-                .receive(on: RunLoop.main)
-                .handleEvents(receiveOutput: {
-                    Analytics.shared.track(.timetableNameChanged)
-                })
-                .map {  _ in nil }
-                .assign(to: \.state.settingAlertType, on: self)
-                .store(in: cancelBag)
-            
-        case .selectedTheme(let themeName):
-            useCase.getThemeDetailInfo(themeName)
-                .receive(on: RunLoop.main)
-                .assign(to: \.selectedThemeColor, on: self)
-                .store(in: cancelBag)
         }
     }
 }

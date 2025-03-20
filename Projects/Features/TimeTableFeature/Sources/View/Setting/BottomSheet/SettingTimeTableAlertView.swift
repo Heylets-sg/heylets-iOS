@@ -12,68 +12,67 @@ import DSKit
 import Core
 
 public struct SettingTimeTableAlertView: View {
-    @ObservedObject var viewModel: ThemeViewModel
+    @ObservedObject var viewModel: TimeTableSettingViewModel
     
-    public init(viewModel: ThemeViewModel) {
+    public init(viewModel: TimeTableSettingViewModel) {
         self.viewModel = viewModel
     }
     
     public var body: some View {
-        ZStack {
-            if let type = viewModel.state.settingAlertType {
-                Color.heyDimmed
-                    .ignoresSafeArea()
-                
-                Group {
-                    switch type {
-                    case .editTimeTableName:
-                        HeyAlertEnterNameView(
-                            title: "Enter name",
-                            text: $viewModel.state.timeTableName,
-                            primaryAction: ("Close", .gray, { viewModel.send(.settingAlertDismiss) }),
-                            secondaryAction: ("Ok", .primary, { viewModel.send(.editTimeTableName) })
-                        )
-                        
-                    case .shareURL:
-                        Text("URL copied to clipboard")
-                            .font(.medium_18)
-                            .foregroundColor(.heyGray1)
-                            .padding(.horizontal, 24)
-                            .padding(.vertical, 24)
-                            .background(Color.heyWhite)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    withAnimation {
-                                        viewModel.send(.shareURL)
-                                    }
+        VStack {
+            Group {
+                switch viewModel.settingAlertType {
+                case .editTimeTableName:
+                    HeyAlertEnterNameView(
+                        title: "Enter name",
+                        text: $viewModel.state.timeTableName,
+                        primaryAction: ("Close", .gray, { viewModel.send(.settingAlertDismiss) }),
+                        secondaryAction: ("Ok", .primary, { viewModel.send(.editTimeTableName) })
+                    )
+                    
+                case .shareURL:
+                    Text("URL copied to clipboard")
+                        .font(.medium_18)
+                        .foregroundColor(.heyGray1)
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 24)
+                        .background(Color.heyWhite)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                withAnimation {
+                                    viewModel.send(.shareURL)
                                 }
                             }
-                        
-                    case .saveImage:
-                        HeyAlertView(
-                            title: "The timetable has been\nsaved as an image.",
-                            primaryAction: ("Ok", .gray, {
-                                viewModel.send(.saveImage)
-                            })
-                        )
-                        
-                    case .removeTimeTable:
-                        HeyAlertView(
-                            title: "Delete this timetable?",
-                            primaryAction: ("Delete", .primary, { viewModel.send(.deleteTimeTable) }),
-                            secondaryAction: ("Close", .gray, { viewModel.send(.settingAlertDismiss) })
-                        )
-                    }
+                        }
+                    
+                case .saveImage:
+                    HeyAlertView(
+                        title: "The timetable has been\nsaved as an image.",
+                        primaryAction: ("Ok", .gray, {
+                            viewModel.send(.saveImage)
+                        })
+                    )
+                    
+                case .removeTimeTable:
+                    HeyAlertView(
+                        title: "Delete this timetable?",
+                        primaryAction: ("Delete", .primary, { viewModel.send(.deleteTimeTable) }),
+                        secondaryAction: ("Close", .gray, { viewModel.send(.settingAlertDismiss) })
+                    )
+                    
+                case .none:
+                    EmptyView()
                 }
-                .padding(.horizontal, 44)
-                .shadow(radius: 10)
-                .onAppear {
-                    if type != .shareURL {
-                        Analytics.shared.track(.screenView(type.rawValue, .modal))
-                    }
+            }
+            .padding(.horizontal, 44)
+            .shadow(radius: 10)
+            .onAppear {
+                if viewModel.settingAlertType != .shareURL {
+                    Analytics.shared.track(.screenView(viewModel.settingAlertType.rawValue, .modal))
                 }
             }
         }
     }
 }
+

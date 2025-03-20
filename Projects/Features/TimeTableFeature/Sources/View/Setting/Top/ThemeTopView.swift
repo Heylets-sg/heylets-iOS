@@ -13,7 +13,6 @@ import DSKit
 import BaseFeatureDependency
 
 struct ThemeTopView: View {
-//    @Binding var viewType: TimeTableViewType
     @ObservedObject var viewModel: ThemeViewModel
     
     var body: some View {

@@ -36,11 +36,6 @@ public struct InviteCodeView: View {
                     .frame(height: 92)
                 
                 Button {
-                    NotificationCenter.default.post(
-                                            name: .timeTableViewTypeChanged,
-                                            object: nil,
-                                            userInfo: ["viewType": TimeTableViewType.theme]
-                                        )
                     viewModel.send(.backButtonDidTap)
                 } label: {
                     Image(uiImage: .icBack)
