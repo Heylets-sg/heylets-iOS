@@ -63,6 +63,7 @@ public class MYSEnterPersonalInfoViewModel: ObservableObject {
         case .genderButtonDidTap(let gender):
             self.gender = gender
             
+            
         case .birthDayDidChange(let date):
             self.birth = date
         }
@@ -71,11 +72,6 @@ public class MYSEnterPersonalInfoViewModel: ObservableObject {
     private func observe() {
         weak var owner = self
         guard let owner else { return }
-        
-        $gender
-            .map { $0 != nil }
-            .assign(to: \.state.continueButtonIsEnabled, on: owner)
-            .store(in: cancelBag)
         
         $password
             .map { $0.isEmpty ? .idle : ($0.isValidPassword() ? .valid : .invalid) }

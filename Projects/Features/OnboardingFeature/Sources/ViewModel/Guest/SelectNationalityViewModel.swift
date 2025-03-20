@@ -43,6 +43,8 @@ public class SelectNationalityViewModel: ObservableObject {
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
+        
+        observe()
     }
     
     // MARK: - Methods
@@ -77,5 +79,16 @@ public class SelectNationalityViewModel: ObservableObject {
             self.nationality = nationality
             state.continueButtonIsEnabled = true
         }
+    }
+    
+    private func observe() {
+        weak var owner = self
+        guard let owner else { return }
+        
+        $nationality
+            .map { $0 != nil }
+            .assign(to: \.state.continueButtonIsEnabled, on: owner)
+            .store(in: cancelBag)
+        
     }
 }

@@ -92,5 +92,10 @@ public enum Paths {
     static let testGuestSignUp = "api/v1/admin/auth/guest/signup/test"
     
     
+    //MARK: Referral
+    
+    static let getReferralCode = "api/v1/referrals/my-code"
+    static let validateReferralCode = "api/v1/referrals/validate"
+    
     
 }

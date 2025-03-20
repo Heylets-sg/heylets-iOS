@@ -28,9 +28,9 @@ public struct MYSEnterPersonalInfoView: View {
     public var body: some View {
         OnboardingBaseView(content: {
             Spacer()
-                .frame(height: 8)
+                .frame(height: 16)
             
-            VStack(spacing: 32) {
+            VStack(spacing: 16) {
                 PasswordField(
                     password: $viewModel.password,
                     showPassword: $showPassword,
@@ -43,6 +43,9 @@ public struct MYSEnterPersonalInfoView: View {
                     textFieldState: $viewModel.state.checkPasswordIsValid
                 )
             }
+            
+            Spacer()
+                .frame(height: 40)
             
             HStack(spacing: 16) {
                 ForEach(Gender.allCases, id: \.self) { gender in
@@ -67,7 +70,7 @@ public struct MYSEnterPersonalInfoView: View {
                 }
                 .labelsHidden()
             }
-        }, titleText: "Please check your gender/birth",
+        }, titleText: "Please enter your account\ninformation!",
         nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
         nextButtonAction: { viewModel.send(.nextButtonDidTap) }
         )
@@ -95,7 +98,7 @@ fileprivate struct GenderButton: View {
 }
 
 #Preview {
-    SGEnterPersonalInfoView(
+    MYSEnterPersonalInfoView(
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
             useCase: StubHeyUseCase.stub.signUpUseCase
