@@ -43,7 +43,9 @@ public final class HeyUseCase: UseCaseType {
         
         signUpUseCase = SignUpUseCase(
             authRepository: repository.authRepository,
-            guestRepository: repository.guestRepository
+            userRepository: repository.userRepository,
+            guestRepository: repository.guestRepository,
+            referralRepository: repository.referralRepository
         )
         
         signInUseCase = SignInUseCase(

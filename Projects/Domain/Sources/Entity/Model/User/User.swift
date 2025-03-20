@@ -15,7 +15,7 @@ public struct User: Hashable, Equatable {
     public var gender: String
     public var birth: Date
     public var nickName: String
-    public var university: String
+    public var university: UniversityInfo
     public var profileImage: UIImage?
     public var agreements: [AgreementInfo]
     public var referralCode: String?
@@ -26,7 +26,7 @@ public struct User: Hashable, Equatable {
         gender: String,
         birth: Date,
         nickName: String,
-        university: String,
+        university: UniversityInfo,
         profileImage: UIImage? = nil,
         agreements: [AgreementInfo],
         referralCode: String? = nil

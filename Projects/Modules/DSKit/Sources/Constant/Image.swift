@@ -58,4 +58,11 @@ public extension UIImage {
     static let nus = DSKitAsset.uniNus.image
     static let ntu = DSKitAsset.uniNtu.image
     static let smu = DSKitAsset.uniSmu.image
+    
+    static let badgeNUS = DSKitAsset.badgeNUS.image
+    static let badgeNTU = DSKitAsset.badgeNTU.image
+    static let badgeSMU = DSKitAsset.badgeSMU.image
+    static let badgeIIUM = DSKitAsset.badgeIIUM.image
+    static let badgeUiTM = DSKitAsset.badgeUiTM.image
+    static let badgeUM = DSKitAsset.badgeUM.image
 }

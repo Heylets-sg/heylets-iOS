@@ -15,40 +15,22 @@ import DSKit
 extension UniversityInfo {
     public var icon: UIImage {
         switch self {
-        case .NUS:
-            return .nus
-        case .NTU:
-            return .ntu
-        case .SMU:
-            return .smu
-        case .empty:
-            return .icSchool
+        case .NUS: return .nus
+        case .NTU: return .ntu
+        case .SMU: return .smu
+        default: return .icSchool
         }
     }
     
-    public var textColor: String {
+    public var badgeImage: UIImage {
         switch self {
-        case .NUS:
-            return "#DB812E"
-        case .NTU:
-            return "#FFFFFF"
-        case .SMU:
-            return "#FFFFFF"
-        case .empty:
-            return "#FFFFFF"
-        }
-    }
-    
-    public var backgroundColor: String {
-        switch self {
-        case .NUS:
-            return "#1B3D76"
-        case .NTU:
-            return "#E01932"
-        case .SMU:
-            return "#1B286A"
-        case .empty:
-            return "#FFFFFF"
+        case .NUS: return .badgeNUS
+        case .NTU: return .badgeNTU
+        case .SMU: return .badgeSMU
+        case .UiTM: return .badgeUiTM
+        case .IIUM: return .badgeIIUM
+        case .UM: return .badgeUM
+        default: return .logo
         }
     }
 }

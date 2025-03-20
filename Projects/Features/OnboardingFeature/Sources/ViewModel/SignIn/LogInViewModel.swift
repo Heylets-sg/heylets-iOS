@@ -72,6 +72,7 @@ public class LogInViewModel: ObservableObject {
             } else {
                 windowRouter.switch(to: .timetable)
             }
+            
         case .loginButtonDidTap:
             Analytics.shared.track(.clickLogin)
             useCase.logIn(id, password)
@@ -82,13 +83,16 @@ public class LogInViewModel: ObservableObject {
                     self?.windowRouter.switch(to: .timetable)
                 })
                 .store(in: cancelBag)
+            
         case .dismissToastView:
             state.errMessage = ""
+            
         case .forgotPasswordButtonDidTap:
             navigationRouter.push(to: .resetPWVerifyEmail)
+            
         case .signUpButtonDidTap:
             Analytics.shared.track(.clickSignUp)
-            navigationRouter.push(to: .selectUniversity)
+            navigationRouter.push(to: .selectNationality)
         }
     }
     

@@ -17,6 +17,7 @@ public class TermsOfServiceViewModel: ObservableObject {
     struct State {
         var termsOfServiceIsAgree = false
         var personalInformationIsAgree = false
+        var marketingIsAgree = false
         var allAgree = false
         var continueButtonIsEnabled = false
         var errMessage = ""
@@ -25,6 +26,7 @@ public class TermsOfServiceViewModel: ObservableObject {
     enum Action {
         case termsOfServiceDidTap
         case personalInformationDidTap
+        case marketingDidTap
         case allAgreeButtonDidTap
         case agreeButtonDidTap
     }
@@ -35,7 +37,7 @@ public class TermsOfServiceViewModel: ObservableObject {
     public var windowRouter: WindowRoutableType
     public var navigationRouter: NavigationRoutableType
     private var useCase: SignUpUseCaseType
-    private var university: String
+    private var university: UniversityInfo
     private let cancelBag = CancelBag()
     
     // MARK: - Init
@@ -43,7 +45,7 @@ public class TermsOfServiceViewModel: ObservableObject {
         navigationRouter: NavigationRoutableType,
         windowRouter: WindowRoutableType,
         useCase: SignUpUseCaseType,
-        university: String
+        university: UniversityInfo
     ) {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
@@ -58,6 +60,7 @@ public class TermsOfServiceViewModel: ObservableObject {
         switch action {
         case .agreeButtonDidTap:
             let agreementList = AgreementInfo.agreementList
+            useCase.userInfo.university = university
             if useCase.userInfo.email.isEmpty {
                 Analytics.shared.track(.clickStartHeylets)
                 useCase.startGuestMode(university: university, agreements: agreementList)
@@ -78,16 +81,22 @@ public class TermsOfServiceViewModel: ObservableObject {
             }
         case .termsOfServiceDidTap:
             state.termsOfServiceIsAgree.toggle()
-            state.allAgree = state.termsOfServiceIsAgree && state.personalInformationIsAgree
+            configButtonState()
             
         case .personalInformationDidTap:
             state.personalInformationIsAgree.toggle()
-            state.allAgree = state.termsOfServiceIsAgree && state.personalInformationIsAgree
+            configButtonState()
+            
+        case .marketingDidTap:
+            state.marketingIsAgree.toggle()
+            configButtonState()
             
         case .allAgreeButtonDidTap:
             state.allAgree.toggle()
             state.termsOfServiceIsAgree = state.allAgree
             state.personalInformationIsAgree =  state.allAgree
+            state.marketingIsAgree = state.allAgree
+            configButtonState()
         }
     }
     
@@ -96,6 +105,13 @@ public class TermsOfServiceViewModel: ObservableObject {
 //            .receive(on: RunLoop.main)
 //            .assign(to: \.state.errMessage, on: self)
 //            .store(in: cancelBag)
+    }
+}
+
+extension TermsOfServiceViewModel {
+    func configButtonState()  {
+        state.continueButtonIsEnabled = state.termsOfServiceIsAgree && state.personalInformationIsAgree
+        state.allAgree = state.termsOfServiceIsAgree && state.personalInformationIsAgree && state.marketingIsAgree
     }
 }
 

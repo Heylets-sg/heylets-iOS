@@ -57,7 +57,6 @@ extension View {
     }
 }
 
-
 //캡쳐
 extension View {
     public func captureAsImage(size: CGSize) -> UIImage {

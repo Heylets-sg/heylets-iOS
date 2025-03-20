@@ -16,7 +16,7 @@ extension User {
             gender: "",
             birth: Date(),
             nickName: "",
-            university: "",
+            university: UniversityInfo.empty,
             profileImage: nil,
             agreements: []
         )

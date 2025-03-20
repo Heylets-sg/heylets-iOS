@@ -19,7 +19,7 @@ extension User {
                 nickname: nickName,
                 email: email,
                 password: password,
-                university: university,
+                university: university.rawValue,
                 sex: gender,
                 birth: birth.toInt(),
                 agreements: agreements.map { $0.toDTO() }

@@ -13,7 +13,7 @@ public enum TextFieldState {
     case valid
     case invalid
     
-    var strokeColor: Color {
+    public var strokeColor: Color {
         switch self {
         case .idle:
             return .clear

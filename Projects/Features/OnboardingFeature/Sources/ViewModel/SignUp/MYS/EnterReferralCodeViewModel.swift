@@ -1,0 +1,78 @@
+//
+//  EnterReferralCodeViewModel.swift
+//  OnboardingFeatureInterface
+//
+//  Created by 류희재 on 3/20/25.
+//  Copyright © 2025 Heylets-iOS. All rights reserved.
+//
+
+import Foundation
+import SwiftUI
+import Combine
+
+import BaseFeatureDependency
+import Domain
+import DSKit
+import Core
+
+public class EnterReferralCodeViewModel: ObservableObject {
+    struct State {
+        var referralIsValid: TextFieldState = .idle
+        var referralMessage: String = ""
+    }
+    
+    enum Action {
+        case backButtonDidTap
+        case skipButtonDidTap
+        case nextButtonDidTap
+    }
+    
+    @Published var referralCode = ""
+    
+    @Published var state = State()
+    public var navigationRouter: NavigationRoutableType
+    private var useCase: SignUpUseCaseType
+    private let cancelBag = CancelBag()
+    
+    public init(
+        navigationRouter: NavigationRoutableType,
+        useCase: SignUpUseCaseType
+    ) {
+        self.navigationRouter = navigationRouter
+        self.useCase = useCase
+        
+        observe()
+    }
+    
+    func send(_ action: Action) {
+        switch action {
+        case .backButtonDidTap:
+            navigationRouter.pop()
+            
+        case .nextButtonDidTap, .skipButtonDidTap:
+            useCase.signUp()
+                .sink(receiveValue: { [weak self] _ in
+                    self?.navigationRouter.popToRootView()
+                })
+                .store(in: cancelBag)
+        }
+    }
+    
+    private func observe() {
+        $referralCode
+            .filter { $0.count == 6}
+            .flatMap(useCase.checkReferraalCode)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] isValid in
+                if isValid {
+                    self?.state.referralIsValid = .valid
+                    self?.state.referralMessage = "Check which themes you received on the\ntimetable theme page!"
+                } else {
+                    self?.state.referralIsValid = .invalid
+                    self?.state.referralMessage = "Invalid invite code, Please check again!"
+                }
+            })
+            .store(in: cancelBag)
+    }
+}
+

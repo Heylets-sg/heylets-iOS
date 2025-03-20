@@ -13,26 +13,35 @@ import Core
 
 final public class SignUpUseCase: SignUpUseCaseType {
     private let authRepository: AuthRepositoryType
+    private let userRepository: UserRepositoryType
     private let guestRepository: GuestRepositoryType
+    private let referralRepository: ReferralRepositoryType
     private var cancelBag = CancelBag()
     
     public var errMessage = PassthroughSubject<String, Never>()
     
     public init(
         authRepository: AuthRepositoryType,
-        guestRepository: GuestRepositoryType
+        userRepository: UserRepositoryType,
+        guestRepository: GuestRepositoryType,
+        referralRepository: ReferralRepositoryType
     ) {
         self.authRepository = authRepository
+        self.userRepository = userRepository
         self.guestRepository = guestRepository
+        self.referralRepository = referralRepository
     }
     
     public var userInfo: User = .empty
     
+    public func checkGuestMode() -> AnyPublisher<Bool, Never> {
+        return guestRepository.checkGuestMode()
+    }
+    
     public func signUp() -> AnyPublisher<Void, Never> {
-        guestRepository.checkGuestMode()  // 게스트 모드 여부를 확인
+        guestRepository.checkGuestMode()
             .flatMap { [weak self] isGuest in
                 guard let self else { return Empty<Void, Never>().eraseToAnyPublisher() }
-                print("isGuest: \(isGuest)")
                 if isGuest {
                     return self.guestRepository.convertToMember(userInfo)
                         .handleEvents(receiveOutput: { _ in
@@ -100,9 +109,9 @@ final public class SignUpUseCase: SignUpUseCaseType {
             .eraseToAnyPublisher()
     }
     
-    public func startGuestMode(university: String, agreements: [AgreementInfo]) -> AnyPublisher<Void, Never> {
+    public func startGuestMode(university: UniversityInfo, agreements: [AgreementInfo]) -> AnyPublisher<Void, Never> {
         guestRepository.startGuestMode(
-            university: university,
+            university: university.rawValue,
             agreements: agreements
         )
         .map { _ in }
@@ -112,11 +121,35 @@ final public class SignUpUseCase: SignUpUseCaseType {
         }
         .eraseToAnyPublisher()
     }
+    
+    public func getUniversityInfo() -> AnyPublisher<UniversityInfo, Never> {
+        userRepository.getProfile()
+            .map { $0.university }
+            .catch { [weak self] error in
+                self?.errMessage.send("대학교를 찾지 못했습니다 \(error)")
+                return Just(UniversityInfo.empty).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func checkReferraalCode(_ code: String) -> AnyPublisher<Bool, Never> {
+        referralRepository.validateReferralCode(code)
+            .map { $0 }
+            .handleEvents(receiveOutput: { [weak self] _ in
+                self?.userInfo.referralCode = code
+            })
+            .catch { _ in Just(false).eraseToAnyPublisher() }
+            .eraseToAnyPublisher()
+    }
 }
 
 final public class StubSignUpUseCase: SignUpUseCaseType {
     public var userInfo: User = .empty
     public var errMessage = PassthroughSubject<String, Never>()
+    
+    public func checkGuestMode() -> AnyPublisher<Bool, Never> {
+        Just(true).eraseToAnyPublisher()
+    }
     
     public func signUp() -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()
@@ -142,9 +175,17 @@ final public class StubSignUpUseCase: SignUpUseCaseType {
     }
     
     public func startGuestMode(
-        university: String,
+        university: UniversityInfo,
         agreements: [AgreementInfo]
     ) -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()
+    }
+    
+    public func getUniversityInfo() -> AnyPublisher<UniversityInfo, Never> {
+        Just(.empty).eraseToAnyPublisher()
+    }
+    
+    public func checkReferraalCode(_ code: String) -> AnyPublisher<Bool, Never> {
+        Just(true).eraseToAnyPublisher()
     }
 }

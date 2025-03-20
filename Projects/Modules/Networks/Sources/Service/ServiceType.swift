@@ -17,6 +17,7 @@ public protocol ServiceType {
     var userService: UserServiceType { get }
     var guestService: GuestServiceType { get }
     var todoService: TodoServiceType { get }
+    var referralService: ReferralServiceType { get }
     
 }
 
@@ -32,6 +33,6 @@ final public class HeyService: ServiceType {
     public var userService: UserServiceType = UserService()
     public var guestService: GuestServiceType = GuestService()
     public var todoService: TodoServiceType = TodoService()
-    
+    public var referralService: ReferralServiceType = ReferralService()
 }
 

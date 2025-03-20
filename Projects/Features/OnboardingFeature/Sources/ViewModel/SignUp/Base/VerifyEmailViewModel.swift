@@ -37,29 +37,16 @@ public class VerifyEmailViewModel: ObservableObject {
     private var useCase: SignUpUseCaseType
     private let cancelBag = CancelBag()
     
-    let domainList: [String] = [
-        "u.nus.edu",
-        "e.ntu.edu.sg",
-        "smu.edu.sg",
-        "smu.edu.sg",
-        "accountancy.smu.edu.sg",
-        "computing.smu.edu.sg",
-        "economics.smu.edu.sg",
-        "scis.smu.edu.sg",
-        "law.smu.edu.sg",
-        "business.edu.sg",
-        "socsc.smu.edu.sg",
-        "business.smu.edu.sg",
-        "gmail.com",
-        "naver.com"
-    ]
+    var domainList: [String] = []
     
     public init(
         navigationRouter: NavigationRoutableType,
-        useCase: SignUpUseCaseType
+        useCase: SignUpUseCaseType,
+        nationality: NationalityInfo
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
+        self.domainList = nationality.domainList
         
         observe()
         bindState()
@@ -73,15 +60,15 @@ public class VerifyEmailViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            useCase.requestEmailVerifyCode(email)
-                .sink(receiveValue: { _ in
-                    owner.useCase.userInfo.email = owner.email
-                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email))
-                })
-                .store(in: cancelBag)
+//            useCase.requestEmailVerifyCode(email)
+//                .sink(receiveValue: { _ in
+//                    owner.useCase.userInfo.email = owner.email
+//                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email))
+//                })
+//                .store(in: cancelBag)
             //MARK: Test용 삭제 필수
-            //            owner.useCase.userInfo.email = owner.email
-            //            owner.navigationRouter.push(to: .enterPersonalInfo)
+            owner.useCase.userInfo.email = owner.email
+            owner.navigationRouter.push(to: .enterPersonalInfo_MYS)
         case .domainListButtonDidTap:
             state.domainListViewIsVisible.toggle()
         case .dismissFocus:

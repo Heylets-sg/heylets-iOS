@@ -40,7 +40,7 @@ struct SelectGuestUnversityView: View {
                 }
                 .padding(.bottom, 39)
                 
-                ForEach(viewModel.allUniversityItems, id: \.self) { university in
+                ForEach(viewModel.universityList, id: \.self) { university in
                     let isSelected = university == viewModel.university
                     HStack(spacing: 0) {
                         VStack {
@@ -104,7 +104,10 @@ struct SelectGuestUnversityView: View {
 
 #Preview {
     SelectGuestUnversityView(
-        viewModel: .init(navigationRouter: Router.default.navigationRouter)
+        viewModel: .init(
+            navigationRouter: Router.default.navigationRouter,
+            universityList: [.IIUM, .UiTM, .UM]
+        )
     )
     .environmentObject(Router.default)
 }

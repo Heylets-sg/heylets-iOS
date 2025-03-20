@@ -1,9 +1,9 @@
 //
-//  EnterPersonalInfoViewModel.swift
-//  OnboardingFeature
+//  MYSEnterPersonalInfoViewModel.swift
+//  OnboardingFeatureInterface
 //
-//  Created by 류희재 on 12/19/24.
-//  Copyright © 2024 Heylets-iOS. All rights reserved.
+//  Created by 류희재 on 3/19/25.
+//  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
 import Foundation
@@ -11,27 +11,13 @@ import Combine
 
 import BaseFeatureDependency
 import Domain
+import DSKit
 import Core
 
-enum Gender: String {
-    case men = "M"
-    case women = "F"
-    case others = "O"
-    
-    var title: String {
-        switch self {
-        case .men:
-            return "Men"
-        case .women:
-            return "Women"
-        case .others:
-            return "Others"
-        }
-    }
-}
-
-public class EnterPersonalInfoViewModel: ObservableObject {
+public class MYSEnterPersonalInfoViewModel: ObservableObject {
     struct State {
+        var passwordIsValid: TextFieldState = .idle
+        var checkPasswordIsValid: TextFieldState = .idle
         var continueButtonIsEnabled: Bool = false
     }
     
@@ -42,8 +28,11 @@ public class EnterPersonalInfoViewModel: ObservableObject {
         case birthDayDidChange(Date)
     }
     
+    var genderList: [Gender] = [.men, .women, .others]
     @Published var gender: Gender?
     @Published var birth: Date = Date()
+    @Published var password = ""
+    @Published var checkPassword = ""
     
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
@@ -64,13 +53,18 @@ public class EnterPersonalInfoViewModel: ObservableObject {
         switch action {
         case .backButtonDidTap:
             navigationRouter.pop()
+            
         case .nextButtonDidTap:
             guard let gender else { return }
+            useCase.userInfo.password = password
             useCase.userInfo.gender = gender.rawValue
             useCase.userInfo.birth = birth
-            navigationRouter.push(to: .enterIdPassword)
+            navigationRouter.push(to: .enterReferralCode)
+            
         case .genderButtonDidTap(let gender):
             self.gender = gender
+            
+            
         case .birthDayDidChange(let date):
             self.birth = date
         }
@@ -80,10 +74,23 @@ public class EnterPersonalInfoViewModel: ObservableObject {
         weak var owner = self
         guard let owner else { return }
         
-        $gender
-            .map { $0 != nil }
-            .assign(to: \.state.continueButtonIsEnabled, on: owner
-            )
+        $password
+            .map { $0.isEmpty ? .idle : ($0.isValidPassword() ? .valid : .invalid) }
+            .assign(to: \.state.passwordIsValid, on: owner)
+            .store(in: cancelBag)
+        
+        $checkPassword
+            .map { $0.isEmpty ? .idle : ($0 == self.password ? .valid : .invalid) }
+            .assign(to: \.state.checkPasswordIsValid, on: owner)
+            .store(in: cancelBag)
+        
+        Publishers.CombineLatest3($gender, $password, $checkPassword)
+            .map { _ in
+                owner.gender != nil &&
+                owner.state.passwordIsValid == .valid &&
+                owner.state.checkPasswordIsValid == .valid
+            }
+            .assign(to: \.state.continueButtonIsEnabled, on: owner)
             .store(in: cancelBag)
     }
 }

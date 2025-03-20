@@ -26,13 +26,8 @@ public struct TopView: View {
                     .frame(height: 34)
                 
                 HStack {
-                    Text(profileInfo.university.rawValue)
-                        .font(.bold_8)
-                        .foregroundColor(Color.init(hex: profileInfo.university.textColor))
-                        .padding(.horizontal, 5)
-                        .padding(.vertical, 2)
-                        .background(Color.init(hex: profileInfo.university.backgroundColor))
-                        .clipShape(RoundedRectangle(cornerRadius: 1.2))
+                    Image(uiImage: profileInfo.university.badgeImage)
+                        .resizable()
                         .frame(width: 28, height: 14)
                         
                     

@@ -26,10 +26,16 @@ public enum NavigationDestination: Hashable {
     
     // Sign Up
     case selectUniversity
-    case verifyEmail
+    case verifyEmail(NationalityInfo)
     case signUpEnterSecurityCode(String)
-    case enterPersonalInfo
+    
+    // 싱가폴
+    case enterPersonalInfo_SG
     case enterIdPassword
+    
+    // 말레이시아
+    case enterPersonalInfo_MYS
+    case enterReferralCode
     
     // Log IN
     case login
@@ -38,8 +44,9 @@ public enum NavigationDestination: Hashable {
     case resetPassword(String)
     
     //Guest
-    case selectGuestUniversity
-    case termsOfServiceAgreement(String)
+    case selectNationality
+    case selectGuestUniversity([UniversityInfo])
+    case termsOfServiceAgreement(UniversityInfo)
 }
 
 extension NavigationDestination {
@@ -74,12 +81,14 @@ extension NavigationDestination {
             return "verify_email"
         case .signUpEnterSecurityCode:
             return "enter_security_code"
-        case .enterPersonalInfo:
+        case .enterPersonalInfo_SG, .enterPersonalInfo_MYS:
             return "enter_pll"
         case .enterIdPassword:
             return "enter_account_info"
         case .termsOfServiceAgreement:
             return "terms_of_service"
+        case .enterReferralCode:
+            return "enter_referral"
             
         // Log In
         case .login:
@@ -92,6 +101,8 @@ extension NavigationDestination {
             return "reset_pw_verify_email"
             
         // Guest
+        case .selectNationality:
+            return ""
         case .selectGuestUniversity:
             return "guest_select_school"
         case .editSchool:

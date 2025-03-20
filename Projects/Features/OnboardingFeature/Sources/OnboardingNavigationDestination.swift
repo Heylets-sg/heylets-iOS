@@ -24,14 +24,14 @@ struct OnboardingNavigationRoutingView: View {
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
                     useCase: useCase.signUpUseCase
-                    
                 )
             )
-        case .verifyEmail:
+        case .verifyEmail(let nationality):
             VerifyEmailView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    useCase: useCase.signUpUseCase
+                    useCase: useCase.signUpUseCase,
+                    nationality: nationality
                 )
             )
         case .signUpEnterSecurityCode(let email):
@@ -42,8 +42,10 @@ struct OnboardingNavigationRoutingView: View {
                     email: email
                 )
             )
-        case .enterPersonalInfo:
-            EnterPersonalInfoView(
+            
+        // 싱가폴
+        case .enterPersonalInfo_SG:
+            SGEnterPersonalInfoView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
                     useCase: useCase.signUpUseCase
@@ -51,6 +53,23 @@ struct OnboardingNavigationRoutingView: View {
             )
         case .enterIdPassword:
             EnterIdPasswordView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    useCase: useCase.signUpUseCase
+                )
+            )
+        
+        // 말레이시아
+        case .enterPersonalInfo_MYS:
+            MYSEnterPersonalInfoView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    useCase: useCase.signUpUseCase
+                )
+            )
+            
+        case .enterReferralCode:
+            EnterReferralCodeView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
                     useCase: useCase.signUpUseCase
@@ -89,10 +108,20 @@ struct OnboardingNavigationRoutingView: View {
                     email: email
                 )
             )
-        case .selectGuestUniversity:
+            
+        case .selectNationality:
+            SelectNationalityView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    useCase: useCase.signUpUseCase
+                )
+            )
+            
+        case .selectGuestUniversity(let universityList):
             SelectGuestUnversityView(
                 viewModel: .init(
-                    navigationRouter: router.navigationRouter
+                    navigationRouter: router.navigationRouter,
+                    universityList: universityList
                 )
             )
         case .termsOfServiceAgreement(let university):

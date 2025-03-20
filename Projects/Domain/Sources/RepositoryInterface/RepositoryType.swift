@@ -18,4 +18,5 @@ public protocol RepositoryType {
     var userRepository: UserRepositoryType { get }
     var guestRepository: GuestRepositoryType { get }
     var todoRepository: TodoRepositoryType { get }
+    var referralRepository: ReferralRepositoryType { get }
 }

@@ -1,34 +1,54 @@
 //
-//  EnterPersonalInfoView.swift
+//  MYSEnterPersonalInfoView.swift
 //  OnboardingFeature
 //
-//  Created by 류희재 on 12/18/24.
-//  Copyright © 2024 Heylets-iOS. All rights reserved.
+//  Created by 류희재 on 3/19/25.
+//  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
+
+import Foundation
 
 import SwiftUI
 
 import BaseFeatureDependency
 import Domain
+import DSKit
 
-public struct EnterPersonalInfoView: View {
+public struct MYSEnterPersonalInfoView: View {
     @EnvironmentObject var container: Router
-    @ObservedObject var viewModel: EnterPersonalInfoViewModel
-    var genderList: [Gender] = [.men, .women, .others]
+    @ObservedObject var viewModel: MYSEnterPersonalInfoViewModel
     
     @State var date = Date()
+    @State var showPassword = false
     
-    public init(viewModel: EnterPersonalInfoViewModel) {
+    public init(viewModel: MYSEnterPersonalInfoViewModel) {
         self.viewModel = viewModel
     }
     
     public var body: some View {
         OnboardingBaseView(content: {
             Spacer()
-                .frame(height: 8)
+                .frame(height: 16)
+            
+            VStack(spacing: 16) {
+                PasswordField(
+                    password: $viewModel.password,
+                    showPassword: $showPassword,
+                    textFieldState: $viewModel.state.passwordIsValid
+                )
+                
+                SecurityPasswordField(
+                    password: $viewModel.checkPassword,
+                    placeHolder: "Confirm Password",
+                    textFieldState: $viewModel.state.checkPasswordIsValid
+                )
+            }
+            
+            Spacer()
+                .frame(height: 40)
             
             HStack(spacing: 16) {
-                ForEach(genderList, id: \.self) { gender in
+                ForEach(Gender.allCases, id: \.self) { gender in
                     GenderButton(
                         title: gender.title,
                         isSelected: gender == viewModel.gender,
@@ -50,7 +70,7 @@ public struct EnterPersonalInfoView: View {
                 }
                 .labelsHidden()
             }
-        }, titleText: "Please check your gender/birth", 
+        }, titleText: "Please enter your account\ninformation!",
         nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
         nextButtonAction: { viewModel.send(.nextButtonDidTap) }
         )
@@ -78,7 +98,7 @@ fileprivate struct GenderButton: View {
 }
 
 #Preview {
-    EnterPersonalInfoView(
+    MYSEnterPersonalInfoView(
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
             useCase: StubHeyUseCase.stub.signUpUseCase
