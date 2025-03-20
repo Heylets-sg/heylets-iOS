@@ -102,6 +102,26 @@ public class TimeTableViewModel: ObservableObject {
         bindState()
         
         timeTable = sectionList.createTimeTableCellList()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleViewTypeChange),
+            name: .timeTableViewTypeChanged,
+            object: nil
+        )
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc private func handleViewTypeChange(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let viewType = userInfo["viewType"] as? TimeTableViewType {
+            DispatchQueue.main.async { [weak self] in
+                self?.viewType = viewType
+            }
+        }
     }
     
     func send(_ action: Action) {

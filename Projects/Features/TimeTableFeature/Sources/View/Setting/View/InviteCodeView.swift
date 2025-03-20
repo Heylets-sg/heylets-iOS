@@ -14,11 +14,17 @@ import BaseFeatureDependency
 import Domain
 import DSKit
 
+extension Notification.Name {
+    static let timeTableViewTypeChanged = Notification.Name("TimeTableViewTypeChanged")
+}
+
 public struct InviteCodeView: View {
     @EnvironmentObject var container: Router
     @ObservedObject var viewModel: InviteCodeViewModel
     
-    public init(viewModel: InviteCodeViewModel) {
+    public init(
+        viewModel: InviteCodeViewModel
+    ) {
         self.viewModel = viewModel
     }
     
@@ -30,6 +36,11 @@ public struct InviteCodeView: View {
                     .frame(height: 92)
                 
                 Button {
+                    NotificationCenter.default.post(
+                                            name: .timeTableViewTypeChanged,
+                                            object: nil,
+                                            userInfo: ["viewType": TimeTableViewType.theme]
+                                        )
                     viewModel.send(.backButtonDidTap)
                 } label: {
                     Image(uiImage: .icBack)
