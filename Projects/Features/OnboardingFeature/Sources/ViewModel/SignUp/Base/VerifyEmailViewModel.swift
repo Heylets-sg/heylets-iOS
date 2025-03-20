@@ -60,15 +60,15 @@ public class VerifyEmailViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            useCase.requestEmailVerifyCode(email)
-                .sink(receiveValue: { _ in
-                    owner.useCase.userInfo.email = owner.email
-                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email))
-                })
-                .store(in: cancelBag)
+//            useCase.requestEmailVerifyCode(email)
+//                .sink(receiveValue: { _ in
+//                    owner.useCase.userInfo.email = owner.email
+//                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email))
+//                })
+//                .store(in: cancelBag)
             //MARK: Test용 삭제 필수
-            //            owner.useCase.userInfo.email = owner.email
-            //            owner.navigationRouter.push(to: .enterPersonalInfo)
+            owner.useCase.userInfo.email = owner.email
+            owner.navigationRouter.push(to: .enterPersonalInfo_MYS)
         case .domainListButtonDidTap:
             state.domainListViewIsVisible.toggle()
         case .dismissFocus:

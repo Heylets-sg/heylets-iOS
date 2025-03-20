@@ -12,7 +12,7 @@ import Domain
 
 public enum ReferralAPI {
     case getReferralCode
-    case validateReferralCode(ValidateReferralCodeRequest)
+    case validateReferralCode(String)
 }
 
 extension ReferralAPI: BaseAPI {
@@ -42,8 +42,8 @@ extension ReferralAPI: BaseAPI {
         switch self {
         case .getReferralCode:
             return .requestPlain
-        case .validateReferralCode(let request):
-            return .requestJSONEncodable(request)
+        case .validateReferralCode(let code):
+            return .requestParameters(["code": code])
             
         }
     }
@@ -51,9 +51,9 @@ extension ReferralAPI: BaseAPI {
     public var headers: [String : String]? {
         switch self {
         case .getReferralCode:
-            return APIHeaders.defaultHeader
-        case .validateReferralCode:
             return APIHeaders.headerWithAccessToken
+        case .validateReferralCode:
+            return APIHeaders.defaultHeader
         }
     }
 }

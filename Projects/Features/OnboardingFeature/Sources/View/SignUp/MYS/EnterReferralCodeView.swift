@@ -37,32 +37,17 @@ public struct EnterReferralCodeView: View {
                 textFieldState: $viewModel.state.referralIsValid,
                 colorSystem: .gray
             )
+            .maxLength(text: $viewModel.referralCode, 6)
+            .padding(.bottom, 8)
             
+            Text(viewModel.state.referralMessage)
+                .font(.regular_12)
+                .foregroundColor(viewModel.state.referralIsValid.strokeColor)
             
         }, titleText: "Enter a referral code to unlock\nmore features🎉",
-        nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
+        buttonTitle : "Start Heylets",
         nextButtonAction: { viewModel.send(.nextButtonDidTap) }
         )
-    }
-}
-
-fileprivate struct GenderButton: View {
-    let title: String
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            Text(title)
-                .frame(height: 56)
-                .frame(maxWidth: .infinity)
-                .font(.semibold_14)
-                .background(isSelected ? Color.heyMain : Color.heyGray4)
-                .foregroundStyle(isSelected ? Color.heyGray1 : Color.heyGray2)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-        }
     }
 }
 

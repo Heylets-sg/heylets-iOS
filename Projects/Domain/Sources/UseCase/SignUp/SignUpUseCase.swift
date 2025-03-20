@@ -136,6 +136,9 @@ final public class SignUpUseCase: SignUpUseCaseType {
     public func checkReferraalCode(_ code: String) -> AnyPublisher<Bool, Never> {
         referralRepository.validateReferralCode(code)
             .map { $0 }
+            .handleEvents(receiveOutput: { [weak self] _ in
+                self?.userInfo.referralCode = code
+            })
             .catch { _ in Just(false).eraseToAnyPublisher() }
             .eraseToAnyPublisher()
     }

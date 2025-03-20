@@ -15,7 +15,7 @@ public protocol ReferralServiceType {
     func getReferralCode() -> NetworkDecodableResponse<ReferralCodeResult>
     
     func validateReferralCode(
-        _ request: ValidateReferralCodeRequest
+        _ code: String
     ) -> NetworkDecodableResponse<ValidateReferralCodeResult>
 }
 
@@ -25,9 +25,9 @@ extension ReferralService: ReferralServiceType {
     }
     
     public func validateReferralCode(
-        _ request: ValidateReferralCodeRequest
+        _ code: String
     ) -> NetworkDecodableResponse<ValidateReferralCodeResult> {
-        requestWithResult(.validateReferralCode(request))
+        requestWithResult(.validateReferralCode(code))
     }
 }
 

@@ -18,11 +18,3 @@ public struct ValidateReferralCodeResult: Decodable {
     let code: String
     let type: String
 }
-
-public struct ValidateReferralCodeRequest: Encodable {
-    let code: String
-    
-    public init(_ code: String) {
-        self.code = code
-    }
-}

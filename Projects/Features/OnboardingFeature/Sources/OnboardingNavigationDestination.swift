@@ -69,7 +69,12 @@ struct OnboardingNavigationRoutingView: View {
             )
             
         case .enterReferralCode:
-            EmptyView()
+            EnterReferralCodeView(
+                viewModel: .init(
+                    navigationRouter: router.navigationRouter,
+                    useCase: useCase.signUpUseCase
+                )
+            )
             
         // LogIn
         case .login:

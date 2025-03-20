@@ -18,8 +18,7 @@ import Core
 public class EnterReferralCodeViewModel: ObservableObject {
     struct State {
         var referralIsValid: TextFieldState = .idle
-        var continueButtonIsEnabled: Bool = false
-        var referralState: (Color, String) = (Color.heyBlack, "")
+        var referralMessage: String = ""
     }
     
     enum Action {
@@ -50,12 +49,12 @@ public class EnterReferralCodeViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
             
-        case .nextButtonDidTap:
-            useCase.userInfo.referralCode = referralCode
-            navigationRouter.push(to: .termsOfService)
-        
-        case .skipButtonDidTap:
-            break
+        case .nextButtonDidTap, .skipButtonDidTap:
+            useCase.signUp()
+                .sink(receiveValue: { [weak self] _ in
+                    self?.navigationRouter.popToRootView()
+                })
+                .store(in: cancelBag)
         }
     }
     
@@ -64,8 +63,18 @@ public class EnterReferralCodeViewModel: ObservableObject {
         guard let owner else { return }
         
         $referralCode
-            .map { !$0.isEmpty }
-            .assign(to: \.state.continueButtonIsEnabled, on: owner)
+            .filter { $0.count == 6}
+            .flatMap(useCase.checkReferraalCode)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] isValid in
+                if isValid {
+                    self?.state.referralIsValid = .valid
+                    self?.state.referralMessage = "Check which themes you received on the\ntimetable theme page!"
+                } else {
+                    self?.state.referralIsValid = .invalid
+                    self?.state.referralMessage = "Invalid invite code, Please check again!"
+                }
+            })
             .store(in: cancelBag)
     }
 }

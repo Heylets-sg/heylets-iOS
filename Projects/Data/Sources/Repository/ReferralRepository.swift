@@ -26,8 +26,7 @@ public struct ReferralRepository: ReferralRepositoryType {
     }
     
     public func validateReferralCode(_ code: String) -> AnyPublisher<Bool, Error> {
-        let request: ValidateReferralCodeRequest = .init(code)
-        return service.validateReferralCode(request)
+        service.validateReferralCode(code)
             .map { $0.isValid }
             .mapToGeneralError()
     }

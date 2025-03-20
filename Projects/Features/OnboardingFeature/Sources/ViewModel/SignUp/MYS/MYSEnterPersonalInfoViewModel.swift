@@ -56,9 +56,10 @@ public class MYSEnterPersonalInfoViewModel: ObservableObject {
             
         case .nextButtonDidTap:
             guard let gender else { return }
+            useCase.userInfo.password = password
             useCase.userInfo.gender = gender.rawValue
             useCase.userInfo.birth = birth
-            navigationRouter.push(to: .enterIdPassword)
+            navigationRouter.push(to: .enterReferralCode)
             
         case .genderButtonDidTap(let gender):
             self.gender = gender
