@@ -109,6 +109,7 @@ public struct InviteCodeView: View {
                 .padding(.top, 36)
                 .padding(.bottom, 65)
             }
+            .setTimeTableHeyNavigation()
             .padding(.horizontal, 16)
             .background(Color.heyWhite)
             .ignoresSafeArea(edges: .vertical)

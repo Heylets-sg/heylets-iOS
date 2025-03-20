@@ -30,12 +30,15 @@ public class ThemeViewModel: ObservableObject {
         case reportButtonDidTap
     }
     
+    private let useCase: TimeTableUseCaseType
+    public var navigationRouter: NavigationRoutableType
+    var selectThemeClosure: ((String) -> Void)?
+    
     @Published var state = State()
     @Published var themeList: [Theme] = []
-    private let useCase: TimeTableUseCaseType
     @Published var displayType: DisplayTypeInfo = .MODULE_CODE
     @Published var theme: String = ""
-    var selectThemeClosure: ((String) -> Void)?
+    
     
     let options: [DisplayTypeInfo] = [
         .MODULE_CODE,
@@ -47,8 +50,12 @@ public class ThemeViewModel: ObservableObject {
     
     private let cancelBag = CancelBag()
     
-    public init(_ useCase: TimeTableUseCaseType) {
+    public init(
+        _ useCase: TimeTableUseCaseType,
+        _ navigationRouter: NavigationRoutableType
+    ) {
         self.useCase = useCase
+        self.navigationRouter = navigationRouter
     }
     
     func send(_ action: Action) {
@@ -68,16 +75,17 @@ public class ThemeViewModel: ObservableObject {
                 .store(in: cancelBag)
             
         case .saveButtonDidTap:
-            Analytics.shared.track(.clickSaveTimetableSetting(
-                theme: theme,
-                displayType: displayType.rawValue
-            ))
-            useCase.patchSettingInfo(displayType, theme)
-                .receive(on: RunLoop.main)
-                .sink(receiveValue: {  _ in
-                    Analytics.shared.track(.timetableSettingSaved)
-                })
-                .store(in: cancelBag)
+            navigationRouter.push(to: .inviteCode)
+//            Analytics.shared.track(.clickSaveTimetableSetting(
+//                theme: theme,
+//                displayType: displayType.rawValue
+//            ))
+//            useCase.patchSettingInfo(displayType, theme)
+//                .receive(on: RunLoop.main)
+//                .sink(receiveValue: {  _ in
+//                    Analytics.shared.track(.timetableSettingSaved)
+//                })
+//                .store(in: cancelBag)
             
         case .themeButtonDidTap(let selectedTheme):
             state.selectedTheme = selectedTheme

@@ -29,8 +29,8 @@ public class InviteCodeViewModel: ObservableObject {
     var shareText: String = ""
     
     public init(
-        _ navigationRouter: NavigationRoutableType,
-        _ useCase: MyPageUseCaseType
+        navigationRouter: NavigationRoutableType,
+        useCase: MyPageUseCaseType
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
