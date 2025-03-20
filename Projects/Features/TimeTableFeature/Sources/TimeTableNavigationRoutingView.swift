@@ -41,11 +41,6 @@ struct TimeTableNavigationRoutingView: View {
         case .settingTimeTable:
             let useCase = useCase.timeTableUseCase
             TimeTableSettingView(
-                viewModel: .init(
-                    router.navigationRouter,
-                    router.windowRouter,
-                    useCase
-                ),
                 themeViewModel: .init(
                     useCase,
                     router.navigationRouter

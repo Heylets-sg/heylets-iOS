@@ -20,15 +20,10 @@ public enum TimeTableSettingViewType: Equatable {
 
 public struct TimeTableSettingView: View {
     @EnvironmentObject var container: Router
-    @ObservedObject var viewModel: TimeTableViewModel
     @ObservedObject var themeViewModel: ThemeViewModel
     @State var viewType: TimeTableSettingViewType = .main
     
-    public init(
-        viewModel: TimeTableViewModel,
-        themeViewModel: ThemeViewModel
-    ) {
-        self.viewModel = viewModel
+    public init(themeViewModel: ThemeViewModel) {
         self.themeViewModel = themeViewModel
     }
     
@@ -56,7 +51,7 @@ public struct TimeTableSettingView: View {
             .ignoresSafeArea()
             
             
-            SettingTimeTableAlertView(viewModel: viewModel)
+            SettingTimeTableAlertView(viewModel: themeViewModel)
         }
         .setTimeTableHeyNavigation()
         .navigationBarBackButtonHidden()
@@ -78,7 +73,7 @@ public struct TimeTableSettingView: View {
         //        SettingTimeTableInfoView(viewModel: themeViewModel)
         //            .bottomSheetTransition()
         
-        SettingTimeTableView()
+        SettingTimeTableView(settingAlertType: $themeViewModel.state.settingAlertType)
     }
 }
 
@@ -88,12 +83,12 @@ extension TimeTableSettingView {
         switch viewType {
         case .theme:
             ThemeTopView(
-                viewType: $viewModel.viewType,
+//                viewType: $viewModel.viewType,
                 viewModel: themeViewModel
             )
             .onAppear {
                 themeViewModel.selectThemeClosure = { themeName in
-                    viewModel.send(.selectedTheme(themeName))
+                    themeViewModel.send(.selectedTheme(themeName))
                 }
             }
         default:
@@ -164,11 +159,6 @@ public struct SettingTopView: View {
     @State var stub: TimeTableViewType = .main
     let useCase = StubHeyUseCase.stub.timeTableUseCase
     return TimeTableSettingView(
-        viewModel: .init(
-            Router.default.navigationRouter,
-            Router.default.windowRouter,
-            useCase
-        ),
         themeViewModel: .init(useCase, Router.default.navigationRouter)
     )
     .environmentObject(Router.default)

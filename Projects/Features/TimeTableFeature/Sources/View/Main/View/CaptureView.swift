@@ -31,23 +31,27 @@ struct MainCaptureContentView: View {
     var body: some View {
         GeometryReader { geometry in
             
-            let cellWidth: CGFloat = (geometry.size.width) / CGFloat(weekList.count)
-            let cellHeight: CGFloat = (geometry.size.height) / CGFloat(hourList.count)
+            let cellWidth: CGFloat = (geometry.size.width - 25) / CGFloat(5)
             
-            WeeklyListView(weekList, cellWidth: cellWidth)
-                .padding(.leading, 25)
-            
-            HStack(alignment: .top, spacing: 0) {
-                HourListView(hourList)
+            ScrollView(.horizontal) {
+                WeeklyListView(weekList, cellWidth: cellWidth)
+                    .padding(.leading, 25)
                 
-                TimeTableGridCaptureView(
-                    weekList: weekList,
-                    timeTable: timeTable,
-                    displayType: displayType,
-                    hourList: hourList,
-                    cellWidth: cellWidth,
-                    cellHeight: cellHeight
-                )
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        HStack(alignment: .top, spacing: 0) {
+                            HourListView(hourList)
+                            
+                            TimeTableGridCaptureView(
+                                weekList: weekList,
+                                timeTable: timeTable,
+                                displayType: displayType,
+                                hourList: hourList,
+                                cellWidth: cellWidth
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -60,22 +64,19 @@ public struct TimeTableGridCaptureView: View {
     var displayType: DisplayTypeInfo
     var hourList: [Int]
     var cellWidth: CGFloat
-    var cellHeight: CGFloat
     
     init(
         weekList: [Week],
         timeTable: [TimeTableCellInfo],
         displayType: DisplayTypeInfo,
         hourList: [Int],
-        cellWidth: CGFloat,
-        cellHeight: CGFloat
+        cellWidth: CGFloat
     ) {
         self.weekList = weekList
         self.timeTable = timeTable
         self.displayType = displayType
         self.hourList = hourList
         self.cellWidth = cellWidth
-        self.cellHeight = cellHeight
     }
     
     public var body: some View {
@@ -83,6 +84,7 @@ public struct TimeTableGridCaptureView: View {
             VStack {
                 let columnCount = weekList.count
                 let rowCount = hourList.count
+                let cellHeight: CGFloat = 52
                 
                 ZStack {
                     // 📌 빈 시간표 배치
@@ -206,11 +208,7 @@ extension TimeTableGridCaptureView {
         return Rectangle()
             .fill(cell.backgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: 2))
-            .overlay(
-                RoundedRectangle(cornerRadius: 2)
-                    .stroke(Color.heyGrid, lineWidth: 1)
-            )
-            .frame(width: cellWidth, height: cellHeight)
+            .frame(width: cellWidth-1, height: cellHeight-1)
             .position(x: centerX, y: centerY)
     }
 }
@@ -242,8 +240,8 @@ private func createClassInfoText(
                 .foregroundColor(cell.textColor)
         }
     }
-    .frame(width: cellWidth, height: cellHeight, alignment: .topLeading)
-    .position(x: centerX, y: centerY)
+    .frame(width: 56, height: cellHeight, alignment: .topLeading)
+    .position(x: centerX-4, y: centerY)
 }
 
 extension TimeTableGridCaptureView {

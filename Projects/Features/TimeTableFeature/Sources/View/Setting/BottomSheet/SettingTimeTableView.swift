@@ -7,7 +7,7 @@ import Core
 
 struct SettingTimeTableView: View {
 //    @Binding var viewType: TimeTableViewType
-//    @Binding var settingAlertType: TimeTableSettingAlertType?
+    @Binding var settingAlertType: TimeTableSettingAlertType?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -35,7 +35,7 @@ struct SettingTimeTableView: View {
                 .padding(.bottom, 25)
                 
                 Button {
-//                    settingAlertType = .editTimeTableName
+                    settingAlertType = .editTimeTableName
 //                    viewType = .main
                 } label: {
                     Text("Timetable name")
@@ -45,7 +45,7 @@ struct SettingTimeTableView: View {
                 .padding(.bottom, 25)
                 
                 Button {
-//                    settingAlertType = .shareURL
+                    settingAlertType = .shareURL
 //                    viewType = .main
                 } label: {
                     Text("Share URL")
@@ -55,7 +55,7 @@ struct SettingTimeTableView: View {
                 .padding(.bottom, 25)
                 
                 Button {
-//                    settingAlertType = .saveImage
+                    settingAlertType = .saveImage
 //                    viewType = .main
                 } label: {
                     Text("Save image")
@@ -65,7 +65,7 @@ struct SettingTimeTableView: View {
                 .padding(.bottom, 25)
                 
                 Button {
-//                    settingAlertType = .removeTimeTable
+                    settingAlertType = .removeTimeTable
 //                    viewType = .main
                 } label: {
                     Text("Remove all")
