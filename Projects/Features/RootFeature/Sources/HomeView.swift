@@ -67,7 +67,7 @@ struct HomeView: View {
                             ),
                             searchModuleViewModel: .init(useCase),
                             addCustomModuleViewModel: .init(useCase),
-                            themeViewModel: .init(useCase, router.navigationRouter)
+                            themeViewModel: .init(useCase)
                         )
                     case .todo:
                         let useCase = useCase.todoUseCase

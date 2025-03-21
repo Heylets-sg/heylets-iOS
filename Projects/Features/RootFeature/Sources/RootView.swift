@@ -53,7 +53,7 @@ public struct RootView: View {
                     ),
                     searchModuleViewModel: .init(useCase),
                     addCustomModuleViewModel: .init(useCase),
-                    themeViewModel: .init(useCase, router.navigationRouter)
+                    themeViewModel: .init(useCase)
                 )
             case .mypage:
                 MyPageView(

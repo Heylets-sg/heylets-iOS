@@ -62,9 +62,10 @@ public class TimeTableViewModel: ObservableObject {
         case selectedTheme(String)
     }
     
-    enum WindowAction {
+    enum TransitionAction {
         case gotoTodo
         case gotoMyPage
+        case gotoInviteCodeView
     }
     
     @Published var state = State()
@@ -244,12 +245,14 @@ public class TimeTableViewModel: ObservableObject {
         }
     }
     
-    func send(_ action: WindowAction) {
+    func send(_ action: TransitionAction) {
         switch action {
         case .gotoTodo:
             windowRouter.switch(to: .todo)
         case .gotoMyPage:
             windowRouter.switch(to: .mypage)
+        case .gotoInviteCodeView:
+            navigationRouter.push(to: .inviteCode)
         }
     }
     

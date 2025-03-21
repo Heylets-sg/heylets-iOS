@@ -18,5 +18,5 @@ public struct ThemeResult: Decodable {
     public let name: String
     let description: String
     public let previewColors: [String]
-    let unlocked: Bool
+    public let unlocked: Bool
 }
