@@ -33,121 +33,119 @@ public struct TimeTableView: View {
     }
     
     public var body: some View {
-        NavigationStack(path: $container.navigationRouter.destinations) {
-            ZStack {
-                VStack(alignment: .leading) {
-                    Spacer()
-                        .frame(height: 60)
-                    
-                    createTopView(viewModel.viewType)
-                    
-                    Spacer()
-                        .frame(height: 19)
-                    
-                    MainView(
-                        viewModel: viewModel,
-                        viewType: $viewModel.viewType
-                    )
-                    
-                    Spacer()
-                        .frame(height: 1)
-                }
-                .ignoresSafeArea()
-                .onAppear {
-                    viewModel.send(.onAppear)
-                    searchModuleViewModel.selectLectureClosure = { lecture in
-                        viewModel.send(.selectLecture(lecture))
-                    }
-                    searchModuleViewModel.addLectureClosure = { lecture in
-                        viewModel.send(.addLecture(lecture))
-                    }
-                }
-                .heyAlert(
-                    isPresented: viewModel.state.error.0,
-                    title: viewModel.state.error.1,
-                    primaryButton: ("Close", .gray, {
-                        viewModel.send(.errorAlertViewCloseButtonDidTap)
-                    })
-                )
-                .heyAlert(
-                    isPresented: viewModel.state.alerts.showDeleteAlert,
-                    title: "Delete module?",
-                    primaryButton: ("Delete", .error, {
-                        viewModel.send(.deleteModule)
-                    }),
-                    secondaryButton: ("Close", .gray, {
-                        viewModel.send(.deleteModuleAlertCloseButtonDidTap)
-                    })
-                )
-                .onAppear {
-                    Analytics.shared.track(.screenView("delete_module", .modal))
-                }
-                .heyAlert(
-                    isPresented: viewModel.state.alerts.showGuestErrorAlert,
-                    loginButtonAction: {
-                        viewModel.send(.loginButtonDidTap)
-                    },
-                    notRightNowButton: {
-                        viewModel.send(.notRightNowButtonDidTap)
-                    })
-                .sheet(isPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert) {
-                    ReportMissingModuleView(
-                        reportMissingModuleAlertIsPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert
-                    )
-                    .transition(.move(edge: .trailing))
-                    .presentationDetents([.height(802)])
-                    .presentationDragIndicator(.visible)
-                }
-                .sheet(isPresented: .constant(viewModel.viewType == .detail)) {
-                    DetailModuleInfoView(
-                        viewType: $viewModel.viewType,
-                        deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
-                        sectionInfo: viewModel.detailSectionInfo
-                    )
-                    .presentationDetents([.height(270)])
-                    .presentationDragIndicator(.hidden)
-                    .ignoresSafeArea(.container, edges: .bottom)
-                }
+        ZStack {
+            VStack(alignment: .leading) {
+                Spacer()
+                    .frame(height: 60)
                 
-                TabBarView(
-                    todoAction: { viewModel.send(.gotoTodo) },
-                    mypageAction: { viewModel.send(.gotoMyPage) }
-                )
-                .hidden(viewModel.viewType != .main)
+                createTopView(viewModel.viewType)
                 
-//                SettingTimeTableAlertView(viewModel: viewModel)
+                Spacer()
+                    .frame(height: 19)
+                
+                MainView(
+                    viewModel: viewModel,
+                    viewType: $viewModel.viewType
+                )
+                
+                Spacer()
+                    .frame(height: 1)
             }
-            .setTimeTableHeyNavigation()
             .ignoresSafeArea()
-            .overlay {
-                let shouldShowOverlay = !( !themeViewModel.state.isShowingSelectInfoView)
-                && viewModel.viewType != .main
-                && viewModel.viewType != .search
-                
-                if shouldShowOverlay {
-                    let opacity = (
-                        viewModel.viewType == .detail
-                        || viewModel.viewType == .setting
-                        || ( themeViewModel.state.isShowingSelectInfoView)
-                    ) ? 1 : 0
-                    
-                    Color.heyDimmed
-                        .opacity(Double(opacity))
-                        .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
-                        .ignoresSafeArea()
+            .onAppear {
+                viewModel.send(.onAppear)
+                searchModuleViewModel.selectLectureClosure = { lecture in
+                    viewModel.send(.selectLecture(lecture))
+                }
+                searchModuleViewModel.addLectureClosure = { lecture in
+                    viewModel.send(.addLecture(lecture))
                 }
             }
-            .onTapGesture {
-                withAnimation {
-                    viewModel.send(.initMainView)
-                }
+            .heyAlert(
+                isPresented: viewModel.state.error.0,
+                title: viewModel.state.error.1,
+                primaryButton: ("Close", .gray, {
+                    viewModel.send(.errorAlertViewCloseButtonDidTap)
+                })
+            )
+            .heyAlert(
+                isPresented: viewModel.state.alerts.showDeleteAlert,
+                title: "Delete module?",
+                primaryButton: ("Delete", .error, {
+                    viewModel.send(.deleteModule)
+                }),
+                secondaryButton: ("Close", .gray, {
+                    viewModel.send(.deleteModuleAlertCloseButtonDidTap)
+                })
+            )
+            .onAppear {
+                Analytics.shared.track(.screenView("delete_module", .modal))
+            }
+            .heyAlert(
+                isPresented: viewModel.state.alerts.showGuestErrorAlert,
+                loginButtonAction: {
+                    viewModel.send(.loginButtonDidTap)
+                },
+                notRightNowButton: {
+                    viewModel.send(.notRightNowButtonDidTap)
+                })
+            .sheet(isPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert) {
+                ReportMissingModuleView(
+                    reportMissingModuleAlertIsPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert
+                )
+                .transition(.move(edge: .trailing))
+                .presentationDetents([.height(802)])
+                .presentationDragIndicator(.visible)
+            }
+            .sheet(isPresented: .constant(viewModel.viewType == .detail)) {
+                DetailModuleInfoView(
+                    viewType: $viewModel.viewType,
+                    deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
+                    sectionInfo: viewModel.detailSectionInfo
+                )
+                .presentationDetents([.height(270)])
+                .presentationDragIndicator(.hidden)
+                .ignoresSafeArea(.container, edges: .bottom)
             }
             
-            createBottomSheetView(viewModel.viewType).onAppear {
-                Analytics.shared.track(.screenView(viewModel.viewType.rawValue, .bottom_sheet))
+            TabBarView(
+                todoAction: { viewModel.send(.gotoTodo) },
+                mypageAction: { viewModel.send(.gotoMyPage) }
+            )
+            .hidden(viewModel.viewType != .main)
+            
+            SettingTimeTableAlertView(viewModel: viewModel)
+        }
+        .ignoresSafeArea()
+        .overlay {
+            let shouldShowOverlay = !(viewModel.viewType == .theme && !themeViewModel.state.isShowingSelectInfoView)
+                && viewModel.viewType != .main
+                && viewModel.viewType != .search
+
+            if shouldShowOverlay {
+                let opacity = (
+                    viewModel.viewType == .detail
+                    || viewModel.viewType == .setting
+                    || (viewModel.viewType == .theme && themeViewModel.state.isShowingSelectInfoView)
+                ) ? 1 : 0
+
+                Color.heyDimmed
+                    .opacity(Double(opacity))
+                    .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
+                    .ignoresSafeArea()
             }
         }
-    }    
+        .onTapGesture {
+            withAnimation {
+                viewModel.send(.initMainView)
+            }
+        }
+        
+        createBottomSheetView(viewModel.viewType)
+            .onAppear {
+                Analytics.shared.track(.screenView(viewModel.viewType.rawValue, .bottom_sheet))
+            }
+    }
 }
 
 extension TimeTableView {
@@ -162,9 +160,9 @@ extension TimeTableView {
             )
             .bottomSheetTransition()
             
-//        case .theme:
-//            SettingTimeTableInfoView(viewModel: themeViewModel)
-//                .bottomSheetTransition()
+        case .theme:
+            SettingTimeTableInfoView(viewModel: themeViewModel)
+                .bottomSheetTransition()
             
         case .addCustom:
             AddCustomModuleView(viewModel: addCustomModuleViewModel)
@@ -184,16 +182,16 @@ extension TimeTableView {
                     viewModel.send(.addCustomModuleButtonDidTap)
                 }
             )
-//        case .theme:
-//            ThemeTopView(
-////                viewType: $viewModel.viewType,
-//                viewModel: themeViewModel
-//            )
-//            .onAppear {
-//                themeViewModel.selectThemeClosure = { themeName in
-//                    settingViewModel.send(.selectedTheme(themeName))
-//                }
-//            }
+        case .theme:
+            ThemeTopView(
+                viewType: $viewModel.viewType,
+                viewModel: themeViewModel
+            )
+            .onAppear {
+                themeViewModel.selectThemeClosure = { themeName in
+                    viewModel.send(.selectedTheme(themeName))
+                }
+            }
         case .addCustom:
             AddCustomModuleTopView(
                 viewType: $viewModel.viewType,
@@ -203,10 +201,26 @@ extension TimeTableView {
             TopView(
                 timeTableInfo: $viewModel.timeTableInfo,
                 viewType: $viewModel.viewType,
-//                settingAlertType: $viewModel.state.alerts.settingAlertType,
-                viewModel: viewModel, profileInfo: $viewModel.state.profile
+                settingAlertType: $viewModel.state.alerts.settingAlertType,
+                profileInfo: $viewModel.state.profile
             )
             .environmentObject(container)
         }
     }
+}
+
+#Preview {
+    @State var stub: TimeTableViewType = .main
+    let useCase = StubHeyUseCase.stub.timeTableUseCase
+    return TimeTableView(
+        viewModel: .init(
+            Router.default.navigationRouter,
+            Router.default.windowRouter,
+            useCase
+        ),
+        searchModuleViewModel: .init(useCase),
+        addCustomModuleViewModel: .init(useCase),
+        themeViewModel: .init(useCase, Router.default.navigationRouter )
+    )
+    .environmentObject(Router.default)
 }

@@ -16,7 +16,7 @@ public struct TopView: View {
     @EnvironmentObject var container: Router
     @Binding var timeTableInfo: TimeTableInfo
     @Binding var viewType: TimeTableViewType
-     var viewModel: TimeTableViewModel
+    @Binding var settingAlertType: TimeTableSettingAlertType?
     @Binding var profileInfo: ProfileInfo
     
     public var body: some View {
@@ -60,9 +60,7 @@ public struct TopView: View {
                 
                 Button {
                     withAnimation {
-                        viewModel.navigationRouter.push(to: .settingTimeTable)
-                        
-//                        viewType = .setting
+                        viewType = .setting
                     }
                 } label: {
                     Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
@@ -75,29 +73,14 @@ public struct TopView: View {
             .padding(.top, 38)
         }
         .padding(.horizontal, 16)
-//        .sheet(isPresented: .constant(viewType == .setting)) {
-//            SettingTimeTableView(
-//                viewType: $viewType,
-//                settingAlertType: $settingAlertType
-//            )
-//            .presentationDetents([.fraction(0.37)])
-//            .presentationDragIndicator(.hidden)
-//            .ignoresSafeArea(.container, edges: .bottom)
-//        }
+        .sheet(isPresented: .constant(viewType == .setting)) {
+            SettingTimeTableView(
+                viewType: $viewType,
+                settingAlertType: $settingAlertType
+            )
+            .presentationDetents([.fraction(0.37)])
+            .presentationDragIndicator(.hidden)
+            .ignoresSafeArea(.container, edges: .bottom)
+        }
     }
 }
-
-//#Preview {
-//    @State var stub: TimeTableViewType = .main
-//    let useCase = StubHeyUseCase.stub.timeTableUseCase
-//    return TimeTableView(
-//        viewModel: .init(
-//            Router.default.navigationRouter,
-//            Router.default.windowRouter,
-//            useCase),
-//        searchModuleViewModel: .init(useCase),
-//        addCustomModuleViewModel: .init(useCase),
-//        themeViewModel: .init(useCase)
-//    )
-//    .environmentObject(Router.default)
-//}

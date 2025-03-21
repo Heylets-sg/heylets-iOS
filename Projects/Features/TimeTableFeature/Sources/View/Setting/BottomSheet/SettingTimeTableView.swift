@@ -6,8 +6,8 @@ import DSKit
 import Core
 
 struct SettingTimeTableView: View {
-    @Binding var viewType: TimeTableSettingViewType
-    @Binding var settingAlertType: TimeTableSettingAlertType
+    @Binding var viewType: TimeTableViewType
+    @Binding var settingAlertType: TimeTableSettingAlertType?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -36,6 +36,7 @@ struct SettingTimeTableView: View {
                 
                 Button {
                     settingAlertType = .editTimeTableName
+                    viewType = .main
                 } label: {
                     Text("Timetable name")
                         .font(.medium_14)
@@ -45,6 +46,7 @@ struct SettingTimeTableView: View {
                 
                 Button {
                     settingAlertType = .shareURL
+                    viewType = .main
                 } label: {
                     Text("Share URL")
                         .font(.medium_14)
@@ -54,6 +56,7 @@ struct SettingTimeTableView: View {
                 
                 Button {
                     settingAlertType = .saveImage
+                    viewType = .main
                 } label: {
                     Text("Save image")
                         .font(.medium_14)
@@ -63,6 +66,7 @@ struct SettingTimeTableView: View {
                 
                 Button {
                     settingAlertType = .removeTimeTable
+                    viewType = .main
                 } label: {
                     Text("Remove all")
                         .font(.medium_14)
@@ -71,7 +75,12 @@ struct SettingTimeTableView: View {
             }
             .padding(.leading, 32)
             .padding(.trailing, 220)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
+        }
+        .animation(.easeInOut, value: viewType)
+        .onDisappear {
+            if viewType == .setting {
+                viewType = .main
+            }
         }
     }
 }

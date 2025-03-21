@@ -16,12 +16,9 @@ import Core
 
 public class ThemeViewModel: ObservableObject {
     struct State {
-        var hiddenSetUpBottomView: Bool = false
         var isShowingSelectInfoView: Bool = false
         var saveSettingInfoSucced: Bool = false
         var selectedTheme: Theme? = nil
-        var timeTableName: String = ""
-        var isShowingSelectView: Bool = false
     }
     
     enum Action {
@@ -33,17 +30,13 @@ public class ThemeViewModel: ObservableObject {
         case reportButtonDidTap
     }
     
-    private let useCase: TimeTableUseCaseType
-    public var navigationRouter: NavigationRoutableType
-    var selectThemeClosure: ((String) -> Void)?
-    @Published var selectedThemeColor: [String] = []
-    @Published var viewType: TimeTableSettingViewType = .main
-    
     @Published var state = State()
     @Published var themeList: [Theme] = []
+    public var navigationRouter: NavigationRoutableType
+    private let useCase: TimeTableUseCaseType
     @Published var displayType: DisplayTypeInfo = .MODULE_CODE
     @Published var theme: String = ""
-    
+    var selectThemeClosure: ((String) -> Void)?
     
     let options: [DisplayTypeInfo] = [
         .MODULE_CODE,

@@ -50,7 +50,7 @@ public enum NavigationDestination: Hashable {
     
     //TimeTable
     case timeTable
-    case settingTimeTable
+//    case settingTimeTable
     case inviteCode
 }
 
@@ -116,8 +116,8 @@ extension NavigationDestination {
         //TimeTable
         case .timeTable:
             return ""
-        case .settingTimeTable:
-            return ""
+//        case .settingTimeTable:
+//            return ""
         case .inviteCode:
             return ""
         }
