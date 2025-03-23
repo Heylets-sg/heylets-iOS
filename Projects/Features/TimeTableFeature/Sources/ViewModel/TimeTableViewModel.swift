@@ -33,7 +33,11 @@ public class TimeTableViewModel: ObservableObject {
         
         var alerts: Alerts = Alerts()
         var timeTable: TimeTable = TimeTable()
-        var timeTableName: String = ""
+        var timeTableName: String = "" {
+            didSet {
+                print("timeTable: \(timeTableName)")
+            }
+        }
         var profile: ProfileInfo = .init()
         var error: (Bool, String) = (false, "")
         var isLoading: Bool = false
