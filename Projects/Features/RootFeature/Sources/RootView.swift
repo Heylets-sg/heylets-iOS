@@ -49,7 +49,8 @@ public struct RootView: View {
                     viewModel: .init(
                         router.navigationRouter,
                         router.windowRouter,
-                        useCase
+                        useCase,
+                        .init(useCase)
                     ),
                     searchModuleViewModel: .init(useCase),
                     addCustomModuleViewModel: .init(useCase),

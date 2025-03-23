@@ -18,7 +18,6 @@ import Core
 public class TimeTableViewModel: ObservableObject {
     struct State {
         struct Alerts {
-            var settingAlertType: TimeTableSettingAlertType? = nil
             var showDeleteAlert: Bool = false
             var showReposrtMissingModuleAlert: Bool = false
             var showAddCustomAlert: Bool = false
@@ -33,11 +32,7 @@ public class TimeTableViewModel: ObservableObject {
         
         var alerts: Alerts = Alerts()
         var timeTable: TimeTable = TimeTable()
-        var timeTableName: String = "" {
-            didSet {
-                print("timeTable: \(timeTableName)")
-            }
-        }
+        var timeTableName: String = ""
         var profile: ProfileInfo = .init()
         var error: (Bool, String) = (false, "")
         var isLoading: Bool = false
@@ -57,15 +52,6 @@ public class TimeTableViewModel: ObservableObject {
         case loginButtonDidTap
     }
     
-    enum SettingAction {
-        case saveImage
-        case settingAlertDismiss
-        case editTimeTableName
-        case deleteTimeTable
-        case shareURL
-        case selectedTheme(String)
-    }
-    
     enum TransitionAction {
         case gotoTodo
         case gotoMyPage
@@ -74,9 +60,11 @@ public class TimeTableViewModel: ObservableObject {
     
     @Published var state = State()
     private let cancelBag = CancelBag()
-    public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType
+    public var navigationRouter: NavigationRoutableType
     private let useCase: TimeTableUseCaseType
+    public var settingViewModel: TimeTableSettingViewModel
+    
     @Published var viewType: TimeTableViewType = .main {
         didSet {
             if viewType == .main {
@@ -101,15 +89,32 @@ public class TimeTableViewModel: ObservableObject {
     public init(
         _ navigationRouter: NavigationRoutableType,
         _ windowRouter: WindowRoutableType,
-        _ useCase: TimeTableUseCaseType
+        _ useCase: TimeTableUseCaseType,
+        _ settingViewModel: TimeTableSettingViewModel
     ) {
         self.useCase = useCase
-        self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
+        self.navigationRouter = navigationRouter
+        self.settingViewModel = settingViewModel
         
         bindState()
+        setupSettingViewModelBindings()
         
         timeTable = sectionList.createTimeTableCellList()
+    }
+    
+    private func setupSettingViewModelBindings() {
+        settingViewModel.settingsUpdated = { [weak self] in
+            self?.useCase.fetchTableInfo()
+                .receive(on: RunLoop.main)
+                .sink { _ in }
+                .store(in: self?.cancelBag ?? CancelBag())
+        }
+        
+//        // Bind to the selectedThemeColor
+//        settingViewModel.$selectedThemeColor
+//            .assign(to: \.selectedThemeColor, on: self)
+//            .store(in: cancelBag)
     }
     
     func send(_ action: Action) {
@@ -153,6 +158,7 @@ public class TimeTableViewModel: ObservableObject {
             state.alerts.showDeleteAlert = false
             
         case .errorAlertViewCloseButtonDidTap:
+            //TODO: 해결하기
             viewType = .search
             state.error = (false, "")
             
@@ -198,64 +204,13 @@ public class TimeTableViewModel: ObservableObject {
         }
     }
     
-    func send(_ action: SettingAction) {
-        switch action {
-        case .saveImage:
-            let mainView = MainCaptureContentView(
-                weekList: weekList,
-                hourList: hourList,
-                timeTable: timeTable,
-                displayType: displayTypeInfo
-            )
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                let image = mainView.captureAsImage(size: CGSize(
-                    width: CGFloat(self.weekList.count * 100),
-                    height: CGFloat(self.hourList.count * 52)
-                ))
-                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-            }
-            state.alerts.settingAlertType = nil
-            
-        case .deleteTimeTable:
-            useCase.deleteAllSection()
-                .receive(on: RunLoop.main)
-                .map { _ in nil}
-                .assign(to: \.state.alerts.settingAlertType, on: self)
-                .store(in: cancelBag)
-            
-        case .shareURL:
-            state.alerts.settingAlertType = nil
-            
-        case .settingAlertDismiss:
-            state.alerts.settingAlertType = nil
-            
-        case .editTimeTableName:
-            Analytics.shared.track(.clickChangeTimetableName(state.timeTableName))
-            useCase.changeTimeTableName(state.timeTableName)
-                .receive(on: RunLoop.main)
-                .handleEvents(receiveOutput: {
-                    Analytics.shared.track(.timetableNameChanged)
-                })
-                .map {  _ in nil }
-                .assign(to: \.state.alerts.settingAlertType, on: self)
-                .store(in: cancelBag)
-            
-        case .selectedTheme(let themeName):
-            useCase.getThemeDetailInfo(themeName)
-                .receive(on: RunLoop.main)
-                .assign(to: \.selectedThemeColor, on: self)
-                .store(in: cancelBag)
-        }
-    }
-    
     func send(_ action: TransitionAction) {
         switch action {
         case .gotoTodo:
             windowRouter.switch(to: .todo)
         case .gotoMyPage:
             windowRouter.switch(to: .mypage)
-        case .gotoInviteCodeView:
+        case .gotoInviteCodeView :
             navigationRouter.push(to: .inviteCode)
         }
     }
@@ -308,7 +263,7 @@ public class TimeTableViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.viewType = .main
-                self?.state.alerts.settingAlertType = nil
+                self?.settingViewModel.settingAlertType = nil
             })
             .map { message in (true, message)}
             .assign(to: \.state.error, on: self)
@@ -318,7 +273,7 @@ public class TimeTableViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.viewType = .main
-                self?.state.alerts.settingAlertType = nil
+                self?.settingViewModel.settingAlertType = nil
             })
             .map { _ in true }
             .assign(to: \.state.alerts.showGuestErrorAlert, on: self)

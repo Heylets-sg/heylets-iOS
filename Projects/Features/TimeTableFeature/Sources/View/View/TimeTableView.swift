@@ -112,7 +112,7 @@ public struct TimeTableView: View {
                 )
                 .hidden(viewModel.viewType != .main)
                 
-                SettingTimeTableAlertView(viewModel: viewModel)
+                SettingTimeTableAlertView(viewModel: viewModel.settingViewModel)
             }
             .setTimeTableHeyNavigation()
             .ignoresSafeArea()
@@ -193,7 +193,7 @@ extension TimeTableView {
             )
             .onAppear {
                 themeViewModel.selectThemeClosure = { themeName in
-                    viewModel.send(.selectedTheme(themeName))
+                    viewModel.settingViewModel.send(.selectedTheme(themeName))
                 }
                 
                 themeViewModel.gotoInviteCodeClosure = {
@@ -213,7 +213,7 @@ extension TimeTableView {
             TopView(
                 timeTableInfo: $viewModel.timeTableInfo,
                 viewType: $viewModel.viewType,
-                settingAlertType: $viewModel.state.alerts.settingAlertType,
+                settingAlertType: $viewModel.settingViewModel.settingAlertType,
                 profileInfo: $viewModel.state.profile
             )
             .environmentObject(container)

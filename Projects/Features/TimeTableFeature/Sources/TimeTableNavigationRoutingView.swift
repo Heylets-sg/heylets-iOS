@@ -29,7 +29,8 @@ struct TimeTableNavigationRoutingView: View {
                 viewModel: .init(
                     router.navigationRouter,
                     router.windowRouter,
-                    useCase
+                    useCase,
+                    TimeTableSettingViewModel(useCase)
                 ),
                 searchModuleViewModel: .init(useCase),
                 addCustomModuleViewModel: .init(useCase),
