@@ -117,19 +117,14 @@ public struct TimeTableView: View {
             .setTimeTableHeyNavigation()
             .ignoresSafeArea()
             .overlay {
-                let shouldShowOverlay = !(viewModel.viewType == .theme && !themeViewModel.state.isShowingSelectInfoView)
-                && viewModel.viewType != .main
-                && viewModel.viewType != .search
+                let config = OverlayConfiguration.configure(
+                    viewType: viewModel.viewType,
+                    isThemeSelectInfoShowing: themeViewModel.state.isShowingSelectInfoView
+                )
                 
-                if shouldShowOverlay {
-                    let opacity = (
-                        viewModel.viewType == .detail
-                        || viewModel.viewType == .setting
-                        || (viewModel.viewType == .theme && themeViewModel.state.isShowingSelectInfoView)
-                    ) ? 1 : 0
-                    
+                if config.shouldShow {
                     Color.heyDimmed
-                        .opacity(Double(opacity))
+                        .opacity(config.opacity)
                         .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
                         .ignoresSafeArea()
                 }

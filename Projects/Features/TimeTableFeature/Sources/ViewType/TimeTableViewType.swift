@@ -23,3 +23,33 @@ public enum TimeTableSettingAlertType: String {
     case saveImage = "save_image"
     case removeTimeTable = "remove_all_modules"
 }
+
+
+/// ViewType별 overlay dimmed 적용
+struct OverlayConfiguration {
+    let shouldShow: Bool
+    let opacity: Double
+    
+    static func configure(viewType: TimeTableViewType, isThemeSelectInfoShowing: Bool) -> OverlayConfiguration {
+        let shouldShow: Bool
+        let opacity: Double
+        
+        switch viewType {
+        case .main, .search:
+            shouldShow = false
+            opacity = 0
+        case .theme:
+            shouldShow = isThemeSelectInfoShowing
+            opacity = isThemeSelectInfoShowing ? 1.0 : 0.0
+        case .detail, .setting:
+            shouldShow = true
+            opacity = 1.0
+        case .addCustom:
+            shouldShow = true
+            opacity = 0.0
+        }
+        
+        return OverlayConfiguration(shouldShow: shouldShow, opacity: opacity)
+    }
+}
+
