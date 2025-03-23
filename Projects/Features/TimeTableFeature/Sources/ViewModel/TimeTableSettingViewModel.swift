@@ -26,27 +26,23 @@ public class TimeTableSettingViewModel: ObservableObject {
         case editTimeTableName
         case deleteTimeTable
         case shareURL
-        case selectedTheme(String)
     }
     
     @Published var state = State()
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
-    @Published var selectedThemeColor: [String] = []
     @Published var settingAlertType: TimeTableSettingAlertType? = nil
 
     var settingsUpdated: (() -> Void)?
     
-    public init(
-        _ useCase: TimeTableUseCaseType) {
+    public init(_ useCase: TimeTableUseCaseType) {
         self.useCase = useCase
     }
     
     func send(_ action: Action) {
         switch action {
         case .saveImage:
-//            alertTypeUpdated?(nil)
-            settingAlertType = nil
+            initSettingAlertType() // 연결 복잡하니까 일단 이렇게 두고 안되면 수정
             
         case .deleteTimeTable:
             useCase.deleteAllSection()
@@ -57,12 +53,6 @@ public class TimeTableSettingViewModel: ObservableObject {
                 })
                 .sink { _ in }
                 .store(in: cancelBag)
-            
-        case .shareURL:
-            settingAlertType = nil
-            
-        case .settingAlertDismiss:
-            settingAlertType = nil
             
         case .editTimeTableName:
             Analytics.shared.track(.clickChangeTimetableName(state.timeTableName))
@@ -76,15 +66,19 @@ public class TimeTableSettingViewModel: ObservableObject {
                 .sink { _ in }
                 .store(in: cancelBag)
             
-        case .selectedTheme(let themeName):
-            useCase.getThemeDetailInfo(themeName)
-                .receive(on: RunLoop.main)
-                .assign(to: \.selectedThemeColor, on: self)
-                .store(in: cancelBag)
+        case .shareURL, .settingAlertDismiss:
+            settingAlertType = nil
         }
     }
     
-    // Method to capture the image of the timetable
+    
+}
+
+extension TimeTableSettingViewModel {
+    func initSettingAlertType() {
+        settingAlertType = nil
+    }
+    
     func captureTimeTableImage(
         mainView: some View,
         weekList: [Week],

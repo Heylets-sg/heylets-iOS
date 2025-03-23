@@ -32,7 +32,6 @@ public class TimeTableViewModel: ObservableObject {
         
         var alerts: Alerts = Alerts()
         var timeTable: TimeTable = TimeTable()
-        var timeTableName: String = ""
         var profile: ProfileInfo = .init()
         var error: (Bool, String) = (false, "")
         var isLoading: Bool = false
@@ -44,6 +43,7 @@ public class TimeTableViewModel: ObservableObject {
         case deleteModule
         case selectLecture(SectionInfo)
         case addLecture(SectionInfo)
+        case selectedTheme(String)
         case deleteModuleAlertCloseButtonDidTap
         case errorAlertViewCloseButtonDidTap
         case addCustomModuleButtonDidTap
@@ -98,7 +98,7 @@ public class TimeTableViewModel: ObservableObject {
         self.settingViewModel = settingViewModel
         
         bindState()
-        setupSettingViewModelBindings()
+//        setupSettingViewModelBindings()
         
         timeTable = sectionList.createTimeTableCellList()
     }
@@ -110,11 +110,6 @@ public class TimeTableViewModel: ObservableObject {
                 .sink { _ in }
                 .store(in: self?.cancelBag ?? CancelBag())
         }
-        
-//        // Bind to the selectedThemeColor
-//        settingViewModel.$selectedThemeColor
-//            .assign(to: \.selectedThemeColor, on: self)
-//            .store(in: cancelBag)
     }
     
     func send(_ action: Action) {
@@ -201,6 +196,12 @@ public class TimeTableViewModel: ObservableObject {
         case .loginButtonDidTap:
             Analytics.shared.track(.clickGuestConfirmLogin)
             windowRouter.switch(to: .login)
+            
+        case .selectedTheme(let themeName):
+            useCase.getThemeDetailInfo(themeName)
+                .receive(on: RunLoop.main)
+                .assign(to: \.selectedThemeColor, on: self)
+                .store(in: cancelBag)
         }
     }
     

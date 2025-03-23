@@ -193,7 +193,7 @@ extension TimeTableView {
             )
             .onAppear {
                 themeViewModel.selectThemeClosure = { themeName in
-                    viewModel.settingViewModel.send(.selectedTheme(themeName))
+                    viewModel.send(.selectedTheme(themeName))
                 }
                 
                 themeViewModel.gotoInviteCodeClosure = {
