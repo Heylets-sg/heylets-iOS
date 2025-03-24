@@ -99,5 +99,8 @@ public enum Paths {
     static let getReferralCode = "api/v1/referrals/my-code"
     static let validateReferralCode = "api/v1/referrals/validate"
     
+    //MARK: Notification
+    static let notificationSetting = "api/v1/notifications/settings"
+    
     
 }
