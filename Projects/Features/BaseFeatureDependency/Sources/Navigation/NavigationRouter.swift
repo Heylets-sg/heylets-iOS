@@ -36,6 +36,8 @@ public class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
         destinations.append(view)
     }
     
+    
+    
     public func pop() {
         _ = destinations.popLast()
     }

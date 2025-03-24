@@ -19,6 +19,7 @@ public class ThemeViewModel: ObservableObject {
         var isShowingSelectInfoView: Bool = false
         var saveSettingInfoSucced: Bool = false
         var selectedTheme: Theme? = nil
+        var inviteCodeViewHidden: Bool = true
     }
     
     enum Action {
@@ -28,6 +29,7 @@ public class ThemeViewModel: ObservableObject {
         case selectDisplayTypeButtonDidTap
         case selectDisplayType(DisplayTypeInfo)
         case reportButtonDidTap
+        case inviteFriendViewDidTap
     }
     
     @Published var state = State()
@@ -35,16 +37,10 @@ public class ThemeViewModel: ObservableObject {
     private let useCase: TimeTableUseCaseType
     @Published var displayType: DisplayTypeInfo = .MODULE_CODE
     @Published var theme: String = ""
+    
     var selectThemeClosure: ((String) -> Void)?
-    
-    let options: [DisplayTypeInfo] = [
-        .MODULE_CODE,
-        .MODULE_CODE_CLASSROOM,
-        .MODULE_CODE_CLASSROOM_CREDIT,
-        .MODULE_CODE_CREDIT
-    ]
-    
-    
+    var gotoInviteCodeClosure: (() -> Void)?
+   
     private let cancelBag = CancelBag()
     
     public init(_ useCase: TimeTableUseCaseType) {
@@ -65,6 +61,11 @@ public class ThemeViewModel: ObservableObject {
             useCase.getThemeList()
                 .receive(on: RunLoop.main)
                 .assign(to: \.themeList, on: self)
+                .store(in: cancelBag)
+            
+            useCase.handleInviteCodeView()
+                .receive(on: RunLoop.main)
+                .assign(to: \.state.inviteCodeViewHidden, on: self)
                 .store(in: cancelBag)
             
         case .saveButtonDidTap:
@@ -94,6 +95,10 @@ public class ThemeViewModel: ObservableObject {
             
         case .reportButtonDidTap:
             state.isShowingSelectInfoView = false
+            
+        case .inviteFriendViewDidTap:
+            guard let gotoInviteCodeClosure else { return }
+            gotoInviteCodeClosure()
         }
     }
 }

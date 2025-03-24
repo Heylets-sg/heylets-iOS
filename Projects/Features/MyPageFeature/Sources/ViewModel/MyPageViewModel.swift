@@ -6,12 +6,14 @@
 //  Copyright © 2024 Heylets-iOS. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Combine
+
 
 import BaseFeatureDependency
 import Domain
 import Core
+
 
 public class MyPageViewModel: ObservableObject {
     struct State {
@@ -28,6 +30,7 @@ public class MyPageViewModel: ObservableObject {
         case contactUsButtonDidTap
         case notificationSettingButtonDidTap
         case deleteAccountButtonDidTap
+        case copyReferralCodeButtonDidTap
         
         case signUpLogInButtonDidTap
         case editSchoolButtonDidTap
@@ -41,7 +44,9 @@ public class MyPageViewModel: ObservableObject {
     public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType
     private let useCase: MyPageUseCaseType
+    
     @Published var profileInfo: ProfileInfo = .init()
+    @Published var referralCode: String? = "123456"
     @Published var isGuestMode: Bool = false
     
     public init(
@@ -93,6 +98,9 @@ public class MyPageViewModel: ObservableObject {
         case .logoutButtonDidTap:
             Analytics.shared.track(.clickLogOut)
             state.logoutAlertViewIsPresented = true
+            
+        case .copyReferralCodeButtonDidTap:
+            UIPasteboard.general.string = referralCode
             
         case .logout:
             useCase.logout()

@@ -30,13 +30,3 @@ final public class SplashUseCase: SplashUseCaseType {
             .eraseToAnyPublisher()
     }
 }
-
-final public class StubSplashUseCase: SplashUseCaseType {
-    public func autoLogin() -> AnyPublisher<Bool, Never> {
-        Just(true).eraseToAnyPublisher()
-    }
-    
-    public func tokenRefresh() -> AnyPublisher<Void, Never> {
-        Just(()).eraseToAnyPublisher()
-    }
-}

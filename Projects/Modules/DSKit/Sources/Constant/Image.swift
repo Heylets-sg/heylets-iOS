@@ -40,11 +40,15 @@ public extension UIImage {
     static let color = DSKitAsset.graphicsTheme.image
     static let alarm = DSKitAsset.graphicsAlarm.image
     static let guest = DSKitAsset.graphicsGuest.image
+    static let congratulation = DSKitAsset.graphicsCongratulation.image
     
     static let icEtc = DSKitAsset.icEtc.image
     static let icBlank = DSKitAsset.icBlank.image
     static let icCompleted = DSKitAsset.icCompleted.image
     static let icAddGroup = DSKitAsset.icAddGroup.image
+    
+    static let icLocked = DSKitAsset.icLocked.image
+    static let icLocked2 = DSKitAsset.icLocked2.image
     
     
     static let logo = DSKitAsset.logo.image

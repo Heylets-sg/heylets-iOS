@@ -12,17 +12,17 @@ import DSKit
 import Core
 
 public struct SettingTimeTableAlertView: View {
-    @ObservedObject var viewModel: TimeTableViewModel
+    @ObservedObject var viewModel: TimeTableSettingViewModel
     
     public init(
-        viewModel: TimeTableViewModel
+        viewModel: TimeTableSettingViewModel
     ) {
         self.viewModel = viewModel
     }
     
     public var body: some View {
         ZStack {
-            if let type = viewModel.state.alerts.settingAlertType {
+            if let type = viewModel.settingAlertType {
                 Color.heyDimmed
                     .ignoresSafeArea()
                 

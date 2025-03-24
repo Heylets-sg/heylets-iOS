@@ -15,7 +15,8 @@ extension ThemeResult {
     func toEntity() -> Theme {
         .init(
             colorList: previewColors,
-            name: name
+            name: name,
+            unlocked: unlocked
         )
     }
 }

@@ -38,7 +38,8 @@ public final class HeyUseCase: UseCaseType {
         myPageUseCase = MyPageUseCase(
             userRepository: repository.userRepository,
             authRepository: repository.authRepository,
-            guestRepository: repository.guestRepository
+            guestRepository: repository.guestRepository,
+            referralRepository: repository.referralRepository
         )
         
         signUpUseCase = SignUpUseCase(
@@ -59,7 +60,8 @@ public final class HeyUseCase: UseCaseType {
             scheduleRepository: repository.scheduleRepository,
             sectionRepository: repository.sectionRepository,
             settingRepository: repository.settingRepository,
-            timeTableRepository: repository.timeTableRepository
+            timeTableRepository: repository.timeTableRepository,
+            guestRepository: repository.guestRepository
         )
         
         todoUseCase = TodoUseCase(

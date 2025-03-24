@@ -11,14 +11,17 @@ import Foundation
 public struct Theme: Hashable {
     public var colorList: [String]
     public var name: String
+    public var unlocked: Bool
     
     public var themeName: String { name.formatName() }
     
     public init(
         colorList: [String],
-        name: String
+        name: String,
+        unlocked: Bool
     ) {
         self.colorList = colorList
         self.name = name
+        self.unlocked = unlocked
     }
 }

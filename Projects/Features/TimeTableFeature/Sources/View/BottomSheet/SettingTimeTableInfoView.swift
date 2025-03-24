@@ -1,4 +1,5 @@
 import SwiftUI
+import Domain
 
 import Core
 
@@ -60,7 +61,7 @@ struct SelectDisplayModuleView: View {
     var body: some View {
         VStack {
             VStack(spacing: 0) {
-                ForEach(viewModel.options, id: \.self) { option in
+                ForEach(DisplayTypeInfo.allCases, id: \.self) { option in
                     VStack(spacing: 0) {
                         HStack(spacing: 0) {
                             Spacer()

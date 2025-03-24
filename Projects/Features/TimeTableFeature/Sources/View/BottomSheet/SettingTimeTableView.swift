@@ -84,15 +84,3 @@ struct SettingTimeTableView: View {
         }
     }
 }
-
-#Preview {
-    @State var stub: TimeTableViewType = .setting
-    let useCase = StubHeyUseCase.stub.timeTableUseCase
-    return TimeTableView(
-        viewModel: .init(Router.default.windowRouter,useCase),
-        searchModuleViewModel: .init(useCase),
-        addCustomModuleViewModel: .init(useCase),
-        themeViewModel: .init(useCase)
-    )
-    .environmentObject(Router.default)
-}

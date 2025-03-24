@@ -15,16 +15,19 @@ final public class MyPageUseCase: MyPageUseCaseType {
     private let userRepository: UserRepositoryType
     private let authRepository: AuthRepositoryType
     private let guestRepository: GuestRepositoryType
+    private let referralRepository: ReferralRepositoryType
     private var cancelBag = CancelBag()
     
     public init(
         userRepository: UserRepositoryType,
         authRepository: AuthRepositoryType,
-        guestRepository: GuestRepositoryType
+        guestRepository: GuestRepositoryType,
+        referralRepository: ReferralRepositoryType
     ) {
         self.userRepository = userRepository
         self.authRepository = authRepository
         self.guestRepository = guestRepository
+        self.referralRepository = referralRepository
     }
     
     public var errMessage = PassthroughSubject<String, Never>()
@@ -93,37 +96,13 @@ final public class MyPageUseCase: MyPageUseCaseType {
             }
             .eraseToAnyPublisher()
     }
-}
-
-final public class StubMyPageUseCase: MyPageUseCaseType {
-    public var errMessage = PassthroughSubject<String, Never>()
-    public var profileInfo =  PassthroughSubject<ProfileInfo, Never>()
     
-    public func checkGuesetMode() -> AnyPublisher<Bool, Never> {
-        Just(false).eraseToAnyPublisher()
-    }
-    
-    public func getProfile() -> AnyPublisher<ProfileInfo, Never> {
-        Just(.init(university: .NUS)).eraseToAnyPublisher()
-    }
-    
-    public func changePassword(
-        _ email: String,
-        _ new: String,
-        _ check: String
-    ) -> AnyPublisher<Void, Never> {
-        Just(()).eraseToAnyPublisher()
-    }
-    
-    public func logout() -> AnyPublisher<Void, Never> {
-        Just(()).eraseToAnyPublisher()
-    }
-    
-    public func deleteAccount(_ password: String) -> AnyPublisher<Void, Never> {
-        Just(()).eraseToAnyPublisher()
-    }
-    
-    public func changeGuestUniversity(university: String) -> AnyPublisher<Void, Never> {
-        Just(()).eraseToAnyPublisher()
+    public func getReferralCode() -> AnyPublisher<String, Never> {
+        referralRepository.getReferralCode()
+            .catch { [weak self] _ in
+                self?.errMessage.send("회원탈퇴에 실패했습니다")
+                return Empty<String, Never>()
+            }
+            .eraseToAnyPublisher()
     }
 }

@@ -50,8 +50,17 @@ struct ThemeTopView: View {
             }
             .padding(.horizontal, 16)
             .padding(.top, 25)
-            .padding(.bottom, 23)
-
+            .padding(.bottom, 24)
+            
+            if !viewModel.state.inviteCodeViewHidden {
+                ThemeInviteFriendView()
+                    .frame(height: 57)
+                    .onTapGesture {
+                        viewModel.send(.inviteFriendViewDidTap)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 24)
+            }
             
             ScrollView(.horizontal) {
                 HStack {
@@ -60,6 +69,7 @@ struct ThemeTopView: View {
                             theme,
                             theme == viewModel.state.selectedTheme
                         )
+                        .disabled(theme.unlocked)
                         .padding(.trailing, 20)
                         .frame(height: 95)
                         .onTapGesture {
@@ -96,7 +106,7 @@ fileprivate struct ThemeListCellView: View {
                         .overlay(Circle().stroke(Color.heySubMain, lineWidth: 3.2))
                 }
                 
-                QuarterCircleView(theme.colorList)
+                QuarterCircleView(theme)
                     .frame(width: 56, height: 56)
             }
             .padding(.bottom, 6)
@@ -109,24 +119,57 @@ fileprivate struct ThemeListCellView: View {
     }
 }
 
-struct QuarterCircleView: View {
-    var colorList: [String]
-    init(_ colorList: [String]) {
-        self.colorList = colorList
+struct ThemeInviteFriendView: View {
+    var body: some View {
+        HStack {
+            Image(uiImage: .icLocked2)
+                .resizable()
+                .frame(width: 25, height: 28)
+                .padding(.trailing, 20)
+            
+            VStack(alignment: .leading, spacing: 0) {
+                Text("Invite a friend and")
+                    .font(.regular_14)
+                
+                Text("unlock more color theme")
+                    .font(.semibold_14)
+            }
+            .frame(height: 32)
+            
+            Spacer()
+            
+            Image(uiImage: .icNext)
+                .resizable()
+                .frame(width: 8, height: 16)
+        }
+        .padding(.vertical, 13)
+        .padding(.leading, 24)
+        .padding(.trailing, 27)
+        .background(Color.heyDimmed)
+        .clipShape(RoundedRectangle(cornerRadius: 28.5))
     }
+}
+
+struct QuarterCircleView: View {
+    var theme: Theme
+    
+    init(_ theme: Theme) {
+        self.theme = theme
+    }
+    
     var body: some View {
         ZStack {
             // 첫 번째 1/4 (위쪽)
-            QuarterCircle(color: colorList[0], startAngle: 0, endAngle: 90)
+            QuarterCircle(color: theme.colorList[0], startAngle: 0, endAngle: 90)
             
             // 두 번째 1/4 (오른쪽)
-            QuarterCircle(color: colorList[1], startAngle: 90, endAngle: 180)
+            QuarterCircle(color: theme.colorList[1], startAngle: 90, endAngle: 180)
             
             // 세 번째 1/4 (아래쪽)
-            QuarterCircle(color: colorList[2], startAngle: 180, endAngle: 270)
+            QuarterCircle(color: theme.colorList[2], startAngle: 180, endAngle: 270)
             
             // 네 번째 1/4 (왼쪽)
-            QuarterCircle(color: colorList[3], startAngle: 270, endAngle: 360)
+            QuarterCircle(color: theme.colorList[3], startAngle: 270, endAngle: 360)
             
             // 세로 선
             Rectangle()
@@ -139,6 +182,16 @@ struct QuarterCircleView: View {
                 .fill(Color.white)
                 .frame(height: 2)
                 .offset(y: 0) // 중심에 위치하도록 설정
+            
+            if !theme.unlocked {
+                Circle()
+                    .fill(Color.heyDimmed)
+                
+                Image(uiImage: .icLocked)
+                    .resizable()
+                    .frame(width: 14, height: 16)
+            }
+            
         }
     }
 }
