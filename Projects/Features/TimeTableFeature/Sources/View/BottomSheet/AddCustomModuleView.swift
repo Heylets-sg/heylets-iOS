@@ -233,8 +233,8 @@ struct CustomTimePickerView: View {
             }
             .navigationBarItems(
                 trailing: Button("Confirm") {
-                    let newStartTime = "\(startHour == 0 ? "00" : "\(startHour)"):\(startMinute == 0 ? "00" : "\(startMinute)")"
-                    let newEndTime = "\(endHour == 0 ? "00" : "\(endHour)"):\(endMinute == 0 ? "00" : "\(endMinute)")"
+                    let newStartTime = String(format: "%02d:%02d", startHour, startMinute)
+                    let newEndTime = String(format: "%02d:%02d", endHour, endMinute)
                     onSave(newStartTime, newEndTime)
                 }
                 .disabled(!isTimeRangeValid())
