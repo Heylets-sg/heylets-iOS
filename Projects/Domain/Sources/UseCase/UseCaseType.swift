@@ -60,7 +60,8 @@ public final class HeyUseCase: UseCaseType {
             scheduleRepository: repository.scheduleRepository,
             sectionRepository: repository.sectionRepository,
             settingRepository: repository.settingRepository,
-            timeTableRepository: repository.timeTableRepository
+            timeTableRepository: repository.timeTableRepository,
+            guestRepository: repository.guestRepository
         )
         
         todoUseCase = TodoUseCase(

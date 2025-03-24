@@ -19,6 +19,7 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
     public let sectionRepository: SectionRepositoryType
     public let settingRepository: SettingRepositoryType
     public let timeTableRepository: TimeTableRepositoryType
+    public let guestRepository: GuestRepositoryType
     
     private var cancelBag = CancelBag()
     
@@ -28,7 +29,8 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
         scheduleRepository: ScheduleRepositoryType,
         sectionRepository: SectionRepositoryType,
         settingRepository: SettingRepositoryType,
-        timeTableRepository: TimeTableRepositoryType
+        timeTableRepository: TimeTableRepositoryType,
+        guestRepository: GuestRepositoryType
     ) {
         self.userRepository = userRepository
         self.lectureRepository = lectureRepository
@@ -36,6 +38,7 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
         self.sectionRepository = sectionRepository
         self.settingRepository = settingRepository
         self.timeTableRepository = timeTableRepository
+        self.guestRepository = guestRepository
     }
     
     public var tableId: Int = 0

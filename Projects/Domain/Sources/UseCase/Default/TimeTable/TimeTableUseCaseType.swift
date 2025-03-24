@@ -63,4 +63,7 @@ public protocol TimeTableUseCaseType {
     
     //시간표 삭제하기
     func deleteAllSection() -> AnyPublisher<Void, Never>
+    
+    //Invite Code 분기처리
+    func handleInviteCodeView() -> AnyPublisher<Bool, Never>
 }

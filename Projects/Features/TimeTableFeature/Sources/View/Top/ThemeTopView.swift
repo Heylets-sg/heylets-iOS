@@ -52,14 +52,15 @@ struct ThemeTopView: View {
             .padding(.top, 25)
             .padding(.bottom, 24)
             
-            ThemeInviteFriendView()
-                .frame(height: 57)
-                .onTapGesture {
-                    viewModel.send(.inviteFriendViewDidTap)
-                }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 24)
-
+            if !viewModel.state.inviteCodeViewHidden {
+                ThemeInviteFriendView()
+                    .frame(height: 57)
+                    .onTapGesture {
+                        viewModel.send(.inviteFriendViewDidTap)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 24)
+            }
             
             ScrollView(.horizontal) {
                 HStack {

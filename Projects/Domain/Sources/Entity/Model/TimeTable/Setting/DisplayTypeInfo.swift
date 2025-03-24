@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum DisplayTypeInfo: String {
+public enum DisplayTypeInfo: String, CaseIterable {
     case MODULE_CODE
     case MODULE_CODE_CLASSROOM
     case MODULE_CODE_CLASSROOM_CREDIT

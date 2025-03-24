@@ -70,4 +70,20 @@ public extension TimeTableUseCase {
             .flatMap(getTableDetailInfo)
             .eraseToAnyPublisher()
     }
+    
+    func handleInviteCodeView() -> AnyPublisher<Bool, Never> {
+        return guestRepository.checkGuestMode()
+            .flatMap { [weak self] isGuest -> AnyPublisher<Bool, Never> in
+                guard let self = self, !isGuest else {
+                    return Just(true).eraseToAnyPublisher()
+                }
+                
+                return self.userRepository.getProfile()
+                    .map { $0.university.nationality }
+                    .map { $0 != .Malaysia }
+                    .catch { _ in Just(true) }
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
 }

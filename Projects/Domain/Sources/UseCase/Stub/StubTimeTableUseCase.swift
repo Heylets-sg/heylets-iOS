@@ -94,5 +94,9 @@ extension StubTimeTableUseCase {
     public func deleteAllSection() -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()
     }
+    
+    public func handleInviteCodeView() -> AnyPublisher<Bool, Never> {
+        return Just(false).eraseToAnyPublisher()
+    }
 }
 
