@@ -7,7 +7,9 @@
 //
 
 import SwiftUI
+
 import BaseFeatureDependency
+import Domain
 
 public struct NotificationSettingView: View {
     
@@ -82,16 +84,19 @@ public struct NotificationSettingView: View {
                 .background(Color.heyGray4)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
             }
-            
-            
         }, titleText: "Notification setting")
+        .onAppear {
+            viewModel.send(.onAppear)
+        }
     }
 }
 
 #Preview {
     NotificationSettingView(
         viewModel: .init(
-            navigationRouter: Router.default.navigationRouter)
+            useCase: StubHeyUseCase.stub.myPageUseCase,
+            navigationRouter: Router.default.navigationRouter
+        )
     )
     .environmentObject(Router.default)
 }

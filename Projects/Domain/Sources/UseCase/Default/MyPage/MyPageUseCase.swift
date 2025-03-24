@@ -16,18 +16,21 @@ final public class MyPageUseCase: MyPageUseCaseType {
     private let authRepository: AuthRepositoryType
     private let guestRepository: GuestRepositoryType
     private let referralRepository: ReferralRepositoryType
+    private let notificationRepository: NotificationRepositoryType
     private var cancelBag = CancelBag()
     
     public init(
         userRepository: UserRepositoryType,
         authRepository: AuthRepositoryType,
         guestRepository: GuestRepositoryType,
-        referralRepository: ReferralRepositoryType
+        referralRepository: ReferralRepositoryType,
+        notificationRepository: NotificationRepositoryType
     ) {
         self.userRepository = userRepository
         self.authRepository = authRepository
         self.guestRepository = guestRepository
         self.referralRepository = referralRepository
+        self.notificationRepository = notificationRepository
     }
     
     public var errMessage = PassthroughSubject<String, Never>()
@@ -64,7 +67,7 @@ final public class MyPageUseCase: MyPageUseCaseType {
             .flatMap {self.authRepository.resetPassword(email, $0)}
             .asVoid()
             .catch { [weak self] error in
-                self?.errMessage.send("로그아웃에 실패했습니다.")
+                self?.errMessage.send("비밀번호 재설정에 실패했습니다.")
                 return Just(())
             }
             .eraseToAnyPublisher()
@@ -102,6 +105,26 @@ final public class MyPageUseCase: MyPageUseCaseType {
             .catch { [weak self] _ in
                 self?.errMessage.send("회원탈퇴에 실패했습니다")
                 return Empty<String, Never>()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func getNotificationSettingInfo() -> AnyPublisher<NotificationSettingInfo, Never>{
+        notificationRepository.getNotificationSetting()
+            .catch { [weak self] _ in
+                self?.errMessage.send("알림설정 가져오기에 실패했습니다.")
+                return Empty<NotificationSettingInfo, Never>()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func putNotificationSettingInfo(
+        _ settingInfo: NotificationSettingInfo
+    ) -> AnyPublisher<Void, Never>{
+        notificationRepository.putNotificationSetting(settingInfo)
+            .catch { [weak self] _ in
+                self?.errMessage.send("알림설정 변경하기에 실패했습니다.")
+                return Empty<Void, Never>()
             }
             .eraseToAnyPublisher()
     }

@@ -24,6 +24,7 @@ public class HeyRepository: RepositoryType {
     public var guestRepository: GuestRepositoryType
     public var todoRepository: TodoRepositoryType
     public var referralRepository: ReferralRepositoryType
+    public var notificationRepository: NotificationRepositoryType
     
     public init(service: ServiceType) {
         self.service = service
@@ -60,6 +61,10 @@ public class HeyRepository: RepositoryType {
         
         referralRepository = ReferralRepository(
             service: service.referralService
+        )
+        
+        notificationRepository = NotificationRepository(
+            service: service.notificationService
         )
     }
 }

@@ -11,8 +11,8 @@ import Foundation
 import Foundation
 
 public struct NotificationSettingInfo {
-    public let dailyBriefing: DailyBriefing
-    public let classNotification: ClassNotification
+    public var dailyBriefing: DailyBriefing
+    public var classNotification: ClassNotification
     
     public init(
         dailyBriefing: DailyBriefing,
@@ -24,8 +24,8 @@ public struct NotificationSettingInfo {
 }
 
 public struct DailyBriefing {
-    public let isEnabled: Bool
-    public let time: String
+    public var isEnabled: Bool
+    public var time: String
     
     public init(
         isEnabled: Bool,

@@ -45,4 +45,16 @@ final public class StubMyPageUseCase: MyPageUseCaseType {
     public func getReferralCode() -> AnyPublisher<String, Never> {
         Just("").eraseToAnyPublisher()
     }
+    
+    public func getNotificationSettingInfo() -> AnyPublisher<NotificationSettingInfo, Never> {
+        return Just(NotificationSettingInfo(
+            dailyBriefing: .init(isEnabled: true, time: ""),
+            classNotification: .init(isEnabled: true, minutes: "")
+            )
+        )
+        .eraseToAnyPublisher()
+    }
+    public func putNotificationSettingInfo(_ settingInfo: NotificationSettingInfo) -> AnyPublisher<Void, Never> {
+        return Just(()).eraseToAnyPublisher()
+    }
 }
