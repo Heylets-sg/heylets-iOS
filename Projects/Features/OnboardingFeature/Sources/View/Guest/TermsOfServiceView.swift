@@ -77,7 +77,7 @@ struct TermsOfServiceView: View {
                     
                     Spacer()
                     
-                    Link(destination: URL(string: "https://melon-pawpaw-a40.notion.site/Terms-of-Use-182bef4663528047952ed03e0dd22100")!) {
+                    Link(destination: URL(string: Website.TermsOfService)!) {
                                 HStack {
                                     Text("View")
                                         .font(.regular_12)
@@ -107,7 +107,7 @@ struct TermsOfServiceView: View {
                     Spacer()
                 
                     
-                    Link(destination: URL(string: "https://melon-pawpaw-a40.notion.site/Privacy-Policy-21-01-2025-182bef46635280e69384d760997c940e")!) {
+                    Link(destination: URL(string: Website.PrivacyPolicy)!) {
                                 HStack {
                                     Text("View")
                                         .font(.regular_12)

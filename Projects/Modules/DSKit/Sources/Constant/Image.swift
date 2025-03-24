@@ -49,6 +49,7 @@ public extension UIImage {
     
     static let icLocked = DSKitAsset.icLocked.image
     static let icLocked2 = DSKitAsset.icLocked2.image
+    static let icLink = DSKitAsset.icLink.image
     
     
     static let logo = DSKitAsset.logo.image
