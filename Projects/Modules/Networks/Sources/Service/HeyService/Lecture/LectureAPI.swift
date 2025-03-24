@@ -14,6 +14,8 @@ public enum LectureAPI {
     case getLectureDetailInfo(Int)
     case getLectureList
     case getLectureListWithKeyword(String)
+    case getLectureDepartment(String)
+    case getKeyword
 }
 
 extension LectureAPI: BaseAPI {
@@ -29,6 +31,10 @@ extension LectureAPI: BaseAPI {
             return Paths.getLectureList
         case .getLectureListWithKeyword:
             return Paths.getLectureList
+        case .getLectureDepartment(let university):
+            return Paths.getLectureDepartment.replacingOccurrences(of: "{university}", with: "\(university)")
+        case .getKeyword:
+            return Paths.getKeyword
         }
     }
     
@@ -60,17 +66,16 @@ extension LectureAPI: BaseAPI {
                 "keyword": keyword,
                 "academicYear": "2024",
                 "semester": "TERM_2"
-                /*TODO: pageable 파라미터 추가 page=0&size=1&sort=%5B%22string%22%5D
-                 {
-                   "page": 0,
-                   "size": 1,
-                   "sort": [
-                     "string"
-                   ]
-                 }
-                 
-                 */
             ])
+            
+        case .getLectureDepartment:
+            return .requestParameters([
+                "academicYear": "2024",
+                "semester": "TERM_2"
+            ])
+            
+        case .getKeyword:
+            return .requestPlain
         }
     }
     

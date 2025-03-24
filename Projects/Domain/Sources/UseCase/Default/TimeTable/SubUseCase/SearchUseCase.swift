@@ -45,4 +45,12 @@ public extension TimeTableUseCase {
             .flatMap(getTableDetailInfo)
             .eraseToAnyPublisher()
     }
+    
+    func getLectureDepartment(
+        _ university: String
+    ) -> AnyPublisher<[String], Error> {
+        lectureRepository.getLectureDepartment(university)
+            .map { $0 }
+            .mapToGeneralError()
+    }
 }
