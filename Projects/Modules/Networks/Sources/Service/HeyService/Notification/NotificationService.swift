@@ -14,8 +14,9 @@ public typealias NotificationService = BaseService<NotificationAPI>
 public protocol NotificationServiceType {
     func deleteNotificationSetting() -> NetworkVoidResponse
     func getNotificationSetting() -> NetworkDecodableResponse<NotificationSettingDTO>
-    func putNotificationSetting(_ request: NotificationSettingDTO) -> NetworkDecodableResponse<NotificaitonSettingResult>
-    
+    func putNotificationSetting(
+        _ request: NotificationSettingDTO
+    ) -> NetworkDecodableResponse<NotificaitonSettingResult>
 }
 
 extension NotificationService: NotificationServiceType {
