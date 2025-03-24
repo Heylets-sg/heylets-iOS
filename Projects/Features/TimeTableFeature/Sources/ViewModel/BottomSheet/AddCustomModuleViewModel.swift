@@ -16,34 +16,23 @@ import Core
 
 public class AddCustomModuleViewModel: ObservableObject {
     struct State {
-        var weekPickerIsHidden = true
-        var timePickerIsHidden = true
+        var isMenuOpen = false
         var isAddSuccess = false
     }
     
     enum Action {
         case weekPickerButtonDidTap(Week)
-        case timePickerButtonDidTap(String)
         case saveCustomModuleButtonDidTap
     }
     
     
     @Published var state = State()
     @Published var day: Week = .Mon
-    @Published var time = "09:00 - 10:00"
+    @Published var startTime = "09:00"
+    @Published var endTime = "10:00"
     @Published var schedule: String = ""
     @Published var location: String = ""
     @Published var professor: String  = ""
-    
-    let timeList: [String] = (1...22).flatMap { hour in
-        [0, 30].map { minute in
-            let start = String(format: "%02d:%02d", hour, minute)
-            let endHour = hour + (minute == 30 ? 1 : 0)  // 30분이면 다음 시간으로 넘어감
-            let endMinute = (minute + 30) % 60
-            let end = String(format: "%02d:%02d", endHour, endMinute)
-            return "\(start) - \(end)"
-        }
-    }
     
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
@@ -55,22 +44,14 @@ public class AddCustomModuleViewModel: ObservableObject {
     func send(_ action: Action) {
         switch action {
         case .weekPickerButtonDidTap(let week):
-            self.day = week
-            state.weekPickerIsHidden.toggle()
-            state.timePickerIsHidden = true
-            
-        case .timePickerButtonDidTap(let time):
-            self.time = time
-            state.weekPickerIsHidden = true
-            state.timePickerIsHidden.toggle()
+            day = week
             
         case .saveCustomModuleButtonDidTap:
-            let splitTime = splitTimeRange(time)
             let customModule: CustomModuleInfo = .init(
                 title: schedule,
                 classDay: day.fromWeek(),
-                startTime: splitTime.0,
-                endTime: splitTime.1,
+                startTime: startTime,
+                endTime: endTime,
                 location: location == "" ? nil : location,
                 professor: professor == "" ? nil : professor,
                 memo: nil
@@ -80,7 +61,7 @@ public class AddCustomModuleViewModel: ObservableObject {
                 professor: professor ,
                 location: location,
                 day: day.fromWeek(),
-                schedule: "\(splitTime.0) ~ \(splitTime.1)"
+                schedule: "\(startTime) ~ \(endTime)"
             )
             )
             useCase.addCustomModule(customModule)
@@ -96,17 +77,8 @@ public class AddCustomModuleViewModel: ObservableObject {
 }
 
 extension AddCustomModuleViewModel {
-    func splitTimeRange(_ timeRange: String) -> (start: String, end: String) {
-        let components = timeRange.components(separatedBy: " - ")
-        let start = components[0]
-        let end = components[1]
-        
-        return (start, end)
-    }
-    
     func initInfo() {
         self.day = .Mon
-        self.time = "09:00 - 10:00"
         self.schedule = ""
         self.location = ""
         self.professor = ""

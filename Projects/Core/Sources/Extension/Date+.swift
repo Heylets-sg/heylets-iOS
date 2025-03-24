@@ -15,6 +15,13 @@ extension Date {
         let dateString = formatter.string(from: self)
         return Int(dateString) ?? 0 // String을 Int로 변환
     }
+    
+    public func timeToString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm" // 원하는 형식
+        let dateString = formatter.string(from: self)
+        return dateString
+    }
 }
 
 
