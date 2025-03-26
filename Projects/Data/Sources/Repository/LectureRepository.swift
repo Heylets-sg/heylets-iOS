@@ -13,6 +13,7 @@ import Domain
 import Networks
 
 public struct LectureRepository: LectureRepositoryType {
+
     private let service: LectureServiceType
     
     public init(service: LectureServiceType) {
@@ -33,9 +34,19 @@ public struct LectureRepository: LectureRepositoryType {
             .mapToGeneralError()
     }
     
-    public func getLectureListWithKeyword(_ keyword: String) -> AnyPublisher<[SectionInfo], Error> {
+    public func getLectureListWithKeyword(
+        _ keyword: String
+    ) -> AnyPublisher<[SectionInfo], Error> {
         service.getLectureListWithKeyword(keyword)
             .map { $0.content.flatMap { $0.toEntity().sections } }
+            .mapToGeneralError()
+    }
+    
+    public func getLectureDepartment(
+        _ university: String
+    ) -> AnyPublisher<[String], Error> {
+        service.getLectureDepartment(university)
+            .map { $0.departments }
             .mapToGeneralError()
     }
 }

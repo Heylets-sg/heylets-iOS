@@ -21,6 +21,12 @@ public protocol LectureServiceType {
     func getLectureListWithKeyword(
         _ keyword: String
     ) -> NetworkDecodableResponse<LectureListResult>
+    
+    func getLectureDepartment(
+        _ university: String
+    ) -> NetworkDecodableResponse<DepartmentResult>
+    
+    func getKeyword() -> NetworkDecodableResponse<KeywordResult>
 }
 
 extension LectureService: LectureServiceType {
@@ -39,9 +45,15 @@ extension LectureService: LectureServiceType {
     ) -> AnyPublisher<LectureListResult, HeyNetworkError> {
         requestWithResult(.getLectureListWithKeyword(keyword))
     }
+    
+    public func getLectureDepartment(
+        _ university: String
+    ) -> NetworkDecodableResponse<DepartmentResult> {
+        requestWithResult(.getLectureDepartment(university))
+    }
+    
+    public func getKeyword() -> NetworkDecodableResponse<KeywordResult> {
+        requestWithResult(.getKeyword)
+    }
 }
-
-//public struct StubAuthService: AuthServiceType {
-//
-//}
 

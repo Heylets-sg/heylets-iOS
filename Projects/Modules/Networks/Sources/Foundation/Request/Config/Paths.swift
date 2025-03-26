@@ -36,6 +36,8 @@ public enum Paths {
     
     static let getDetailLectureInfo = "api/v1/lectures/{lectureId}"
     static let getLectureList = "api/v1/lectures/search"
+    static let getLectureDepartment = "api/v1/lectures/university/{university}/departments"
+    static let getKeyword = "api/v1/lectures/keywords"
     
     //MARK: Schedules
 
@@ -96,6 +98,9 @@ public enum Paths {
     
     static let getReferralCode = "api/v1/referrals/my-code"
     static let validateReferralCode = "api/v1/referrals/validate"
+    
+    //MARK: Notification
+    static let notificationSetting = "api/v1/notifications/settings"
     
     
 }

@@ -17,6 +17,7 @@ import Core
 
 public class MyPageViewModel: ObservableObject {
     struct State {
+        var referralCodeViewHidden: Bool = false
         var logoutAlertViewIsPresented: Bool = false
         var isLoading: Bool = false
     }
@@ -46,7 +47,7 @@ public class MyPageViewModel: ObservableObject {
     private let useCase: MyPageUseCaseType
     
     @Published var profileInfo: ProfileInfo = .init()
-    @Published var referralCode: String? = "123456"
+    @Published var referralCode: String = ""
     @Published var isGuestMode: Bool = false
     
     public init(
@@ -57,6 +58,8 @@ public class MyPageViewModel: ObservableObject {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
         self.useCase = useCase
+        
+        observe()
     }
     
     private let cancelBag = CancelBag()
@@ -72,8 +75,15 @@ public class MyPageViewModel: ObservableObject {
                 .map { _ in }
                 .flatMap(useCase.getProfile)
                 .receive(on: RunLoop.main)
+                .handleEvents(receiveOutput: { [weak self] profileInfo in
+                    self?.profileInfo = profileInfo
+                })
+                .filter { $0.university.nationality == .Malaysia }
+                .map { _ in }
+                .flatMap(useCase.getReferralCode)
+                .receive(on: RunLoop.main)
                 .assignLoading(to: \.state.isLoading, on: self)
-                .assign(to: \.profileInfo, on: self)
+                .assign(to: \.referralCode, on: self)
                 .store(in: cancelBag)
             
         case .changePasswordButtonDidTap:
@@ -120,5 +130,13 @@ public class MyPageViewModel: ObservableObject {
         case .editSchoolButtonDidTap:
             navigationRouter.push(to: .editSchool)
         }
+    }
+    
+    private func observe() {
+        $referralCode
+            .receive(on: RunLoop.main)
+            .map { $0.isEmpty }
+            .assign(to: \.state.referralCodeViewHidden, on: self)
+            .store(in: cancelBag)
     }
 }
