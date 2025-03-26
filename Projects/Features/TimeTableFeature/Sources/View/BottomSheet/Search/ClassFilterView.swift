@@ -10,21 +10,56 @@ import SwiftUI
 
 struct ClassFilterView: View {
     @ObservedObject var viewModel: SearchFilterViewModel
-    @State var isPresented: Bool = false
+    @ObservedObject var parentViewModel: SearchModuleViewModel
     
     var body: some View {
-        HStack(spacing: 8) {
-            ForEach(ClassFilterType.allCases, id: \.self) { type in
-                ClassFilterCapsuleView(
-                    title: type.title,
-                    isSelected: false,
-                    action: { isPresented = true }
-                )
+        VStack(alignment: .leading, spacing: 8) {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(ClassFilterType.allCases, id: \.self) { type in
+                        ClassFilterCapsuleView(
+                            title: type.title,
+                            isSelected: isFilterSelected(type),
+                            action: {
+                                viewModel.send(.filterButtonDidTap(type))
+                            }
+                        )
+                    }
+                }
+            }
+            
+            if !parentViewModel.getFilterStatus().isEmpty {
+                Text(parentViewModel.getFilterStatus())
+                    .font(.regular_12)
+                    .foregroundColor(.heyGray2)
+                    .padding(.top, 4)
             }
         }
-        .sheet(isPresented: $isPresented) {
-            ClassFilterBottomSheetView()
-                .presentationDetents([.height(417)])
+        .sheet(isPresented: $viewModel.state.isPresented) {
+            ClassFilterBottomSheetView(
+                filterType: viewModel.filterType,
+                filterList: $viewModel.filterList,
+                backButtonAction: { viewModel.send(.backButtonDidTap) },
+                applyButtonAction: { viewModel.send(.applyButtonDidTap) }
+            )
+            .presentationDetents([.height(400)])
+            .presentationDragIndicator(.visible)
+        }
+        .onAppear {
+            viewModel.send(.onAppear)
+        }
+    }
+    
+    private func isFilterSelected(_ type: ClassFilterType) -> Bool {
+        switch type {
+        case .department:
+            return !parentViewModel.selectedDepartments.isEmpty
+        case .semester:
+            return !parentViewModel.selectedSemesters.isEmpty
+        case .level:
+            return !parentViewModel.selectedLevels.isEmpty
+        case .other:
+            return !parentViewModel.selectedOthers.isEmpty
         }
     }
 }
@@ -53,15 +88,15 @@ struct ClassFilterCapsuleView: View {
             .background(
                 RoundedRectangle(cornerRadius: 20)
                     .fill(
-                        isSelected 
-                        ? Color.heyMain
+                        isSelected
+                        ? Color.heyMain.opacity(0.1)
                         : Color.white
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(
                                 isSelected
-                                ? Color.init(hex: "#6E7AB3")
+                                ? Color.heyMain
                                 : Color.init(hex: "#E3E3E3"),
                                 lineWidth: 1.8
                             )
@@ -72,29 +107,63 @@ struct ClassFilterCapsuleView: View {
 }
 
 struct ClassFilterBottomSheetView: View {
-    var arr: [String] = Array(repeating: "temp", count: 20)
+    var filterType: ClassFilterType
+    @Binding var filterList: [FilterItemType]
+    let backButtonAction: () -> Void
+    let applyButtonAction: () -> Void
+    
+    private var selectedCount: Int {
+        filterList.filter { $0.isSelected }.count
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
-            Text("DepartMent")
-                .font(.bold_20)
-                .padding(.bottom, 16)
-                .padding(.horizontal, 24)
+            HStack {
+                Text(filterType.title)
+                    .font(.bold_20)
+                
+                Spacer()
+                
+                if selectedCount > 0 {
+                    Text("\(selectedCount) selected")
+                        .font(.medium_14)
+                        .foregroundColor(.heyMain)
+                }
+                
+                Button {
+                    // Clear all selections
+                    for i in 0..<filterList.count {
+                        filterList[i].isSelected = false
+                    }
+                } label: {
+                    Text("Clear All")
+                        .font(.medium_14)
+                        .foregroundColor(.heyGray2)
+                        .padding(.leading, 12)
+                }
+                .opacity(selectedCount > 0 ? 1 : 0)
+            }
+            .padding(.bottom, 16)
+            .padding(.horizontal, 24)
             
             Rectangle()
                 .fill(Color.init(hex: "#E3E3E3"))
                 .frame(height: 1)
             
             ScrollView {
-                ForEach(arr, id: \.self) { _ in
-                    ClassFilterCellView(isSelected: true, name: "temptemp")
-                        .padding(.bottom, 24)
+                ForEach($filterList, id: \.self) { $item in
+                    ClassFilterCellView(
+                        isSelected: $item.isSelected,
+                        name: item.title
+                    )
+                    .padding(.bottom, 24)
                 }
             }
             .padding(.horizontal, 24)
             
             HStack(spacing: 17) {
                 Button {
-                    
+                    backButtonAction()
                 } label: {
                     Text("Back")
                         .font(.semibold_16)
@@ -106,15 +175,23 @@ struct ClassFilterBottomSheetView: View {
                 }
                 
                 Button {
-                    
+                    applyButtonAction()
                 } label: {
-                    Text("Apply")
-                        .font(.semibold_16)
-                        .foregroundColor(.heyWhite)
-                        .padding(.horizontal, 80)
-                        .padding(.vertical, 15)
-                        .background(Color.heyMain)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    HStack(spacing: 4) {
+                        if selectedCount > 0 {
+                            Text("\(selectedCount)")
+                                .font(.semibold_16)
+                                .foregroundColor(.heyWhite)
+                        }
+                        
+                        Text("Apply")
+                            .font(.semibold_16)
+                            .foregroundColor(.heyWhite)
+                    }
+                    .padding(.horizontal, 80)
+                    .padding(.vertical, 15)
+                    .background(Color.heyMain)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
             }
             .padding(.horizontal, 16)
@@ -126,7 +203,7 @@ struct ClassFilterBottomSheetView: View {
 }
 
 struct ClassFilterCellView: View {
-    var isSelected: Bool
+    @Binding var isSelected: Bool
     var name: String
     
     var body: some View {
@@ -142,5 +219,6 @@ struct ClassFilterCellView: View {
             
             Spacer()
         }
+        .onTapGesture { isSelected.toggle() }
     }
 }

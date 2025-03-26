@@ -21,18 +21,18 @@ public struct SearchModuleView: View {
     public var body: some View {
         VStack {
             Spacer()
-                .frame(height: 27)
+                .frame(height: 5)
             
             ClassSearchBarView(viewModel: viewModel)
                 .padding(.bottom, 16)
                 .padding(.horizontal, 16)
             
-            ClassFilterView(viewModel: viewModel.filterViewModel)
+            ClassFilterView(viewModel: viewModel.filterViewModel, parentViewModel: viewModel)
                 .padding(.bottom, 16)
                 .padding(.horizontal, 16)
             
             if viewModel.lectureList.isEmpty && !viewModel.searchText.isEmpty {
-                Text("We couldn’t find a match for\n‘\(viewModel.searchText)’.")
+                Text("We couldn't find a match for\n'\(viewModel.searchText)'.")
                     .font(.regular_16)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.heyGray2)
