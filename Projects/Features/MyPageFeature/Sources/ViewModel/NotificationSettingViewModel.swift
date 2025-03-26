@@ -31,6 +31,9 @@ public class NotificationSettingViewModel: ObservableObject {
     private let useCase: MyPageUseCaseType
     private var cancelBag = CancelBag()
     
+    @Published var briefingTime: String = ""
+    @Published var classNotificationMinute: Int = 10
+    
     public init(
         useCase: MyPageUseCaseType,
         navigationRouter: NavigationRoutableType
@@ -47,10 +50,23 @@ public class NotificationSettingViewModel: ObservableObject {
                 .sink(receiveValue: { [weak self] settingInfo in
                     self?.state.dailyBriefingToggleOn = settingInfo.dailyBriefing.isEnabled
                     self?.state.classToggleOn = settingInfo.classNotification.isEnabled
+                    self?.briefingTime = settingInfo.dailyBriefing.time
+                    self?.classNotificationMinute = Int(settingInfo.classNotification.minutes)!
                 })
                 .store(in: cancelBag)
+            
         case .backButtonDidTap:
-            navigationRouter.pop()
+            useCase.putNotificationSettingInfo(
+                state.dailyBriefingToggleOn,
+                briefingTime,
+                state.classToggleOn,
+                classNotificationMinute
+            )
+            .sink(receiveValue: { [weak self] _ in
+                self?.navigationRouter.pop()
+            })
+            .store(in: cancelBag)
+            
         case .dailyBriefingToggleDidTap:
             state.dailyBriefingToggleOn.toggle()
         case .classToggleDidTap:

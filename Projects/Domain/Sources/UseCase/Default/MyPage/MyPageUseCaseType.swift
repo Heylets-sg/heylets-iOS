@@ -40,5 +40,11 @@ public protocol MyPageUseCaseType {
     func getReferralCode() -> AnyPublisher<String, Never>
     
     func getNotificationSettingInfo() -> AnyPublisher<NotificationSettingInfo, Never>
-    func putNotificationSettingInfo(_ settingInfo: NotificationSettingInfo) -> AnyPublisher<Void, Never>
+    
+    func putNotificationSettingInfo(
+        _ dailyBriefingIsEnabled: Bool,
+        _ dailyBriefingTime: String,
+        _ classNotificationIsEnabled: Bool,
+        _ classNotificationMinute: Int
+    ) -> AnyPublisher<Void, Never>
 }

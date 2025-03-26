@@ -54,7 +54,12 @@ final public class StubMyPageUseCase: MyPageUseCaseType {
         )
         .eraseToAnyPublisher()
     }
-    public func putNotificationSettingInfo(_ settingInfo: NotificationSettingInfo) -> AnyPublisher<Void, Never> {
+    public func putNotificationSettingInfo(
+        _ dailyBriefingIsEnabled: Bool,
+        _ dailyBriefingTime: String,
+        _ classNotificationIsEnabled: Bool,
+        _ classNotificationMinute: Int
+    ) -> AnyPublisher<Void, Never> {
         return Just(()).eraseToAnyPublisher()
     }
 }

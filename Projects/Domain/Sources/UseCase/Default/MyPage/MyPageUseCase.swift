@@ -119,9 +119,16 @@ final public class MyPageUseCase: MyPageUseCaseType {
     }
     
     public func putNotificationSettingInfo(
-        _ settingInfo: NotificationSettingInfo
-    ) -> AnyPublisher<Void, Never>{
-        notificationRepository.putNotificationSetting(settingInfo)
+        _ dailyBriefingIsEnabled: Bool,
+        _ dailyBriefingTime: String,
+        _ classNotificationIsEnabled: Bool,
+        _ classNotificationMinute: Int
+    ) -> AnyPublisher<Void, Never> {
+        let settingInfo = NotificationSettingInfo(
+            dailyBriefing: .init(isEnabled: dailyBriefingIsEnabled, time: dailyBriefingTime),
+            classNotification: .init(isEnabled: classNotificationIsEnabled, minutes: "\(classNotificationMinute)")
+        )
+        return notificationRepository.putNotificationSetting(settingInfo)
             .catch { [weak self] _ in
                 self?.errMessage.send("알림설정 변경하기에 실패했습니다.")
                 return Empty<Void, Never>()
