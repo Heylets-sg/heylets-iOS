@@ -20,11 +20,12 @@ public protocol TimeTableUseCaseType {
     
     //시간표 상세조회 불러오기
     var timeTableInfo: CurrentValueSubject<TimeTableInfo, Never> { get }
+    var profileInfo: CurrentValueSubject<ProfileInfo, Never> { get }
     var displayInfo: PassthroughSubject<DisplayTypeInfo, Never> { get }
     var sectionList: PassthroughSubject<[SectionInfo], Never> { get }
     
     func fetchTableInfo() -> AnyPublisher<Void, Never>
-    func getProfileInfo() -> AnyPublisher<ProfileInfo, Never>
+    func getProfileInfo() -> AnyPublisher<Void, Never>
     
     
     
@@ -33,6 +34,8 @@ public protocol TimeTableUseCaseType {
     func getLectureList(_ keyword: String) -> AnyPublisher<[SectionInfo], Never>
     //커스텀 모듈 추가하기
     func addCustomModule(_ customModule: CustomModuleInfo) -> AnyPublisher<Void, Never>
+    //학과 찾기
+    func getLectureDepartment() -> AnyPublisher<[String], Never>
     
     
     //MARK: Detail

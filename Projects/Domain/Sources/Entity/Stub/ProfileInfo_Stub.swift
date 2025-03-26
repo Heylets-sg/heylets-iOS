@@ -15,4 +15,11 @@ extension ProfileInfo {
             university: .NUS
         )
     }
+    
+    static public var empty: Self {
+        .init(
+            nickName: "",
+            university: .empty
+        )
+    }
 }

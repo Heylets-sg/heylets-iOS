@@ -24,9 +24,13 @@ public extension TimeTableUseCase {
             .eraseToAnyPublisher()
     }
     
-    func getProfileInfo() -> AnyPublisher<ProfileInfo, Never> {
+    func getProfileInfo() -> AnyPublisher<Void, Never> {
         userRepository.getProfile()
-            .catch { _ in  Empty() }
+            .handleEvents(receiveOutput: { [weak self] profileInfo in
+                self?.profileInfo.send(profileInfo)
+            })
+            .map { _ in }
+            .catch {  _ in Empty() }
             .eraseToAnyPublisher()
     }
     

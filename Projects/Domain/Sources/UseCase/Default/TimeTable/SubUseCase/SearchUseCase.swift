@@ -46,11 +46,10 @@ public extension TimeTableUseCase {
             .eraseToAnyPublisher()
     }
     
-    func getLectureDepartment(
-        _ university: String
-    ) -> AnyPublisher<[String], Error> {
-        lectureRepository.getLectureDepartment(university)
+    func getLectureDepartment() -> AnyPublisher<[String], Never> {
+        lectureRepository.getLectureDepartment(profileInfo.value.university.rawValue)
             .map { $0 }
-            .mapToGeneralError()
+            .catch {  _ in Empty<[String], Never>() }
+            .eraseToAnyPublisher()
     }
 }

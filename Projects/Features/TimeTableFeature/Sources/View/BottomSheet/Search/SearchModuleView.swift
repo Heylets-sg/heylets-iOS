@@ -24,7 +24,11 @@ public struct SearchModuleView: View {
                 .frame(height: 27)
             
             ClassSearchBarView(viewModel: viewModel)
-                .padding(.bottom, 18)
+                .padding(.bottom, 16)
+                .padding(.horizontal, 16)
+            
+            ClassFilterView(viewModel: viewModel.filterViewModel)
+                .padding(.bottom, 16)
                 .padding(.horizontal, 16)
             
             if viewModel.lectureList.isEmpty && !viewModel.searchText.isEmpty {

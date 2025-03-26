@@ -58,6 +58,11 @@ public class TimeTableViewModel: ObservableObject {
         case gotoInviteCodeView
     }
     
+    @ObservedObject var searchModuleViewModel: SearchModuleViewModel
+    @ObservedObject var addCustomModuleViewModel: AddCustomModuleViewModel
+    @ObservedObject var themeViewModel: ThemeViewModel
+    
+    
     @Published var state = State()
     private let cancelBag = CancelBag()
     public var windowRouter: WindowRoutableType
@@ -87,37 +92,33 @@ public class TimeTableViewModel: ObservableObject {
     
     
     public init(
+        _ searchModuleViewModel: SearchModuleViewModel,
+        _ addCustomModuleViewModel: AddCustomModuleViewModel,
+        _ themeViewModel: ThemeViewModel,
+        _ settingViewModel: TimeTableSettingViewModel,
         _ navigationRouter: NavigationRoutableType,
         _ windowRouter: WindowRoutableType,
-        _ useCase: TimeTableUseCaseType,
-        _ settingViewModel: TimeTableSettingViewModel
+        _ useCase: TimeTableUseCaseType
     ) {
+        self.searchModuleViewModel = searchModuleViewModel
+        self.addCustomModuleViewModel = addCustomModuleViewModel
+        self.themeViewModel = themeViewModel
+        self.settingViewModel = settingViewModel
+        
         self.useCase = useCase
         self.windowRouter = windowRouter
         self.navigationRouter = navigationRouter
-        self.settingViewModel = settingViewModel
         
         bindState()
-//        setupSettingViewModelBindings()
         
         timeTable = sectionList.createTimeTableCellList()
-    }
-    
-    private func setupSettingViewModelBindings() {
-        settingViewModel.settingsUpdated = { [weak self] in
-            self?.useCase.fetchTableInfo()
-                .receive(on: RunLoop.main)
-                .sink { _ in }
-                .store(in: self?.cancelBag ?? CancelBag())
-        }
     }
     
     func send(_ action: Action) {
         switch action {
         case .onAppear:
             useCase.getProfileInfo()
-                .receive(on: RunLoop.main)
-                .assign(to: \.state.profile, on: self)
+                .sink(receiveValue: {_ in })
                 .store(in: cancelBag)
             
             useCase.fetchTableInfo()
@@ -223,6 +224,11 @@ public class TimeTableViewModel: ObservableObject {
         useCase.timeTableInfo
             .receive(on: RunLoop.main)
             .assign(to: \.timeTableInfo, on: self)
+            .store(in: cancelBag)
+        
+        useCase.profileInfo
+            .receive(on: RunLoop.main)
+            .assign(to: \.state.profile, on: self)
             .store(in: cancelBag)
         
         useCase.displayInfo

@@ -32,14 +32,18 @@ public class SearchModuleViewModel: ObservableObject {
     @Published var state = State()
     var selectLectureClosure: ((SectionInfo) -> Void)?
     var addLectureClosure: ((SectionInfo) -> Void)?
+    public var filterViewModel: SearchFilterViewModel
     @Published var lectureList: [SectionInfo] = []
     @Published var searchText = ""
     
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
     
-    public init(_ useCase: TimeTableUseCaseType) {
+    public init(
+        _ useCase: TimeTableUseCaseType
+    ) {
         self.useCase = useCase
+        self.filterViewModel = .init(useCase)
     }
     
     func send(_ action: Action) {

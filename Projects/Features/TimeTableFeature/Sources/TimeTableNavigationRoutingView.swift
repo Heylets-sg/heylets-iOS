@@ -27,14 +27,14 @@ struct TimeTableNavigationRoutingView: View {
             let useCase = useCase.timeTableUseCase
             TimeTableView(
                 viewModel: .init(
+                    SearchModuleViewModel(useCase),
+                    AddCustomModuleViewModel(useCase),
+                    ThemeViewModel(useCase),
+                    TimeTableSettingViewModel(useCase),
                     router.navigationRouter,
                     router.windowRouter,
-                    useCase,
-                    TimeTableSettingViewModel(useCase)
-                ),
-                searchModuleViewModel: .init(useCase),
-                addCustomModuleViewModel: .init(useCase),
-                themeViewModel: .init(useCase)
+                    useCase
+                )
             )
 //        case .settingTimeTable:
 //            let useCase = useCase.timeTableUseCase
