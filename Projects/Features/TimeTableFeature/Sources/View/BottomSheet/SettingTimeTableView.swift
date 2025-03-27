@@ -45,16 +45,6 @@ struct SettingTimeTableView: View {
                 .padding(.bottom, 25)
                 
                 Button {
-                    settingAlertType = .shareURL
-                    viewType = .main
-                } label: {
-                    Text("Share URL")
-                        .font(.medium_14)
-                        .foregroundColor(.heyGray1)
-                }
-                .padding(.bottom, 25)
-                
-                Button {
                     settingAlertType = .saveImage
                     viewType = .main
                 } label: {
