@@ -50,7 +50,6 @@ public enum NavigationDestination: Hashable {
     
     //TimeTable
     case timeTable
-//    case settingTimeTable
     case inviteCode
 }
 

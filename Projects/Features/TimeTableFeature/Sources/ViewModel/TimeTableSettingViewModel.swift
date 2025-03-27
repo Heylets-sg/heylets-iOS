@@ -25,7 +25,6 @@ public class TimeTableSettingViewModel: ObservableObject {
         case settingAlertDismiss
         case editTimeTableName
         case deleteTimeTable
-        case shareURL
     }
     
     @Published var state = State()
@@ -66,7 +65,7 @@ public class TimeTableSettingViewModel: ObservableObject {
                 .sink { _ in }
                 .store(in: cancelBag)
             
-        case .shareURL, .settingAlertDismiss:
+        case .settingAlertDismiss:
             settingAlertType = nil
         }
     }

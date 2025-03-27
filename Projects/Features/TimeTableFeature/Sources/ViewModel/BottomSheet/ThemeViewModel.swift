@@ -2,7 +2,7 @@
 //  ThemeViewModel.swift
 //  TimeTableFeature
 //
-//  Created by 류희재 on 1/7/25.
+//  Created on 3/27/25.
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
@@ -38,13 +38,21 @@ public class ThemeViewModel: ObservableObject {
     @Published var displayType: DisplayTypeInfo = .MODULE_CODE
     @Published var theme: String = ""
     
+    // 싱글톤 사용
+    private var viewTypeService: TimeTableViewTypeService  = TimeTableViewTypeService.shared
+    private let navigationRouter: NavigationRoutableType
+    
     var selectThemeClosure: ((String) -> Void)?
     var gotoInviteCodeClosure: (() -> Void)?
    
     private let cancelBag = CancelBag()
     
-    public init(_ useCase: TimeTableUseCaseType) {
+    public init(
+        _ useCase: TimeTableUseCaseType,
+        _ navigationRouter: NavigationRoutableType
+    ) {
         self.useCase = useCase
+        self.navigationRouter = navigationRouter
     }
     
     func send(_ action: Action) {
@@ -75,8 +83,9 @@ public class ThemeViewModel: ObservableObject {
             ))
             useCase.patchSettingInfo(displayType, theme)
                 .receive(on: RunLoop.main)
-                .sink(receiveValue: {  _ in
+                .sink(receiveValue: { [weak self] _ in
                     Analytics.shared.track(.timetableSettingSaved)
+                    self?.viewTypeService.reset()
                 })
                 .store(in: cancelBag)
             
@@ -97,8 +106,7 @@ public class ThemeViewModel: ObservableObject {
             state.isShowingSelectInfoView = false
             
         case .inviteFriendViewDidTap:
-            guard let gotoInviteCodeClosure else { return }
-            gotoInviteCodeClosure()
+            navigationRouter.push(to: .inviteCode)
         }
     }
 }

@@ -19,7 +19,6 @@ public enum TimeTableViewType: String, Equatable {
 
 public enum TimeTableSettingAlertType: String {
     case editTimeTableName = "change_timetable_name"
-    case shareURL = "share_URL"
     case saveImage = "save_image"
     case removeTimeTable = "remove_all_modules"
 }

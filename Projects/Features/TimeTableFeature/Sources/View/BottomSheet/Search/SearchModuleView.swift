@@ -19,15 +19,13 @@ public struct SearchModuleView: View {
     @ObservedObject var viewModel: SearchModuleViewModel
     
     public var body: some View {
-        VStack {
-            Spacer()
-                .frame(height: 5)
-            
+        VStack(spacing: 0) {
             ClassSearchBarView(viewModel: viewModel)
-                .padding(.bottom, 16)
+                .padding(.vertical, 16)
                 .padding(.horizontal, 16)
             
             ClassFilterView(viewModel: viewModel.filterViewModel, parentViewModel: viewModel)
+                .padding(.top, 5)
                 .padding(.bottom, 16)
                 .padding(.horizontal, 16)
             

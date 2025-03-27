@@ -2,8 +2,8 @@
 //  TimeTableView.swift
 //  TimeTableFeature
 //
-//  Created by 류희재 on 12/27/24.
-//  Copyright © 2024 Heylets-iOS. All rights reserved.
+//  Created on 3/27/25.
+//  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
 import SwiftUI
@@ -16,6 +16,7 @@ import Core
 public struct TimeTableView: View {
     @EnvironmentObject var container: Router
     @ObservedObject var viewModel: TimeTableViewModel
+    @ObservedObject var viewTypeService = TimeTableViewTypeService.shared
     
     public init(viewModel: TimeTableViewModel) {
         self.viewModel = viewModel
@@ -25,14 +26,14 @@ public struct TimeTableView: View {
         NavigationStack(path: $container.navigationRouter.destinations) {
             ZStack {
                 VStack(alignment: .leading) {
-                    createTopView(viewModel.viewType)
+                    createTopView(viewTypeService.viewType)
                     
                     Spacer()
                         .frame(height: 19)
                     
                     MainView(
                         viewModel: viewModel,
-                        viewType: $viewModel.viewType
+                        viewType: viewTypeService.binding
                     )
                     
                     Spacer()
@@ -84,9 +85,9 @@ public struct TimeTableView: View {
                     .presentationDetents([.height(802)])
                     .presentationDragIndicator(.visible)
                 }
-                .sheet(isPresented: .constant(viewModel.viewType == .detail)) {
+                .sheet(isPresented: .constant(viewTypeService.viewType == .detail)) {
                     DetailModuleInfoView(
-                        viewType: $viewModel.viewType,
+                        viewType: viewTypeService.binding,
                         deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
                         sectionInfo: viewModel.detailSectionInfo
                     )
@@ -95,11 +96,12 @@ public struct TimeTableView: View {
                     .ignoresSafeArea(.container, edges: .bottom)
                 }
                 
-                TabBarView(
-                    todoAction: { viewModel.send(.gotoTodo) },
-                    mypageAction: { viewModel.send(.gotoMyPage) }
-                )
-                .hidden(viewModel.viewType != .main)
+                if viewTypeService.viewType == .main {
+                    TabBarView(
+                        todoAction: { viewModel.send(.gotoTodo) },
+                        mypageAction: { viewModel.send(.gotoMyPage) }
+                    )
+                }
                 
                 SettingTimeTableAlertView(viewModel: viewModel.settingViewModel)
             }
@@ -107,14 +109,14 @@ public struct TimeTableView: View {
             .ignoresSafeArea()
             .overlay {
                 let config = OverlayConfiguration.configure(
-                    viewType: viewModel.viewType,
+                    viewType: viewTypeService.viewType,
                     isThemeSelectInfoShowing: viewModel.themeViewModel.state.isShowingSelectInfoView
                 )
                 
                 if config.shouldShow {
                     Color.heyDimmed
                         .opacity(config.opacity)
-                        .animation(.easeInOut(duration: 0.3), value: viewModel.viewType)
+                        .animation(.easeInOut(duration: 0.3), value: viewTypeService.viewType)
                         .ignoresSafeArea()
                 }
             }
@@ -124,9 +126,9 @@ public struct TimeTableView: View {
                 }
             }
             
-            createBottomSheetView(viewModel.viewType)
+            createBottomSheetView(viewTypeService.viewType)
                 .onAppear {
-                    Analytics.shared.track(.screenView(viewModel.viewType.rawValue, .bottom_sheet))
+                    Analytics.shared.track(.screenView(viewTypeService.viewType.rawValue, .bottom_sheet))
                 }
         }
     }
@@ -138,7 +140,7 @@ extension TimeTableView {
         switch viewType {
         case .search:
             SearchModuleView(
-                viewType: $viewModel.viewType,
+                viewType: viewTypeService.binding,
                 reportMissingModuleAlertIsPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert,
                 viewModel: viewModel.searchModuleViewModel
             )
@@ -163,32 +165,31 @@ extension TimeTableView {
             Spacer()
                 .frame(height: 60)
             SearchModuleTopView(
-                viewType: $viewModel.viewType,
+                viewType: viewTypeService.binding,
                 addCustomModuleButtonDidTapEvent: {
                     viewModel.send(.addCustomModuleButtonDidTap)
+                },
+                closeButtonDidTapEvent: {
+                    viewModel.searchModuleViewModel.send(.closeButtonDidTap)
                 }
             )
         case .theme:
             Spacer()
                 .frame(height: 30)
             ThemeTopView(
-                viewType: $viewModel.viewType,
+                viewType: viewTypeService.binding,
                 viewModel: viewModel.themeViewModel
             )
             .onAppear {
                 viewModel.themeViewModel.selectThemeClosure = { themeName in
                     viewModel.send(.selectedTheme(themeName))
                 }
-                
-                viewModel.themeViewModel.gotoInviteCodeClosure = {
-                    viewModel.send(.gotoInviteCodeView)
-                }
             }
         case .addCustom:
             Spacer()
                 .frame(height: 60)
             AddCustomModuleTopView(
-                viewType: $viewModel.viewType,
+                viewType: viewTypeService.binding,
                 viewModel: viewModel.addCustomModuleViewModel
             )
         default:
@@ -196,7 +197,7 @@ extension TimeTableView {
                 .frame(height: 60)
             TopView(
                 timeTableInfo: $viewModel.timeTableInfo,
-                viewType: $viewModel.viewType,
+                viewType: viewTypeService.binding,
                 settingAlertType: $viewModel.settingViewModel.settingAlertType,
                 profileInfo: $viewModel.state.profile
             )
@@ -204,19 +205,3 @@ extension TimeTableView {
         }
     }
 }
-
-//#Preview {
-//    @State var stub: TimeTableViewType = .main
-//    let useCase = StubHeyUseCase.stub.timeTableUseCase
-//    return TimeTableView(
-//        viewModel: .init(
-//            Router.default.navigationRouter,
-//            Router.default.windowRouter,
-//            useCase
-//        ),
-//        searchModuleViewModel: .init(useCase),
-//        addCustomModuleViewModel: .init(useCase),
-//        themeViewModel: .init(useCase, Router.default.navigationRouter )
-//    )
-//    .environmentObject(Router.default)
-//}

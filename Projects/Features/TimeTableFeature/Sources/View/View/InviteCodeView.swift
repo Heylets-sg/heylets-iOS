@@ -67,7 +67,7 @@ public struct InviteCodeView: View {
                                 .background(Color.heyMain)
                             
                             HStack {
-                                Text("468J2K")
+                                Text(viewModel.referralCode)
                                     .font(.medium_30)
                                     .foregroundColor(.heyBlack)
                                     .kerning(10)

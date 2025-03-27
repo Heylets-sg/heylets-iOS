@@ -11,13 +11,16 @@ import SwiftUI
 public struct SearchModuleTopView: View {
     @Binding var viewType: TimeTableViewType
     var addCustomModuleButtonDidTapEvent: (() -> Void)
+    var closeButtonDidTapEvent: (() -> Void)
     
     
     public var body: some View {
         HStack {
             Button {
                 withAnimation {
+                    closeButtonDidTapEvent()
                     viewType = .main
+                    
                 }
             } label: {
                 Image(uiImage: .icClose)
