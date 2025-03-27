@@ -86,7 +86,7 @@ public class SelectNationalityViewModel: ObservableObject {
         guard let owner else { return }
         
         $nationality
-            .map { $0 != nil }
+            .map { !($0?.universityList.isEmpty ?? false)}
             .assign(to: \.state.continueButtonIsEnabled, on: owner)
             .store(in: cancelBag)
         

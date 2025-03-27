@@ -48,10 +48,13 @@ public struct MyPageView: View {
                                 .hidden(viewModel.state.isLoading)
                                 .loading(viewModel.state.isLoading)
                             
-                            MyReferalCodeView(viewModel.referralCode)
-                                .onTapGesture {
-                                    viewModel.send(.copyReferralCodeButtonDidTap)
-                                }
+                            if !viewModel.state.referralCodeViewHidden {
+                                MyReferalCodeView(viewModel.referralCode)
+                                    .onTapGesture {
+                                        viewModel.send(.copyReferralCodeButtonDidTap)
+                                    }
+                            }
+                            
                             
                             if viewModel.isGuestMode {
                                 MyPageGuestView(viewModel: viewModel)
