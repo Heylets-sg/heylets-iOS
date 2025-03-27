@@ -208,17 +208,20 @@ extension TimeTableGridView {
                 .font(.medium_12)
                 .foregroundColor(textColor)
                 .multilineTextAlignment(.leading)
+                .lineLimit(1)
             
             if displayType.classRoomIsVisible {
                 Text(cell.schedule.location)
                     .font(.regular_10)
                     .foregroundColor(textColor)
+                    .lineLimit(1)
             }
             
             if displayType.creditIsVisible, let unit = cell.unit {
                 Text("unit: \(unit)")
                     .font(.regular_10)
                     .foregroundColor(textColor)
+                    .lineLimit(1)
             }
         }
         .frame(width: 56, height: cellHeight ,alignment: .topLeading)
