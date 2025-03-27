@@ -53,13 +53,13 @@ struct ClassFilterView: View {
     private func isFilterSelected(_ type: ClassFilterType) -> Bool {
         switch type {
         case .department:
-            return !parentViewModel.selectedDepartments.isEmpty
+            return parentViewModel.selectedDepartment != nil
         case .semester:
-            return !parentViewModel.selectedSemesters.isEmpty
+            return parentViewModel.selectedSemester != nil
         case .level:
-            return !parentViewModel.selectedLevels.isEmpty
+            return parentViewModel.selectedLevel != nil
         case .other:
-            return !parentViewModel.selectedOthers.isEmpty
+            return parentViewModel.selectedOther != nil
         }
     }
 }
@@ -123,25 +123,6 @@ struct ClassFilterBottomSheetView: View {
                     .font(.bold_20)
                 
                 Spacer()
-                
-                if selectedCount > 0 {
-                    Text("\(selectedCount) selected")
-                        .font(.medium_14)
-                        .foregroundColor(.heyMain)
-                }
-                
-                Button {
-                    // Clear all selections
-                    for i in 0..<filterList.count {
-                        filterList[i].isSelected = false
-                    }
-                } label: {
-                    Text("Clear All")
-                        .font(.medium_14)
-                        .foregroundColor(.heyGray2)
-                        .padding(.leading, 12)
-                }
-                .opacity(selectedCount > 0 ? 1 : 0)
             }
             .padding(.bottom, 16)
             .padding(.horizontal, 24)
@@ -151,10 +132,21 @@ struct ClassFilterBottomSheetView: View {
                 .frame(height: 1)
             
             ScrollView {
-                ForEach($filterList, id: \.self) { $item in
+                ForEach(0..<filterList.count, id: \.self) { index in
                     ClassFilterCellView(
-                        isSelected: $item.isSelected,
-                        name: item.title
+                        isSelected: Binding(
+                            get: { filterList[index].isSelected },
+                            set: { newValue in
+                                if newValue {
+                                    for i in 0..<filterList.count {
+                                        filterList[i].isSelected = (i == index)
+                                    }
+                                } else {
+                                    filterList[index].isSelected = false
+                                }
+                            }
+                        ),
+                        name: filterList[index].title
                     )
                     .padding(.bottom, 24)
                 }

@@ -57,8 +57,8 @@ public class SearchFilterViewModel: ObservableObject {
     @Published var filterType: ClassFilterType = .department
     @Published var filterList: [FilterItemType] = []
     
-    // Closure for passing selected filters to parent ViewModel
-    var updateSelectedFilters: ((ClassFilterType, [String]) -> Void)?
+    // Closure for passing selected filter to parent ViewModel
+    var updateSelectedFilter: ((ClassFilterType, String?) -> Void)?
     
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
@@ -69,8 +69,8 @@ public class SearchFilterViewModel: ObservableObject {
         self.useCase = useCase
     }
     
-    // Get currently selected filters from parent view model
-    var getSelectedFilters: ((ClassFilterType) -> [String])?
+    // Get currently selected filter from parent view model
+    var getSelectedFilter: ((ClassFilterType) -> String?)?
     
     func send(_ action: Action) {
         switch action {
@@ -94,17 +94,16 @@ public class SearchFilterViewModel: ObservableObject {
                 tempArr = []
             }
             
-            // Get currently selected items for this filter type
-            let currentlySelectedItems = getSelectedFilters?(type) ?? []
+            // Get currently selected item for this filter type
+            let currentlySelectedItem = getSelectedFilter?(type)
             
             // Create filter items with appropriate selection state
             filterList = tempArr.map { item in
-                return FilterItemType(title: item, isSelected: currentlySelectedItems.contains(item))
+                return FilterItemType(title: item, isSelected: currentlySelectedItem == item)
             }
             
-            // 선택된 항목들이 제대로 표시되는지 디버깅용 출력
-            print("Filter type: \(type), Selected items: \(currentlySelectedItems)")
-            print("Filter list with selection state: \(filterList.filter { $0.isSelected }.map { $0.title })")
+            // Debug output
+            print("Filter type: \(type), Selected item: \(currentlySelectedItem ?? "none")")
             
             state.isPresented = true
             
@@ -112,9 +111,11 @@ public class SearchFilterViewModel: ObservableObject {
             state.isPresented = false
             
         case .applyButtonDidTap:
-            let selectedItems = filterList.filter { $0.isSelected }.map { $0.title }
-            if let updateSelectedFilters = updateSelectedFilters {
-                updateSelectedFilters(filterType, selectedItems)
+            // Get the single selected item or nil if none selected
+            let selectedItem = filterList.first(where: { $0.isSelected })?.title
+            
+            if let updateSelectedFilter = updateSelectedFilter {
+                updateSelectedFilter(filterType, selectedItem)
             }
             state.isPresented = false
         }
