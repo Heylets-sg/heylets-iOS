@@ -49,7 +49,7 @@ public struct RootView: View {
                     viewModel: .init(
                         SearchModuleViewModel(useCase),
                         AddCustomModuleViewModel(useCase),
-                        ThemeViewModel(useCase),
+                        ThemeViewModel(useCase, router.navigationRouter),
                         TimeTableSettingViewModel(useCase),
                         router.navigationRouter,
                         router.windowRouter,

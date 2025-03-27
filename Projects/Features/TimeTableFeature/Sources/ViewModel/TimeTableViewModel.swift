@@ -2,7 +2,7 @@
 //  TimeTableViewModel.swift
 //  TimeTableFeature
 //
-//  Created by 류희재 on 1/5/25.
+//  Created on 3/27/25.
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
@@ -61,7 +61,8 @@ public class TimeTableViewModel: ObservableObject {
     @ObservedObject var searchModuleViewModel: SearchModuleViewModel
     @ObservedObject var addCustomModuleViewModel: AddCustomModuleViewModel
     @ObservedObject var themeViewModel: ThemeViewModel
-    
+    // 싱글톤 사용
+    @ObservedObject private var viewTypeService = TimeTableViewTypeService.shared
     
     @Published var state = State()
     private let cancelBag = CancelBag()
@@ -70,14 +71,8 @@ public class TimeTableViewModel: ObservableObject {
     private let useCase: TimeTableUseCaseType
     public var settingViewModel: TimeTableSettingViewModel
     
-    @Published var viewType: TimeTableViewType = .main {
-        didSet {
-            if viewType == .main {
-                selectLecture = []
-                selectedThemeColor = []
-            }
-        }
-    }
+    // We now use the viewType from the service
+    var viewType: TimeTableViewType { viewTypeService.viewType }
     
     @Published var timeTableInfo: TimeTableInfo = .empty
     @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
@@ -112,6 +107,25 @@ public class TimeTableViewModel: ObservableObject {
         bindState()
         
         timeTable = sectionList.createTimeTableCellList()
+        
+        // Listen for viewType changes from other components
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleViewTypeChange(_:)),
+            name: .timeTableViewTypeChanged,
+            object: nil
+        )
+    }
+    
+    @objc private func handleViewTypeChange(_ notification: Notification) {
+        if viewType == .main {
+            selectLecture = []
+            selectedThemeColor = []
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func send(_ action: Action) {
@@ -129,7 +143,7 @@ public class TimeTableViewModel: ObservableObject {
             
         case .tableCellDidTap(let sectionId):
             Analytics.shared.track(.screenView("module_info", .bottom_sheet))
-            viewType = .detail
+            viewTypeService.switchTo(.detail)
             if let detailInfo = sectionList.first(where: { $0.id == sectionId }) {
                 detailSectionInfo = detailInfo
             } else {
@@ -154,8 +168,7 @@ public class TimeTableViewModel: ObservableObject {
             state.alerts.showDeleteAlert = false
             
         case .errorAlertViewCloseButtonDidTap:
-            //TODO: 해결하기
-            viewType = .search
+            viewTypeService.switchTo(.search)
             state.error = (false, "")
             
         case .selectLecture(let lecture):
@@ -171,22 +184,21 @@ public class TimeTableViewModel: ObservableObject {
             )
             useCase.addSection(lecture.id)
                 .receive(on: RunLoop.main)
-                .map { _ in TimeTableViewType.search }
-                .sink(receiveValue: { [weak self] viewType in
+                .sink(receiveValue: { [weak self] _ in
                     Analytics.shared.track(.moduleAdded)
-                    self?.viewType = viewType
+                    self?.viewTypeService.switchTo(.search)
                     self?.selectLecture = []
                 })
                 .store(in: cancelBag)
             
         case .initMainView:
             if !(viewType == .search || viewType == .theme || viewType == .addCustom) {
-                viewType = .main
+                viewTypeService.reset()
             }
             
         case .addCustomModuleButtonDidTap:
             Analytics.shared.track(.screenView("add_custom_module", .bottom_sheet))
-            viewType = .addCustom
+            viewTypeService.switchTo(.addCustom)
             state.alerts.showAddCustomAlert = true
             selectLecture = []
             
@@ -269,7 +281,7 @@ public class TimeTableViewModel: ObservableObject {
         useCase.errMessage
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
-                self?.viewType = .main
+                self?.viewTypeService.reset()
                 self?.settingViewModel.settingAlertType = nil
             })
             .map { message in (true, message)}
@@ -279,7 +291,7 @@ public class TimeTableViewModel: ObservableObject {
         useCase.guestModeError
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
-                self?.viewType = .main
+                self?.viewTypeService.reset()
                 self?.settingViewModel.settingAlertType = nil
             })
             .map { _ in true }
@@ -288,6 +300,7 @@ public class TimeTableViewModel: ObservableObject {
     }
 }
 
+// Rest of the functions remain the same
 extension TimeTableViewModel {
     private func configHourList(
         _ timeTableCellList: [TimeTableCellInfo]
