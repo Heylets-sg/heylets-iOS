@@ -18,7 +18,7 @@ struct ClassSearchBarView: View {
                 .font(.regular_12)
                 .foregroundColor(.heyGray2)
             
-            TextField(text: $viewModel.searchText, label: {
+            TextField(text: $viewModel.filterInfo.keyword, label: {
                 
             })
             .font(.medium_12)

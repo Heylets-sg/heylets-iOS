@@ -27,13 +27,6 @@ struct ClassFilterView: View {
                     }
                 }
             }
-            
-            if !parentViewModel.getFilterStatus().isEmpty {
-                Text(parentViewModel.getFilterStatus())
-                    .font(.regular_12)
-                    .foregroundColor(.heyGray2)
-                    .padding(.top, 4)
-            }
         }
         .sheet(isPresented: $viewModel.state.isPresented) {
             ClassFilterBottomSheetView(
@@ -53,13 +46,13 @@ struct ClassFilterView: View {
     private func isFilterSelected(_ type: ClassFilterType) -> Bool {
         switch type {
         case .department:
-            return parentViewModel.selectedDepartment != nil
+            return parentViewModel.filterInfo.department != nil
         case .semester:
-            return parentViewModel.selectedSemester != nil
+            return parentViewModel.filterInfo.semester != nil
         case .level:
-            return parentViewModel.selectedLevel != nil
+            return parentViewModel.filterInfo.level != nil
         case .other:
-            return parentViewModel.selectedOther != nil
+            return parentViewModel.filterInfo.other != nil
         }
     }
 }

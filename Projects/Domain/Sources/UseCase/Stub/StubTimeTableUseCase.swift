@@ -59,7 +59,9 @@ extension StubTimeTableUseCase {
         Just(()).eraseToAnyPublisher()
     }
     
-    public func getLectureList(_ keyword: String) -> AnyPublisher<[SectionInfo], Never> {
+    public func getLectureList(
+        _ filterInfo: FilterInfo
+    ) -> AnyPublisher<[SectionInfo], Never> {
         Just([]).eraseToAnyPublisher()
     }
     

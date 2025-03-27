@@ -13,7 +13,7 @@ import Domain
 public enum LectureAPI {
     case getLectureDetailInfo(Int)
     case getLectureList
-    case getLectureListWithKeyword(String)
+    case getLectureListWithKeyword(Parameters)
     case getLectureDepartment(String)
     case getKeyword
 }
@@ -61,12 +61,8 @@ extension LectureAPI: BaseAPI {
                  
                  */
             ])
-        case .getLectureListWithKeyword(let keyword):
-            return .requestParameters([
-                "keyword": keyword,
-                "academicYear": "2024",
-                "semester": "TERM_2"
-            ])
+        case .getLectureListWithKeyword(let parameters):
+            return .requestParameters(parameters)
             
         case .getLectureDepartment:
             return .requestParameters([

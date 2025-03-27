@@ -35,9 +35,10 @@ public struct LectureRepository: LectureRepositoryType {
     }
     
     public func getLectureListWithKeyword(
-        _ keyword: String
+        _ filterInfo: FilterInfo
     ) -> AnyPublisher<[SectionInfo], Error> {
-        service.getLectureListWithKeyword(keyword)
+        let params = filterInfo.toRequestParameters()
+        return service.getLectureListWithKeyword(params)
             .map { $0.content.flatMap { $0.toEntity().sections } }
             .mapToGeneralError()
     }

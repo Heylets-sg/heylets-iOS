@@ -31,7 +31,9 @@ public protocol TimeTableUseCaseType {
     
     //MARK: Search
     //강의 리스트 조회하기 & 강의 검색하기
-    func getLectureList(_ keyword: String) -> AnyPublisher<[SectionInfo], Never>
+    func getLectureList(
+        _ filterInfo: FilterInfo
+    ) -> AnyPublisher<[SectionInfo], Never>
     //커스텀 모듈 추가하기
     func addCustomModule(_ customModule: CustomModuleInfo) -> AnyPublisher<Void, Never>
     //학과 찾기

@@ -31,8 +31,8 @@ public struct SearchModuleView: View {
                 .padding(.bottom, 16)
                 .padding(.horizontal, 16)
             
-            if viewModel.lectureList.isEmpty && !viewModel.searchText.isEmpty {
-                Text("We couldn't find a match for\n'\(viewModel.searchText)'.")
+            if viewModel.lectureList.isEmpty && !viewModel.filterInfo.keyword.isEmpty {
+                Text("We couldn't find a match for\n'\(viewModel.filterInfo.keyword)'.")
                     .font(.regular_16)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.heyGray2)

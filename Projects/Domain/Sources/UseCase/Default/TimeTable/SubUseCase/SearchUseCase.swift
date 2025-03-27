@@ -12,19 +12,21 @@ import Core
 
 //MARK: Serach
 public extension TimeTableUseCase {
-    func getLectureList(_ keyword: String) -> AnyPublisher<[SectionInfo], Never> {
-        if keyword != "" {
-            return lectureRepository.getLectureListWithKeyword(keyword)
+    func getLectureList(
+        _ filterInfo: FilterInfo
+    ) -> AnyPublisher<[SectionInfo], Never> {
+        if filterInfo.keyword != "" {
+            Analytics.shared.track(.clickSearchModule(
+                keyword: filterInfo.keyword,
+                semester: timeTableInfo.value.semester
+            )
+            )
+            return lectureRepository.getLectureListWithKeyword(filterInfo)
                 .catch { _ in
                     return Just([]).eraseToAnyPublisher()
                 }
                 .eraseToAnyPublisher()
         } else {
-            Analytics.shared.track(.clickSearchModule(
-                keyword: keyword,
-                semester: timeTableInfo.value.semester
-            )
-            )
             return lectureRepository.getLectureList()
                 .catch { _ in
                     return Just([]).eraseToAnyPublisher()

@@ -35,13 +35,15 @@ public class SearchModuleViewModel: ObservableObject {
     var addLectureClosure: ((SectionInfo) -> Void)?
     public var filterViewModel: SearchFilterViewModel
     @Published var lectureList: [SectionInfo] = []
-    @Published var searchText = ""
     
-    // Changed from arrays to optional strings for single selection
-    @Published var selectedDepartment: String? = nil
-    @Published var selectedSemester: String? = nil
-    @Published var selectedLevel: String? = nil
-    @Published var selectedOther: String? = nil
+    @Published var filterInfo: FilterInfo = .init()
+    //    @Published var searchText = ""
+    //
+    //    // Changed from arrays to optional strings for single selection
+    //    @Published var selectedDepartment: String? = nil
+    //    @Published var selectedSemester: String? = nil
+    //    @Published var selectedLevel: String? = nil
+    //    @Published var selectedOther: String? = nil
     
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
@@ -51,7 +53,9 @@ public class SearchModuleViewModel: ObservableObject {
     ) {
         self.useCase = useCase
         self.filterViewModel = .init(useCase)
+        
         setupBindings()
+        observe()
     }
     
     func send(_ action: Action) {
@@ -68,7 +72,7 @@ public class SearchModuleViewModel: ObservableObject {
             fetchLectures()
             
         case .clearButtonDidTap:
-            searchText = ""
+            filterInfo.keyword = ""
             state.selectedLecture = nil
             fetchLectures()
             
@@ -83,11 +87,11 @@ public class SearchModuleViewModel: ObservableObject {
     }
     
     private func fetchLectures() {
-        useCase.getLectureList(searchText)
+        useCase.getLectureList(.init())
             .receive(on: RunLoop.main)
             .assignLoading(to: \.state.isLoading, on: self)
             .handleEvents(receiveOutput: { [weak self] _ in
-                if self?.searchText.isEmpty == false {
+                if self?.filterInfo.keyword.isEmpty == false {
                     Analytics.shared.track(.moduleSearched)
                 }
             })
@@ -95,47 +99,35 @@ public class SearchModuleViewModel: ObservableObject {
             .store(in: cancelBag)
     }
     
-    func getFilterStatus() -> String {
-        var filterStatus = ""
-        
-        if let selectedDepartment = selectedDepartment {
-            filterStatus += "Department: \(selectedDepartment)"
-        }
-        
-        if let selectedSemester = selectedSemester {
-            if !filterStatus.isEmpty { filterStatus += " | " }
-            filterStatus += "Sem: \(selectedSemester)"
-        }
-        
-        if let selectedLevel = selectedLevel {
-            if !filterStatus.isEmpty { filterStatus += " | " }
-            filterStatus += "Level: \(selectedLevel)"
-        }
-        
-        if let selectedOther = selectedOther {
-            if !filterStatus.isEmpty { filterStatus += " | " }
-            filterStatus += "Others: \(selectedOther)"
-        }
-        
-        return filterStatus
+    private func observe() {
+        $filterInfo
+            .flatMap(useCase.getLectureList)
+            .receive(on: RunLoop.main)
+            .assignLoading(to: \.state.isLoading, on: self)
+            .handleEvents(receiveOutput: { [weak self] _ in
+                if self?.filterInfo.keyword.isEmpty == false {
+                    Analytics.shared.track(.moduleSearched)
+                }
+            })
+            .assign(to: \.lectureList, on: self)
+            .store(in: cancelBag)
     }
 }
 
 extension SearchModuleViewModel {
     private func setupBindings() {
-        // Updated to handle single selection
         filterViewModel.updateSelectedFilter = { [weak self] filterType, selectedItem in
             guard let self = self else { return }
             
             switch filterType {
             case .department:
-                self.selectedDepartment = selectedItem
+                self.filterInfo.department = selectedItem
             case .semester:
-                self.selectedSemester = selectedItem
+                self.filterInfo.semester = selectedItem
             case .level:
-                self.selectedLevel = selectedItem
+                self.filterInfo.level = selectedItem
             case .other:
-                self.selectedOther = selectedItem
+                self.filterInfo.other = selectedItem
             }
             self.send(.updateFilters)
         }
@@ -146,13 +138,13 @@ extension SearchModuleViewModel {
             
             switch filterType {
             case .department:
-                return self.selectedDepartment
+                return self.filterInfo.department
             case .semester:
-                return self.selectedSemester
+                return self.filterInfo.semester
             case .level:
-                return self.selectedLevel
+                return self.filterInfo.level
             case .other:
-                return self.selectedOther
+                return self.filterInfo.other
             }
         }
     }

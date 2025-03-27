@@ -57,7 +57,6 @@ public class SearchFilterViewModel: ObservableObject {
     @Published var filterType: ClassFilterType = .department
     @Published var filterList: [FilterItemType] = []
     
-    // Closure for passing selected filter to parent ViewModel
     var updateSelectedFilter: ((ClassFilterType, String?) -> Void)?
     
     private let cancelBag = CancelBag()
