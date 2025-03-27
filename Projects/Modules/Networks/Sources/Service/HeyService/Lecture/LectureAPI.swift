@@ -12,8 +12,7 @@ import Domain
 
 public enum LectureAPI {
     case getLectureDetailInfo(Int)
-    case getLectureList
-    case getLectureListWithKeyword(Parameters)
+    case getLectureList(Parameters)
     case getLectureDepartment(String)
     case getKeyword
 }
@@ -28,8 +27,6 @@ extension LectureAPI: BaseAPI {
         case .getLectureDetailInfo(let lectureId):
             return Paths.getDetailLectureInfo.replacingOccurrences(of: "{lectureId}", with: "\(lectureId)")
         case .getLectureList:
-            return Paths.getLectureList
-        case .getLectureListWithKeyword:
             return Paths.getLectureList
         case .getLectureDepartment(let university):
             return Paths.getLectureDepartment.replacingOccurrences(of: "{university}", with: "\(university)")
@@ -46,23 +43,19 @@ extension LectureAPI: BaseAPI {
         switch self {
         case .getLectureDetailInfo:
             return .requestPlain
-        case .getLectureList:
-            return .requestParameters([
-                "academicYear": "2024",
-                "semester": "TERM_2"
-                /*TODO: pageable 파라미터 추가 page=0&size=1&sort=%5B%22string%22%5D
-                 {
-                   "page": 0,
-                   "size": 1,
-                   "sort": [
-                     "string"
-                   ]
-                 }
-                 
-                 */
-            ])
-        case .getLectureListWithKeyword(let parameters):
+            
+        case .getLectureList(let parameters):
             return .requestParameters(parameters)
+            /*TODO: pageable 파라미터 추가 page=0&size=1&sort=%5B%22string%22%5D
+             {
+               "page": 0,
+               "size": 1,
+               "sort": [
+                 "string"
+               ]
+             }
+             
+             */
             
         case .getLectureDepartment:
             return .requestParameters([

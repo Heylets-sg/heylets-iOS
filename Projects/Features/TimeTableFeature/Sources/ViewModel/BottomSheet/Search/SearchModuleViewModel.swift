@@ -55,7 +55,6 @@ public class SearchModuleViewModel: ObservableObject {
         self.filterViewModel = .init(useCase)
         
         setupBindings()
-        observe()
     }
     
     func send(_ action: Action) {
@@ -82,26 +81,21 @@ public class SearchModuleViewModel: ObservableObject {
             state.selectedLecture = nil
             
         case .updateFilters:
-            fetchLectures()
+            useCase.getLectureList(filterInfo)
+                .receive(on: RunLoop.main)
+                .assignLoading(to: \.state.isLoading, on: self)
+                .handleEvents(receiveOutput: { [weak self] _ in
+                    if self?.filterInfo.keyword.isEmpty == false {
+                        Analytics.shared.track(.moduleSearched)
+                    }
+                })
+                .assign(to: \.lectureList, on: self)
+                .store(in: cancelBag)
         }
     }
     
     private func fetchLectures() {
         useCase.getLectureList(.init())
-            .receive(on: RunLoop.main)
-            .assignLoading(to: \.state.isLoading, on: self)
-            .handleEvents(receiveOutput: { [weak self] _ in
-                if self?.filterInfo.keyword.isEmpty == false {
-                    Analytics.shared.track(.moduleSearched)
-                }
-            })
-            .assign(to: \.lectureList, on: self)
-            .store(in: cancelBag)
-    }
-    
-    private func observe() {
-        $filterInfo
-            .flatMap(useCase.getLectureList)
             .receive(on: RunLoop.main)
             .assignLoading(to: \.state.isLoading, on: self)
             .handleEvents(receiveOutput: { [weak self] _ in

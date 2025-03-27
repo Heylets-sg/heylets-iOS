@@ -16,9 +16,7 @@ public protocol LectureServiceType {
         _ lectureId: Int
     ) -> NetworkDecodableResponse<LectureDetailResult>
     
-    func getLectureList() -> NetworkDecodableResponse<LectureListResult>
-    
-    func getLectureListWithKeyword(
+    func getLectureList(
         _ filterParameters: Parameters
     ) -> NetworkDecodableResponse<LectureListResult>
     
@@ -36,14 +34,10 @@ extension LectureService: LectureServiceType {
         requestWithResult(.getLectureDetailInfo(lectureId))
     }
     
-    public func getLectureList() -> AnyPublisher<LectureListResult, HeyNetworkError> {
-        requestWithResult(.getLectureList)
-    }
-    
-    public func getLectureListWithKeyword(
+    public func getLectureList(
         _ filterParameters: Parameters
     ) -> AnyPublisher<LectureListResult, HeyNetworkError> {
-        requestWithResult(.getLectureListWithKeyword(filterParameters))
+        requestWithResult(.getLectureList(filterParameters))
     }
     
     public func getLectureDepartment(

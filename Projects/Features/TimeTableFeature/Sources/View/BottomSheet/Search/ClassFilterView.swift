@@ -162,21 +162,13 @@ struct ClassFilterBottomSheetView: View {
                 Button {
                     applyButtonAction()
                 } label: {
-                    HStack(spacing: 4) {
-                        if selectedCount > 0 {
-                            Text("\(selectedCount)")
-                                .font(.semibold_16)
-                                .foregroundColor(.heyWhite)
-                        }
-                        
-                        Text("Apply")
-                            .font(.semibold_16)
-                            .foregroundColor(.heyWhite)
-                    }
-                    .padding(.horizontal, 80)
-                    .padding(.vertical, 15)
-                    .background(Color.heyMain)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    Text("Apply")
+                        .font(.semibold_16)
+                        .foregroundColor(.heyWhite)
+                        .padding(.horizontal, 90)
+                        .padding(.vertical, 15)
+                        .background(Color.heyMain)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
             }
             .padding(.horizontal, 16)

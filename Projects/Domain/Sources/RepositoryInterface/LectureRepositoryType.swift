@@ -14,9 +14,7 @@ public protocol LectureRepositoryType {
         _ lectureId: Int
     ) -> AnyPublisher<LectureInfo, Error>
     
-    func getLectureList() -> AnyPublisher<[SectionInfo], Error>
-    
-    func getLectureListWithKeyword(
+    func getLectureList(
         _ filterInfo: FilterInfo
     ) -> AnyPublisher<[SectionInfo], Error>
     

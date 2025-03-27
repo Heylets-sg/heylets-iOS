@@ -15,24 +15,18 @@ public extension TimeTableUseCase {
     func getLectureList(
         _ filterInfo: FilterInfo
     ) -> AnyPublisher<[SectionInfo], Never> {
-        if filterInfo.keyword != "" {
-            Analytics.shared.track(.clickSearchModule(
-                keyword: filterInfo.keyword,
-                semester: timeTableInfo.value.semester
-            )
-            )
-            return lectureRepository.getLectureListWithKeyword(filterInfo)
-                .catch { _ in
-                    return Just([]).eraseToAnyPublisher()
-                }
-                .eraseToAnyPublisher()
-        } else {
-            return lectureRepository.getLectureList()
-                .catch { _ in
-                    return Just([]).eraseToAnyPublisher()
-                }
-                .eraseToAnyPublisher()
-        }
+        return lectureRepository.getLectureList(filterInfo)
+            .handleEvents(receiveRequest: {  _ in
+                Analytics.shared.track(.clickSearchModule(
+                    keyword: filterInfo.keyword,
+                    semester: filterInfo.semester ?? "TERM_2"
+                )
+                )
+            })
+            .catch { _ in
+                return Just([]).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
     
     func addCustomModule(
