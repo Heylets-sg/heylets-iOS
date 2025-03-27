@@ -13,18 +13,16 @@ struct ClassFilterView: View {
     @ObservedObject var parentViewModel: SearchModuleViewModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    ForEach(ClassFilterType.allCases, id: \.self) { type in
-                        ClassFilterCapsuleView(
-                            title: type.title,
-                            isSelected: isFilterSelected(type),
-                            action: {
-                                viewModel.send(.filterButtonDidTap(type))
-                            }
-                        )
-                    }
+        VStack(alignment: .leading) {
+            HStack(spacing: 8) {
+                ForEach(ClassFilterType.allCases, id: \.self) { type in
+                    ClassFilterCapsuleView(
+                        title: type.title,
+                        isSelected: isFilterSelected(type),
+                        action: {
+                            viewModel.send(.filterButtonDidTap(type))
+                        }
+                    )
                 }
             }
         }
@@ -35,8 +33,10 @@ struct ClassFilterView: View {
                 backButtonAction: { viewModel.send(.backButtonDidTap) },
                 applyButtonAction: { viewModel.send(.applyButtonDidTap) }
             )
-            .presentationDetents([.height(400)])
+            .presentationDetents([.height(380)])
             .presentationDragIndicator(.visible)
+            .ignoresSafeArea(.container, edges: .bottom)
+            
         }
         .onAppear {
             viewModel.send(.onAppear)
@@ -144,7 +144,9 @@ struct ClassFilterBottomSheetView: View {
                     .padding(.bottom, 24)
                 }
             }
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 16)
+            
+            Spacer()
             
             HStack(spacing: 17) {
                 Button {

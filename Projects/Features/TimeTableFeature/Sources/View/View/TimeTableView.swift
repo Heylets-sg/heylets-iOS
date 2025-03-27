@@ -96,11 +96,12 @@ public struct TimeTableView: View {
                     .ignoresSafeArea(.container, edges: .bottom)
                 }
                 
-                TabBarView(
-                    todoAction: { viewModel.send(.gotoTodo) },
-                    mypageAction: { viewModel.send(.gotoMyPage) }
-                )
-                .hidden(viewTypeService.viewType != .main)
+                if viewTypeService.viewType == .main {
+                    TabBarView(
+                        todoAction: { viewModel.send(.gotoTodo) },
+                        mypageAction: { viewModel.send(.gotoMyPage) }
+                    )
+                }
                 
                 SettingTimeTableAlertView(viewModel: viewModel.settingViewModel)
             }
