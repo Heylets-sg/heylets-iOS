@@ -23,6 +23,7 @@ public class SearchModuleViewModel: ObservableObject {
     
     enum Action {
         case onAppear
+        case closeButtonDidTap
         case lectureCellDidTap(SectionInfo)
         case searchButtonDidTap
         case clearButtonDidTap
@@ -35,15 +36,7 @@ public class SearchModuleViewModel: ObservableObject {
     var addLectureClosure: ((SectionInfo) -> Void)?
     public var filterViewModel: SearchFilterViewModel
     @Published var lectureList: [SectionInfo] = []
-    
     @Published var filterInfo: FilterInfo = .init()
-    //    @Published var searchText = ""
-    //
-    //    // Changed from arrays to optional strings for single selection
-    //    @Published var selectedDepartment: String? = nil
-    //    @Published var selectedSemester: String? = nil
-    //    @Published var selectedLevel: String? = nil
-    //    @Published var selectedOther: String? = nil
     
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
@@ -61,6 +54,10 @@ public class SearchModuleViewModel: ObservableObject {
         switch action {
         case .onAppear:
             fetchLectures()
+            
+        case .closeButtonDidTap:
+            filterInfo = .init()
+            break
             
         case .lectureCellDidTap(let lecture):
             state.selectedLecture = lecture
@@ -121,12 +118,11 @@ extension SearchModuleViewModel {
             case .level:
                 self.filterInfo.level = selectedItem
             case .other:
-                self.filterInfo.other = selectedItem
+                self.filterInfo.keywordType = selectedItem
             }
             self.send(.updateFilters)
         }
         
-        // Updated to return single selection
         filterViewModel.getSelectedFilter = { [weak self] filterType in
             guard let self = self else { return nil }
             
@@ -138,7 +134,7 @@ extension SearchModuleViewModel {
             case .level:
                 return self.filterInfo.level
             case .other:
-                return self.filterInfo.other
+                return self.filterInfo.keywordType
             }
         }
     }

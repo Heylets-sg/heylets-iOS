@@ -53,6 +53,7 @@ public class SearchFilterViewModel: ObservableObject {
     @Published var departmentList: [String] = []
     private let levelList: [String] = ["1", "2", "3", "4", "5", "6"]
     private let semesterList: [String] = ["TERM_1", "TERM_2"]
+    private let keywordList: [String] = ["MEANINGFUL", "UNRESTRICTED"]
     
     @Published var filterType: ClassFilterType = .department
     @Published var filterList: [FilterItemType] = []
@@ -62,13 +63,10 @@ public class SearchFilterViewModel: ObservableObject {
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
     
-    public init(
-        _ useCase: TimeTableUseCaseType
-    ) {
+    public init(_ useCase: TimeTableUseCaseType) {
         self.useCase = useCase
     }
     
-    // Get currently selected filter from parent view model
     var getSelectedFilter: ((ClassFilterType) -> String?)?
     
     func send(_ action: Action) {
@@ -90,27 +88,20 @@ public class SearchFilterViewModel: ObservableObject {
             case .level:
                 tempArr = levelList
             case .other:
-                tempArr = []
+                tempArr = keywordList
             }
             
-            // Get currently selected item for this filter type
             let currentlySelectedItem = getSelectedFilter?(type)
             
-            // Create filter items with appropriate selection state
             filterList = tempArr.map { item in
                 return FilterItemType(title: item, isSelected: currentlySelectedItem == item)
             }
-            
-            // Debug output
-            print("Filter type: \(type), Selected item: \(currentlySelectedItem ?? "none")")
-            
             state.isPresented = true
             
         case .backButtonDidTap:
             state.isPresented = false
             
         case .applyButtonDidTap:
-            // Get the single selected item or nil if none selected
             let selectedItem = filterList.first(where: { $0.isSelected })?.title
             
             if let updateSelectedFilter = updateSelectedFilter {

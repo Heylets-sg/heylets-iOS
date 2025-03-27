@@ -52,7 +52,7 @@ struct ClassFilterView: View {
         case .level:
             return parentViewModel.filterInfo.level != nil
         case .other:
-            return parentViewModel.filterInfo.other != nil
+            return parentViewModel.filterInfo.keywordType != nil
         }
     }
 }

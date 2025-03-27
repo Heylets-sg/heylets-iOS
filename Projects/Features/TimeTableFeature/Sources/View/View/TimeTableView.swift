@@ -166,6 +166,9 @@ extension TimeTableView {
                 viewType: $viewModel.viewType,
                 addCustomModuleButtonDidTapEvent: {
                     viewModel.send(.addCustomModuleButtonDidTap)
+                }, 
+                closeButtonDidTapEvent: {
+                    viewModel.searchModuleViewModel.send(.closeButtonDidTap)
                 }
             )
         case .theme:

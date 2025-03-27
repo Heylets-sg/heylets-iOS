@@ -13,20 +13,20 @@ public struct FilterInfo {
     public var department: String?
     public var semester: String?
     public var level: String?
-    public var other: String?
+    public var keywordType: String?
     
     public init(
         _ keyword: String = "",
         _ department: String? = nil,
         _ semester: String? = nil,
         _ level: String? = nil,
-        _ other: String? = nil
+        _ keywordType: String? = nil
     ) {
         self.keyword = keyword
         self.department = department
         self.semester = semester
         self.level = level
-        self.other = other
+        self.keywordType = keywordType
     }
     
     public func toRequestParameters() -> [String: Any] {
@@ -42,7 +42,7 @@ public struct FilterInfo {
             params["semester"] = "TERM_2"
         }
         if let level = level { params["level"] = level }
-        if let other = other { params["other"] = other }
+        if let other = keywordType { params["keywordType"] = keywordType }
         
         return params
     }
