@@ -27,29 +27,40 @@ public class SearchModuleViewModel: ObservableObject {
         case searchButtonDidTap
         case clearButtonDidTap
         case addLectureButtonDidTap(SectionInfo)
+        case updateFilters
     }
     
     @Published var state = State()
     var selectLectureClosure: ((SectionInfo) -> Void)?
     var addLectureClosure: ((SectionInfo) -> Void)?
+    public var filterViewModel: SearchFilterViewModel
     @Published var lectureList: [SectionInfo] = []
-    @Published var searchText = ""
+    
+    @Published var filterInfo: FilterInfo = .init()
+    //    @Published var searchText = ""
+    //
+    //    // Changed from arrays to optional strings for single selection
+    //    @Published var selectedDepartment: String? = nil
+    //    @Published var selectedSemester: String? = nil
+    //    @Published var selectedLevel: String? = nil
+    //    @Published var selectedOther: String? = nil
     
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
     
-    public init(_ useCase: TimeTableUseCaseType) {
+    public init(
+        _ useCase: TimeTableUseCaseType
+    ) {
         self.useCase = useCase
+        self.filterViewModel = .init(useCase)
+        
+        setupBindings()
     }
     
     func send(_ action: Action) {
         switch action {
         case .onAppear:
-            useCase.getLectureList(searchText)
-                .receive(on: RunLoop.main)
-                .assignLoading(to: \.state.isLoading, on: self)
-                .assign(to: \.lectureList, on: self)
-                .store(in: cancelBag)
+            fetchLectures()
             
         case .lectureCellDidTap(let lecture):
             state.selectedLecture = lecture
@@ -57,27 +68,78 @@ public class SearchModuleViewModel: ObservableObject {
             selectLecture(lecture)
             
         case .searchButtonDidTap:
-            useCase.getLectureList(searchText)
-                .receive(on: RunLoop.main)
-                .handleEvents(receiveOutput: { _ in
-                    Analytics.shared.track(.moduleSearched)
-                })
-                .assign(to: \.lectureList, on: self)
-                .store(in: cancelBag)
+            fetchLectures()
             
         case .clearButtonDidTap:
-            searchText = ""
+            filterInfo.keyword = ""
             state.selectedLecture = nil
-            useCase.getLectureList(searchText)
-                .receive(on: RunLoop.main)
-                .assign(to: \.lectureList, on: self)
-                .store(in: cancelBag)
+            fetchLectures()
             
         case .addLectureButtonDidTap(let lecture):
             guard let addLecture = addLectureClosure else { return }
             addLecture(lecture)
             state.selectedLecture = nil
+            
+        case .updateFilters:
+            useCase.getLectureList(filterInfo)
+                .receive(on: RunLoop.main)
+                .assignLoading(to: \.state.isLoading, on: self)
+                .handleEvents(receiveOutput: { [weak self] _ in
+                    if self?.filterInfo.keyword.isEmpty == false {
+                        Analytics.shared.track(.moduleSearched)
+                    }
+                })
+                .assign(to: \.lectureList, on: self)
+                .store(in: cancelBag)
         }
+    }
+    
+    private func fetchLectures() {
+        useCase.getLectureList(.init())
+            .receive(on: RunLoop.main)
+            .assignLoading(to: \.state.isLoading, on: self)
+            .handleEvents(receiveOutput: { [weak self] _ in
+                if self?.filterInfo.keyword.isEmpty == false {
+                    Analytics.shared.track(.moduleSearched)
+                }
+            })
+            .assign(to: \.lectureList, on: self)
+            .store(in: cancelBag)
     }
 }
 
+extension SearchModuleViewModel {
+    private func setupBindings() {
+        filterViewModel.updateSelectedFilter = { [weak self] filterType, selectedItem in
+            guard let self = self else { return }
+            
+            switch filterType {
+            case .department:
+                self.filterInfo.department = selectedItem
+            case .semester:
+                self.filterInfo.semester = selectedItem
+            case .level:
+                self.filterInfo.level = selectedItem
+            case .other:
+                self.filterInfo.other = selectedItem
+            }
+            self.send(.updateFilters)
+        }
+        
+        // Updated to return single selection
+        filterViewModel.getSelectedFilter = { [weak self] filterType in
+            guard let self = self else { return nil }
+            
+            switch filterType {
+            case .department:
+                return self.filterInfo.department
+            case .semester:
+                return self.filterInfo.semester
+            case .level:
+                return self.filterInfo.level
+            case .other:
+                return self.filterInfo.other
+            }
+        }
+    }
+}

@@ -16,6 +16,7 @@ final public class StubTimeTableUseCase: TimeTableUseCaseType {
     public var timeTableInfo = CurrentValueSubject<TimeTableInfo, Never>(.empty)
     public var sectionList = PassthroughSubject<[SectionInfo], Never>()
     public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()
+    public var profileInfo = CurrentValueSubject<ProfileInfo, Never>(.empty)
     
     public init() {
         timeTableInfo.send(TimeTableInfo.stub)
@@ -36,8 +37,8 @@ extension StubTimeTableUseCase {
         Just(()).eraseToAnyPublisher()
     }
     
-    public func getProfileInfo() -> AnyPublisher<ProfileInfo, Never> {
-        Just(.stub).eraseToAnyPublisher()
+    public func getProfileInfo() -> AnyPublisher<Void, Never> {
+        Just(()).eraseToAnyPublisher()
     }
     
     
@@ -58,7 +59,9 @@ extension StubTimeTableUseCase {
         Just(()).eraseToAnyPublisher()
     }
     
-    public func getLectureList(_ keyword: String) -> AnyPublisher<[SectionInfo], Never> {
+    public func getLectureList(
+        _ filterInfo: FilterInfo
+    ) -> AnyPublisher<[SectionInfo], Never> {
         Just([]).eraseToAnyPublisher()
     }
     
@@ -97,6 +100,10 @@ extension StubTimeTableUseCase {
     
     public func handleInviteCodeView() -> AnyPublisher<Bool, Never> {
         return Just(false).eraseToAnyPublisher()
+    }
+    
+    public func getLectureDepartment() -> AnyPublisher<[String], Never> {
+        Just([]).eraseToAnyPublisher()
     }
 }
 

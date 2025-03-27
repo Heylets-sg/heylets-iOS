@@ -12,25 +12,21 @@ import Core
 
 //MARK: Serach
 public extension TimeTableUseCase {
-    func getLectureList(_ keyword: String) -> AnyPublisher<[SectionInfo], Never> {
-        if keyword != "" {
-            return lectureRepository.getLectureListWithKeyword(keyword)
-                .catch { _ in
-                    return Just([]).eraseToAnyPublisher()
-                }
-                .eraseToAnyPublisher()
-        } else {
-            Analytics.shared.track(.clickSearchModule(
-                keyword: keyword,
-                semester: timeTableInfo.value.semester
-            )
-            )
-            return lectureRepository.getLectureList()
-                .catch { _ in
-                    return Just([]).eraseToAnyPublisher()
-                }
-                .eraseToAnyPublisher()
-        }
+    func getLectureList(
+        _ filterInfo: FilterInfo
+    ) -> AnyPublisher<[SectionInfo], Never> {
+        return lectureRepository.getLectureList(filterInfo)
+            .handleEvents(receiveRequest: {  _ in
+                Analytics.shared.track(.clickSearchModule(
+                    keyword: filterInfo.keyword,
+                    semester: filterInfo.semester ?? "TERM_2"
+                )
+                )
+            })
+            .catch { _ in
+                return Just([]).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
     
     func addCustomModule(
@@ -46,11 +42,10 @@ public extension TimeTableUseCase {
             .eraseToAnyPublisher()
     }
     
-    func getLectureDepartment(
-        _ university: String
-    ) -> AnyPublisher<[String], Error> {
-        lectureRepository.getLectureDepartment(university)
+    func getLectureDepartment() -> AnyPublisher<[String], Never> {
+        lectureRepository.getLectureDepartment(profileInfo.value.university.rawValue)
             .map { $0 }
-            .mapToGeneralError()
+            .catch {  _ in Empty<[String], Never>() }
+            .eraseToAnyPublisher()
     }
 }

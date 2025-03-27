@@ -28,16 +28,11 @@ public struct LectureRepository: LectureRepositoryType {
             .mapToGeneralError()
     }
     
-    public func getLectureList() -> AnyPublisher<[SectionInfo], Error> {
-        service.getLectureList()
-            .map { $0.content.flatMap { $0.toEntity().sections } }
-            .mapToGeneralError()
-    }
-    
-    public func getLectureListWithKeyword(
-        _ keyword: String
+    public func getLectureList(
+        _ filterInfo: FilterInfo
     ) -> AnyPublisher<[SectionInfo], Error> {
-        service.getLectureListWithKeyword(keyword)
+        let params = filterInfo.toRequestParameters()
+        return service.getLectureList(params)
             .map { $0.content.flatMap { $0.toEntity().sections } }
             .mapToGeneralError()
     }

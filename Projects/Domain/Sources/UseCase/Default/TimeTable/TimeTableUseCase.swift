@@ -47,4 +47,5 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
     public var timeTableInfo = CurrentValueSubject<TimeTableInfo, Never>(.empty)
     public var sectionList = PassthroughSubject<[SectionInfo], Never>()
     public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()
+    public var profileInfo = CurrentValueSubject<ProfileInfo, Never>(.empty)
 }

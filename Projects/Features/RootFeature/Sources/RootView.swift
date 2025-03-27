@@ -38,23 +38,23 @@ public struct RootView: View {
                 )
             case .login:
                 LogInView(viewModel: .init(
-                        navigationRouter: router.navigationRouter,
-                        windowRouter: router.windowRouter,
-                        useCase: useCase.signInUseCase
-                    )
+                    navigationRouter: router.navigationRouter,
+                    windowRouter: router.windowRouter,
+                    useCase: useCase.signInUseCase
+                )
                 )
             case .timetable:
                 let useCase = useCase.timeTableUseCase
                 TimeTableView(
                     viewModel: .init(
+                        SearchModuleViewModel(useCase),
+                        AddCustomModuleViewModel(useCase),
+                        ThemeViewModel(useCase),
+                        TimeTableSettingViewModel(useCase),
                         router.navigationRouter,
                         router.windowRouter,
-                        useCase,
-                        .init(useCase)
-                    ),
-                    searchModuleViewModel: .init(useCase),
-                    addCustomModuleViewModel: .init(useCase),
-                    themeViewModel: .init(useCase)
+                        useCase
+                    )
                 )
             case .mypage:
                 MyPageView(

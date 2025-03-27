@@ -16,20 +16,9 @@ import Core
 public struct TimeTableView: View {
     @EnvironmentObject var container: Router
     @ObservedObject var viewModel: TimeTableViewModel
-    @ObservedObject var searchModuleViewModel: SearchModuleViewModel
-    @ObservedObject var addCustomModuleViewModel: AddCustomModuleViewModel
-    @ObservedObject var themeViewModel: ThemeViewModel
     
-    public init(
-        viewModel: TimeTableViewModel,
-        searchModuleViewModel: SearchModuleViewModel,
-        addCustomModuleViewModel: AddCustomModuleViewModel,
-        themeViewModel: ThemeViewModel
-    ) {
+    public init(viewModel: TimeTableViewModel) {
         self.viewModel = viewModel
-        self.searchModuleViewModel = searchModuleViewModel
-        self.addCustomModuleViewModel = addCustomModuleViewModel
-        self.themeViewModel = themeViewModel
     }
     
     public var body: some View {
@@ -52,10 +41,10 @@ public struct TimeTableView: View {
                 .ignoresSafeArea()
                 .onAppear {
                     viewModel.send(.onAppear)
-                    searchModuleViewModel.selectLectureClosure = { lecture in
+                    viewModel.searchModuleViewModel.selectLectureClosure = { lecture in
                         viewModel.send(.selectLecture(lecture))
                     }
-                    searchModuleViewModel.addLectureClosure = { lecture in
+                    viewModel.searchModuleViewModel.addLectureClosure = { lecture in
                         viewModel.send(.addLecture(lecture))
                     }
                 }
@@ -119,7 +108,7 @@ public struct TimeTableView: View {
             .overlay {
                 let config = OverlayConfiguration.configure(
                     viewType: viewModel.viewType,
-                    isThemeSelectInfoShowing: themeViewModel.state.isShowingSelectInfoView
+                    isThemeSelectInfoShowing: viewModel.themeViewModel.state.isShowingSelectInfoView
                 )
                 
                 if config.shouldShow {
@@ -151,16 +140,16 @@ extension TimeTableView {
             SearchModuleView(
                 viewType: $viewModel.viewType,
                 reportMissingModuleAlertIsPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert,
-                viewModel: searchModuleViewModel
+                viewModel: viewModel.searchModuleViewModel
             )
             .bottomSheetTransition()
             
         case .theme:
-            SettingTimeTableInfoView(viewModel: themeViewModel)
+            SettingTimeTableInfoView(viewModel: viewModel.themeViewModel)
                 .bottomSheetTransition()
             
         case .addCustom:
-            AddCustomModuleView(viewModel: addCustomModuleViewModel)
+            AddCustomModuleView(viewModel: viewModel.addCustomModuleViewModel)
                 .bottomSheetTransition()
         default:
             EmptyView()
@@ -184,14 +173,14 @@ extension TimeTableView {
                 .frame(height: 30)
             ThemeTopView(
                 viewType: $viewModel.viewType,
-                viewModel: themeViewModel
+                viewModel: viewModel.themeViewModel
             )
             .onAppear {
-                themeViewModel.selectThemeClosure = { themeName in
+                viewModel.themeViewModel.selectThemeClosure = { themeName in
                     viewModel.send(.selectedTheme(themeName))
                 }
                 
-                themeViewModel.gotoInviteCodeClosure = {
+                viewModel.themeViewModel.gotoInviteCodeClosure = {
                     viewModel.send(.gotoInviteCodeView)
                 }
             }
@@ -200,7 +189,7 @@ extension TimeTableView {
                 .frame(height: 60)
             AddCustomModuleTopView(
                 viewType: $viewModel.viewType,
-                viewModel: addCustomModuleViewModel
+                viewModel: viewModel.addCustomModuleViewModel
             )
         default:
             Spacer()
