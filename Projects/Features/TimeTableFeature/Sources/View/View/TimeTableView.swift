@@ -93,7 +93,7 @@ public struct TimeTableView: View {
                         viewType: viewTypeService.binding,
                         settingAlertType: $viewModel.settingViewModel.settingAlertType
                     )
-                    .presentationDetents([.fraction(0.42)])
+                    .presentationDetents([.height(267)])
                     .presentationDragIndicator(.hidden)
                     .ignoresSafeArea(.container, edges: .bottom)
                 }
