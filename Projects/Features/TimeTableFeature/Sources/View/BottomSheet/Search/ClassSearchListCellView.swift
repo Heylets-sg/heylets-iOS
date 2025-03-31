@@ -40,7 +40,7 @@ struct ClassSearchListCellView: View {
             
             Text("\(section.professor) / \(section.location) \(section.unit.map { " / \($0) unit" } ?? "")")
                 .font(.regular_12)
-                .foregroundColor(isSelected ? Color.heyGray2 : Color.heyGray8)
+                .foregroundColor(isSelected ? .init(hex: "#666666") : Color.heyGray8)
                 .padding(.bottom, 15)
             
             if isSelected {

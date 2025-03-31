@@ -33,7 +33,7 @@ struct ClassFilterView: View {
                 backButtonAction: { viewModel.send(.backButtonDidTap) },
                 applyButtonAction: { viewModel.send(.applyButtonDidTap) }
             )
-            .presentationDetents([.height(380)])
+            .presentationDetents([.height(417)])
             .presentationDragIndicator(.visible)
             .ignoresSafeArea(.container, edges: .bottom)
             
@@ -70,9 +70,10 @@ struct ClassFilterCapsuleView: View {
                     .foregroundColor(isSelected ? .heyMain : .heyGray1)
 
                 Image(uiImage: .icDown)
+                    .renderingMode(.template)
                     .resizable()
                     .frame(width: 9, height: 4)
-                    .foregroundColor(isSelected ? .heyMain : .heyGray1)
+                    .tint(isSelected ? .heyMain : .heyGray1)
                 
             }
             .padding(.horizontal, 12)
@@ -190,7 +191,7 @@ struct ClassFilterCellView: View {
             Image(uiImage: isSelected ? .icCompleted : .icBlank)
                 .resizable()
                 .frame(width: 24, height: 24)
-                .padding(.trailing, 12)
+                .padding(.trailing, 8)
             
             Text(name)
                 .font(.medium_14)
@@ -198,6 +199,7 @@ struct ClassFilterCellView: View {
             
             Spacer()
         }
+        .background(Color.white)
         .onTapGesture { isSelected.toggle() }
     }
 }
