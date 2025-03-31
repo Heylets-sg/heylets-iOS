@@ -17,6 +17,15 @@ public enum TimeTableViewType: String, Equatable {
     case theme = "timetable_theme"
     case addCustom = "add_custom_module"
     
+    var topViewSpacingRatio: Double {
+        switch self {
+        case .theme:
+            return 0.035
+        default:
+            return 0.07
+        }
+    }
+    
     var bottomSheetHeightRatio: Double {
         switch self {
         case .search: return 0.6

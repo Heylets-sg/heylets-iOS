@@ -7,43 +7,45 @@ struct SettingTimeTableInfoView: View {
     @ObservedObject var viewModel: ThemeViewModel
     
     var body: some View {
-        VStack {
-            if viewModel.state.isShowingSelectInfoView {
-                Color.heyWhite
-                    .ignoresSafeArea()
-            } else {
-                VStack {
-                    Spacer()
-                        .frame(height: 30)
-                    
-                    HStack {
-                        Text("Information")
-                            .font(.medium_14)
-                            .foregroundColor(.heyGray1)
-                        
+        GeometryReader { proxy in
+            VStack {
+                if viewModel.state.isShowingSelectInfoView {
+                    Color.heyWhite
+                        .ignoresSafeArea()
+                } else {
+                    VStack {
                         Spacer()
+                            .frame(height: proxy.size.height * 0.035)
                         
-                        Button {
-                            viewModel.send(.selectDisplayTypeButtonDidTap)
-                        } label: {
-                            Text(viewModel.displayType.text)
-                                .font(.regular_12)
-                                .foregroundColor(.heyGray2)
+                        HStack {
+                            Text("Information")
+                                .font(.medium_14)
+                                .foregroundColor(.heyGray1)
+                            
+                            Spacer()
+                            
+                            Button {
+                                viewModel.send(.selectDisplayTypeButtonDidTap)
+                            } label: {
+                                Text(viewModel.displayType.text)
+                                    .font(.regular_12)
+                                    .foregroundColor(.heyGray2)
+                            }
+                            
+                            Spacer()
                         }
-                        
+                        .padding(.leading, 24)
                         Spacer()
                     }
-                    .padding(.leading, 24)
-                    Spacer()
+                    .background(Color.heyWhite)
                 }
-                .background(Color.heyWhite)
             }
-        }
-        .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
-            SelectDisplayModuleView(viewModel: viewModel)
-                .presentationDetents([.height(380)])
-                .presentationDragIndicator(.hidden)
-                .presentationBackground(.clear)
+            .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
+                SelectDisplayModuleView(viewModel: viewModel)
+                    .presentationDetents([.height(380)])
+                    .presentationDragIndicator(.hidden)
+                    .presentationBackground(.clear)
+            }
         }
     }
 }

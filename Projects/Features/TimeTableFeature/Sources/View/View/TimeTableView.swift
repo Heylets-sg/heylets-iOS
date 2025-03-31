@@ -27,10 +27,12 @@ public struct TimeTableView: View {
             GeometryReader { proxy in
             ZStack {
                 VStack(alignment: .leading) {
+                    Spacer()
+                        .frame(height: proxy.size.height * viewTypeService.viewType.topViewSpacingRatio)
                     createTopView(viewTypeService.viewType)
                     
                     Spacer()
-                        .frame(height: 19)
+                        .frame(height: proxy.size.height * 0.02)
                     
                     MainView(
                         viewModel: viewModel,
@@ -83,8 +85,17 @@ public struct TimeTableView: View {
                         reportMissingModuleAlertIsPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert
                     )
                     .transition(.move(edge: .trailing))
-                    .presentationDetents([.height(802)])
+                    .presentationDetents([.fraction(0.95)])
                     .presentationDragIndicator(.visible)
+                }
+                .sheet(isPresented: .constant(viewTypeService.viewType == .setting)) {
+                    SettingTimeTableView(
+                        viewType: viewTypeService.binding,
+                        settingAlertType: $viewModel.settingViewModel.settingAlertType
+                    )
+                    .presentationDetents([.fraction(0.42)])
+                    .presentationDragIndicator(.hidden)
+                    .ignoresSafeArea(.container, edges: .bottom)
                 }
                 .sheet(isPresented: .constant(viewTypeService.viewType == .detail)) {
                     DetailModuleInfoView(
@@ -92,7 +103,7 @@ public struct TimeTableView: View {
                         deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
                         sectionInfo: viewModel.detailSectionInfo
                     )
-                    .presentationDetents([.height(270)])
+                    .presentationDetents([.height(280)])
                     .presentationDragIndicator(.hidden)
                     .ignoresSafeArea(.container, edges: .bottom)
                 }
@@ -172,8 +183,6 @@ extension TimeTableView {
     private func createTopView(_ viewType: TimeTableViewType) -> some View {
         switch viewType {
         case .search:
-            Spacer()
-                .frame(height: 60)
             SearchModuleTopView(
                 viewType: viewTypeService.binding,
                 addCustomModuleButtonDidTapEvent: {
@@ -184,8 +193,6 @@ extension TimeTableView {
                 }
             )
         case .theme:
-            Spacer()
-                .frame(height: 30)
             ThemeTopView(
                 viewType: viewTypeService.binding,
                 viewModel: viewModel.themeViewModel
@@ -196,19 +203,14 @@ extension TimeTableView {
                 }
             }
         case .addCustom:
-            Spacer()
-                .frame(height: 60)
             AddCustomModuleTopView(
                 viewType: viewTypeService.binding,
                 viewModel: viewModel.addCustomModuleViewModel
             )
         default:
-            Spacer()
-                .frame(height: 60)
             TopView(
                 timeTableInfo: $viewModel.timeTableInfo,
                 viewType: viewTypeService.binding,
-                settingAlertType: $viewModel.settingViewModel.settingAlertType,
                 profileInfo: $viewModel.state.profile
             )
             .environmentObject(container)

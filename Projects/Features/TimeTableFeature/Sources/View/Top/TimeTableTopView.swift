@@ -16,7 +16,7 @@ public struct TopView: View {
     @EnvironmentObject var container: Router
     @Binding var timeTableInfo: TimeTableInfo
     @Binding var viewType: TimeTableViewType
-    @Binding var settingAlertType: TimeTableSettingAlertType?
+//    @Binding var settingAlertType: TimeTableSettingAlertType?
     @Binding var profileInfo: ProfileInfo
     
     public var body: some View {
@@ -73,14 +73,14 @@ public struct TopView: View {
             .padding(.top, 38)
         }
         .padding(.horizontal, 16)
-        .sheet(isPresented: .constant(viewType == .setting)) {
-            SettingTimeTableView(
-                viewType: $viewType,
-                settingAlertType: $settingAlertType
-            )
-            .presentationDetents([.fraction(0.32)])
-            .presentationDragIndicator(.hidden)
-            .ignoresSafeArea(.container, edges: .bottom)
-        }
+//        .sheet(isPresented: .constant(viewType == .setting)) {
+//            SettingTimeTableView(
+//                viewType: $viewType,
+//                settingAlertType: $settingAlertType
+//            )
+//            .presentationDetents([.fraction(0.32)])
+//            .presentationDragIndicator(.hidden)
+//            .ignoresSafeArea(.container, edges: .bottom)
+//        }
     }
 }

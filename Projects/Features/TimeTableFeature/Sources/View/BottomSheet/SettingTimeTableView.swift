@@ -10,61 +10,63 @@ struct SettingTimeTableView: View {
     @Binding var settingAlertType: TimeTableSettingAlertType?
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text("Timetable setup")
-                .foregroundColor(.heyBlack)
-                .font(.semibold_16)
-                .padding(.vertical, 20)
-                .padding(.leading, 32)
-            
-            Divider()
-                .frame(height: 0.8)
-                .background(Color.heyGray5)
-                .padding(.bottom, 12)
-            
+        GeometryReader { proxy in
             VStack(alignment: .leading, spacing: 0) {
-                Button {
-                    withAnimation {
-                        viewType = .theme
+                Text("Timetable setup")
+                    .foregroundColor(.heyBlack)
+                    .font(.semibold_16)
+                    .padding(.vertical, proxy.size.height * 0.08)
+                    .padding(.leading, 32)
+                
+                Divider()
+                    .frame(height: 0.8)
+                    .background(Color.heyGray5)
+                    .padding(.bottom, 12)
+                
+                VStack(alignment: .leading, spacing: 0) {
+                    Button {
+                        withAnimation {
+                            viewType = .theme
+                        }
+                    } label: {
+                        Text("Theme")
+                            .font(.medium_14)
+                            .foregroundColor(.heyGray1)
                     }
-                } label: {
-                    Text("Theme")
-                        .font(.medium_14)
-                        .foregroundColor(.heyGray1)
+                    .padding(.bottom, 25)
+                    
+                    Button {
+                        settingAlertType = .editTimeTableName
+                        viewType = .main
+                    } label: {
+                        Text("Timetable name")
+                            .font(.medium_14)
+                            .foregroundColor(.heyGray1)
+                    }
+                    .padding(.bottom, 25)
+                    
+                    Button {
+                        settingAlertType = .saveImage
+                        viewType = .main
+                    } label: {
+                        Text("Save image")
+                            .font(.medium_14)
+                            .foregroundColor(.heyGray1)
+                    }
+                    .padding(.bottom, 25)
+                    
+                    Button {
+                        settingAlertType = .removeTimeTable
+                        viewType = .main
+                    } label: {
+                        Text("Remove all")
+                            .font(.medium_14)
+                            .foregroundColor(.heyGray1)
+                    }
                 }
-                .padding(.bottom, 25)
-                
-                Button {
-                    settingAlertType = .editTimeTableName
-                    viewType = .main
-                } label: {
-                    Text("Timetable name")
-                        .font(.medium_14)
-                        .foregroundColor(.heyGray1)
-                }
-                .padding(.bottom, 25)
-                
-                Button {
-                    settingAlertType = .saveImage
-                    viewType = .main
-                } label: {
-                    Text("Save image")
-                        .font(.medium_14)
-                        .foregroundColor(.heyGray1)
-                }
-                .padding(.bottom, 25)
-                
-                Button {
-                    settingAlertType = .removeTimeTable
-                    viewType = .main
-                } label: {
-                    Text("Remove all")
-                        .font(.medium_14)
-                        .foregroundColor(.heyGray1)
-                }
+                .padding(.leading, 32)
+                .padding(.trailing, 220)
             }
-            .padding(.leading, 32)
-            .padding(.trailing, 220)
         }
         .animation(.easeInOut, value: viewType)
         .onDisappear {
