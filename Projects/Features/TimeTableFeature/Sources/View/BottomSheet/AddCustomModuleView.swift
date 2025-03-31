@@ -96,6 +96,7 @@ public struct AddCustomModuleView: View {
             Spacer()
         }
         .padding(.horizontal, 16)
+        .background(Color.heyWhite)
         
         // 통합 시간 선택기 Sheet
         .sheet(isPresented: $showingTimePicker) {

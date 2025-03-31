@@ -99,17 +99,17 @@ extension MainView {
     }
 }
 
-#Preview {
-    let useCase = StubHeyUseCase.stub.timeTableUseCase
-    return TimeTableView(
-        viewModel: .init(
-            .init(useCase),
-            .init(useCase),
-            .init(useCase, Router.default.navigationRouter),
-            .init(useCase),
-            Router.default.navigationRouter,
-            Router.default.windowRouter,
-            useCase)
-    )
-    .environmentObject(Router.default)
-}
+//#Preview {
+//    let useCase = StubHeyUseCase.stub.timeTableUseCase
+//    return TimeTableView(
+//        viewModel: .init(
+//            .init(useCase),
+//            .init(useCase),
+//            .init(useCase, Router.default.navigationRouter),
+//            .init(useCase),
+//            Router.default.navigationRouter,
+//            Router.default.windowRouter,
+//            useCase)
+//    )
+//    .environmentObject(Router.default)
+//}

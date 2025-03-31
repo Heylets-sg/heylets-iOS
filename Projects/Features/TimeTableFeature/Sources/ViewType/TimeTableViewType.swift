@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public enum TimeTableViewType: String, Equatable {
     case main = "timetable"
@@ -15,6 +16,15 @@ public enum TimeTableViewType: String, Equatable {
     case setting = "timetable_setting"
     case theme = "timetable_theme"
     case addCustom = "add_custom_module"
+    
+    var bottomSheetHeightRatio: Double {
+        switch self {
+        case .search: return 0.6
+        case .theme: return 0.45
+        case .addCustom: return 0.6
+        default: return 0
+        }
+    }
 }
 
 public enum TimeTableSettingAlertType: String {
@@ -39,7 +49,7 @@ struct OverlayConfiguration {
             opacity = 0
         case .theme:
             shouldShow = isThemeSelectInfoShowing
-            opacity = isThemeSelectInfoShowing ? 1.0 : 0.0
+            opacity = isThemeSelectInfoShowing ? 0.0 : 1.0
         case .detail, .setting:
             shouldShow = true
             opacity = 1.0

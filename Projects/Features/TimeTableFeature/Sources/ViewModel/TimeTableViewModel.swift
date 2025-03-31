@@ -22,6 +22,7 @@ public class TimeTableViewModel: ObservableObject {
             var showReposrtMissingModuleAlert: Bool = false
             var showAddCustomAlert: Bool = false
             var showGuestErrorAlert: Bool = false
+            var showSelectInfoView: Bool = false
         }
         
         struct TimeTable {

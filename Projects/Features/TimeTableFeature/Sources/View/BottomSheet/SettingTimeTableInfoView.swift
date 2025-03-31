@@ -8,39 +8,37 @@ struct SettingTimeTableInfoView: View {
     
     var body: some View {
         VStack {
-            Spacer()
-                .frame(height: 30)
             if viewModel.state.isShowingSelectInfoView {
-                Color.clear
+                Color.heyWhite
                     .ignoresSafeArea()
             } else {
-                HStack {
-                    Text("Information")
-                        .font(.medium_14)
-                        .foregroundColor(.heyGray1)
-                    
+                VStack {
                     Spacer()
+                        .frame(height: 30)
                     
-                    Button {
-                        viewModel.send(.selectDisplayTypeButtonDidTap)
-                    } label: {
-                        Text(viewModel.displayType.text)
-                            .font(.regular_12)
-                            .foregroundColor(.heyGray2)
+                    HStack {
+                        Text("Information")
+                            .font(.medium_14)
+                            .foregroundColor(.heyGray1)
+                        
+                        Spacer()
+                        
+                        Button {
+                            viewModel.send(.selectDisplayTypeButtonDidTap)
+                        } label: {
+                            Text(viewModel.displayType.text)
+                                .font(.regular_12)
+                                .foregroundColor(.heyGray2)
+                        }
+                        
+                        Spacer()
                     }
-                    
+                    .padding(.leading, 24)
                     Spacer()
                 }
-                .padding(.leading, 24)
+                .background(Color.heyWhite)
             }
-            Spacer()
         }
-        .frame(height: 173)
-        .overlay(
-            Color.heyDimmed
-                .opacity(viewModel.state.isShowingSelectInfoView ? 1 : 0)
-                .ignoresSafeArea()
-        )
         .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
             SelectDisplayModuleView(viewModel: viewModel)
                 .presentationDetents([.height(380)])

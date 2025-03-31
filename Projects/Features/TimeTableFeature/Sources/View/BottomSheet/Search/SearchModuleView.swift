@@ -78,7 +78,7 @@ public struct SearchModuleView: View {
                 .scrollIndicators(.hidden)
             }
         }
-        .frame(height: 504)
+        .background(Color.heyWhite)
         .ignoresSafeArea()
         .shadow(color: .init(hex: "#929292").opacity(0.16), radius: 24, y: 4)
         .onAppear {

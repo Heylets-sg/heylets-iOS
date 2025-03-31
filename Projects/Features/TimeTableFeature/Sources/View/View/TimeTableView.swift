@@ -24,6 +24,7 @@ public struct TimeTableView: View {
     
     public var body: some View {
         NavigationStack(path: $container.navigationRouter.destinations) {
+            GeometryReader { proxy in
             ZStack {
                 VStack(alignment: .leading) {
                     createTopView(viewTypeService.viewType)
@@ -126,10 +127,18 @@ public struct TimeTableView: View {
                 }
             }
             
-            createBottomSheetView(viewTypeService.viewType)
-                .onAppear {
-                    Analytics.shared.track(.screenView(viewTypeService.viewType.rawValue, .bottom_sheet))
+            
+                VStack {
+                    Spacer()
+                    createBottomSheetView(viewTypeService.viewType)
+                        .onAppear {
+                            Analytics.shared.track(.screenView(viewTypeService.viewType.rawValue, .bottom_sheet))
+                        }
+                        .frame(height: proxy.size.height * viewTypeService.viewType.bottomSheetHeightRatio)
                 }
+                
+            }
+            
         }
     }
 }
@@ -155,6 +164,7 @@ extension TimeTableView {
                 .bottomSheetTransition()
         default:
             EmptyView()
+                .frame(height: 0)
         }
     }
     
