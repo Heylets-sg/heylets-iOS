@@ -17,25 +17,12 @@ public protocol TimeTableViewTypeServiceType: ObservableObject {
 }
 
 public class TimeTableViewTypeService: TimeTableViewTypeServiceType {
-    // Singleton instance
     public static let shared = TimeTableViewTypeService()
     
     @Published public private(set) var viewType: TimeTableViewType = .main
-    private let notificationCenter: NotificationCenter
-    
-    // Private initializer for singleton
-    private init(notificationCenter: NotificationCenter = .default) {
-        self.notificationCenter = notificationCenter
-    }
     
     public func switchTo(_ viewType: TimeTableViewType) {
         self.viewType = viewType
-        // Broadcast change via Notification Center to allow any component to listen
-        notificationCenter.post(
-            name: .timeTableViewTypeChanged,
-            object: nil,
-            userInfo: ["viewType": viewType.rawValue]
-        )
     }
     
     public func reset() {
@@ -60,7 +47,6 @@ public class StubTimeTableViewTypeService: TimeTableViewTypeServiceType {
     }
 }
 
-// Add a helper to create a binding that updates the service
 extension TimeTableViewTypeServiceType {
     public var binding: Binding<TimeTableViewType> {
         Binding(

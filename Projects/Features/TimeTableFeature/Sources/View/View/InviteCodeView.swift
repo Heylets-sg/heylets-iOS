@@ -14,9 +14,6 @@ import BaseFeatureDependency
 import Domain
 import DSKit
 
-extension Notification.Name {
-    static let timeTableViewTypeChanged = Notification.Name("TimeTableViewTypeChanged")
-}
 
 public struct InviteCodeView: View {
     @EnvironmentObject var container: Router
@@ -127,4 +124,3 @@ public struct InviteCodeView: View {
         }
     }
 }
-
