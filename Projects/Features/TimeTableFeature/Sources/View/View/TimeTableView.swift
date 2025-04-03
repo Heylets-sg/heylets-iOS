@@ -27,9 +27,10 @@ public struct TimeTableView: View {
             GeometryReader { proxy in
             ZStack {
                 VStack(alignment: .leading) {
-                    Spacer()
-                        .frame(height: proxy.size.height * viewTypeService.viewType.topViewSpacingRatio)
                     createTopView(viewTypeService.viewType)
+                        .background(.green)
+                        .padding(.top, proxy.size.height * viewTypeService.viewType.topViewSpacingRatio)
+                        .background(.red)
                     
                     Spacer()
                         .frame(height: proxy.size.height * 0.02)
@@ -192,11 +193,20 @@ extension TimeTableView {
                     viewModel.searchModuleViewModel.send(.closeButtonDidTap)
                 }
             )
+            .frame(height: 16)
         case .theme:
-            ThemeTopView(
-                viewType: viewTypeService.binding,
-                viewModel: viewModel.themeViewModel
-            )
+            VStack {
+                ThemeTopView(
+                    viewType: viewTypeService.binding,
+                    viewModel: viewModel.themeViewModel
+                )
+                .frame(height: 22)
+                
+                ThemeListTopView(
+                    viewType: viewTypeService.binding,
+                    viewModel: viewModel.themeViewModel
+                )
+            }
             .onAppear {
                 viewModel.themeViewModel.selectThemeClosure = { themeName in
                     viewModel.send(.selectedTheme(themeName))
@@ -207,12 +217,14 @@ extension TimeTableView {
                 viewType: viewTypeService.binding,
                 viewModel: viewModel.addCustomModuleViewModel
             )
+            .frame(height: 19)
         default:
             TopView(
                 timeTableInfo: $viewModel.timeTableInfo,
                 viewType: viewTypeService.binding,
                 profileInfo: $viewModel.state.profile
             )
+            .frame(height: 53)
             .environmentObject(container)
         }
     }

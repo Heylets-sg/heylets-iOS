@@ -19,10 +19,25 @@ public enum TimeTableViewType: String, Equatable {
     
     var topViewSpacingRatio: Double {
         switch self {
+        case .main:
+            return 0.08
         case .theme:
             return 0.035
         default:
             return 0.07
+        }
+    }
+    
+    var topViewHeightRatio: Double {
+        switch self {
+        case .main, .detail,.setting:
+            return 0.06
+        case .search:
+            return 0.018
+        case .theme:
+            return 0.026
+        case .addCustom:
+            return 0.022
         }
     }
     

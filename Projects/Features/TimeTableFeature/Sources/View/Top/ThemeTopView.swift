@@ -22,7 +22,7 @@ struct ThemeTopView: View {
                 Text("Theme")
                     .font(.semibold_16)
                     .foregroundColor(.heyGray1)
-
+                
                 HStack {
                     Button {
                         withAnimation {
@@ -33,9 +33,9 @@ struct ThemeTopView: View {
                             .resizable()
                             .frame(width: 16, height: 16)
                     }
-
+                    
                     Spacer()
-
+                    
                     Button {
                         viewModel.send(.saveButtonDidTap)
                         withAnimation {
@@ -51,7 +51,16 @@ struct ThemeTopView: View {
             .padding(.horizontal, 16)
             .padding(.top, 25)
             .padding(.bottom, 24)
-            
+        }
+    }
+}
+
+struct ThemeListTopView: View {
+    @Binding var viewType: TimeTableViewType
+    @ObservedObject var viewModel: ThemeViewModel
+    
+    var body: some View {
+        VStack {
             if !viewModel.state.inviteCodeViewHidden {
                 ThemeInviteFriendView()
                     .frame(height: 57)
@@ -211,3 +220,4 @@ struct QuarterCircle: View {
         .fill(Color(hex: color))
     }
 }
+

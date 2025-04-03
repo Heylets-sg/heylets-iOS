@@ -16,71 +16,61 @@ public struct TopView: View {
     @EnvironmentObject var container: Router
     @Binding var timeTableInfo: TimeTableInfo
     @Binding var viewType: TimeTableViewType
-//    @Binding var settingAlertType: TimeTableSettingAlertType?
     @Binding var profileInfo: ProfileInfo
     
     public var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
+        GeometryReader { proxy in
+            HStack {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(uiImage: profileInfo.university.badgeImage)
+                            .resizable()
+                            .frame(width: proxy.size.height * 0.68, height: proxy.size.height * 0.34)
+                            
+                        
+                        Text(timeTableInfo.fullSemester)
+                            .font(.medium_12)
+                            .foregroundColor(.heyGray2)
+                    }
+                    .padding(.bottom, proxy.size.height * 0.2)
+                    
+                    Text(timeTableInfo.timeTableName)
+                        .lineLimit(1)
+                        .font(.semibold_18)
+                        .foregroundColor(.heyGray1)
+                }
+                
                 Spacer()
-                    .frame(height: 34)
                 
                 HStack {
-                    Image(uiImage: profileInfo.university.badgeImage)
-                        .resizable()
-                        .frame(width: 28, height: 14)
-                        
+                    Button {
+                        withAnimation {
+                            viewType = .search
+                        }
+                    } label: {
+                        Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
+                            .resizable()
+                            .frame(width: proxy.size.height * 0.32, height: proxy.size.height * 0.32)
+                            .tint(.init(hex: "#353536"))
+                            .padding(.trailing, 26)
+                    }
                     
-                    Text(timeTableInfo.fullSemester)
-                        .font(.medium_12)
-                        .foregroundColor(.heyGray2)
-                }
-                .padding(.bottom, 8)
-                
-                Text(timeTableInfo.timeTableName)
-                    .lineLimit(1)
-                    .font(.semibold_18)
-                    .foregroundColor(.heyGray1)
-            }
-            
-            Spacer()
-            
-            HStack {
-                Button {
-                    withAnimation {
-                        viewType = .search
+                    Button {
+                        withAnimation {
+                            viewType = .setting
+                        }
+                    } label: {
+                        Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
+                            .resizable()
+                            .frame(width: proxy.size.height * 0.34, height: proxy.size.height * 0.34)
+                            .tint(.init(hex: "#353536"))
                     }
-                } label: {
-                    Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                        .tint(.heyGray2)
-                        .padding(.trailing, 26)
                 }
-                
-                Button {
-                    withAnimation {
-                        viewType = .setting
-                    }
-                } label: {
-                    Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .tint(.heyGray2)
-                        .padding(.trailing, 23)
-                }
+                .padding(.trailing, 24)
+                .padding(.vertical, proxy.size.height * 0.33)
+//                .frame(height: 18)
             }
-            .padding(.top, 38)
+            .padding(.horizontal, 16)
         }
-        .padding(.horizontal, 16)
-//        .sheet(isPresented: .constant(viewType == .setting)) {
-//            SettingTimeTableView(
-//                viewType: $viewType,
-//                settingAlertType: $settingAlertType
-//            )
-//            .presentationDetents([.fraction(0.32)])
-//            .presentationDragIndicator(.hidden)
-//            .ignoresSafeArea(.container, edges: .bottom)
-//        }
     }
 }
