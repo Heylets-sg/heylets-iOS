@@ -27,11 +27,14 @@ public struct TimeTableView: View {
             GeometryReader { proxy in
             ZStack {
                 VStack(alignment: .leading) {
-                    createTopView(viewTypeService.viewType)
-                        .padding(.top, proxy.size.height * viewTypeService.viewType.topViewSpacingRatio)
+                    createTopView(
+                        viewTypeService.viewType,
+                        proxy.size.height
+                    )
+                    .padding(.top, proxy.size.height * viewTypeService.viewType.topViewTopSpacingRatio)
                     
                     Spacer()
-                        .frame(height: proxy.size.height * 0.06)
+                        .frame(height: proxy.size.height * viewTypeService.viewType.topViewBottomSpacingRatio)
                     
                     MainView(
                         viewModel: viewModel,
@@ -108,10 +111,15 @@ public struct TimeTableView: View {
                 }
                 
                 if viewTypeService.viewType == .main {
-                    TabBarView(
-                        todoAction: { viewModel.send(.gotoTodo) },
-                        mypageAction: { viewModel.send(.gotoMyPage) }
-                    )
+                    VStack {
+                        Spacer()
+                        TabBarView(
+                            todoAction: { viewModel.send(.gotoTodo) },
+                            mypageAction: { viewModel.send(.gotoMyPage) }
+                        )
+                        .frame(height: proxy.size.height * 0.098)
+                    }
+                    
                 }
                 
                 SettingTimeTableAlertView(viewModel: viewModel.settingViewModel)
@@ -179,7 +187,10 @@ extension TimeTableView {
     }
     
     @ViewBuilder
-    private func createTopView(_ viewType: TimeTableViewType) -> some View {
+    private func createTopView(
+        _ viewType: TimeTableViewType,
+        _ height: CGFloat
+    ) -> some View {
         switch viewType {
         case .search:
             SearchModuleTopView(
@@ -191,19 +202,20 @@ extension TimeTableView {
                     viewModel.searchModuleViewModel.send(.closeButtonDidTap)
                 }
             )
-            .frame(height: 16)
+            .frame(height: height * viewType.topViewHeightRatio)
         case .theme:
             VStack {
                 ThemeTopView(
                     viewType: viewTypeService.binding,
                     viewModel: viewModel.themeViewModel
                 )
-                .frame(height: 22)
+                .frame(height: height * viewType.topViewHeightRatio)
                 
                 ThemeListTopView(
                     viewType: viewTypeService.binding,
-                    viewModel: viewModel.themeViewModel
-                )
+                    viewModel: viewModel.themeViewModel,
+                    height: height
+                )                
             }
             .onAppear {
                 viewModel.themeViewModel.selectThemeClosure = { themeName in
@@ -215,14 +227,14 @@ extension TimeTableView {
                 viewType: viewTypeService.binding,
                 viewModel: viewModel.addCustomModuleViewModel
             )
-            .frame(height: 19)
+            .frame(height: height * viewType.topViewHeightRatio)
         default:
             TopView(
                 timeTableInfo: $viewModel.timeTableInfo,
                 viewType: viewTypeService.binding,
                 profileInfo: $viewModel.state.profile
             )
-            .frame(height: 53)
+            .frame(height: height * viewType.topViewHeightRatio)
             .environmentObject(container)
         }
     }

@@ -18,6 +18,7 @@ public struct WeeklyListView: View {
         self.weekList = weekList
         self.cellWidth = cellWidth
     }
+    
     public var body: some View {
         HStack(spacing: 0) {
             ForEach(weekList, id: \.self) { day in

@@ -24,87 +24,92 @@ public struct TodoView: View {
     }
     
     public var body: some View {
-        VStack {
-            ZStack {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("Things to do")
-                            .font(.semibold_18)
-                            .foregroundColor(.heyGray1)
-                            .padding(.leading, 16)
-                            .padding(.top, 81)
-                            .padding(.bottom, 12)
+        GeometryReader { proxy in
+            VStack {
+                ZStack {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("Things to do")
+                                .font(.semibold_18)
+                                .foregroundColor(.heyGray1)
+                                .padding(.leading, 16)
+                                .padding(.top, 81)
+                                .padding(.bottom, 12)
+                            
+                            Spacer()
+                        }
                         
-                        Spacer()
+                        ScrollView {
+                            Spacer()
+                                .frame(height: 20)
+                            VStack(spacing: 16) {
+                                ForEach(viewModel.groupList, id: \.self) { group in
+                                    TodoGroupView(
+                                        group: group,
+                                        viewModel: viewModel
+                                    )
+                                }
+                            }
+                            .loading(viewModel.state.isLoading)
+                            .padding(.bottom, 36)
+                            
+                            HStack {
+                                Spacer()
+                                Button {
+                                    viewModel.send(.addGroupButtonDidTap)
+                                } label: {
+                                    Image(uiImage: .icAddGroup)
+                                        .resizable()
+                                        .frame(width: 28, height: 28)
+                                }
+                                Spacer()
+                            }
+                            .padding(.bottom, 209)
+                            
+                        }
+                        .scrollIndicators(.hidden)
+                    }
+                    .ignoresSafeArea()
+                    .onAppear {
+                        viewModel.send(.onAppear)
                     }
                     
-                    ScrollView {
+                    
+                    VStack {
                         Spacer()
-                            .frame(height: 20)
-                        VStack(spacing: 16) {
-                            ForEach(viewModel.groupList, id: \.self) { group in
-                                TodoGroupView(
-                                    group: group,
-                                    viewModel: viewModel
-                                )
-                            }
-                        }
-                        .loading(viewModel.state.isLoading)
-                        .padding(.bottom, 36)
-                        
-                        HStack {
-                            Spacer()
-                            Button {
-                                viewModel.send(.addGroupButtonDidTap)
-                            } label: {
-                                Image(uiImage: .icAddGroup)
-                                    .resizable()
-                                    .frame(width: 28, height: 28)
-                            }
-                            Spacer()
-                        }
-                        .padding(.bottom, 209)
-                        
+                        TabBarView(
+                            timeTableAction: { viewModel.send(.gotoTimeTable) },
+                            mypageAction: { viewModel.send(.gotoMyPage) }
+                        )
+                        .frame(height: proxy.size.height * 0.098)
                     }
-                    .scrollIndicators(.hidden)
+                    
+                    TodoChangeGroupNameAlertView(
+                        title: "Enter name",
+                        content: $viewModel.state.editGroupName.1,
+                        primaryAction: ("Close", .gray, { viewModel.send(.closeButtonDidTap) }),
+                        secondaryAction: ("Ok", .primary, { viewModel.send(.changeGroupName) })
+                    )
+                    .hidden(!viewModel.state.showItemAlertView)
                 }
                 .ignoresSafeArea()
-                .onAppear {
-                    viewModel.send(.onAppear)
-                }
                 
-                
-                TabBarView(
-                    timeTableAction: { viewModel.send(.gotoTimeTable) },
-                    mypageAction: { viewModel.send(.gotoMyPage) }
+                .heyAlert(
+                    isPresented: viewModel.state.showGuestDeniedAlert,
+                    loginButtonAction: {
+                        viewModel.send(.loginButtonDidTap)
+                    },
+                    notRightNowButton: {
+                        viewModel.send(.notRightNowButtonDidTap)
+                    }
                 )
-                .hidden(viewModel.state.hiddenTabBar)
-                
-                TodoChangeGroupNameAlertView(
-                    title: "Enter name",
-                    content: $viewModel.state.editGroupName.1,
-                    primaryAction: ("Close", .gray, { viewModel.send(.closeButtonDidTap) }),
-                    secondaryAction: ("Ok", .primary, { viewModel.send(.changeGroupName) })
-                )
-                .hidden(!viewModel.state.showItemAlertView)
-            }
-            .ignoresSafeArea()
-            
-            .heyAlert(
-                isPresented: viewModel.state.showGuestDeniedAlert,
-                loginButtonAction: {
-                    viewModel.send(.loginButtonDidTap)
-                },
-                notRightNowButton: {
-                    viewModel.send(.notRightNowButtonDidTap)
+                .onTapGesture {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    viewModel.send(.hideKeyboard)
                 }
-            )
-            .onTapGesture {
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                viewModel.send(.hideKeyboard)
-            }
-            .onReceive(Publishers.keyboardHeight) { height in
-                keyboardHeight = height
+                .onReceive(Publishers.keyboardHeight) { height in
+                    keyboardHeight = height
+                }
             }
         }
     }

@@ -58,17 +58,21 @@ struct ThemeTopView: View {
 struct ThemeListTopView: View {
     @Binding var viewType: TimeTableViewType
     @ObservedObject var viewModel: ThemeViewModel
+    let height: CGFloat
     
     var body: some View {
+        
         VStack {
             if !viewModel.state.inviteCodeViewHidden {
                 ThemeInviteFriendView()
-                    .frame(height: 57)
+//                    .padding(.vertical, height * 0.015)
+                    .frame(height: height * 0.067)
+                    .clipShape(RoundedRectangle(cornerRadius: 28.5))
                     .onTapGesture {
                         viewModel.send(.inviteFriendViewDidTap)
                     }
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 24)
+                    .padding(.bottom, height * 0.028)
             }
             
             ScrollView(.horizontal) {
@@ -143,7 +147,7 @@ struct ThemeInviteFriendView: View {
                 Text("unlock more color theme")
                     .font(.semibold_14)
             }
-            .frame(height: 32)
+//            .frame(height: 32)
             
             Spacer()
             
@@ -155,7 +159,6 @@ struct ThemeInviteFriendView: View {
         .padding(.leading, 24)
         .padding(.trailing, 27)
         .background(Color.heyDimmed)
-        .clipShape(RoundedRectangle(cornerRadius: 28.5))
     }
 }
 
@@ -219,5 +222,20 @@ struct QuarterCircle: View {
         }
         .fill(Color(hex: color))
     }
+}
+
+#Preview {
+    let useCase = StubHeyUseCase.stub.timeTableUseCase
+    return TimeTableView(
+        viewModel: .init(
+            .init(useCase),
+            .init(useCase),
+            .init(useCase, Router.default.navigationRouter),
+            .init(useCase),
+            Router.default.navigationRouter,
+            Router.default.windowRouter,
+            useCase)
+    )
+    .environmentObject(Router.default)
 }
 

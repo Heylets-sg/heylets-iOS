@@ -64,40 +64,42 @@ public struct TabBarView: View {
     }
     
     public var body: some View {
-        VStack {
-            Spacer()
-            HStack {
-                TabItemView(.timeTable, timeTableAction == nil)
-                    .onTapGesture {
-                        guard let timeTableAction else { return }
-                        timeTableAction()
-                    }
-                    .frame(width: 50)
+        GeometryReader { proxy in
+            VStack {
+                HStack {
+                    TabItemView(.timeTable, timeTableAction == nil)
+                        .onTapGesture {
+                            guard let timeTableAction else { return }
+                            timeTableAction()
+                        }
+                        .frame(width: 50)
+                        
+                    Spacer()
                     
-                Spacer()
-                
-                TabItemView(.todo, todoAction == nil)
-                    .onTapGesture {
-                        guard let todoAction else { return }
-                        todoAction()
-                    }
-                    .frame(width: 27)
-                
-                Spacer()
-                
-                TabItemView(.my, false)
-                    .onTapGesture {
-                        guard let mypageAction else { return }
-                        mypageAction()
-                    }
-                    .frame(width: 23)
+                    TabItemView(.todo, todoAction == nil)
+                        .onTapGesture {
+                            guard let todoAction else { return }
+                            todoAction()
+                        }
+                        .frame(width: 28)
+                    
+                    Spacer()
+                    
+                    TabItemView(.my, false)
+                        .onTapGesture {
+                            guard let mypageAction else { return }
+                            mypageAction()
+                        }
+                        .frame(width: 22)
+                }
+                .padding(.leading, 48)
+                .padding(.trailing, 62)
+                .padding(.top, proxy.size.height * 0.08)
+                .padding(.bottom, proxy.size.height * 0.6)
+                .background(Color.heyWhite)
+                .ignoresSafeArea()
             }
-            .padding(.horizontal, 58)
-            .padding(.top, 16)
-            .padding(.bottom, 30)
-            .frame(height: 86)
-            .background(Color.heyWhite)
-            .ignoresSafeArea()
+            .clipShape(RoundedRectangle(cornerRadius: 16))
         }
         .shadow(
             color: Color(hex: "#000000").opacity(0.06),

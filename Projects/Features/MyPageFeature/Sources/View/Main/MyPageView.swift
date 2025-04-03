@@ -166,7 +166,6 @@ public struct MyReferalCodeView: View {
             }
             .padding(.vertical, 8)
             .padding(.horizontal, 34)
-            .background(.blue)
             .clipShape(RoundedRectangle(cornerRadius: 15.5))
             .padding(.bottom, 30)
             
