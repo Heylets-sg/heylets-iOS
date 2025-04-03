@@ -28,12 +28,10 @@ public struct TimeTableView: View {
             ZStack {
                 VStack(alignment: .leading) {
                     createTopView(viewTypeService.viewType)
-                        .background(.green)
                         .padding(.top, proxy.size.height * viewTypeService.viewType.topViewSpacingRatio)
-                        .background(.red)
                     
                     Spacer()
-                        .frame(height: proxy.size.height * 0.02)
+                        .frame(height: proxy.size.height * 0.06)
                     
                     MainView(
                         viewModel: viewModel,

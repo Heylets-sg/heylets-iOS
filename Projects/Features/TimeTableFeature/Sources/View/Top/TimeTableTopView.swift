@@ -25,14 +25,14 @@ public struct TopView: View {
                     HStack {
                         Image(uiImage: profileInfo.university.badgeImage)
                             .resizable()
-                            .frame(width: proxy.size.height * 0.68, height: proxy.size.height * 0.34)
+                            .frame(width: 36, height: 18)
                             
                         
                         Text(timeTableInfo.fullSemester)
                             .font(.medium_12)
                             .foregroundColor(.heyGray2)
                     }
-                    .padding(.bottom, proxy.size.height * 0.2)
+                    .padding(.bottom, proxy.size.height * 0.1)
                     
                     Text(timeTableInfo.timeTableName)
                         .lineLimit(1)
@@ -50,7 +50,7 @@ public struct TopView: View {
                     } label: {
                         Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
                             .resizable()
-                            .frame(width: proxy.size.height * 0.32, height: proxy.size.height * 0.32)
+                            .frame(width: 17, height: 17)
                             .tint(.init(hex: "#353536"))
                             .padding(.trailing, 26)
                     }
@@ -62,13 +62,11 @@ public struct TopView: View {
                     } label: {
                         Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
                             .resizable()
-                            .frame(width: proxy.size.height * 0.34, height: proxy.size.height * 0.34)
+                            .frame(width: 18, height: 18)
                             .tint(.init(hex: "#353536"))
                     }
                 }
-                .padding(.trailing, 24)
-                .padding(.vertical, proxy.size.height * 0.33)
-//                .frame(height: 18)
+                .padding(.trailing, 8)
             }
             .padding(.horizontal, 16)
         }
