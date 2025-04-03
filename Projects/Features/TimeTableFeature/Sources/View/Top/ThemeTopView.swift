@@ -81,7 +81,6 @@ struct ThemeListTopView: View {
                         )
                         .disabled(theme.unlocked)
                         .padding(.trailing, 20)
-                        .background(.green)
                         .onTapGesture {
                             viewModel.send(.themeButtonDidTap(theme))
                         }
@@ -120,16 +119,12 @@ fileprivate struct ThemeListCellView: View {
                     .frame(width: 56, height: 56)
             }
             .padding(.bottom, 6)
-            .background(.orange)
-            
             
             Text(theme.themeName)
                 .font(.medium_10)
                 .foregroundColor(.heyGray1)
-                .background(.pink)
         }
         .frame(height: 95)
-        .background(.blue)
     }
 }
 
@@ -149,7 +144,6 @@ struct ThemeInviteFriendView: View {
                 Text("unlock more color theme")
                     .font(.semibold_14)
             }
-//            .frame(height: 32)
             
             Spacer()
             
@@ -161,7 +155,7 @@ struct ThemeInviteFriendView: View {
         .padding(.leading, 24)
         .padding(.trailing, 27)
         .background(Color.heyDimmed)
-        .clipShape(RoundedRectangle(cornerRadius: 28.5))
+        .clipShape(Capsule())
     }
 }
 
