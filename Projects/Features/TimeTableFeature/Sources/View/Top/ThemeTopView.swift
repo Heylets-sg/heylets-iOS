@@ -58,18 +58,18 @@ struct ThemeTopView: View {
 struct ThemeListTopView: View {
     @Binding var viewType: TimeTableViewType
     @ObservedObject var viewModel: ThemeViewModel
-    let height: CGFloat
+//    let height: CGFloat
     
     var body: some View {
         
         VStack {
             if !viewModel.state.inviteCodeViewHidden {
-                ThemeInviteFriendView(height: height * 0.067)
+                ThemeInviteFriendView(height: 56.adjusted)
                     .onTapGesture {
                         viewModel.send(.inviteFriendViewDidTap)
                     }
                     .padding(.horizontal, 16)
-                    .padding(.bottom, height * 0.028)
+                    .padding(.bottom, 23.adjusted)
             }
             
             ScrollView(.horizontal) {

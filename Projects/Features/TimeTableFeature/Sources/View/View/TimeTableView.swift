@@ -27,14 +27,11 @@ public struct TimeTableView: View {
             GeometryReader { proxy in
             ZStack {
                 VStack(alignment: .leading) {
-                    createTopView(
-                        viewTypeService.viewType,
-                        proxy.size.height
-                    )
-                    .padding(.top, proxy.size.height * viewTypeService.viewType.topViewTopSpacingRatio)
+                    createTopView(viewTypeService.viewType)
+                        .padding(.top, viewTypeService.viewType.topViewTopPadding.adjusted)
                     
                     Spacer()
-                        .frame(height: proxy.size.height * viewTypeService.viewType.topViewBottomSpacingRatio)
+                        .frame(height: viewTypeService.viewType.topViewBottomPadding.adjusted)
                     
                     MainView(
                         viewModel: viewModel,
@@ -117,7 +114,7 @@ public struct TimeTableView: View {
                             todoAction: { viewModel.send(.gotoTodo) },
                             mypageAction: { viewModel.send(.gotoMyPage) }
                         )
-                        .frame(height: proxy.size.height * 0.098)
+                        .frame(height: 82.adjusted)
                     }
                     
                 }
@@ -152,7 +149,7 @@ public struct TimeTableView: View {
                         .onAppear {
                             Analytics.shared.track(.screenView(viewTypeService.viewType.rawValue, .bottom_sheet))
                         }
-                        .frame(height: proxy.size.height * viewTypeService.viewType.bottomSheetHeightRatio)
+                        .frame(height: viewTypeService.viewType.bottomSheetHeight.adjusted)
                 }
                 
             }
@@ -187,10 +184,7 @@ extension TimeTableView {
     }
     
     @ViewBuilder
-    private func createTopView(
-        _ viewType: TimeTableViewType,
-        _ height: CGFloat
-    ) -> some View {
+    private func createTopView(_ viewType: TimeTableViewType) -> some View {
         switch viewType {
         case .search:
             SearchModuleTopView(
@@ -202,20 +196,19 @@ extension TimeTableView {
                     viewModel.searchModuleViewModel.send(.closeButtonDidTap)
                 }
             )
-            .frame(height: height * viewType.topViewHeightRatio)
+            .frame(height: viewType.topViewHeight.adjusted)
         case .theme:
             VStack {
                 ThemeTopView(
                     viewType: viewTypeService.binding,
                     viewModel: viewModel.themeViewModel
                 )
-                .frame(height: height * viewType.topViewHeightRatio)
-                .padding(.bottom, height * 0.028)
+                .frame(height: viewType.topViewHeight.adjusted)
+                .padding(.bottom, 23.adjusted)
                 
                 ThemeListTopView(
                     viewType: viewTypeService.binding,
-                    viewModel: viewModel.themeViewModel,
-                    height: height
+                    viewModel: viewModel.themeViewModel
                 )                
             }
             .onAppear {
@@ -228,14 +221,14 @@ extension TimeTableView {
                 viewType: viewTypeService.binding,
                 viewModel: viewModel.addCustomModuleViewModel
             )
-            .frame(height: height * viewType.topViewHeightRatio)
+            .frame(height: viewType.topViewHeight.adjusted)
         default:
             TopView(
                 timeTableInfo: $viewModel.timeTableInfo,
                 viewType: viewTypeService.binding,
                 profileInfo: $viewModel.state.profile
             )
-            .frame(height: height * viewType.topViewHeightRatio)
+            .frame(height: viewType.topViewHeight.adjusted)
             .environmentObject(container)
         }
     }

@@ -17,44 +17,43 @@ public enum TimeTableViewType: String, Equatable {
     case theme = "timetable_theme"
     case addCustom = "add_custom_module"
     
-    var topViewTopSpacingRatio: Double {
+    var topViewTopPadding: Int {
         switch self {
         case .main:
-            return 0.08
+            return 67
         case .theme:
-            return 0.055
+            return 46
         default:
-            return 0.07
+            return 59
         }
     }
 
-    var topViewBottomSpacingRatio: Double {
+    var topViewBottomPadding: Int {
         switch self {
         case .main,.detail,.setting:
-            return 0.06
+            return 50
         case .theme:
-            return 0.02
+            return 16
         case .search, .addCustom:
-            return 0.04
+            return 33
         }
     }
     
-    var topViewHeightRatio: Double {
+    var topViewHeight: Int {
         switch self {
         case .main, .detail,.setting:
-            return 0.063
+            return 53
         case .search, .addCustom:
-            return 0.022
+            return 18
         case .theme:
-            return 0.026
+            return 21
         }
     }
     
-    var bottomSheetHeightRatio: Double {
+    var bottomSheetHeight: Int {
         switch self {
-        case .search: return 0.6
-        case .theme: return 0.45
-        case .addCustom: return 0.6
+        case .search, .addCustom: return 506
+        case .theme: return 380
         default: return 0
         }
     }
