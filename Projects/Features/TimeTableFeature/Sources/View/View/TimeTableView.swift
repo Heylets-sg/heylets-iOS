@@ -210,6 +210,7 @@ extension TimeTableView {
                     viewModel: viewModel.themeViewModel
                 )
                 .frame(height: height * viewType.topViewHeightRatio)
+                .padding(.bottom, height * 0.028)
                 
                 ThemeListTopView(
                     viewType: viewTypeService.binding,

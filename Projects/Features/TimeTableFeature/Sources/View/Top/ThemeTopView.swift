@@ -64,10 +64,7 @@ struct ThemeListTopView: View {
         
         VStack {
             if !viewModel.state.inviteCodeViewHidden {
-                ThemeInviteFriendView()
-//                    .padding(.vertical, height * 0.015)
-                    .frame(height: height * 0.067)
-                    .clipShape(RoundedRectangle(cornerRadius: 28.5))
+                ThemeInviteFriendView(height: height * 0.067)
                     .onTapGesture {
                         viewModel.send(.inviteFriendViewDidTap)
                     }
@@ -84,7 +81,7 @@ struct ThemeListTopView: View {
                         )
                         .disabled(theme.unlocked)
                         .padding(.trailing, 20)
-                        .frame(height: 95)
+                        .background(.green)
                         .onTapGesture {
                             viewModel.send(.themeButtonDidTap(theme))
                         }
@@ -123,16 +120,21 @@ fileprivate struct ThemeListCellView: View {
                     .frame(width: 56, height: 56)
             }
             .padding(.bottom, 6)
+            .background(.orange)
             
             
             Text(theme.themeName)
                 .font(.medium_10)
                 .foregroundColor(.heyGray1)
+                .background(.pink)
         }
+        .frame(height: 95)
+        .background(.blue)
     }
 }
 
 struct ThemeInviteFriendView: View {
+    let height: CGFloat
     var body: some View {
         HStack {
             Image(uiImage: .icLocked2)
@@ -155,10 +157,11 @@ struct ThemeInviteFriendView: View {
                 .resizable()
                 .frame(width: 8, height: 16)
         }
-        .padding(.vertical, 13)
+        .padding(.vertical, height * 0.22)
         .padding(.leading, 24)
         .padding(.trailing, 27)
         .background(Color.heyDimmed)
+        .clipShape(RoundedRectangle(cornerRadius: 28.5))
     }
 }
 
