@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Core
 
 enum TabType {
     case timeTable
@@ -64,43 +65,42 @@ public struct TabBarView: View {
     }
     
     public var body: some View {
-        GeometryReader { proxy in
-            VStack {
-                HStack {
-                    TabItemView(.timeTable, timeTableAction == nil)
-                        .onTapGesture {
-                            guard let timeTableAction else { return }
-                            timeTableAction()
-                        }
-                        .frame(width: 50)
-                        
-                    Spacer()
-                    
-                    TabItemView(.todo, todoAction == nil)
-                        .onTapGesture {
-                            guard let todoAction else { return }
-                            todoAction()
-                        }
-                        .frame(width: 28)
-                    
-                    Spacer()
-                    
-                    TabItemView(.my, false)
-                        .onTapGesture {
-                            guard let mypageAction else { return }
-                            mypageAction()
-                        }
-                        .frame(width: 22)
-                }
-                .padding(.leading, 48)
-                .padding(.trailing, 62)
-                .padding(.top, proxy.size.height * 0.08)
-                .padding(.bottom, proxy.size.height * 0.6)
-                .background(Color.heyWhite)
-                .ignoresSafeArea()
+        VStack {
+            HStack {
+                TabItemView(.timeTable, timeTableAction == nil)
+                    .onTapGesture {
+                        guard let timeTableAction else { return }
+                        timeTableAction()
+                    }
+                    .frame(width: 50)
+                
+                Spacer()
+                
+                TabItemView(.todo, todoAction == nil)
+                    .onTapGesture {
+                        guard let todoAction else { return }
+                        todoAction()
+                    }
+                    .frame(width: 28)
+                
+                Spacer()
+                
+                TabItemView(.my, false)
+                    .onTapGesture {
+                        guard let mypageAction else { return }
+                        mypageAction()
+                    }
+                    .frame(width: 22)
             }
-            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .padding(.leading, 48)
+            .padding(.trailing, 62)
+            .padding(.top, 7.adjusted)
+            .padding(.bottom, 34.adjusted)
+            .background(Color.heyWhite)
+            .ignoresSafeArea()
         }
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        
         .shadow(
             color: Color(hex: "#000000").opacity(0.06),
             radius: 17.2,
@@ -132,7 +132,6 @@ struct TabItemView: View {
             )
             .resizable()
             .frame(width: 23, height: 23)
-//            .padding(.bottom, 6)
             
             Text(tabType.title)
                 .font(.semibold_10)

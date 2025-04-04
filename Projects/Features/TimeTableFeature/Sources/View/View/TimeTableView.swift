@@ -17,29 +17,27 @@ public struct TimeTableView: View {
     @EnvironmentObject var container: Router
     @ObservedObject var viewModel: TimeTableViewModel
     @ObservedObject var viewTypeService = TimeTableViewTypeService.shared
-    
+
     public init(viewModel: TimeTableViewModel) {
         self.viewModel = viewModel
     }
-    
+
     public var body: some View {
         NavigationStack(path: $container.navigationRouter.destinations) {
-            GeometryReader { proxy in
             ZStack {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 0) {
                     createTopView(viewTypeService.viewType)
                         .padding(.top, viewTypeService.viewType.topViewTopPadding.adjusted)
-                    
+
                     Spacer()
                         .frame(height: viewTypeService.viewType.topViewBottomPadding.adjusted)
-                    
+
                     MainView(
                         viewModel: viewModel,
                         viewType: viewTypeService.binding
                     )
-                    
-                    Spacer()
-                        .frame(height: 1)
+
+                    Spacer(minLength: 0)
                 }
                 .ignoresSafeArea()
                 .onAppear {
@@ -116,33 +114,23 @@ public struct TimeTableView: View {
                         )
                         .frame(height: 82.adjusted)
                     }
-                    
+                    .ignoresSafeArea(.keyboard, edges: .bottom) // 키보드가 올라와도 TabBar가 가려지지 않도록 처리
                 }
-                
+
                 SettingTimeTableAlertView(viewModel: viewModel.settingViewModel)
-            }
-            .setTimeTableHeyNavigation()
-            .ignoresSafeArea()
-            .overlay {
+
                 let config = OverlayConfiguration.configure(
                     viewType: viewTypeService.viewType,
                     isThemeSelectInfoShowing: viewModel.themeViewModel.state.isShowingSelectInfoView
                 )
-                
+
                 if config.shouldShow {
                     Color.heyDimmed
                         .opacity(config.opacity)
                         .animation(.easeInOut(duration: 0.3), value: viewTypeService.viewType)
                         .ignoresSafeArea()
                 }
-            }
-            .onTapGesture {
-                withAnimation {
-                    viewModel.send(.initMainView)
-                }
-            }
-            
-            
+
                 VStack {
                     Spacer()
                     createBottomSheetView(viewTypeService.viewType)
@@ -151,9 +139,14 @@ public struct TimeTableView: View {
                         }
                         .frame(height: viewTypeService.viewType.bottomSheetHeight.adjusted)
                 }
-                
             }
-            
+            .setTimeTableHeyNavigation()
+            .ignoresSafeArea()
+            .onTapGesture {
+                withAnimation {
+                    viewModel.send(.initMainView)
+                }
+            }
         }
     }
 }
@@ -169,20 +162,21 @@ extension TimeTableView {
                 viewModel: viewModel.searchModuleViewModel
             )
             .bottomSheetTransition()
-            
+
         case .theme:
             SettingTimeTableInfoView(viewModel: viewModel.themeViewModel)
                 .bottomSheetTransition()
-            
+
         case .addCustom:
             AddCustomModuleView(viewModel: viewModel.addCustomModuleViewModel)
                 .bottomSheetTransition()
+
         default:
             EmptyView()
                 .frame(height: 0)
         }
     }
-    
+
     @ViewBuilder
     private func createTopView(_ viewType: TimeTableViewType) -> some View {
         switch viewType {
@@ -197,6 +191,7 @@ extension TimeTableView {
                 }
             )
             .frame(height: viewType.topViewHeight.adjusted)
+
         case .theme:
             VStack {
                 ThemeTopView(
@@ -205,23 +200,25 @@ extension TimeTableView {
                 )
                 .frame(height: viewType.topViewHeight.adjusted)
                 .padding(.bottom, 23.adjusted)
-                
+
                 ThemeListTopView(
                     viewType: viewTypeService.binding,
                     viewModel: viewModel.themeViewModel
-                )                
+                )
             }
             .onAppear {
                 viewModel.themeViewModel.selectThemeClosure = { themeName in
                     viewModel.send(.selectedTheme(themeName))
                 }
             }
+
         case .addCustom:
             AddCustomModuleTopView(
                 viewType: viewTypeService.binding,
                 viewModel: viewModel.addCustomModuleViewModel
             )
             .frame(height: viewType.topViewHeight.adjusted)
+
         default:
             TopView(
                 timeTableInfo: $viewModel.timeTableInfo,

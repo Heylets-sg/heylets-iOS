@@ -19,56 +19,56 @@ public struct TopView: View {
     @Binding var profileInfo: ProfileInfo
     
     public var body: some View {
-        GeometryReader { proxy in
-            HStack {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Image(uiImage: profileInfo.university.badgeImage)
-                            .resizable()
-                            .frame(width: 36, height: 18)
-                            
-                        
-                        Text(timeTableInfo.fullSemester)
-                            .font(.medium_12)
-                            .foregroundColor(.heyGray2)
-                    }
-                    .padding(.bottom, proxy.size.height * 0.1)
-                    
-                    Text(timeTableInfo.timeTableName)
-                        .lineLimit(1)
-                        .font(.semibold_18)
-                        .foregroundColor(.heyGray1)
-                }
-                
-                Spacer()
-                
+        
+        HStack {
+            VStack(alignment: .leading) {
                 HStack {
-                    Button {
-                        withAnimation {
-                            viewType = .search
-                        }
-                    } label: {
-                        Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
-                            .resizable()
-                            .frame(width: 17, height: 17)
-                            .tint(.init(hex: "#353536"))
-                            .padding(.trailing, 26)
-                    }
+                    Image(uiImage: profileInfo.university.badgeImage)
+                        .resizable()
+                        .frame(width: 36, height: 18)
                     
-                    Button {
-                        withAnimation {
-                            viewType = .setting
-                        }
-                    } label: {
-                        Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
-                            .resizable()
-                            .frame(width: 18, height: 18)
-                            .tint(.init(hex: "#353536"))
-                    }
+                    
+                    Text(timeTableInfo.fullSemester)
+                        .font(.medium_12)
+                        .foregroundColor(.heyGray2)
                 }
-                .padding(.trailing, 8)
+                .padding(.bottom, 10.adjusted)
+                
+                Text(timeTableInfo.timeTableName)
+                    .lineLimit(1)
+                    .font(.semibold_18)
+                    .foregroundColor(.heyGray1)
             }
-            .padding(.horizontal, 16)
+            
+            Spacer()
+            
+            HStack {
+                Button {
+                    withAnimation {
+                        viewType = .search
+                    }
+                } label: {
+                    Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
+                        .resizable()
+                        .frame(width: 17, height: 17)
+                        .tint(.init(hex: "#353536"))
+                        .padding(.trailing, 26)
+                }
+                
+                Button {
+                    withAnimation {
+                        viewType = .setting
+                    }
+                } label: {
+                    Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
+                        .resizable()
+                        .frame(width: 18, height: 18)
+                        .tint(.init(hex: "#353536"))
+                }
+            }
+            .padding(.trailing, 8)
         }
+        .padding(.horizontal, 16)
     }
 }
+

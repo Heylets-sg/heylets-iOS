@@ -7,7 +7,6 @@ struct SettingTimeTableInfoView: View {
     @ObservedObject var viewModel: ThemeViewModel
     
     var body: some View {
-        GeometryReader { proxy in
             VStack {
                 if viewModel.state.isShowingSelectInfoView {
                     Color.heyWhite
@@ -15,7 +14,7 @@ struct SettingTimeTableInfoView: View {
                 } else {
                     VStack {
                         Spacer()
-                            .frame(height: proxy.size.height * 0.035)
+                            .frame(height: 30.adjusted)
                         
                         HStack {
                             Text("Information")
@@ -48,7 +47,7 @@ struct SettingTimeTableInfoView: View {
             }
         }
     }
-}
+
 
 
 struct SelectDisplayModuleView: View {

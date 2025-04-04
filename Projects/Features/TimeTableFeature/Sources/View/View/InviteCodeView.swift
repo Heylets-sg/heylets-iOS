@@ -26,104 +26,102 @@ public struct InviteCodeView: View {
     }
     
     public var body: some View {
-        GeometryReader { proxy in
-            ZStack {
+        
+        ZStack {
+            VStack(alignment: .leading) {
+                
+                Spacer()
+                    .frame(height: 92.adjusted)
+                
+                Button {
+                    viewModel.send(.backButtonDidTap)
+                } label: {
+                    Image(uiImage: .icBack)
+                        .resizable()
+                        .frame(width: 22, height: 18)
+                }
+                
                 VStack(alignment: .leading) {
+                    Text("Invite a friend and get\ntimetable themes together🎉")
+                        .font(.semibold_18)
+                        .foregroundColor(.heyGray1)
+                        .padding(.bottom, 8.adjusted)
+                    
+                    Text("When a friend signs up using your code, ")
+                        .font(.regular_16)
+                    
+                    Text("they get 3 random themes, and you get 2")
+                        .font(.regular_16)
                     
                     Spacer()
-                        .frame(height: 92.adjusted)
+                        .frame(height: 126.adjusted)
                     
-                    Button {
-                        viewModel.send(.backButtonDidTap)
-                    } label: {
-                        Image(uiImage: .icBack)
-                            .resizable()
-                            .frame(width: 22, height: 18)
-                    }
-                    
-                    VStack(alignment: .leading) {
-                        Text("Invite a friend and get\ntimetable themes together🎉")
-                            .font(.semibold_18)
-                            .foregroundColor(.heyGray1)
-                            .padding(.bottom, 8)
-                        
-                        Text("When a friend signs up using your code, ")
-                            .font(.regular_16)
-                        
-                        Text("they get 3 random themes, and you get 2")
-                            .font(.regular_16)
-                        
+                    HStack {
                         Spacer()
-                            .frame(height: 126)
-                        
-                        HStack {
-                            Spacer()
-                            VStack {
-                                Text("My invite code")
-                                    .padding(.vertical, 12)
-                                    .padding(.horizontal, 90)
-                                    .background(Color.heyMain)
-                                
-                                HStack {
-                                    Text(viewModel.referralCode)
-                                        .font(.medium_30)
-                                        .foregroundColor(.heyBlack)
-                                        .kerning(10)
-                                    
-                                    Button {
-                                        viewModel.send(.copyButtonDidTap)
-                                    } label: {
-                                        Image(uiImage: .icCopy)
-                                            .resizable()
-                                            .frame(width: 11, height: 11)
-                                            .padding(.all, 7)
-                                            .background(Color.heyGray3)
-                                            .clipShape(RoundedRectangle(cornerRadius: 3))
-                                    }
-                                    
-                                }
-                                .padding(.vertical, 30)
-                            }
-                            .clipShape(RoundedRectangle(cornerRadius: 7))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 7)
-                                    .stroke(Color.heyMain, lineWidth: 1)
-                            )
-                            Spacer()
-                        }
-                        .padding(.horizontal, 20)
-                        
-                        
-                        Spacer()
-                        
-                        ShareLink(
-                            item: viewModel.shareText
-                        ) {
+                        VStack {
+                            Text("My invite code")
+                                .padding(.vertical, 12.adjusted)
+                                .padding(.horizontal, 90)
+                                .background(Color.heyMain)
+                            
                             HStack {
-                                Text("Share my code")
-                                    .font(.semibold_14)
-                                    .foregroundStyle(Color.heyWhite)
+                                Text(viewModel.referralCode)
+                                    .font(.medium_30)
+                                    .foregroundColor(.heyBlack)
+                                    .kerning(10)
+                                
+                                Button {
+                                    viewModel.send(.copyButtonDidTap)
+                                } label: {
+                                    Image(uiImage: .icCopy)
+                                        .resizable()
+                                        .frame(width: 11, height: 11)
+                                        .padding(.all, 7)
+                                        .background(Color.heyGray3)
+                                        .clipShape(RoundedRectangle(cornerRadius: 3))
+                                }
+                                
                             }
-                            .frame(height: 56)
-                            .frame(maxWidth: .infinity)
-                            .background(Color.heyMain)
-                            .clipShape(RoundedRectangle(cornerRadius: 28))
+                            .padding(.vertical, 30.adjusted)
                         }
+                        .clipShape(RoundedRectangle(cornerRadius: 7))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 7)
+                                .stroke(Color.heyMain, lineWidth: 1)
+                        )
+                        Spacer()
                     }
-                    .padding(.top, 36)
-                    .padding(.bottom, 65)
+                    .padding(.horizontal, 20)
+                    
+                    
+                    Spacer()
+                    
+                    ShareLink(
+                        item: viewModel.shareText
+                    ) {
+                        HStack {
+                            Text("Share my code")
+                                .font(.semibold_14)
+                                .foregroundStyle(Color.heyWhite)
+                        }
+                        .frame(height: 56.adjusted)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.heyMain)
+                        .clipShape(RoundedRectangle(cornerRadius: 28))
+                    }
                 }
-                .setTimeTableHeyNavigation()
-                .padding(.horizontal, 16)
-                .background(Color.heyWhite)
-                .ignoresSafeArea(edges: .vertical)
-                .ignoresSafeArea(.keyboard)
-                .navigationBarBackButtonHidden()
-                .onAppear {
-                    viewModel.send(.onAppear)
-                }
+                .padding(.top, 36.adjusted)
+                .padding(.bottom, 65.adjusted)
+            }
+            .setTimeTableHeyNavigation()
+            .padding(.horizontal, 16)
+            .background(Color.heyWhite)
+            .ignoresSafeArea(edges: .vertical)
+            .ignoresSafeArea(.keyboard)
+            .navigationBarBackButtonHidden()
+            .onAppear {
+                viewModel.send(.onAppear)
             }
         }
-        }
-        
+    }
 }
