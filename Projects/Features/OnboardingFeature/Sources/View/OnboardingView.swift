@@ -7,6 +7,8 @@
 //
 
 import SwiftUI
+import UIKit
+
 import BaseFeatureDependency
 import Core
 import DSKit
@@ -49,25 +51,47 @@ enum OnboardingType {
         }
     }
     
-    var horizontalPadding: CGFloat {
+    var horizontalPadding: Int {
         switch self {
         case .timeTable:
-            return 0.12
+            return 49
         case .theme:
             return 0
         case .alarm:
-            return 0.07
+            return 29
         }
     }
     
-    var topPadding: CGFloat {
+    var topPadding: Int {
         switch self {
         case .timeTable:
-            return 0.06
+            return 78
         case .theme:
-            return 0.15
+            return 125
         case .alarm:
-            return 0.11
+            return 99
+        }
+    }
+    
+    var bottomPadding: Int {
+        switch self {
+        case .timeTable:
+            return 34
+        case .theme:
+            return 134
+        case .alarm:
+            return 118
+        }
+    }
+    
+    var height: Int {
+        switch self {
+        case .timeTable:
+            return 293
+        case .theme:
+            return 145
+        case .alarm:
+            return 207
         }
     }
 }
@@ -104,44 +128,47 @@ public struct OnboardingView: View {
                     
                     VStack {
                         Spacer()
-                            .frame(height: geometry.size.height * 0.15)
+                            .frame(height: UIScreen.main.bounds.height  <= 700 ? 40.adjusted : 90.adjusted)
                         
                         VStack(alignment: .leading, spacing: 0) {
-                            HStack {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text(onboardingContent[currentIndex].title)
-                                        .font(.bold_20)
-                                        .foregroundColor(.heyWhite)
-                                        .multilineTextAlignment(.leading)
-                                    
-                                    Text(onboardingContent[currentIndex].description)
-                                        .font(.regular_14)
-                                        .foregroundColor(.heyWhite)
-                                        .multilineTextAlignment(.leading)
-                                }
-                                Spacer()
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text(onboardingContent[currentIndex].title)
+                                    .font(.bold_20)
+                                    .foregroundColor(.heyWhite)
+                                    .multilineTextAlignment(.leading)
+                                
+                                Text(onboardingContent[currentIndex].description)
+                                    .font(.medium_14)
+                                    .foregroundColor(.heyWhite)
+                                    .multilineTextAlignment(.leading)
                             }
-                            .padding(.leading, 16)
+                            .padding(.leading, 22)
+                            .frame(minHeight: 120)
                             
                             VStack {
                                 Spacer()
+                                    .frame(height: onboardingContent[currentIndex].topPadding.adjusted)
+                                
                                 Image(uiImage: onboardingContent[currentIndex].image)
                                     .resizable()
-                                    .scaledToFit()
+//                                    .frame(height: onboardingContent[currentIndex].height.adjusted)
                                     .padding(
                                         .horizontal,
-                                        geometry.size.width * onboardingContent[currentIndex].horizontalPadding
+                                        onboardingContent[currentIndex].horizontalPadding.adjusted
                                     )
+                                
                                 Spacer()
+                                    .frame(height: onboardingContent[currentIndex].bottomPadding.adjusted)
                             }
-                            .frame(height: geometry.size.height * 0.48)
+                            .frame(height: 424.adjusted)
                         }
                         .gesture(
                             DragGesture()
                                 .onEnded { value in
                                     let offsetX = value.translation.width // 드래그가 끝난 후 이동한 거리를 계산한 값
+                                    let screenWidth = UIScreen.main.bounds.width
                                     
-                                    let progress = -offsetX / 370 // 페이지의 이동 비율 (370은 페이지의 너비로 가정)
+                                    let progress = -offsetX / screenWidth // 페이지의 이동 비율 (370은 페이지의 너비로 가정)
                                     let threshold: CGFloat = 0.15
                                     let minDragDistance: CGFloat = 50 // 최소 드래그 거리 추가
                                     
@@ -154,8 +181,6 @@ public struct OnboardingView: View {
                                     }
                                 }
                         )
-                        
-                        Spacer()
                         
                         
                         VStack {
@@ -172,13 +197,13 @@ public struct OnboardingView: View {
                                 }
                                 Spacer()
                             }
-                            .padding(.bottom, 50)
+                            .padding(.bottom, 50.adjusted)
                             
                             Button("Start") {
                                 viewModel.send(.startButtonDidTap)
                             }
                             .heyBottomButtonStyle(.white)
-                            .padding(.bottom, 16)
+                            .padding(.bottom, 16.adjusted)
                             
                             Button {
                                 viewModel.send(.alreadyRegisteredButtonDidTap)
@@ -200,7 +225,7 @@ public struct OnboardingView: View {
                         .padding(.horizontal, 16)
                         
                         Spacer()
-                            .frame(height: geometry.size.height * 0.08)
+                            .frame(height: 72.adjusted)
                     }
                 }
                 .ignoresSafeArea(edges: .vertical)
