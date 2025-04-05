@@ -26,7 +26,7 @@ struct TermsOfServiceView: View {
                     VStack(alignment:. leading) {
                         Image(uiImage: .logo)
                             .resizable()
-                            .frame(width: 95, height: 49)
+                            .frame(width: 95.adjusted, height: 49.adjusted)
                         
                         Text("Terms of Service")
                             .font(.bold_20)
@@ -35,12 +35,12 @@ struct TermsOfServiceView: View {
                     Spacer()
                 }
                 .padding(.horizontal, 22)
-                .padding(.bottom, 41)
+                .padding(.bottom, 41.adjusted)
                 
                 HStack(alignment: .center, spacing: 12) { // spacing 추가
                     Image(uiImage: viewModel.state.allAgree ? .icSelected : .icCheck)
                         .resizable()
-                        .frame(width: 24, height: 24)
+                        .frame(width: 24.adjusted, height: 24.adjusted)
 
                     Text("Agree to all")
                         .font(.semibold_16)
@@ -51,20 +51,20 @@ struct TermsOfServiceView: View {
                 .onTapGesture {
                     viewModel.send(.allAgreeButtonDidTap)
                 }
-                .padding(.bottom, 18)
+                .padding(.bottom, 18.adjusted)
                 .padding(.horizontal, 22)
                 
                 Rectangle()
                     .fill(Color.heyGray4)
                     .frame(height: 1)
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 30.adjusted)
                     
                 
                 HStack {
                     Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
                         .resizable()
-                        .frame(width: 16, height: 10)
+                        .frame(width: 16.adjusted, height: 10.adjusted)
                         .foregroundStyle(viewModel.state.termsOfServiceIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
                         .padding(.trailing, 12)
                         .onTapGesture {
@@ -86,13 +86,13 @@ struct TermsOfServiceView: View {
                             }
                 }
                 .padding(.horizontal, 24)
-                .padding(.bottom, 20)
+                .padding(.bottom, 20.adjusted)
                 
                 
                 HStack {
                     Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
                         .resizable()
-                        .frame(width: 16, height: 10)
+                        .frame(width: 16.adjusted, height: 10.adjusted)
                         .foregroundStyle(viewModel.state.personalInformationIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
                         .padding(.trailing, 12)
                         .onTapGesture {
@@ -116,13 +116,13 @@ struct TermsOfServiceView: View {
                             }
                 }
                 .padding(.horizontal, 24)
-                .padding(.bottom, 20)
+                .padding(.bottom, 20.adjusted)
                 
                 
                 HStack {
                     Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
                         .resizable()
-                        .frame(width: 16, height: 10)
+                        .frame(width: 16.adjusted, height: 10.adjusted)
                         .foregroundStyle(viewModel.state.marketingIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
                         .padding(.trailing, 12)
                         .onTapGesture {
@@ -161,8 +161,8 @@ struct TermsOfServiceView: View {
                 .padding(.horizontal, 16)
             }
             
-            .padding(.top, 126)
-            .padding(.bottom, 65)
+            .padding(.top, 126.adjusted)
+            .padding(.bottom, 65.adjusted)
         }
         .background(Color.heyWhite)
         .ignoresSafeArea(edges: .vertical)

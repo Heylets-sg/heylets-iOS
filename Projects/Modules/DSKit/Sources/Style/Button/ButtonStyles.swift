@@ -34,7 +34,6 @@ struct HeyBottomButtonStyle: ButtonStyle {
         configuration.label
             .frame(height: 56)
             .frame(maxWidth: .infinity)
-//            .font(.semibold_14)
             .background(isEnabled ? colorStyle.background : colorStyle.disabledBackground)
             .foregroundStyle(isEnabled ? colorStyle.foreground : colorStyle.disabledForeground)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
