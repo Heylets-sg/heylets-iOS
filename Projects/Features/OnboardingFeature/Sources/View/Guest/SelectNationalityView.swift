@@ -108,6 +108,7 @@ struct SelectNationalityView: View {
     SelectNationalityView(
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
+            windowRouter: Router.default.windowRouter,
             useCase: StubHeyUseCase.stub.signUpUseCase
         )
     )

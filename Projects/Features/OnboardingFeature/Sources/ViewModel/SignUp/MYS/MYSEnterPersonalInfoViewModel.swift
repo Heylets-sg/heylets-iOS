@@ -28,8 +28,7 @@ public class MYSEnterPersonalInfoViewModel: ObservableObject {
         case birthDayDidChange(Date)
     }
     
-    var genderList: [Gender] = [.men, .women, .others]
-    @Published var gender: Gender?
+    @Published var gender: Gender? = nil
     @Published var birth: Date = Date()
     @Published var password = ""
     @Published var checkPassword = ""
@@ -85,6 +84,7 @@ public class MYSEnterPersonalInfoViewModel: ObservableObject {
             .store(in: cancelBag)
         
         Publishers.CombineLatest3($gender, $password, $checkPassword)
+            .receive(on: RunLoop.main)
             .map { _ in
                 owner.gender != nil &&
                 owner.state.passwordIsValid == .valid &&

@@ -25,16 +25,16 @@ public struct EnterReferralCodeView: View {
     public var body: some View {
         ZStack {
             VStack(alignment: .leading) {
-                
                 Spacer()
-                    .frame(height: 92)
+                    .frame(height: 92.adjusted)
+                
                 HStack {
                     Button {
                         viewModel.send(.backButtonDidTap)
                     } label: {
                         Image(uiImage: .icBack)
                             .resizable()
-                            .frame(width: 22, height: 18)
+                            .frame(width: 22.adjusted, height: 18.adjusted)
                     }
                     
                     Spacer()
@@ -51,14 +51,14 @@ public struct EnterReferralCodeView: View {
                     Text("Enter a referral code to unlock\nmore features🎉")
                         .font(.semibold_18)
                         .foregroundColor(.heyGray1)
-                        .padding(.bottom, 18)
+                        .padding(.bottom, 18.adjusted)
                     
                     Spacer()
-                        .frame(height: 8)
+                        .frame(height: 8.adjusted)
                     
                     Text("You can get 3 timetable themes for free!")
                         .font(.regular_16)
-                        .padding(.bottom, 32)
+                        .padding(.bottom, 32.adjusted)
                     
                     HeyTextField(
                         text: $viewModel.referralCode,
@@ -67,7 +67,7 @@ public struct EnterReferralCodeView: View {
                         colorSystem: .gray
                     )
                     .maxLength(text: $viewModel.referralCode, 6)
-                    .padding(.bottom, 8)
+                    .padding(.bottom, 8.adjusted)
                     
                     Text(viewModel.state.referralMessage)
                         .font(.regular_12)
@@ -81,8 +81,8 @@ public struct EnterReferralCodeView: View {
                     .heyBottomButtonStyle()
                     
                 }
-                .padding(.top, 36)
-                .padding(.bottom, 65)
+                .padding(.top, 36.adjusted)
+                .padding(.bottom, 65.adjusted)
             }
             .padding(.horizontal, 16)
             .background(Color.heyWhite)

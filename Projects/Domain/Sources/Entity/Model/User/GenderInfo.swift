@@ -15,12 +15,9 @@ public enum Gender: String, CaseIterable {
     
     public var title: String {
         switch self {
-        case .men:
-            return "Men"
-        case .women:
-            return "Women"
-        case .others:
-            return "Others"
+        case .men: return "Men"
+        case .women: return "Women"
+        case .others: return "Others"
         }
     }
 }

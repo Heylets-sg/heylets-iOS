@@ -28,9 +28,9 @@ public struct MYSEnterPersonalInfoView: View {
     public var body: some View {
         OnboardingBaseView(content: {
             Spacer()
-                .frame(height: 16)
+                .frame(height: 16.adjusted)
             
-            VStack(spacing: 16) {
+            VStack(spacing: 16.adjusted) {
                 PasswordField(
                     password: $viewModel.password,
                     showPassword: $showPassword,
@@ -45,9 +45,9 @@ public struct MYSEnterPersonalInfoView: View {
             }
             
             Spacer()
-                .frame(height: 40)
+                .frame(height: 40.adjusted)
             
-            HStack(spacing: 16) {
+            HStack(spacing: 16.adjusted) {
                 ForEach(Gender.allCases, id: \.self) { gender in
                     GenderButton(
                         title: gender.title,
@@ -57,7 +57,7 @@ public struct MYSEnterPersonalInfoView: View {
                 }
             }
             .padding(.trailing, 62)
-            .padding(.bottom, 20)
+            .padding(.bottom, 20.adjusted)
             
             HStack {
                 DatePicker(
@@ -87,7 +87,7 @@ fileprivate struct GenderButton: View {
             action()
         } label: {
             Text(title)
-                .frame(height: 56)
+                .frame(height: 56.adjusted)
                 .frame(maxWidth: .infinity)
                 .font(.semibold_14)
                 .background(isSelected ? Color.heyMain : Color.heyGray4)

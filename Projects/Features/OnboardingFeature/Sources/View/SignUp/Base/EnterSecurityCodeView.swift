@@ -23,7 +23,7 @@ public struct EnterSecurityCodeView: View {
     public var body: some View {
         OnboardingBaseView(content: {
             Spacer()
-                .frame(height: 8)
+                .frame(height: 8.adjusted)
             
             Text(verbatim: "Enter the 6-digit code we sent to the email:\n\(viewModel.state.hiddenEmail)")
                 .font(.regular_16)
@@ -31,13 +31,13 @@ public struct EnterSecurityCodeView: View {
                 .lineLimit(2)
             
             Spacer()
-                .frame(height: 88)
+                .frame(height: 88.adjusted)
             
             HStack {
                 Spacer()
                 SecurityCodeInputView(otpCode: $viewModel.otpCode)
                     .frame(width: 310, height: 50)
-                    .padding(.bottom, 16)
+                    .padding(.bottom, 16.adjusted)
                 Spacer()
             }
             

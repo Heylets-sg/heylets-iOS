@@ -31,14 +31,17 @@ public class SelectNationalityViewModel: ObservableObject {
     
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
+    public var windowRouter: WindowRoutableType
     public var useCase: SignUpUseCaseType
     private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: NavigationRoutableType,
+        windowRouter: WindowRoutableType,
         useCase: SignUpUseCaseType
     ) {
         self.navigationRouter = navigationRouter
+        self.windowRouter = windowRouter
         self.useCase = useCase
         
         observe()
@@ -62,8 +65,9 @@ public class SelectNationalityViewModel: ObservableObject {
             
             let preview = navigationRouter.destinations.first!
             
-            if preview == .login && nationality == .Malaysia{
-                navigationRouter.push(to: .verifyEmail(nationality))
+            if (preview == .login || windowRouter.destination == .login) {
+                if nationality == .Malaysia { navigationRouter.push(to: .verifyEmail(nationality)) }
+                else { navigationRouter.push(to: .selectUniversity) }
             } else {
                 navigationRouter.push(to: .selectGuestUniversity(nationality.universityList))
             }
