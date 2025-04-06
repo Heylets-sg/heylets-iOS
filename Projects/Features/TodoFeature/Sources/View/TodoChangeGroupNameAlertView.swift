@@ -39,19 +39,19 @@ public struct TodoChangeGroupNameAlertView: View {
                 Text(title)
                     .font(.medium_18)
                     .foregroundColor(.heyGray1)
-                    .padding(.vertical, 24)
+                    .padding(.vertical, 24.adjusted)
                 
                 TextField(text: $content, label: {
                     
                 })
                 .font(.medium_12)
                 .foregroundColor(.heyGray1)
-                .frame(height: 51)
+                .frame(height: 51.adjusted)
                 .background(Color.init(hex: "#F4F4F4"))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 24.adjusted)
                 
-                .padding(.bottom, 26)
+                .padding(.bottom, 26.adjusted)
                 
                 HStack {
                     Button(primaryAction.title) {
@@ -60,19 +60,19 @@ public struct TodoChangeGroupNameAlertView: View {
                     .heyAlertButtonStyle(primaryAction.colorSystem)
                     
                     Spacer()
-                        .frame(width: 24)
+                        .frame(width: 24.adjusted)
                     
                     Button(secondaryAction.title) {
                         secondaryAction.action()
                     }
                     .heyAlertButtonStyle(secondaryAction.colorSystem)
                 }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 24)
+                .padding(.horizontal, 24.adjusted)
+                .padding(.bottom, 24.adjusted)
             }
             .background(Color.heyWhite)
             .clipShape(RoundedRectangle(cornerRadius: 8))
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.adjusted)
         }
         .ignoresSafeArea()
     }

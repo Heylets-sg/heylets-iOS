@@ -35,6 +35,15 @@ enum ClassFilterType: CaseIterable {
         case .other: "Others"
         }
     }
+    
+    var width: CGFloat {
+        switch self {
+        case .department: 113
+        case .semester: 67
+        case .level: 72
+        case .other: 82
+        }
+    }
 }
 
 public class SearchFilterViewModel: ObservableObject {

@@ -14,7 +14,6 @@ import Domain
 public struct SGEnterPersonalInfoView: View {
     @EnvironmentObject var container: Router
     @ObservedObject var viewModel: SGEnterPersonalInfoViewModel
-    var genderList: [Gender] = [.men, .women, .others]
     
     @State var date = Date()
     
@@ -28,7 +27,7 @@ public struct SGEnterPersonalInfoView: View {
                 .frame(height: 8)
             
             HStack(spacing: 16) {
-                ForEach(genderList, id: \.self) { gender in
+                ForEach(Gender.allCases, id: \.self) { gender in
                     GenderButton(
                         title: gender.title,
                         isSelected: gender == viewModel.gender,

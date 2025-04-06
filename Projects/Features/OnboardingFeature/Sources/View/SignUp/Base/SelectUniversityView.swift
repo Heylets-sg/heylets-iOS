@@ -80,7 +80,7 @@ fileprivate struct SelectUniversityListCellView: View {
         HStack {
             Image(uiImage: university.icon)
                 .resizable()
-                .frame(width: 24, height: 24)
+                .frame(width: 24.adjusted, height: 24.adjusted)
                 .padding(.leading, 16)
             
             Text(university.rawValue)
@@ -90,7 +90,7 @@ fileprivate struct SelectUniversityListCellView: View {
             
             Spacer()
         }
-        .padding(.vertical, 10)
+        .padding(.vertical, 10.adjusted)
         .background(isSelected ? Color.heyMain : Color.heyGray4)
     }
 }

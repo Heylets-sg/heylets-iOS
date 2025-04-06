@@ -81,11 +81,73 @@ public struct NotificationSettingView: View {
     }
 }
 
+struct SelectTimePickerView: View {
+    var timeArr: [String]
+    var onSelect: (String) -> Void
+    var onDismiss: () -> Void
+    
+    var body: some View {
+        VStack {
+            VStack(spacing: 0) {
+                ForEach(timeArr, id: \.self) { time in
+                    VStack(spacing: 0) {
+                        HStack(spacing: 0) {
+                            Spacer()
+                            
+                            Text(time)
+                                .font(.medium_14)
+                                .foregroundColor(.heyGray1)
+                            
+                            Spacer()
+                        }
+                        .padding(.vertical, 20)
+                        .onTapGesture {
+                            onSelect(time)
+                        }
+                        
+                        Divider()
+                            .background(Color.heyGrid)
+                    }
+                }
+            }
+            .background(Color.heyWhite)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            
+            
+            Spacer()
+                .frame(height: 20)
+            
+            Button {
+                onDismiss()
+            } label: {
+                Text("Back")
+                    .font(.semibold_14)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.heyWhite)
+                    .foregroundColor(.heyGray1)
+                    .cornerRadius(8)
+            }
+        }
+        .padding(.horizontal, 16)
+        .background(Color.clear)
+    }
+}
+
 // MARK: - Daily Briefing Section
 struct DailyBriefingSection: View {
     @Binding var isToggleOn: Bool
-    @Binding var briefingTime: String // Now stored as "HH:mm" in ViewModel
+    @Binding var briefingTime: String // Stored as "HH:mm" in ViewModel
     @State private var showTimePicker = false
+    
+    let briefingTimeArr = [
+        "AM 06:00",
+        "AM 07:00",
+        "AM 08:00",
+        "AM 09:00",
+        "AM 10:00",
+        "AM 11:00"
+    ]
     
     var body: some View {
         VStack {
@@ -122,7 +184,6 @@ struct DailyBriefingSection: View {
                 Button(action: {
                     showTimePicker.toggle()
                 }) {
-                    // Convert 24-hour format to 12-hour format for display
                     Text(Date.fromTimeString(briefingTime)?.timeToString() ?? "AM 09:00")
                         .font(.regular_12)
                         .foregroundColor(.heyGray1)
@@ -135,8 +196,30 @@ struct DailyBriefingSection: View {
         .background(Color.heyGray4)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .sheet(isPresented: $showTimePicker) {
-            TimePickerView(selectedTime: $briefingTime)
+            SelectTimePickerView(
+                timeArr: briefingTimeArr,
+                onSelect: { selectedTime in
+                    // Convert AM/PM format to 24-hour format for the viewModel
+                    if let date = convertAMPMToDate(selectedTime) {
+                        briefingTime = date.timeToString24()
+                    }
+                    showTimePicker = false
+                },
+                onDismiss: {
+                    showTimePicker = false
+                }
+            )
+            .presentationDetents([.height(CGFloat(60 * briefingTimeArr.count + 76))])
+            .presentationDragIndicator(.hidden)
+            .presentationBackground(.clear)
         }
+    }
+    
+    // Helper function to convert AM/PM format string to Date
+    private func convertAMPMToDate(_ timeString: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "a hh:mm"
+        return formatter.date(from: timeString)
     }
 }
 
@@ -145,6 +228,16 @@ struct ClassNotificationSection: View {
     @Binding var isToggleOn: Bool
     @Binding var notificationMinute: Int
     @State private var showMinutePicker = false
+    
+    let minuteArr = [
+        "5 min",
+        "10 min",
+        "15 min",
+        "20 min",
+        "25 min",
+        "30 min",
+        "1 hour"
+    ]
     
     var body: some View {
         VStack {
@@ -193,7 +286,34 @@ struct ClassNotificationSection: View {
         .background(Color.heyGray4)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .sheet(isPresented: $showMinutePicker) {
-            MinutePickerView(selectedMinute: $notificationMinute)
+            SelectTimePickerView(
+                timeArr: minuteArr,
+                onSelect: { selectedTime in
+                    // Extract minutes from the selection
+                    notificationMinute = parseMinutes(from: selectedTime)
+                    showMinutePicker = false
+                },
+                onDismiss: {
+                    showMinutePicker = false
+                }
+            )
+            .presentationDetents([.height(CGFloat(60 * minuteArr.count + 76))])
+            .presentationDragIndicator(.hidden)
+            .presentationBackground(.clear)
+        }
+    }
+    
+    // Helper function to parse minutes from strings like "5 min", "10 min", etc.
+    private func parseMinutes(from timeString: String) -> Int {
+        if timeString == "1 hour" {
+            return 60
+        } else {
+            // Extract the number from strings like "5 min", "10 min", etc.
+            let components = timeString.components(separatedBy: " ")
+            if let minuteStr = components.first, let minutes = Int(minuteStr) {
+                return minutes
+            }
+            return 10 // Default value if parsing fails
         }
     }
 }

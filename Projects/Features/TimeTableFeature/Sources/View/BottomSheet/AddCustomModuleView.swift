@@ -96,6 +96,7 @@ public struct AddCustomModuleView: View {
             Spacer()
         }
         .padding(.horizontal, 16)
+        .background(Color.heyWhite)
         
         // 통합 시간 선택기 Sheet
         .sheet(isPresented: $showingTimePicker) {
@@ -132,7 +133,7 @@ struct CustomTimePickerView: View {
     
     // 시간 옵션
     let hours = Array(0...23)
-    let minutes = Array(0...59)
+    let minutes = stride(from: 0, to: 60, by: 10).map { $0 }
     
     // 초기화
     init(startTime: String, endTime: String, onSave: @escaping (String, String) -> Void, onDismiss: @escaping () -> Void) {

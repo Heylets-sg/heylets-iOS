@@ -128,7 +128,7 @@ public class MyPageViewModel: ObservableObject {
             windowRouter.switch(to: .login)
             
         case .editSchoolButtonDidTap:
-            navigationRouter.push(to: .editSchool)
+            navigationRouter.push(to: .editSchool(profileInfo.university.nationality))
         }
     }
     

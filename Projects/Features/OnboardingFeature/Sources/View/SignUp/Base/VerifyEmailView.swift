@@ -26,7 +26,7 @@ public struct VerifyEmailView: View {
         
         OnboardingBaseView(content: {
             Spacer()
-                .frame(height: 18)
+                .frame(height: 18.adjusted)
             
             HStack {
                 HeyTextField(
@@ -42,7 +42,7 @@ public struct VerifyEmailView: View {
                     .foregroundColor(.heyGray1)
             }
             .padding(.trailing, 47)
-            .padding(.bottom, 18)
+            .padding(.bottom, 18.adjusted)
             
             Button {
                 viewModel.send(.domainListButtonDidTap)
@@ -66,21 +66,21 @@ public struct VerifyEmailView: View {
                         .frame(width: 12, height: 6)
                 }
                 .padding(.horizontal, 16)
-                .padding(.vertical, 17)
+                .padding(.vertical, 17.adjusted)
                 .background(Color.heyGray4)
             }
             
             .background(Color.heyGray4)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.trailing, 116)
-            .padding(.bottom, 20)
+            .padding(.bottom, 20.adjusted)
             
             Text(viewModel.state.errMessage)
                 .font(.regular_14)
                 .foregroundColor(.heyError)
             
             EmailDomainListView(viewModel: viewModel)
-                .frame(height: 250)
+                .frame(maxHeight: 250.adjusted)
                 .padding(.trailing, 116)
                 .hidden(!viewModel.state.domainListViewIsVisible)
         },
@@ -134,7 +134,7 @@ fileprivate struct EmailDomainListCellView: View {
             
             Spacer()
         }
-        .padding(.vertical, 10)
+        .padding(.vertical, 10.adjusted)
         .padding(.leading, 16)
     }
 }

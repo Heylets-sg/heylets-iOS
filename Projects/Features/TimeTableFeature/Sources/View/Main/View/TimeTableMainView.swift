@@ -10,6 +10,7 @@ import SwiftUI
 
 import Domain
 import DSKit
+import BaseFeatureDependency
 
 public struct MainView: View {
     @Binding var viewType: TimeTableViewType
@@ -76,10 +77,27 @@ extension MainView {
     private func scrollToPosition(proxy: ScrollViewProxy?, position: CGFloat? = nil) {
         guard let proxy = proxy else { return }
         
-        let targetIndex = position != nil ? Int(position! / 52) : 0
-        
-        withAnimation {
-            proxy.scrollTo(targetIndex, anchor: .top) // 스크롤 이동
+        if let position = position {
+            // 정확한 스크롤 위치 계산
+            // 강의 시작 시간에 해당하는 행(row) ID를 찾습니다
+            let hourIndex = Int(position / 52)
+            
+            // viewModel.hourList의 인덱스 범위를 확인하여 유효한 인덱스만 사용
+            let safeHourIndex = max(0, min(hourIndex, viewModel.hourList.count - 1))
+            
+            // 해당 시간을 scrollTo의 ID로 사용하여 스크롤
+            DispatchQueue.main.async {
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    proxy.scrollTo(safeHourIndex, anchor: .top)
+                }
+            }
+        } else {
+            // position이 nil인 경우 맨 위로 스크롤
+            DispatchQueue.main.async {
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    proxy.scrollTo(0, anchor: .top)
+                }
+            }
         }
     }
     
@@ -91,9 +109,31 @@ extension MainView {
         let startHour = cell.schedule.startHour
         let startMinute = cell.schedule.startMinute
         
-        // 시작 시간과 분을 기준으로 시작 위치 계산
-        let y = CGFloat(startHour - firstTime) * cellHeight + CGFloat(startMinute) / 60 * cellHeight
+        // 강의가 맨 위보다 위에 있는 경우 처리
+        if startHour < firstTime {
+            return 0 // 맨 위로 스크롤
+        }
         
-        return y 
+        // 시작 시간과 분을 기준으로 정확한 시작 위치 계산
+        let hourOffset = CGFloat(startHour - firstTime) * cellHeight
+        let minuteOffset = CGFloat(startMinute) / 60.0 * cellHeight
+        
+        // 최종 위치 반환 (약간 위로 오프셋 적용하여 더 보기 좋게)
+        return max(0, hourOffset + minuteOffset - 20)
     }
 }
+
+//#Preview {
+//    let useCase = StubHeyUseCase.stub.timeTableUseCase
+//    return TimeTableView(
+//        viewModel: .init(
+//            .init(useCase),
+//            .init(useCase),
+//            .init(useCase, Router.default.navigationRouter),
+//            .init(useCase),
+//            Router.default.navigationRouter,
+//            Router.default.windowRouter,
+//            useCase)
+//    )
+//    .environmentObject(Router.default)
+//}

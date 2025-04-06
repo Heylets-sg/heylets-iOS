@@ -57,11 +57,12 @@ struct MyPageNavigationRoutingView: View {
                 )
             )
             
-        case .editSchool:
+        case .editSchool(let nationality):
             EditSchoolView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
-                    useCase: useCase.myPageUseCase
+                    useCase: useCase.myPageUseCase,
+                    nationality: nationality
                 )
             )
         default:

@@ -44,7 +44,8 @@ struct OnboardingBaseView<Content:View>: View {
             VStack(alignment: .leading) {
                 
                 Spacer()
-                    .frame(height: 92)
+                    .frame(height: 92.adjusted)
+                
                 HStack {
                     Button {
                         dismiss()
@@ -72,7 +73,7 @@ struct OnboardingBaseView<Content:View>: View {
                     Text(titleText)
                         .font(.semibold_18)
                         .foregroundColor(.heyGray1)
-                        .padding(.bottom, 18)
+                        .padding(.bottom, 18.adjusted)
                     
                     content
                     
@@ -85,8 +86,8 @@ struct OnboardingBaseView<Content:View>: View {
                     .heyBottomButtonStyle()
                     
                 }
-                .padding(.top, 36)
-                .padding(.bottom, 65)
+                .padding(.top, 36.adjusted)
+                .padding(.bottom, 65.adjusted)
             }
             .padding(.horizontal, 16)
             .background(Color.heyWhite)

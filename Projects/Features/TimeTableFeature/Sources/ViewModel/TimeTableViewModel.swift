@@ -22,6 +22,7 @@ public class TimeTableViewModel: ObservableObject {
             var showReposrtMissingModuleAlert: Bool = false
             var showAddCustomAlert: Bool = false
             var showGuestErrorAlert: Bool = false
+            var showSelectInfoView: Bool = false
         }
         
         struct TimeTable {
@@ -71,7 +72,6 @@ public class TimeTableViewModel: ObservableObject {
     private let useCase: TimeTableUseCaseType
     public var settingViewModel: TimeTableSettingViewModel
     
-    // We now use the viewType from the service
     var viewType: TimeTableViewType { viewTypeService.viewType }
     
     @Published var timeTableInfo: TimeTableInfo = .empty
@@ -107,25 +107,6 @@ public class TimeTableViewModel: ObservableObject {
         bindState()
         
         timeTable = sectionList.createTimeTableCellList()
-        
-        // Listen for viewType changes from other components
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleViewTypeChange(_:)),
-            name: .timeTableViewTypeChanged,
-            object: nil
-        )
-    }
-    
-    @objc private func handleViewTypeChange(_ notification: Notification) {
-        if viewType == .main {
-            selectLecture = []
-            selectedThemeColor = []
-        }
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     func send(_ action: Action) {

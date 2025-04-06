@@ -14,9 +14,6 @@ import BaseFeatureDependency
 import Domain
 import DSKit
 
-extension Notification.Name {
-    static let timeTableViewTypeChanged = Notification.Name("TimeTableViewTypeChanged")
-}
 
 public struct InviteCodeView: View {
     @EnvironmentObject var container: Router
@@ -29,11 +26,12 @@ public struct InviteCodeView: View {
     }
     
     public var body: some View {
+        
         ZStack {
             VStack(alignment: .leading) {
                 
                 Spacer()
-                    .frame(height: 92)
+                    .frame(height: 92.adjusted)
                 
                 Button {
                     viewModel.send(.backButtonDidTap)
@@ -47,7 +45,7 @@ public struct InviteCodeView: View {
                     Text("Invite a friend and get\ntimetable themes together🎉")
                         .font(.semibold_18)
                         .foregroundColor(.heyGray1)
-                        .padding(.bottom, 8)
+                        .padding(.bottom, 8.adjusted)
                     
                     Text("When a friend signs up using your code, ")
                         .font(.regular_16)
@@ -56,14 +54,14 @@ public struct InviteCodeView: View {
                         .font(.regular_16)
                     
                     Spacer()
-                        .frame(height: 126)
+                        .frame(height: 126.adjusted)
                     
                     HStack {
                         Spacer()
                         VStack {
                             Text("My invite code")
-                                .padding(.vertical, 12)
-                                .padding(.horizontal, 90)
+                                .padding(.vertical, 12.adjusted)
+                                .padding(.horizontal, 90.adjusted)
                                 .background(Color.heyMain)
                             
                             HStack {
@@ -84,7 +82,7 @@ public struct InviteCodeView: View {
                                 }
                                 
                             }
-                            .padding(.vertical, 30)
+                            .padding(.vertical, 30.adjusted)
                         }
                         .clipShape(RoundedRectangle(cornerRadius: 7))
                         .overlay(
@@ -112,8 +110,8 @@ public struct InviteCodeView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 28))
                     }
                 }
-                .padding(.top, 36)
-                .padding(.bottom, 65)
+                .padding(.top, 36.adjusted)
+                .padding(.bottom, 65.adjusted)
             }
             .setTimeTableHeyNavigation()
             .padding(.horizontal, 16)
@@ -127,4 +125,3 @@ public struct InviteCodeView: View {
         }
     }
 }
-

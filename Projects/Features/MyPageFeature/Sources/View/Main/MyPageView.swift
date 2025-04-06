@@ -30,21 +30,21 @@ public struct MyPageView: View {
                 
                 VStack {
                     Spacer()
-                        .frame(height: 60)
+                        .frame(height: 60.adjusted)
                     
                     MyPageTopView()
                         .environmentObject(container)
                     
                     VStack {
                         Spacer()
-                            .frame(height:90)
+                            .frame(height:90.adjusted)
                         
                         VStack {
                             Text("\(viewModel.profileInfo.nickName) / \(viewModel.profileInfo.university.rawValue)")
                                 .font(.medium_16)
                                 .foregroundColor(Color.heyBlack)
-                                .padding(.top, 44)
-                                .padding(.bottom, 12)
+                                .padding(.top, 50.adjusted)
+                                .padding(.bottom, 12.adjusted)
                                 .hidden(viewModel.state.isLoading)
                                 .loading(viewModel.state.isLoading)
                             
@@ -76,7 +76,7 @@ public struct MyPageView: View {
                                 .frame(width: 80, height: 80)
                                 .background(Color.heyWhite)
                                 .clipShape(Circle())
-                                .padding(.top, 125)
+                                .padding(.top, 125.adjusted)
                         } placeholder: {
                             ProgressView()
                                 .progressViewStyle(CircularProgressViewStyle())
@@ -85,7 +85,7 @@ public struct MyPageView: View {
                         Circle()
                             .fill(Color.heyBlack)
                             .frame(width: 80, height: 80)
-                            .padding(.top, 125)
+                            .padding(.top, 125.adjusted)
                     }
                     
                     Spacer()
@@ -164,15 +164,13 @@ public struct MyReferalCodeView: View {
                     .resizable()
                     .frame(width: 12, height: 12)
             }
-            .padding(.vertical, 8)
+            .padding(.vertical, 8.adjusted)
             .padding(.horizontal, 34)
-            .background(.blue)
-            .clipShape(RoundedRectangle(cornerRadius: 15.5))
-            .padding(.bottom, 30)
-            
+            .clipShape(Capsule())
+            .padding(.bottom, 30.adjusted)
         } else {
             Spacer()
-                .frame(height: 60)
+                .frame(height: 60.adjusted)
         }
     }
 }

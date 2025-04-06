@@ -15,7 +15,7 @@ import Core
 
 public class SelectNationalityViewModel: ObservableObject {
     struct State {
-        var continueButtonIsEnabled = false
+        var continueButtonIsEnabled = false { didSet {print(self)}}
         var errMessage = ""
     }
     
@@ -26,22 +26,22 @@ public class SelectNationalityViewModel: ObservableObject {
         case selectNationality(NationalityInfo?)
     }
     
-    // MARK: - Properties
-    
     let allNationalityItems: [NationalityInfo] = [.Malaysia, .Singapore]
     @Published var nationality: NationalityInfo? = nil
     
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
+    public var windowRouter: WindowRoutableType
     public var useCase: SignUpUseCaseType
     private let cancelBag = CancelBag()
     
-    // MARK: - Init
     public init(
         navigationRouter: NavigationRoutableType,
+        windowRouter: WindowRoutableType,
         useCase: SignUpUseCaseType
     ) {
         self.navigationRouter = navigationRouter
+        self.windowRouter = windowRouter
         self.useCase = useCase
         
         observe()
@@ -63,17 +63,14 @@ public class SelectNationalityViewModel: ObservableObject {
         case .nextButtonDidTap:
             guard let nationality else { return }
             
-            useCase.checkGuestMode()
-                .receive(on: RunLoop.main)
-                .sink(receiveValue: { [weak self] isGuestMode in
-                    if isGuestMode {
-                        if nationality == .Malaysia { self?.navigationRouter.push(to: .verifyEmail(nationality)) }
-                        else { self?.navigationRouter.push(to: .selectGuestUniversity(nationality.universityList)) }
-                    } else {
-                        self?.navigationRouter.push(to: .selectGuestUniversity(nationality.universityList))
-                    }
-                })
-                .store(in: cancelBag)
+            let preview = navigationRouter.destinations.first!
+            
+            if (preview == .login || windowRouter.destination == .login) {
+                if nationality == .Malaysia { navigationRouter.push(to: .verifyEmail(nationality)) }
+                else { navigationRouter.push(to: .selectUniversity) }
+            } else {
+                navigationRouter.push(to: .selectGuestUniversity(nationality.universityList))
+            }
             
         case .selectNationality(let nationality):
             self.nationality = nationality
@@ -86,9 +83,11 @@ public class SelectNationalityViewModel: ObservableObject {
         guard let owner else { return }
         
         $nationality
-            .map { !($0?.universityList.isEmpty ?? false)}
+            .receive(on: RunLoop.main)
+            .map {
+                return !($0?.universityList.isEmpty ?? false || $0 == nil )
+            }
             .assign(to: \.state.continueButtonIsEnabled, on: owner)
             .store(in: cancelBag)
-        
     }
 }

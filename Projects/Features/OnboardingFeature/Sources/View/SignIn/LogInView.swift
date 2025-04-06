@@ -42,13 +42,13 @@ public struct LogInView: View {
                     }
                     .hidden(!viewModel.state.showCloseBtn)
                 }
-                .padding(.bottom, 10)
+                .padding(.bottom, 10.adjusted)
                 
                 Image(uiImage: .logo)
                     .resizable()
                     .frame(height: 56)
                     .padding(.horizontal, 125)
-                    .padding(.bottom, 32)
+                    .padding(.bottom, 32.adjusted)
                 
                 HStack {
                     Text("Log In")
@@ -70,7 +70,7 @@ public struct LogInView: View {
                             .foregroundStyle(Color.heyMain)
                     }
                 }
-                .padding(.bottom, 29)
+                .padding(.bottom, 29.adjusted)
                 
                 HeyTextField(
                     text: $viewModel.id,
@@ -81,7 +81,7 @@ public struct LogInView: View {
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(Color.heyGray3, lineWidth: 1)
                 )
-                .padding(.bottom, 21)
+                .padding(.bottom, 21.adjusted)
                 
                 PasswordField(
                     password: $viewModel.password,
@@ -129,8 +129,8 @@ public struct LogInView: View {
             .onAppear {
                 viewModel.send(.onAppear)
             }
-            .padding(.top, 106)
-            .padding(.bottom, 65)
+            .padding(.top, 106.adjusted)
+            .padding(.bottom, 65.adjusted)
             .padding(.horizontal, 16)
             .background(Color.heyWhite)
             .ignoresSafeArea(edges: .vertical)

@@ -23,12 +23,12 @@ public struct LectureInfoResult: Decodable {
     public let lectureId: Int
     public let courseCode, courseName: String
     public let sections: [SectionResult]
-    public let credit: Double
+    public let credit: Double?
     public let courseLevel: String?
-    public let termId: Int
-    public let academicYear: String
-    public let semester: String
-    public let keywordScore: Double
+    public let termId: Int?
+    public let academicYear: String?
+    public let semester: String?
+    public let keywordScore: Double?
     public let requiresModuleSelection: Bool?
 }
 

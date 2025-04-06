@@ -32,16 +32,16 @@ public struct TodoView: View {
                             .font(.semibold_18)
                             .foregroundColor(.heyGray1)
                             .padding(.leading, 16)
-                            .padding(.top, 81)
-                            .padding(.bottom, 12)
+                            .padding(.top, 81.adjusted)
+                            .padding(.bottom, 12.adjusted)
                         
                         Spacer()
                     }
                     
                     ScrollView {
                         Spacer()
-                            .frame(height: 20)
-                        VStack(spacing: 16) {
+                            .frame(height: 20.adjusted)
+                        VStack(spacing: 16.adjusted) {
                             ForEach(viewModel.groupList, id: \.self) { group in
                                 TodoGroupView(
                                     group: group,
@@ -50,7 +50,7 @@ public struct TodoView: View {
                             }
                         }
                         .loading(viewModel.state.isLoading)
-                        .padding(.bottom, 36)
+                        .padding(.bottom, 36.adjusted)
                         
                         HStack {
                             Spacer()
@@ -63,7 +63,7 @@ public struct TodoView: View {
                             }
                             Spacer()
                         }
-                        .padding(.bottom, 209)
+                        .padding(.bottom, 209.adjusted)
                         
                     }
                     .scrollIndicators(.hidden)
@@ -74,11 +74,14 @@ public struct TodoView: View {
                 }
                 
                 
-                TabBarView(
-                    timeTableAction: { viewModel.send(.gotoTimeTable) },
-                    mypageAction: { viewModel.send(.gotoMyPage) }
-                )
-                .hidden(viewModel.state.hiddenTabBar)
+                VStack {
+                    Spacer()
+                    TabBarView(
+                        timeTableAction: { viewModel.send(.gotoTimeTable) },
+                        mypageAction: { viewModel.send(.gotoMyPage) }
+                    )
+                    .frame(height: 82.adjusted)
+                }
                 
                 TodoChangeGroupNameAlertView(
                     title: "Enter name",
@@ -109,6 +112,7 @@ public struct TodoView: View {
         }
     }
 }
+
 
 // ✅ 키보드 높이를 감지하는 Publisher
 import Combine

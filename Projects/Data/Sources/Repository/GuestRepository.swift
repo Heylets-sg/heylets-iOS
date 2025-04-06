@@ -50,21 +50,8 @@ public struct GuestRepository: GuestRepositoryType {
     
     public func convertToMember(_ user: User) -> AnyPublisher<Void, SignUpError> {
         let request = user.toDTO()
-        //MARK: Test용 삭제 필수
-//        return guestService.convertToMember(request)
-//            .mapError { error in
-//                if let errorCode = error.isInvalidStatusCode() {
-//                    return SignUpError.error(with: errorCode)
-//                } else {
-//                    return .unknown
-//                }
-//            }
-//            .eraseToAnyPublisher()
-        return guestService.testConvertToMember(request)
-            .handleEvents(receiveOutput: { token in
-                UserDefaultsManager.clearToken()
-                UserDefaultsManager.isGuestMode = false
-            })
+        
+        return guestService.convertToMember(request)
             .mapError { error in
                 if let errorCode = error.isInvalidStatusCode() {
                     return SignUpError.error(with: errorCode)
@@ -73,6 +60,20 @@ public struct GuestRepository: GuestRepositoryType {
                 }
             }
             .eraseToAnyPublisher()
+//        MARK: Test용 삭제 필수
+//        return guestService.testConvertToMember(request)
+//            .handleEvents(receiveOutput: { token in
+//                UserDefaultsManager.clearToken()
+//                UserDefaultsManager.isGuestMode = false
+//            })
+//            .mapError { error in
+//                if let errorCode = error.isInvalidStatusCode() {
+//                    return SignUpError.error(with: errorCode)
+//                } else {
+//                    return .unknown
+//                }
+//            }
+//            .eraseToAnyPublisher()
     }
 }
 

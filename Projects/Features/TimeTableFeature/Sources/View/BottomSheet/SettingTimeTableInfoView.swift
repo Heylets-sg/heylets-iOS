@@ -7,48 +7,47 @@ struct SettingTimeTableInfoView: View {
     @ObservedObject var viewModel: ThemeViewModel
     
     var body: some View {
-        VStack {
-            Spacer()
-                .frame(height: 30)
-            if viewModel.state.isShowingSelectInfoView {
-                Color.clear
-                    .ignoresSafeArea()
-            } else {
-                HStack {
-                    Text("Information")
-                        .font(.medium_14)
-                        .foregroundColor(.heyGray1)
-                    
-                    Spacer()
-                    
-                    Button {
-                        viewModel.send(.selectDisplayTypeButtonDidTap)
-                    } label: {
-                        Text(viewModel.displayType.text)
-                            .font(.regular_12)
-                            .foregroundColor(.heyGray2)
+            VStack {
+                if viewModel.state.isShowingSelectInfoView {
+                    Color.heyWhite
+                        .ignoresSafeArea()
+                } else {
+                    VStack {
+                        Spacer()
+                            .frame(height: 30.adjusted)
+                        
+                        HStack {
+                            Text("Information")
+                                .font(.medium_14)
+                                .foregroundColor(.heyGray1)
+                            
+                            Spacer()
+                            
+                            Button {
+                                viewModel.send(.selectDisplayTypeButtonDidTap)
+                            } label: {
+                                Text(viewModel.displayType.text)
+                                    .font(.regular_12)
+                                    .foregroundColor(.heyGray2)
+                            }
+                            
+                            Spacer()
+                        }
+                        .padding(.leading, 24)
+                        Spacer()
                     }
-                    
-                    Spacer()
+                    .background(Color.heyWhite)
                 }
-                .padding(.leading, 24)
             }
-            Spacer()
-        }
-        .frame(height: 173)
-        .overlay(
-            Color.heyDimmed
-                .opacity(viewModel.state.isShowingSelectInfoView ? 1 : 0)
-                .ignoresSafeArea()
-        )
-        .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
-            SelectDisplayModuleView(viewModel: viewModel)
-                .presentationDetents([.height(380)])
-                .presentationDragIndicator(.hidden)
-                .presentationBackground(.clear)
+            .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
+                SelectDisplayModuleView(viewModel: viewModel)
+                    .presentationDetents([.height(350)])
+                    .presentationDragIndicator(.hidden)
+                    .presentationBackground(.clear)
+            }
         }
     }
-}
+
 
 
 struct SelectDisplayModuleView: View {
@@ -72,7 +71,7 @@ struct SelectDisplayModuleView: View {
                             
                             Spacer()
                         }
-                        .padding(.vertical, 20)
+                        .padding(.vertical, 20.adjusted)
                         .onTapGesture {
                             withAnimation {
                                 viewModel.send(.selectDisplayType(option))
@@ -89,7 +88,7 @@ struct SelectDisplayModuleView: View {
             
             
             Spacer()
-                .frame(height: 20)
+                .frame(height: 20.adjusted)
             
             Button {
                 viewModel.send(.reportButtonDidTap)

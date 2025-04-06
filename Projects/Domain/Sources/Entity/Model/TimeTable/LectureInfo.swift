@@ -31,9 +31,9 @@ public struct LectureInfo {
         department: String? = nil,
         credit: Int? = nil,
         courseLevel: Int? = nil,
-        termId: Int,
-        academicYear: String,
-        semester: String,
+        termId: Int = 0,
+        academicYear: String = "",
+        semester: String = "",
         sections: [SectionInfo]
     ) {
         self.id = id

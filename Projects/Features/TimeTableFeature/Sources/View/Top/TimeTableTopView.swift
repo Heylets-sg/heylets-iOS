@@ -16,26 +16,23 @@ public struct TopView: View {
     @EnvironmentObject var container: Router
     @Binding var timeTableInfo: TimeTableInfo
     @Binding var viewType: TimeTableViewType
-    @Binding var settingAlertType: TimeTableSettingAlertType?
     @Binding var profileInfo: ProfileInfo
     
     public var body: some View {
+        
         HStack {
             VStack(alignment: .leading) {
-                Spacer()
-                    .frame(height: 34)
-                
                 HStack {
                     Image(uiImage: profileInfo.university.badgeImage)
                         .resizable()
-                        .frame(width: 28, height: 14)
-                        
+                        .frame(width: 36, height: 18)
+                    
                     
                     Text(timeTableInfo.fullSemester)
                         .font(.medium_12)
                         .foregroundColor(.heyGray2)
                 }
-                .padding(.bottom, 8)
+                .padding(.bottom, 10.adjusted)
                 
                 Text(timeTableInfo.timeTableName)
                     .lineLimit(1)
@@ -53,8 +50,8 @@ public struct TopView: View {
                 } label: {
                     Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
                         .resizable()
-                        .frame(width: 16, height: 16)
-                        .tint(.heyGray2)
+                        .frame(width: 17, height: 17)
+                        .tint(.init(hex: "#353536"))
                         .padding(.trailing, 26)
                 }
                 
@@ -65,22 +62,13 @@ public struct TopView: View {
                 } label: {
                     Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
                         .resizable()
-                        .frame(width: 20, height: 20)
-                        .tint(.heyGray2)
-                        .padding(.trailing, 23)
+                        .frame(width: 18, height: 18)
+                        .tint(.init(hex: "#353536"))
                 }
             }
-            .padding(.top, 38)
+            .padding(.trailing, 8)
         }
         .padding(.horizontal, 16)
-        .sheet(isPresented: .constant(viewType == .setting)) {
-            SettingTimeTableView(
-                viewType: $viewType,
-                settingAlertType: $settingAlertType
-            )
-            .presentationDetents([.fraction(0.32)])
-            .presentationDragIndicator(.hidden)
-            .ignoresSafeArea(.container, edges: .bottom)
-        }
     }
 }
+

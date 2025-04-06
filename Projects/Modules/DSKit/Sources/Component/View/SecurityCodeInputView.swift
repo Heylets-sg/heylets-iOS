@@ -18,11 +18,7 @@ public struct SecurityCodeInputView: View {
     }
     
     //MARK: Body
-    public var body: some View {
-//        GeometryReader { geometry in
-//            let cellWidth: CGFloat = geometry.size.width / 10
-//            let padding: CGFloat = geometry.size.width / 30
-            
+    public var body: some View {            
             HStack {
                 ZStack(alignment: .center) {
                     TextField("", text: $otpCode)

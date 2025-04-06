@@ -22,7 +22,7 @@ struct ThemeTopView: View {
                 Text("Theme")
                     .font(.semibold_16)
                     .foregroundColor(.heyGray1)
-
+                
                 HStack {
                     Button {
                         withAnimation {
@@ -33,9 +33,9 @@ struct ThemeTopView: View {
                             .resizable()
                             .frame(width: 16, height: 16)
                     }
-
+                    
                     Spacer()
-
+                    
                     Button {
                         viewModel.send(.saveButtonDidTap)
                         withAnimation {
@@ -51,15 +51,25 @@ struct ThemeTopView: View {
             .padding(.horizontal, 16)
             .padding(.top, 25)
             .padding(.bottom, 24)
-            
+        }
+    }
+}
+
+struct ThemeListTopView: View {
+    @Binding var viewType: TimeTableViewType
+    @ObservedObject var viewModel: ThemeViewModel
+//    let height: CGFloat
+    
+    var body: some View {
+        
+        VStack {
             if !viewModel.state.inviteCodeViewHidden {
-                ThemeInviteFriendView()
-                    .frame(height: 57)
+                ThemeInviteFriendView(height: 56.adjusted)
                     .onTapGesture {
                         viewModel.send(.inviteFriendViewDidTap)
                     }
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 24)
+                    .padding(.bottom, 23.adjusted)
             }
             
             ScrollView(.horizontal) {
@@ -71,7 +81,6 @@ struct ThemeTopView: View {
                         )
                         .disabled(theme.unlocked)
                         .padding(.trailing, 20)
-                        .frame(height: 95)
                         .onTapGesture {
                             viewModel.send(.themeButtonDidTap(theme))
                         }
@@ -111,15 +120,16 @@ fileprivate struct ThemeListCellView: View {
             }
             .padding(.bottom, 6)
             
-            
             Text(theme.themeName)
                 .font(.medium_10)
                 .foregroundColor(.heyGray1)
         }
+        .frame(height: 95)
     }
 }
 
 struct ThemeInviteFriendView: View {
+    let height: CGFloat
     var body: some View {
         HStack {
             Image(uiImage: .icLocked2)
@@ -134,7 +144,6 @@ struct ThemeInviteFriendView: View {
                 Text("unlock more color theme")
                     .font(.semibold_14)
             }
-            .frame(height: 32)
             
             Spacer()
             
@@ -142,11 +151,11 @@ struct ThemeInviteFriendView: View {
                 .resizable()
                 .frame(width: 8, height: 16)
         }
-        .padding(.vertical, 13)
+        .padding(.vertical, height * 0.22)
         .padding(.leading, 24)
         .padding(.trailing, 27)
         .background(Color.heyDimmed)
-        .clipShape(RoundedRectangle(cornerRadius: 28.5))
+        .clipShape(Capsule())
     }
 }
 
@@ -211,3 +220,19 @@ struct QuarterCircle: View {
         .fill(Color(hex: color))
     }
 }
+
+#Preview {
+    let useCase = StubHeyUseCase.stub.timeTableUseCase
+    return TimeTableView(
+        viewModel: .init(
+            .init(useCase),
+            .init(useCase),
+            .init(useCase, Router.default.navigationRouter),
+            .init(useCase),
+            Router.default.navigationRouter,
+            Router.default.windowRouter,
+            useCase)
+    )
+    .environmentObject(Router.default)
+}
+

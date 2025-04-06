@@ -27,7 +27,7 @@ public class EditSchoolViewModel: ObservableObject {
     
     // MARK: - Properties
     
-    let allUniversityItems: [UniversityInfo] = [.NTU, .NUS, .SMU]
+    var allUniversityItems: [UniversityInfo] = []
     @Published var university: UniversityInfo? = nil
     
     @Published var state = State()
@@ -38,10 +38,13 @@ public class EditSchoolViewModel: ObservableObject {
     // MARK: - Init
     public init(
         navigationRouter: NavigationRoutableType,
-        useCase: MyPageUseCaseType
+        useCase: MyPageUseCaseType,
+        nationality: NationalityInfo
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
+        
+        allUniversityItems = nationality.universityList
     }
     
     // MARK: - Methods
