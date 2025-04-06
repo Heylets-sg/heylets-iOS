@@ -43,7 +43,7 @@ public struct MyPageView: View {
                             Text("\(viewModel.profileInfo.nickName) / \(viewModel.profileInfo.university.rawValue)")
                                 .font(.medium_16)
                                 .foregroundColor(Color.heyBlack)
-                                .padding(.top, 44.adjusted)
+                                .padding(.top, 50.adjusted)
                                 .padding(.bottom, 12.adjusted)
                                 .hidden(viewModel.state.isLoading)
                                 .loading(viewModel.state.isLoading)

@@ -41,7 +41,7 @@ struct SettingTimeTableInfoView: View {
             }
             .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
                 SelectDisplayModuleView(viewModel: viewModel)
-                    .presentationDetents([.fraction(0.36)])
+                    .presentationDetents([.height(350)])
                     .presentationDragIndicator(.hidden)
                     .presentationBackground(.clear)
             }
@@ -71,7 +71,7 @@ struct SelectDisplayModuleView: View {
                             
                             Spacer()
                         }
-                        .padding(.vertical, 20)
+                        .padding(.vertical, 20.adjusted)
                         .onTapGesture {
                             withAnimation {
                                 viewModel.send(.selectDisplayType(option))
@@ -88,7 +88,7 @@ struct SelectDisplayModuleView: View {
             
             
             Spacer()
-                .frame(height: 20)
+                .frame(height: 20.adjusted)
             
             Button {
                 viewModel.send(.reportButtonDidTap)
