@@ -54,10 +54,10 @@ public struct SecurityCodeInputView: View {
                             VStack {
                                 Text(self.getPin(at: index))
 //                                    .font(.semibold_28)
-                                    .foregroundColor(Color.heyGray1)
+                                    .foregroundColor(.common.MainText.default)
                                 Rectangle()
                                     .frame(width: 32, height: 2)
-                                    .foregroundColor(Color.heyGray1)
+                                    .foregroundColor(.common.InputField.securityCode)
                                     .padding(.leading, index == 3 ? 20 : 10)
                                     .padding(.trailing, index == 2 ? 20 : 10)
                                     .opacity(self.otpCode.count <= index ? 1 : 0)

@@ -131,13 +131,13 @@ extension Publishers {
     }
 }
 
-//#Preview {
-//    let useCase = StubHeyUseCase.stub.todoUseCase
-//    return TodoView(
-//        viewModel: .init(
-//            windowRouter: Router.default.windowRouter,
-//            useCase: useCase
-//        )
-//    )
-//    .environmentObject(Router.default)
-//}
+#Preview {
+    let useCase = StubHeyUseCase.stub.todoUseCase
+    return TodoView(
+        viewModel: .init(
+            windowRouter: Router.default.windowRouter,
+            useCase: useCase
+        )
+    )
+    .environmentObject(Router.default)
+}

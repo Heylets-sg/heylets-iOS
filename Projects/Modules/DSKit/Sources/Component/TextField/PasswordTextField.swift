@@ -37,7 +37,7 @@ public struct PasswordField: View {
                     "",
                     text: $password,
                     prompt: Text(placeHolder)
-                        .foregroundColor(.heyGray3)
+                        .foregroundColor(.common.Placeholder.default)
                 )
                 .heyTextFieldStyle()
             } else {
@@ -45,7 +45,7 @@ public struct PasswordField: View {
                     "",
                     text: $password,
                     prompt: Text("Password")
-                        .foregroundColor(.heyGray3)
+                        .foregroundColor(.common.Placeholder.default)
                 )
                 .heyTextFieldStyle()
             }

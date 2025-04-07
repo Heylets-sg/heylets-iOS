@@ -50,9 +50,10 @@ struct OnboardingBaseView<Content:View>: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(uiImage: .icBack)
+                        Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
                             .resizable()
                             .frame(width: 22, height: 18)
+                            .tint(.common.ButtonBack.default)
                     }
                     .hidden(!hiddenCloseBtn)
                     

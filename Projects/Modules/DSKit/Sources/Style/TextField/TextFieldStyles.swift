@@ -14,8 +14,8 @@ struct HeyTextFieldStlyes: TextFieldStyle {
         configuration
             .disableAutocorrection(true)
             .textInputAutocapitalization(.never)
-//            .font(.medium_14)
-            .foregroundColor(.heyBlack)
+            .font(.regular_14)
+            .foregroundColor(.common.MainText.default)
             .frame(height: 52)
             .frame(maxWidth: .infinity)
     }

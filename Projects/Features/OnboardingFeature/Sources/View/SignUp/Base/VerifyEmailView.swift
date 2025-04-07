@@ -39,7 +39,7 @@ public struct VerifyEmailView: View {
                 
                 Text("@")
                     .font(.regular_16)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
             }
             .padding(.trailing, 47)
             .padding(.bottom, 18.adjusted)
@@ -55,8 +55,8 @@ public struct VerifyEmailView: View {
                     .font(.medium_14)
                     .foregroundColor(
                         viewModel.domain.isEmpty
-                        ? .heyGray3
-                        : .heyGray1
+                        ? .common.Placeholder.default
+                        : .common.MainText.default
                     )
                     
                     Spacer()
@@ -67,7 +67,7 @@ public struct VerifyEmailView: View {
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 17.adjusted)
-                .background(Color.heyGray4)
+                .background(Color.common.InputField.default)
             }
             
             .background(Color.heyGray4)
@@ -148,6 +148,7 @@ fileprivate struct EmailDomainListCellView: View {
         )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }
 
 

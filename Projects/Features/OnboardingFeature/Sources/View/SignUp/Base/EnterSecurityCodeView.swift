@@ -27,7 +27,7 @@ public struct EnterSecurityCodeView: View {
             
             Text(verbatim: "Enter the 6-digit code we sent to the email:\n\(viewModel.state.hiddenEmail)")
                 .font(.regular_16)
-                .foregroundColor(.heyGray1)
+                .foregroundColor(.common.SubText.default)
                 .lineLimit(2)
             
             Spacer()
@@ -61,4 +61,5 @@ public struct EnterSecurityCodeView: View {
         )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }

@@ -18,9 +18,9 @@ public enum TextFieldState {
         case .idle:
             return .clear
         case .valid:
-            return .heyGreen
+            return .common.Success.default
         case .invalid:
-            return .heyError
+            return .common.Error.default
         }
     }
     

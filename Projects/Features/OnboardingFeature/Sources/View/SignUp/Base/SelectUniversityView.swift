@@ -103,4 +103,5 @@ fileprivate struct SelectUniversityListCellView: View {
         )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }
