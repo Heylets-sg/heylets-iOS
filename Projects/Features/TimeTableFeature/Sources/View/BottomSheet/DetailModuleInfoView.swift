@@ -40,10 +40,9 @@ public struct DetailModuleInfoView: View {
                 
                 Text(sectionInfo.name)
                     .font(.semibold_18)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
-//                    .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
                     .padding(.top, 12)
                     .padding(.bottom, 16)
                     .padding(.trailing, 120)
@@ -80,7 +79,7 @@ public struct DetailModuleInfoView: View {
                 Spacer()
             }
         }
-        .background(Color.heyWhite)
+        .background(Color.timeTableMain.bottomSheet)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .onDisappear {
             if viewType == .detail {

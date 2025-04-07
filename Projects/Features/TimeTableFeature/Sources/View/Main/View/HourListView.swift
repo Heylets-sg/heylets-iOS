@@ -21,7 +21,7 @@ public struct HourListView: View {
     public var body: some View {
         VStack(spacing: 0) {
             Rectangle()
-                .fill(Color.heyGrid)
+                .fill(Color.timeTableMain.Timeline.background)
                 .frame(height: 0.5)
                 .padding(.bottom, 17)
             
@@ -29,7 +29,7 @@ public struct HourListView: View {
                 HStack {
                     Text("\(hour > 12 ? hour - 12 : hour)")
                         .font(.regular_12)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.timeTableMain.Timeline.default)
                         .multilineTextAlignment(.trailing)
                 }
                 .frame(height: 16)

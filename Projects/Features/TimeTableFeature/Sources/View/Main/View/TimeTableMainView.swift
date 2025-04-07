@@ -32,6 +32,8 @@ public struct MainView: View {
             ScrollView(.horizontal) {
                 WeeklyListView(viewModel.weekList, cellWidth: cellWidth)
                     .padding(.leading, 25)
+                    .padding(.bottom, 16.adjusted)
+                    .background(Color.timeTableMain.TimeTableInfo.topNavi)
                 
                 ScrollViewReader { proxy in
                     ScrollView {

@@ -147,61 +147,14 @@ public extension Color {
         public enum HandleBar {
             public static let `default` = Color(DSKitAsset.handleBarDefault.color)
         }
+        
+        enum Divider {
+            public static let `default` = Color(DSKitAsset.dividerDefault.color)
+        }
     }
     
     // 쉬운 접근을 위한 네임스페이스 프로퍼티
     static var common: Common.Type {
         return Common.self
-    }
-}
-
-// MARK: - 사용 예시
-struct ContentView: View {
-    var body: some View {
-        ZStack {
-            // 기본 배경색
-            Color.common.Background.default
-                .ignoresSafeArea()
-            
-            VStack(spacing: 20) {
-                Text("메인 텍스트")
-                    .foregroundColor(Color.common.MainText.default)
-                    .font(.title)
-                
-                Text("서브 텍스트")
-                    .foregroundColor(Color.common.SubText.default)
-                
-                TextField("플레이스홀더", text: .constant(""))
-                    .padding()
-                    .background(Color.common.InputField.default)
-                    .foregroundColor(Color.common.TextActive.default)
-                    .cornerRadius(8)
-                
-                Button(action: {}) {
-                    Text("활성 버튼")
-                        .foregroundColor(Color.common.CTAText.active)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.common.Button.active)
-                        .cornerRadius(8)
-                }
-                
-                Button(action: {}) {
-                    Text("비활성 버튼")
-                        .foregroundColor(Color.common.CTAText.unactive)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.common.Button.unactive)
-                        .cornerRadius(8)
-                }
-                
-                Text("에러 메시지")
-                    .foregroundColor(Color.common.Error.default)
-                
-                Text("성공 메시지")
-                    .foregroundColor(Color.common.Success.default)
-            }
-            .padding()
-        }
     }
 }

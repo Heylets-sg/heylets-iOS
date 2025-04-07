@@ -121,7 +121,7 @@ extension TimeTableGridView {
         _ cellWidth: CGFloat,
         _ cellHeight: CGFloat
     ) {
-        let gridColor = Color.heyGrid
+        let gridColor = Color.timeTableMain.Timeline.background
         // 첫번째 선 그리기
         
         let height = CGFloat(rowCount) * cellHeight
