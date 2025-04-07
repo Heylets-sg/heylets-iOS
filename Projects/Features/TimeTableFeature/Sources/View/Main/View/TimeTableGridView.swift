@@ -236,7 +236,7 @@ extension TimeTableGridView {
         cellHeight: CGFloat
     ) -> some View {
         return Rectangle()
-            .fill(Color.timeTableSub.Module.preview)
+            .fill(Color.Module.preview)
             .clipShape(RoundedRectangle(cornerRadius: 2))
             .frame(width: cellWidth, height: cellHeight)
             .position(x: centerX, y: centerY)

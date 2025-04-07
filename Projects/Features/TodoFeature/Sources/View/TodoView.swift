@@ -30,7 +30,7 @@ public struct TodoView: View {
                     HStack {
                         Text("Things to do")
                             .font(.semibold_18)
-                            .foregroundColor(.heyGray1)
+                            .foregroundColor(.common.MainText.else)
                             .padding(.leading, 16)
                             .padding(.top, 81.adjusted)
                             .padding(.bottom, 12.adjusted)
@@ -57,9 +57,10 @@ public struct TodoView: View {
                             Button {
                                 viewModel.send(.addGroupButtonDidTap)
                             } label: {
-                                Image(uiImage: .icAddGroup)
+                                Image(uiImage: .icAddGroup.withRenderingMode(.alwaysTemplate))
                                     .resizable()
                                     .frame(width: 28, height: 28)
+                                    .tint(.todo.addtodo)
                             }
                             Spacer()
                         }

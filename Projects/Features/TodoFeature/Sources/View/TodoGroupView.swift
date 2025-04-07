@@ -30,7 +30,7 @@ public struct TodoGroupView: View {
                 HStack(spacing: 0) {
                     Text(group.name)
                         .font(.semibold_14)
-                        .foregroundStyle(Color.init(hex: "#3D3D3D"))
+                        .foregroundColor(.common.MainText.default)
                     
                     Spacer()
                     
@@ -54,9 +54,10 @@ public struct TodoGroupView: View {
                         
                     } label: {
                         HStack {
-                            Image(uiImage: .icEtc)
+                            Image(uiImage: .icEtc.withRenderingMode(.alwaysTemplate))
                                 .resizable()
                                 .frame(width: 13, height: 3)
+                                .foregroundColor(.common.Placeholder.default)
                         }
                         .padding(.leading, 20)
                         .padding(.vertical, 20)
