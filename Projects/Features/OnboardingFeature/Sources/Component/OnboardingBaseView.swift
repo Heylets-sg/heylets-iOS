@@ -72,7 +72,7 @@ struct OnboardingBaseView<Content:View>: View {
                 VStack(alignment: .leading) {
                     Text(titleText)
                         .font(.semibold_18)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .padding(.bottom, 18.adjusted)
                     
                     content
@@ -90,7 +90,7 @@ struct OnboardingBaseView<Content:View>: View {
                 .padding(.bottom, 65.adjusted)
             }
             .padding(.horizontal, 16)
-            .background(Color.heyWhite)
+            .background(Color.common.Background.default)
             .ignoresSafeArea(edges: .vertical)
             .ignoresSafeArea(.keyboard)
             .navigationBarBackButtonHidden()

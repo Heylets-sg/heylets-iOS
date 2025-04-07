@@ -30,6 +30,7 @@ struct TermsOfServiceView: View {
                         
                         Text("Terms of Service")
                             .font(.bold_20)
+                            .foregroundColor(.common.MainText.default)
                     }
 
                     Spacer()
@@ -44,7 +45,7 @@ struct TermsOfServiceView: View {
 
                     Text("Agree to all")
                         .font(.semibold_16)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                     
                     Spacer()
                 }
@@ -55,7 +56,7 @@ struct TermsOfServiceView: View {
                 .padding(.horizontal, 22)
                 
                 Rectangle()
-                    .fill(Color.heyGray4)
+                    .fill(Color.heyGray4) //TODO: 색상추가
                     .frame(height: 1)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 30.adjusted)
@@ -73,7 +74,7 @@ struct TermsOfServiceView: View {
 
                     Text("Agree to the Terms of Service.(required)")
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.common.SubText.default)
                     
                     Spacer()
                     
@@ -81,7 +82,7 @@ struct TermsOfServiceView: View {
                                 HStack {
                                     Text("View")
                                         .font(.regular_12)
-                                        .foregroundColor(Color.init(hex: "#B8B8B8"))
+                                        .foregroundColor(.common.Placeholder.default)
                                 } .foregroundColor(.black)
                             }
                 }
@@ -102,7 +103,7 @@ struct TermsOfServiceView: View {
                     Text("Agree to the collection and use of\npersonal information.(required)")
                         .multilineTextAlignment(.leading)
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.common.SubText.default)
                     
                     Spacer()
                 
@@ -111,7 +112,7 @@ struct TermsOfServiceView: View {
                                 HStack {
                                     Text("View")
                                         .font(.regular_12)
-                                        .foregroundColor(Color.init(hex: "#B8B8B8"))
+                                        .foregroundColor(.common.Placeholder.default)
                                 } .foregroundColor(.black)
                             }
                 }
@@ -132,7 +133,7 @@ struct TermsOfServiceView: View {
                     Text("Agree to receive ads and marketing communications.")
                         .multilineTextAlignment(.leading)
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.common.SubText.default)
                     
                     Spacer()
                 
@@ -141,7 +142,7 @@ struct TermsOfServiceView: View {
                                 HStack {
                                     Text("View")
                                         .font(.regular_12)
-                                        .foregroundColor(Color.init(hex: "#B8B8B8"))
+                                        .foregroundColor(.common.Placeholder.default)
                                 } .foregroundColor(.black)
                             }
                 }
@@ -149,7 +150,7 @@ struct TermsOfServiceView: View {
                 
                 Text(viewModel.state.errMessage)
                     .font(.title)
-                    .foregroundColor(.red)
+                    .foregroundColor(.common.Error.default)
                 
                 Spacer()
                 
@@ -164,7 +165,7 @@ struct TermsOfServiceView: View {
             .padding(.top, 126.adjusted)
             .padding(.bottom, 65.adjusted)
         }
-        .background(Color.heyWhite)
+        .background(Color.common.Background.default)
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()

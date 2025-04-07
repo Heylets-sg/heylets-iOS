@@ -36,6 +36,7 @@ struct SelectGuestUnversityView: View {
                     Text("Which school are you\n currently attending?")
                         .font(.bold_20)
                         .multilineTextAlignment(.leading)
+                        .foregroundColor(.common.MainText.default)
                     Spacer()
                 }
                 .padding(.bottom, 39.adjusted)
@@ -52,7 +53,7 @@ struct SelectGuestUnversityView: View {
                                 Circle()
                                     .fill(.clear)
                                     .frame(width: 24.adjusted, height: 24.adjusted)
-                                    .overlay(Circle().stroke(Color.init(hex: "B8B8B8"), lineWidth: 2))
+                                    .overlay(Circle().stroke(Color.common.Button.active2, lineWidth: 2))
                                     
                             }
                         }
@@ -63,16 +64,27 @@ struct SelectGuestUnversityView: View {
                         
                         Text(university.rawValue)
                             .font(.medium_16)
-                            .foregroundColor(isSelected ? .heyGray1 : .heyGray2)
+                            .foregroundColor(
+                                isSelected
+                                ? .common.Placeholder.default
+                                : .common.MainText.default
+                            )
                         Spacer()
                     }
                     .frame(height: 64.adjusted)
                     .padding(.horizontal, 8)
-                    .background(isSelected ? Color.init(hex: "EFF1FA") : Color.heyGray4)
+                    .background(
+                        isSelected
+                        ? Color.common.Button.active2
+                        : Color.common.Button.unactive
+                    )
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(isSelected ? Color.heyMain : .clear , lineWidth: 2)
+                            .stroke(
+                                isSelected
+                                ? Color.common.Button.active2
+                                : .clear , lineWidth: 2)
                     )
                     .onTapGesture {
                         viewModel.send(.selectUniversity(university))
@@ -95,7 +107,7 @@ struct SelectGuestUnversityView: View {
             .padding(.bottom, 65.adjusted)
         }
         .padding(.horizontal, 16)
-        .background(Color.heyWhite)
+        .background(Color.common.Background.default)
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()
