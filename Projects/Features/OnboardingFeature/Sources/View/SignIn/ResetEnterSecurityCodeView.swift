@@ -27,7 +27,7 @@ public struct ResetEnterSecurityCodeView: View {
             
             Text(verbatim: "Enter the 6-digit code we sent to the email:\n\(viewModel.state.hiddenEmail)")
                 .font(.regular_16)
-                .foregroundColor(.heyGray1)
+                .foregroundColor(.common.SubText.default)
                 .lineLimit(2)
             
             Spacer()
@@ -43,7 +43,7 @@ public struct ResetEnterSecurityCodeView: View {
             
             Text(viewModel.state.errMessage)
                 .font(.regular_14)
-                .foregroundColor(.heyError)
+                .foregroundColor(.common.Error.default)
             
         }, titleText: "Enter Your Security Code",
                            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
@@ -61,5 +61,6 @@ public struct ResetEnterSecurityCodeView: View {
         )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }
 

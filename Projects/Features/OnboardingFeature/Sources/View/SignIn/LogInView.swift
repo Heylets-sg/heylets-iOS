@@ -53,13 +53,13 @@ public struct LogInView: View {
                 HStack {
                     Text("Log In")
                         .font(.semibold_18)
-                        .foregroundStyle(Color.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                     
                     Spacer()
                     
                     Text("New to Heylets?")
                         .font(.regular_14)
-                        .foregroundStyle(Color.heyGray1)
+                        .foregroundColor(.common.GuideText.default)
                         .padding(.trailing, 8)
                     
                     Button {
@@ -97,7 +97,7 @@ public struct LogInView: View {
                 HStack {
                     Text(viewModel.state.errMessage)
                         .font(.regular_14)
-                        .foregroundColor(.heyError)
+                        .foregroundColor(.common.Error.default)
                         .frame(width: 180)
                     
                     Spacer()
@@ -107,7 +107,7 @@ public struct LogInView: View {
                     } label: {
                         Text("Forgot password?")
                             .font(.regular_12)
-                            .foregroundStyle(Color.heyGray1)
+                            .foregroundColor(.common.Placeholder.default)
                     }
                 }
                 
@@ -132,7 +132,7 @@ public struct LogInView: View {
             .padding(.top, 106.adjusted)
             .padding(.bottom, 65.adjusted)
             .padding(.horizontal, 16)
-            .background(Color.heyWhite)
+            .background(Color.common.Background.default)
             .ignoresSafeArea(edges: .vertical)
             .ignoresSafeArea(.keyboard)
             .navigationBarBackButtonHidden()
@@ -154,4 +154,5 @@ public struct LogInView: View {
         )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }

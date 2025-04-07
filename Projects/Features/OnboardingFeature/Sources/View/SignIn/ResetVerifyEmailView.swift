@@ -26,7 +26,7 @@ public struct ResetVerifyEmailView: View {
             
             Text("Enter your email address and\nwe’ll send you a link to reset your password")
                 .font(.regular_16)
-                .foregroundColor(.heyGray1)
+                .foregroundColor(.common.SubText.default)
                 .padding(.bottom, 32)
             
             HeyTextField(
@@ -41,15 +41,20 @@ public struct ResetVerifyEmailView: View {
                 .font(.regular_14)
                 .foregroundColor(.heyError)
             
-        }, titleText: "Reset your password", 
-           nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
-           hiddenCloseBtn: false,
-           nextButtonAction: { viewModel.send(.nextButtonDidTap) }
+        }, titleText: "Reset your password",
+                           nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
+                           hiddenCloseBtn: false,
+                           nextButtonAction: { viewModel.send(.nextButtonDidTap) }
         )
     }
 }
 
-
-//#Preview {
-//    EnterEmailView()
-//}
+import Domain
+#Preview {
+    ResetVerifyEmailView(viewModel: .init(
+        navigationRouter: Router.default.navigationRouter,
+        useCase: StubHeyUseCase.stub.signInUseCase
+    )
+    )
+    .preferredColorScheme(.dark)
+}

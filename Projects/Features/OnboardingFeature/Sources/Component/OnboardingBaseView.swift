@@ -62,9 +62,10 @@ struct OnboardingBaseView<Content:View>: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(uiImage: .icClose)
+                        Image(uiImage: .icClose.withRenderingMode(.alwaysTemplate))
                             .resizable()
                             .frame(width: 18, height: 18)
+                            .tint(.common.ButtonClose.default)
                     }
                     .hidden(hiddenCloseBtn)
                     

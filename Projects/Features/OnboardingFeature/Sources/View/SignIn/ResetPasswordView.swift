@@ -27,7 +27,7 @@ public struct ResetPasswordView: View {
             
             Text("Resetting your password will log you out on all\ndevices.")
                 .font(.regular_16)
-                .foregroundColor(.heyGray1)
+                .foregroundColor(.common.SubText.default)
                 .padding(.bottom, 32)
             
             VStack(spacing: 32) {
@@ -60,4 +60,5 @@ public struct ResetPasswordView: View {
         )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }
