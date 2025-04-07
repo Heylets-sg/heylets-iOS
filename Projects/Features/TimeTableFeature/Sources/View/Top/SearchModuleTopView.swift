@@ -23,9 +23,10 @@ public struct SearchModuleTopView: View {
                     
                 }
             } label: {
-                Image(uiImage: .icClose)
+                Image(uiImage: .icClose.withRenderingMode(.alwaysTemplate))
                     .resizable()
                     .frame(width: 16, height: 16)
+                    .tint(.common.ButtonClose.default)
             }
             
             Spacer()
@@ -35,9 +36,10 @@ public struct SearchModuleTopView: View {
                     addCustomModuleButtonDidTapEvent()
                 }
             } label: {
-                Image(uiImage: .icPencil)
+                Image(uiImage: .icPencil.withRenderingMode(.alwaysTemplate))
                     .resizable()
                     .frame(width: 16, height: 16)
+//                    .tint(.timeTableSub.Module.Add.button) //TODO: 색상 확인 add_custom
             }
         }
         .padding(.horizontal, 16)

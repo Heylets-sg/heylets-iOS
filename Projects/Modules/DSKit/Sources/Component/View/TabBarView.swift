@@ -96,7 +96,7 @@ public struct TabBarView: View {
             .padding(.trailing, 62)
             .padding(.top, 7.adjusted)
             .padding(.bottom, 34.adjusted)
-            .background(Color.heyWhite)
+            .background(Color.timeTableMain.tabNavigator)
             .ignoresSafeArea()
         }
         .clipShape(RoundedRectangle(cornerRadius: 16))

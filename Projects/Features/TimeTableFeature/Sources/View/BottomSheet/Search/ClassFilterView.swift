@@ -17,21 +17,18 @@ struct ClassFilterView: View {
             let screenWidth = geometry.size.width
             
             VStack(alignment: .leading) {
-//                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
-                        ForEach(ClassFilterType.allCases, id: \.self) { type in
-                            ClassFilterCapsuleView(
-                                title: type.title,
-                                isSelected: isFilterSelected(type),
-                                screenWidth: screenWidth,
-                                action: {
-                                    viewModel.send(.filterButtonDidTap(type))
-                                }
-                            )
-                        }
+                HStack(spacing: 8) {
+                    ForEach(ClassFilterType.allCases, id: \.self) { type in
+                        ClassFilterCapsuleView(
+                            title: type.title,
+                            isSelected: isFilterSelected(type),
+                            screenWidth: screenWidth,
+                            action: {
+                                viewModel.send(.filterButtonDidTap(type))
+                            }
+                        )
                     }
-//                    .padding(.horizontal, 16)
-//                }
+                }
             }
         }
         .frame(height: 40)
@@ -105,17 +102,16 @@ struct ClassFilterCapsuleView: View {
             HStack(spacing: 4) {
                 Text(title)
                     .font(.semibold_12)
-                    .foregroundColor(isSelected ? .heyMain : .heyGray1)
-
+                    .foregroundColor(isSelected ? .timeTableSub.Filter.Text.active : .timeTableSub.Filter.Text.unActive)
+                
                 Image(uiImage: .icDown)
                     .renderingMode(.template)
                     .resizable()
                     .frame(width: 9, height: 4)
-                    .tint(isSelected ? .heyMain : .heyGray1)
+//                    .tint(isSelected ? .time : .heyGray1)
             }
             .padding(.horizontal, horizontalPadding)
             .padding(.vertical, 11)
-//            .frame(minWidth: minWidth)
             .background(
                 Capsule()
                     .fill(
@@ -127,8 +123,8 @@ struct ClassFilterCapsuleView: View {
                         Capsule()
                             .stroke(
                                 isSelected
-                                ? Color.heyMain
-                                : Color.init(hex: "#E3E3E3"),
+                                ? Color.timeTableSub.Filter.Stroke.active
+                                : Color.timeTableSub.Filter.Stroke.unActive,
                                 lineWidth: 1.8
                             )
                     )
@@ -216,7 +212,6 @@ struct ClassFilterBottomSheetView: View {
                 .padding(.horizontal, proxy.size.width * 0.04)
             }
             .frame(height: 52)
-//            .padding(.horizontal, 16)
             .padding(.bottom, 40)
             
         }

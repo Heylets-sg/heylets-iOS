@@ -50,16 +50,16 @@ public struct DetailModuleInfoView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(sectionInfo.allscheduleTime)
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.timeTableMain.ModuleInfo.info)
                         .padding(.trailing, 24)
                     
                     Text(sectionInfo.professor)
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.timeTableMain.ModuleInfo.info)
                     
                     Text("\(sectionInfo.location)\(sectionInfo.unit.map { " / \($0) unit" } ?? "")")
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.timeTableMain.ModuleInfo.info)
                 }
             }
             .padding(.leading, 24)
@@ -74,7 +74,7 @@ public struct DetailModuleInfoView: View {
                 } label: {
                     Text("Delete")
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.timeTableMain.ModuleInfo.delete)
                 }
                 Spacer()
             }
@@ -88,19 +88,3 @@ public struct DetailModuleInfoView: View {
         }
     }
 }
-
-
-//#Preview {
-//    @State var stub: TimeTableViewType = .detail
-//    let useCase = StubHeyUseCase.stub.timeTableUseCase
-//    return TimeTableView(
-//        viewModel: .init(
-//            Router.default.navigationRouter,
-//            Router.default.windowRouter,
-//            useCase),
-//        searchModuleViewModel: .init(useCase),
-//        addCustomModuleViewModel: .init(useCase),
-//        themeViewModel: .init(useCase)
-//    )
-//    .environmentObject(Router.default)
-//}

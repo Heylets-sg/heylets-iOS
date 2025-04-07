@@ -113,7 +113,7 @@ public struct TimeTableView: View {
                             mypageAction: { viewModel.send(.gotoMyPage) }
                         )
                         .frame(height: 82.adjusted)
-                        .background(Color.timeTableMain.tabNavigator)
+                        
                         
                     }
                     .ignoresSafeArea(.keyboard, edges: .bottom)

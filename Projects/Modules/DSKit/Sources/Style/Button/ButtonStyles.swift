@@ -32,6 +32,7 @@ struct HeyBottomButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
+        
             .frame(height: 56)
             .frame(maxWidth: .infinity)
             .background(isEnabled ? colorStyle.background : colorStyle.disabledBackground)

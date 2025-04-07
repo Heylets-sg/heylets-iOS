@@ -16,13 +16,13 @@ struct ClassSearchBarView: View {
         HStack {
             Text("name/code:")
                 .font(.regular_12)
-                .foregroundColor(.heyGray2)
+                .foregroundColor(.common.Placeholder.default)
             
             TextField(text: $viewModel.filterInfo.keyword, label: {
                 
             })
             .font(.medium_12)
-            .foregroundColor(.heySubMain2)
+            .foregroundColor(.timeTableSub.Module.search)
             .onSubmit {
                 viewModel.send(.searchButtonDidTap)
             }
@@ -34,7 +34,7 @@ struct ClassSearchBarView: View {
             } label: {
                 Image(uiImage: .icClose.withRenderingMode(.alwaysTemplate))
                     .resizable()
-                    .tint(.heyGray2)
+                    .tint(.timeTableSub.searchDelete)
                     .frame(width: 6, height: 6)
                     .padding(.all, 6)
                     .background(Color.heyGray9)
