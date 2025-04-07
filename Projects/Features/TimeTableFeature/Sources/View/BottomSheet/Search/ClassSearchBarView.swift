@@ -22,7 +22,7 @@ struct ClassSearchBarView: View {
                 
             })
             .font(.medium_12)
-            .foregroundColor(.timeTableSub.Module.search)
+            .foregroundColor(.Module.search)
             .onSubmit {
                 viewModel.send(.searchButtonDidTap)
             }

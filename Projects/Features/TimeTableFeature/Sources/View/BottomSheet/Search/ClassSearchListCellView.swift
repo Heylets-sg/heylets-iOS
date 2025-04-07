@@ -36,11 +36,11 @@ struct ClassSearchListCellView: View {
             
             Text(section.allscheduleTime)
                 .font(.regular_12)
-                .foregroundColor(.timeTableSub.Module.info2)
+                .foregroundColor(.Module.info2)
             
             Text("\(section.professor) / \(section.location) \(section.unit.map { " / \($0) unit" } ?? "")")
                 .font(.regular_12)
-                .foregroundColor(.timeTableSub.Module.info2)
+                .foregroundColor(.Module.info2)
                 .padding(.bottom, 15)
             
             if isSelected {
@@ -50,10 +50,10 @@ struct ClassSearchListCellView: View {
                     } label: {
                         Text("Add")
                             .font(.regular_12)
-                            .foregroundColor(.timeTableSub.Module.Add.button)
+                            .foregroundColor(.Module.Add.button)
                             .padding(.vertical, 5)
                             .frame(width: 46, height: 25)
-                            .background(Color.timeTableSub.Module.Add.text)
+                            .background(Color.Module.Add.text)
                             .clipShape(RoundedRectangle(cornerRadius: 12.5))
                             .padding(.trailing, 7)
                     }
@@ -64,7 +64,7 @@ struct ClassSearchListCellView: View {
             }
         }
         .padding(.horizontal, 16)
-        .background(isSelected ? Color.timeTableSub.Module.select : Color.black.opacity(0.0001))
+        .background(isSelected ? Color.Module.select : Color.black.opacity(0.0001))
         .onTapGesture {
             cellDidTap()
         }

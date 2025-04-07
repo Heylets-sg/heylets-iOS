@@ -148,7 +148,7 @@ public extension Color {
             public static let `default` = Color(DSKitAsset.handleBarDefault.color)
         }
         
-        enum Divider {
+        public enum Divider {
             public static let `default` = Color(DSKitAsset.dividerDefault.color)
         }
     }

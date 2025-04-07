@@ -19,7 +19,7 @@ struct SettingTimeTableInfoView: View {
                         HStack {
                             Text("Information")
                                 .font(.medium_14)
-                                .foregroundColor(.heyGray1)
+                                .foregroundColor(.pink) //TODO: 색상 확인 info_setting / title
                             
                             Spacer()
                             
@@ -28,7 +28,7 @@ struct SettingTimeTableInfoView: View {
                             } label: {
                                 Text(viewModel.displayType.text)
                                     .font(.regular_12)
-                                    .foregroundColor(.heyGray2)
+                                    .foregroundColor(.pink) //TODO: 색상 확인 info_setting / set
                             }
                             
                             Spacer()
@@ -36,7 +36,7 @@ struct SettingTimeTableInfoView: View {
                         .padding(.leading, 24)
                         Spacer()
                     }
-                    .background(Color.heyWhite)
+                    .background(Color.timeTableMain.bottomSheet)
                 }
             }
             .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
@@ -67,7 +67,7 @@ struct SelectDisplayModuleView: View {
                             
                             Text(option.text)
                                 .font(.medium_14)
-                                .foregroundColor(.heyGray1)
+                                .foregroundColor(.common.MainText.default)
                             
                             Spacer()
                         }
@@ -79,11 +79,11 @@ struct SelectDisplayModuleView: View {
                         }
                         
                         Divider()
-                            .background(Color.heyGrid)
+                            .background(Color.common.Divider.default)
                     }
                 }
             }
-            .background(Color.heyWhite)
+            .background(Color.timeTableMain.bottomSheet)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
             

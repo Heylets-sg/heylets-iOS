@@ -102,13 +102,17 @@ struct ClassFilterCapsuleView: View {
             HStack(spacing: 4) {
                 Text(title)
                     .font(.semibold_12)
-                    .foregroundColor(isSelected ? .timeTableSub.Filter.Text.active : .timeTableSub.Filter.Text.unActive)
+                    .foregroundColor(
+                        isSelected 
+                        ? .Filter.Text.active
+                        : .Filter.Text.unActive
+                    )
                 
                 Image(uiImage: .icDown)
                     .renderingMode(.template)
                     .resizable()
                     .frame(width: 9, height: 4)
-//                    .tint(isSelected ? .time : .heyGray1)
+                    .tint(isSelected ? .heyMain : .heyGray1)
             }
             .padding(.horizontal, horizontalPadding)
             .padding(.vertical, 11)
@@ -117,14 +121,14 @@ struct ClassFilterCapsuleView: View {
                     .fill(
                         isSelected
                         ? Color.heyMain.opacity(0.1)
-                        : Color.white
+                        : Color.clear
                     )
                     .overlay(
                         Capsule()
                             .stroke(
                                 isSelected
-                                ? Color.timeTableSub.Filter.Stroke.active
-                                : Color.timeTableSub.Filter.Stroke.unActive,
+                                ? Color.Filter.Stroke.active
+                                : Color.Filter.Stroke.unActive,
                                 lineWidth: 1.8
                             )
                     )
@@ -148,6 +152,7 @@ struct ClassFilterBottomSheetView: View {
             HStack {
                 Text(filterType.title)
                     .font(.bold_20)
+                    .foregroundColor(.common.MainText.default)
                 
                 Spacer()
             }
@@ -155,7 +160,7 @@ struct ClassFilterBottomSheetView: View {
             .padding(.horizontal, 24)
             
             Rectangle()
-                .fill(Color.init(hex: "#E3E3E3"))
+                .fill(Color.common.Divider.default)
                 .frame(height: 1)
                 .padding(.horizontal, 16)
             
@@ -236,7 +241,7 @@ struct ClassFilterCellView: View {
             
             Spacer()
         }
-        .background(Color.white)
+//        .background(Color.timeTableSub.Filter.list)
         .onTapGesture { isSelected.toggle() }
     }
 }

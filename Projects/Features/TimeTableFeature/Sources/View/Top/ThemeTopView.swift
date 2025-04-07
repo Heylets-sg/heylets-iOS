@@ -21,7 +21,7 @@ struct ThemeTopView: View {
             ZStack {
                 Text("Theme")
                     .font(.semibold_16)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
                 
                 HStack {
                     Button {
@@ -29,9 +29,10 @@ struct ThemeTopView: View {
                             viewType = .main
                         }
                     } label: {
-                        Image(uiImage: .icClose)
+                        Image(uiImage: .icClose.withRenderingMode(.alwaysTemplate))
                             .resizable()
                             .frame(width: 16, height: 16)
+                            .tint(.common.ButtonClose.default)
                     }
                     
                     Spacer()
@@ -44,7 +45,7 @@ struct ThemeTopView: View {
                     } label: {
                         Text("Save")
                             .font(.medium_16)
-                            .foregroundColor(.heyGray7)
+                            .foregroundColor(.pink) //TODO: 색상 확인 button_save
                     }
                 }
             }
@@ -58,7 +59,6 @@ struct ThemeTopView: View {
 struct ThemeListTopView: View {
     @Binding var viewType: TimeTableViewType
     @ObservedObject var viewModel: ThemeViewModel
-//    let height: CGFloat
     
     var body: some View {
         

@@ -39,7 +39,7 @@ public struct SearchModuleTopView: View {
                 Image(uiImage: .icPencil.withRenderingMode(.alwaysTemplate))
                     .resizable()
                     .frame(width: 16, height: 16)
-//                    .tint(.timeTableSub.Module.Add.button) //TODO: 색상 확인 add_custom
+                    .tint(.timeTableSub.addCustom)
             }
         }
         .padding(.horizontal, 16)
