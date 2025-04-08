@@ -38,7 +38,7 @@ public enum NationalityInfo: String {
             return [
                 "student.uitm.edu.my",
                 "siswa.um.edu.my",
-                "live.iium.edu.my ",
+                "live.iium.edu.my",
                 "gmail.com",
                 "naver.com",
                 "kookmin.ac.kr"

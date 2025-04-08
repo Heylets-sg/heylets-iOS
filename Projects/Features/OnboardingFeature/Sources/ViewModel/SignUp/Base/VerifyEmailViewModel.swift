@@ -62,12 +62,13 @@ public class VerifyEmailViewModel: ObservableObject {
             navigationRouter.pop()
         case .nextButtonDidTap:
             useCase.requestEmailVerifyCode(email)
-                .sink(receiveValue: { [weak self] _ in
-                    //TODO: email 설정
+                .sink(receiveValue: { _ in
                     owner.useCase.userInfo.email = owner.email
-                    owner.useCase.userInfo.nickName = ""
-                    owner.useCase.userInfo.university = .IIUM
-                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email, self?.nationality ?? .empty))
+                    if let university = self.domainToUniversity(owner.domain) {
+                        owner.useCase.userInfo.university = university
+                        print("🏡: \(university)")
+                    }
+//                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email, owner.nationality))
                 })
                 .store(in: cancelBag)
 //            MARK: Test용 삭제 필수
@@ -104,5 +105,16 @@ public class VerifyEmailViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .assign(to: \.state.errMessage, on: self)
             .store(in: cancelBag)
+    }
+}
+
+extension VerifyEmailViewModel {
+    func domainToUniversity(_ domain: String) -> UniversityInfo? {
+        switch domain {
+        case "student.uitm.edu.my": return .UiTM
+        case "siswa.um.edu.my": return .IIUM
+        case "live.iium.edu.my": return .UM
+        default: return nil
+        }
     }
 }
