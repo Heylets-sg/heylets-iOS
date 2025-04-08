@@ -124,7 +124,7 @@ public extension Color {
         // MARK: - ButtonBack
         public enum ButtonBack {
             public static let `default` = Color(DSKitAsset.buttonBackDefault.color)
-            static let `else` = Color(DSKitAsset.buttonBackElse.color)
+            public static let `else` = Color(DSKitAsset.buttonBackElse.color)
         }
         
         // MARK: - MainText

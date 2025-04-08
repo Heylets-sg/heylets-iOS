@@ -66,7 +66,6 @@ public struct EnterReferralCodeView: View {
                         textFieldState: $viewModel.state.referralIsValid,
                         colorSystem: .gray
                     )
-                    .maxLength(text: $viewModel.referralCode, 6)
                     .padding(.bottom, 8.adjusted)
                     
                     Text(viewModel.state.referralMessage)
@@ -85,7 +84,7 @@ public struct EnterReferralCodeView: View {
                 .padding(.bottom, 65.adjusted)
             }
             .padding(.horizontal, 16)
-            .background(Color.heyWhite)
+            .background(Color.common.Background.default)
             .ignoresSafeArea(edges: .vertical)
             .ignoresSafeArea(.keyboard)
             .navigationBarBackButtonHidden()

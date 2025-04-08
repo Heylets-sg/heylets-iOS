@@ -42,7 +42,7 @@ public struct MyPageView: View {
                         VStack {
                             Text("\(viewModel.profileInfo.nickName) / \(viewModel.profileInfo.university.rawValue)")
                                 .font(.medium_16)
-                                .foregroundColor(Color.heyBlack)
+                                .foregroundColor(.common.MainText.default)
                                 .padding(.top, 50.adjusted)
                                 .padding(.bottom, 12.adjusted)
                                 .hidden(viewModel.state.isLoading)
@@ -63,7 +63,7 @@ public struct MyPageView: View {
                             }
                         }
                         .padding(.horizontal, 16)
-                        .background(Color.heyWhite)
+                        .background(Color.common.Background.default)
                         .cornerRadius(24, corners: [.topLeft, .topRight])
                     }
                 }
@@ -124,7 +124,7 @@ public struct MyPageTopView: View {
                 
                 Text("My account")
                     .font(.semibold_18)
-                    .foregroundColor(.white)
+                    .foregroundColor(.common.MainText.else)
                 
                 Spacer()
             }
@@ -136,7 +136,7 @@ public struct MyPageTopView: View {
                     Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
                         .resizable()
                         .frame(width: 24, height: 20)
-                        .tint(.white)
+                        .tint(.common.ButtonBack.else)
                 }
                 .padding(.leading, 16)
                 Spacer()
@@ -177,14 +177,13 @@ public struct MyReferalCodeView: View {
 
 
 
-#Preview {
-    MyPageView(
-        viewModel: .init(
-            navigationRouter: Router.default.navigationRouter,
-            windowRouter: Router.default.windowRouter,
-            useCase: StubHeyUseCase.stub.myPageUseCase
-            //            profileInfo: .init()
-        )
-    )
-    .environmentObject(Router.default)
-}
+//#Preview {
+//    MyPageView(
+//        viewModel: .init(
+//            navigationRouter: Router.default.navigationRouter,
+//            windowRouter: Router.default.windowRouter,
+//            useCase: StubHeyUseCase.stub.myPageUseCase
+//        )
+//    )
+//    .environmentObject(Router.default)
+//}

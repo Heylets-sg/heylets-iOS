@@ -57,7 +57,8 @@ public struct EnterSecurityCodeView: View {
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
             useCase: StubHeyUseCase.stub.signUpUseCase,
-            email: ""
+            email: "",
+            nationality: .Malaysia
         )
     )
     .environmentObject(Router.default)

@@ -37,7 +37,8 @@ public class VerifyEmailViewModel: ObservableObject {
     private var useCase: SignUpUseCaseType
     private let cancelBag = CancelBag()
     
-    var domainList: [String] = []
+    var nationality: NationalityInfo = .empty
+    var university: UniversityInfo = .empty
     
     public init(
         navigationRouter: NavigationRoutableType,
@@ -46,7 +47,7 @@ public class VerifyEmailViewModel: ObservableObject {
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
-        self.domainList = nationality.domainList
+        self.nationality = nationality
         
         observe()
         bindState()
@@ -61,9 +62,12 @@ public class VerifyEmailViewModel: ObservableObject {
             navigationRouter.pop()
         case .nextButtonDidTap:
             useCase.requestEmailVerifyCode(email)
-                .sink(receiveValue: { _ in
+                .sink(receiveValue: { [weak self] _ in
+                    //TODO: email 설정
                     owner.useCase.userInfo.email = owner.email
-                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email))
+                    owner.useCase.userInfo.nickName = ""
+                    owner.useCase.userInfo.university = .IIUM
+                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email, self?.nationality ?? .empty))
                 })
                 .store(in: cancelBag)
 //            MARK: Test용 삭제 필수

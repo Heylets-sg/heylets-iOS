@@ -34,12 +34,13 @@ struct OnboardingNavigationRoutingView: View {
                     nationality: nationality
                 )
             )
-        case .signUpEnterSecurityCode(let email):
+        case .signUpEnterSecurityCode(let email, let nationality):
             EnterSecurityCodeView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
                     useCase: useCase.signUpUseCase,
-                    email: email
+                    email: email,
+                    nationality: nationality
                 )
             )
             

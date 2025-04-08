@@ -107,7 +107,7 @@ fileprivate struct EmailDomainListView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                ForEach(viewModel.domainList, id: \.self) { domain in
+                ForEach(viewModel.nationality.domainList, id: \.self) { domain in
                     EmailDomainListCellView(domain)
                         .onTapGesture {
                             viewModel.send(.selectDomain(domain))

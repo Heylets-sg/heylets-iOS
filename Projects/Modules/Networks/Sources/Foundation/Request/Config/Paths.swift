@@ -15,7 +15,7 @@ public enum Paths {
     
     static let checkUserName = "api/v1/auth/username/check"
     static let refreshToken = "api/v1/auth/token/refresh"
-    static let signUp = "api/v2/auth/signup"
+    static let signUp = "api/v1/auth/signup"
     static let resetPassword = "api/v1/auth/password/reset"
     static let verifyResetPassword = "api/v1/auth/password/reset/verify"
     static let requestResetPassword = "api/v1/auth/password/reset/request"

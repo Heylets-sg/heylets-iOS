@@ -22,7 +22,8 @@ extension User {
                 university: university.rawValue,
                 sex: gender,
                 birth: birth.toInt(),
-                agreements: agreements.map { $0.toDTO() }
+                agreements: agreements.map { $0.toDTO() },
+                code: referralCode
             ),
             profileImg: profileImage?.jpegData(compressionQuality: 0.1)
         )

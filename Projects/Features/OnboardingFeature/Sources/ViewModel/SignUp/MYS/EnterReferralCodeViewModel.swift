@@ -49,7 +49,15 @@ public class EnterReferralCodeViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
             
-        case .nextButtonDidTap, .skipButtonDidTap:
+        case .nextButtonDidTap:
+            useCase.userInfo.referralCode = referralCode
+            useCase.signUp()
+                .sink(receiveValue: { [weak self] _ in
+                    self?.navigationRouter.popToRootView()
+                })
+                .store(in: cancelBag)
+            
+        case .skipButtonDidTap:
             useCase.signUp()
                 .sink(receiveValue: { [weak self] _ in
                     self?.navigationRouter.popToRootView()
@@ -60,7 +68,6 @@ public class EnterReferralCodeViewModel: ObservableObject {
     
     private func observe() {
         $referralCode
-            .filter { $0.count == 6}
             .flatMap(useCase.checkReferraalCode)
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] isValid in

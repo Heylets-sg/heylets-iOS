@@ -39,14 +39,14 @@ public struct GuestAccountView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     Text("Account")
                         .font(.semibold_16)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                     
                     Button {
                         viewModel.send(.signUpLogInButtonDidTap)
                     } label: {
                         Text("Sign up / Log in")
                             .font(.regular_14)
-                            .foregroundColor(.heyGray1)
+                            .foregroundColor(.common.SubText.default)
                     }
                     
                     Button {
@@ -54,7 +54,7 @@ public struct GuestAccountView: View {
                     } label: {
                         Text("Edit School")
                             .font(.regular_14)
-                            .foregroundColor(.heyGray1)
+                            .foregroundColor(.common.SubText.default)
                     }
                     
                 }
@@ -65,7 +65,7 @@ public struct GuestAccountView: View {
             }
             
         }
-        .background(Color.heyGray4)
+        .background(Color.mypage.menubox)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }

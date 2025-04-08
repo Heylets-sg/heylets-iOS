@@ -34,7 +34,7 @@ extension ReferralAPI: BaseAPI {
         case .getReferralCode:
             return .get
         case .validateReferralCode:
-            return .post
+            return .get
         }
     }
     

@@ -21,7 +21,7 @@ public struct NotificationSettingView: View {
     
     public var body: some View {
         ZStack {
-            Color.heyWhite.ignoresSafeArea()
+            Color.common.Background.default.ignoresSafeArea()
             
             VStack(alignment: .leading) {
                 Spacer()
@@ -33,7 +33,7 @@ public struct NotificationSettingView: View {
                         
                         Text("Notification setting")
                             .font(.semibold_18)
-                            .foregroundColor(.heyGray1)
+                            .foregroundColor(.common.MainText.default)
                         
                         Spacer()
                     }
@@ -45,7 +45,7 @@ public struct NotificationSettingView: View {
                             Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
                                 .resizable()
                                 .frame(width: 24, height: 18)
-                                .tint(.heyGray1)
+                                .tint(.common.ButtonBack.default)
                         }
                         Spacer()
                     }
@@ -155,13 +155,13 @@ struct DailyBriefingSection: View {
                 VStack(alignment: .leading) {
                     Text("Daily briefing")
                         .font(.semibold_16)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .lineSpacing(8)
                         .padding(.bottom, 4)
                     
                     Text("ex. There's two modules today")
                         .font(.regular_12)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .lineSpacing(12)
                         .padding(.bottom, 4)
                 }
@@ -177,7 +177,7 @@ struct DailyBriefingSection: View {
             HStack {
                 Text("Notification time")
                     .font(.regular_12)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
                 
                 Spacer()
                 
@@ -186,14 +186,14 @@ struct DailyBriefingSection: View {
                 }) {
                     Text(Date.fromTimeString(briefingTime)?.timeToString() ?? "AM 09:00")
                         .font(.regular_12)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                 }
                 .padding(.trailing, 15)
             }
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 24)
-        .background(Color.heyGray4)
+        .background(Color.mypage.menubox)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .sheet(isPresented: $showTimePicker) {
             SelectTimePickerView(
@@ -245,13 +245,13 @@ struct ClassNotificationSection: View {
                 VStack(alignment: .leading) {
                     Text("Class")
                         .font(.semibold_16)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .lineSpacing(8)
                         .padding(.bottom, 4)
                     
                     Text("ex. There's two modules today")
                         .font(.regular_12)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .lineSpacing(12)
                         .padding(.bottom, 4)
                 }
@@ -267,7 +267,7 @@ struct ClassNotificationSection: View {
             HStack {
                 Text("Notification time")
                     .font(.regular_12)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
                 
                 Spacer()
                 
@@ -276,14 +276,14 @@ struct ClassNotificationSection: View {
                 }) {
                     Text("\(notificationMinute) min before")
                         .font(.regular_12)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                 }
                 .padding(.trailing, 15)
             }
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 24)
-        .background(Color.heyGray4)
+        .background(Color.mypage.menubox)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .sheet(isPresented: $showMinutePicker) {
             SelectTimePickerView(
