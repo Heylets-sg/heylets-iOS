@@ -45,7 +45,8 @@ final public class SignUpUseCase: SignUpUseCaseType {
                 if isGuest {
                     return self.guestRepository.convertToMember(userInfo)
                         .handleEvents(receiveOutput: { _ in
-                            Analytics.shared.track(.userSignedUp)
+                            Analytics.shared.track(.guestConverted)
+                            
                         })
                         .map { _ in }
                         .catch { [weak self] error in
@@ -56,8 +57,13 @@ final public class SignUpUseCase: SignUpUseCaseType {
                 } else {
                     Analytics.shared.track(.clickFinishSignUp)
                     return self.authRepository.signUp(userInfo)
-                        .handleEvents(receiveOutput: { _ in
-                            Analytics.shared.track(.guestConverted)
+                        .handleEvents(
+                            receiveOutput: { _ in
+                            Analytics.shared.track(.userSignedUp)
+                        }, receiveRequest: { _ in
+                            print("🏡🏡🏡🏡🏡🏡🏡🏡🏡🏡🏡")
+                            dump(self.userInfo)
+                            print("🏡🏡🏡🏡🏡🏡🏡🏡🏡🏡🏡")
                         })
                         .map { _ in }
                         .catch { [weak self] error in

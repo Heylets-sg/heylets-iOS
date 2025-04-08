@@ -77,7 +77,7 @@ public struct VerifyEmailView: View {
             
             Text(viewModel.state.errMessage)
                 .font(.regular_14)
-                .foregroundColor(.heyError)
+                .foregroundColor(.common.Error.default)
             
             EmailDomainListView(viewModel: viewModel)
                 .frame(maxHeight: 250.adjusted)
@@ -115,7 +115,7 @@ fileprivate struct EmailDomainListView: View {
                 }
             }
         }
-        .background(Color.heyGray4)
+        .background(Color.common.Button.active)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }

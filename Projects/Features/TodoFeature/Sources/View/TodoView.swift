@@ -88,7 +88,7 @@ public struct TodoView: View {
                     title: "Enter name",
                     content: $viewModel.state.editGroupName.1,
                     primaryAction: ("Close", .gray, { viewModel.send(.closeButtonDidTap) }),
-                    secondaryAction: ("Ok", .primary, { viewModel.send(.changeGroupName) })
+                    secondaryAction: ("Ok", .ctaPrimary, { viewModel.send(.changeGroupName) })
                 )
                 .hidden(!viewModel.state.showItemAlertView)
             }

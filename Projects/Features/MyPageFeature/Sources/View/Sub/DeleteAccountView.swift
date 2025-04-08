@@ -39,7 +39,7 @@ public struct DeleteAccountView: View {
                 
                 Button("Delete account"){
                     viewModel.send(.deleteAccountButtonDidTap)
-                }.heyBottomButtonStyle(.primary)
+                }.heyBottomButtonStyle(.ctaPrimary)
                 
                 Spacer()
                     .frame(height: 65)
@@ -51,7 +51,7 @@ public struct DeleteAccountView: View {
             primaryButton: ("Close", .gray, {
                 viewModel.send(.dismissDeleteAccountAlertView)
             }),
-            secondaryButton: ("Ok", .primary, {
+            secondaryButton: ("Ok", .ctaPrimary, {
                 viewModel.send(.deleteAccount)
             })
         )

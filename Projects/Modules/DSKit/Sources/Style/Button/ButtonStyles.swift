@@ -15,7 +15,7 @@ struct ScaleButtonStyle: ButtonStyle {
     }
 }
 
-struct HeyBottomButtonStyle: ButtonStyle {
+struct HeyCTAButtonStyle: ButtonStyle {
     
     @Environment(\.isEnabled) private var isEnabled: Bool
     
@@ -43,8 +43,8 @@ struct HeyBottomButtonStyle: ButtonStyle {
 }
 
 extension View {
-    public func heyBottomButtonStyle(_ colorStyle: HeyButtonColorStyle = .primary, cornerRadius: CGFloat = 28) -> some View {
-        self.buttonStyle(HeyBottomButtonStyle(colorStyle, cornerRadius: cornerRadius))
+    public func heyBottomButtonStyle(_ colorStyle: HeyButtonColorStyle = .ctaPrimary, cornerRadius: CGFloat = 28) -> some View {
+        self.buttonStyle(HeyCTAButtonStyle(colorStyle, cornerRadius: cornerRadius))
     }
 }
 

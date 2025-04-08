@@ -23,7 +23,7 @@ extension HeyButtonColorStyle {
         disabledBackground: .heyGray4
     )
     
-    public static let primary = HeyButtonColorStyle(
+    public static let ctaPrimary = HeyButtonColorStyle(
         background: .common.CTA.active,
         foreground: .common.CTAText.active,
         disabledForeground: .common.CTAText.unactive,

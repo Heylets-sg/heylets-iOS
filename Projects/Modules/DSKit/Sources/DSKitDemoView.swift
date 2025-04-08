@@ -38,7 +38,7 @@ public struct DSKitDemoView: View {
             Button("기본 바텀 버튼") {
                 // Action
             }
-            .heyBottomButtonStyle(.primary)
+            .heyBottomButtonStyle(.ctaPrimary)
             
             //MARK: Case 3
             Button("기본 바텀 버튼") {
@@ -132,14 +132,14 @@ public struct DSKitDemoView: View {
             //MARK: Case 1
             HeyAlertView(
                 title: "OneButton",
-                primaryAction: ("확인", .primary, { } )
+                primaryAction: ("확인", .ctaPrimary, { } )
             )
             
             //MARK: Case 2
             
             HeyAlertView(
                 title: "TwoButton",
-                primaryAction: ("확인", .primary, { } ),
+                primaryAction: ("확인", .ctaPrimary, { } ),
                 secondaryAction: ("취소", .error, { } )
             )
             

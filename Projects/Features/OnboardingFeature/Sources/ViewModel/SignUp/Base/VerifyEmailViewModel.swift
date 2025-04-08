@@ -68,7 +68,8 @@ public class VerifyEmailViewModel: ObservableObject {
                         owner.useCase.userInfo.university = university
                         print("🏡: \(university)")
                     }
-//                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email, owner.nationality))
+                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email, owner.nationality))
+//                    owner.navigationRouter.push(to: .enterReferralCode)
                 })
                 .store(in: cancelBag)
 //            MARK: Test용 삭제 필수
@@ -114,7 +115,8 @@ extension VerifyEmailViewModel {
         case "student.uitm.edu.my": return .UiTM
         case "siswa.um.edu.my": return .IIUM
         case "live.iium.edu.my": return .UM
-        default: return nil
+        case "kookmin.ac.kr": return .UM
+        default: return .empty
         }
     }
 }

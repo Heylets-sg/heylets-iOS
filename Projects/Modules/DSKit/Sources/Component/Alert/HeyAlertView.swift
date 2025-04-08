@@ -30,25 +30,39 @@ public struct HeyAlertView: View {
             
             Text(title)
                 .font(.medium_18)
-                .foregroundColor(.heyBlack)
+                .foregroundColor(.popup.Text.default)
                 .multilineTextAlignment(.center)
             
             Spacer()
             
             HStack {
-                Button(primaryAction.title) {
+                Button {
                     primaryAction.action()
+                } label: {
+                    Text(primaryAction.title)
+                        .frame(height: 46)
+                        .frame(maxWidth: .infinity)
+                        .font(.medium_16)
+                        .background(Color.popup.Button.default)
+                        .foregroundColor(.popup.Text.default)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-                .heyAlertButtonStyle(primaryAction.colorSystem)
                 
                 if let secondaryAction = secondaryAction {
                     Spacer()
                         .frame(width: 24)
                     
-                    Button(secondaryAction.title) {
-                        secondaryAction.action()
+                    Button {
+                        primaryAction.action()
+                    } label: {
+                        Text(primaryAction.title)
+                            .frame(height: 46)
+                            .frame(maxWidth: .infinity)
+                            .font(.medium_16)
+                            .background(Color.popup.Button.expect)
+                            .foregroundColor(.popup.Text.default)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
-                    .heyAlertButtonStyle(secondaryAction.colorSystem)
                 }
             }
             

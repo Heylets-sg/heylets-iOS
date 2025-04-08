@@ -64,7 +64,7 @@ public struct ChangePasswordView: View {
                     viewModel.send(.changePasswordButtonDidTap)
                 }
                 .disabled(!viewModel.state.changePasswordButtonIsEnabled)
-                .heyBottomButtonStyle(.primary)
+                .heyBottomButtonStyle(.ctaPrimary)
                 
                 Spacer()
                     .frame(height: 65)

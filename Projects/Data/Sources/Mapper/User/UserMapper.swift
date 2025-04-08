@@ -23,7 +23,7 @@ extension User {
                 sex: gender,
                 birth: birth.toInt(),
                 agreements: agreements.map { $0.toDTO() },
-                code: referralCode
+                referralCode: referralCode
             ),
             profileImg: profileImage?.jpegData(compressionQuality: 0.1)
         )

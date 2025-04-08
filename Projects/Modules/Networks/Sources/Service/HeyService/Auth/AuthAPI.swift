@@ -116,7 +116,9 @@ extension AuthAPI: BaseAPI {
                 )
                 multipartData.append(part)
             }
-            
+            print("🍎🍎🍎🍎")
+            print(multipartData)
+            print("🍎🍎🍎🍎")
             return .uploadMultipartFormData(multipartData, boundary)
         case .resetPassword(let request):
             return .requestJSONEncodable(request)

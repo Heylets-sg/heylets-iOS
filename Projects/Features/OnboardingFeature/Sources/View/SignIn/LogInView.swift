@@ -85,7 +85,8 @@ public struct LogInView: View {
                 
                 PasswordField(
                     password: $viewModel.password,
-                    showPassword: $showPassword, colorSystem: .white
+                    showPassword: $showPassword, 
+                    colorSystem: .white
                 )
                 .focused($isFocused, equals: .password)
                 .overlay(
