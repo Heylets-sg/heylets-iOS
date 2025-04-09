@@ -28,7 +28,7 @@ struct ReportMissingModuleView: View {
                 .foregroundColor(.heyGray1)
                 .padding(.bottom, 32)
             
-            HeyTextField(text: $text, placeHolder: "ex) Carrer and Enterpreurial", colorSystem: .lightgray)
+            HeyTextField(text: $text, placeHolder: "ex) Carrer and Enterpreurial")
             
             Spacer()
             

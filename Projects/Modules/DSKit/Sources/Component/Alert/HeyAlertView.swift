@@ -36,33 +36,17 @@ public struct HeyAlertView: View {
             Spacer()
             
             HStack {
-                Button {
+                Button(primaryAction.title) {
                     primaryAction.action()
-                } label: {
-                    Text(primaryAction.title)
-                        .frame(height: 46)
-                        .frame(maxWidth: .infinity)
-                        .font(.medium_16)
-                        .background(Color.popup.Button.default)
-                        .foregroundColor(.popup.Text.default)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                }
+                }.heyAlertButtonStyle(primaryAction.color)
                 
                 if let secondaryAction = secondaryAction {
                     Spacer()
                         .frame(width: 24)
                     
-                    Button {
-                        secondaryAction.action()
-                    } label: {
-                        Text(secondaryAction.title)
-                            .frame(height: 46)
-                            .frame(maxWidth: .infinity)
-                            .font(.medium_16)
-                            .background(Color.popup.Button.expect)
-                            .foregroundColor(.popup.Text.default)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
+                    Button(secondaryAction.title) {
+                        primaryAction.action()
+                    }.heyAlertButtonStyle(secondaryAction.color)
                 }
             }
             

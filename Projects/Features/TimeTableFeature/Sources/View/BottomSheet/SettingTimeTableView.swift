@@ -12,14 +12,14 @@ struct SettingTimeTableView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Timetable setup")
-                .foregroundColor(.heyBlack)
+                .foregroundColor(.common.MainText.default)
                 .font(.semibold_16)
                 .padding(.vertical, 20)
                 .padding(.leading, 32)
             
             Divider()
                 .frame(height: 0.8)
-                .background(Color.heyGray5)
+                .background(Color.common.Divider.default)
                 .padding(.bottom, 12)
             
             VStack(alignment: .leading, spacing: 0) {
@@ -30,7 +30,7 @@ struct SettingTimeTableView: View {
                 } label: {
                     Text("Theme")
                         .font(.medium_14)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                 }
                 .padding(.bottom, 25)
                 
@@ -40,7 +40,7 @@ struct SettingTimeTableView: View {
                 } label: {
                     Text("Timetable name")
                         .font(.medium_14)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                 }
                 .padding(.bottom, 25)
                 
@@ -50,7 +50,7 @@ struct SettingTimeTableView: View {
                 } label: {
                     Text("Save image")
                         .font(.medium_14)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                 }
                 .padding(.bottom, 25)
                 
@@ -60,7 +60,7 @@ struct SettingTimeTableView: View {
                 } label: {
                     Text("Remove all")
                         .font(.medium_14)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                 }
             }
             .padding(.leading, 32)

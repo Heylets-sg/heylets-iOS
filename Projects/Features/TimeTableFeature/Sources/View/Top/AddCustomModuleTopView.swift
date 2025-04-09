@@ -32,7 +32,11 @@ struct AddCustomModuleTopView: View {
                 } label: {
                     Text("Save")
                         .font(.medium_16)
-                        .foregroundColor(viewModel.schedule.isEmpty ? .heyGray7 : .heyGray1)
+                        .foregroundColor(
+                            viewModel.schedule.isEmpty
+                            ? .common.Button.Save.unactive
+                            : .common.Button.Save.active
+                        )
                 }
                 .disabled(viewModel.schedule.isEmpty)
             }

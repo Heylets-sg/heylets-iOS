@@ -37,13 +37,13 @@ struct ClassSearchBarView: View {
                     .tint(.timeTableSub.searchDelete)
                     .frame(width: 6, height: 6)
                     .padding(.all, 6)
-                    .background(Color.heyGray9)
+                    .background(Color.common.Placeholder.default)
                     .clipShape(Circle())
             }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 9)
-        .background(Color.heyGray10)
+        .background(Color.module.search)
         .clipShape(RoundedRectangle(cornerRadius: 18))
     }
 }

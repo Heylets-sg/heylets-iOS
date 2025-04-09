@@ -25,9 +25,10 @@ struct EditSchoolView: View {
                     Button {
                         viewModel.send(.closeButtonDidTap)
                     } label: {
-                        Image(uiImage: .icClose)
+                        Image(uiImage: .icClose.withRenderingMode(.alwaysTemplate))
                             .resizable()
                             .frame(width: 18, height: 18)
+                            .tint(.Common.ButtonClose.default)
                     }
                 }
                 .padding(.bottom, 10.adjusted)
@@ -63,14 +64,27 @@ struct EditSchoolView: View {
                         
                         Text(university.rawValue)
                             .font(.medium_16)
-                            .foregroundColor(isSelected ? .heyGray1 : .heyGray2)
+                            .foregroundColor(
+                                isSelected
+                                ? .common.MainText.default
+                                : .common.Placeholder.default
+                            )
                         Spacer()
                     }
                     .frame(height: 64.adjusted)
                     .padding(.horizontal, 8)
-                    .background(isSelected ? Color.init(hex: "EFF1FA") : Color.heyGray4)
+                    .background(
+                        isSelected 
+                        ? Color.common.Button.active2
+                        : Color.common.Button.unactive
+                    )
                     .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .overlay(isSelected ? RoundedRectangle(cornerRadius: 8).stroke(Color.heyMain, lineWidth: 2) : nil)
+                    .overlay(
+                        isSelected
+                        ? RoundedRectangle(cornerRadius: 8).stroke(
+                            Color.heyMain, lineWidth: 2)
+                        : nil
+                    )
                     .onTapGesture {
                         viewModel.send(.selectUniversity(university))
                     }
@@ -90,7 +104,7 @@ struct EditSchoolView: View {
             .padding(.bottom, 65.adjusted)
         }
         .padding(.horizontal, 16)
-        .background(Color.heyWhite)
+        .background(Color.common.Background.default)
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()

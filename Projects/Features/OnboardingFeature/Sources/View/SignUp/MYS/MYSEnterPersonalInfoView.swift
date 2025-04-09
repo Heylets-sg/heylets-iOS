@@ -90,8 +90,8 @@ fileprivate struct GenderButton: View {
                 .frame(height: 56.adjusted)
                 .frame(maxWidth: .infinity)
                 .font(.semibold_14)
-                .background(isSelected ? Color.common.Button.active : Color.common.Button.unactive)
-                .foregroundStyle(isSelected ? Color.heyGray1 : Color.heyGray2)
+                .background(isSelected ? Color.common.CTA.active : Color.common.CTA.unactive)
+                .foregroundColor(isSelected ? .common.CTAText.active : .common.CTAText.unactive)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
         }
     }

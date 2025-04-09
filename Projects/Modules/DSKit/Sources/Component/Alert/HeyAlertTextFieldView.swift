@@ -1,18 +1,14 @@
 //
-//  TodoChangeGroupNameAlertView.swift
-//  TodoFeature
+//  HeyAlertEnterNameView.swift
+//  DSKit
 //
-//  Created by 류희재 on 3/2/25.
+//  Created by 류희재 on 1/7/25.
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
 import SwiftUI
 
-import DSKit
-import Domain
-import BaseFeatureDependency
-
-public struct TodoChangeGroupNameAlertView: View {
+public struct HeyAlertTextFieldView: View {
     public init(
         title: String,
         content: Binding<String>,
@@ -65,26 +61,16 @@ public struct TodoChangeGroupNameAlertView: View {
                     Button(secondaryAction.title) {
                         secondaryAction.action()
                     }
-                    .heyAlertButtonStyle(.except)
+                    .heyAlertButtonStyle(.gray)
                 }
                 .padding(.horizontal, 24.adjusted)
                 .padding(.bottom, 24.adjusted)
             }
             .background(Color.heyWhite)
             .clipShape(RoundedRectangle(cornerRadius: 8))
-            .padding(.horizontal, 24.adjusted)
+            .padding(.horizontal, 44.adjusted)
         }
         .ignoresSafeArea()
     }
 }
 
-#Preview {
-    let useCase = StubHeyUseCase.stub.todoUseCase
-    return TodoView(
-        viewModel: .init(
-            windowRouter: Router.default.windowRouter,
-            useCase: useCase
-        )
-    )
-    .environmentObject(Router.default)
-}

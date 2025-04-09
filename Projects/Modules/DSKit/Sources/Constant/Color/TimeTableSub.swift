@@ -50,6 +50,15 @@ public extension Color {
         return Module.self
     }
     
+    enum Setting {
+        public static let title = Color(DSKitAsset.infoSettingTitle.color)
+        public static let set = Color(DSKitAsset.infoSettingSet.color)
+    }
+    
+    static var setting: Setting.Type {
+        return Setting.self
+    }
+    
     enum TimeTableSub {
         public static let searchDelete = Color(DSKitAsset.searchDelete.color)
         public static let addCustom = Color(DSKitAsset.addCustom.color)

@@ -84,9 +84,9 @@ public struct TodoView: View {
                     .frame(height: 82.adjusted)
                 }
                 
-                HeyAlertEnterNameView(
+                HeyAlertTextFieldView(
                     title: "Enter name",
-                    text: $viewModel.state.editGroupName.1,
+                    content: $viewModel.state.editGroupName.1,
                     primaryAction: ("Close", .gray, { viewModel.send(.closeButtonDidTap) }),
                     secondaryAction: ("Ok", .primary, { viewModel.send(.changeGroupName) })
                 )

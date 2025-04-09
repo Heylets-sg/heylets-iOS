@@ -115,7 +115,7 @@ public struct InviteCodeView: View {
             }
             .setTimeTableHeyNavigation()
             .padding(.horizontal, 16)
-            .background(Color.heyWhite)
+            .background(Color.common.Background.default)
             .ignoresSafeArea(edges: .vertical)
             .ignoresSafeArea(.keyboard)
             .navigationBarBackButtonHidden()

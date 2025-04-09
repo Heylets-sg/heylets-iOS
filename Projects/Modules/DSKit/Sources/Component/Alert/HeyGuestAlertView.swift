@@ -27,12 +27,12 @@ struct GuestAlertView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     Text("To use more tools!")
                         .font(.semibold_18)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.else)
                         .padding(.bottom, 6)
                     
                     Text("Manage everything about\nyour school life with the Heylets")
                         .font(.regular_12)
-                        .foregroundColor(Color.init(hex: "#646464"))
+                        .foregroundColor(.common.MainText.default)
                 }
                 Spacer()
             }
@@ -53,19 +53,20 @@ struct GuestAlertView: View {
                 HStack {
                     Text("Log In")
                         .font(.semibold_14)
-                        .foregroundColor(.heyWhite)
+                        .foregroundColor(.common.CTA.active)
                         .padding(.trailing, 8)
                     
-                    Image(uiImage: .icArrow)
+                    Image(uiImage: .icArrow.withRenderingMode(.alwaysTemplate))
                         .resizable()
                         .frame(width: 10, height: 9)
+                        .tint(Color.common.CTAText.active)
                 }
                 .padding(.vertical, 15)
                 .padding(.horizontal, 92)
                 
             }
             .frame(height: 50)
-            .background(Color.heyMain)
+            .background(Color.common.CTA.active)
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .padding(.bottom, 14)
             
@@ -74,7 +75,7 @@ struct GuestAlertView: View {
             } label: {
                 Text("Not right now")
                     .font(.regular_12)
-                    .foregroundColor(.heyGray2)
+                    .foregroundColor(.common.MainText.default)
             }
             .padding(.bottom, 22)
         }
@@ -93,7 +94,7 @@ extension View {
         self.overlay {
             if isPresented {
                 ZStack {
-                    Color.black.opacity(0.5)
+                    Color.popup.default
                     
                     GuestAlertView(
                         loginButtonAction,

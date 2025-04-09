@@ -39,26 +39,4 @@ extension HeyCTAButtonColorStyle {
         disabledForeground: .common.CTAText.unactive,
         disabledBackground: .common.CTA.unactive
     )
-    
-    public static let black = HeyCTAButtonColorStyle(
-        background: .heyBlack,
-        foreground: .heyWhite,
-        disabledForeground: .heyWhite,
-        disabledBackground: .heyGray2
-    )
-    
-    public static let error = HeyCTAButtonColorStyle(
-        background: .common.Error.default,
-        foreground: .heyWhite,
-        disabledForeground: .heyWhite,
-        disabledBackground: .heyGray4
-    )
-    
-    //TODO: 피그마 디자인 시스템 적용시 값 변경
-    public static let gray = HeyCTAButtonColorStyle(
-        background: .heyGray4,
-        foreground: .heyGray7,
-        disabledForeground: .heyWhite,
-        disabledBackground: .heyGray4
-    )
 }

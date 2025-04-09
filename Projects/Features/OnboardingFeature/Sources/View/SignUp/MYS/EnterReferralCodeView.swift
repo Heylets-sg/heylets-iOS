@@ -45,7 +45,7 @@ public struct EnterReferralCodeView: View {
                     } label: {
                         Text("Skip")
                             .font(.regular_16)
-                            .foregroundColor(.common.Button.skip)
+                            .foregroundColor(.common.SubText.default)
                     }
                 }
                 

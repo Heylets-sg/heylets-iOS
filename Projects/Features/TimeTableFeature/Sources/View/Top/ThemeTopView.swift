@@ -45,7 +45,7 @@ struct ThemeTopView: View {
                     } label: {
                         Text("Save")
                             .font(.medium_16)
-                            .foregroundColor(.pink) //TODO: 색상 확인 button_save
+                            .foregroundColor(.common.Button.unactive)
                     }
                 }
             }

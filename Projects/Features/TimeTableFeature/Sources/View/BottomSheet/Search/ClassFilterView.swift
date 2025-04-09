@@ -207,11 +207,11 @@ struct ClassFilterBottomSheetView: View {
                     } label: {
                         Text("Apply")
                             .font(.semibold_16)
-                            .foregroundColor(.heyWhite)
+                            .foregroundColor(.common.CTAText.active)
                             .padding(.vertical, 15)
                     }
                     .frame(width: proxy.size.width * 0.58)
-                    .background(Color.heyMain)
+                    .background(Color.common.CTA.active)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
                 .padding(.horizontal, proxy.size.width * 0.04)

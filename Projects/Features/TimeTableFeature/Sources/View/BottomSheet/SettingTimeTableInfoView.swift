@@ -9,7 +9,7 @@ struct SettingTimeTableInfoView: View {
     var body: some View {
             VStack {
                 if viewModel.state.isShowingSelectInfoView {
-                    Color.heyWhite
+                    Color.timeTableMain.bottomSheet
                         .ignoresSafeArea()
                 } else {
                     VStack {
@@ -19,7 +19,7 @@ struct SettingTimeTableInfoView: View {
                         HStack {
                             Text("Information")
                                 .font(.medium_14)
-                                .foregroundColor(.pink) //TODO: 색상 확인 info_setting / title
+                                .foregroundColor(.setting.title)
                             
                             Spacer()
                             
@@ -28,7 +28,7 @@ struct SettingTimeTableInfoView: View {
                             } label: {
                                 Text(viewModel.displayType.text)
                                     .font(.regular_12)
-                                    .foregroundColor(.pink) //TODO: 색상 확인 info_setting / set
+                                    .foregroundColor(.setting.set)
                             }
                             
                             Spacer()
@@ -97,8 +97,8 @@ struct SelectDisplayModuleView: View {
                     .font(.semibold_14)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(Color.heyWhite)
-                    .foregroundColor(.heyGray1)
+                    .background(Color.timeTableMain.bottomSheet)
+                    .foregroundColor(.common.Placeholder.default)
                     .cornerRadius(8)
             }
         }

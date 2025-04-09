@@ -124,8 +124,8 @@ struct SelectTimePickerView: View {
                     .font(.semibold_14)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(Color.heyWhite)
-                    .foregroundColor(.heyGray1)
+                    .background(Color.timeTableMain.bottomSheet)
+                    .foregroundColor(.common.Placeholder.default)
                     .cornerRadius(8)
             }
         }
@@ -169,7 +169,7 @@ struct DailyBriefingSection: View {
                 Spacer()
                 
                 Toggle("", isOn: $isToggleOn)
-                    .toggleStyle(SwitchToggleStyle(tint: Color.heyMain))
+                    .toggleStyle(SwitchToggleStyle(tint: Color.toggle.default))
                     .labelsHidden()
                     .padding(.trailing, 15)
             }
@@ -259,7 +259,7 @@ struct ClassNotificationSection: View {
                 Spacer()
                 
                 Toggle("", isOn: $isToggleOn)
-                    .toggleStyle(SwitchToggleStyle(tint: Color.heyMain))
+                    .toggleStyle(SwitchToggleStyle(tint: Color.toggle.default))
                     .labelsHidden()
                     .padding(.trailing, 15)
             }

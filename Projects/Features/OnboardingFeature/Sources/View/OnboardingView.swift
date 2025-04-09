@@ -134,12 +134,12 @@ public struct OnboardingView: View {
                             VStack(alignment: .leading, spacing: 12) {
                                 Text(onboardingContent[currentIndex].title)
                                     .font(.bold_20)
-                                    .foregroundColor(.heyWhite)
+                                    .foregroundColor(.common.MainText.else)
                                     .multilineTextAlignment(.leading)
                                 
                                 Text(onboardingContent[currentIndex].description)
                                     .font(.medium_14)
-                                    .foregroundColor(.heyWhite)
+                                    .foregroundColor(.common.MainText.else)
                                     .multilineTextAlignment(.leading)
                             }
                             .padding(.leading, 22)
@@ -151,7 +151,6 @@ public struct OnboardingView: View {
                                 
                                 Image(uiImage: onboardingContent[currentIndex].image)
                                     .resizable()
-//                                    .frame(height: onboardingContent[currentIndex].height.adjusted)
                                     .padding(
                                         .horizontal,
                                         onboardingContent[currentIndex].horizontalPadding.adjusted
@@ -212,11 +211,11 @@ public struct OnboardingView: View {
                                     Spacer()
                                     Text("Already registered")
                                         .font(.medium_12)
-                                        .foregroundColor(.heyWhite)
+                                        .foregroundColor(.common.MainText.else)
                                     
                                     Image(uiImage: .icNext.withRenderingMode(.alwaysTemplate))
                                         .resizable()
-                                        .tint(.heyWhite)
+                                        .tint(.common.MainText.else)
                                         .frame(width: 3.5, height: 7)
                                     Spacer()
                                 }
