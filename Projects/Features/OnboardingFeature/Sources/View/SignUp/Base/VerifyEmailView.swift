@@ -114,7 +114,7 @@ fileprivate struct EmailDomainListView: View {
                 }
             }
         }
-        .background(Color.common.Background.opacity60)
+        .background(Color.common.InputField.default)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }

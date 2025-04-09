@@ -67,10 +67,5 @@ public extension Color {
     static var timeTableSub: TimeTableSub.Type {
         return TimeTableSub.self
     }
-    
-//    enum Setting {
-//        public static let title = Color(DSKitAsset.searchDelete.color)
-//        public static let set = Color(DSKitAsset.addCustom.color)
-//    }
 }
 

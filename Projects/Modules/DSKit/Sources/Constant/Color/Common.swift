@@ -11,7 +11,6 @@ import SwiftUI
 public extension Color {
     static let heyGray1 = Color(DSKitAsset.heyGray1.color)
     static let heyGray3 = Color(DSKitAsset.heyGray3.color)
-    static let heyDimmed = Color(DSKitAsset.heyDimmedColor.color)
     static let heyMain = Color(DSKitAsset.heyMain.color)
     static let heySubMain = Color(DSKitAsset.heySubMain.color)
     static let heyWhite = Color(DSKitAsset.heyWhite.color)
@@ -140,6 +139,11 @@ public extension Color {
         
         public enum Divider {
             public static let `default` = Color(DSKitAsset.dividerDefault.color)
+        }
+        
+        public enum Check {
+            public static let active = Color(DSKitAsset.checkActive.color)
+            public static let unactive = Color(DSKitAsset.checkUnactive.color)
         }
     }
     

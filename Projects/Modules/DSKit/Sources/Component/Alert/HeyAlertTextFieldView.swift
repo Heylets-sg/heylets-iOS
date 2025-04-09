@@ -66,7 +66,7 @@ public struct HeyAlertTextFieldView: View {
                 .padding(.horizontal, 24.adjusted)
                 .padding(.bottom, 24.adjusted)
             }
-            .background(Color.heyWhite)
+            .background(Color.popup.default)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.horizontal, 44.adjusted)
         }

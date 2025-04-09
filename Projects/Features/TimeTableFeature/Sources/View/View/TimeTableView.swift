@@ -127,7 +127,7 @@ public struct TimeTableView: View {
                 )
 
                 if config.shouldShow {
-                    Color.heyDimmed
+                    Color.common.Background.opacity60
                         .opacity(config.opacity)
                         .animation(.easeInOut(duration: 0.3), value: viewTypeService.viewType)
                         .ignoresSafeArea()

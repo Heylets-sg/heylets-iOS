@@ -95,7 +95,11 @@ fileprivate struct SelectUniversityListCellView: View {
             Spacer()
         }
         .padding(.vertical, 10.adjusted)
-        .background(isSelected ? Color.common.MainText.default : .clear) //TODO: 색상확인
+        .background(
+            isSelected
+            ? Color.common.Button.active
+            : Color.common.InputField.default
+        )
     }
 }
 

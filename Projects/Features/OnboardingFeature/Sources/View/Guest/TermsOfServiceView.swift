@@ -32,7 +32,7 @@ struct TermsOfServiceView: View {
                             .font(.bold_20)
                             .foregroundColor(.common.MainText.default)
                     }
-
+                    
                     Spacer()
                 }
                 .padding(.horizontal, 22)
@@ -42,7 +42,7 @@ struct TermsOfServiceView: View {
                     Image(uiImage: viewModel.state.allAgree ? .icSelected : .icCheck)
                         .resizable()
                         .frame(width: 24.adjusted, height: 24.adjusted)
-
+                    
                     Text("Agree to all")
                         .font(.semibold_16)
                         .foregroundColor(.common.MainText.default)
@@ -56,23 +56,26 @@ struct TermsOfServiceView: View {
                 .padding(.horizontal, 22)
                 
                 Rectangle()
-                    .fill(Color.common.Divider.default) //TODO: 색상추가
+                    .fill(Color.common.Divider.default)
                     .frame(height: 1)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 30.adjusted)
-                    
+                
                 
                 HStack {
                     Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
-                        //TODO: 색상확인
-                        .foregroundStyle(viewModel.state.termsOfServiceIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
+                        .foregroundColor(
+                            viewModel.state.termsOfServiceIsAgree
+                            ? .common.Check.active
+                            : .common.Check.unactive
+                        )
                         .padding(.trailing, 12)
                         .onTapGesture {
                             viewModel.send(.termsOfServiceDidTap)
                         }
-
+                    
                     Text("Agree to the Terms of Service.(required)")
                         .font(.regular_14)
                         .foregroundColor(.common.SubText.default)
@@ -80,12 +83,12 @@ struct TermsOfServiceView: View {
                     Spacer()
                     
                     Link(destination: URL(string: Website.TermsOfService)!) {
-                                HStack {
-                                    Text("View")
-                                        .font(.regular_12)
-                                        .foregroundColor(.common.Placeholder.default)
-                                } .foregroundColor(.black)
-                            }
+                        HStack {
+                            Text("View")
+                                .font(.regular_12)
+                                .foregroundColor(.common.Placeholder.default)
+                        }
+                    }
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 20.adjusted)
@@ -95,28 +98,31 @@ struct TermsOfServiceView: View {
                     Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
-                        //TODO: 색상확인
-                        .foregroundStyle(viewModel.state.personalInformationIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
+                        .foregroundColor(
+                            viewModel.state.termsOfServiceIsAgree
+                            ? .common.Check.active
+                            : .common.Check.unactive
+                        )
                         .padding(.trailing, 12)
                         .onTapGesture {
                             viewModel.send(.personalInformationDidTap)
                         }
-
+                    
                     Text("Agree to the collection and use of\npersonal information.(required)")
                         .multilineTextAlignment(.leading)
                         .font(.regular_14)
                         .foregroundColor(.common.SubText.default)
                     
                     Spacer()
-                
+                    
                     
                     Link(destination: URL(string: Website.PrivacyPolicy)!) {
-                                HStack {
-                                    Text("View")
-                                        .font(.regular_12)
-                                        .foregroundColor(.common.Placeholder.default)
-                                } .foregroundColor(.black)
-                            }
+                        HStack {
+                            Text("View")
+                                .font(.regular_12)
+                                .foregroundColor(.common.Placeholder.default)
+                        }
+                    }
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 20.adjusted)
@@ -126,27 +132,31 @@ struct TermsOfServiceView: View {
                     Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
-                        .foregroundStyle(viewModel.state.marketingIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
+                        .foregroundColor(
+                            viewModel.state.termsOfServiceIsAgree
+                            ? .common.Check.active
+                            : .common.Check.unactive
+                        )
                         .padding(.trailing, 12)
                         .onTapGesture {
                             viewModel.send(.marketingDidTap)
                         }
-
+                    
                     Text("Agree to receive ads and marketing communications.")
                         .multilineTextAlignment(.leading)
                         .font(.regular_14)
                         .foregroundColor(.common.SubText.default)
                     
                     Spacer()
-                
+                    
                     
                     Link(destination: URL(string: "https://melon-pawpaw-a40.notion.site/Marketing-Consent-for-Email-Communication-1b4bef466352819dab2df02918a53e50")!) {
-                                HStack {
-                                    Text("View")
-                                        .font(.regular_12)
-                                        .foregroundColor(.common.Placeholder.default)
-                                } .foregroundColor(.black)
-                            }
+                        HStack {
+                            Text("View")
+                                .font(.regular_12)
+                                .foregroundColor(.common.Placeholder.default)
+                        }
+                    }
                 }
                 .padding(.horizontal, 24)
                 

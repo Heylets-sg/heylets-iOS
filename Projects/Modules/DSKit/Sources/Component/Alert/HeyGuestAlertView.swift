@@ -53,7 +53,7 @@ struct GuestAlertView: View {
                 HStack {
                     Text("Log In")
                         .font(.semibold_14)
-                        .foregroundColor(.common.CTA.active)
+                        .foregroundColor(.common.CTAText.active)
                         .padding(.trailing, 8)
                     
                     Image(uiImage: .icArrow.withRenderingMode(.alwaysTemplate))
@@ -79,7 +79,7 @@ struct GuestAlertView: View {
             }
             .padding(.bottom, 22)
         }
-        .background(Color.heyWhite)
+        .background(Color.popup.default)
         .frame(height: 373)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
@@ -94,7 +94,7 @@ extension View {
         self.overlay {
             if isPresented {
                 ZStack {
-                    Color.popup.default
+//                    Color.popup.default
                     
                     GuestAlertView(
                         loginButtonAction,

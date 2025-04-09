@@ -23,7 +23,7 @@ public struct SettingTimeTableAlertView: View {
     public var body: some View {
         ZStack {
             if let type = viewModel.settingAlertType {
-                Color.heyDimmed
+                Color.common.Background.opacity60
                     .ignoresSafeArea()
                 
                 Group {

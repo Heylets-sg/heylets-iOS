@@ -154,7 +154,7 @@ struct ThemeInviteFriendView: View {
         .padding(.vertical, height * 0.22)
         .padding(.leading, 24)
         .padding(.trailing, 27)
-        .background(Color.heyDimmed)
+        .background(Color.common.Background.opacity60)
         .clipShape(Capsule())
     }
 }
@@ -194,7 +194,7 @@ struct QuarterCircleView: View {
             
             if !theme.unlocked {
                 Circle()
-                    .fill(Color.heyDimmed)
+                    .fill(Color.common.Background.opacity60)
                 
                 Image(uiImage: .icLocked)
                     .resizable()
