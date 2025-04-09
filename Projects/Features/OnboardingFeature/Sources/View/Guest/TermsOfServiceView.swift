@@ -56,7 +56,7 @@ struct TermsOfServiceView: View {
                 .padding(.horizontal, 22)
                 
                 Rectangle()
-                    .fill(Color.heyGray4) //TODO: 색상추가
+                    .fill(Color.common.Divider.default) //TODO: 색상추가
                     .frame(height: 1)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 30.adjusted)
@@ -66,6 +66,7 @@ struct TermsOfServiceView: View {
                     Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
+                        //TODO: 색상확인
                         .foregroundStyle(viewModel.state.termsOfServiceIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
                         .padding(.trailing, 12)
                         .onTapGesture {
@@ -94,6 +95,7 @@ struct TermsOfServiceView: View {
                     Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
+                        //TODO: 색상확인
                         .foregroundStyle(viewModel.state.personalInformationIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
                         .padding(.trailing, 12)
                         .onTapGesture {
@@ -180,4 +182,5 @@ struct TermsOfServiceView: View {
         university: UniversityInfo.empty
     ))
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }

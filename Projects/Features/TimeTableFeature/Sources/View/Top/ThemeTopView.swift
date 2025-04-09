@@ -122,7 +122,7 @@ fileprivate struct ThemeListCellView: View {
             
             Text(theme.themeName)
                 .font(.medium_10)
-                .foregroundColor(.heyGray1)
+                .foregroundColor(.common.MainText.default)
         }
         .frame(height: 95)
     }

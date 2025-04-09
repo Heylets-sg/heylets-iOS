@@ -44,9 +44,6 @@ public struct AuthRepository: AuthRepositoryType {
         _ user: User
     ) -> AnyPublisher<Void, SignUpError> {
         let request = user.toDTO()
-        print("🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨")
-        dump(request)
-        print("🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨")
         return authService.signUp(request)
             .mapError { error in
                 if let errorCode = error.isInvalidStatusCode() {

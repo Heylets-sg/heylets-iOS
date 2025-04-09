@@ -39,7 +39,7 @@ public struct ResetVerifyEmailView: View {
             
             Text(viewModel.state.errMessage)
                 .font(.regular_14)
-                .foregroundColor(.heyError)
+                .foregroundColor(.common.Error.default)
             
         }, titleText: "Reset your password",
                            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,

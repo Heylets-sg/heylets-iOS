@@ -9,7 +9,6 @@
 import SwiftUI
 
 public extension Color {
-    static let heyError = Color(DSKitAsset.heyError.color)
     static let heyGray1 = Color(DSKitAsset.heyGray1.color)
     static let heyGray2 = Color(DSKitAsset.heyGray2.color)
     static let heyGray3 = Color(DSKitAsset.heyGray3.color)

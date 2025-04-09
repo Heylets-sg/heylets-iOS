@@ -32,8 +32,8 @@ struct HeyCTAButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-        
             .frame(height: 56)
+            .font(.semibold_14)
             .frame(maxWidth: .infinity)
             .background(isEnabled ? colorStyle.background : colorStyle.disabledBackground)
             .foregroundStyle(isEnabled ? colorStyle.foreground : colorStyle.disabledForeground)

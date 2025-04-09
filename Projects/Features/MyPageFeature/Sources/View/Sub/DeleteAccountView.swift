@@ -25,7 +25,7 @@ public struct DeleteAccountView: View {
             VStack(alignment: .leading) {
                 Text("Account password")
                     .font(.medium_16)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
                     .padding(.top, 36)
                 
                 HeyTextField(

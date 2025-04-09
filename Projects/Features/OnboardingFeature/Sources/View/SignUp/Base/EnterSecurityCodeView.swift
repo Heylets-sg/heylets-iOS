@@ -43,7 +43,7 @@ public struct EnterSecurityCodeView: View {
             
             Text(viewModel.state.errMessage)
                 .font(.regular_14)
-                .foregroundColor(.heyError)
+                .foregroundColor(.common.Error.default)
             
         }, titleText: "Enter Your Security Code",
                            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,

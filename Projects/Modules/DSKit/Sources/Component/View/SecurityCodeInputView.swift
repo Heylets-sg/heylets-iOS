@@ -53,7 +53,7 @@ public struct SecurityCodeInputView: View {
                         ForEach(0..<6) { index in
                             VStack {
                                 Text(self.getPin(at: index))
-//                                    .font(.semibold_28)
+                                    .font(.semibold_28)
                                     .foregroundColor(.common.MainText.default)
                                 Rectangle()
                                     .frame(width: 32, height: 2)

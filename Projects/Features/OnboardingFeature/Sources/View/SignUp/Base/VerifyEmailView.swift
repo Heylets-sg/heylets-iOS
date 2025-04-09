@@ -61,16 +61,15 @@ public struct VerifyEmailView: View {
                     
                     Spacer()
                     
-                    Image(uiImage: .icDown)
+                    Image(uiImage: .icDown.withRenderingMode(.alwaysTemplate))
                         .resizable()
                         .frame(width: 12, height: 6)
+                        .tint(.common.Placeholder.default)
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 17.adjusted)
                 .background(Color.common.InputField.default)
             }
-            
-            .background(Color.heyGray4)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.trailing, 116)
             .padding(.bottom, 20.adjusted)
@@ -115,7 +114,7 @@ fileprivate struct EmailDomainListView: View {
                 }
             }
         }
-        .background(Color.common.Button.active)
+        .background(Color.common.Background.opacity60)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
@@ -130,7 +129,7 @@ fileprivate struct EmailDomainListCellView: View {
         HStack {
             Text(domain)
                 .font(.medium_14)
-                .foregroundColor(.heyBlack)
+                .foregroundColor(.common.MainText.default)
             
             Spacer()
         }
@@ -152,3 +151,14 @@ fileprivate struct EmailDomainListCellView: View {
 }
 
 
+#Preview {
+    VerifyEmailView(
+        viewModel: .init(
+            navigationRouter: Router.default.navigationRouter,
+            useCase: StubHeyUseCase.stub.signUpUseCase,
+            nationality: .Malaysia
+        )
+    )
+    .environmentObject(Router.default)
+    
+}

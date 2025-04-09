@@ -19,7 +19,7 @@ public struct ErrorMessageToastView: View {
         Text(message)
             .font(.bold_20)
             .multilineTextAlignment(.center)
-            .foregroundColor(.heyError)
+            .foregroundColor(.common.Error.default)
             .animation(.easeInOut, value: message)
     }
 }

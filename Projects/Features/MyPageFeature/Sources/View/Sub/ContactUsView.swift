@@ -20,14 +20,14 @@ public struct ContactUsView: View {
             VStack(alignment: .leading) {
                 Text("Our email")
                     .font(.medium_16)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
                     .lineSpacing(10)
                     .padding(.bottom, 8)
                 
                 HStack {
                     Text(verbatim: "jacobkwak1122@gmail.com")
                         .font(.regular_14)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.Placeholder.default)
                     
                     Spacer()
                     
@@ -42,7 +42,7 @@ public struct ContactUsView: View {
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(Color.heyMain, lineWidth: 2)
                 )
-                .background(Color.heyGray4)
+                .background(Color.mypage.menubox)
             }
             
             

@@ -96,7 +96,7 @@ struct SelectTimePickerView: View {
                             
                             Text(time)
                                 .font(.medium_14)
-                                .foregroundColor(.heyGray1)
+                                .foregroundColor(.common.SubText.default)
                             
                             Spacer()
                         }
@@ -106,11 +106,11 @@ struct SelectTimePickerView: View {
                         }
                         
                         Divider()
-                            .background(Color.heyGrid)
+                            .background(Color.common.Divider.default)
                     }
                 }
             }
-            .background(Color.heyWhite)
+            .background(Color.common.Background.default)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
             

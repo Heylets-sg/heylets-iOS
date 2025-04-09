@@ -38,7 +38,7 @@ extension HeyButtonColorStyle {
     )
     
     public static let error = HeyButtonColorStyle(
-        background: .heyError,
+        background: .common.Error.default,
         foreground: .heyWhite,
         disabledForeground: .heyWhite,
         disabledBackground: .heyGray4
