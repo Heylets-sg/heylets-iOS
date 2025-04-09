@@ -137,7 +137,7 @@ struct SelectTimePickerView: View {
 // MARK: - Daily Briefing Section
 struct DailyBriefingSection: View {
     @Binding var isToggleOn: Bool
-    @Binding var briefingTime: String // Stored as "HH:mm" in ViewModel
+    @Binding var briefingTime: String
     @State private var showTimePicker = false
     
     let briefingTimeArr = [
@@ -199,7 +199,6 @@ struct DailyBriefingSection: View {
             SelectTimePickerView(
                 timeArr: briefingTimeArr,
                 onSelect: { selectedTime in
-                    // Convert AM/PM format to 24-hour format for the viewModel
                     if let date = convertAMPMToDate(selectedTime) {
                         briefingTime = date.timeToString24()
                     }
@@ -215,7 +214,6 @@ struct DailyBriefingSection: View {
         }
     }
     
-    // Helper function to convert AM/PM format string to Date
     private func convertAMPMToDate(_ timeString: String) -> Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = "a hh:mm"
@@ -303,87 +301,16 @@ struct ClassNotificationSection: View {
         }
     }
     
-    // Helper function to parse minutes from strings like "5 min", "10 min", etc.
     private func parseMinutes(from timeString: String) -> Int {
         if timeString == "1 hour" {
             return 60
         } else {
-            // Extract the number from strings like "5 min", "10 min", etc.
             let components = timeString.components(separatedBy: " ")
             if let minuteStr = components.first, let minutes = Int(minuteStr) {
                 return minutes
             }
-            return 10 // Default value if parsing fails
+            return 10
         }
-    }
-}
-
-// MARK: - Minute Picker View
-struct MinutePickerView: View {
-    @Binding var selectedMinute: Int
-    @Environment(\.presentationMode) var presentationMode
-    
-    var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-                Button("Done") {
-                    presentationMode.wrappedValue.dismiss()
-                }
-                .padding()
-            }
-            
-            Picker("", selection: $selectedMinute) {
-                ForEach(0..<60) { minute in
-                    Text("\(minute) min")
-                        .tag(minute)
-                }
-            }
-            .pickerStyle(WheelPickerStyle())
-            
-            Spacer()
-        }
-        .background(Color.white)
-        .interactiveDismissDisabled()
-    }
-}
-
-// MARK: - Time Picker View
-struct TimePickerView: View {
-    @Binding var selectedTime: String
-    @State private var date: Date
-    @Environment(\.presentationMode) var presentationMode
-    
-    init(selectedTime: Binding<String>) {
-        self._selectedTime = selectedTime
-        let initialDate = Date.fromTimeString(selectedTime.wrappedValue) ?? Date()
-        self._date = State(initialValue: initialDate)
-    }
-    
-    var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-                Button("Done") {
-                    // Use 24-hour format for ViewModel storage
-                    selectedTime = date.timeToString24()
-                    presentationMode.wrappedValue.dismiss()
-                }
-                .padding()
-            }
-            
-            DatePicker(
-                "",
-                selection: $date,
-                displayedComponents: [.hourAndMinute]
-            )
-            .datePickerStyle(WheelDatePickerStyle())
-            .labelsHidden()
-            
-            Spacer()
-        }
-        .background(Color.white)
-        .interactiveDismissDisabled()
     }
 }
 

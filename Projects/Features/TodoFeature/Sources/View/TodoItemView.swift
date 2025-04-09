@@ -98,7 +98,7 @@ public struct TodoItemView: View {
                     } label: {
                         Text("Delete")
                             .font(.medium_14)
-                            .foregroundColor(.white)
+                            .foregroundColor(.heyWhite)
                             .frame(width: threshold)
                             .frame(minHeight: 56, maxHeight: 81)
                             .background(.red)

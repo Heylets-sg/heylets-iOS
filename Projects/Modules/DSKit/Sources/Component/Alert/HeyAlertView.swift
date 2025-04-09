@@ -72,7 +72,7 @@ extension View {
         self.overlay {
             if isPresented {
                 ZStack {
-                    Color.black.opacity(0.5)
+                    Color.common.Background.opacity60
                     
                     HeyAlertView(
                         title: title,

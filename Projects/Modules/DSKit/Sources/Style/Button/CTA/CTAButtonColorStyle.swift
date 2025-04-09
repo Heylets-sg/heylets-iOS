@@ -30,7 +30,7 @@ public struct HeyCTAButtonColorStyle {
 extension HeyCTAButtonColorStyle {
     public static let white = HeyCTAButtonColorStyle(
         background: .common.CTA.onboarding,
-        foreground: .common.CTAText.active //TODO: 색상확인
+        foreground: .common.CTAText.unactive
     )
     
     public static let primary = HeyCTAButtonColorStyle(
