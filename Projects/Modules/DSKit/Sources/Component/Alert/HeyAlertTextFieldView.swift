@@ -41,9 +41,9 @@ public struct HeyAlertTextFieldView: View {
                     
                 })
                 .font(.medium_12)
-                .foregroundColor(.heyGray1)
+                .foregroundColor(.common.MainText.default)
                 .frame(height: 51.adjusted)
-                .background(Color.init(hex: "#F4F4F4"))
+                .background(Color.common.InputField.default)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.horizontal, 24.adjusted)
                 

@@ -19,18 +19,19 @@ public struct TermsOfServiceView: View {
                     HStack {
                         Text("Show Terms of service")
                             .font(.semibold_16)
-                            .foregroundColor(Color.init(hex: "#353536"))
+                            .foregroundColor(.common.Placeholder.default)
                         
                         Spacer()
                         
-                        Image(uiImage: .icLink)
+                        Image(uiImage: .icLink.withRenderingMode(.alwaysTemplate))
                             .resizable()
                             .frame(width: 16, height: 16)
+                            .tint(.common.Placeholder.default)
                         
                     }
                     .padding(.vertical, 16)
                     .padding(.horizontal, 20)
-                    .background(Color.init(hex: "#F4F4F4"))
+                    .background(Color.common.InputField.default)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
                 .padding(.top, 28)
