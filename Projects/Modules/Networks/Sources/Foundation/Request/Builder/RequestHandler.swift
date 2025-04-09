@@ -16,6 +16,16 @@ public struct RequestHandler {
     static public func createURLRequest<T: URLRequestTargetType>(for target: T) -> AnyPublisher<URLRequest, HeyNetworkError> {
         return target.asURLRequest()
             .mapError { ErrorHandler.handleRequestError($0) }
+            .flatMap { request in
+                if target.isWithInterceptor {
+                    return SessionInterceptor.shared.adapt(request)
+                        .eraseToAnyPublisher()
+                } else {
+                    return Just(request)
+                        .setFailureType(to: HeyNetworkError.self)
+                        .eraseToAnyPublisher()
+                }
+            }
             .eraseToAnyPublisher()
     }
     

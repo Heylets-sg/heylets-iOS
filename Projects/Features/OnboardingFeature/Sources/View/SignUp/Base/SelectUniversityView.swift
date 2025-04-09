@@ -33,6 +33,10 @@ public struct SelectUniversityView: View {
                     .focused($isFocused)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.heyGray3, lineWidth: 1)
+                    )
                     .onChange(of: isFocused) { isFocused in
                         if isFocused {
                             viewModel.send(.textFieldDidTap)

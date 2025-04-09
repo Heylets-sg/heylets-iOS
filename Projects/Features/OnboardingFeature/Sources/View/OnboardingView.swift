@@ -202,7 +202,7 @@ public struct OnboardingView: View {
                             Button("Start") {
                                 viewModel.send(.startButtonDidTap)
                             }
-                            .heyBottomButtonStyle(.white)
+                            .heyCTAButtonStyle(.white)
                             .padding(.bottom, 16.adjusted)
                             
                             Button {

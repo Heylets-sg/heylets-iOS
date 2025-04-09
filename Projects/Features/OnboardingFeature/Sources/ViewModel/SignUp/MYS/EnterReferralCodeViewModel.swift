@@ -31,14 +31,17 @@ public class EnterReferralCodeViewModel: ObservableObject {
     
     @Published var state = State()
     public var navigationRouter: NavigationRoutableType
+    public var windowRouter: WindowRoutableType
     private var useCase: SignUpUseCaseType
     private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: NavigationRoutableType,
+        windowRouter: WindowRoutableType,
         useCase: SignUpUseCaseType
     ) {
         self.navigationRouter = navigationRouter
+        self.windowRouter = windowRouter
         self.useCase = useCase
         
         observe()
@@ -53,14 +56,16 @@ public class EnterReferralCodeViewModel: ObservableObject {
             useCase.userInfo.referralCode = referralCode
             useCase.signUp()
                 .sink(receiveValue: { [weak self] _ in
-                    self?.navigationRouter.popToRootView()
+                    self?.navigationRouter.destinations = []
+                    self?.windowRouter.switch(to: .login)
                 })
                 .store(in: cancelBag)
             
         case .skipButtonDidTap:
             useCase.signUp()
                 .sink(receiveValue: { [weak self] _ in
-                    self?.navigationRouter.popToRootView()
+                    self?.navigationRouter.destinations = []
+                    self?.windowRouter.switch(to: .login)
                 })
                 .store(in: cancelBag)
         }

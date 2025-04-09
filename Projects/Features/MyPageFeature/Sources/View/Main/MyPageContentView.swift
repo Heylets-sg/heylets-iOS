@@ -201,7 +201,7 @@ public struct EtcView: View {
             }
             
         }
-        .background(Color.common.Background.default)
+        .background(Color.mypage.menubox)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }

@@ -32,26 +32,26 @@ public struct DSKitDemoView: View {
             Button("기본 바텀 버튼") {
                 // Action
             }
-            .heyBottomButtonStyle()
+            .heyCTAButtonStyle()
             
             //MARK: Case 2
             Button("기본 바텀 버튼") {
                 // Action
             }
-            .heyBottomButtonStyle(.ctaPrimary)
+            .heyCTAButtonStyle()
             
             //MARK: Case 3
             Button("기본 바텀 버튼") {
                 // Action
             }
-            .heyBottomButtonStyle(.black)
+            .heyCTAButtonStyle()
             
             //MARK: Case 2
             Button("클릭시 비활성화 되는 버튼") {
                 buttonDisabled = true
             }
             .disabled(buttonDisabled)
-            .heyBottomButtonStyle()
+            .heyCTAButtonStyle()
             
             Spacer()
         }
@@ -132,14 +132,14 @@ public struct DSKitDemoView: View {
             //MARK: Case 1
             HeyAlertView(
                 title: "OneButton",
-                primaryAction: ("확인", .ctaPrimary, { } )
+                primaryAction: ("확인", .primary, { } )
             )
             
             //MARK: Case 2
             
             HeyAlertView(
                 title: "TwoButton",
-                primaryAction: ("확인", .ctaPrimary, { } ),
+                primaryAction: ("확인", .primary, { } ),
                 secondaryAction: ("취소", .error, { } )
             )
             

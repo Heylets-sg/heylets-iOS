@@ -34,7 +34,7 @@ struct ReportMissingModuleView: View {
             
             Button("Back") {
                 reportMissingModuleAlertIsPresented = false
-            }.heyBottomButtonStyle()
+            }.heyCTAButtonStyle()
             
             Spacer()
                 .frame(height: 65)

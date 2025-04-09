@@ -32,9 +32,10 @@ public struct EnterReferralCodeView: View {
                     Button {
                         viewModel.send(.backButtonDidTap)
                     } label: {
-                        Image(uiImage: .icBack)
+                        Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
                             .resizable()
                             .frame(width: 22.adjusted, height: 18.adjusted)
+                            .tint(.common.ButtonBack.default)
                     }
                     
                     Spacer()
@@ -44,13 +45,14 @@ public struct EnterReferralCodeView: View {
                     } label: {
                         Text("Skip")
                             .font(.regular_16)
+                            .foregroundColor(.common.Button.skip)
                     }
                 }
                 
                 VStack(alignment: .leading) {
                     Text("Enter a referral code to unlock\nmore features🎉")
                         .font(.semibold_18)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .padding(.bottom, 18.adjusted)
                     
                     Spacer()
@@ -58,6 +60,7 @@ public struct EnterReferralCodeView: View {
                     
                     Text("You can get 3 timetable themes for free!")
                         .font(.regular_16)
+                        .foregroundColor(.common.SubText.default)
                         .padding(.bottom, 32.adjusted)
                     
                     HeyTextField(
@@ -77,7 +80,7 @@ public struct EnterReferralCodeView: View {
                     Button("Start Heylets") {
                         viewModel.send(.nextButtonDidTap)
                     }
-                    .heyBottomButtonStyle()
+                    .heyCTAButtonStyle()
                     
                 }
                 .padding(.top, 36.adjusted)
@@ -96,9 +99,11 @@ public struct EnterReferralCodeView: View {
     EnterReferralCodeView(
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
+            windowRouter:  Router.default.windowRouter,
             useCase: StubHeyUseCase.stub.signUpUseCase
         )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }
 

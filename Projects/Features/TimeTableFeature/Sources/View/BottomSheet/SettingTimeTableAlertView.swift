@@ -33,7 +33,7 @@ public struct SettingTimeTableAlertView: View {
                             title: "Enter name",
                             text: $viewModel.state.timeTableName,
                             primaryAction: ("Close", .gray, { viewModel.send(.settingAlertDismiss) }),
-                            secondaryAction: ("Ok", .ctaPrimary, { viewModel.send(.editTimeTableName) })
+                            secondaryAction: ("Ok", .primary, { viewModel.send(.editTimeTableName) })
                         )
                         
                     case .saveImage:
@@ -47,7 +47,7 @@ public struct SettingTimeTableAlertView: View {
                     case .removeTimeTable:
                         HeyAlertView(
                             title: "Delete this timetable?",
-                            primaryAction: ("Delete", .ctaPrimary, { viewModel.send(.deleteTimeTable) }),
+                            primaryAction: ("Delete", .primary, { viewModel.send(.deleteTimeTable) }),
                             secondaryAction: ("Close", .gray, { viewModel.send(.settingAlertDismiss) })
                         )
                     }

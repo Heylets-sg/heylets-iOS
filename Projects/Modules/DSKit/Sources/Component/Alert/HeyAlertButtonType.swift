@@ -8,4 +8,4 @@
 
 import Foundation
 
-public typealias HeyAlertButtonType = (title: String, colorSystem: HeyButtonColorStyle, action: () -> Void)
+public typealias HeyAlertButtonType = (title: String, colorSystem: HeyAlertButtonColorStyle, action: () -> Void)

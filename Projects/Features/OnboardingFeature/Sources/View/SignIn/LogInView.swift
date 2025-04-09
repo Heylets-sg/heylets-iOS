@@ -77,6 +77,10 @@ public struct LogInView: View {
                     placeHolder: "ID"
                 )
                 .focused($isFocused, equals: .id)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.heyGray3, lineWidth: 1)
+                )
                 .padding(.bottom, 21.adjusted)
                 
                 PasswordField(
@@ -85,6 +89,10 @@ public struct LogInView: View {
                     colorSystem: .white
                 )
                 .focused($isFocused, equals: .password)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.heyGray3, lineWidth: 1)
+                )
                 .padding(.bottom, 14)
                 
                 HStack {
@@ -109,7 +117,7 @@ public struct LogInView: View {
                 Button("Log In") {
                     viewModel.send(.loginButtonDidTap)
                 }
-                .heyBottomButtonStyle()
+                .heyCTAButtonStyle()
             }
             .onSubmit {
                 switch isFocused {

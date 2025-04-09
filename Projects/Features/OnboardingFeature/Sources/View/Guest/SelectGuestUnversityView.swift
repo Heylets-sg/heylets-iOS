@@ -100,7 +100,7 @@ struct SelectGuestUnversityView: View {
                     viewModel.send(.nextButtonDidTap)
                 }
                 .disabled(!viewModel.state.continueButtonIsEnabled)
-                .heyBottomButtonStyle()
+                .heyCTAButtonStyle()
             }
             
             .padding(.top, 92.adjusted)

@@ -85,7 +85,7 @@ struct OnboardingBaseView<Content:View>: View {
                         nextButtonAction()
                     }
                     .disabled(!nextButtonIsEnabled)
-                    .heyBottomButtonStyle()
+                    .heyCTAButtonStyle()
                     
                 }
                 .padding(.top, 36.adjusted)

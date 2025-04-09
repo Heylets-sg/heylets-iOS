@@ -97,7 +97,7 @@ struct SelectNationalityView: View {
                     viewModel.send(.nextButtonDidTap)
                 }
                 .disabled(!viewModel.state.continueButtonIsEnabled)
-                .heyBottomButtonStyle()
+                .heyCTAButtonStyle()
             }
             .padding(.top, 92.adjusted)
             .padding(.bottom, 65.adjusted)

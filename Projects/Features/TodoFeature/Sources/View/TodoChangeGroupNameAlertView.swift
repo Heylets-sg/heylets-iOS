@@ -57,7 +57,7 @@ public struct TodoChangeGroupNameAlertView: View {
                     Button(primaryAction.title) {
                         primaryAction.action()
                     }
-                    .heyAlertButtonStyle(primaryAction.colorSystem)
+                    .heyAlertButtonStyle(.primary)
                     
                     Spacer()
                         .frame(width: 24.adjusted)
@@ -65,7 +65,7 @@ public struct TodoChangeGroupNameAlertView: View {
                     Button(secondaryAction.title) {
                         secondaryAction.action()
                     }
-                    .heyAlertButtonStyle(secondaryAction.colorSystem)
+                    .heyAlertButtonStyle(.except)
                 }
                 .padding(.horizontal, 24.adjusted)
                 .padding(.bottom, 24.adjusted)

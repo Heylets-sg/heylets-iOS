@@ -160,7 +160,7 @@ struct TermsOfServiceView: View {
                     viewModel.send(.agreeButtonDidTap)
                 }
                 .disabled(!viewModel.state.continueButtonIsEnabled)
-                .heyBottomButtonStyle()
+                .heyCTAButtonStyle()
                 .padding(.horizontal, 16)
             }
             

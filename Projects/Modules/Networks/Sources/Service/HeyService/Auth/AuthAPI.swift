@@ -147,8 +147,6 @@ extension AuthAPI: BaseAPI {
             return APIHeaders.headerWithAccessToken
         case .refreshToken:
             return APIHeaders.headerWithRefreshToken
-//        case .testSignUp(_, let boundary):
-//            return APIHeaders.testHeader(boundary)
         default:
             return APIHeaders.defaultHeader
         }

@@ -84,11 +84,11 @@ public struct TodoView: View {
                     .frame(height: 82.adjusted)
                 }
                 
-                TodoChangeGroupNameAlertView(
+                HeyAlertEnterNameView(
                     title: "Enter name",
-                    content: $viewModel.state.editGroupName.1,
+                    text: $viewModel.state.editGroupName.1,
                     primaryAction: ("Close", .gray, { viewModel.send(.closeButtonDidTap) }),
-                    secondaryAction: ("Ok", .ctaPrimary, { viewModel.send(.changeGroupName) })
+                    secondaryAction: ("Ok", .primary, { viewModel.send(.changeGroupName) })
                 )
                 .hidden(!viewModel.state.showItemAlertView)
             }

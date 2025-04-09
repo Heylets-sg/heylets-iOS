@@ -127,7 +127,8 @@ public extension APIHeaders {
             deviceModelName: deviceModel,
             OSVersionName: OSVersion,
             appVersionName: appVersion.versionString,
-            xPlatform: iOS
+            xPlatform: iOS,
+            pushTokenName: pushToken
         ]
     }
 }

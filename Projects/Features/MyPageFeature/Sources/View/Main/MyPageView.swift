@@ -105,7 +105,7 @@ public struct MyPageView: View {
             primaryButton: ("Close", .gray, {
                 viewModel.send(.dismissLogoutAlertView)
             }),
-            secondaryButton: ("Ok", .ctaPrimary, {
+            secondaryButton: ("Ok", .primary, {
                 viewModel.send(.logout)
             })
         )

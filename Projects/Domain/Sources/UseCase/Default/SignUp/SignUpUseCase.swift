@@ -48,7 +48,7 @@ final public class SignUpUseCase: SignUpUseCaseType {
                             Analytics.shared.track(.guestConverted)
                             
                         })
-                        .map { _ in }
+                        .map {_ in }
                         .catch { [weak self] error in
                             self?.errMessage.send(error.description)
                             return Empty<Void, Never>()

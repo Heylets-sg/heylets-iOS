@@ -53,9 +53,9 @@ public struct HeyAlertView: View {
                         .frame(width: 24)
                     
                     Button {
-                        primaryAction.action()
+                        secondaryAction.action()
                     } label: {
-                        Text(primaryAction.title)
+                        Text(secondaryAction.title)
                             .frame(height: 46)
                             .frame(maxWidth: .infinity)
                             .font(.medium_16)
@@ -72,7 +72,7 @@ public struct HeyAlertView: View {
         .padding(.horizontal, 24)
         .frame(height: 154)
         .frame(maxWidth: .infinity)
-        .background(Color.heyWhite)
+        .background(Color.popup.default)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }

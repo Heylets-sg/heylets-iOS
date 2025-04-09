@@ -19,11 +19,11 @@ struct HeyCTAButtonStyle: ButtonStyle {
     
     @Environment(\.isEnabled) private var isEnabled: Bool
     
-    private let colorStyle: HeyButtonColorStyle
+    private let colorStyle: HeyCTAButtonColorStyle
     private let cornerRadius: CGFloat
     
     init(
-        _ colorStyle: HeyButtonColorStyle,
+        _ colorStyle: HeyCTAButtonColorStyle,
         cornerRadius: CGFloat
     ) {
         self.colorStyle = colorStyle
@@ -43,7 +43,7 @@ struct HeyCTAButtonStyle: ButtonStyle {
 }
 
 extension View {
-    public func heyBottomButtonStyle(_ colorStyle: HeyButtonColorStyle = .ctaPrimary, cornerRadius: CGFloat = 28) -> some View {
+    public func heyCTAButtonStyle(_ colorStyle: HeyCTAButtonColorStyle = .primary, cornerRadius: CGFloat = 28) -> some View {
         self.buttonStyle(HeyCTAButtonStyle(colorStyle, cornerRadius: cornerRadius))
     }
 }

@@ -83,7 +83,7 @@ struct EditSchoolView: View {
                     viewModel.send(.continueButtonDidTap)
                 }
                 .disabled(!viewModel.state.continueButtonIsEnabled)
-                .heyBottomButtonStyle()
+                .heyCTAButtonStyle()
             }
             
             .padding(.top, 92.adjusted)

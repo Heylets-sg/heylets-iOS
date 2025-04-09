@@ -51,7 +51,7 @@ public struct HeyAlertEnterNameView: View {
                 Button(primaryAction.title) {
                     primaryAction.action()
                 }
-                .heyAlertButtonStyle(primaryAction.colorSystem)
+                .heyAlertButtonStyle(.primary)
                 
                 
                 Spacer()
@@ -61,7 +61,7 @@ public struct HeyAlertEnterNameView: View {
                     secondaryAction.action()
                     text = ""
                 }
-                .heyAlertButtonStyle(secondaryAction.colorSystem)
+                .heyAlertButtonStyle(.except)
             }
             
             Spacer()
@@ -70,7 +70,7 @@ public struct HeyAlertEnterNameView: View {
         .padding(.horizontal, 24)
         .frame(height: 213)
         .frame(maxWidth: .infinity)
-        .background(Color.heyWhite)
+        .background(Color.popup.default)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }

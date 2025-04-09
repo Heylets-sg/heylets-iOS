@@ -8,14 +8,26 @@
 
 import SwiftUI
 
+public enum AlertButtonType {
+    case primary
+    case except
+    
+    var color: Color {
+        switch self {
+        case .primary: .popup.Button.default
+        case .except: .popup.Button.expect
+        }
+    }
+}
+
 struct HeyAlertButtonStyle: ButtonStyle {
     
     @Environment(\.isEnabled) private var isEnabled: Bool
     
-    private let colorStyle: HeyButtonColorStyle
+    private let type: AlertButtonType
     
-    init(_ colorStyle: HeyButtonColorStyle) {
-        self.colorStyle = colorStyle
+    init(_ type: AlertButtonType) {
+        self.type = type
     }
 
     func makeBody(configuration: Self.Configuration) -> some View {
@@ -23,17 +35,16 @@ struct HeyAlertButtonStyle: ButtonStyle {
             .frame(height: 46)
             .frame(maxWidth: .infinity)
             .font(.medium_16)
-//            .background(colorStyle.background)
             .background(Color.popup.default)
-            .foregroundStyle(colorStyle.foreground)
+            .foregroundStyle(type.color)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .scaleEffect(configuration.isPressed ? 0.95 : 1)
     }
 }
 
 public extension View {
-    func heyAlertButtonStyle(_ colorStyle: HeyButtonColorStyle = .gray) -> some View {
-        self.buttonStyle(HeyAlertButtonStyle(colorStyle))
+    func heyAlertButtonStyle(_ type: AlertButtonType) -> some View {
+        self.buttonStyle(HeyAlertButtonStyle(type))
     }
 }
 

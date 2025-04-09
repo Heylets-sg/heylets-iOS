@@ -8,36 +8,46 @@
 
 import SwiftUI
 
-public struct HeyButtonColorStyle {
+public struct HeyCTAButtonColorStyle {
     let background: Color
     let foreground: Color
     let disabledForeground: Color
     let disabledBackground: Color
+    
+    init(
+        background: Color,
+        foreground: Color,
+        disabledForeground: Color = .common.MainText.default,
+        disabledBackground: Color = .common.Background.default
+    ) {
+        self.background = background
+        self.foreground = foreground
+        self.disabledForeground = disabledForeground
+        self.disabledBackground = disabledBackground
+    }
 }
 
-extension HeyButtonColorStyle {
-    public static let white = HeyButtonColorStyle(
-        background: .heyWhite,
-        foreground: .heyBlack,
-        disabledForeground: .heyGray7,
-        disabledBackground: .heyGray4
+extension HeyCTAButtonColorStyle {
+    public static let white = HeyCTAButtonColorStyle(
+        background: .common.CTA.onboarding,
+        foreground: .common.CTAText.active //TODO: 색상확인
     )
     
-    public static let ctaPrimary = HeyButtonColorStyle(
+    public static let primary = HeyCTAButtonColorStyle(
         background: .common.CTA.active,
         foreground: .common.CTAText.active,
         disabledForeground: .common.CTAText.unactive,
         disabledBackground: .common.CTA.unactive
     )
     
-    public static let black = HeyButtonColorStyle(
+    public static let black = HeyCTAButtonColorStyle(
         background: .heyBlack,
         foreground: .heyWhite,
         disabledForeground: .heyWhite,
         disabledBackground: .heyGray2
     )
     
-    public static let error = HeyButtonColorStyle(
+    public static let error = HeyCTAButtonColorStyle(
         background: .common.Error.default,
         foreground: .heyWhite,
         disabledForeground: .heyWhite,
@@ -45,7 +55,7 @@ extension HeyButtonColorStyle {
     )
     
     //TODO: 피그마 디자인 시스템 적용시 값 변경
-    public static let gray = HeyButtonColorStyle(
+    public static let gray = HeyCTAButtonColorStyle(
         background: .heyGray4,
         foreground: .heyGray7,
         disabledForeground: .heyWhite,
