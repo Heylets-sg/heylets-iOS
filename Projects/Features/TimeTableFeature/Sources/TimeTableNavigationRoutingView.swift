@@ -21,22 +21,20 @@ struct TimeTableNavigationRoutingView: View {
     
     var body: some View {
         switch destination {
-        
-        // Onboarding
-        case .timeTable:
-            let useCase = useCase.timeTableUseCase
-            TimeTableView(
-                viewModel: .init(
-                    SearchModuleViewModel(useCase),
-                    AddCustomModuleViewModel(useCase),
-                    ThemeViewModel(useCase, router.navigationRouter),
-                    TimeTableSettingViewModel(useCase),
-                    router.navigationRouter,
-                    router.windowRouter,
-                    useCase
-                )
-            )
-
+//        case .timeTable:
+//            let useCase = useCase.timeTableUseCase
+//            TimeTableView(
+//                viewModel: .init(
+//                    SearchModuleViewModel(useCase),
+//                    AddCustomModuleViewModel(useCase),
+//                    ThemeViewModel(useCase, router.navigationRouter),
+//                    TimeTableSettingViewModel(useCase),
+//                    router.navigationRouter,
+//                    router.windowRouter,
+//                    useCase
+//                )
+//            )
+            
         case .inviteCode:
             InviteCodeView(
                 viewModel: .init(
