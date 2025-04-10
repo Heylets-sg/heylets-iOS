@@ -30,7 +30,7 @@ public struct HeyAlertView: View {
             
             Text(title)
                 .font(.medium_18)
-                .foregroundColor(.popup.Text.default)
+                .foregroundColor(.common.MainText.default)
                 .multilineTextAlignment(.center)
             
             Spacer()

@@ -20,7 +20,7 @@ struct ClassSearchListCellView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            TextWithCustomFontSubstring(
+            CustomSubstringText(
                 originalText: "\(section.code!) \(section.name)",
                 targetSubstring: section.code!,
                 targetFont: .bold_14

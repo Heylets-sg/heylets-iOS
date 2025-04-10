@@ -198,7 +198,7 @@ public struct OnboardingView: View {
                             }
                             .padding(.bottom, 50.adjusted)
                             
-                            Button("Start") { //TODO: 색상확인
+                            Button("Start") {
                                 viewModel.send(.startButtonDidTap)
                             }
                             .heyCTAButtonStyle(.white)

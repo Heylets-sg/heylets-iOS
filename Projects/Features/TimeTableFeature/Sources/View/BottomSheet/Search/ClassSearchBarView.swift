@@ -22,10 +22,11 @@ struct ClassSearchBarView: View {
                 
             })
             .font(.medium_12)
-            .foregroundColor(.Module.search)
+            .foregroundColor(.common.Placeholder.default)
             .onSubmit {
                 viewModel.send(.searchButtonDidTap)
             }
+            
             
             Spacer()
             

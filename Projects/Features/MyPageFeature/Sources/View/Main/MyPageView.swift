@@ -156,16 +156,24 @@ public struct MyReferalCodeView: View {
     public var body: some View {
         if let code {
             HStack {
-                Text("Referal code   \(code)")
-                    .font(.regular_12)
-                    .padding(.trailing, 12)
+                CustomSubstringText(
+                    originalText: "Referal code   \(code)",
+                    targetSubstring: code,
+                    targetFont: .regular_12,
+                    targetColor: .common.MainText.default
+                )
+                .font(.regular_12)
+                .foregroundColor(.common.Placeholder.default)
+                .padding(.trailing, 12)
                 
-                Image(uiImage: .icCopy)
+                Image(uiImage: .icCopy.withRenderingMode(.alwaysTemplate))
                     .resizable()
                     .frame(width: 12, height: 12)
+                    .tint(.common.MainText.default)
             }
             .padding(.vertical, 8.adjusted)
             .padding(.horizontal, 34)
+            .background(Color.mypage.menubox)
             .clipShape(Capsule())
             .padding(.bottom, 30.adjusted)
         } else {

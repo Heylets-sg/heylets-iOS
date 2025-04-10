@@ -13,10 +13,18 @@ public enum HeyAlertButtonColorStyle {
     case gray
     case error
     
-    var color: Color {
+    var textColor: Color {
+        switch self {
+        case .primary: .popup.Text.default
+        case .gray: .common.Placeholder.default
+        case .error: .heyWhite
+        }
+    }
+    
+    var backgroundColor: Color {
         switch self {
         case .primary: .popup.Button.default
-        case .gray: .popup.Button.expect
+        case .gray: .common.InputField.default
         case .error: .common.Error.default
         }
     }

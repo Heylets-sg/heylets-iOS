@@ -78,7 +78,7 @@ public struct SearchModuleView: View {
                 .scrollIndicators(.hidden)
             }
         }
-        .background(Color.timeTableMain.bottomSheet)
+        .background(Color.common.Background.default)
         .ignoresSafeArea()
         .onAppear {
             viewModel.send(.onAppear)

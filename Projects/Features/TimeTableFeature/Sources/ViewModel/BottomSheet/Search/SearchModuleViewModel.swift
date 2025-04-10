@@ -54,8 +54,8 @@ public class SearchModuleViewModel: ObservableObject {
             fetchLectures()
             
         case .closeButtonDidTap:
+            state.selectedLecture = nil
             filterInfo = .init()
-            break
             
         case .lectureCellDidTap(let lecture):
             state.selectedLecture = lecture

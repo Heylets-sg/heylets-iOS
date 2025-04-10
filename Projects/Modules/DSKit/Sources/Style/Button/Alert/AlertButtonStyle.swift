@@ -23,8 +23,8 @@ struct HeyAlertButtonStyle: ButtonStyle {
             .frame(height: 46)
             .frame(maxWidth: .infinity)
             .font(.medium_16)
-            .background(Color.popup.default)
-            .foregroundStyle(colorStyle.color)
+            .background(colorStyle.backgroundColor)
+            .foregroundStyle(colorStyle.textColor)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .scaleEffect(configuration.isPressed ? 0.95 : 1)
     }
