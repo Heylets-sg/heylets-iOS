@@ -59,7 +59,7 @@ public extension Project {
         name: String,
         packages: [Package] = []
     ) -> Project {
-        var projectTargets: [Target] = TargetHandler.makeProjectTargets(
+        let projectTargets: [Target] = TargetHandler.makeProjectTargets(
             name: name,
             hasResources: false,
             externalDependencies: [

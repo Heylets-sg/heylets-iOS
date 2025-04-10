@@ -21,7 +21,7 @@ struct TargetHandler {
         deploymentTarget: DeploymentTarget = env.deploymentTarget,
         infoPlist: InfoPlist = .default,
         resources: ResourceFileElements? = nil,
-//        entitlements:  ProjectDescription.Entitlements? = nil,
+        entitlements: ProjectDescription.Path? = nil,
         dependencies: [TargetDependency] = []
     ) -> Target {
         .init(
@@ -33,7 +33,7 @@ struct TargetHandler {
             infoPlist: infoPlist,
             sources: targetType.sources,
             resources: resources,
-//            entitlements: entitlements,
+            entitlements: entitlements,
             dependencies: dependencies
         )
     }
@@ -98,7 +98,7 @@ extension TargetHandler {
             bundleID: "\(env.bundlePrefix).\(name.contains("Demo") ? "test" : "release")",
             infoPlist: InfoPlistProvider.forApp(name: name),
             resources: [.glob(pattern: "Resources/**", excluding: [])],
-//            entitlements: "\(name).entitlements",
+            entitlements: "\(name).entitlements",
             dependencies: dependencies
         )
     }
