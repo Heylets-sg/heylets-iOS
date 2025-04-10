@@ -102,7 +102,7 @@ public struct TabBarView: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
         
         .shadow(
-            color: Color(hex: "#000000").opacity(0.06),
+            color: Color.heyBlack.opacity(0.06),
             radius: 17.2,
             x: 0,
             y: 2

@@ -45,7 +45,7 @@ public struct HeyAlertView: View {
                         .frame(width: 24)
                     
                     Button(secondaryAction.title) {
-                        primaryAction.action()
+                        secondaryAction.action()
                     }.heyAlertButtonStyle(secondaryAction.color)
                 }
             }

@@ -59,7 +59,7 @@ public struct TodoItemView: View {
                         )
                         .focused($isKeyboardActive)
                         .font(.medium_14)
-                        .foregroundColor(.common.Placeholder.default)
+                        .foregroundColor(.todo.contents)
                         .frame(width: 271, alignment: .leading)
                         .offset(x: offsetX)
                         .onSubmit {
@@ -168,7 +168,7 @@ public struct TodoAddItemView: View {
                     )
                     .focused($isKeyboardActive)
                     .font(.medium_14)
-                    .foregroundColor(.common.Placeholder.default)
+                    .foregroundColor(.todo.contents)
                     .onSubmit {
                         viewModel.send(.addItem(groupId, content))
                     }
@@ -198,7 +198,7 @@ public struct TodoAddItemView: View {
                 }
             }
         }
-        .background(Color.common.InputField.default)
+        .background(Color.common.InputField.toDo)
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .frame(height: 56)
     }

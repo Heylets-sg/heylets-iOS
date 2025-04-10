@@ -61,7 +61,7 @@ public struct InviteCodeView: View {
                         VStack {
                             Text("My invite code")
                                 .padding(.vertical, 12.adjusted)
-                                .padding(.horizontal, 90.adjusted)
+                                .padding(.horizontal, 80.adjusted)
                                 .background(Color.heyMain)
                             
                             HStack {

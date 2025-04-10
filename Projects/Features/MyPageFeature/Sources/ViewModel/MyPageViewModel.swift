@@ -113,6 +113,7 @@ public class MyPageViewModel: ObservableObject {
             UIPasteboard.general.string = referralCode
             
         case .logout:
+            print("🏡")
             useCase.logout()
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
