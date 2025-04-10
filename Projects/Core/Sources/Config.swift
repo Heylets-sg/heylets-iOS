@@ -13,6 +13,7 @@ public enum Config {
         enum Plist {
             static let baseURL = "BASE_URL"
             static let amplitudeAPIKey = "AMPLITUDE_API_KEY"
+            static let env = "ENV"
         }
     }
     
@@ -36,4 +37,17 @@ public enum Config {
         }
         return key
     }()
+    
+    static public let environment: String = {
+        guard let key = Config.infoDictionary[Keys.Plist.env] as? String else {
+            fatalError("Enviroment is not set in plist for this configuration.")
+        }
+        return key
+    }()
+}
+
+extension Config {
+    public static var isTestEnvironment: Bool {
+        return environment == "DEV" || environment == "QA"
+    }
 }

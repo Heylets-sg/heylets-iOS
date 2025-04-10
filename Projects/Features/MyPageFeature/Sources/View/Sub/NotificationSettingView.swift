@@ -42,7 +42,7 @@ public struct NotificationSettingView: View {
                         Button {
                             viewModel.send(.backButtonDidTap)
                         } label: {
-                            Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
+                            Image(uiImage: .icBack)
                                 .resizable()
                                 .frame(width: 24, height: 18)
                                 .tint(.common.ButtonBack.default)

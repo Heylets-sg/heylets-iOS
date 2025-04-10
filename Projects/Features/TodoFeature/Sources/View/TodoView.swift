@@ -57,7 +57,7 @@ public struct TodoView: View {
                             Button {
                                 viewModel.send(.addGroupButtonDidTap)
                             } label: {
-                                Image(uiImage: .icAddGroup.withRenderingMode(.alwaysTemplate))
+                                Image(uiImage: .icAddGroup)
                                     .resizable()
                                     .frame(width: 28, height: 28)
                                     .tint(.todo.addtodo)

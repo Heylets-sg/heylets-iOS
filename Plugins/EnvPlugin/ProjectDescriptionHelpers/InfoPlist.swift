@@ -13,6 +13,7 @@ import ProjectDescription
 
 public extension Project {
     static let appInfoPlist: [String: InfoPlist.Value] = [
+        "ENV": "$(ENV)",
         "BASE_URL": "$(BASE_URL)",
         "AMPLITUDE_API_KEY": "$(AMPLITUDE_API_KEY)",
         "NSAppTransportSecurity": .dictionary([

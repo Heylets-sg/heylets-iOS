@@ -9,24 +9,24 @@
 import SwiftUI
 
 public extension UIImage {
-    static let icAdd = DSKitAsset.icAdd.image
-    static let icArrow = DSKitAsset.icArrow.image
+    static let icAdd = DSKitAsset.icAdd.image.withRenderingMode(.alwaysTemplate)
+    static let icArrow = DSKitAsset.icArrow.image.withRenderingMode(.alwaysTemplate)
     static let icCamera = DSKitAsset.icCamera.image
-    static let icClose = DSKitAsset.icClose.image
+    static let icClose = DSKitAsset.icClose.image.withRenderingMode(.alwaysTemplate)
     static let icError = DSKitAsset.icError.image
     static let icHide = DSKitAsset.icHide.image
     static let icMagic = DSKitAsset.icMagic.image
     static let icRepeat = DSKitAsset.icRepeat.image
     static let icSchool = DSKitAsset.icSchool.image
-    static let icSetting = DSKitAsset.icSetting.image
+    static let icSetting = DSKitAsset.icSetting.image.withRenderingMode(.alwaysTemplate)
     static let icShow = DSKitAsset.icShow.image
-    static let icSuccess = DSKitAsset.icSuccess.image
-    static let icBack = DSKitAsset.icBack.image
-    static let icCopy = DSKitAsset.icCopy.image
-    static let icPencil = DSKitAsset.icPencil.image
-    static let icDown = DSKitAsset.icDown.image
+    static let icSuccess = DSKitAsset.icSuccess.image.withRenderingMode(.alwaysTemplate)
+    static let icBack = DSKitAsset.icBack.image.withRenderingMode(.alwaysTemplate)
+    static let icCopy = DSKitAsset.icCopy.image.withRenderingMode(.alwaysTemplate)
+    static let icPencil = DSKitAsset.icPencil.image.withRenderingMode(.alwaysTemplate)
+    static let icDown = DSKitAsset.icDown.image.withRenderingMode(.alwaysTemplate)
     static let icPlus = DSKitAsset.icPlus.image
-    static let icNext = DSKitAsset.icNext.image
+    static let icNext = DSKitAsset.icNext.image.withRenderingMode(.alwaysTemplate)
     static let icSelected = DSKitAsset.icSelected.image
     static let icCheck = DSKitAsset.icCheck.image
     
@@ -42,14 +42,14 @@ public extension UIImage {
     static let guest = DSKitAsset.graphicsGuest.image
     static let congratulation = DSKitAsset.graphicsCongratulation.image
     
-    static let icEtc = DSKitAsset.icEtc.image
+    static let icEtc = DSKitAsset.icEtc.image.withRenderingMode(.alwaysTemplate)
     static let icBlank = DSKitAsset.icBlank.image
     static let icCompleted = DSKitAsset.icCompleted.image
-    static let icAddGroup = DSKitAsset.icAddGroup.image
+    static let icAddGroup = DSKitAsset.icAddGroup.image.withRenderingMode(.alwaysTemplate)
     
     static let icLocked = DSKitAsset.icLocked.image
     static let icLocked2 = DSKitAsset.icLocked2.image
-    static let icLink = DSKitAsset.icLink.image
+    static let icLink = DSKitAsset.icLink.image.withRenderingMode(.alwaysTemplate)
     
     
     static let logo = DSKitAsset.logo.image

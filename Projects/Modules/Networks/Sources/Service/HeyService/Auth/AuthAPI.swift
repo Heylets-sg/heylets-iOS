@@ -22,7 +22,7 @@ public enum AuthAPI {
     case verifyEmail(VerifyOTPCodeRequest)
     case requestVerifyEmail(RequestOTPCodeRequest)
     case deleteAccount(DeleteAccountRequest)
-//    case testSignUp(SignUpRequest, String)
+    case testSignUp(SignUpRequest, String)
 }
 
 extension AuthAPI: BaseAPI {
@@ -54,8 +54,8 @@ extension AuthAPI: BaseAPI {
             Paths.requestVerifyEmail
         case .deleteAccount:
             Paths.deleteAccount
-//        case .testSignUp:
-//            Paths.testSignUp
+        case .testSignUp:
+            Paths.testSignUp
         }
     }
     
@@ -83,8 +83,8 @@ extension AuthAPI: BaseAPI {
             return .post
         case .deleteAccount:
             return .post
-//        case .testSignUp:
-//            return .post
+        case .testSignUp:
+            return .post
         }
     }
     
@@ -94,7 +94,7 @@ extension AuthAPI: BaseAPI {
             return .requestParameters(["username": name])
         case .refreshToken:
             return .requestPlain
-        case .signUp(let request, let boundary):
+        case .signUp(let request, let boundary), .testSignUp(let request, let boundary):
             var multipartData: [MultipartData] = []
             
             if let jsonData = try? JSONEncoder().encode(request.request),
@@ -116,9 +116,6 @@ extension AuthAPI: BaseAPI {
                 )
                 multipartData.append(part)
             }
-            print("🍎🍎🍎🍎")
-            print(multipartData)
-            print("🍎🍎🍎🍎")
             return .uploadMultipartFormData(multipartData, boundary)
         case .resetPassword(let request):
             return .requestJSONEncodable(request)
@@ -147,10 +144,11 @@ extension AuthAPI: BaseAPI {
             return APIHeaders.headerWithAccessToken
         case .refreshToken:
             return APIHeaders.headerWithRefreshToken
+        case .testSignUp(_, let boundary):
+            return APIHeaders.testHeader(boundary)
         default:
             return APIHeaders.defaultHeader
         }
-        
     }
 }
 

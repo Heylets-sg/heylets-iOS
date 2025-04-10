@@ -33,7 +33,7 @@ struct ClassSearchBarView: View {
             Button {
                 viewModel.send(.clearButtonDidTap)
             } label: {
-                Image(uiImage: .icClose.withRenderingMode(.alwaysTemplate))
+                Image(uiImage: .icClose)
                     .resizable()
                     .tint(.timeTableSub.searchDelete)
                     .frame(width: 6, height: 6)

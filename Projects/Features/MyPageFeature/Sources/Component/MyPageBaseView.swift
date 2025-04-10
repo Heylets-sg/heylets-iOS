@@ -54,7 +54,7 @@ struct MyPageBaseView<Content:View>: View {
                         Button {
                             dismiss()
                         } label: {
-                            Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
+                            Image(uiImage: .icBack)
                                 .resizable()
                                 .frame(width: 24, height: 18)
                                 .tint(.common.ButtonBack.default)

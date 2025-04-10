@@ -61,7 +61,7 @@ public struct VerifyEmailView: View {
                     
                     Spacer()
                     
-                    Image(uiImage: .icDown.withRenderingMode(.alwaysTemplate))
+                    Image(uiImage: .icDown)
                         .resizable()
                         .frame(width: 12, height: 6)
                         .tint(.common.Placeholder.default)

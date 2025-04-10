@@ -48,7 +48,7 @@ public struct TopView: View {
                         viewType = .search
                     }
                 } label: {
-                    Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
+                    Image(uiImage: .icAdd)
                         .resizable()
                         .frame(width: 17, height: 17)
                         .tint(.timeTableMain.TimeTableInfo.topIcon)
@@ -60,7 +60,7 @@ public struct TopView: View {
                         viewType = .setting
                     }
                 } label: {
-                    Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
+                    Image(uiImage: .icSetting)
                         .resizable()
                         .frame(width: 18, height: 18)
                         .tint(.timeTableMain.TimeTableInfo.topIcon)

@@ -29,7 +29,7 @@ struct ThemeTopView: View {
                             viewType = .main
                         }
                     } label: {
-                        Image(uiImage: .icClose.withRenderingMode(.alwaysTemplate))
+                        Image(uiImage: .icClose)
                             .resizable()
                             .frame(width: 16, height: 16)
                             .tint(.common.ButtonClose.default)

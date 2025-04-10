@@ -63,7 +63,7 @@ struct TermsOfServiceView: View {
                 
                 
                 HStack {
-                    Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
+                    Image(uiImage: .icSuccess)
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
                         .foregroundColor(
@@ -95,7 +95,7 @@ struct TermsOfServiceView: View {
                 
                 
                 HStack {
-                    Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
+                    Image(uiImage: .icSuccess)
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
                         .foregroundColor(
@@ -129,7 +129,7 @@ struct TermsOfServiceView: View {
                 
                 
                 HStack {
-                    Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
+                    Image(uiImage: .icSuccess)
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
                         .foregroundColor(

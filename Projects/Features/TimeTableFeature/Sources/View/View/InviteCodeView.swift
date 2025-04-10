@@ -37,21 +37,25 @@ public struct InviteCodeView: View {
                     viewModel.send(.backButtonDidTap)
                 } label: {
                     Image(uiImage: .icBack)
+                        .renderingMode(.template)
                         .resizable()
                         .frame(width: 22, height: 18)
+                        .tint(.common.ButtonBack.default)
                 }
                 
                 VStack(alignment: .leading) {
                     Text("Invite a friend and get\ntimetable themes together🎉")
                         .font(.semibold_18)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .padding(.bottom, 8.adjusted)
                     
                     Text("When a friend signs up using your code, ")
                         .font(.regular_16)
+                        .foregroundColor(.common.SubText.default)
                     
                     Text("they get 3 random themes, and you get 2")
                         .font(.regular_16)
+                        .foregroundColor(.heyMain)
                     
                     Spacer()
                         .frame(height: 126.adjusted)
@@ -60,6 +64,7 @@ public struct InviteCodeView: View {
                         Spacer()
                         VStack {
                             Text("My invite code")
+                                .foregroundColor(.common.SubText.default)
                                 .padding(.vertical, 12.adjusted)
                                 .padding(.horizontal, 80.adjusted)
                                 .background(Color.heyMain)
@@ -67,7 +72,7 @@ public struct InviteCodeView: View {
                             HStack {
                                 Text(viewModel.referralCode)
                                     .font(.medium_30)
-                                    .foregroundColor(.heyBlack)
+                                    .foregroundColor(.common.MainText.else)
                                     .kerning(10)
                                 
                                 Button {
@@ -106,7 +111,7 @@ public struct InviteCodeView: View {
                         }
                         .frame(height: 56)
                         .frame(maxWidth: .infinity)
-                        .background(Color.heyMain)
+                        .background(Color.common.CTA.active)
                         .clipShape(RoundedRectangle(cornerRadius: 28))
                     }
                 }

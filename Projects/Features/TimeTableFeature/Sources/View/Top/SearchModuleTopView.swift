@@ -23,7 +23,7 @@ public struct SearchModuleTopView: View {
                     
                 }
             } label: {
-                Image(uiImage: .icClose.withRenderingMode(.alwaysTemplate))
+                Image(uiImage: .icClose)
                     .resizable()
                     .frame(width: 16, height: 16)
                     .tint(.common.ButtonClose.default)
@@ -36,7 +36,7 @@ public struct SearchModuleTopView: View {
                     addCustomModuleButtonDidTapEvent()
                 }
             } label: {
-                Image(uiImage: .icPencil.withRenderingMode(.alwaysTemplate))
+                Image(uiImage: .icPencil)
                     .resizable()
                     .frame(width: 16, height: 16)
                     .tint(.timeTableSub.addCustom)

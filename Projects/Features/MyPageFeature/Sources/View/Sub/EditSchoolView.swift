@@ -25,7 +25,7 @@ struct EditSchoolView: View {
                     Button {
                         viewModel.send(.closeButtonDidTap)
                     } label: {
-                        Image(uiImage: .icClose.withRenderingMode(.alwaysTemplate))
+                        Image(uiImage: .icClose)
                             .resizable()
                             .frame(width: 18, height: 18)
                             .tint(.Common.ButtonClose.default)

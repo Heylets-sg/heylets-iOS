@@ -61,20 +61,27 @@ public class VerifyEmailViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            useCase.requestEmailVerifyCode(email)
-                .sink(receiveValue: { _ in
-                    owner.useCase.userInfo.email = owner.email
-                    if let university = self.domainToUniversity(owner.domain) {
-                        owner.useCase.userInfo.university = university
-                    }
-                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email, owner.nationality))
-                })
-                .store(in: cancelBag)
-            
-//            navigationRouter.push(to: .enterReferralCode)
-//            MARK: Test용 삭제 필수
-//            owner.useCase.userInfo.email = owner.email
-//            owner.navigationRouter.push(to: .enterPersonalInfo_SG)
+            if Config.isTestEnvironment {
+                owner.useCase.userInfo.email = owner.email
+                if let university = self.domainToUniversity(owner.domain) {
+                    owner.useCase.userInfo.university = university
+                }
+                if nationality == .Malaysia {
+                    navigationRouter.push(to: .enterPersonalInfo_MYS)
+                } else {
+                    navigationRouter.push(to: .enterPersonalInfo_SG)
+                }
+            } else {
+                useCase.requestEmailVerifyCode(email)
+                    .sink(receiveValue: { _ in
+                        owner.useCase.userInfo.email = owner.email
+                        if let university = self.domainToUniversity(owner.domain) {
+                            owner.useCase.userInfo.university = university
+                        }
+                        owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email, owner.nationality))
+                    })
+                    .store(in: cancelBag)
+            }
         case .domainListButtonDidTap:
             state.domainListViewIsVisible.toggle()
         case .dismissFocus:
@@ -115,6 +122,7 @@ extension VerifyEmailViewModel {
         case "student.uitm.edu.my": return .UiTM
         case "siswa.um.edu.my": return .IIUM
         case "live.iium.edu.my": return .UM
+        case "naver.com": return .UM
 //        case "kookmin.ac.kr": return .UM
         default: return .empty
         }

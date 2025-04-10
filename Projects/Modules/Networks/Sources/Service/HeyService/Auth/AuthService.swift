@@ -9,6 +9,8 @@
 import Foundation
 import Combine
 
+import Core
+
 public typealias AuthService = BaseService<AuthAPI>
 
 public protocol AuthServiceType {
@@ -67,9 +69,11 @@ extension AuthService: AuthServiceType {
     public func signUp(
         _ request: SignUpRequest
     ) -> NetworkVoidResponse {
-        return requestWithNoResult(.signUp(request, UUID().uuidString))
-        //MARK: Test용
-        //requestWithNoResult(.testSignUp(request, UUID().uuidString))
+        if Config.isTestEnvironment {
+            return requestWithNoResult(.testSignUp(request, UUID().uuidString))
+        } else {
+            return requestWithNoResult(.signUp(request, UUID().uuidString))
+        }
     }
     
     public func resetPassword(

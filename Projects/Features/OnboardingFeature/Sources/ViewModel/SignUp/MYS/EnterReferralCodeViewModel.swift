@@ -57,7 +57,7 @@ public class EnterReferralCodeViewModel: ObservableObject {
             useCase.signUp()
                 .sink(receiveValue: { [weak self] _ in
                     self?.navigationRouter.destinations = []
-                    self?.windowRouter.switch(to: .login)
+                    self?.windowRouter.switch(to: .timetable)
                 })
                 .store(in: cancelBag)
             
@@ -65,7 +65,7 @@ public class EnterReferralCodeViewModel: ObservableObject {
             useCase.signUp()
                 .sink(receiveValue: { [weak self] _ in
                     self?.navigationRouter.destinations = []
-                    self?.windowRouter.switch(to: .login)
+                    self?.windowRouter.switch(to: .timetable)
                 })
                 .store(in: cancelBag)
         }
