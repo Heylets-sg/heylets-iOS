@@ -17,22 +17,11 @@ enum TabType {
     var image: UIImage {
         switch self {
         case .timeTable:
-            return .tabTimeTable
+            return .tabTimeTable.withRenderingMode(.alwaysTemplate)
         case .todo:
-            return .tabTodo
+            return .tabTodo.withRenderingMode(.alwaysTemplate)
         case .my:
-            return .tabMypage
-        }
-    }
-    
-    var selectedImage: UIImage {
-        switch self {
-        case .timeTable:
-            return .tabTimeTableFilled
-        case .todo:
-            return .tabTodoFilled
-        case .my:
-            return .tabMypage
+            return .tabMypage.withRenderingMode(.alwaysTemplate)
         }
     }
     
@@ -125,20 +114,22 @@ struct TabItemView: View {
     
     var body: some View {
         VStack {
-            Image(
-                uiImage: isFilled
-                ? tabType.selectedImage
-                : tabType.image
-            )
+            Image(uiImage: tabType.image)
+            .renderingMode(.template)
             .resizable()
             .frame(width: 23, height: 23)
+            .foregroundColor(
+                isFilled
+                ? .timeTableMain.Navigator.iconActive
+                : .timeTableMain.Navigator.iconUnActive
+            )
             
             Text(tabType.title)
                 .font(.semibold_10)
                 .foregroundColor(
                     isFilled
-                    ? Color.init(hex: "#1B1B1C")
-                    : Color.init(hex: "#D2D2D2")
+                    ? .timeTableMain.Navigator.iconActive
+                    : .timeTableMain.Navigator.iconUnActive
                 )
         }
     }

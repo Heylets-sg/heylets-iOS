@@ -53,6 +53,9 @@ public extension Color {
     enum Setting {
         public static let title = Color(DSKitAsset.infoSettingTitle.color)
         public static let set = Color(DSKitAsset.infoSettingSet.color)
+        public static let inviteBox = Color(DSKitAsset.inviteBox.color)
+        public static let copyButton = Color(DSKitAsset.copyButton.color)
+        public static let copyIcon = Color(DSKitAsset.copyIcon.color)
     }
     
     static var setting: Setting.Type {

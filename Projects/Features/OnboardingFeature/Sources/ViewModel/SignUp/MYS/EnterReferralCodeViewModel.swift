@@ -55,6 +55,7 @@ public class EnterReferralCodeViewModel: ObservableObject {
         case .nextButtonDidTap:
             useCase.userInfo.referralCode = referralCode
             useCase.signUp()
+                .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
                     self?.navigationRouter.destinations = []
                     self?.windowRouter.switch(to: .timetable)
@@ -63,6 +64,7 @@ public class EnterReferralCodeViewModel: ObservableObject {
             
         case .skipButtonDidTap:
             useCase.signUp()
+                .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
                     self?.navigationRouter.destinations = []
                     self?.windowRouter.switch(to: .timetable)

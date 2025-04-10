@@ -20,12 +20,12 @@ struct ReportMissingModuleView: View {
             
             Text("Report Missing Modules")
                 .font(.semibold_18)
-                .foregroundColor(.heyGray1)
+                .foregroundColor(.common.MainText.default)
                 .padding(.bottom, 8)
             
             Text("It will be reviewed and registered\nwithin 3 days.")
                 .font(.regular_16)
-                .foregroundColor(.heyGray1)
+                .foregroundColor(.common.SubText.default)
                 .padding(.bottom, 32)
             
             HeyTextField(text: $text, placeHolder: "ex) Carrer and Enterpreurial")

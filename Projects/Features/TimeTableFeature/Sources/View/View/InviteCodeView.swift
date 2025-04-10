@@ -81,21 +81,24 @@ public struct InviteCodeView: View {
                                     Image(uiImage: .icCopy)
                                         .resizable()
                                         .frame(width: 11, height: 11)
+                                        .tint(Color.setting.copyIcon)
                                         .padding(.all, 7)
-                                        .background(Color.heyGray3)
+                                        .background(Color.setting.copyButton)
                                         .clipShape(RoundedRectangle(cornerRadius: 3))
                                 }
                                 
                             }
                             .padding(.vertical, 30.adjusted)
                         }
+                        .background(Color.popup.default)
                         .clipShape(RoundedRectangle(cornerRadius: 7))
                         .overlay(
                             RoundedRectangle(cornerRadius: 7)
-                                .stroke(Color.heyMain, lineWidth: 1)
+                                .stroke(Color.setting.inviteBox, lineWidth: 1)
                         )
                         Spacer()
                     }
+                    
                     .padding(.horizontal, 20)
                     
                     
@@ -107,7 +110,7 @@ public struct InviteCodeView: View {
                         HStack {
                             Text("Share my code")
                                 .font(.semibold_14)
-                                .foregroundStyle(Color.heyWhite)
+                                .foregroundStyle(Color.common.CTAText.active)
                         }
                         .frame(height: 56)
                         .frame(maxWidth: .infinity)

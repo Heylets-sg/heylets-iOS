@@ -40,7 +40,7 @@ public struct TodoGroupView: View {
                         } label: {
                             Text("Delete group")
                                 .font(.medium_14)
-                                .foregroundColor(.heyGray1)
+                                .foregroundColor(.common.MainText.default)
                         }
                         .padding(.bottom, 27)
                         
@@ -49,7 +49,7 @@ public struct TodoGroupView: View {
                         } label: {
                             Text("Change name")
                                 .font(.medium_14)
-                                .foregroundColor(.heyGray1)
+                                .foregroundColor(.common.MainText.default)
                         }
                         
                     } label: {

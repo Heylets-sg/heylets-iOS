@@ -34,7 +34,7 @@ public struct HeyAlertTextFieldView: View {
             VStack {
                 Text(title)
                     .font(.medium_18)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
                     .padding(.vertical, 24.adjusted)
                 
                 TextField(text: $content, label: {

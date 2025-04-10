@@ -23,6 +23,7 @@ struct AddCustomModuleTopView: View {
                     Image(uiImage: .icClose)
                         .resizable()
                         .frame(width: 16, height: 16)
+                        .foregroundColor(.common.ButtonClose.default)
                 }
                 
                 Spacer()

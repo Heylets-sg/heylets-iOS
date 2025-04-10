@@ -20,11 +20,12 @@ public struct AddCustomModuleView: View {
                         HStack {
                             Text(viewModel.day.rawValue)
                                 .font(.regular_14)
-                                .foregroundColor(.heyGray1)
+                                .foregroundColor(.common.MainText.default)
                             
                             Image(uiImage: .icDown)
                                 .resizable()
                                 .frame(width: 9, height: 4)
+                                .foregroundColor(.heyMain)
                         }
                     }
                 }
@@ -38,15 +39,16 @@ public struct AddCustomModuleView: View {
                         // Date 객체가 아닌 문자열 형식 그대로 표시
                         Text(viewModel.startTime)
                             .font(.regular_14)
-                            .foregroundColor(.heyGray1)
+                            .foregroundColor(.common.MainText.default)
                         
                         Text("~")
                             .font(.regular_14)
                             .frame(width: 20)
+                            .foregroundColor(.common.MainText.default)
                         
                         Text(viewModel.endTime)
                             .font(.regular_14)
-                            .foregroundColor(.heyGray1)
+                            .foregroundColor(.common.MainText.default)
                     }
                 }
                 .frame(height: 50)
@@ -60,7 +62,7 @@ public struct AddCustomModuleView: View {
                         text: $viewModel.schedule,
                         prompt: Text("Schedule")
                             .font(.regular_14)
-                            .foregroundColor(.common.MainText.default)
+                            .foregroundColor(.common.Placeholder.default)
                     )
                     
                     Divider()
@@ -73,7 +75,7 @@ public struct AddCustomModuleView: View {
                         text: $viewModel.location,
                         prompt: Text("Location(option)")
                             .font(.regular_14)
-                            .foregroundColor(.common.MainText.default)
+                            .foregroundColor(.common.Placeholder.default)
                     )
                     
                     Divider()
@@ -86,7 +88,7 @@ public struct AddCustomModuleView: View {
                         text: $viewModel.professor,
                         prompt: Text("Professor(option)")
                             .font(.regular_14)
-                            .foregroundColor(.common.MainText.default)
+                            .foregroundColor(.common.Placeholder.default)
                     )
                     
                     Divider()
