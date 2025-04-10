@@ -66,7 +66,6 @@ public class EnterSecurityCodeViewModel: ObservableObject {
                     case .Malaysia:
                         owner.navigationRouter.push(to: .enterPersonalInfo_MYS)
                     default:
-                        print("fuck")
                         break
                     }
                 })
@@ -79,7 +78,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         guard let owner else { return }
         
         $otpCode
-            .map { $0.count >= 6 }
+            .map { $0.count == 6 }
             .assign(to: \.state.continueButtonIsEnabled, on: owner)
             .store(in: cancelBag)
     }

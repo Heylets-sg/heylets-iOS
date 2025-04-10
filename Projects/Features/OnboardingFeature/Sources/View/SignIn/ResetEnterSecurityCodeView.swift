@@ -37,7 +37,7 @@ public struct ResetEnterSecurityCodeView: View {
                 Spacer()
                 SecurityCodeInputView(otpCode: $viewModel.otpCode)
                     .frame(width: 310, height: 50)
-                    .padding(.bottom, 16)
+                    .padding(.bottom, 16.adjusted)
                 Spacer()
             }
             

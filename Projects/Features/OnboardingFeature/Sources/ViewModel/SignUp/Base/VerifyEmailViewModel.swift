@@ -61,17 +61,17 @@ public class VerifyEmailViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-//            useCase.requestEmailVerifyCode(email)
-//                .sink(receiveValue: { _ in
-//                    owner.useCase.userInfo.email = owner.email
-//                    if let university = self.domainToUniversity(owner.domain) {
-//                        owner.useCase.userInfo.university = university
-//                    }
-//                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email, owner.nationality))
-//                })
-//                .store(in: cancelBag)
+            useCase.requestEmailVerifyCode(email)
+                .sink(receiveValue: { _ in
+                    owner.useCase.userInfo.email = owner.email
+                    if let university = self.domainToUniversity(owner.domain) {
+                        owner.useCase.userInfo.university = university
+                    }
+                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email, owner.nationality))
+                })
+                .store(in: cancelBag)
             
-            navigationRouter.push(to: .enterReferralCode)
+//            navigationRouter.push(to: .enterReferralCode)
 //            MARK: Test용 삭제 필수
 //            owner.useCase.userInfo.email = owner.email
 //            owner.navigationRouter.push(to: .enterPersonalInfo_SG)

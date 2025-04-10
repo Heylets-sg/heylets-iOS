@@ -51,7 +51,7 @@ extension StubTimeTableUseCase {
         Just(91).eraseToAnyPublisher()
     }
     
-    public func addSection(_ sectionId: Int) -> AnyPublisher<Void, Never> {
+    public func addSection(_ sectionId: Int, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()
     }
     

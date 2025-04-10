@@ -35,15 +35,21 @@ public struct EnterSecurityCodeView: View {
             
             HStack {
                 Spacer()
-                SecurityCodeInputView(otpCode: $viewModel.otpCode)
-                    .frame(width: 310, height: 50)
-                    .padding(.bottom, 16.adjusted)
+                VStack {
+                    SecurityCodeInputView(otpCode: $viewModel.otpCode)
+                        .frame(width: 310, height: 50)
+                        .padding(.bottom, 16.adjusted)
+                    
+                    Text(viewModel.state.errMessage)
+                        .font(.regular_14)
+                        .foregroundColor(.common.Error.default)
+                        .multilineTextAlignment(.center)
+                    
+                }
                 Spacer()
             }
             
-            Text(viewModel.state.errMessage)
-                .font(.regular_14)
-                .foregroundColor(.common.Error.default)
+            
             
         }, titleText: "Enter Your Security Code",
                            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,

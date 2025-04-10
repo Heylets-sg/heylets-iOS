@@ -50,7 +50,10 @@ public protocol TimeTableUseCaseType {
 
     
     //정규 강의 추가하기
-    func addSection(_ sectionId: Int) -> AnyPublisher<Void, Never>
+    func addSection(
+        _ sectionId: Int,
+        _ scheduleIsEmpty: Bool
+    ) -> AnyPublisher<Void, Never>
     
     //MARK: Setting
     

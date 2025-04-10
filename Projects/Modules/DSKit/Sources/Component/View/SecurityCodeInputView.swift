@@ -18,65 +18,56 @@ public struct SecurityCodeInputView: View {
     }
     
     //MARK: Body
-    public var body: some View {            
-            HStack {
-                ZStack(alignment: .center) {
-                    TextField("", text: $otpCode)
-                        .frame(width: 0, height: 0, alignment: .center)
-                        .font(Font.system(size: 0))
-                        .accentColor(.clear)
-                        .foregroundColor(.clear)
-                        .multilineTextAlignment(.center)
-                        .keyboardType(.numberPad)
-                        .onChange(of: otpCode) { newValue in
-                            print(otpCode)
-                            if otpCode.isEmpty {
-                                self.focusedField = .field // otpCode가 비어 있으면 키보드 올리기
-                            }
-                            if otpCode.count >= 6 {
-                                otpCode = String(otpCode.prefix(6))
-                                
-                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                            }
+    public var body: some View {
+        HStack {
+            ZStack(alignment: .center) {
+                TextField("", text: $otpCode)
+                    .frame(width: 0, height: 0, alignment: .center)
+                    .accentColor(.clear)
+                    .foregroundColor(.clear)
+                    .multilineTextAlignment(.center)
+                    .keyboardType(.numberPad)
+                    .onChange(of: otpCode) { _ in
+                        print(otpCode)
+                        if otpCode.isEmpty { keyBoardAppear() }
+                        if otpCode.count >= 6 {
+                            otpCode = String(otpCode.prefix(6))
+                            
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         }
-                        .focused($focusedField, equals: .field)
-                        .task {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5)
-                            {
-                                self.focusedField = .field
-                            }
+                    }
+                    .focused($focusedField, equals: .field)
+                    .task { keyBoardAppear() }
+                    .padding()
+                
+                HStack(spacing: 0) {
+                    
+                    ForEach(0..<6) { index in
+                        VStack {
+                            Text(self.getPin(at: index))
+                                .font(.semibold_28)
+                                .foregroundColor(.common.MainText.default)
+                            Rectangle()
+                                .frame(width: 32, height: 2)
+                                .foregroundColor(.common.InputField.securityCode)
+                                .padding(.leading, index == 3 ? 20 : 10)
+                                .padding(.trailing, index == 2 ? 20 : 10)
+                                .opacity(self.otpCode.count <= index ? 1 : 0)
+                            
                         }
-                        .padding()
-                        
-                    HStack(spacing: 0) {
-                        
-                        ForEach(0..<6) { index in
-                            VStack {
-                                Text(self.getPin(at: index))
-                                    .font(.semibold_28)
-                                    .foregroundColor(.common.MainText.default)
-                                Rectangle()
-                                    .frame(width: 32, height: 2)
-                                    .foregroundColor(.common.InputField.securityCode)
-                                    .padding(.leading, index == 3 ? 20 : 10)
-                                    .padding(.trailing, index == 2 ? 20 : 10)
-                                    .opacity(self.otpCode.count <= index ? 1 : 0)
-                                    
-                            }
-                        }
-                        
-                        
                     }
                     
+                    
                 }
-            }
-            .onTapGesture {
-                self.focusedField = .field
+                
             }
         }
-        
+        .onTapGesture {
+            self.focusedField = .field
+        }
     }
-//}
+    
+}
 
 extension SecurityCodeInputView {
     //MARK: func
@@ -91,6 +82,12 @@ extension SecurityCodeInputView {
         if otpCode.count > upper {
             otpCode = String(otpCode.prefix(upper))
             
+        }
+    }
+    
+    private func keyBoardAppear() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.focusedField = .field
         }
     }
 }

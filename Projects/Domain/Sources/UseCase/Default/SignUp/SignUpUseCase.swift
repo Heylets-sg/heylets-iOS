@@ -39,38 +39,49 @@ final public class SignUpUseCase: SignUpUseCaseType {
     }
     
     public func signUp() -> AnyPublisher<Void, Never> {
-        guestRepository.checkGuestMode()
+        return guestRepository.checkGuestMode()
             .flatMap { [weak self] isGuest in
                 guard let self else { return Empty<Void, Never>().eraseToAnyPublisher() }
+                
+                let signUpPublisher: AnyPublisher<Void, Error>
+                
                 if isGuest {
-                    return self.guestRepository.convertToMember(userInfo)
+                    // 게스트 모드 전환
+                    signUpPublisher = self.guestRepository.convertToMember(self.userInfo)
                         .handleEvents(receiveOutput: { _ in
                             Analytics.shared.track(.guestConverted)
-                            
                         })
-                        .map {_ in }
-                        .catch { [weak self] error in
-                            self?.errMessage.send(error.description)
-                            return Empty<Void, Never>()
-                        }
+                        .mapError { $0 as Error }
                         .eraseToAnyPublisher()
                 } else {
+                    // 일반 회원가입
                     Analytics.shared.track(.clickFinishSignUp)
-                    return self.authRepository.signUp(userInfo)
+                    signUpPublisher = self.authRepository.signUp(self.userInfo)
                         .handleEvents(receiveOutput: { _ in
                             Analytics.shared.track(.userSignedUp)
                         })
-                        .map { _ in }
-                        .catch { [weak self] error in
-                            self?.errMessage.send(error.description)
-                            return Empty<Void, Never>()
-                        }
+                        .mapError { $0 as Error }
                         .eraseToAnyPublisher()
                 }
+                
+                // 회원가입 후 자동 로그인 처리
+                return signUpPublisher
+                    .flatMap { [weak self] _ -> AnyPublisher<Void, Error> in
+                        guard let self = self else { return Fail(error: NSError()).eraseToAnyPublisher() }
+                        
+                        return self.authRepository.logIn(self.userInfo.email, self.userInfo.password)
+                            .map { _ in () }
+                            .mapError { $0 as Error }
+                            .eraseToAnyPublisher()
+                    }
+                    .catch { [weak self] error in
+                        self?.errMessage.send(error.localizedDescription)
+                        return Empty<Void, Never>().eraseToAnyPublisher()
+                    }
+                    .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
-    
     public func requestEmailVerifyCode(
         _ email: String
     ) -> AnyPublisher<Void, Never> {

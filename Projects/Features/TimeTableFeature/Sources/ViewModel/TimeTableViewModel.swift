@@ -163,7 +163,7 @@ public class TimeTableViewModel: ObservableObject {
                 professor: lecture.professor
             )
             )
-            useCase.addSection(lecture.id)
+            useCase.addSection(lecture.id, lecture.schedule.isEmpty)
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
                     Analytics.shared.track(.moduleAdded)
