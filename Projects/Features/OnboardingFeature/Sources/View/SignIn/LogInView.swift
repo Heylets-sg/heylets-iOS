@@ -39,6 +39,7 @@ public struct LogInView: View {
                         Image(uiImage: .icClose)
                             .resizable()
                             .frame(width: 18, height: 18)
+                            .tint(.Common.ButtonClose.default)
                     }
                     .hidden(!viewModel.state.showCloseBtn)
                 }

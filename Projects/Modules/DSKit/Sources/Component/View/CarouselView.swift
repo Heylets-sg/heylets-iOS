@@ -132,7 +132,6 @@ struct ContentView2: View {
             VStack(alignment: .leading) {
                 Text(onboardingContent[index].title)
                     .font(.regular_16)
-//                    .foregroundColor(.heyBlack)
                     .lineSpacing(3.5)
                     .padding(.bottom, 12)
                     .padding(.leading, 16)
@@ -140,7 +139,6 @@ struct ContentView2: View {
                 
                 Text(onboardingContent[index].description)
                     .font(.medium_14)
-//                    .foregroundColor(.heyBlack)
                     .padding(.leading, 16)
                     .lineLimit(2)
                 

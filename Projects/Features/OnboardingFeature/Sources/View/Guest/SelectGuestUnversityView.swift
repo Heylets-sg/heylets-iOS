@@ -28,6 +28,7 @@ struct SelectGuestUnversityView: View {
                         Image(uiImage: .icClose)
                             .resizable()
                             .frame(width: 18, height: 18)
+                            .tint(.Common.ButtonClose.default)
                     }
                 }
                 .padding(.bottom, 10.adjusted)

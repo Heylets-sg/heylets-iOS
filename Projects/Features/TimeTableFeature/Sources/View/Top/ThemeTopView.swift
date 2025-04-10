@@ -45,7 +45,7 @@ struct ThemeTopView: View {
                     } label: {
                         Text("Save")
                             .font(.medium_16)
-                            .foregroundColor(.common.Button.unactive)
+                            .foregroundColor(.common.Button.active)
                     }
                 }
             }
@@ -112,7 +112,7 @@ fileprivate struct ThemeListCellView: View {
                     Circle()
                         .fill(Color.heyWhite)
                         .frame(width: 64, height: 64)
-                        .overlay(Circle().stroke(Color.heySubMain, lineWidth: 3.2))
+                        .overlay(Circle().stroke(Color.heyMain, lineWidth: 3.2))
                 }
                 
                 QuarterCircleView(theme)

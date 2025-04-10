@@ -72,7 +72,7 @@ public struct InviteCodeView: View {
                             HStack {
                                 Text(viewModel.referralCode)
                                     .font(.medium_30)
-                                    .foregroundColor(.common.MainText.else)
+                                    .foregroundColor(.common.MainText.default)
                                     .kerning(10)
                                 
                                 Button {

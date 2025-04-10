@@ -109,10 +109,13 @@ struct ClassFilterCapsuleView: View {
                     )
                 
                 Image(uiImage: .icDown)
-                    .renderingMode(.template)
                     .resizable()
                     .frame(width: 9, height: 4)
-                    .tint(isSelected ? .heyMain : .heyGray1)
+                    .foregroundColor(
+                        isSelected
+                        ? .Filter.Text.active
+                        : .Filter.Text.unActive
+                    )
             }
             .padding(.horizontal, horizontalPadding)
             .padding(.vertical, 11)
