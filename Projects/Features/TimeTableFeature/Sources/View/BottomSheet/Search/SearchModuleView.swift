@@ -50,6 +50,7 @@ public struct SearchModuleView: View {
                         Image(uiImage: .icNext)
                             .resizable()
                             .frame(width: 4, height: 9)
+                            .tint(.common.MainText.else)
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 7)

@@ -11,7 +11,7 @@ import DependencyPlugin
 
 let project = Project.makeModule(
     name: "TodoFeature",
-    targets: [.dynamicFramework, .interface], //, .demo
+    targets: [.staticFramework, .interface], //, .demo
     interfaceDependencies: [
         .Features.BaseFeatureDependency
     ]

@@ -27,13 +27,12 @@ public extension UIImage {
     static let icDown = DSKitAsset.icDown.image.withRenderingMode(.alwaysTemplate)
     static let icPlus = DSKitAsset.icPlus.image
     static let icNext = DSKitAsset.icNext.image.withRenderingMode(.alwaysTemplate)
-    static let icSelected = DSKitAsset.icSelected.image
-    static let icCheck = DSKitAsset.icCheck.image
+    static let icSelected = DSKitAsset.icSelected.image.withRenderingMode(.alwaysTemplate)
+    static let icCheck = DSKitAsset.icCheck.image.withRenderingMode(.alwaysTemplate)
+    static let icUnCheck = DSKitAsset.icUnchecked.image.withRenderingMode(.alwaysTemplate)
     
     static let tabTimeTable = DSKitAsset.tabTimetable.image
-    static let tabTimeTableFilled = DSKitAsset.tabTimetableFilled.image
     static let tabTodo = DSKitAsset.tabTodo.image
-    static let tabTodoFilled = DSKitAsset.tabTodoFilled.image
     static let tabMypage = DSKitAsset.tabMypage.image
     
     static let timeTable = DSKitAsset.graphicsTimeTable.image

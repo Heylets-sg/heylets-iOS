@@ -39,9 +39,10 @@ struct TermsOfServiceView: View {
                 .padding(.bottom, 41.adjusted)
                 
                 HStack(alignment: .center, spacing: 12) { // spacing 추가
-                    Image(uiImage: viewModel.state.allAgree ? .icSelected : .icCheck)
+                    Image(uiImage: .icCheck)
                         .resizable()
                         .frame(width: 24.adjusted, height: 24.adjusted)
+                        .foregroundColor(viewModel.state.allAgree ? .heyMain : .common.MainText.default)
                     
                     Text("Agree to all")
                         .font(.semibold_16)

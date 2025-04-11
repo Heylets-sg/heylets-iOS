@@ -49,15 +49,15 @@ struct SelectNationalityView: View {
                     HStack(spacing: 0) {
                         VStack {
                             if isSelected {
-                                Image(uiImage: .icSelected)
+                                Image(uiImage: .icCheck)
                                     .resizable()
                                     .frame(width: 24.adjusted, height: 24.adjusted)
+                                    .foregroundColor(.heyMain)
                             } else {
-                                Circle()
-                                    .fill(.clear)
+                                Image(uiImage: .icUnCheck)
+                                    .resizable()
                                     .frame(width: 24.adjusted, height: 24.adjusted)
-                                    .overlay(Circle().stroke(Color.common.Button.active2, lineWidth: 2))
-                                    
+                                    .foregroundColor(Color.init(hex: "#747474"))
                             }
                         }
                         .padding(.leading, 20)
@@ -69,8 +69,8 @@ struct SelectNationalityView: View {
                             .font(.medium_16)
                             .foregroundColor(
                                 isSelected
-                                ? .common.Placeholder.default
-                                : .common.MainText.default
+                                ? .common.MainText.default
+                                : .common.Placeholder.default
                             )
                         Spacer()
                     }
@@ -84,7 +84,7 @@ struct SelectNationalityView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(isSelected ? Color.common.Button.active2 : .clear , lineWidth: 2)
+                            .stroke(isSelected ? Color.heyMain : .clear , lineWidth: 2)
                     )
                     .onTapGesture {
                         viewModel.send(.selectNationality(nationality))
