@@ -42,7 +42,7 @@ public struct FilterInfo {
             params["semester"] = "TERM_2"
         }
         if let level = level { params["level"] = level }
-        if let other = keywordType { params["keywordType"] = keywordType }
+        params["size"] = "100"
         
         return params
     }
