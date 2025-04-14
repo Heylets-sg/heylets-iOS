@@ -22,6 +22,7 @@ public class TimeTableViewModel: ObservableObject {
             var showReposrtMissingModuleAlert: Bool = false
             var showAddCustomAlert: Bool = false
             var showGuestErrorAlert: Bool = false
+            var showEmptyScheduleErrorAlert: (Bool, String) = (false, "")
             var showSelectInfoView: Bool = false
         }
         
@@ -47,6 +48,7 @@ public class TimeTableViewModel: ObservableObject {
         case selectedTheme(String)
         case deleteModuleAlertCloseButtonDidTap
         case errorAlertViewCloseButtonDidTap
+        case emptyScheduleErrorAddButtonDidTap(String)
         case addCustomModuleButtonDidTap
         case initMainView
         case notRightNowButtonDidTap
@@ -152,6 +154,11 @@ public class TimeTableViewModel: ObservableObject {
             viewTypeService.switchTo(.search)
             state.error = (false, "")
             
+        case .emptyScheduleErrorAddButtonDidTap(let name):
+            addCustomModuleViewModel.schedule = name
+            state.alerts.showEmptyScheduleErrorAlert = (false, "")
+            viewTypeService.switchTo(.addCustom)
+            
         case .selectLecture(let lecture):
             selectLecture = lecture.timeTableCellInfo
             
@@ -163,7 +170,7 @@ public class TimeTableViewModel: ObservableObject {
                 professor: lecture.professor
             )
             )
-            useCase.addSection(lecture.id, lecture.schedule.isEmpty)
+            useCase.addSection(lecture.id, lecture.name, lecture.schedule.isEmpty)
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
                     Analytics.shared.track(.moduleAdded)
@@ -277,6 +284,16 @@ public class TimeTableViewModel: ObservableObject {
             })
             .map { _ in true }
             .assign(to: \.state.alerts.showGuestErrorAlert, on: self)
+            .store(in: cancelBag)
+        
+        useCase.emptyScheduleError
+            .receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: { [weak self] _ in
+                self?.viewTypeService.reset()
+                self?.settingViewModel.settingAlertType = nil
+            })
+            .map { name in (true, name)}
+            .assign(to: \.state.alerts.showEmptyScheduleErrorAlert, on: self)
             .store(in: cancelBag)
     }
 }

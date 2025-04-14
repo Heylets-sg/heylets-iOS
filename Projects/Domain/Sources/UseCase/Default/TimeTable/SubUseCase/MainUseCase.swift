@@ -68,9 +68,9 @@ public extension TimeTableUseCase {
             .eraseToAnyPublisher()
     }
     
-    func addSection(_ sectionId: Int, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never> {
+    func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never> {
         if scheduleIsEmpty {
-            errMessage.send("Empty schedule, please")
+            emptyScheduleError.send(name)
             return Empty<Void, Never>()
                 .eraseToAnyPublisher()
         } else {

@@ -57,7 +57,7 @@ extension SectioninTableResult {
             name: courseName,
             schedule: schedules.map { $0.toEntity() },
             professor: professor,
-            unit: Int(schedules[0].credit!),
+            unit: schedules[0].credit != nil ?  Int(schedules[0].credit!) : nil,
             backgroundColor: displayStyle.backgroundColor,
             textColor: displayStyle.textColor
         )

@@ -37,7 +37,9 @@ public class AddCustomModuleViewModel: ObservableObject {
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
     
-    public init(_ useCase: TimeTableUseCaseType) {
+    public init(
+        _ useCase: TimeTableUseCaseType
+    ) {
         self.useCase = useCase
     }
     

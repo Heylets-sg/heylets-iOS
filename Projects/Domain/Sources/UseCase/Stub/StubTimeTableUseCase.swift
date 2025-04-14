@@ -12,6 +12,7 @@ import Combine
 final public class StubTimeTableUseCase: TimeTableUseCaseType {
     public var tableId: Int = 0
     public var errMessage = PassthroughSubject<String, Never>()
+    public var emptyScheduleError = PassthroughSubject<String, Never>()
     public var guestModeError = PassthroughSubject<Void, Never>()
     public var timeTableInfo = CurrentValueSubject<TimeTableInfo, Never>(.empty)
     public var sectionList = PassthroughSubject<[SectionInfo], Never>()
@@ -51,7 +52,7 @@ extension StubTimeTableUseCase {
         Just(91).eraseToAnyPublisher()
     }
     
-    public func addSection(_ sectionId: Int, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never> {
+    public func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never> {
         Just(()).eraseToAnyPublisher()
     }
     

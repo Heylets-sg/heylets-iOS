@@ -57,6 +57,15 @@ public struct TimeTableView: View {
                     })
                 )
                 .heyAlert(
+                    isPresented: viewModel.state.alerts.showEmptyScheduleErrorAlert.0,
+                    title: "Empty schedule, please",
+                    primaryButton: ("Add", .gray, {
+                        viewModel.send(.emptyScheduleErrorAddButtonDidTap(
+                            viewModel.state.alerts.showEmptyScheduleErrorAlert.1
+                        ))
+                    })
+                )
+                .heyAlert(
                     isPresented: viewModel.state.alerts.showDeleteAlert,
                     title: "Delete module?",
                     primaryButton: ("Delete", .error, {
