@@ -120,10 +120,9 @@ extension VerifyEmailViewModel {
     func domainToUniversity(_ domain: String) -> UniversityInfo? {
         switch domain {
         case "student.uitm.edu.my": return .UiTM
-        case "siswa.um.edu.my": return .IIUM
-        case "live.iium.edu.my": return .UM
-        case "naver.com": return .UM
-//        case "kookmin.ac.kr": return .UM
+        case "siswa.um.edu.my": return .UM
+        case "live.iium.edu.my": return .IIUM
+        case "gmail.com": return .UM
         default: return .empty
         }
     }
