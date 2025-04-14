@@ -124,6 +124,12 @@ final public class MyPageUseCase: MyPageUseCaseType {
         _ classNotificationIsEnabled: Bool,
         _ classNotificationMinute: Int
     ) -> AnyPublisher<Void, Never> {
+        Analytics.shared.track(.clickUpdateNotificationSetting(
+            classReminderEnabled: classNotificationIsEnabled,
+            dailyBriefing_Enabled: dailyBriefingIsEnabled,
+            classReminderTime: "\(classNotificationMinute)",
+            dailyBriefingTime: dailyBriefingTime
+        ))
         let settingInfo = NotificationSettingInfo(
             dailyBriefing: .init(isEnabled: dailyBriefingIsEnabled, time: dailyBriefingTime),
             classNotification: .init(isEnabled: classNotificationIsEnabled, minutes: "\(classNotificationMinute)")

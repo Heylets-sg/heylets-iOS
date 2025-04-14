@@ -62,6 +62,7 @@ public class SelectNationalityViewModel: ObservableObject {
             
         case .nextButtonDidTap:
             guard let nationality else { return }
+            Analytics.shared.track(.clickSelectCountry(country: nationality.rawValue))
             
             let preview = navigationRouter.destinations.first!
             

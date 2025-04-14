@@ -58,7 +58,7 @@ public struct TimeTableView: View {
                 )
                 .heyAlert(
                     isPresented: viewModel.state.alerts.showEmptyScheduleErrorAlert.0,
-                    title: "Empty schedule, please",
+                    title: "The section hasn't been registered yet",
                     primaryButton: ("Add", .gray, {
                         viewModel.send(.emptyScheduleErrorAddButtonDidTap(
                             viewModel.state.alerts.showEmptyScheduleErrorAlert.1

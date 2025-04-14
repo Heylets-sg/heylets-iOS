@@ -13,6 +13,7 @@ import SwiftUI
 import BaseFeatureDependency
 import Domain
 import DSKit
+import Core
 
 
 public struct InviteCodeView: View {
@@ -116,6 +117,9 @@ public struct InviteCodeView: View {
                         .frame(maxWidth: .infinity)
                         .background(Color.common.CTA.active)
                         .clipShape(RoundedRectangle(cornerRadius: 28))
+                    }
+                    .onTapGesture {
+                        Analytics.shared.track(.clickShareReferralCode)
                     }
                 }
                 .padding(.top, 36.adjusted)

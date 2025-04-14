@@ -24,5 +24,38 @@ public extension AnalyticsTaxonomy {
     static let userSignedUp = AnalyticsTaxonomy(
         eventName: "user_signed_up"
     )
+    
+    static func enterReferralCode(
+        referralCode: String
+    ) -> AnalyticsTaxonomy {
+        return AnalyticsTaxonomy(
+            eventName: "enter_referral_code",
+            properties: [
+                "referral_code": referralCode
+            ]
+        )
+    }
+    
+    static func referralCodeValidated(
+        referralCode: String
+    ) -> AnalyticsTaxonomy {
+        return AnalyticsTaxonomy(
+            eventName: "referral_code_validated",
+            properties: [
+                "referral_code": referralCode
+            ]
+        )
+    }
+    
+    static func clickSelectCountry(
+        country: String
+    ) -> AnalyticsTaxonomy {
+        return AnalyticsTaxonomy(
+            eventName: "click_select_country",
+            properties: [
+                "country": country
+            ]
+        )
+    }
 }
 

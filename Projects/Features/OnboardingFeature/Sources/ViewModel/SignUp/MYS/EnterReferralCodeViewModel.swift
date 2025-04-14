@@ -53,6 +53,7 @@ public class EnterReferralCodeViewModel: ObservableObject {
             navigationRouter.pop()
             
         case .nextButtonDidTap:
+            Analytics.shared.track(.enterReferralCode(referralCode: referralCode))
             useCase.userInfo.referralCode = referralCode
             useCase.signUp()
                 .receive(on: RunLoop.main)
@@ -78,12 +79,14 @@ public class EnterReferralCodeViewModel: ObservableObject {
             .flatMap(useCase.checkReferraalCode)
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] isValid in
+                guard let self else { return }
                 if isValid {
-                    self?.state.referralIsValid = .valid
-                    self?.state.referralMessage = "Check which themes you received on the\ntimetable theme page!"
+                    Analytics.shared.track(.referralCodeValidated(referralCode: self.referralCode))
+                    self.state.referralIsValid = .valid
+                    self.state.referralMessage = "Check which themes you received on the\ntimetable theme page!"
                 } else {
-                    self?.state.referralIsValid = .invalid
-                    self?.state.referralMessage = "Invalid invite code, Please check again!"
+                    self.state.referralIsValid = .invalid
+                    self.state.referralMessage = "Invalid invite code, Please check again!"
                 }
             })
             .store(in: cancelBag)

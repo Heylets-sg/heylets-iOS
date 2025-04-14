@@ -17,7 +17,11 @@ public class TermsOfServiceViewModel: ObservableObject {
     struct State {
         var termsOfServiceIsAgree = false
         var personalInformationIsAgree = false
-        var marketingIsAgree = false
+        var marketingIsAgree = false {
+            didSet {
+                if marketingIsAgree { Analytics.shared.track(.marketingCommunicationAgreed) }
+            }
+        }
         var allAgree = false
         var continueButtonIsEnabled = false
         var errMessage = ""
