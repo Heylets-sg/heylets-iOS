@@ -64,7 +64,8 @@ public struct TodoGroupView: View {
                         
                     }
                 }
-                .padding(.bottom, 8)
+                .frame(height: 22)
+                .padding(.bottom, 8.adjusted)
                 
                 
                 ScrollView {
@@ -77,7 +78,7 @@ public struct TodoGroupView: View {
                         .onTapGesture {
                             viewModel.send(.itemDidTap(item.id))
                         }
-                        .padding(.bottom, 8)
+                        .padding(.bottom, 8.adjusted)
                     }
                     
                     TodoAddItemView(

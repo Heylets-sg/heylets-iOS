@@ -24,43 +24,30 @@ public struct TodoView: View {
     }
     
     public var body: some View {
-        VStack {
+        GeometryReader { geometry in
             ZStack {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("Things to do")
-                            .font(.semibold_18)
-                            .foregroundColor(.common.MainText.else)
-                            .padding(.leading, 16)
-                        
-                        Spacer()
-                        
-                        Button {
-                            viewModel.send(.addGroupButtonDidTap)
-                        } label: {
-                            Image(uiImage: .icPlus)
-                                .resizable()
-                                .frame(width: 16, height: 16)
-                                .tint(.timeTableMain.TimeTableInfo.topIcon)
-                                .padding(.trailing, 24)
+                Color.common.Background.default
+                
+                VStack(spacing: 0) {
+                    headerView
+                        .frame(width: geometry.size.width)
+                        .padding(.top, 81.adjusted)
+                        .padding(.bottom, 12.adjusted)
+                    
+                    ZStack(alignment: .top) {
+                        if viewModel.groupList.isEmpty {
+                            emptyContentView
+                                .frame(width: geometry.size.width)
+                        } else {
+                            listContentView
+                                .frame(width: geometry.size.width)
                         }
                     }
-                    .padding(.top, 81.adjusted)
-                    .padding(.bottom, 12.adjusted)
+                    .frame(width: geometry.size.width)
                     
-                    if viewModel.groupList.isEmpty {
-                        TodoEmptyView()
-                            .background(.green)
-                    } else {
-                        TodoListView(viewModel: viewModel)
-                            .background(.blue)
-                    }
+                    Spacer(minLength: 0)
                 }
-                .ignoresSafeArea()
-                .onAppear {
-                    viewModel.send(.onAppear)
-                }
-                
+                .frame(width: geometry.size.width, height: geometry.size.height)
                 
                 VStack {
                     Spacer()
@@ -68,8 +55,9 @@ public struct TodoView: View {
                         timeTableAction: { viewModel.send(.gotoTimeTable) },
                         mypageAction: { viewModel.send(.gotoMyPage) }
                     )
-                    .frame(height: 82.adjusted)
+                    .frame(width: geometry.size.width, height: 82.adjusted)
                 }
+                .ignoresSafeArea(.keyboard, edges: .bottom)
                 
                 HeyAlertTextFieldView(
                     title: "Enter name",
@@ -79,35 +67,86 @@ public struct TodoView: View {
                 )
                 .hidden(!viewModel.state.showItemAlertView)
             }
-            .ignoresSafeArea()
-            
-            .heyAlert(
-                isPresented: viewModel.state.showGuestDeniedAlert,
-                loginButtonAction: {
-                    viewModel.send(.loginButtonDidTap)
-                },
-                notRightNowButton: {
-                    viewModel.send(.notRightNowButtonDidTap)
-                }
-            )
-            .onTapGesture {
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                viewModel.send(.hideKeyboard)
+        }
+        .ignoresSafeArea()
+        .edgesIgnoringSafeArea(.all)
+        .heyAlert(
+            isPresented: viewModel.state.showGuestDeniedAlert,
+            loginButtonAction: {
+                viewModel.send(.loginButtonDidTap)
+            },
+            notRightNowButton: {
+                viewModel.send(.notRightNowButtonDidTap)
             }
-            .onReceive(Publishers.keyboardHeight) { height in
-                keyboardHeight = height
+        )
+        .onTapGesture {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            viewModel.send(.hideKeyboard)
+        }
+        .onReceive(Publishers.keyboardHeight) { height in
+            keyboardHeight = height
+        }
+        .onAppear {
+            viewModel.send(.onAppear)
+        }
+    }
+    
+    // 헤더 뷰
+    private var headerView: some View {
+        HStack {
+            Text("Things to do")
+                .font(.semibold_18)
+                .foregroundColor(.common.MainText.else)
+                .padding(.leading, 16)
+            
+            Spacer()
+            
+            Button {
+                viewModel.send(.addGroupButtonDidTap)
+            } label: {
+                Image(uiImage: .icPlus)
+                    .resizable()
+                    .frame(width: 16, height: 16)
+                    .tint(.timeTableMain.TimeTableInfo.topIcon)
+                    .padding(.trailing, 24)
             }
         }
     }
-}
-
-public struct TodoListView: View {
-    @ObservedObject var viewModel: TodoViewModel
     
-    public var body: some View {
+    // 비어있는 상태 뷰
+    private var emptyContentView: some View {
+        ScrollView {
+            VStack {
+                Spacer()
+                    .frame(height: 132.adjusted)
+                
+                Image(uiImage: .todoEmpty)
+                    .resizable()
+                    .frame(width: 103.adjusted, height: 113.adjusted)
+                    .padding(.bottom, 36.adjusted)
+                
+                Text("Nothing here yet")
+                    .font(.semibold_18)
+                    .foregroundColor(.common.MainText.default)
+                    .padding(.bottom, 12.adjusted)
+                
+                Text("Add your first to-do and\nstay on track!")
+                    .font(.medium_16)
+                    .foregroundColor(.common.Placeholder.default)
+                    .multilineTextAlignment(.center)
+                
+                Spacer()
+            }
+        }
+        .scrollIndicators(.hidden)
+    }
+    
+    // 목록 콘텐츠 뷰
+    private var listContentView: some View {
         ScrollView {
             Spacer()
                 .frame(height: 20.adjusted)
+            
             VStack(spacing: 16.adjusted) {
                 ForEach(viewModel.groupList, id: \.self) { group in
                     TodoGroupView(
@@ -132,44 +171,11 @@ public struct TodoListView: View {
                 Spacer()
             }
             .padding(.bottom, 209.adjusted)
-            
         }
         .scrollIndicators(.hidden)
     }
 }
 
-public struct TodoEmptyView: View {
-    public var body: some View {
-        HStack {
-            Spacer()
-            VStack {
-                Spacer()
-                    .frame(height: 132.adjusted)
-                
-                Image(uiImage: .todoEmpty)
-                    .resizable()
-                    .frame(width: 103.adjusted, height: 113.adjusted)
-                    .padding(.bottom, 36.adjusted)
-                
-                Text("Nothing here yet")
-                    .font(.semibold_18)
-                    .foregroundColor(.common.MainText.default)
-                    .padding(.bottom, 12.adjusted)
-                
-                Text("Add your first to-do and\nstay on track!")
-                    .font(.medium_16)
-                    .foregroundColor(.common.Placeholder.default)
-                    .multilineTextAlignment(.center)
-                
-                Spacer()
-            }
-            Spacer()
-        }
-        
-    }
-}
-
-// ✅ 키보드 높이를 감지하는 Publisher
 import Combine
 
 extension Publishers {
