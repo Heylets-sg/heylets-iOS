@@ -40,6 +40,7 @@ public extension UIImage {
     static let alarm = DSKitAsset.graphicsAlarm.image
     static let guest = DSKitAsset.graphicsGuest.image
     static let congratulation = DSKitAsset.graphicsCongratulation.image
+    static let todoEmpty = DSKitAsset.graphicsTodoEmpty.image
     
     static let icEtc = DSKitAsset.icEtc.image.withRenderingMode(.alwaysTemplate)
     static let icBlank = DSKitAsset.icBlank.image

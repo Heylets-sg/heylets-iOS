@@ -57,8 +57,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         print("Received remote notification: \(userInfo)")
         
         // 데이터 메시지의 notificationTitle과 notificationBody를 사용하여 로컬 알림 생성
-        if let notificationTitle = userInfo["notificationTitle"] as? String,
-           let notificationBody = userInfo["notificationBody"] as? String {
+        if let notificationTitle = userInfo["NotificationTitle"] as? String,
+           let notificationBody = userInfo["NotificationBody"] as? String {
             
             let content = UNMutableNotificationContent()
             content.title = notificationTitle

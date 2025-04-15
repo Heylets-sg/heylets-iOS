@@ -13,8 +13,8 @@ import Domain
 public enum GuestAPI {
     case changeGuestUniversity(UniversityRequest)
     case startGuestMode(String, GuestAgreementRequest)
-    case convertToMember(SignUpRequest, String)
-    case testConvertToMember(SignUpRequest, String)
+    case convertToMember(GuestSignUpRequest, String)
+    case testConvertToMember(GuestSignUpRequest, String)
 }
 
 extension GuestAPI: BaseAPI {
@@ -92,8 +92,8 @@ extension GuestAPI: BaseAPI {
             return APIHeaders.headerWithAccessToken
         case .startGuestMode:
             return APIHeaders.defaultHeader
-        case .convertToMember:
-            return APIHeaders.headerWithAccessToken
+        case .convertToMember(_, let boundary):
+            return APIHeaders.multipartGuestHeader(boundary)
         case .testConvertToMember(_, let boundary):
             return APIHeaders.testGuestHeader(boundary)
         }

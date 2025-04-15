@@ -20,7 +20,6 @@ public struct SearchModuleTopView: View {
                 withAnimation {
                     closeButtonDidTapEvent()
                     viewType = .main
-                    
                 }
             } label: {
                 Image(uiImage: .icClose)

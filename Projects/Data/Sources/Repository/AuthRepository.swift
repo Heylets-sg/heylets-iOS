@@ -43,7 +43,7 @@ public struct AuthRepository: AuthRepositoryType {
     public func signUp(
         _ user: User
     ) -> AnyPublisher<Void, SignUpError> {
-        let request = user.toDTO()
+        let request: SignUpRequest = user.toDTO()
         return authService.signUp(request)
             .mapError { error in
                 if let errorCode = error.isInvalidStatusCode() {

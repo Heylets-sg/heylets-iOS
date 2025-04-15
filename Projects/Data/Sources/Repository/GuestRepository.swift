@@ -50,7 +50,7 @@ public struct GuestRepository: GuestRepositoryType {
     }
     
     public func convertToMember(_ user: User) -> AnyPublisher<Void, SignUpError> {
-        let request = user.toDTO()
+        let request: GuestSignUpRequest = user.toDTO()
         if Config.isTestEnvironment {
             return guestService.testConvertToMember(request)
                 .handleEvents(receiveOutput: { token in
@@ -67,6 +67,10 @@ public struct GuestRepository: GuestRepositoryType {
                 .eraseToAnyPublisher()
         } else {
             return guestService.convertToMember(request)
+                .handleEvents(receiveOutput: { token in
+                    UserDefaultsManager.clearToken()
+                    UserDefaultsManager.isGuestMode = false
+                })
                 .mapError { error in
                     if let errorCode = error.isInvalidStatusCode() {
                         return SignUpError.error(with: errorCode)

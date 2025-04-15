@@ -32,42 +32,29 @@ public struct TodoView: View {
                             .font(.semibold_18)
                             .foregroundColor(.common.MainText.else)
                             .padding(.leading, 16)
-                            .padding(.top, 81.adjusted)
-                            .padding(.bottom, 12.adjusted)
                         
                         Spacer()
+                        
+                        Button {
+                            viewModel.send(.addGroupButtonDidTap)
+                        } label: {
+                            Image(uiImage: .icPlus)
+                                .resizable()
+                                .frame(width: 16, height: 16)
+                                .tint(.timeTableMain.TimeTableInfo.topIcon)
+                                .padding(.trailing, 24)
+                        }
                     }
+                    .padding(.top, 81.adjusted)
+                    .padding(.bottom, 12.adjusted)
                     
-                    ScrollView {
-                        Spacer()
-                            .frame(height: 20.adjusted)
-                        VStack(spacing: 16.adjusted) {
-                            ForEach(viewModel.groupList, id: \.self) { group in
-                                TodoGroupView(
-                                    group: group,
-                                    viewModel: viewModel
-                                )
-                            }
-                        }
-                        .loading(viewModel.state.isLoading)
-                        .padding(.bottom, 36.adjusted)
-                        
-                        HStack {
-                            Spacer()
-                            Button {
-                                viewModel.send(.addGroupButtonDidTap)
-                            } label: {
-                                Image(uiImage: .icAddGroup)
-                                    .resizable()
-                                    .frame(width: 28, height: 28)
-                                    .tint(.todo.addtodo)
-                            }
-                            Spacer()
-                        }
-                        .padding(.bottom, 209.adjusted)
-                        
+                    if viewModel.groupList.isEmpty {
+                        TodoEmptyView()
+                            .background(.green)
+                    } else {
+                        TodoListView(viewModel: viewModel)
+                            .background(.blue)
                     }
-                    .scrollIndicators(.hidden)
                 }
                 .ignoresSafeArea()
                 .onAppear {
@@ -114,6 +101,73 @@ public struct TodoView: View {
     }
 }
 
+public struct TodoListView: View {
+    @ObservedObject var viewModel: TodoViewModel
+    
+    public var body: some View {
+        ScrollView {
+            Spacer()
+                .frame(height: 20.adjusted)
+            VStack(spacing: 16.adjusted) {
+                ForEach(viewModel.groupList, id: \.self) { group in
+                    TodoGroupView(
+                        group: group,
+                        viewModel: viewModel
+                    )
+                }
+            }
+            .loading(viewModel.state.isLoading)
+            .padding(.bottom, 36.adjusted)
+            
+            HStack {
+                Spacer()
+                Button {
+                    viewModel.send(.addGroupButtonDidTap)
+                } label: {
+                    Image(uiImage: .icAddGroup)
+                        .resizable()
+                        .frame(width: 28, height: 28)
+                        .tint(.todo.addtodo)
+                }
+                Spacer()
+            }
+            .padding(.bottom, 209.adjusted)
+            
+        }
+        .scrollIndicators(.hidden)
+    }
+}
+
+public struct TodoEmptyView: View {
+    public var body: some View {
+        HStack {
+            Spacer()
+            VStack {
+                Spacer()
+                    .frame(height: 132.adjusted)
+                
+                Image(uiImage: .todoEmpty)
+                    .resizable()
+                    .frame(width: 103.adjusted, height: 113.adjusted)
+                    .padding(.bottom, 36.adjusted)
+                
+                Text("Nothing here yet")
+                    .font(.semibold_18)
+                    .foregroundColor(.common.MainText.default)
+                    .padding(.bottom, 12.adjusted)
+                
+                Text("Add your first to-do and\nstay on track!")
+                    .font(.medium_16)
+                    .foregroundColor(.common.Placeholder.default)
+                    .multilineTextAlignment(.center)
+                
+                Spacer()
+            }
+            Spacer()
+        }
+        
+    }
+}
 
 // ✅ 키보드 높이를 감지하는 Publisher
 import Combine

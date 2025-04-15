@@ -122,7 +122,8 @@ extension VerifyEmailViewModel {
         case "student.uitm.edu.my": return .UiTM
         case "siswa.um.edu.my": return .UM
         case "live.iium.edu.my": return .IIUM
-//        case "gmail.com": return .UM
+        case "naver.com", "gmail.com": return .UM
+            
         default: return .empty
         }
     }

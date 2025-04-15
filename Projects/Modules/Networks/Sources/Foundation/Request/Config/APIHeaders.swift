@@ -131,5 +131,17 @@ public extension APIHeaders {
             pushTokenName: pushToken
         ]
     }
+    
+    static func multipartGuestHeader(_ boundary: String) -> [String:String] {
+        return [
+            contentType: multiPartFormData + "boundary=\(boundary)",
+            accept: applicationJSON,
+            deviceIDName: deviceID,
+            deviceModelName: deviceModel,
+            OSVersionName: OSVersion,
+            appVersionName: appVersion.versionString,
+            xPlatform: iOS,
+            auth: accessToken
+        ]
+    }
 }
-

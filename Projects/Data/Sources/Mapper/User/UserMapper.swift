@@ -21,7 +21,22 @@ extension User {
                 password: password,
                 university: university.rawValue,
                 sex: gender,
-                birth: birth.toInt(),
+                birth: birth.toString(),
+                agreements: agreements.map { $0.toDTO() },
+                referralCode: referralCode
+            ),
+            profileImg: profileImage?.jpegData(compressionQuality: 0.1)
+        )
+    }
+    
+    public func toDTO() -> GuestSignUpRequest {
+        .init(
+            request: .init(
+                nickname: nickName,
+                email: email,
+                password: password,
+                sex: gender,
+                birth: birth.toString(),
                 agreements: agreements.map { $0.toDTO() },
                 referralCode: referralCode
             ),

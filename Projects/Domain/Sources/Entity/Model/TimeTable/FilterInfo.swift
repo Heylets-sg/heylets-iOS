@@ -42,7 +42,7 @@ public struct FilterInfo {
             params["semester"] = "TERM_2"
         }
         if let level = level { params["level"] = level }
-        params["size"] = "100"
+        params["size"] = "50"
         
         return params
     }

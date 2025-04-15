@@ -18,13 +18,23 @@ public struct SignUpRequest: Encodable {
     }
 }
 
+public struct GuestSignUpRequest: Encodable {
+    let request: GuestRequiredRequest
+    let profileImg: Data?
+    
+    public init(request: GuestRequiredRequest, profileImg: Data?) {
+        self.request = request
+        self.profileImg = profileImg
+    }
+}
+
 public struct RequiredRequest: Encodable {
     let nickname: String
     let email: String
     let password: String
     let university: String
     let sex: String
-    let birth: Int
+    let birth: String
     let agreements: [AgreementRequest]
     let referralCode: String?
     
@@ -34,7 +44,7 @@ public struct RequiredRequest: Encodable {
         password: String,
         university: String,
         sex: String,
-        birth: Int,
+        birth: String,
         agreements: [AgreementRequest],
         referralCode: String? = nil
     ) {
@@ -48,6 +58,35 @@ public struct RequiredRequest: Encodable {
         self.referralCode = referralCode
     }
 }
+
+public struct GuestRequiredRequest: Encodable {
+    let nickname: String
+    let email: String
+    let password: String
+    let sex: String
+    let birth: String
+    let agreements: [AgreementRequest]
+    let referralCode: String?
+    
+    public init(
+        nickname: String,
+        email: String,
+        password: String,
+        sex: String,
+        birth: String,
+        agreements: [AgreementRequest],
+        referralCode: String? = nil
+    ) {
+        self.nickname = nickname
+        self.email = email
+        self.password = password
+        self.sex = sex
+        self.birth = birth
+        self.agreements = agreements
+        self.referralCode = referralCode
+    }
+}
+
 
 public struct GuestAgreementRequest: Encodable {
     let agreements: [AgreementRequest]

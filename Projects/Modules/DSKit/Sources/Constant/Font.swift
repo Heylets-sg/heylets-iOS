@@ -17,6 +17,7 @@ public extension Font {
     
     // semibold
     static let semibold_28: Font = Font(DSKitFontFamily.NotoSansKR.semiBold.font(size: 28))
+    static let semibold_20: Font = Font(DSKitFontFamily.NotoSansKR.semiBold.font(size: 20))
     static let semibold_18: Font = Font(DSKitFontFamily.NotoSansKR.semiBold.font(size: 18))
     static let semibold_16: Font = Font(DSKitFontFamily.NotoSansKR.semiBold.font(size: 16))
     static let semibold_14: Font = Font(DSKitFontFamily.NotoSansKR.semiBold.font(size: 14))
