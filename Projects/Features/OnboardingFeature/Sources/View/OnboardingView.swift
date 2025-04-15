@@ -198,18 +198,18 @@ public struct OnboardingView: View {
                             }
                             .padding(.bottom, 50.adjusted)
                             
-                            Button("Start") {
-                                viewModel.send(.startButtonDidTap)
+                            Button("Log in") {
+                                viewModel.send(.loginButtonDidTap)
                             }
                             .heyCTAButtonStyle(.white)
                             .padding(.bottom, 16.adjusted)
                             
                             Button {
-                                viewModel.send(.alreadyRegisteredButtonDidTap)
+                                viewModel.send(.guestModeButtonDidTap)
                             } label: {
                                 HStack {
                                     Spacer()
-                                    Text("Already registered")
+                                    Text("Create as Guest")
                                         .font(.medium_12)
                                         .foregroundColor(.common.MainText.else)
                                     

@@ -9,7 +9,11 @@
 import Foundation
 
 public struct NetworkLogHandler {
-    // 디코딩 로깅 함수
+    // MARK: - 상수
+    private static let divider = "================================================================"
+    private static let shortDivider = "--------------------------------"
+    
+    // MARK: - 디코딩 로깅 함수
     static func responseDecodingError<T: Decodable>(
         data: Data,
         decodingType: T.Type,
@@ -18,55 +22,68 @@ public struct NetworkLogHandler {
         let jsonString = String(data: data, encoding: .utf8) ?? "Invalid Data"
         
         print("""
-            ======================== 📥 Response <========================
-            ========================= ❌ Decoding Error ==========================
-            ❗️ Error Type: \(error.description)
-            ❗️ Expected Decoding Type: \(decodingType)
-            ❗️ Error Data: \(jsonString)
-            ==============================================================
+            
+            \(divider)
+            📥 응답 - 디코딩 오류
+            \(shortDivider)
+            ❌ 오류 유형: \(error.description)
+            📋 예상 디코딩 타입: \(decodingType)
+            🔍 오류 데이터: \(jsonString)
+            \(divider)
+            
             """)
     }
     
     static func tokenIntercepterRetryLogging(retryCnt: Int) {
         print("""
-            ======================== 🪄 retry <========================
-            🪄 토큰이 만료되어서 retry 작업을 실행합니다
-            🪄 실행 횟수 \(retryCnt) -> \(3-retryCnt)이후 🚨요청횟수 초과🚨 에러가 발생합니다!
-            ==============================================================
+            
+            \(divider)
+            🔄 토큰 재시도 (\(retryCnt)/3)
+            \(shortDivider)
+            🔑 토큰이 만료되어 재시도 작업을 실행합니다.
+            ⚠️ \(3-retryCnt)회 이후 요청 횟수 초과 오류가 발생합니다!
+            \(divider)
+            
             """)
-        
     }
     
     static func tokenIntercepterRetryError(error: HeyNetworkError) {
         print("""
-            ========================= ❌ Retry Error ==========================
-            ❗️ Error Type: \(error.description)
-            ==============================================================
+            
+            \(divider)
+            ❌ 토큰 재시도 오류
+            \(shortDivider)
+            🔴 오류 유형: \(error.description)
+            \(divider)
+            
             """)
-        
     }
 }
 
-// 네트워크 응답 로깅 함수
+// MARK: - 네트워크 응답 로깅 함수
 extension NetworkLogHandler {
     static func responseLogging(
         _ endpoint: URLRequestTargetType,
         result response: NetworkResponse
     ) {
         print("""
-            ======================== 📥 Response <========================
-            [EndPoint Information]
-            1️⃣ URL: \(endpoint.url)
-            2️⃣ Path: \(endpoint.path ?? "없음")
-            3️⃣ Method: \(endpoint.method)
-            4️⃣ headers: \(endpoint.headers ?? [:])
-            5️⃣ task: \(endpoint.task)
-            ========================= ✌🏻 응답이 도착했습니다 =========================
-            ✌🏻 StatusCode: \(response.response.statusCode)
-            ✌🏻 responseData: \(String(data: response.data ?? Data(), encoding: .utf8) ?? "No data")
-            ==============================================================
-            """
-        )
+            
+            \(divider)
+            📥 응답 수신 완료
+            \(shortDivider)
+            📌 엔드포인트 정보:
+              • URL: \(endpoint.url)
+              • Path: \(endpoint.path ?? "없음")
+              • Method: \(endpoint.method)
+              • Headers: \(formatDictionary(endpoint.headers ?? [:]))
+              • Task: \(endpoint.task)
+            \(shortDivider)
+            📊 응답 정보:
+              • Status Code: \(response.response.statusCode)
+              • 응답 데이터: \(String(data: response.data ?? Data(), encoding: .utf8) ?? "No data")
+            \(divider)
+            
+            """)
     }
     
     static func NoResponseError(
@@ -74,9 +91,17 @@ extension NetworkLogHandler {
         error: HeyNetworkError.ResponseError
     ) {
         print("""
-            ======================== 📤 네트워크 응답시 발생한 에러입니다 📤========================
-            ========================= ❌ NoResponse Error ❌ ==========================
-            ❗️ Error Type: \(error.description)
+            
+            \(divider)
+            📤 네트워크 응답 오류
+            \(shortDivider)
+            ❌ 응답 없음
+            🔴 오류 유형: \(error.description)
+            📌 요청 정보:
+              • URL: \(endpoint.url)
+              • Path: \(endpoint.path ?? "없음")
+            \(divider)
+            
             """)
     }
     
@@ -85,51 +110,39 @@ extension NetworkLogHandler {
         error: HeyNetworkError.ResponseError
     ) {
         print("""
-            ======================== 📤 네트워크 응답시 발생한 에러입니다 📤========================
-            ========================= ❌ invalidResponse Error ❌ ==========================
-            ❗️ Error Type: \(error.description)
-            ❗️ responseData: \(String(data: response.data ?? Data(), encoding: .utf8) ?? "No data")
-            ❗️ StatusCode: \(response.response.statusCode)
-            ==============================================================
-            """
-        )
+            
+            \(divider)
+            📤 네트워크 응답 오류
+            \(shortDivider)
+            ❌ 잘못된 응답
+            🔴 오류 유형: \(error.description)
+            🔢 상태 코드: \(response.response.statusCode)
+            📄 응답 데이터: \(String(data: response.data ?? Data(), encoding: .utf8) ?? "No data")
+            \(divider)
+            
+            """)
     }
 }
 
-
-// 네트워크 요청 로깅 함수
+// MARK: - 네트워크 요청 로깅 함수
 extension NetworkLogHandler {
     static func requestLogging(_ request: URLRequest) {
         let requestURL = request.url?.absoluteString ?? "없음"
         let requestHTTPmethod = request.httpMethod ?? "없음"
         let requestHeaders = request.allHTTPHeaderFields ?? [:]
-        var parameters: Any?
-        
-        if let httpBody = request.httpBody {
-            if let jsonObject = try? JSONSerialization.jsonObject(with: httpBody, options: []),
-               let encodableParameter = jsonObject as? [String: Any] {
-                parameters = encodableParameter
-            } else { return }
-        }
-        
-        // HTTPBody가 없으면 URLQueryItem에서 추출
-        if let url = request.url, let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
-            var queryParameters: [String: Any] = [:]
-            components.queryItems?.forEach { queryItem in
-                if let value = queryItem.value {
-                    queryParameters[queryItem.name] = value
-                }
-            }
-            parameters = queryParameters
-        }
+        let parameters = extractParameters(from: request)
         
         print("""
-            ================== 📤 Request ===================>
-            📝 URL: \(requestURL)
-            📝 HTTP Method: \(requestHTTPmethod)
-            📝 Header: \(requestHeaders)
-            📝 Parameters: \(parameters ?? "없음")
-            ================================
+            
+            \(divider)
+            📤 요청 전송
+            \(shortDivider)
+            🔗 URL: \(requestURL)
+            🔤 HTTP Method: \(requestHTTPmethod)
+            📋 Header: \(formatDictionary(requestHeaders))
+            📦 Parameters: \(parameters != nil ? "\n\(formatAnyValue(parameters!))" : "없음")
+            \(divider)
+            
             """)
     }
     
@@ -143,14 +156,18 @@ extension NetworkLogHandler {
         let task = endpoint.task
         
         print("""
-            ======================== 📤 네트워크 요청 📤========================
-            ========================= ❌ InvalidURL Error ❌ ==========================
-            ❗️ Error Type: \(error.description)
-            ❗️ 🚨 URL: \(url) 🚨
-            ❗️ Method: \(method)
-            ❗️ Header: \(headers)
-            ❗️ Task: \(task)
-            ==============================================================
+            
+            \(divider)
+            📤 네트워크 요청 오류
+            \(shortDivider)
+            ❌ 잘못된 URL
+            🔴 오류 유형: \(error.description)
+            🔗 URL: \(url)
+            🔤 Method: \(method)
+            📋 Header: \(formatDictionary(headers))
+            📦 Task: \(task)
+            \(divider)
+            
             """)
     }
     
@@ -162,18 +179,69 @@ extension NetworkLogHandler {
         let url = request.url?.absoluteString ?? "없음"
         let method = request.httpMethod ?? "없음"
         let headers = request.allHTTPHeaderFields ?? [:]
-        let parameterDescription = parameter.map { String(describing: $0) } ?? "없음"
+        let parameterDescription = parameter.map { formatAnyValue($0) } ?? "없음"
         
         print("""
-            ======================== 📤 네트워크 요청 📤 ========================
-            ========================= ❌ ParameterEncoding Error ❌ ==========================
-            ❗️ Error Type: \(error.description)
-            ❗️ URL: \(url)
-            ❗️ Method: \(method)
-            ❗️ Header: \(headers)
-            ❗️ 🚨 Parameter: \(parameterDescription) 🚨
-            ==============================================================
-        """)
+            
+            \(divider)
+            📤 네트워크 요청 오류
+            \(shortDivider)
+            ❌ 파라미터 인코딩 실패
+            🔴 오류 유형: \(error.description)
+            🔗 URL: \(url)
+            🔤 Method: \(method)
+            📋 Header: \(formatDictionary(headers))
+            📦 Parameter: \(parameterDescription)
+            \(divider)
+            
+            """)
+    }
+    
+    // MARK: - 유틸리티 메소드
+    
+    /// 딕셔너리를 가독성 좋게 포맷팅
+    private static func formatDictionary<K, V>(_ dict: [K: V]) -> String {
+        if dict.isEmpty { return "없음" }
+        
+        let elements = dict.map { "\($0.key): \($0.value)" }
+        return "[\n    " + elements.joined(separator: ",\n    ") + "\n]"
+    }
+    
+    /// request에서 파라미터 추출
+    private static func extractParameters(from request: URLRequest) -> Any? {
+        // HTTP Body에서 파라미터 추출 시도
+        if let httpBody = request.httpBody, let jsonObject = try? JSONSerialization.jsonObject(with: httpBody, options: []) {
+            return jsonObject
+        }
+        
+        // URL 쿼리 파라미터 추출 시도
+        if let url = request.url, let components = URLComponents(url: url, resolvingAgainstBaseURL: false), let queryItems = components.queryItems, !queryItems.isEmpty {
+            var queryParameters: [String: String] = [:]
+            queryItems.forEach { queryItem in
+                if let value = queryItem.value {
+                    queryParameters[queryItem.name] = value
+                }
+            }
+            return queryParameters
+        }
+        
+        return nil
+    }
+    
+    /// Any 타입 값을 가독성 좋게 포맷팅
+    private static func formatAnyValue(_ value: Any) -> String {
+        let mirror = Mirror(reflecting: value)
+        
+        if let dict = value as? [String: Any] {
+            let elements = dict.map { "\"\($0.key)\": \(formatAnyValue($0.value))" }
+            return "{\n    " + elements.joined(separator: ",\n    ") + "\n}"
+        } else if let array = value as? [Any] {
+            let elements = array.map { formatAnyValue($0) }
+            return "[\n    " + elements.joined(separator: ",\n    ") + "\n]"
+        } else if mirror.displayStyle == .class || mirror.displayStyle == .struct {
+            return String(describing: value)
+        } else {
+            return "\(value)"
+        }
     }
 }
-

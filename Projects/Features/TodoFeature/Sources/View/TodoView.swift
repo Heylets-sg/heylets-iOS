@@ -80,7 +80,7 @@ public struct TodoView: View {
             }
         )
         .onTapGesture {
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            endTextEditing()
             viewModel.send(.hideKeyboard)
         }
         .onReceive(Publishers.keyboardHeight) { height in

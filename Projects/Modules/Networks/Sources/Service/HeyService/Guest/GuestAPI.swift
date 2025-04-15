@@ -85,7 +85,6 @@ extension GuestAPI: BaseAPI {
             return .uploadMultipartFormData(multipartData, boundary)
         }
     }
-    
     public var headers: [String : String]? {
         switch self {
         case .changeGuestUniversity:

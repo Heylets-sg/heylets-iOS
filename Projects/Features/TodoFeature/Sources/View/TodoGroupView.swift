@@ -97,10 +97,3 @@ public struct TodoGroupView: View {
         .padding(.horizontal, 24)
     }
 }
-
-
-extension UIResponder {
-    @objc static func resignFirstResponder() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
