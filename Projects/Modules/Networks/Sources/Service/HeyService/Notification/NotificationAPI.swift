@@ -17,6 +17,10 @@ public enum NotificationAPI {
 }
 
 extension NotificationAPI: BaseAPI {
+    public var connectWebHook: Bool {
+        return false
+    }
+    
     public var isWithInterceptor: Bool {
         return false
     }

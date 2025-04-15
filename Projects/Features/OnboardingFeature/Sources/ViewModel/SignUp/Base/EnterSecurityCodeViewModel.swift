@@ -46,6 +46,8 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         self.email = email
         self.nationality = nationality
         
+        state.hiddenEmail = email.maskedEmail()
+        
         observe()
         bindState()
     }

@@ -114,4 +114,3 @@ public class LogInViewModel: ObservableObject {
             .store(in: cancelBag)
     }
 }
-

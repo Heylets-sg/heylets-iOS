@@ -26,7 +26,18 @@ public final class BaseService<Target: URLRequestTargetType> {
             .flatMap { response in
                 self.validate(response: response, target: target)
                     .map { _ in response.data! }
-                    .mapError { $0 }
+                    .mapError {
+                        if target.connectWebHook {
+                            WebHookHandler.shared.sendErrorToSlack(
+                                error: $0,
+                                fullURL: "\(target.url)\(target.path ?? "")",
+                                method: target.method.rawValue,
+                                headers: target.headers?.map { "\($0): \($1)" }.joined(separator: "\n") ?? "없음",
+                                taksDesc: String(describing: target.task)
+                            )
+                        }
+                        return $0
+                    }
             }
             .flatMap { data in
                 self.decode(data: data)
@@ -40,7 +51,18 @@ public final class BaseService<Target: URLRequestTargetType> {
             .flatMap { response in
                 self.validate(response: response, target: target)
                     .map { _ in response.data! }
-                    .mapError { $0 }
+                    .mapError {
+                        if target.connectWebHook {
+                            WebHookHandler.shared.sendErrorToSlack(
+                                error: $0,
+                                fullURL: "\(target.url)\(target.path ?? "")",
+                                method: target.method.rawValue,
+                                headers: target.headers?.map { "\($0): \($1)" }.joined(separator: "\n") ?? "없음",
+                                taksDesc: String(describing: target.task)
+                            )
+                        }
+                        return $0
+                    }
             }
             .flatMap { data -> AnyPublisher<VoidResult, HeyNetworkError> in
                 self.decodeNoResult(data: data)

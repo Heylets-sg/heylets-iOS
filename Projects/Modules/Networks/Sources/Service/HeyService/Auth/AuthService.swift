@@ -58,7 +58,7 @@ public protocol AuthServiceType {
 extension AuthService: AuthServiceType {
     public func checkUserName(
         _ name: String
-    ) -> AnyPublisher<UserNameResult, HeyNetworkError> {
+    ) -> NetworkDecodableResponse<UserNameResult> {
         requestWithResult(.checkUserName(name))
     }
     

@@ -11,6 +11,7 @@ import Combine
 
 import Domain
 import Networks
+import Core
 
 public struct AuthRepository: AuthRepositoryType {
     public let authService: AuthServiceType

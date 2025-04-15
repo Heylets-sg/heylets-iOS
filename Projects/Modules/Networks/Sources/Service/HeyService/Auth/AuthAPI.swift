@@ -150,6 +150,13 @@ extension AuthAPI: BaseAPI {
             return APIHeaders.defaultHeader
         }
     }
+    
+    public var connectWebHook: Bool {
+        switch self {
+        case .refreshToken:
+            return false
+        default:
+            return true
+        }
+    }
 }
-
-

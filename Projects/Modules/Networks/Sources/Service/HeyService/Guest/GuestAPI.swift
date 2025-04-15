@@ -18,6 +18,15 @@ public enum GuestAPI {
 }
 
 extension GuestAPI: BaseAPI {
+    public var connectWebHook: Bool {
+        switch self {
+        case .convertToMember(let guestSignUpRequest, let string):
+            return true
+        default:
+            return false
+        }
+    }
+    
     public var isWithInterceptor: Bool {
         return false
     }
