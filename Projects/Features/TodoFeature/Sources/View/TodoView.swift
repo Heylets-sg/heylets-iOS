@@ -124,16 +124,19 @@ public struct TodoView: View {
                     .resizable()
                     .frame(width: 103.adjusted, height: 113.adjusted)
                     .padding(.bottom, 36.adjusted)
+                    .hidden(viewModel.state.isLoading)
                 
                 Text("Nothing here yet")
                     .font(.semibold_18)
                     .foregroundColor(.common.MainText.default)
                     .padding(.bottom, 12.adjusted)
+                    .hidden(viewModel.state.isLoading)
                 
                 Text("Add your first to-do and\nstay on track!")
                     .font(.medium_16)
                     .foregroundColor(.common.Placeholder.default)
                     .multilineTextAlignment(.center)
+                    .hidden(viewModel.state.isLoading)
                 
                 Spacer()
             }

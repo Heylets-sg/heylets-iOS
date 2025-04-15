@@ -1,11 +1,3 @@
-//
-//  TimeTableViewModel.swift
-//  TimeTableFeature
-//
-//  Created on 3/27/25.
-//  Copyright © 2025 Heylets-iOS. All rights reserved.
-//
-
 import Foundation
 import Combine
 import SwiftUI
@@ -87,6 +79,8 @@ public class TimeTableViewModel: ObservableObject {
     @Published var selectLecture: [TimeTableCellInfo] = []
     @Published var selectedThemeColor: [String] = []
     
+    // Add subscription to track view type changes
+    private var viewTypeSubscription: AnyCancellable?
     
     public init(
         _ searchModuleViewModel: SearchModuleViewModel,
@@ -109,6 +103,14 @@ public class TimeTableViewModel: ObservableObject {
         bindState()
         
         timeTable = sectionList.createTimeTableCellList()
+        
+        // Subscribe to view type changes to reset selectLecture when returning to main
+        viewTypeSubscription = viewTypeService.$viewType
+            .sink { [weak self] viewType in
+                if viewType == .main {
+                    self?.selectLecture = []
+                }
+            }
     }
     
     func send(_ action: Action) {
@@ -182,6 +184,8 @@ public class TimeTableViewModel: ObservableObject {
         case .initMainView:
             if !(viewType == .search || viewType == .theme || viewType == .addCustom) {
                 viewTypeService.reset()
+                // Also clear selectLecture when manually resetting to main view
+                selectLecture = []
             }
             
         case .addCustomModuleButtonDidTap:
@@ -212,7 +216,10 @@ public class TimeTableViewModel: ObservableObject {
             windowRouter.switch(to: .todo)
         case .gotoMyPage:
             windowRouter.switch(to: .mypage)
-        case .gotoInviteCodeView :
+        case .gotoInviteCodeView:
+            // Store current view type before navigating to invite code
+            let currentViewType = viewType
+            // Navigate to invite code
             navigationRouter.push(to: .inviteCode)
         }
     }
@@ -271,6 +278,8 @@ public class TimeTableViewModel: ObservableObject {
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.viewTypeService.reset()
                 self?.settingViewModel.settingAlertType = nil
+                // Clear selectLecture on error
+                self?.selectLecture = []
             })
             .map { message in (true, message)}
             .assign(to: \.state.error, on: self)
@@ -281,6 +290,8 @@ public class TimeTableViewModel: ObservableObject {
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.viewTypeService.reset()
                 self?.settingViewModel.settingAlertType = nil
+                // Clear selectLecture on guest mode error
+                self?.selectLecture = []
             })
             .map { _ in true }
             .assign(to: \.state.alerts.showGuestErrorAlert, on: self)
@@ -291,6 +302,8 @@ public class TimeTableViewModel: ObservableObject {
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.viewTypeService.reset()
                 self?.settingViewModel.settingAlertType = nil
+                // Clear selectLecture on empty schedule error
+                self?.selectLecture = []
             })
             .map { name in (true, name)}
             .assign(to: \.state.alerts.showEmptyScheduleErrorAlert, on: self)
