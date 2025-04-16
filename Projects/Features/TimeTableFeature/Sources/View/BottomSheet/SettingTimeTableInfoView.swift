@@ -9,8 +9,6 @@ struct SettingTimeTableInfoView: View {
     
     var body: some View {
         ZStack {
-            Color.clear
-            
             VStack {
                 Spacer()
                 VStack {
@@ -47,7 +45,9 @@ struct SettingTimeTableInfoView: View {
                             ? 388.adjusted
                             : 306.adjusted
                         )
-                        .background(Color.timeTableMain.bottomSheet)
+                        .background(
+                            Color.timeTableMain.bottomSheet
+                        )
                     }
                 }
                 .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
@@ -62,6 +62,7 @@ struct SettingTimeTableInfoView: View {
                 CongratulationPopupView(
                     okayButtonClosure: { viewModel.send(.popUpOkButtonDidTap) }
                 )
+                .background(viewModel.state.isShowingPopup ? Color.common.Background.opacity60 : Color.clear)
             }
         }
     }
@@ -72,43 +73,47 @@ struct CongratulationPopupView: View {
     
     var body: some View {
         VStack {
-            ZStack {
-                VStack {
-                    Text("Congratulations!")
-                        .font(.bold_20)
-                        .foregroundColor(.common.MainText.default)
-                        .padding(.top, 69)
-                        .padding(.bottom, 20)
-                    
-                    Text("3 themes have been\nunlocked")
-                        .font(.medium_16)
-                        .foregroundColor(.common.MainText.default)
-                        .multilineTextAlignment(.center)
-                        .padding(.bottom, 27)
-                    
-                    Button("Ok") {
-                        okayButtonClosure()
+            Spacer()
+                .frame(height: 231)
+            VStack {
+                ZStack {
+                    VStack {
+                        Text("Congratulations!")
+                            .font(.bold_20)
+                            .foregroundColor(.common.MainText.default)
+                            .padding(.top, 69)
+                            .padding(.bottom, 20)
+                        
+                        Text("3 themes have been\nunlocked")
+                            .font(.medium_16)
+                            .foregroundColor(.common.MainText.default)
+                            .multilineTextAlignment(.center)
+                            .padding(.bottom, 27)
+                        
+                        Button("Ok") {
+                            okayButtonClosure()
+                        }
+                        .heyAlertButtonStyle(.primary, 52)
+                        .padding(.bottom, 30)
+                        .padding(.horizontal, 14)
                     }
-                    .heyAlertButtonStyle(.primary, 52)
-                    .padding(.bottom, 30)
-                    .padding(.horizontal, 14)
+                    .frame(height: 300)
+                    .background(Color.popup.default)
+                    .clipShape(RoundedRectangle(cornerRadius: 6.5))
+                    .padding(.top, 102)
+                    
+                    VStack {
+                        Image(uiImage: .congratulation)
+                            .resizable()
+                            .frame(width: 167, height: 151)
+                            .padding(.bottom, 200)
+                    }
                 }
-//                .frame(.height, 248)
-                .background(Color.popup.default)
-                .clipShape(RoundedRectangle(cornerRadius: 6.5))
-                .padding(.top, 102)
-                
-                VStack {
-                    Image(uiImage: .congratulation)
-                        .resizable()
-                        .frame(width: 167, height: 151)
-                        .padding(.bottom, 200)
-                }
+                .padding(.horizontal, 54)
+                .frame(height: 350)
             }
-            .padding(.horizontal, 54)
-            .frame(height: 350)
+            Spacer()
         }
-        Spacer()
     }
 }
 
