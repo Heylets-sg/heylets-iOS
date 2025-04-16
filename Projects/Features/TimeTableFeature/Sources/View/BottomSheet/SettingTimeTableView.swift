@@ -25,7 +25,7 @@ struct SettingTimeTableView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Button {
                     withAnimation {
-                        viewType = .theme
+                        viewType = .theme(false)
                     }
                 } label: {
                     Text("Theme")

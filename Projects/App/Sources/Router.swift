@@ -36,7 +36,7 @@ extension Router {
         // TimeTableViewTypeService를 사용하여 테마 화면으로 전환
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // 탭 전환이 완료된 후 테마 뷰로 전환
-            TimeTableViewTypeService.shared.switchTo(.theme)
+            TimeTableViewTypeService.shared.switchTo(.theme(true))
         }
     }
 }

@@ -9,13 +9,13 @@
 import Foundation
 import SwiftUI
 
-public enum TimeTableViewType: String, Equatable {
-    case main = "timetable"
-    case detail = "module_info"
-    case search = "add_module"
-    case setting = "timetable_setting"
-    case theme = "timetable_theme"
-    case addCustom = "add_custom_module"
+public enum TimeTableViewType: Equatable {
+    case main
+    case detail
+    case search
+    case setting
+    case theme(Bool)
+    case addCustom
     
     var topViewTopPadding: Int {
         switch self {
@@ -53,8 +53,19 @@ public enum TimeTableViewType: String, Equatable {
     var bottomSheetHeight: Int {
         switch self {
         case .search, .addCustom: return 506
-        case .theme: return 380
+        case .theme: return 840
         default: return 0
+        }
+    }
+    
+    var screenName: String {
+        switch self {
+        case .main:"timetable"
+        case .detail: "module_info"
+        case .search: "add_module"
+        case .setting: "timetable_setting"
+        case .theme: "timetable_theme"
+        case .addCustom: "add_custom_module"
         }
     }
 }

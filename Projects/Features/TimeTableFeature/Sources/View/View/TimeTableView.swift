@@ -146,7 +146,7 @@ public struct TimeTableView: View {
                     Spacer()
                     createBottomSheetView(viewTypeService.viewType)
                         .onAppear {
-                            Analytics.shared.track(.screenView(viewTypeService.viewType.rawValue, .bottom_sheet))
+                            Analytics.shared.track(.screenView(viewTypeService.viewType.screenName, .bottom_sheet))
                         }
                         .frame(height: viewTypeService.viewType.bottomSheetHeight.adjusted)
                 }

@@ -90,7 +90,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 Router.default.windowRouter.switch(to: .timetable)
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    TimeTableViewTypeService.shared.switchTo(.theme)
+                    TimeTableViewTypeService.shared.switchTo(.theme(true))
                 }
             }
         default:

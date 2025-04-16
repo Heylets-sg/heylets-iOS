@@ -182,7 +182,7 @@ public class TimeTableViewModel: ObservableObject {
                 .store(in: cancelBag)
             
         case .initMainView:
-            if !(viewType == .search || viewType == .theme || viewType == .addCustom) {
+            if !(viewType == .search || viewType == .theme(false) || viewType == .addCustom) {
                 viewTypeService.reset()
                 // Also clear selectLecture when manually resetting to main view
                 selectLecture = []

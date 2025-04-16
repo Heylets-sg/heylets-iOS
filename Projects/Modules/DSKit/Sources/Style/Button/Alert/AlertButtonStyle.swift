@@ -13,14 +13,19 @@ struct HeyAlertButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var isEnabled: Bool
     
     private let colorStyle: HeyAlertButtonColorStyle
+    private let height: CGFloat
     
-    init(_ colorStyle: HeyAlertButtonColorStyle) {
+    init(
+        _ colorStyle: HeyAlertButtonColorStyle,
+        _ height: CGFloat
+    ) {
         self.colorStyle = colorStyle
+        self.height = height
     }
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .frame(height: 46)
+            .frame(height: height)
             .frame(maxWidth: .infinity)
             .font(.medium_16)
             .background(colorStyle.backgroundColor)
@@ -31,7 +36,10 @@ struct HeyAlertButtonStyle: ButtonStyle {
 }
 
 public extension View {
-    func heyAlertButtonStyle(_ style: HeyAlertButtonColorStyle) -> some View {
-        self.buttonStyle(HeyAlertButtonStyle(style))
+    func heyAlertButtonStyle(
+        _ style: HeyAlertButtonColorStyle,
+        _ height: CGFloat = 46
+    ) -> some View {
+        self.buttonStyle(HeyAlertButtonStyle(style, height))
     }
 }

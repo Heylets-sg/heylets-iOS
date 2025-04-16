@@ -50,8 +50,8 @@ struct ThemeTopView: View {
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.top, 25)
-            .padding(.bottom, 24)
+            .padding(.top, 57.adjusted)
+            .padding(.bottom, 24.adjusted)
         }
     }
 }
