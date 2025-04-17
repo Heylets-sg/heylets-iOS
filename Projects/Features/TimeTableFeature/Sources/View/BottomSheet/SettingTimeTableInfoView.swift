@@ -12,10 +12,10 @@ struct SettingTimeTableInfoView: View {
             VStack {
                 Spacer()
                 VStack {
-                    if viewModel.state.isShowingSelectInfoView {
-                        Color.timeTableMain.bottomSheet
-                            .ignoresSafeArea()
-                    } else {
+//                    if viewModel.state.isShowingSelectInfoView {
+//                        Color.timeTableMain.bottomSheet
+//                            .ignoresSafeArea()
+//                    } else {
                         VStack {
                             Spacer()
                                 .frame(height: 30.adjusted)
@@ -49,7 +49,7 @@ struct SettingTimeTableInfoView: View {
                             Color.timeTableMain.bottomSheet
                         )
                     }
-                }
+//                }
                 .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
                     SelectDisplayModuleView(viewModel: viewModel)
                         .presentationDetents([.height(350)])
