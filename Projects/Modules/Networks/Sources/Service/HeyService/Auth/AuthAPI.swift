@@ -27,7 +27,13 @@ public enum AuthAPI {
 
 extension AuthAPI: BaseAPI {
     public var isWithInterceptor: Bool {
-        return false
+        switch self {
+        case .logout, .deleteAccount:
+            return true
+        default:
+            return false
+        }
+        
     }
     
     public var path: String? {

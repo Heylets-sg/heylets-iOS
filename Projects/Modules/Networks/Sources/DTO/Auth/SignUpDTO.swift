@@ -29,7 +29,7 @@ public struct GuestSignUpRequest: Encodable {
 }
 
 public struct RequiredRequest: Encodable {
-    let nickname: String
+    let nickname: String?
     let email: String
     let password: String
     let university: String
@@ -39,7 +39,7 @@ public struct RequiredRequest: Encodable {
     let referralCode: String?
     
     public init(
-        nickname: String,
+        nickname: String? = nil,
         email: String,
         password: String,
         university: String,
@@ -60,7 +60,7 @@ public struct RequiredRequest: Encodable {
 }
 
 public struct GuestRequiredRequest: Encodable {
-    let nickname: String
+    let nickname: String?
     let email: String
     let password: String
     let sex: String
@@ -69,7 +69,7 @@ public struct GuestRequiredRequest: Encodable {
     let referralCode: String?
     
     public init(
-        nickname: String,
+        nickname: String? = nil,
         email: String,
         password: String,
         sex: String,

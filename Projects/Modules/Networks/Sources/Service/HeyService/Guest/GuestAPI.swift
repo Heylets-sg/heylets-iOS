@@ -20,7 +20,7 @@ public enum GuestAPI {
 extension GuestAPI: BaseAPI {
     public var connectWebHook: Bool {
         switch self {
-        case .convertToMember(let guestSignUpRequest, let string):
+        case .convertToMember:
             return true
         default:
             return false
@@ -28,7 +28,12 @@ extension GuestAPI: BaseAPI {
     }
     
     public var isWithInterceptor: Bool {
-        return false
+        switch self {
+        case .changeGuestUniversity, .convertToMember:
+            return true
+        default:
+            return false
+        }
     }
     
     public var path: String? {
