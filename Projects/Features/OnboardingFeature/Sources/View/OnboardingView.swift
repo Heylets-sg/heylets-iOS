@@ -204,22 +204,22 @@ public struct OnboardingView: View {
                             .heyCTAButtonStyle(.white)
                             .padding(.bottom, 16.adjusted)
                             
-//                            Button {
-//                                viewModel.send(.guestModeButtonDidTap)
-//                            } label: {
-//                                HStack {
-//                                    Spacer()
-//                                    Text("Create as Guest")
-//                                        .font(.medium_12)
-//                                        .foregroundColor(.common.MainText.else)
-//                                    
-//                                    Image(uiImage: .icNext)
-//                                        .resizable()
-//                                        .tint(.common.MainText.else)
-//                                        .frame(width: 3.5, height: 7)
-//                                    Spacer()
-//                                }
-//                            }
+                            Button {
+                                viewModel.send(.guestModeButtonDidTap)
+                            } label: {
+                                HStack {
+                                    Spacer()
+                                    Text("Create as Guest")
+                                        .font(.medium_12)
+                                        .foregroundColor(.common.MainText.else)
+                                    
+                                    Image(uiImage: .icNext)
+                                        .resizable()
+                                        .tint(.common.MainText.else)
+                                        .frame(width: 3.5, height: 7)
+                                    Spacer()
+                                }
+                            }
                         }
                         .padding(.horizontal, 16)
                         

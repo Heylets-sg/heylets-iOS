@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Core
 
 public enum NationalityInfo: String {
     case Malaysia
@@ -35,14 +36,23 @@ public enum NationalityInfo: String {
     public var domainList: [String] {
         switch self {
         case .Malaysia:
-            return [
-                "student.uitm.edu.my",
-                "siswa.um.edu.my",
-                "live.iium.edu.my"
-//                "gmail.com",
-//                "naver.com",
-//                "kookmin.ac.kr"
-            ]
+            if Config.isTestEnvironment {
+                return [
+                    "student.uitm.edu.my",
+                    "siswa.um.edu.my",
+                    "live.iium.edu.my",
+                    "gmail.com",
+                    "naver.com",
+                    "kookmin.ac.kr"
+                ]
+            } else {
+                return [
+                    "student.uitm.edu.my",
+                    "siswa.um.edu.my",
+                    "live.iium.edu.my"
+                ]
+            }
+            
         case .Singapore:
             return [
                 "u.nus.edu",

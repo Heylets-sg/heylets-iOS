@@ -47,7 +47,11 @@ public enum Config {
 }
 
 extension Config {
-    public static var isTestEnvironment: Bool {
+    public static var isDevEnvironment: Bool {
         return environment == "DEV"
+    }
+    
+    public static var isTestEnvironment: Bool {
+        return environment == "DEV" || environment == "QA"
     }
 }

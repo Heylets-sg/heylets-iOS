@@ -69,7 +69,7 @@ extension AuthService: AuthServiceType {
     public func signUp(
         _ request: SignUpRequest
     ) -> NetworkVoidResponse {
-        if Config.isTestEnvironment {
+        if Config.isDevEnvironment {
             return requestWithNoResult(.testSignUp(request, UUID().uuidString))
         } else {
             return requestWithNoResult(.signUp(request, UUID().uuidString))
