@@ -41,9 +41,7 @@ public class SearchModuleViewModel: ObservableObject {
     private let cancelBag = CancelBag()
     private let useCase: TimeTableUseCaseType
     
-    public init(
-        _ useCase: TimeTableUseCaseType
-    ) {
+    public init(_ useCase: TimeTableUseCaseType) {
         self.useCase = useCase
         self.filterViewModel = .init(useCase)
         
@@ -56,8 +54,8 @@ public class SearchModuleViewModel: ObservableObject {
             fetchLectures()
             
         case .closeButtonDidTap:
+            state.selectedLecture = nil
             filterInfo = .init()
-            break
             
         case .lectureCellDidTap(let lecture):
             state.selectedLecture = lecture

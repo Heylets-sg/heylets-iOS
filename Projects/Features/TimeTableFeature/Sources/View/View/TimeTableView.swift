@@ -28,9 +28,8 @@ public struct TimeTableView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     createTopView(viewTypeService.viewType)
                         .padding(.top, viewTypeService.viewType.topViewTopPadding.adjusted)
-
-                    Spacer()
-                        .frame(height: viewTypeService.viewType.topViewBottomPadding.adjusted)
+                        .padding(.bottom, viewTypeService.viewType.topViewBottomPadding.adjusted)
+                        .background(Color.timeTableMain.TimeTableInfo.topNavi)
 
                     MainView(
                         viewModel: viewModel,
@@ -39,6 +38,7 @@ public struct TimeTableView: View {
 
                     Spacer(minLength: 0)
                 }
+                .background(Color.common.Background.default)
                 .ignoresSafeArea()
                 .onAppear {
                     viewModel.send(.onAppear)
@@ -54,6 +54,15 @@ public struct TimeTableView: View {
                     title: viewModel.state.error.1,
                     primaryButton: ("Close", .gray, {
                         viewModel.send(.errorAlertViewCloseButtonDidTap)
+                    })
+                )
+                .heyAlert(
+                    isPresented: viewModel.state.alerts.showEmptyScheduleErrorAlert.0,
+                    title: "The section hasn't been registered yet",
+                    primaryButton: ("Add", .gray, {
+                        viewModel.send(.emptyScheduleErrorAddButtonDidTap(
+                            viewModel.state.alerts.showEmptyScheduleErrorAlert.1
+                        ))
                     })
                 )
                 .heyAlert(
@@ -113,8 +122,10 @@ public struct TimeTableView: View {
                             mypageAction: { viewModel.send(.gotoMyPage) }
                         )
                         .frame(height: 82.adjusted)
+                        
+                        
                     }
-                    .ignoresSafeArea(.keyboard, edges: .bottom) // 키보드가 올라와도 TabBar가 가려지지 않도록 처리
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
                 }
 
                 SettingTimeTableAlertView(viewModel: viewModel.settingViewModel)
@@ -125,7 +136,7 @@ public struct TimeTableView: View {
                 )
 
                 if config.shouldShow {
-                    Color.heyDimmed
+                    Color.common.Background.opacity60
                         .opacity(config.opacity)
                         .animation(.easeInOut(duration: 0.3), value: viewTypeService.viewType)
                         .ignoresSafeArea()
@@ -135,7 +146,7 @@ public struct TimeTableView: View {
                     Spacer()
                     createBottomSheetView(viewTypeService.viewType)
                         .onAppear {
-                            Analytics.shared.track(.screenView(viewTypeService.viewType.rawValue, .bottom_sheet))
+                            Analytics.shared.track(.screenView(viewTypeService.viewType.screenName, .bottom_sheet))
                         }
                         .frame(height: viewTypeService.viewType.bottomSheetHeight.adjusted)
                 }
@@ -235,13 +246,15 @@ extension TimeTableView {
     let useCase = StubHeyUseCase.stub.timeTableUseCase
     return TimeTableView(
         viewModel: .init(
-            .init(useCase),
-            .init(useCase),
-            .init(useCase, Router.default.navigationRouter),
-            .init(useCase),
+            SearchModuleViewModel(useCase),
+            AddCustomModuleViewModel(useCase),
+            ThemeViewModel(useCase, Router.default.navigationRouter),
+            TimeTableSettingViewModel(useCase),
             Router.default.navigationRouter,
             Router.default.windowRouter,
-            useCase)
+            useCase
+        )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }

@@ -30,14 +30,14 @@ public struct TopView: View {
                     
                     Text(timeTableInfo.fullSemester)
                         .font(.medium_12)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.timeTableMain.TimeTableInfo.semester)
                 }
                 .padding(.bottom, 10.adjusted)
                 
                 Text(timeTableInfo.timeTableName)
                     .lineLimit(1)
                     .font(.semibold_18)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.timeTableMain.TimeTableInfo.tableName)
             }
             
             Spacer()
@@ -48,10 +48,10 @@ public struct TopView: View {
                         viewType = .search
                     }
                 } label: {
-                    Image(uiImage: .icAdd.withRenderingMode(.alwaysTemplate))
+                    Image(uiImage: .icAdd)
                         .resizable()
                         .frame(width: 17, height: 17)
-                        .tint(.init(hex: "#353536"))
+                        .tint(.timeTableMain.TimeTableInfo.topIcon)
                         .padding(.trailing, 26)
                 }
                 
@@ -60,10 +60,10 @@ public struct TopView: View {
                         viewType = .setting
                     }
                 } label: {
-                    Image(uiImage: .icSetting.withRenderingMode(.alwaysTemplate))
+                    Image(uiImage: .icSetting)
                         .resizable()
                         .frame(width: 18, height: 18)
-                        .tint(.init(hex: "#353536"))
+                        .tint(.timeTableMain.TimeTableInfo.topIcon)
                 }
             }
             .padding(.trailing, 8)

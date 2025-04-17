@@ -1,18 +1,14 @@
-//
-//  BaseService.swift
-//  Networks
-//
-//  Created by 류희재 on 1/8/25.
-//  Copyright © 2025 Heylets-iOS. All rights reserved.
-//
-
 import Foundation
 import Combine
 import Core
 
 public final class BaseService<Target: URLRequestTargetType> {
     
-    public init() {}
+    public init() {
+        // 인터셉터 등록
+        SessionInterceptor.shared.register(adapter: TokenAdapter())
+        SessionInterceptor.shared.register(retrier: TokenRetrier(session: session))
+    }
     
     public typealias API = Target
     
@@ -20,16 +16,28 @@ public final class BaseService<Target: URLRequestTargetType> {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 10
         configuration.timeoutIntervalForResource = 10
-        return URLSession(configuration: configuration)
+        return URLSession(configuration: configuration, delegate: SessionInterceptor.shared, delegateQueue: nil)
     }()
     
+    // MARK: - Public Methods
     
     func requestWithResult<T: Decodable>(_ target: API) -> AnyPublisher<T, HeyNetworkError> {
         return fetchResponse(with: target)
             .flatMap { response in
                 self.validate(response: response, target: target)
                     .map { _ in response.data! }
-                    .mapError { $0 }
+                    .mapError {
+                        if target.connectWebHook {
+                            WebHookHandler.shared.sendErrorToSlack(
+                                error: $0,
+                                fullURL: "\(target.url)\(target.path ?? "")",
+                                method: target.method.rawValue,
+                                headers: target.headers?.map { "\($0): \($1)" }.joined(separator: "\n") ?? "없음",
+                                taksDesc: String(describing: target.task)
+                            )
+                        }
+                        return $0
+                    }
             }
             .flatMap { data in
                 self.decode(data: data)
@@ -43,7 +51,18 @@ public final class BaseService<Target: URLRequestTargetType> {
             .flatMap { response in
                 self.validate(response: response, target: target)
                     .map { _ in response.data! }
-                    .mapError { $0 }
+                    .mapError {
+                        if target.connectWebHook {
+                            WebHookHandler.shared.sendErrorToSlack(
+                                error: $0,
+                                fullURL: "\(target.url)\(target.path ?? "")",
+                                method: target.method.rawValue,
+                                headers: target.headers?.map { "\($0): \($1)" }.joined(separator: "\n") ?? "없음",
+                                taksDesc: String(describing: target.task)
+                            )
+                        }
+                        return $0
+                    }
             }
             .flatMap { data -> AnyPublisher<VoidResult, HeyNetworkError> in
                 self.decodeNoResult(data: data)
@@ -54,9 +73,34 @@ public final class BaseService<Target: URLRequestTargetType> {
             .eraseToAnyPublisher()
     }
 }
+
+// MARK: - Network Request & Response Handling
 extension BaseService {
     
-    // dataTask 네트워크 요청 수행
+    /// 네트워크 요청 생성 및 처리 메소드
+    private func fetchResponse(with target: API) -> AnyPublisher<NetworkResponse, HeyNetworkError> {
+        return RequestHandler.createURLRequest(for: target)
+            .map { $0 }
+            .handleEvents(receiveOutput: { NetworkLogHandler.requestLogging($0) })
+            .flatMap { [weak self] urlRequest -> AnyPublisher<NetworkResponse, HeyNetworkError> in
+                guard let self = self else {
+                    return Fail(error: .unknownError).eraseToAnyPublisher()
+                }
+                
+                return self.executeRequest(urlRequest: urlRequest, target: target)
+            }
+            .handleEvents(receiveOutput: { NetworkLogHandler.responseLogging(target, result: $0) })
+            .eraseToAnyPublisher()
+    }
+    
+    /// 실제 네트워크 요청 실행 메소드
+    private func executeRequest(urlRequest: URLRequest, target: API) -> AnyPublisher<NetworkResponse, HeyNetworkError> {
+        return performDataTask(with: urlRequest)
+            .mapError { ErrorHandler.handleNoResponseError(target, error: $0) }
+            .eraseToAnyPublisher()
+    }
+    
+    /// URLSession 데이터 태스크 수행 메소드
     private func performDataTask(with urlRequest: URLRequest) -> AnyPublisher<NetworkResponse, HeyNetworkError.ResponseError> {
         return session.dataTaskPublisher(for: urlRequest)
             .tryMap { data, response in
@@ -69,30 +113,10 @@ extension BaseService {
             .eraseToAnyPublisher()
     }
     
-    
-    /// 네트워크 응답 처리 메소드
-    private func fetchResponse(with target: API) -> AnyPublisher<NetworkResponse, HeyNetworkError> {
-        return RequestHandler.createURLRequest(for: target)
-            .map { $0 }
-            .handleEvents(receiveOutput: { NetworkLogHandler.requestLogging($0) })
-            .flatMap { urlRequest in
-                self.performDataTask(with: urlRequest)
-                    .mapError { ErrorHandler.handleNoResponseError(target, error: $0) }
-            }
-            .handleEvents(receiveOutput: { NetworkLogHandler.responseLogging(target, result: $0) })
-            .eraseToAnyPublisher()
-    }
-    
-    
     /// 응답 유효성 검사 메서드
     private func validate(response: NetworkResponse, target: API) -> AnyPublisher<Void, HeyNetworkError> {
         guard response.response.isValidateStatus() else {
-            // 401 인증 오류 발생 시 토큰 갱신 후 재요청
-            if response.response.unAuthorized() {
-//                return refreshTokenAndRetry(for: target)
-                
-            }
-            // 기타 오류 발생 시 에러 반환
+            // 401 인증 오류는 TokenRetrier에서 처리되므로 여기서는 단순히 에러 반환
             let error = ErrorHandler.handleInvalidResponse(response: response)
             return Fail(error: error).eraseToAnyPublisher()
         }
@@ -101,8 +125,11 @@ extension BaseService {
             .setFailureType(to: HeyNetworkError.self)
             .eraseToAnyPublisher()
     }
-    
-    /// 디코딩 메소드
+}
+
+// MARK: - Decoding Methods
+extension BaseService {
+    /// 일반 응답 디코딩 메소드
     private func decode<T: Decodable>(data: Data) -> AnyPublisher<T, HeyNetworkError.DecodeError> {
         return Just(data)
             .decode(type: GenericResponse<T>.self, decoder: JSONDecoder())
@@ -111,36 +138,17 @@ extension BaseService {
             .eraseToAnyPublisher()
     }
     
+    /// 빈 응답 디코딩 메소드
     private func decodeNoResult(data: Data) -> AnyPublisher<VoidResult, HeyNetworkError.DecodeError> {
         return Just(data)
             .decode(type: GenericResponse<VoidResult>.self, decoder: JSONDecoder())
             .mapError { _ in .decodingFailed }
-            .map { _ in  VoidResult() }
+            .map { _ in VoidResult() }
             .eraseToAnyPublisher()
     }
-    
-//    private func refreshTokenAndRetry(for target: API) -> AnyPublisher<Void, HeyNetworkError> {
-//        return TokenInterceptor.shared.retry(for: session)
-//            .flatMap { tokenResult -> AnyPublisher<Void, HeyNetworkError> in
-////                UserManager.shared.accessToken = tokenResult.accessToken
-////                UserManager.shared.refreshToken = tokenResult.refreshToken
-//                return self.fetchResponse(with: target)
-//                    .flatMap { newResponse in
-//                        self.validate(response: newResponse, target: target)
-//                    }
-//                    .eraseToAnyPublisher()
-//            }
-//            .catch { error -> AnyPublisher<Void, HeyNetworkError> in
-////                UserManager.shared.accessToken = ""
-////                UserManager.shared.refreshToken = ""
-//                return Fail(error: error).eraseToAnyPublisher()
-//            }
-//            .eraseToAnyPublisher()
-//    }
-    
 }
 
-// HTTP 상태코드 유효성 검사
+// HTTP 상태코드 유효성 검사 확장
 extension HTTPURLResponse {
     func isValidateStatus() -> Bool {
         return (200...299).contains(self.statusCode)
@@ -150,4 +158,3 @@ extension HTTPURLResponse {
         return self.statusCode == 401
     }
 }
-

@@ -17,20 +17,21 @@ public struct PrivacyPolicyView: View {
             VStack {
                 Link(destination: URL(string: Website.PrivacyPolicy)!) {
                     HStack {
-                        Text("Show Privact policy")
+                        Text("Show Privacy policy")
                             .font(.semibold_16)
-                            .foregroundColor(Color.init(hex: "#353536"))
+                            .foregroundColor(.common.Placeholder.default)
                         
                         Spacer()
                         
                         Image(uiImage: .icLink)
                             .resizable()
                             .frame(width: 16, height: 16)
+                            .tint(.common.Placeholder.default)
                         
                     }
                     .padding(.vertical, 16)
                     .padding(.horizontal, 20)
-                    .background(Color.init(hex: "#F4F4F4"))
+                    .background(Color.common.InputField.default)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
                 .padding(.top, 28)

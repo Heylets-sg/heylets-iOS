@@ -53,6 +53,7 @@ struct OnboardingBaseView<Content:View>: View {
                         Image(uiImage: .icBack)
                             .resizable()
                             .frame(width: 22, height: 18)
+                            .tint(.common.ButtonBack.default)
                     }
                     .hidden(!hiddenCloseBtn)
                     
@@ -64,6 +65,7 @@ struct OnboardingBaseView<Content:View>: View {
                         Image(uiImage: .icClose)
                             .resizable()
                             .frame(width: 18, height: 18)
+                            .tint(.common.ButtonClose.default)
                     }
                     .hidden(hiddenCloseBtn)
                     
@@ -72,7 +74,7 @@ struct OnboardingBaseView<Content:View>: View {
                 VStack(alignment: .leading) {
                     Text(titleText)
                         .font(.semibold_18)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .padding(.bottom, 18.adjusted)
                     
                     content
@@ -83,14 +85,14 @@ struct OnboardingBaseView<Content:View>: View {
                         nextButtonAction()
                     }
                     .disabled(!nextButtonIsEnabled)
-                    .heyBottomButtonStyle()
+                    .heyCTAButtonStyle()
                     
                 }
                 .padding(.top, 36.adjusted)
                 .padding(.bottom, 65.adjusted)
             }
             .padding(.horizontal, 16)
-            .background(Color.heyWhite)
+            .background(Color.common.Background.default)
             .ignoresSafeArea(edges: .vertical)
             .ignoresSafeArea(.keyboard)
             .navigationBarBackButtonHidden()

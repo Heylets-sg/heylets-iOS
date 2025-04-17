@@ -68,15 +68,22 @@ public extension TimeTableUseCase {
             .eraseToAnyPublisher()
     }
     
-    func addSection(_ sectionId: Int) -> AnyPublisher<Void, Never> {
-        return sectionRepository.addSection(tableId, sectionId, "")
-            .catch { [weak self] error in
-                if error.isGuestModeError { self?.guestModeError.send(()) }
-                else { self?.errMessage.send(error.description) }
-                return Empty<Void, Never>()
-            }
-            .flatMap(getTableDetailInfo)
-            .eraseToAnyPublisher()
+    func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never> {
+        if scheduleIsEmpty {
+            emptyScheduleError.send(name)
+            return Empty<Void, Never>()
+                .eraseToAnyPublisher()
+        } else {
+            return sectionRepository.addSection(tableId, sectionId, "")
+                .catch { [weak self] error in
+                    if error.isGuestModeError { self?.guestModeError.send(()) }
+                    else { self?.errMessage.send(error.description) }
+                    return Empty<Void, Never>()
+                }
+                .flatMap(getTableDetailInfo)
+                .eraseToAnyPublisher()
+        }
+        
     }
     
     func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never> {

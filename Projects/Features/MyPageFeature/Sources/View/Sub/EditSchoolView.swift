@@ -28,6 +28,7 @@ struct EditSchoolView: View {
                         Image(uiImage: .icClose)
                             .resizable()
                             .frame(width: 18, height: 18)
+                            .tint(.Common.ButtonClose.default)
                     }
                 }
                 .padding(.bottom, 10.adjusted)
@@ -45,15 +46,15 @@ struct EditSchoolView: View {
                     HStack(spacing: 0) {
                         VStack {
                             if isSelected {
-                                Image(uiImage: .icSelected)
+                                Image(uiImage: .icCheck)
                                     .resizable()
                                     .frame(width: 24.adjusted, height: 24.adjusted)
+                                    .foregroundColor(.heyMain)
                             } else {
-                                Circle()
-                                    .fill(.clear)
+                                Image(uiImage: .icUnCheck)
+                                    .resizable()
                                     .frame(width: 24.adjusted, height: 24.adjusted)
-                                    .overlay(Circle().stroke(Color.init(hex: "B8B8B8"), lineWidth: 2))
-                                
+                                    .foregroundColor(Color.init(hex: "#747474"))
                             }
                         }
                         .padding(.leading, 24)
@@ -63,14 +64,27 @@ struct EditSchoolView: View {
                         
                         Text(university.rawValue)
                             .font(.medium_16)
-                            .foregroundColor(isSelected ? .heyGray1 : .heyGray2)
+                            .foregroundColor(
+                                isSelected
+                                ? .common.MainText.default
+                                : .common.Placeholder.default
+                            )
                         Spacer()
                     }
                     .frame(height: 64.adjusted)
                     .padding(.horizontal, 8)
-                    .background(isSelected ? Color.init(hex: "EFF1FA") : Color.heyGray4)
+                    .background(
+                        isSelected 
+                        ? Color.common.Button.active2
+                        : Color.common.Button.unactive
+                    )
                     .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .overlay(isSelected ? RoundedRectangle(cornerRadius: 8).stroke(Color.heyMain, lineWidth: 2) : nil)
+                    .overlay(
+                        isSelected
+                        ? RoundedRectangle(cornerRadius: 8).stroke(
+                            Color.heyMain, lineWidth: 2)
+                        : nil
+                    )
                     .onTapGesture {
                         viewModel.send(.selectUniversity(university))
                     }
@@ -83,14 +97,14 @@ struct EditSchoolView: View {
                     viewModel.send(.continueButtonDidTap)
                 }
                 .disabled(!viewModel.state.continueButtonIsEnabled)
-                .heyBottomButtonStyle()
+                .heyCTAButtonStyle()
             }
             
             .padding(.top, 92.adjusted)
             .padding(.bottom, 65.adjusted)
         }
         .padding(.horizontal, 16)
-        .background(Color.heyWhite)
+        .background(Color.common.Background.default)
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()

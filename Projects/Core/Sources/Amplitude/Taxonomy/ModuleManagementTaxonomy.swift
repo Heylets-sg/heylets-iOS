@@ -19,13 +19,19 @@ public extension AnalyticsTaxonomy {
     
     static func clickSearchModule(
         keyword: String,
-        semester: String
+        department: String,
+        semester: String,
+        level: String,
+        keywordType: String
     ) ->  AnalyticsTaxonomy {
         return AnalyticsTaxonomy(
             eventName: "click_search_module",
             properties: [
                 "keyword": keyword,
-                "semeter": semester
+                "department": department,
+                "semeter": semester,
+                "level": level,
+                "keywordType": keywordType
             ]
         )
     }

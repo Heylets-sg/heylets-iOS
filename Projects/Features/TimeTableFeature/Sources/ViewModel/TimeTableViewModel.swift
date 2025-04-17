@@ -1,11 +1,3 @@
-//
-//  TimeTableViewModel.swift
-//  TimeTableFeature
-//
-//  Created on 3/27/25.
-//  Copyright © 2025 Heylets-iOS. All rights reserved.
-//
-
 import Foundation
 import Combine
 import SwiftUI
@@ -22,6 +14,7 @@ public class TimeTableViewModel: ObservableObject {
             var showReposrtMissingModuleAlert: Bool = false
             var showAddCustomAlert: Bool = false
             var showGuestErrorAlert: Bool = false
+            var showEmptyScheduleErrorAlert: (Bool, String) = (false, "")
             var showSelectInfoView: Bool = false
         }
         
@@ -47,6 +40,7 @@ public class TimeTableViewModel: ObservableObject {
         case selectedTheme(String)
         case deleteModuleAlertCloseButtonDidTap
         case errorAlertViewCloseButtonDidTap
+        case emptyScheduleErrorAddButtonDidTap(String)
         case addCustomModuleButtonDidTap
         case initMainView
         case notRightNowButtonDidTap
@@ -85,6 +79,8 @@ public class TimeTableViewModel: ObservableObject {
     @Published var selectLecture: [TimeTableCellInfo] = []
     @Published var selectedThemeColor: [String] = []
     
+    // Add subscription to track view type changes
+    private var viewTypeSubscription: AnyCancellable?
     
     public init(
         _ searchModuleViewModel: SearchModuleViewModel,
@@ -107,6 +103,14 @@ public class TimeTableViewModel: ObservableObject {
         bindState()
         
         timeTable = sectionList.createTimeTableCellList()
+        
+        // Subscribe to view type changes to reset selectLecture when returning to main
+        viewTypeSubscription = viewTypeService.$viewType
+            .sink { [weak self] viewType in
+                if viewType == .main {
+                    self?.selectLecture = []
+                }
+            }
     }
     
     func send(_ action: Action) {
@@ -152,6 +156,11 @@ public class TimeTableViewModel: ObservableObject {
             viewTypeService.switchTo(.search)
             state.error = (false, "")
             
+        case .emptyScheduleErrorAddButtonDidTap(let name):
+            addCustomModuleViewModel.schedule = name
+            state.alerts.showEmptyScheduleErrorAlert = (false, "")
+            viewTypeService.switchTo(.addCustom)
+            
         case .selectLecture(let lecture):
             selectLecture = lecture.timeTableCellInfo
             
@@ -163,7 +172,7 @@ public class TimeTableViewModel: ObservableObject {
                 professor: lecture.professor
             )
             )
-            useCase.addSection(lecture.id)
+            useCase.addSection(lecture.id, lecture.name, lecture.schedule.isEmpty)
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
                     Analytics.shared.track(.moduleAdded)
@@ -173,8 +182,10 @@ public class TimeTableViewModel: ObservableObject {
                 .store(in: cancelBag)
             
         case .initMainView:
-            if !(viewType == .search || viewType == .theme || viewType == .addCustom) {
+            if !(viewType == .search || viewType == .theme(false) || viewType == .addCustom) {
                 viewTypeService.reset()
+                // Also clear selectLecture when manually resetting to main view
+                selectLecture = []
             }
             
         case .addCustomModuleButtonDidTap:
@@ -205,7 +216,10 @@ public class TimeTableViewModel: ObservableObject {
             windowRouter.switch(to: .todo)
         case .gotoMyPage:
             windowRouter.switch(to: .mypage)
-        case .gotoInviteCodeView :
+        case .gotoInviteCodeView:
+            // Store current view type before navigating to invite code
+            let currentViewType = viewType
+            // Navigate to invite code
             navigationRouter.push(to: .inviteCode)
         }
     }
@@ -264,6 +278,8 @@ public class TimeTableViewModel: ObservableObject {
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.viewTypeService.reset()
                 self?.settingViewModel.settingAlertType = nil
+                // Clear selectLecture on error
+                self?.selectLecture = []
             })
             .map { message in (true, message)}
             .assign(to: \.state.error, on: self)
@@ -274,9 +290,23 @@ public class TimeTableViewModel: ObservableObject {
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.viewTypeService.reset()
                 self?.settingViewModel.settingAlertType = nil
+                // Clear selectLecture on guest mode error
+                self?.selectLecture = []
             })
             .map { _ in true }
             .assign(to: \.state.alerts.showGuestErrorAlert, on: self)
+            .store(in: cancelBag)
+        
+        useCase.emptyScheduleError
+            .receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: { [weak self] _ in
+                self?.viewTypeService.reset()
+                self?.settingViewModel.settingAlertType = nil
+                // Clear selectLecture on empty schedule error
+                self?.selectLecture = []
+            })
+            .map { name in (true, name)}
+            .assign(to: \.state.alerts.showEmptyScheduleErrorAlert, on: self)
             .store(in: cancelBag)
     }
 }

@@ -39,7 +39,7 @@ fileprivate struct WeeklyListCellView: View {
             Spacer()
             Text(day)
                 .font(.semibold_12)
-                .foregroundColor(.heyGray1)
+                .foregroundColor(.timeTableMain.Day.dayInfo)
             Spacer()
         }
     }

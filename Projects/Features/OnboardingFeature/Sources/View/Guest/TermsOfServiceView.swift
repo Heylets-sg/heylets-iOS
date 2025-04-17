@@ -30,21 +30,23 @@ struct TermsOfServiceView: View {
                         
                         Text("Terms of Service")
                             .font(.bold_20)
+                            .foregroundColor(.common.MainText.default)
                     }
-
+                    
                     Spacer()
                 }
                 .padding(.horizontal, 22)
                 .padding(.bottom, 41.adjusted)
                 
                 HStack(alignment: .center, spacing: 12) { // spacing 추가
-                    Image(uiImage: viewModel.state.allAgree ? .icSelected : .icCheck)
+                    Image(uiImage: .icCheck)
                         .resizable()
                         .frame(width: 24.adjusted, height: 24.adjusted)
-
+                        .foregroundColor(viewModel.state.allAgree ? .heyMain : .common.MainText.default)
+                    
                     Text("Agree to all")
                         .font(.semibold_16)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                     
                     Spacer()
                 }
@@ -55,101 +57,113 @@ struct TermsOfServiceView: View {
                 .padding(.horizontal, 22)
                 
                 Rectangle()
-                    .fill(Color.heyGray4)
+                    .fill(Color.common.Divider.default)
                     .frame(height: 1)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 30.adjusted)
-                    
+                
                 
                 HStack {
-                    Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
+                    Image(uiImage: .icSuccess)
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
-                        .foregroundStyle(viewModel.state.termsOfServiceIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
+                        .foregroundColor(
+                            viewModel.state.termsOfServiceIsAgree
+                            ? .common.Check.active
+                            : .common.Check.unactive
+                        )
                         .padding(.trailing, 12)
                         .onTapGesture {
                             viewModel.send(.termsOfServiceDidTap)
                         }
-
+                    
                     Text("Agree to the Terms of Service.(required)")
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.common.SubText.default)
                     
                     Spacer()
                     
                     Link(destination: URL(string: Website.TermsOfService)!) {
-                                HStack {
-                                    Text("View")
-                                        .font(.regular_12)
-                                        .foregroundColor(Color.init(hex: "#B8B8B8"))
-                                } .foregroundColor(.black)
-                            }
+                        HStack {
+                            Text("View")
+                                .font(.regular_12)
+                                .foregroundColor(.common.Placeholder.default)
+                        }
+                    }
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 20.adjusted)
                 
                 
                 HStack {
-                    Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
+                    Image(uiImage: .icSuccess)
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
-                        .foregroundStyle(viewModel.state.personalInformationIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
+                        .foregroundColor(
+                            viewModel.state.termsOfServiceIsAgree
+                            ? .common.Check.active
+                            : .common.Check.unactive
+                        )
                         .padding(.trailing, 12)
                         .onTapGesture {
                             viewModel.send(.personalInformationDidTap)
                         }
-
+                    
                     Text("Agree to the collection and use of\npersonal information.(required)")
                         .multilineTextAlignment(.leading)
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.common.SubText.default)
                     
                     Spacer()
-                
+                    
                     
                     Link(destination: URL(string: Website.PrivacyPolicy)!) {
-                                HStack {
-                                    Text("View")
-                                        .font(.regular_12)
-                                        .foregroundColor(Color.init(hex: "#B8B8B8"))
-                                } .foregroundColor(.black)
-                            }
+                        HStack {
+                            Text("View")
+                                .font(.regular_12)
+                                .foregroundColor(.common.Placeholder.default)
+                        }
+                    }
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 20.adjusted)
                 
                 
                 HStack {
-                    Image(uiImage: .icSuccess.withRenderingMode(.alwaysTemplate))
+                    Image(uiImage: .icSuccess)
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
-                        .foregroundStyle(viewModel.state.marketingIsAgree ? Color.heyMain : Color.init(hex: "#B8B8B8"))
+                        .foregroundColor(
+                            viewModel.state.termsOfServiceIsAgree
+                            ? .common.Check.active
+                            : .common.Check.unactive
+                        )
                         .padding(.trailing, 12)
                         .onTapGesture {
                             viewModel.send(.marketingDidTap)
                         }
-
+                    
                     Text("Agree to receive ads and marketing communications.")
                         .multilineTextAlignment(.leading)
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.common.SubText.default)
                     
                     Spacer()
-                
+                    
                     
                     Link(destination: URL(string: "https://melon-pawpaw-a40.notion.site/Marketing-Consent-for-Email-Communication-1b4bef466352819dab2df02918a53e50")!) {
-                                HStack {
-                                    Text("View")
-                                        .font(.regular_12)
-                                        .foregroundColor(Color.init(hex: "#B8B8B8"))
-                                } .foregroundColor(.black)
-                            }
+                        HStack {
+                            Text("View")
+                                .font(.regular_12)
+                                .foregroundColor(.common.Placeholder.default)
+                        }
+                    }
                 }
                 .padding(.horizontal, 24)
                 
                 Text(viewModel.state.errMessage)
                     .font(.title)
-                    .foregroundColor(.red)
+                    .foregroundColor(.common.Error.default)
                 
                 Spacer()
                 
@@ -157,14 +171,14 @@ struct TermsOfServiceView: View {
                     viewModel.send(.agreeButtonDidTap)
                 }
                 .disabled(!viewModel.state.continueButtonIsEnabled)
-                .heyBottomButtonStyle()
+                .heyCTAButtonStyle()
                 .padding(.horizontal, 16)
             }
             
             .padding(.top, 126.adjusted)
             .padding(.bottom, 65.adjusted)
         }
-        .background(Color.heyWhite)
+        .background(Color.common.Background.default)
         .ignoresSafeArea(edges: .vertical)
         .ignoresSafeArea(.keyboard)
         .navigationBarBackButtonHidden()
@@ -179,4 +193,5 @@ struct TermsOfServiceView: View {
         university: UniversityInfo.empty
     ))
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }

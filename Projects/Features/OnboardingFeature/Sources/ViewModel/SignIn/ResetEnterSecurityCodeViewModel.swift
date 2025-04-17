@@ -42,6 +42,8 @@ public class ResetEnterSecurityCodeViewModel: ObservableObject {
         self.useCase = useCase
         self.email = email
         
+        state.hiddenEmail = email.maskedEmail()
+        
         observe()
         bindState()
     }

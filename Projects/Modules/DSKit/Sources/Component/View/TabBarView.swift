@@ -17,22 +17,11 @@ enum TabType {
     var image: UIImage {
         switch self {
         case .timeTable:
-            return .tabTimeTable
+            return .tabTimeTable.withRenderingMode(.alwaysTemplate)
         case .todo:
-            return .tabTodo
+            return .tabTodo.withRenderingMode(.alwaysTemplate)
         case .my:
-            return .tabMypage
-        }
-    }
-    
-    var selectedImage: UIImage {
-        switch self {
-        case .timeTable:
-            return .tabTimeTableFilled
-        case .todo:
-            return .tabTodoFilled
-        case .my:
-            return .tabMypage
+            return .tabMypage.withRenderingMode(.alwaysTemplate)
         }
     }
     
@@ -96,13 +85,13 @@ public struct TabBarView: View {
             .padding(.trailing, 62)
             .padding(.top, 7.adjusted)
             .padding(.bottom, 34.adjusted)
-            .background(Color.heyWhite)
+            .background(Color.timeTableMain.tabNavigator)
             .ignoresSafeArea()
         }
         .clipShape(RoundedRectangle(cornerRadius: 16))
         
         .shadow(
-            color: Color(hex: "#000000").opacity(0.06),
+            color: Color.heyBlack.opacity(0.06),
             radius: 17.2,
             x: 0,
             y: 2
@@ -125,20 +114,22 @@ struct TabItemView: View {
     
     var body: some View {
         VStack {
-            Image(
-                uiImage: isFilled
-                ? tabType.selectedImage
-                : tabType.image
-            )
+            Image(uiImage: tabType.image)
+            .renderingMode(.template)
             .resizable()
             .frame(width: 23, height: 23)
+            .foregroundColor(
+                isFilled
+                ? .timeTableMain.Navigator.iconActive
+                : .timeTableMain.Navigator.iconUnActive
+            )
             
             Text(tabType.title)
                 .font(.semibold_10)
                 .foregroundColor(
                     isFilled
-                    ? Color.init(hex: "#1B1B1C")
-                    : Color.init(hex: "#D2D2D2")
+                    ? .timeTableMain.Navigator.iconActive
+                    : .timeTableMain.Navigator.iconUnActive
                 )
         }
     }

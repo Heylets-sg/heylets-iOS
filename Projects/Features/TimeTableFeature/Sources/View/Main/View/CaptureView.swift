@@ -147,7 +147,7 @@ extension TimeTableGridCaptureView {
         _ cellWidth: CGFloat,
         _ cellHeight: CGFloat
     ) {
-        let gridColor = Color.heyGrid
+        let gridColor = Color.TimeTableMain.Timeline.default
         // 첫번째 선 그리기
         
         let height = CGFloat(rowCount) * cellHeight

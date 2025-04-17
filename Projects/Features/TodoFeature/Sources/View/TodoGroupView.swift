@@ -30,7 +30,7 @@ public struct TodoGroupView: View {
                 HStack(spacing: 0) {
                     Text(group.name)
                         .font(.semibold_14)
-                        .foregroundStyle(Color.init(hex: "#3D3D3D"))
+                        .foregroundColor(.common.MainText.default)
                     
                     Spacer()
                     
@@ -40,7 +40,7 @@ public struct TodoGroupView: View {
                         } label: {
                             Text("Delete group")
                                 .font(.medium_14)
-                                .foregroundColor(.heyGray1)
+                                .foregroundColor(.common.MainText.default)
                         }
                         .padding(.bottom, 27)
                         
@@ -49,7 +49,7 @@ public struct TodoGroupView: View {
                         } label: {
                             Text("Change name")
                                 .font(.medium_14)
-                                .foregroundColor(.heyGray1)
+                                .foregroundColor(.common.MainText.default)
                         }
                         
                     } label: {
@@ -57,13 +57,15 @@ public struct TodoGroupView: View {
                             Image(uiImage: .icEtc)
                                 .resizable()
                                 .frame(width: 13, height: 3)
+                                .foregroundColor(.common.Placeholder.default)
                         }
                         .padding(.leading, 20)
                         .padding(.vertical, 20)
                         
                     }
                 }
-                .padding(.bottom, 8)
+                .frame(height: 22)
+                .padding(.bottom, 8.adjusted)
                 
                 
                 ScrollView {
@@ -76,7 +78,7 @@ public struct TodoGroupView: View {
                         .onTapGesture {
                             viewModel.send(.itemDidTap(item.id))
                         }
-                        .padding(.bottom, 8)
+                        .padding(.bottom, 8.adjusted)
                     }
                     
                     TodoAddItemView(
@@ -93,12 +95,5 @@ public struct TodoGroupView: View {
             }
         }
         .padding(.horizontal, 24)
-    }
-}
-
-
-extension UIResponder {
-    @objc static func resignFirstResponder() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

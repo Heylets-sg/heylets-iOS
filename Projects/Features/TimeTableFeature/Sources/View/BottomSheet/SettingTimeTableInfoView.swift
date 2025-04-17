@@ -1,4 +1,5 @@
 import SwiftUI
+import DSKit
 import Domain
 
 import Core
@@ -7,47 +8,114 @@ struct SettingTimeTableInfoView: View {
     @ObservedObject var viewModel: ThemeViewModel
     
     var body: some View {
+        ZStack {
             VStack {
-                if viewModel.state.isShowingSelectInfoView {
-                    Color.heyWhite
-                        .ignoresSafeArea()
-                } else {
-                    VStack {
-                        Spacer()
-                            .frame(height: 30.adjusted)
-                        
-                        HStack {
-                            Text("Information")
-                                .font(.medium_14)
-                                .foregroundColor(.heyGray1)
-                            
+                Spacer()
+                VStack {
+                    if viewModel.state.isShowingSelectInfoView {
+                        Color.timeTableMain.bottomSheet
+                            .ignoresSafeArea()
+                    } else {
+                        VStack {
                             Spacer()
+                                .frame(height: 30.adjusted)
                             
-                            Button {
-                                viewModel.send(.selectDisplayTypeButtonDidTap)
-                            } label: {
-                                Text(viewModel.displayType.text)
-                                    .font(.regular_12)
-                                    .foregroundColor(.heyGray2)
+                            HStack {
+                                Text("Information")
+                                    .font(.medium_14)
+                                    .foregroundColor(.setting.title)
+                                
+                                Spacer()
+                                
+                                Button {
+                                    viewModel.send(.selectDisplayTypeButtonDidTap)
+                                } label: {
+                                    Text(viewModel.displayType.text)
+                                        .font(.regular_12)
+                                        .foregroundColor(.setting.set)
+                                }
+                                
+                                Spacer()
                             }
-                            
+                            .padding(.leading, 24)
                             Spacer()
                         }
-                        .padding(.leading, 24)
-                        Spacer()
+                        .frame(
+                            height: viewModel.state.inviteCodeViewHidden
+                            ? 388.adjusted
+                            : 306.adjusted
+                        )
+                        .background(
+                            Color.timeTableMain.bottomSheet
+                        )
                     }
-                    .background(Color.heyWhite)
+                }
+                .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
+                    SelectDisplayModuleView(viewModel: viewModel)
+                        .presentationDetents([.height(350)])
+                        .presentationDragIndicator(.hidden)
+                        .presentationBackground(.clear)
                 }
             }
-            .sheet(isPresented: $viewModel.state.isShowingSelectInfoView) {
-                SelectDisplayModuleView(viewModel: viewModel)
-                    .presentationDetents([.height(350)])
-                    .presentationDragIndicator(.hidden)
-                    .presentationBackground(.clear)
+            
+            if viewModel.state.isShowingPopup {
+                CongratulationPopupView(
+                    okayButtonClosure: { viewModel.send(.popUpOkButtonDidTap) }
+                )
+                .background(viewModel.state.isShowingPopup ? Color.common.Background.opacity60 : Color.clear)
             }
         }
     }
+}
 
+struct CongratulationPopupView: View {
+    var okayButtonClosure: (() -> Void)
+    
+    var body: some View {
+        VStack {
+            Spacer()
+                .frame(height: 231)
+            VStack {
+                ZStack {
+                    VStack {
+                        Text("Congratulations!")
+                            .font(.bold_20)
+                            .foregroundColor(.common.MainText.default)
+                            .padding(.top, 69)
+                            .padding(.bottom, 20)
+                        
+                        Text("3 themes have been\nunlocked")
+                            .font(.medium_16)
+                            .foregroundColor(.common.MainText.default)
+                            .multilineTextAlignment(.center)
+                            .padding(.bottom, 27)
+                        
+                        Button("Ok") {
+                            okayButtonClosure()
+                        }
+                        .heyAlertButtonStyle(.primary, 52)
+                        .padding(.bottom, 30)
+                        .padding(.horizontal, 14)
+                    }
+                    .frame(height: 300)
+                    .background(Color.popup.default)
+                    .clipShape(RoundedRectangle(cornerRadius: 6.5))
+                    .padding(.top, 102)
+                    
+                    VStack {
+                        Image(uiImage: .congratulation)
+                            .resizable()
+                            .frame(width: 167, height: 151)
+                            .padding(.bottom, 200)
+                    }
+                }
+                .padding(.horizontal, 54)
+                .frame(height: 350)
+            }
+            Spacer()
+        }
+    }
+}
 
 
 struct SelectDisplayModuleView: View {
@@ -67,7 +135,7 @@ struct SelectDisplayModuleView: View {
                             
                             Text(option.text)
                                 .font(.medium_14)
-                                .foregroundColor(.heyGray1)
+                                .foregroundColor(.common.MainText.default)
                             
                             Spacer()
                         }
@@ -79,11 +147,11 @@ struct SelectDisplayModuleView: View {
                         }
                         
                         Divider()
-                            .background(Color.heyGrid)
+                            .background(Color.common.Divider.default)
                     }
                 }
             }
-            .background(Color.heyWhite)
+            .background(Color.timeTableMain.bottomSheet)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
             
@@ -97,8 +165,8 @@ struct SelectDisplayModuleView: View {
                     .font(.semibold_14)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(Color.heyWhite)
-                    .foregroundColor(.heyGray1)
+                    .background(Color.timeTableMain.bottomSheet)
+                    .foregroundColor(.common.Placeholder.default)
                     .cornerRadius(8)
             }
         }

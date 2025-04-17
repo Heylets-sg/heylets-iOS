@@ -24,6 +24,10 @@ public enum TodoAPI {
 }
 
 extension TodoAPI: BaseAPI {
+    public var connectWebHook: Bool {
+        return false
+    }
+    
     public var isWithInterceptor: Bool {
         return false
     }

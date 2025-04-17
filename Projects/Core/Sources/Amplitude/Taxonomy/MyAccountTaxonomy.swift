@@ -25,9 +25,22 @@ public extension AnalyticsTaxonomy {
         eventName: "account_deleted"
     )
 
-    static let clickUpdateNotificationSetting = AnalyticsTaxonomy(
-        eventName: "click_update_notification_setting"
-    )
+    static func clickUpdateNotificationSetting(
+        classReminderEnabled: Bool,
+        dailyBriefing_Enabled: Bool,
+        classReminderTime: String,
+        dailyBriefingTime: String
+    ) -> AnalyticsTaxonomy {
+        return AnalyticsTaxonomy(
+            eventName: "click_update_notification_setting",
+            properties: [
+                "class_reminder_enabled": classReminderEnabled,
+                "daily_briefing_enabled": dailyBriefing_Enabled,
+                "class_reminder_time": classReminderTime,
+                "daily_briefing_time": dailyBriefingTime
+            ]
+        )
+    }
 
     static let notificationSettingUpdated = AnalyticsTaxonomy(
         eventName: "notification_setting_updated"

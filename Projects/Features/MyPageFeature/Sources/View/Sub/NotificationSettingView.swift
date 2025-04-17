@@ -21,7 +21,7 @@ public struct NotificationSettingView: View {
     
     public var body: some View {
         ZStack {
-            Color.heyWhite.ignoresSafeArea()
+            Color.common.Background.default.ignoresSafeArea()
             
             VStack(alignment: .leading) {
                 Spacer()
@@ -33,7 +33,7 @@ public struct NotificationSettingView: View {
                         
                         Text("Notification setting")
                             .font(.semibold_18)
-                            .foregroundColor(.heyGray1)
+                            .foregroundColor(.common.MainText.default)
                         
                         Spacer()
                     }
@@ -42,10 +42,10 @@ public struct NotificationSettingView: View {
                         Button {
                             viewModel.send(.backButtonDidTap)
                         } label: {
-                            Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
+                            Image(uiImage: .icBack)
                                 .resizable()
                                 .frame(width: 24, height: 18)
-                                .tint(.heyGray1)
+                                .tint(.common.ButtonBack.default)
                         }
                         Spacer()
                     }
@@ -96,7 +96,7 @@ struct SelectTimePickerView: View {
                             
                             Text(time)
                                 .font(.medium_14)
-                                .foregroundColor(.heyGray1)
+                                .foregroundColor(.common.SubText.default)
                             
                             Spacer()
                         }
@@ -106,11 +106,11 @@ struct SelectTimePickerView: View {
                         }
                         
                         Divider()
-                            .background(Color.heyGrid)
+                            .background(Color.common.Divider.default)
                     }
                 }
             }
-            .background(Color.heyWhite)
+            .background(Color.common.Background.default)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
             
@@ -124,8 +124,8 @@ struct SelectTimePickerView: View {
                     .font(.semibold_14)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(Color.heyWhite)
-                    .foregroundColor(.heyGray1)
+                    .background(Color.timeTableMain.bottomSheet)
+                    .foregroundColor(.common.Placeholder.default)
                     .cornerRadius(8)
             }
         }
@@ -137,7 +137,7 @@ struct SelectTimePickerView: View {
 // MARK: - Daily Briefing Section
 struct DailyBriefingSection: View {
     @Binding var isToggleOn: Bool
-    @Binding var briefingTime: String // Stored as "HH:mm" in ViewModel
+    @Binding var briefingTime: String
     @State private var showTimePicker = false
     
     let briefingTimeArr = [
@@ -155,13 +155,13 @@ struct DailyBriefingSection: View {
                 VStack(alignment: .leading) {
                     Text("Daily briefing")
                         .font(.semibold_16)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .lineSpacing(8)
                         .padding(.bottom, 4)
                     
                     Text("ex. There's two modules today")
                         .font(.regular_12)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .lineSpacing(12)
                         .padding(.bottom, 4)
                 }
@@ -169,7 +169,7 @@ struct DailyBriefingSection: View {
                 Spacer()
                 
                 Toggle("", isOn: $isToggleOn)
-                    .toggleStyle(SwitchToggleStyle(tint: Color.heyMain))
+                    .toggleStyle(SwitchToggleStyle(tint: Color.toggle.default))
                     .labelsHidden()
                     .padding(.trailing, 15)
             }
@@ -177,7 +177,7 @@ struct DailyBriefingSection: View {
             HStack {
                 Text("Notification time")
                     .font(.regular_12)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
                 
                 Spacer()
                 
@@ -186,20 +186,19 @@ struct DailyBriefingSection: View {
                 }) {
                     Text(Date.fromTimeString(briefingTime)?.timeToString() ?? "AM 09:00")
                         .font(.regular_12)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                 }
                 .padding(.trailing, 15)
             }
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 24)
-        .background(Color.heyGray4)
+        .background(Color.mypage.menubox)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .sheet(isPresented: $showTimePicker) {
             SelectTimePickerView(
                 timeArr: briefingTimeArr,
                 onSelect: { selectedTime in
-                    // Convert AM/PM format to 24-hour format for the viewModel
                     if let date = convertAMPMToDate(selectedTime) {
                         briefingTime = date.timeToString24()
                     }
@@ -215,7 +214,6 @@ struct DailyBriefingSection: View {
         }
     }
     
-    // Helper function to convert AM/PM format string to Date
     private func convertAMPMToDate(_ timeString: String) -> Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = "a hh:mm"
@@ -245,13 +243,13 @@ struct ClassNotificationSection: View {
                 VStack(alignment: .leading) {
                     Text("Class")
                         .font(.semibold_16)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .lineSpacing(8)
                         .padding(.bottom, 4)
                     
                     Text("ex. There's two modules today")
                         .font(.regular_12)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .lineSpacing(12)
                         .padding(.bottom, 4)
                 }
@@ -259,7 +257,7 @@ struct ClassNotificationSection: View {
                 Spacer()
                 
                 Toggle("", isOn: $isToggleOn)
-                    .toggleStyle(SwitchToggleStyle(tint: Color.heyMain))
+                    .toggleStyle(SwitchToggleStyle(tint: Color.toggle.default))
                     .labelsHidden()
                     .padding(.trailing, 15)
             }
@@ -267,7 +265,7 @@ struct ClassNotificationSection: View {
             HStack {
                 Text("Notification time")
                     .font(.regular_12)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
                 
                 Spacer()
                 
@@ -276,14 +274,14 @@ struct ClassNotificationSection: View {
                 }) {
                     Text("\(notificationMinute) min before")
                         .font(.regular_12)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                 }
                 .padding(.trailing, 15)
             }
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 24)
-        .background(Color.heyGray4)
+        .background(Color.mypage.menubox)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .sheet(isPresented: $showMinutePicker) {
             SelectTimePickerView(
@@ -303,87 +301,16 @@ struct ClassNotificationSection: View {
         }
     }
     
-    // Helper function to parse minutes from strings like "5 min", "10 min", etc.
     private func parseMinutes(from timeString: String) -> Int {
         if timeString == "1 hour" {
             return 60
         } else {
-            // Extract the number from strings like "5 min", "10 min", etc.
             let components = timeString.components(separatedBy: " ")
             if let minuteStr = components.first, let minutes = Int(minuteStr) {
                 return minutes
             }
-            return 10 // Default value if parsing fails
+            return 10
         }
-    }
-}
-
-// MARK: - Minute Picker View
-struct MinutePickerView: View {
-    @Binding var selectedMinute: Int
-    @Environment(\.presentationMode) var presentationMode
-    
-    var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-                Button("Done") {
-                    presentationMode.wrappedValue.dismiss()
-                }
-                .padding()
-            }
-            
-            Picker("", selection: $selectedMinute) {
-                ForEach(0..<60) { minute in
-                    Text("\(minute) min")
-                        .tag(minute)
-                }
-            }
-            .pickerStyle(WheelPickerStyle())
-            
-            Spacer()
-        }
-        .background(Color.white)
-        .interactiveDismissDisabled()
-    }
-}
-
-// MARK: - Time Picker View
-struct TimePickerView: View {
-    @Binding var selectedTime: String
-    @State private var date: Date
-    @Environment(\.presentationMode) var presentationMode
-    
-    init(selectedTime: Binding<String>) {
-        self._selectedTime = selectedTime
-        let initialDate = Date.fromTimeString(selectedTime.wrappedValue) ?? Date()
-        self._date = State(initialValue: initialDate)
-    }
-    
-    var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-                Button("Done") {
-                    // Use 24-hour format for ViewModel storage
-                    selectedTime = date.timeToString24()
-                    presentationMode.wrappedValue.dismiss()
-                }
-                .padding()
-            }
-            
-            DatePicker(
-                "",
-                selection: $date,
-                displayedComponents: [.hourAndMinute]
-            )
-            .datePickerStyle(WheelDatePickerStyle())
-            .labelsHidden()
-            
-            Spacer()
-        }
-        .background(Color.white)
-        .interactiveDismissDisabled()
     }
 }
 

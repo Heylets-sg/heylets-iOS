@@ -30,7 +30,7 @@ public struct HeyAlertView: View {
             
             Text(title)
                 .font(.medium_18)
-                .foregroundColor(.heyBlack)
+                .foregroundColor(.common.MainText.default)
                 .multilineTextAlignment(.center)
             
             Spacer()
@@ -38,8 +38,7 @@ public struct HeyAlertView: View {
             HStack {
                 Button(primaryAction.title) {
                     primaryAction.action()
-                }
-                .heyAlertButtonStyle(primaryAction.colorSystem)
+                }.heyAlertButtonStyle(primaryAction.color)
                 
                 if let secondaryAction = secondaryAction {
                     Spacer()
@@ -47,8 +46,7 @@ public struct HeyAlertView: View {
                     
                     Button(secondaryAction.title) {
                         secondaryAction.action()
-                    }
-                    .heyAlertButtonStyle(secondaryAction.colorSystem)
+                    }.heyAlertButtonStyle(secondaryAction.color)
                 }
             }
             
@@ -58,7 +56,7 @@ public struct HeyAlertView: View {
         .padding(.horizontal, 24)
         .frame(height: 154)
         .frame(maxWidth: .infinity)
-        .background(Color.heyWhite)
+        .background(Color.popup.default)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
@@ -74,7 +72,7 @@ extension View {
         self.overlay {
             if isPresented {
                 ZStack {
-                    Color.black.opacity(0.5)
+                    Color.common.Background.opacity60
                     
                     HeyAlertView(
                         title: title,

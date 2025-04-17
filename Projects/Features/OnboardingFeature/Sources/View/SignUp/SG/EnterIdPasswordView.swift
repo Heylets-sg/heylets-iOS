@@ -28,7 +28,7 @@ public struct EnterIdPasswordView: View {
             
             Text("Our community is anonymous!")
                 .font(.regular_16)
-                .foregroundColor(.heyGray1)
+                .foregroundColor(.common.SubText.default)
                 .padding(.bottom, 32)
             
             VStack(spacing: 32) {
@@ -61,6 +61,9 @@ public struct EnterIdPasswordView: View {
     }
 }
 
-//#Preview {
-//    EnterIdPasswordView()
-//}
+import Domain
+#Preview {
+    EnterIdPasswordView(viewModel: .init(navigationRouter: Router.default.navigationRouter, useCase: StubHeyUseCase().signUpUseCase))
+        .environmentObject(Router.default)
+        .preferredColorScheme(.dark)
+}

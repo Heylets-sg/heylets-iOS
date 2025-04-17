@@ -19,6 +19,10 @@ public enum TimeTableAPI {
 }
 
 extension TimeTableAPI: BaseAPI {
+    public var connectWebHook: Bool {
+        return false
+    }
+    
     public var isWithInterceptor: Bool {
         return false
     }

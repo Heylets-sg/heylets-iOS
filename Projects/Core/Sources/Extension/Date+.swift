@@ -9,11 +9,11 @@
 import Foundation
 
 extension Date {
-    public func toInt() -> Int {
+    public func toString() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyyMMdd" // 원하는 형식
         let dateString = formatter.string(from: self)
-        return Int(dateString) ?? 0 // String을 Int로 변환
+        return dateString
     }
     
     public func timeToString() -> String {

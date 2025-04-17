@@ -20,13 +20,13 @@ struct ClassSearchListCellView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            TextWithCustomFontSubstring(
+            CustomSubstringText(
                 originalText: "\(section.code!) \(section.name)",
                 targetSubstring: section.code!,
                 targetFont: .bold_14
             )
             .font(.medium_14)
-            .foregroundColor(.heyGray1)
+            .foregroundColor(.common.MainText.default)
             .lineLimit(2)
             .fixedSize(horizontal: false, vertical: true)
             .padding(.top, 12)
@@ -36,11 +36,11 @@ struct ClassSearchListCellView: View {
             
             Text(section.allscheduleTime)
                 .font(.regular_12)
-                .foregroundColor(isSelected ? Color.heyGray2 : Color.heyGray8)
+                .foregroundColor(.Module.info2)
             
             Text("\(section.professor) / \(section.location) \(section.unit.map { " / \($0) unit" } ?? "")")
                 .font(.regular_12)
-                .foregroundColor(isSelected ? .init(hex: "#666666") : Color.heyGray8)
+                .foregroundColor(.Module.info2)
                 .padding(.bottom, 15)
             
             if isSelected {
@@ -50,10 +50,10 @@ struct ClassSearchListCellView: View {
                     } label: {
                         Text("Add")
                             .font(.regular_12)
-                            .foregroundColor(Color.heyWhite)
+                            .foregroundColor(.Module.Add.button)
                             .padding(.vertical, 5)
                             .frame(width: 46, height: 25)
-                            .background(Color.heyMain)
+                            .background(Color.Module.Add.text)
                             .clipShape(RoundedRectangle(cornerRadius: 12.5))
                             .padding(.trailing, 7)
                     }
@@ -64,7 +64,7 @@ struct ClassSearchListCellView: View {
             }
         }
         .padding(.horizontal, 16)
-        .background(isSelected ? Color.heySubMain3 : Color.black.opacity(0.0001))
+        .background(isSelected ? Color.Module.select : Color.black.opacity(0.0001))
         .onTapGesture {
             cellDidTap()
         }

@@ -28,9 +28,9 @@ public struct URLValidator {
             return .failure(.invalidPort)
         }
         
-        if !validatePath(url, originalURLString: trimmedURLString) {
-            return .failure(.invalidPath)
-        }
+//        if !validatePath(url, originalURLString: trimmedURLString) {
+//            return .failure(.invalidPath)
+//        }
         
         if let query = url.query, !validateQuery(query) {
             return .failure(.invalidQueryParameter)

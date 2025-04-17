@@ -12,7 +12,7 @@ public struct SectionInfoResult: Decodable {
     let sectionId: Int
     let courseCode: String
     let courseName: String
-    let credit: Int
+    let credit: Int?
     let professor: String
     let sectionStatus: String
     let schedules: [SchedulesResult]

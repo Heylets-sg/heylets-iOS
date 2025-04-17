@@ -15,8 +15,8 @@ import Core
 public class OnboardingViewModel: ObservableObject {
     
     enum Action {
-        case startButtonDidTap
-        case alreadyRegisteredButtonDidTap
+        case loginButtonDidTap
+        case guestModeButtonDidTap
     }
     
     @Published var index: Int = 0
@@ -28,12 +28,12 @@ public class OnboardingViewModel: ObservableObject {
     
     func send(_ action: Action) {
         switch action {
-        case .startButtonDidTap:
-            Analytics.shared.track(.clickExplore)
-            navigationRouter.push(to: .selectNationality)
-        case .alreadyRegisteredButtonDidTap:
+        case .loginButtonDidTap:
             Analytics.shared.track(.clickAlreadyRegistered)
             navigationRouter.push(to: .login)
+        case .guestModeButtonDidTap:
+            Analytics.shared.track(.clickExplore)
+            navigationRouter.push(to: .selectNationality)
         }
     }
 }

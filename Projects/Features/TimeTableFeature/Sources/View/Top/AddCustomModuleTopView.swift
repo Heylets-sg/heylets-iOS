@@ -23,6 +23,7 @@ struct AddCustomModuleTopView: View {
                     Image(uiImage: .icClose)
                         .resizable()
                         .frame(width: 16, height: 16)
+                        .foregroundColor(.common.ButtonClose.default)
                 }
                 
                 Spacer()
@@ -32,7 +33,11 @@ struct AddCustomModuleTopView: View {
                 } label: {
                     Text("Save")
                         .font(.medium_16)
-                        .foregroundColor(viewModel.schedule.isEmpty ? .heyGray7 : .heyGray1)
+                        .foregroundColor(
+                            viewModel.schedule.isEmpty
+                            ? .common.Button.Save.unactive
+                            : .common.Button.Save.active
+                        )
                 }
                 .disabled(viewModel.schedule.isEmpty)
             }

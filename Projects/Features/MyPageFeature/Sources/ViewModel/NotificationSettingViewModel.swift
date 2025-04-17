@@ -52,6 +52,7 @@ public class NotificationSettingViewModel: ObservableObject {
                     self?.state.classToggleOn = settingInfo.classNotification.isEnabled
                     self?.briefingTime = settingInfo.dailyBriefing.time
                     self?.classNotificationMinute = Int(settingInfo.classNotification.minutes)!
+                    Analytics.shared.track(.notificationSettingUpdated)
                 })
                 .store(in: cancelBag)
             

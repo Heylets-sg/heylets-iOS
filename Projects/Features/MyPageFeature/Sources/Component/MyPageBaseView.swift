@@ -21,8 +21,8 @@ struct MyPageBaseView<Content:View>: View {
     init(
         @ViewBuilder content: () -> Content,
         titleText: String,
-        titleColor: Color = .heyGray1,
-        backgroundColor: Color = .heyWhite
+        titleColor: Color = .common.MainText.default,
+        backgroundColor: Color = .common.Background.default
     ) {
         self.content = content()
         self.titleText = titleText
@@ -54,10 +54,10 @@ struct MyPageBaseView<Content:View>: View {
                         Button {
                             dismiss()
                         } label: {
-                            Image(uiImage: .icBack.withRenderingMode(.alwaysTemplate))
+                            Image(uiImage: .icBack)
                                 .resizable()
                                 .frame(width: 24, height: 18)
-                                .tint(titleColor)
+                                .tint(.common.ButtonBack.default)
                         }
                         Spacer()
                     }

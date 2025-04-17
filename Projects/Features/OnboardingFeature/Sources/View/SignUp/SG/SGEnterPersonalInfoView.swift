@@ -69,8 +69,17 @@ fileprivate struct GenderButton: View {
                 .frame(height: 56)
                 .frame(maxWidth: .infinity)
                 .font(.semibold_14)
-                .background(isSelected ? Color.heyMain : Color.heyGray4)
-                .foregroundStyle(isSelected ? Color.heyGray1 : Color.heyGray2)
+                .background(
+                    isSelected
+                    ? Color.common.Button.active
+                    : Color.common.Button.unactive
+                )
+                //TODO: 색상 확인
+                .foregroundStyle(
+                    isSelected
+                    ? Color.common.MainText.default
+                    : Color.common.MainText.else
+                )
                 .clipShape(RoundedRectangle(cornerRadius: 8))
         }
     }
@@ -84,4 +93,5 @@ fileprivate struct GenderButton: View {
         )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }

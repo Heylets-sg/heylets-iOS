@@ -31,16 +31,22 @@ public class EnterSecurityCodeViewModel: ObservableObject {
     public var navigationRouter: NavigationRoutableType
     private var useCase: SignUpUseCaseType
     private var email: String
+    private var nationality: NationalityInfo = .empty
+    
     private let cancelBag = CancelBag()
     
     public init(
         navigationRouter: NavigationRoutableType,
         useCase: SignUpUseCaseType,
-        email: String
+        email: String,
+        nationality: NationalityInfo
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
         self.email = email
+        self.nationality = nationality
+        
+        state.hiddenEmail = email.maskedEmail()
         
         observe()
         bindState()
@@ -55,8 +61,8 @@ public class EnterSecurityCodeViewModel: ObservableObject {
             navigationRouter.pop()
         case .nextButtonDidTap:
             useCase.verifyEmail(email, Int(otpCode)!)
-                .sink(receiveValue: { _ in
-                    switch owner.useCase.userInfo.university.nationality {
+                .sink(receiveValue: {  _ in
+                    switch owner.nationality {
                     case .Singapore:
                         owner.navigationRouter.push(to: .enterPersonalInfo_SG)
                     case .Malaysia:
@@ -74,7 +80,7 @@ public class EnterSecurityCodeViewModel: ObservableObject {
         guard let owner else { return }
         
         $otpCode
-            .map { $0.count >= 6 }
+            .map { $0.count == 6 }
             .assign(to: \.state.continueButtonIsEnabled, on: owner)
             .store(in: cancelBag)
     }

@@ -33,10 +33,6 @@ public struct SelectUniversityView: View {
                     .focused($isFocused)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.heyMain, lineWidth: 2)
-                    )
                     .onChange(of: isFocused) { isFocused in
                         if isFocused {
                             viewModel.send(.textFieldDidTap)
@@ -85,13 +81,21 @@ fileprivate struct SelectUniversityListCellView: View {
             
             Text(university.rawValue)
                 .font(.regular_14)
-                .foregroundColor(.heyGray1)
+                .foregroundColor(
+                    isSelected
+                    ? .common.TextActive.else
+                    : .common.Placeholder.default
+                )
                 .padding(.leading, 12)
             
             Spacer()
         }
         .padding(.vertical, 10.adjusted)
-        .background(isSelected ? Color.heyMain : Color.heyGray4)
+        .background(
+            isSelected
+            ? Color.common.Button.active
+            : Color.common.InputField.default
+        )
     }
 }
 
@@ -103,4 +107,5 @@ fileprivate struct SelectUniversityListCellView: View {
         )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }

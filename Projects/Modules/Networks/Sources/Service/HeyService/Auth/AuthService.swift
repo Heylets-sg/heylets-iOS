@@ -9,6 +9,8 @@
 import Foundation
 import Combine
 
+import Core
+
 public typealias AuthService = BaseService<AuthAPI>
 
 public protocol AuthServiceType {
@@ -56,7 +58,7 @@ public protocol AuthServiceType {
 extension AuthService: AuthServiceType {
     public func checkUserName(
         _ name: String
-    ) -> AnyPublisher<UserNameResult, HeyNetworkError> {
+    ) -> NetworkDecodableResponse<UserNameResult> {
         requestWithResult(.checkUserName(name))
     }
     
@@ -67,9 +69,11 @@ extension AuthService: AuthServiceType {
     public func signUp(
         _ request: SignUpRequest
     ) -> NetworkVoidResponse {
-        //MARK: Test용
-        requestWithNoResult(.signUp(request, UUID().uuidString))
-//        requestWithNoResult(.testSignUp(request, UUID().uuidString))
+        if Config.isTestEnvironment {
+            return requestWithNoResult(.testSignUp(request, UUID().uuidString))
+        } else {
+            return requestWithNoResult(.signUp(request, UUID().uuidString))
+        }
     }
     
     public func resetPassword(

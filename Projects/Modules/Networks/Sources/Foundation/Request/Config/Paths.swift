@@ -13,23 +13,23 @@ public enum Paths {
     
     //MARK: Auth
     
-    static let checkUserName = "api/v1/auth/username/check"
+    static let checkUserName = "api/v1/auth/username/check" //webHook
     static let refreshToken = "api/v1/auth/token/refresh"
-    static let signUp = "api/v2/auth/signup"
-    static let resetPassword = "api/v1/auth/password/reset"
-    static let verifyResetPassword = "api/v1/auth/password/reset/verify"
-    static let requestResetPassword = "api/v1/auth/password/reset/request"
-    static let logout = "api/v1/auth/logout"
-    static let login = "api/v1/auth/login"
-    static let verifyEmail = "api/v1/auth/email/verify"
-    static let requestVerifyEmail = "api/v1/auth/email/verification"
-    static let deleteAccount = "api/v1/users/security/me/withdrawal"
+    static let signUp = "api/v1/auth/signup" //webHook
+    static let resetPassword = "api/v1/auth/password/reset" //webHook
+    static let verifyResetPassword = "api/v1/auth/password/reset/verify" //webHook
+    static let requestResetPassword = "api/v1/auth/password/reset/request" //webHook
+    static let logout = "api/v1/auth/logout" //webHook
+    static let login = "api/v1/auth/login" //webHook
+    static let verifyEmail = "api/v1/auth/email/verify" //webHook
+    static let requestVerifyEmail = "api/v1/auth/email/verification" //webHook
+    static let deleteAccount = "api/v1/users/security/me/withdrawal" //webHook
     
     //MARK: Guest
     
     static let changeGuestUniversity = "api/v1/auth/guest/university"
     static let startGuestMode = "api/v2/auth/guest/start/{university}"
-    static let convertToMember = "/api/v1/auth/guest/signup"
+    static let convertToMember = "/api/v1/auth/guest/signup" //webHook
     
     
     //MARK: Lecture

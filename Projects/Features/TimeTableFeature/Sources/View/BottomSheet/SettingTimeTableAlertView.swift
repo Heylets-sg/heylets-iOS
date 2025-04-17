@@ -23,15 +23,15 @@ public struct SettingTimeTableAlertView: View {
     public var body: some View {
         ZStack {
             if let type = viewModel.settingAlertType {
-                Color.heyDimmed
+                Color.common.Background.opacity60
                     .ignoresSafeArea()
                 
                 Group {
                     switch type {
                     case .editTimeTableName:
-                        HeyAlertEnterNameView(
+                        HeyAlertTextFieldView(
                             title: "Enter name",
-                            text: $viewModel.state.timeTableName,
+                            content: $viewModel.state.timeTableName,
                             primaryAction: ("Close", .gray, { viewModel.send(.settingAlertDismiss) }),
                             secondaryAction: ("Ok", .primary, { viewModel.send(.editTimeTableName) })
                         )
@@ -43,6 +43,7 @@ public struct SettingTimeTableAlertView: View {
                                 viewModel.send(.saveImage)
                             })
                         )
+                        .padding(.horizontal, 44)
                         
                     case .removeTimeTable:
                         HeyAlertView(
@@ -50,9 +51,10 @@ public struct SettingTimeTableAlertView: View {
                             primaryAction: ("Delete", .primary, { viewModel.send(.deleteTimeTable) }),
                             secondaryAction: ("Close", .gray, { viewModel.send(.settingAlertDismiss) })
                         )
+                        .padding(.horizontal, 44)
                     }
                 }
-                .padding(.horizontal, 44)
+                
                 .shadow(radius: 10)
                 .onAppear {
                     Analytics.shared.track(.screenView(type.rawValue, .modal))

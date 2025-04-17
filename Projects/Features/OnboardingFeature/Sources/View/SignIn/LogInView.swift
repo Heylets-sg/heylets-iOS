@@ -39,6 +39,7 @@ public struct LogInView: View {
                         Image(uiImage: .icClose)
                             .resizable()
                             .frame(width: 18, height: 18)
+                            .tint(.Common.ButtonClose.default)
                     }
                     .hidden(!viewModel.state.showCloseBtn)
                 }
@@ -53,13 +54,13 @@ public struct LogInView: View {
                 HStack {
                     Text("Log In")
                         .font(.semibold_18)
-                        .foregroundStyle(Color.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                     
                     Spacer()
                     
                     Text("New to Heylets?")
                         .font(.regular_14)
-                        .foregroundStyle(Color.heyGray1)
+                        .foregroundColor(.common.GuideText.default)
                         .padding(.trailing, 8)
                     
                     Button {
@@ -67,7 +68,7 @@ public struct LogInView: View {
                     } label: {
                         Text("Sign Up")
                             .font(.regular_12)
-                            .foregroundStyle(Color.heyMain)
+                            .foregroundColor(.common.MainText.default)
                     }
                 }
                 .padding(.bottom, 29.adjusted)
@@ -77,27 +78,20 @@ public struct LogInView: View {
                     placeHolder: "ID"
                 )
                 .focused($isFocused, equals: .id)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.heyGray3, lineWidth: 1)
-                )
                 .padding(.bottom, 21.adjusted)
                 
                 PasswordField(
                     password: $viewModel.password,
-                    showPassword: $showPassword, colorSystem: .white
+                    showPassword: $showPassword, 
+                    colorSystem: .white
                 )
                 .focused($isFocused, equals: .password)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.heyGray3, lineWidth: 1)
-                )
                 .padding(.bottom, 14)
                 
                 HStack {
                     Text(viewModel.state.errMessage)
                         .font(.regular_14)
-                        .foregroundColor(.heyError)
+                        .foregroundColor(.common.Error.default)
                         .frame(width: 180)
                     
                     Spacer()
@@ -107,7 +101,7 @@ public struct LogInView: View {
                     } label: {
                         Text("Forgot password?")
                             .font(.regular_12)
-                            .foregroundStyle(Color.heyGray1)
+                            .foregroundColor(.common.Placeholder.default)
                     }
                 }
                 
@@ -116,7 +110,7 @@ public struct LogInView: View {
                 Button("Log In") {
                     viewModel.send(.loginButtonDidTap)
                 }
-                .heyBottomButtonStyle()
+                .heyCTAButtonStyle()
             }
             .onSubmit {
                 switch isFocused {
@@ -132,7 +126,7 @@ public struct LogInView: View {
             .padding(.top, 106.adjusted)
             .padding(.bottom, 65.adjusted)
             .padding(.horizontal, 16)
-            .background(Color.heyWhite)
+            .background(Color.common.Background.default)
             .ignoresSafeArea(edges: .vertical)
             .ignoresSafeArea(.keyboard)
             .navigationBarBackButtonHidden()
@@ -154,4 +148,5 @@ public struct LogInView: View {
         )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }

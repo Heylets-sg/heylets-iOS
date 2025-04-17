@@ -20,6 +20,7 @@ public class ThemeViewModel: ObservableObject {
         var saveSettingInfoSucced: Bool = false
         var selectedTheme: Theme? = nil
         var inviteCodeViewHidden: Bool = true
+        var isShowingPopup: Bool = false
     }
     
     enum Action {
@@ -30,6 +31,7 @@ public class ThemeViewModel: ObservableObject {
         case selectDisplayType(DisplayTypeInfo)
         case reportButtonDidTap
         case inviteFriendViewDidTap
+        case popUpOkButtonDidTap
     }
     
     @Published var state = State()
@@ -37,6 +39,9 @@ public class ThemeViewModel: ObservableObject {
     private let useCase: TimeTableUseCaseType
     @Published var displayType: DisplayTypeInfo = .MODULE_CODE
     @Published var theme: String = ""
+    
+    var viewType: TimeTableViewType { viewTypeService.viewType }
+    private var viewTypeSubscription: AnyCancellable?
     
     // 싱글톤 사용
     private var viewTypeService: TimeTableViewTypeService  = TimeTableViewTypeService.shared
@@ -53,6 +58,13 @@ public class ThemeViewModel: ObservableObject {
     ) {
         self.useCase = useCase
         self.navigationRouter = navigationRouter
+        
+        viewTypeSubscription = viewTypeService.$viewType
+            .sink { [weak self] viewType in
+                if viewType == .theme(true) {
+                    self?.state.isShowingPopup = true
+                }
+            }
     }
     
     func send(_ action: Action) {
@@ -107,6 +119,9 @@ public class ThemeViewModel: ObservableObject {
             
         case .inviteFriendViewDidTap:
             navigationRouter.push(to: .inviteCode)
+            
+        case .popUpOkButtonDidTap:
+            state.isShowingPopup = false
         }
     }
 }

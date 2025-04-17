@@ -13,6 +13,7 @@ import SwiftUI
 import BaseFeatureDependency
 import Domain
 import DSKit
+import Core
 
 
 public struct InviteCodeView: View {
@@ -37,21 +38,25 @@ public struct InviteCodeView: View {
                     viewModel.send(.backButtonDidTap)
                 } label: {
                     Image(uiImage: .icBack)
+                        .renderingMode(.template)
                         .resizable()
                         .frame(width: 22, height: 18)
+                        .tint(.common.ButtonBack.default)
                 }
                 
                 VStack(alignment: .leading) {
                     Text("Invite a friend and get\ntimetable themes together🎉")
                         .font(.semibold_18)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .padding(.bottom, 8.adjusted)
                     
                     Text("When a friend signs up using your code, ")
                         .font(.regular_16)
+                        .foregroundColor(.common.SubText.default)
                     
                     Text("they get 3 random themes, and you get 2")
                         .font(.regular_16)
+                        .foregroundColor(.heyMain)
                     
                     Spacer()
                         .frame(height: 126.adjusted)
@@ -60,14 +65,15 @@ public struct InviteCodeView: View {
                         Spacer()
                         VStack {
                             Text("My invite code")
+                                .foregroundColor(.common.SubText.default)
                                 .padding(.vertical, 12.adjusted)
-                                .padding(.horizontal, 90.adjusted)
+                                .padding(.horizontal, 80.adjusted)
                                 .background(Color.heyMain)
                             
                             HStack {
                                 Text(viewModel.referralCode)
                                     .font(.medium_30)
-                                    .foregroundColor(.heyBlack)
+                                    .foregroundColor(.common.MainText.default)
                                     .kerning(10)
                                 
                                 Button {
@@ -76,21 +82,24 @@ public struct InviteCodeView: View {
                                     Image(uiImage: .icCopy)
                                         .resizable()
                                         .frame(width: 11, height: 11)
+                                        .tint(Color.setting.copyIcon)
                                         .padding(.all, 7)
-                                        .background(Color.heyGray3)
+                                        .background(Color.setting.copyButton)
                                         .clipShape(RoundedRectangle(cornerRadius: 3))
                                 }
                                 
                             }
                             .padding(.vertical, 30.adjusted)
                         }
+                        .background(Color.popup.default)
                         .clipShape(RoundedRectangle(cornerRadius: 7))
                         .overlay(
                             RoundedRectangle(cornerRadius: 7)
-                                .stroke(Color.heyMain, lineWidth: 1)
+                                .stroke(Color.setting.inviteBox, lineWidth: 1)
                         )
                         Spacer()
                     }
+                    
                     .padding(.horizontal, 20)
                     
                     
@@ -102,12 +111,15 @@ public struct InviteCodeView: View {
                         HStack {
                             Text("Share my code")
                                 .font(.semibold_14)
-                                .foregroundStyle(Color.heyWhite)
+                                .foregroundStyle(Color.common.CTAText.active)
                         }
                         .frame(height: 56)
                         .frame(maxWidth: .infinity)
-                        .background(Color.heyMain)
+                        .background(Color.common.CTA.active)
                         .clipShape(RoundedRectangle(cornerRadius: 28))
+                    }
+                    .onTapGesture {
+                        Analytics.shared.track(.clickShareReferralCode)
                     }
                 }
                 .padding(.top, 36.adjusted)
@@ -115,7 +127,7 @@ public struct InviteCodeView: View {
             }
             .setTimeTableHeyNavigation()
             .padding(.horizontal, 16)
-            .background(Color.heyWhite)
+            .background(Color.common.Background.default)
             .ignoresSafeArea(edges: .vertical)
             .ignoresSafeArea(.keyboard)
             .navigationBarBackButtonHidden()

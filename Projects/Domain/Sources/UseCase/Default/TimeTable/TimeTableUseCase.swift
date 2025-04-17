@@ -43,6 +43,7 @@ final public class TimeTableUseCase: TimeTableUseCaseType {
     
     public var tableId: Int = 0
     public var errMessage = PassthroughSubject<String, Never>()
+    public var emptyScheduleError = PassthroughSubject<String, Never>()
     public var guestModeError = PassthroughSubject<Void, Never>()
     public var timeTableInfo = CurrentValueSubject<TimeTableInfo, Never>(.empty)
     public var sectionList = PassthroughSubject<[SectionInfo], Never>()

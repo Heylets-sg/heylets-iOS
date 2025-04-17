@@ -17,7 +17,7 @@ public struct User: Hashable, Equatable {
     public var nickName: String
     public var university: UniversityInfo
     public var profileImage: UIImage?
-    public var agreements: [AgreementInfo]
+    public var agreements: [AgreementInfo] = AgreementInfo.agreementList
     public var referralCode: String?
     
     public init(
@@ -28,7 +28,7 @@ public struct User: Hashable, Equatable {
         nickName: String,
         university: UniversityInfo,
         profileImage: UIImage? = nil,
-        agreements: [AgreementInfo],
+        agreements: [AgreementInfo] = AgreementInfo.agreementList,
         referralCode: String? = nil
     ) {
         self.email = email

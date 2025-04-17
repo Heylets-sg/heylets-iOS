@@ -37,7 +37,8 @@ public class VerifyEmailViewModel: ObservableObject {
     private var useCase: SignUpUseCaseType
     private let cancelBag = CancelBag()
     
-    var domainList: [String] = []
+    var nationality: NationalityInfo = .empty
+    var university: UniversityInfo = .empty
     
     public init(
         navigationRouter: NavigationRoutableType,
@@ -46,7 +47,7 @@ public class VerifyEmailViewModel: ObservableObject {
     ) {
         self.navigationRouter = navigationRouter
         self.useCase = useCase
-        self.domainList = nationality.domainList
+        self.nationality = nationality
         
         observe()
         bindState()
@@ -60,15 +61,27 @@ public class VerifyEmailViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            useCase.requestEmailVerifyCode(email)
-                .sink(receiveValue: { _ in
-                    owner.useCase.userInfo.email = owner.email
-                    owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email))
-                })
-                .store(in: cancelBag)
-//            MARK: Test용 삭제 필수
-//            owner.useCase.userInfo.email = owner.email
-//            owner.navigationRouter.push(to: .enterPersonalInfo_SG)
+            if Config.isTestEnvironment {
+                owner.useCase.userInfo.email = owner.email
+                if let university = self.domainToUniversity(owner.domain) {
+                    owner.useCase.userInfo.university = university
+                }
+                if nationality == .Malaysia {
+                    navigationRouter.push(to: .enterPersonalInfo_MYS)
+                } else {
+                    navigationRouter.push(to: .enterPersonalInfo_SG)
+                }
+            } else {
+                useCase.requestEmailVerifyCode(email)
+                    .sink(receiveValue: { _ in
+                        owner.useCase.userInfo.email = owner.email
+                        if let university = self.domainToUniversity(owner.domain) {
+                            owner.useCase.userInfo.university = university
+                        }
+                        owner.navigationRouter.push(to: .signUpEnterSecurityCode(owner.email, owner.nationality))
+                    })
+                    .store(in: cancelBag)
+            }
         case .domainListButtonDidTap:
             state.domainListViewIsVisible.toggle()
         case .dismissFocus:
@@ -100,5 +113,18 @@ public class VerifyEmailViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .assign(to: \.state.errMessage, on: self)
             .store(in: cancelBag)
+    }
+}
+
+extension VerifyEmailViewModel {
+    func domainToUniversity(_ domain: String) -> UniversityInfo? {
+        switch domain {
+        case "student.uitm.edu.my": return .UiTM
+        case "siswa.um.edu.my": return .UM
+        case "live.iium.edu.my": return .IIUM
+        case "naver.com", "gmail.com": return .UM
+            
+        default: return .empty
+        }
     }
 }

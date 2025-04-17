@@ -27,7 +27,7 @@ public struct EnterSecurityCodeView: View {
             
             Text(verbatim: "Enter the 6-digit code we sent to the email:\n\(viewModel.state.hiddenEmail)")
                 .font(.regular_16)
-                .foregroundColor(.heyGray1)
+                .foregroundColor(.common.SubText.default)
                 .lineLimit(2)
             
             Spacer()
@@ -35,15 +35,21 @@ public struct EnterSecurityCodeView: View {
             
             HStack {
                 Spacer()
-                SecurityCodeInputView(otpCode: $viewModel.otpCode)
-                    .frame(width: 310, height: 50)
-                    .padding(.bottom, 16.adjusted)
+                VStack {
+                    SecurityCodeInputView(otpCode: $viewModel.otpCode)
+                        .frame(width: 310, height: 50)
+                        .padding(.bottom, 16.adjusted)
+                    
+                    Text(viewModel.state.errMessage)
+                        .font(.regular_14)
+                        .foregroundColor(.common.Error.default)
+                        .multilineTextAlignment(.center)
+                    
+                }
                 Spacer()
             }
             
-            Text(viewModel.state.errMessage)
-                .font(.regular_14)
-                .foregroundColor(.heyError)
+            
             
         }, titleText: "Enter Your Security Code",
                            nextButtonIsEnabled: viewModel.state.continueButtonIsEnabled,
@@ -57,8 +63,10 @@ public struct EnterSecurityCodeView: View {
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
             useCase: StubHeyUseCase.stub.signUpUseCase,
-            email: ""
+            email: "",
+            nationality: .Malaysia
         )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }

@@ -32,26 +32,26 @@ public struct DSKitDemoView: View {
             Button("기본 바텀 버튼") {
                 // Action
             }
-            .heyBottomButtonStyle()
+            .heyCTAButtonStyle()
             
             //MARK: Case 2
             Button("기본 바텀 버튼") {
                 // Action
             }
-            .heyBottomButtonStyle(.primary)
+            .heyCTAButtonStyle()
             
             //MARK: Case 3
             Button("기본 바텀 버튼") {
                 // Action
             }
-            .heyBottomButtonStyle(.black)
+            .heyCTAButtonStyle()
             
             //MARK: Case 2
             Button("클릭시 비활성화 되는 버튼") {
                 buttonDisabled = true
             }
             .disabled(buttonDisabled)
-            .heyBottomButtonStyle()
+            .heyCTAButtonStyle()
             
             Spacer()
         }

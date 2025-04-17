@@ -84,6 +84,11 @@ public extension SettingsDictionary {
         merging(["PROVISIONING_PROFILE_SPECIFIER": SettingValue(stringLiteral: "$(APP_PROVISIONING_PROFILE)")])
             .merging(["PROVISIONING_PROFILE": SettingValue(stringLiteral: "$(APP_PROVISIONING_PROFILE)")])
     }
+    
+    // 엔타이틀먼트 수정 허용 설정
+    func allowEntitlementsModification(_ value: Bool = true) -> SettingsDictionary {
+        merging(["CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION": SettingValue(stringLiteral: value ? "YES" : "NO")])
+    }
 }
 
 

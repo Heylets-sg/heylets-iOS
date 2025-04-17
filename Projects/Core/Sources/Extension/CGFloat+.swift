@@ -26,3 +26,21 @@ public extension Int {
         return ratio <= ratioH ? CGFloat(self) * ratio : CGFloat(self) * ratioH
     }
 }
+
+public extension CGFloat {
+    var adjusted: CGFloat {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        let ratio: CGFloat = screenWidth / 390
+        let ratioH: CGFloat = screenHeight / 844
+        return ratio <= ratioH ? CGFloat(self) * ratio : CGFloat(self) * ratioH
+    }
+    
+    func adjusted(_ height: Int) -> CGFloat {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        let ratio: CGFloat = screenWidth / 390
+        let ratioH: CGFloat = screenHeight / 844
+        return ratio <= ratioH ? CGFloat(self) * ratio : CGFloat(self) * ratioH
+    }
+}

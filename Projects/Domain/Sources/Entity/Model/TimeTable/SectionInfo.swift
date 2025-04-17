@@ -82,8 +82,8 @@ public struct SectionInfo: Hashable, Equatable {
         professor: String,
         unit: Int?,
         memo: String? = nil,
-        backgroundColor: String = "#CAD0ED", // heySubMain
-        textColor: String = "#FFFFFF", //black,
+        backgroundColor: String = "#CAD0ED",
+        textColor: String = "#FFFFFF",
         isCustom: Bool = false
     ) {
         self.id = id

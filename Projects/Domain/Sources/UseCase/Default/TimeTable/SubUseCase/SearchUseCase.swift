@@ -19,7 +19,10 @@ public extension TimeTableUseCase {
             .handleEvents(receiveRequest: {  _ in
                 Analytics.shared.track(.clickSearchModule(
                     keyword: filterInfo.keyword,
-                    semester: filterInfo.semester ?? "TERM_2"
+                    department: filterInfo.department ?? "",
+                    semester: filterInfo.semester ?? "TERM_2",
+                    level: filterInfo.level ?? "",
+                    keywordType: filterInfo.keywordType ?? ""
                 )
                 )
             })

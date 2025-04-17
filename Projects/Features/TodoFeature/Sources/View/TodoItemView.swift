@@ -55,11 +55,11 @@ public struct TodoItemView: View {
                             text: $content,
                             prompt: Text(item.content)
                                 .font(.medium_14)
-                                .foregroundColor(.init(hex: "#B8B8B8"))
+                                .foregroundColor(.common.Placeholder.default)
                         )
                         .focused($isKeyboardActive)
                         .font(.medium_14)
-                        .foregroundStyle(Color.init(hex: "#4A4A4A"))
+                        .foregroundColor(.todo.contents)
                         .frame(width: 271, alignment: .leading)
                         .offset(x: offsetX)
                         .onSubmit {
@@ -72,7 +72,7 @@ public struct TodoItemView: View {
                     } else {
                         Text(item.content)
                             .font(.medium_14)
-                            .foregroundStyle(Color.init(hex: "#4A4A4A"))
+                            .foregroundColor(.todo.contents)
                             .lineLimit(2)
                             .frame(width: 271, alignment: .leading)
                             .multilineTextAlignment(.leading)
@@ -87,7 +87,7 @@ public struct TodoItemView: View {
                 .padding(.vertical, 20)
             }
             .frame(minHeight: 56, maxHeight: 81)
-            .background(Color.init(hex: "#F7F7F7"))
+            .background(Color.common.InputField.toDo)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
             if showDeleteButton {
@@ -98,7 +98,7 @@ public struct TodoItemView: View {
                     } label: {
                         Text("Delete")
                             .font(.medium_14)
-                            .foregroundColor(.white)
+                            .foregroundColor(.heyWhite)
                             .frame(width: threshold)
                             .frame(minHeight: 56, maxHeight: 81)
                             .background(.red)
@@ -164,11 +164,11 @@ public struct TodoAddItemView: View {
                         text: $content,
                         prompt: Text("Add a task")
                             .font(.medium_12)
-                            .foregroundColor(.init(hex: "#B8B8B8"))
+                            .foregroundColor(.common.Placeholder.default)
                     )
                     .focused($isKeyboardActive)
                     .font(.medium_14)
-                    .foregroundStyle(Color.init(hex: "#4A4A4A"))
+                    .foregroundColor(.todo.contents)
                     .onSubmit {
                         viewModel.send(.addItem(groupId, content))
                     }
@@ -189,7 +189,7 @@ public struct TodoAddItemView: View {
                     
                     Text("Add a task")
                         .font(.medium_12)
-                        .foregroundStyle(Color.init(hex: "#B8B8B8"))
+                        .foregroundColor(.common.Placeholder.default)
                     
                     Spacer()
                 }
@@ -198,7 +198,7 @@ public struct TodoAddItemView: View {
                 }
             }
         }
-        .background(Color.init(hex: "#F7F7F7"))
+        .background(Color.common.InputField.toDo)
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .frame(height: 56)
     }

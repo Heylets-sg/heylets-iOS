@@ -31,6 +31,14 @@ public enum UniversityInfo: String {
             return .empty
         }
     }
+    
+    public var domain: String? {
+        switch self {
+            
+        default:
+            return nil
+        }
+    }
 }
 
 extension UniversityInfo {
@@ -53,3 +61,4 @@ extension UniversityInfo {
         }
     }
 }
+

@@ -20,12 +20,12 @@ public struct SearchModuleTopView: View {
                 withAnimation {
                     closeButtonDidTapEvent()
                     viewType = .main
-                    
                 }
             } label: {
                 Image(uiImage: .icClose)
                     .resizable()
                     .frame(width: 16, height: 16)
+                    .tint(.common.ButtonClose.default)
             }
             
             Spacer()
@@ -38,6 +38,7 @@ public struct SearchModuleTopView: View {
                 Image(uiImage: .icPencil)
                     .resizable()
                     .frame(width: 16, height: 16)
+                    .tint(.timeTableSub.addCustom)
             }
         }
         .padding(.horizontal, 16)

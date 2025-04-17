@@ -40,10 +40,9 @@ public struct DetailModuleInfoView: View {
                 
                 Text(sectionInfo.name)
                     .font(.semibold_18)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
-//                    .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
                     .padding(.top, 12)
                     .padding(.bottom, 16)
                     .padding(.trailing, 120)
@@ -51,16 +50,16 @@ public struct DetailModuleInfoView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(sectionInfo.allscheduleTime)
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.timeTableMain.ModuleInfo.info)
                         .padding(.trailing, 24)
                     
                     Text(sectionInfo.professor)
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.timeTableMain.ModuleInfo.info)
                     
                     Text("\(sectionInfo.location)\(sectionInfo.unit.map { " / \($0) unit" } ?? "")")
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.timeTableMain.ModuleInfo.info)
                 }
             }
             .padding(.leading, 24)
@@ -75,12 +74,12 @@ public struct DetailModuleInfoView: View {
                 } label: {
                     Text("Delete")
                         .font(.regular_14)
-                        .foregroundColor(.heyGray2)
+                        .foregroundColor(.timeTableMain.ModuleInfo.delete)
                 }
                 Spacer()
             }
         }
-        .background(Color.heyWhite)
+        .background(Color.timeTableMain.bottomSheet)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .onDisappear {
             if viewType == .detail {
@@ -89,19 +88,3 @@ public struct DetailModuleInfoView: View {
         }
     }
 }
-
-
-//#Preview {
-//    @State var stub: TimeTableViewType = .detail
-//    let useCase = StubHeyUseCase.stub.timeTableUseCase
-//    return TimeTableView(
-//        viewModel: .init(
-//            Router.default.navigationRouter,
-//            Router.default.windowRouter,
-//            useCase),
-//        searchModuleViewModel: .init(useCase),
-//        addCustomModuleViewModel: .init(useCase),
-//        themeViewModel: .init(useCase)
-//    )
-//    .environmentObject(Router.default)
-//}

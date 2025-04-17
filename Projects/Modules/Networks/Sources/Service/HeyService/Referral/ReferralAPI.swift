@@ -16,6 +16,10 @@ public enum ReferralAPI {
 }
 
 extension ReferralAPI: BaseAPI {
+    public var connectWebHook: Bool {
+        return false
+    }
+    
     public var isWithInterceptor: Bool {
         return false
     }
@@ -34,7 +38,7 @@ extension ReferralAPI: BaseAPI {
         case .getReferralCode:
             return .get
         case .validateReferralCode:
-            return .post
+            return .get
         }
     }
     

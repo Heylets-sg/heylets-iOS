@@ -21,7 +21,7 @@ struct ThemeTopView: View {
             ZStack {
                 Text("Theme")
                     .font(.semibold_16)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
                 
                 HStack {
                     Button {
@@ -32,6 +32,7 @@ struct ThemeTopView: View {
                         Image(uiImage: .icClose)
                             .resizable()
                             .frame(width: 16, height: 16)
+                            .tint(.common.ButtonClose.default)
                     }
                     
                     Spacer()
@@ -44,13 +45,13 @@ struct ThemeTopView: View {
                     } label: {
                         Text("Save")
                             .font(.medium_16)
-                            .foregroundColor(.heyGray7)
+                            .foregroundColor(.common.Button.active)
                     }
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.top, 25)
-            .padding(.bottom, 24)
+            .padding(.top, 57.adjusted)
+            .padding(.bottom, 24.adjusted)
         }
     }
 }
@@ -58,7 +59,6 @@ struct ThemeTopView: View {
 struct ThemeListTopView: View {
     @Binding var viewType: TimeTableViewType
     @ObservedObject var viewModel: ThemeViewModel
-//    let height: CGFloat
     
     var body: some View {
         
@@ -112,7 +112,7 @@ fileprivate struct ThemeListCellView: View {
                     Circle()
                         .fill(Color.heyWhite)
                         .frame(width: 64, height: 64)
-                        .overlay(Circle().stroke(Color.heySubMain, lineWidth: 3.2))
+                        .overlay(Circle().stroke(Color.heyMain, lineWidth: 3.2))
                 }
                 
                 QuarterCircleView(theme)
@@ -122,7 +122,7 @@ fileprivate struct ThemeListCellView: View {
             
             Text(theme.themeName)
                 .font(.medium_10)
-                .foregroundColor(.heyGray1)
+                .foregroundColor(.common.MainText.default)
         }
         .frame(height: 95)
     }
@@ -154,7 +154,7 @@ struct ThemeInviteFriendView: View {
         .padding(.vertical, height * 0.22)
         .padding(.leading, 24)
         .padding(.trailing, 27)
-        .background(Color.heyDimmed)
+        .background(Color.common.Background.opacity60)
         .clipShape(Capsule())
     }
 }
@@ -194,7 +194,7 @@ struct QuarterCircleView: View {
             
             if !theme.unlocked {
                 Circle()
-                    .fill(Color.heyDimmed)
+                    .fill(Color.common.Background.opacity60)
                 
                 Image(uiImage: .icLocked)
                     .resizable()

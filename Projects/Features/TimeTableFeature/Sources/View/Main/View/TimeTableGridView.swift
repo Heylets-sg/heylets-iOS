@@ -121,7 +121,7 @@ extension TimeTableGridView {
         _ cellWidth: CGFloat,
         _ cellHeight: CGFloat
     ) {
-        let gridColor = Color.heyGrid
+        let gridColor = Color.timeTableMain.Timeline.background
         // 첫번째 선 그리기
         
         let height = CGFloat(rowCount) * cellHeight
@@ -236,7 +236,7 @@ extension TimeTableGridView {
         cellHeight: CGFloat
     ) -> some View {
         return Rectangle()
-            .fill(Color.heyGray2.opacity(0.5))
+            .fill(Color.Module.preview)
             .clipShape(RoundedRectangle(cornerRadius: 2))
             .frame(width: cellWidth, height: cellHeight)
             .position(x: centerX, y: centerY)

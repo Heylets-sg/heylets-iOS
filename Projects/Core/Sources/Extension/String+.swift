@@ -20,17 +20,17 @@ extension String {
         
         // 로컬파트와 도메인을 각각 마스킹
         let maskedLocalPart = localPart.masked()
-        let maskedDomainPart = domainPart.masked()
+        let maskedDomainPart = domainPart.masked(suffix:3)
         
         return "\(maskedLocalPart)@\(maskedDomainPart)"
     }
     
     /// 문자열의 첫 번째와 마지막 문자를 제외한 부분을 *로 마스킹합니다.
-    private func masked() -> String {
+    public func masked(prefix: Int = 1, suffix: Int = 1) -> String {
         guard self.count > 2 else { return self } // 길이가 2 이하라면 그대로 반환
         
-        let first = self.prefix(1) // 첫 번째 문자
-        let last = self.suffix(3)
+        let first = self.prefix(prefix) // 첫 번째 문자
+        let last = self.suffix(suffix)
         let middle = String(repeating: "*", count: self.count - 2) // 중간 문자들을 별로 대체
         
         return "\(first)\(middle)\(last)"

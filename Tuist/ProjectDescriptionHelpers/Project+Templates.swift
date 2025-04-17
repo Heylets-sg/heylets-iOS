@@ -44,12 +44,16 @@ public extension Project {
             targets: targets
         )
         let projcetScheme: [Scheme] = SchemeProvider.makeProjectScheme(targets: targets, name: name)
+        let baseSettings: SettingsDictionary = .baseSettings.allowEntitlementsModification()
         
         return Project(
             name: name,
             organizationName: env.workspaceName,
             packages: packages,
-            settings: .settings(configurations: XCConfig.configurations),
+            settings: .settings(
+                base: baseSettings,
+                configurations: XCConfig.configurations
+            ),
             targets: projectTargets,
             schemes: projcetScheme
         )
@@ -59,7 +63,7 @@ public extension Project {
         name: String,
         packages: [Package] = []
     ) -> Project {
-        var projectTargets: [Target] = TargetHandler.makeProjectTargets(
+        let projectTargets: [Target] = TargetHandler.makeProjectTargets(
             name: name,
             hasResources: false,
             externalDependencies: [

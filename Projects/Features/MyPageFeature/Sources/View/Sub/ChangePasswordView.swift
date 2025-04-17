@@ -25,7 +25,7 @@ public struct ChangePasswordView: View {
             VStack(alignment: .leading) {
                 Text("Current Password")
                     .font(.medium_16)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
                     .padding(.top, 36)
                 
                 HeyTextField(
@@ -40,7 +40,7 @@ public struct ChangePasswordView: View {
                 
                 Text("New password")
                     .font(.medium_16)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
                 
                 SecurityPasswordField(
                     password: $viewModel.newPassword,
@@ -64,7 +64,7 @@ public struct ChangePasswordView: View {
                     viewModel.send(.changePasswordButtonDidTap)
                 }
                 .disabled(!viewModel.state.changePasswordButtonIsEnabled)
-                .heyBottomButtonStyle(.primary)
+                .heyCTAButtonStyle()
                 
                 Spacer()
                     .frame(height: 65)

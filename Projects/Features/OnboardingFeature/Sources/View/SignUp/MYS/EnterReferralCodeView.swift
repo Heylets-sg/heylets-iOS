@@ -35,6 +35,7 @@ public struct EnterReferralCodeView: View {
                         Image(uiImage: .icBack)
                             .resizable()
                             .frame(width: 22.adjusted, height: 18.adjusted)
+                            .tint(.common.ButtonBack.default)
                     }
                     
                     Spacer()
@@ -44,13 +45,14 @@ public struct EnterReferralCodeView: View {
                     } label: {
                         Text("Skip")
                             .font(.regular_16)
+                            .foregroundColor(.common.SubText.default)
                     }
                 }
                 
                 VStack(alignment: .leading) {
                     Text("Enter a referral code to unlock\nmore features🎉")
                         .font(.semibold_18)
-                        .foregroundColor(.heyGray1)
+                        .foregroundColor(.common.MainText.default)
                         .padding(.bottom, 18.adjusted)
                     
                     Spacer()
@@ -58,6 +60,7 @@ public struct EnterReferralCodeView: View {
                     
                     Text("You can get 3 timetable themes for free!")
                         .font(.regular_16)
+                        .foregroundColor(.common.SubText.default)
                         .padding(.bottom, 32.adjusted)
                     
                     HeyTextField(
@@ -66,7 +69,6 @@ public struct EnterReferralCodeView: View {
                         textFieldState: $viewModel.state.referralIsValid,
                         colorSystem: .gray
                     )
-                    .maxLength(text: $viewModel.referralCode, 6)
                     .padding(.bottom, 8.adjusted)
                     
                     Text(viewModel.state.referralMessage)
@@ -78,14 +80,14 @@ public struct EnterReferralCodeView: View {
                     Button("Start Heylets") {
                         viewModel.send(.nextButtonDidTap)
                     }
-                    .heyBottomButtonStyle()
+                    .heyCTAButtonStyle()
                     
                 }
                 .padding(.top, 36.adjusted)
                 .padding(.bottom, 65.adjusted)
             }
             .padding(.horizontal, 16)
-            .background(Color.heyWhite)
+            .background(Color.common.Background.default)
             .ignoresSafeArea(edges: .vertical)
             .ignoresSafeArea(.keyboard)
             .navigationBarBackButtonHidden()
@@ -97,9 +99,11 @@ public struct EnterReferralCodeView: View {
     EnterReferralCodeView(
         viewModel: .init(
             navigationRouter: Router.default.navigationRouter,
+            windowRouter:  Router.default.windowRouter,
             useCase: StubHeyUseCase.stub.signUpUseCase
         )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }
 

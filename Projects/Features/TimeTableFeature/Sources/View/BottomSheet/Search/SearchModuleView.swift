@@ -33,7 +33,7 @@ public struct SearchModuleView: View {
                 Text("We couldn't find a match for\n'\(viewModel.filterInfo.keyword)'.")
                     .font(.regular_16)
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.heyGray2)
+                    .foregroundColor(.common.Placeholder.default)
                     .padding(.bottom, 20)
                     .onAppear {
                         Analytics.shared.track(.screenView("missing_module", .modal))
@@ -45,17 +45,18 @@ public struct SearchModuleView: View {
                     HStack {
                         Text("Report Missing Modules")
                             .font(.regular_14)
-                            .foregroundColor(.heyGray2)
+                            .foregroundColor(.common.Placeholder.default)
                         
                         Image(uiImage: .icNext)
                             .resizable()
                             .frame(width: 4, height: 9)
+                            .tint(.common.MainText.else)
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 7)
                     .overlay(
                         RoundedRectangle(cornerRadius: 4)
-                            .stroke(Color.heyGray3, lineWidth: 1)
+                            .stroke(Color.common.Placeholder.default, lineWidth: 1)
                     )
                 }
                 
@@ -78,9 +79,8 @@ public struct SearchModuleView: View {
                 .scrollIndicators(.hidden)
             }
         }
-        .background(Color.heyWhite)
+        .background(Color.common.Background.default)
         .ignoresSafeArea()
-        .shadow(color: .init(hex: "#929292").opacity(0.16), radius: 24, y: 4)
         .onAppear {
             viewModel.send(.onAppear)
         }

@@ -13,6 +13,7 @@ import ProjectDescription
 
 public extension Project {
     static let appInfoPlist: [String: InfoPlist.Value] = [
+        "ENV": "$(ENV)",
         "BASE_URL": "$(BASE_URL)",
         "AMPLITUDE_API_KEY": "$(AMPLITUDE_API_KEY)",
         "NSAppTransportSecurity": .dictionary([
@@ -33,7 +34,7 @@ public extension Project {
         "NSPhotoLibraryUsageDescription": .string("This app requires access to the photo library to select and upload photos."),
         "UIUserNotificationUsageDescription": .string("The app requests permission to send notifications."),
         "NSCameraUsageDescription": .string("This app requires access to the camera to take and upload photos."),
-        "UIUserInterfaceStyle": .string("Light"),
+        "UIUserInterfaceStyle": .string("Automatic"),
         "UISupportedInterfaceOrientations": .array([
             .string("UIInterfaceOrientationPortrait")
         ]),

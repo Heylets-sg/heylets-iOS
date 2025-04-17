@@ -15,6 +15,7 @@ public protocol TimeTableUseCaseType {
     var tableId: Int { get }
     var errMessage: PassthroughSubject<String, Never> { get }
     var guestModeError: PassthroughSubject<Void, Never> { get }
+    var emptyScheduleError: PassthroughSubject<String, Never> { get }
     
     //MARK: Main
     
@@ -50,7 +51,11 @@ public protocol TimeTableUseCaseType {
 
     
     //정규 강의 추가하기
-    func addSection(_ sectionId: Int) -> AnyPublisher<Void, Never>
+    func addSection(
+        _ sectionId: Int,
+        _ name: String,
+        _ scheduleIsEmpty: Bool
+    ) -> AnyPublisher<Void, Never>
     
     //MARK: Setting
     

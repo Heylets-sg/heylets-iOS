@@ -80,6 +80,7 @@ public class LogInViewModel: ObservableObject {
                 .assignLoading(to: \.state.isLoading, on: self)
                 .sink(receiveValue: { [weak self] _ in
                     Analytics.shared.track(.userLoggedIn)
+                    self?.navigationRouter.destinations = []
                     self?.windowRouter.switch(to: .timetable)
                 })
                 .store(in: cancelBag)
@@ -113,4 +114,3 @@ public class LogInViewModel: ObservableObject {
             .store(in: cancelBag)
     }
 }
-

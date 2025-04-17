@@ -39,7 +39,7 @@ public struct VerifyEmailView: View {
                 
                 Text("@")
                     .font(.regular_16)
-                    .foregroundColor(.heyGray1)
+                    .foregroundColor(.common.MainText.default)
             }
             .padding(.trailing, 47)
             .padding(.bottom, 18.adjusted)
@@ -55,8 +55,8 @@ public struct VerifyEmailView: View {
                     .font(.medium_14)
                     .foregroundColor(
                         viewModel.domain.isEmpty
-                        ? .heyGray3
-                        : .heyGray1
+                        ? .common.Placeholder.default
+                        : .common.MainText.default
                     )
                     
                     Spacer()
@@ -64,20 +64,19 @@ public struct VerifyEmailView: View {
                     Image(uiImage: .icDown)
                         .resizable()
                         .frame(width: 12, height: 6)
+                        .tint(.common.Placeholder.default)
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 17.adjusted)
-                .background(Color.heyGray4)
+                .background(Color.common.InputField.default)
             }
-            
-            .background(Color.heyGray4)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.trailing, 116)
             .padding(.bottom, 20.adjusted)
             
             Text(viewModel.state.errMessage)
                 .font(.regular_14)
-                .foregroundColor(.heyError)
+                .foregroundColor(.common.Error.default)
             
             EmailDomainListView(viewModel: viewModel)
                 .frame(maxHeight: 250.adjusted)
@@ -107,7 +106,7 @@ fileprivate struct EmailDomainListView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                ForEach(viewModel.domainList, id: \.self) { domain in
+                ForEach(viewModel.nationality.domainList, id: \.self) { domain in
                     EmailDomainListCellView(domain)
                         .onTapGesture {
                             viewModel.send(.selectDomain(domain))
@@ -115,7 +114,7 @@ fileprivate struct EmailDomainListView: View {
                 }
             }
         }
-        .background(Color.heyGray4)
+        .background(Color.common.InputField.default)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
@@ -130,7 +129,7 @@ fileprivate struct EmailDomainListCellView: View {
         HStack {
             Text(domain)
                 .font(.medium_14)
-                .foregroundColor(.heyBlack)
+                .foregroundColor(.common.MainText.default)
             
             Spacer()
         }
@@ -148,6 +147,18 @@ fileprivate struct EmailDomainListCellView: View {
         )
     )
     .environmentObject(Router.default)
+    .preferredColorScheme(.dark)
 }
 
 
+#Preview {
+    VerifyEmailView(
+        viewModel: .init(
+            navigationRouter: Router.default.navigationRouter,
+            useCase: StubHeyUseCase.stub.signUpUseCase,
+            nationality: .Malaysia
+        )
+    )
+    .environmentObject(Router.default)
+    
+}

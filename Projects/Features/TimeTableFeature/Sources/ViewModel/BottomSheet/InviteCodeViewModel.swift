@@ -54,6 +54,7 @@ public class InviteCodeViewModel: ObservableObject {
             navigationRouter.pop()
             
         case .copyButtonDidTap:
+            Analytics.shared.track(.clickCopyReferralCode)
             UIPasteboard.general.string = referralCode
         }
     }
