@@ -93,6 +93,32 @@ public extension APIHeaders {
         ]
     }
     
+    static func multipartGuestHeader(_ boundary: String) -> [String:String] {
+        return [
+            contentType: multiPartFormData + "boundary=\(boundary)",
+            accept: applicationJSON,
+            deviceIDName: deviceID,
+            deviceModelName: deviceModel,
+            OSVersionName: OSVersion,
+            appVersionName: appVersion.versionString,
+            xPlatform: iOS,
+            auth: accessToken
+        ]
+    }
+    
+    static func multipartHeader(_ boundary: String) -> [String:String] {
+        return [
+            contentType: multiPartFormData + "boundary=\(boundary)",
+            accept: applicationJSON,
+            deviceIDName: deviceID,
+            deviceModelName: deviceModel,
+            OSVersionName: OSVersion,
+            appVersionName: appVersion.versionString,
+            xPlatform: iOS,
+            pushTokenName: pushToken
+        ]
+    }
+    
     static var headerWithAccessToken: [String:String] {
         return [
             contentType: applicationJSON,
@@ -116,32 +142,6 @@ public extension APIHeaders {
             xPlatform: iOS,
             refreshTokenName: refreshToken,
             pushTokenName: pushToken
-        ]
-    }
-    
-    static func multipartHeader(_ boundary: String) -> [String:String] {
-        return [
-            contentType: multiPartFormData + "boundary=\(boundary)",
-            accept: applicationJSON,
-            deviceIDName: deviceID,
-            deviceModelName: deviceModel,
-            OSVersionName: OSVersion,
-            appVersionName: appVersion.versionString,
-            xPlatform: iOS,
-            pushTokenName: pushToken
-        ]
-    }
-    
-    static func multipartGuestHeader(_ boundary: String) -> [String:String] {
-        return [
-            contentType: multiPartFormData + "boundary=\(boundary)",
-            accept: applicationJSON,
-            deviceIDName: deviceID,
-            deviceModelName: deviceModel,
-            OSVersionName: OSVersion,
-            appVersionName: appVersion.versionString,
-            xPlatform: iOS,
-            auth: accessToken
         ]
     }
 }
