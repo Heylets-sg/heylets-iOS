@@ -76,21 +76,12 @@ public class SearchModuleViewModel: ObservableObject {
             state.selectedLecture = nil
             
         case .updateFilters:
-            useCase.getLectureList(filterInfo)
-                .receive(on: RunLoop.main)
-                .assignLoading(to: \.state.isLoading, on: self)
-                .handleEvents(receiveOutput: { [weak self] _ in
-                    if self?.filterInfo.keyword.isEmpty == false {
-                        Analytics.shared.track(.moduleSearched)
-                    }
-                })
-                .assign(to: \.lectureList, on: self)
-                .store(in: cancelBag)
+            fetchLectures()
         }
     }
     
     private func fetchLectures() {
-        useCase.getLectureList(.init())
+        useCase.getLectureList(filterInfo)
             .receive(on: RunLoop.main)
             .assignLoading(to: \.state.isLoading, on: self)
             .handleEvents(receiveOutput: { [weak self] _ in
