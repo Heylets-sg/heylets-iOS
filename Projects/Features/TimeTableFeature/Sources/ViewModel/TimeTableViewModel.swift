@@ -79,7 +79,6 @@ public class TimeTableViewModel: ObservableObject {
     @Published var selectLecture: [TimeTableCellInfo] = []
     @Published var selectedThemeColor: [String] = []
     
-    // Add subscription to track view type changes
     private var viewTypeSubscription: AnyCancellable?
     
     public init(
@@ -104,7 +103,6 @@ public class TimeTableViewModel: ObservableObject {
         
         timeTable = sectionList.createTimeTableCellList()
         
-        // Subscribe to view type changes to reset selectLecture when returning to main
         viewTypeSubscription = viewTypeService.$viewType
             .sink { [weak self] viewType in
                 if viewType == .main {
