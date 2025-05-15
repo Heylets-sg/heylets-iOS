@@ -51,8 +51,8 @@ jobs:
     # - run: pod install
 
     # 6. Build Project using xcodebuild
-    - name: Build Project
-      run: xcodebuild -workspace "{PROJECT_NAME}.xcworkspace" -scheme "{SCHEME_NAME}" -destination "platform=iOS Simulator,name={DEVICE_NAME},OS=16.0" -verbose clean build
+    #- name: Build Project
+    #  run: xcodebuild -workspace "{PROJECT_NAME}.xcworkspace" -scheme "{SCHEME_NAME}" -destination "platform=iOS Simulator,name={DEVICE_NAME},OS=16.0" -verbose clean build
     
     # secrets에 저장된 SSH_KEY를 받아와서 match에 사용할 권한 받아옴
     - uses: shimataro/ssh-key-action@v2
