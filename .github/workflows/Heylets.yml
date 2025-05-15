@@ -15,7 +15,7 @@ jobs:
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event." 
       - run: echo "🐧 이 작업은 지금 GitHub가 호스팅하는 ${{ runner.os }} 서버에서 실행 중입니다!"
-      - run: echo "🔎 현재 브랜치 이름은 ${{ github.ref }} 이고, 저장소 이름은 ${{ github.repository }} 입니다.
+      - run: echo "🔎 현재 브랜치 이름은 ${{ github.ref }} 이고, 저장소 이름은 ${{ github.repository }} 입니다."
       - name: Check out repository code
         uses: actions/checkout@v3
       - run: echo "💡 ${{ github.repository }} 저장소가 러너에 복제되었습니다."
