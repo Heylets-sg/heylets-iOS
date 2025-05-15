@@ -34,9 +34,10 @@ jobs:
     # 3. Tuist 설치 및 확인
 
     - name: Install Tuist
-      run:
+      run: |
         curl -Ls https://uninstall.tuist.io | bash
         curl -Ls https://install.tuist.io | bash -s -- 3.28.0
+        echo "$HOME/.tuist/bin" >> $GITHUB_PATH
       
 
     - name: Tuist Version Check
