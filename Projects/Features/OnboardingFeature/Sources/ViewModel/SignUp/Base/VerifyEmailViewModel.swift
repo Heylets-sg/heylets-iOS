@@ -61,7 +61,7 @@ public class VerifyEmailViewModel: ObservableObject {
         case .backButtonDidTap:
             navigationRouter.pop()
         case .nextButtonDidTap:
-            if Config.isTestEnvironment {
+            if Config.isDevEnvironment {
                 owner.useCase.userInfo.email = owner.email
                 if let university = self.domainToUniversity(owner.domain) {
                     owner.useCase.userInfo.university = university
@@ -123,7 +123,6 @@ extension VerifyEmailViewModel {
         case "siswa.um.edu.my": return .UM
         case "live.iium.edu.my": return .IIUM
         case "naver.com", "gmail.com": return .UM
-            
         default: return .empty
         }
     }

@@ -37,15 +37,4 @@ public struct UserRepository: UserRepositoryType {
         return service.patchNickName(request)
             .asVoidWithGeneralError()
     }
-    
-//    public func patchAcademicInfo(
-//        _ matriculationYear: Int,
-//        _ academicYear: Int,
-//        _ studentId: String
-//    ) {
-//        let request: AcademicDTO = .init(matriculationYear, academicYear, studentId)
-//        return service.patchAcademicInfo(request)
-//            .
-//    }
-    
 }

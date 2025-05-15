@@ -21,7 +21,7 @@ extension ReferralAPI: BaseAPI {
     }
     
     public var isWithInterceptor: Bool {
-        return false
+        return true
     }
     
     public var path: String? {

@@ -51,7 +51,7 @@ public struct GuestRepository: GuestRepositoryType {
     
     public func convertToMember(_ user: User) -> AnyPublisher<Void, SignUpError> {
         let request: GuestSignUpRequest = user.toDTO()
-        if Config.isTestEnvironment {
+        if Config.isDevEnvironment {
             return guestService.testConvertToMember(request)
                 .handleEvents(receiveOutput: { token in
                     UserDefaultsManager.clearToken()

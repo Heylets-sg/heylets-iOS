@@ -22,9 +22,7 @@ public struct APIHeaders {
     static let auth = "Authorization"
     
     static let deviceIDName = "Device-Id"
-    //MARK: Test용 삭제 필수
     static let deviceID = AppService.getDeviceIdentifier()
-//    static let deviceID = "10DC5DA2-11CB-437D-ABC8-C6C222418B51"
     
     static let deviceModelName = "Device-Model"
     static let deviceModel = AppService.getDeviceModelName()
@@ -93,29 +91,16 @@ public extension APIHeaders {
         ]
     }
     
-    static var headerWithAccessToken: [String:String] {
+    static func multipartGuestHeader(_ boundary: String) -> [String:String] {
         return [
-            contentType: applicationJSON,
+            contentType: multiPartFormData + "boundary=\(boundary)",
+            accept: applicationJSON,
             deviceIDName: deviceID,
             deviceModelName: deviceModel,
             OSVersionName: OSVersion,
             appVersionName: appVersion.versionString,
             xPlatform: iOS,
-            auth: accessToken,
-            pushTokenName: pushToken
-        ]
-    }
-    
-    static var headerWithRefreshToken: [String:String] {
-        return [
-            contentType: applicationJSON,
-            deviceIDName: deviceID,
-            deviceModelName: deviceModel,
-            OSVersionName: OSVersion,
-            appVersionName: appVersion.versionString,
-            xPlatform: iOS,
-            refreshTokenName: refreshToken,
-            pushTokenName: pushToken
+            auth: accessToken
         ]
     }
     
@@ -132,16 +117,30 @@ public extension APIHeaders {
         ]
     }
     
-    static func multipartGuestHeader(_ boundary: String) -> [String:String] {
+    static var headerWithAccessToken: [String:String] {
         return [
-            contentType: multiPartFormData + "boundary=\(boundary)",
-            accept: applicationJSON,
+            contentType: applicationJSON,
             deviceIDName: deviceID,
             deviceModelName: deviceModel,
             OSVersionName: OSVersion,
             appVersionName: appVersion.versionString,
             xPlatform: iOS,
-            auth: accessToken
+            auth: accessToken,
+            refreshTokenName: refreshToken,
+            pushTokenName: pushToken
+        ]
+    }
+    
+    static var headerWithRefreshToken: [String:String] {
+        return [
+            contentType: applicationJSON,
+            deviceIDName: deviceID,
+            deviceModelName: deviceModel,
+            OSVersionName: OSVersion,
+            appVersionName: appVersion.versionString,
+            xPlatform: iOS,
+            refreshTokenName: refreshToken,
+            pushTokenName: pushToken
         ]
     }
 }

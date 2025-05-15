@@ -55,7 +55,6 @@ extension Task {
                 .eraseToAnyPublisher()
             
         case .uploadMultipartFormData(let multipartData, let boundary, let multipartBuilder):
-            
             return multipartBuilder.buildRequest(
                 request,
                 with: multipartData,

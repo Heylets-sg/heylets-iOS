@@ -81,7 +81,9 @@ extension BaseService {
     private func fetchResponse(with target: API) -> AnyPublisher<NetworkResponse, HeyNetworkError> {
         return RequestHandler.createURLRequest(for: target)
             .map { $0 }
-            .handleEvents(receiveOutput: { NetworkLogHandler.requestLogging($0) })
+            .handleEvents(receiveOutput: {
+                NetworkLogHandler.requestLogging($0)
+            })
             .flatMap { [weak self] urlRequest -> AnyPublisher<NetworkResponse, HeyNetworkError> in
                 guard let self = self else {
                     return Fail(error: .unknownError).eraseToAnyPublisher()
