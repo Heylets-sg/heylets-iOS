@@ -13,17 +13,17 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event." 
+      - run: echo "🐧 이 작업은 지금 GitHub가 호스팅하는 ${{ runner.os }} 서버에서 실행 중입니다!"
+      - run: echo "🔎 현재 브랜치 이름은 ${{ github.ref }} 이고, 저장소 이름은 ${{ github.repository }} 입니다.
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - run: echo "💡 ${{ github.repository }} 저장소가 러너에 복제되었습니다."
+      - run: echo "🖥️ 워크플로우가 이제 러너에서 코드를 테스트할 준비가 되었습니다."
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: echo "🍏 이 작업의 상태는 ${{ job.status }}."
 
 
 # on: # 언제 행동을 트리거 시킬지에 관한 문법
