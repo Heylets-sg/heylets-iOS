@@ -48,7 +48,7 @@ jobs:
       run: tuist fetch
 
     # 5. Pod install
-    - run: pod install
+    # - run: pod install
 
     # 6. Build Project using xcodebuild
     - name: Build Project
