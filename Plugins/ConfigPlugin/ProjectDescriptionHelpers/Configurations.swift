@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ProjectDescription
+@preconcurrency import ProjectDescription
 
 /// 빌드할 환경에 대한 설정
 

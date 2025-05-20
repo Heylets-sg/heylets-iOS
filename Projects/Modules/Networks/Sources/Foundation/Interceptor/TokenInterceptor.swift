@@ -16,7 +16,7 @@ class TokenInterceptor {
     private var retryLimit = 3
     let cancelBag = CancelBag()
     
-    static let shared = TokenInterceptor(
+    nonisolated(unsafe) static let shared = TokenInterceptor(
 //        service: ReissueAPIService()
     )
     

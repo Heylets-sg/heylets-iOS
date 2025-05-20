@@ -5,7 +5,7 @@
 //  Created by 류희재 on 12/17/24.
 //
 
-import ProjectDescription
+@preconcurrency import ProjectDescription
 
 //TODO: 추후 환경에 맞게 InfoPlist 수정하기
 /// InfoPList를 정리해둔 파일이빈다
@@ -19,6 +19,8 @@ public extension Project {
         "NSAppTransportSecurity": .dictionary([
             "NSAllowsArbitraryLoads": .boolean(true)
         ]),
+        "CFBundleShortVersionString": "$(MARKETING_VERSION)",
+        "CFBundleVersion": "$(CURRENT_PROJECT_VERSION)",
         "CFBundleDisplayName": .string("HeyLets"),
         "UIBackgroundModes": .array([
             .string("fetch"),

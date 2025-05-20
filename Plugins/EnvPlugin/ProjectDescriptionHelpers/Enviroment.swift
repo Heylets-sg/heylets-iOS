@@ -5,11 +5,11 @@
 //  Created by 류희재 on 12/17/24.
 //
 
-import ProjectDescription
+@preconcurrency import ProjectDescription
 
 /// 프로젝트 환경 관련 파일입니다
 
-public struct ProjectEnvironment {
+public struct ProjectEnvironment : Sendable{
     public let workspaceName: String
     public let deploymentTarget: DeploymentTarget
     public let platform: Platform

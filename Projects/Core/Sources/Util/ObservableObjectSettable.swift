@@ -8,11 +8,13 @@
 
 import Combine
 
+@MainActor
 public protocol ObservableObjectSettable: AnyObject {
     var objectWillChange: ObservableObjectPublisher? { get set }
     func setObjectWillChange(_ objectWillChange: ObservableObjectPublisher?)
 }
 
+@MainActor
 public extension ObservableObjectSettable {
     func setObjectWillChange(_ objectWillChange: ObservableObjectPublisher?) {
         self.objectWillChange = objectWillChange

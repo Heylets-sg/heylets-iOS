@@ -15,6 +15,7 @@ import Domain
 import DSKit
 import Core
 
+@MainActor
 public class TimeTableSettingViewModel: ObservableObject {
     struct State {
         var timeTableName: String = ""
@@ -73,6 +74,7 @@ public class TimeTableSettingViewModel: ObservableObject {
     
 }
 
+@MainActor
 extension TimeTableSettingViewModel {
     func initSettingAlertType() {
         settingAlertType = nil

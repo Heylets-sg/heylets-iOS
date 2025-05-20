@@ -31,7 +31,7 @@ public struct APIHeaders {
     static let OSVersion = AppService.getOSVersion()
     
     static let appVersionName = "App-Version"
-    static let appVersion = AppService.getLocalAppVersion()
+    nonisolated(unsafe) static let appVersion = AppService.getLocalAppVersion()
     
     static let xPlatform = "X-Platform"
     static let iOS = "IOS"
@@ -41,16 +41,16 @@ public struct APIHeaders {
     static let xadminkey = "heylets-183ba62c-c51e-4d03-967e-0a95fe01a9fa"
     
     static var accessToken: String {
-        return "Bearer \(UserDefaultsManager.heyAccessToken)"
+        return "Bearer \(UserDefaultsManager.getAccessToken())"
     }
     
-    static var refreshTokenName = "Refresh-Token"
+    static let refreshTokenName = "Refresh-Token"
     static var refreshToken: String {
-        return "Bearer \(UserDefaultsManager.heyRefreshToken)"
+        return "Bearer \(UserDefaultsManager.getRefreshToken())"
     }
     
-    static var pushTokenName = "Push-Token"
-    static var pushToken = UserDefaultsManager.fcmToken
+    static let pushTokenName = "Push-Token"
+    nonisolated(unsafe) static var pushToken = UserDefaultsManager.getFCMToken()
 }
 
 public extension APIHeaders {

@@ -72,6 +72,7 @@ extension LectureAPI: BaseAPI {
         }
     }
     
+    
     public var headers: [String : String]? {
         return APIHeaders.headerWithAccessToken
     }

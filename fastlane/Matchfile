@@ -1,8 +1,13 @@
-git_url("https://github.com/Heylets-sg/heylets-iOS")
+git_url("https://github.com/Heylets-sg/Heylets-fastlane-iOS")
 
 storage_mode("git")
 
-type("appstore") #테스트 플라이트 업로드 할 예정
+type("appstore") # The default type, can be: appstore, adhoc, enterprise or development
 
-# app_identifier("com.heeom.Heylets-iOS.release") #Bundle ID
-# username("jacobkwak1122@gmail.com") #Developer 이메일 계정
+# app_identifier(["tools.fastlane.app", "tools.fastlane.app2"])
+# username("user@fastlane.tools") # Your Apple Developer Portal username
+
+# For all available options run `fastlane match --help`
+# Remove the # in the beginning of the line to enable the other options
+
+# The docs are available on https://docs.fastlane.tools/actions/match

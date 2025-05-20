@@ -7,7 +7,7 @@
 
 import Foundation
 
-import ProjectDescription
+@preconcurrency import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 

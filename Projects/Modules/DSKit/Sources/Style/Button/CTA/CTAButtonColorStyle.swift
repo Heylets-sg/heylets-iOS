@@ -28,12 +28,12 @@ public struct HeyCTAButtonColorStyle {
 }
 
 extension HeyCTAButtonColorStyle {
-    public static let white = HeyCTAButtonColorStyle(
+    nonisolated(unsafe) public static let white = HeyCTAButtonColorStyle(
         background: .common.CTA.onboarding,
         foreground: .common.CTAText.unactive
     )
     
-    public static let primary = HeyCTAButtonColorStyle(
+    nonisolated(unsafe) public static let primary = HeyCTAButtonColorStyle(
         background: .common.CTA.active,
         foreground: .common.CTAText.active,
         disabledForeground: .common.CTAText.unactive,

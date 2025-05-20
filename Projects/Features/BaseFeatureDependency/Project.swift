@@ -5,7 +5,7 @@
 //  Created by 류희재 on 12/18/24.
 //
 
-import ProjectDescription
+@preconcurrency import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 

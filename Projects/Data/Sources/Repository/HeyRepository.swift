@@ -11,7 +11,7 @@ import Foundation
 import Domain
 import Networks
 
-public class HeyRepository: RepositoryType {
+public class HeyRepository: RepositoryType, @unchecked Sendable {
     let service: ServiceType
     
     public var authRepository: AuthRepositoryType

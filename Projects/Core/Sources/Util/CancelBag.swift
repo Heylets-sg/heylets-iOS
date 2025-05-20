@@ -7,13 +7,23 @@
 //
 
 import Combine
+import Foundation
 
-public class CancelBag {
-    public var subscriptions = Set<AnyCancellable>()
+public final class CancelBag: @unchecked Sendable {
+    private let lock = NSLock()
+    public private(set) var subscriptions = Set<AnyCancellable>()
     
     public func cancel() {
+        lock.lock()
+        defer { lock.unlock() }
         subscriptions.forEach { $0.cancel() }
         subscriptions.removeAll()
+    }
+    
+    public func store(_ cancellable: AnyCancellable) {
+        lock.lock()
+        defer { lock.unlock() }
+        subscriptions.insert(cancellable)
     }
     
     public init() { }
@@ -21,6 +31,6 @@ public class CancelBag {
 
 extension AnyCancellable {
     public func store(in cancelBag: CancelBag) {
-        cancelBag.subscriptions.insert(self)
+        cancelBag.store(self)
     }
 }

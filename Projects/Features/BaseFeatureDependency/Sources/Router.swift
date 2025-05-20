@@ -16,6 +16,7 @@ import Domain
 public typealias NavigationRoutableType = NavigationRoutable & ObservableObjectSettable
 public typealias WindowRoutableType = WindowRoutable & ObservableObjectSettable
 
+@MainActor
 final public class Router: ObservableObject {
     public var navigationRouter: NavigationRoutableType
     public var windowRouter: WindowRoutableType

@@ -6,6 +6,7 @@ import Domain
 import DSKit
 import Core
 
+@MainActor
 public class MYSEnterPersonalInfoViewModel: ObservableObject {
     struct State {
         var passwordIsValid: TextFieldState = .idle

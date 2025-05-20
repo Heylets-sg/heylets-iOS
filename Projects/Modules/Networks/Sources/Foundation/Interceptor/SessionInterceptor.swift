@@ -11,11 +11,13 @@ import Combine
 import Core
 
 // 요청을 수정하는 Adapter 프로토콜
+
 public protocol RequestAdapter {
     func adapt(_ urlRequest: URLRequest) -> AnyPublisher<URLRequest, HeyNetworkError>
 }
 
 // 실패한 요청을 재시도하는 Retrier 프로토콜
+
 public protocol RequestRetrier {
     func retry(_ request: URLRequest, dueTo error: Error, retryCount: Int) -> AnyPublisher<Bool, Never>
 }
@@ -24,9 +26,11 @@ public protocol RequestRetrier {
 public protocol RequestInterceptor: RequestAdapter, RequestRetrier {}
 
 // 세션 인터셉터 구현
-public class SessionInterceptor: NSObject, URLSessionTaskDelegate, RequestInterceptor {
-    private var retriers: [RequestRetrier] = []
-    private var adapters: [RequestAdapter] = []
+
+
+public class SessionInterceptor: NSObject, URLSessionTaskDelegate, RequestInterceptor, @unchecked Sendable {
+    nonisolated(unsafe) private var retriers: [RequestRetrier] = []
+    nonisolated(unsafe) private var adapters: [RequestAdapter] = []
     
     // 싱글톤 인스턴스
     public static let shared = SessionInterceptor()
@@ -71,7 +75,7 @@ public class SessionInterceptor: NSObject, URLSessionTaskDelegate, RequestInterc
     }
     
     // URLSessionTaskDelegate 구현
-    public func urlSession(_ session: URLSession,
+    nonisolated public func urlSession(_ session: URLSession,
                            task: URLSessionTask,
                            willPerformHTTPRedirection response: HTTPURLResponse,
                            newRequest request: URLRequest,
@@ -82,12 +86,12 @@ public class SessionInterceptor: NSObject, URLSessionTaskDelegate, RequestInterc
 }
 
 // 토큰 어댑터 구현
-public class TokenAdapter: RequestAdapter {
-    public func adapt(_ urlRequest: URLRequest) -> AnyPublisher<URLRequest, HeyNetworkError> {
+public class TokenAdapter: @preconcurrency RequestAdapter {
+    @MainActor public func adapt(_ urlRequest: URLRequest) -> AnyPublisher<URLRequest, HeyNetworkError> {
         var request = urlRequest
         
         // 액세스 토큰이 있으면 헤더에 추가
-        if !UserDefaultsManager.heyAccessToken.isEmpty {
+        if !UserDefaultsManager.getAccessToken().isEmpty {
             request.setValue(APIHeaders.accessToken, forHTTPHeaderField: APIHeaders.auth)
         }
         
@@ -98,7 +102,7 @@ public class TokenAdapter: RequestAdapter {
 }
 
 // 토큰 갱신 Retrier 구현
-public class TokenRetrier: RequestRetrier {
+public class TokenRetrier: @preconcurrency RequestRetrier {
     private let session: URLSession
     private var isRefreshing = false
     private var refreshPublisher: AnyPublisher<AuthResult, HeyNetworkError>?
@@ -109,7 +113,7 @@ public class TokenRetrier: RequestRetrier {
         self.session = session
     }
     
-    public func retry(_ request: URLRequest, dueTo error: Error, retryCount: Int) -> AnyPublisher<Bool, Never> {
+    @MainActor public func retry(_ request: URLRequest, dueTo error: Error, retryCount: Int) -> AnyPublisher<Bool, Never> {
         self.retryCount = retryCount
         
         // 재시도 횟수 초과 체크
@@ -134,7 +138,7 @@ public class TokenRetrier: RequestRetrier {
             .eraseToAnyPublisher()
     }
     
-    private func refreshTokenIfNeeded() -> AnyPublisher<AuthResult, HeyNetworkError> {
+    @MainActor private func refreshTokenIfNeeded() -> AnyPublisher<AuthResult, HeyNetworkError> {
         // 이미 갱신 중이면 기존 publisher 반환
         if let publisher = refreshPublisher, isRefreshing {
             return publisher
@@ -175,16 +179,16 @@ public class TokenRetrier: RequestRetrier {
             .handleEvents(
                 receiveOutput: { tokenResult in
                     // 새 토큰 저장
-                    UserDefaultsManager.heyAccessToken = tokenResult.access_token
-                    UserDefaultsManager.heyRefreshToken = tokenResult.refresh_token ?? ""
+                    UserDefaultsManager.setAccessToken(tokenResult.access_token)
+                    UserDefaultsManager.setRefreshToken(tokenResult.refresh_token ?? "")
                     self.isRefreshing = false
                     self.refreshPublisher = nil
                 },
                 receiveCompletion: { completion in
                     if case .failure = completion {
                         // 실패 시 토큰 초기화
-                        UserDefaultsManager.heyAccessToken = ""
-                        UserDefaultsManager.heyRefreshToken = ""
+                        UserDefaultsManager.setAccessToken("")
+                        UserDefaultsManager.setRefreshToken("")
                         self.isRefreshing = false
                         self.refreshPublisher = nil
                     }

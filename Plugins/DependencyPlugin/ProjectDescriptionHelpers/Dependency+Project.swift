@@ -5,7 +5,7 @@
 //  Created by 류희재 on 12/17/24.
 //
 
-import ProjectDescription
+@preconcurrency import ProjectDescription
 
 /// 프로젝트 내 모듈 및 기능별 종속성을 체계적으로 관리하기 위한 유틸리티를 제공
 /// 새로운 모듈이나 기능이 추가되더라도 해당 파일만 업데이트하면 되어 유지보수가 용이합니다.

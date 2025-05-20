@@ -18,7 +18,7 @@ public protocol URLRequestTargetType {
     var isWithInterceptor: Bool { get }
     var connectWebHook: Bool { get }
     
-    func asURLRequest() -> AnyPublisher<URLRequest, HeyNetworkError.RequestError>
+    func asURLRequest() async -> AnyPublisher<URLRequest, HeyNetworkError.RequestError>
 }
 
 extension URLRequestTargetType {

@@ -14,6 +14,7 @@ import Domain
 import Core
 
 // TimeTable 내부 화면 전환을 관리하는 클래스
+@MainActor
 public class TimeTableNavigator {
     // 기존 NavigationRouter 참조
     private let navigationRouter: NavigationRoutableType
@@ -50,6 +51,7 @@ public class TimeTableNavigator {
             print("🚢 TimeTableNavigator: viewType 복원 = \(viewType)")
             
             // UI 업데이트를 위한 딜레이 추가
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
                 guard let self = self else { return }
                 self.viewTypeSubject.send(viewType)

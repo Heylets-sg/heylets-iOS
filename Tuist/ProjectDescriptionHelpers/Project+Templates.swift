@@ -44,7 +44,9 @@ public extension Project {
             targets: targets
         )
         let projcetScheme: [Scheme] = SchemeProvider.makeProjectScheme(targets: targets, name: name)
-        let baseSettings: SettingsDictionary = .baseSettings.allowEntitlementsModification()
+        let baseSettings: SettingsDictionary = .baseSettings
+            .allowEntitlementsModification()
+            .setProvisioning()
         
         return Project(
             name: name,

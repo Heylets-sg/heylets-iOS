@@ -17,6 +17,7 @@ import Core
 import TimeTableFeature
 import BaseFeatureDependency
 
+@MainActor
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -176,6 +177,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     
     // Foreground(앱 켜진 상태)에서도 알림 오는 설정
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         // iOS 14 이상에서는 .banner, .list, .sound 사용
         if #available(iOS 14.0, *) {

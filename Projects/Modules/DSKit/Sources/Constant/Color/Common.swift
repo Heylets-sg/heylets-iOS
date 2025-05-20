@@ -23,7 +23,7 @@ public extension Color {
         // MARK: - Background
         public enum Background {
             public static let `default` = Color(DSKitAsset.backgroundDefault.color)
-            public static var opacity60 = Color(DSKitAsset.backgroundOpacity60.color)
+            public static let opacity60 = Color(DSKitAsset.backgroundOpacity60.color)
         }
         
         // MARK: - Cursor
