@@ -13,23 +13,23 @@ extension UserDefaultsManager {
     
     @MainActor
     static func setToken(_ authInfo: AuthResult) {
-        UserDefaultsManager.heyAccessToken = authInfo.access_token
-        UserDefaultsManager.heyRefreshToken = authInfo.refresh_token ?? ""
+        UserDefaultsManager.setAccessToken(authInfo.access_token)
+        UserDefaultsManager.setFCMToken(authInfo.refresh_token ?? "")
     }
 
     @MainActor
     static func clearToken() {
-        UserDefaultsManager.heyAccessToken = ""
-        UserDefaultsManager.heyRefreshToken = ""
+        UserDefaultsManager.setAccessToken("")
+        UserDefaultsManager.setFCMToken("")
     }
     
     @MainActor
     static func isTokenExist() -> Bool {
-        return heyAccessToken != ""
+        return UserDefaultsManager.getAccessToken() != ""
     }
     
     @MainActor
     public static func setFCMTokne(_ fcmToken: String) {
-        UserDefaultsManager.fcmToken = fcmToken
+        UserDefaultsManager.setFCMToken(fcmToken)
     }
 }

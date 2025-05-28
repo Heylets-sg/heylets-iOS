@@ -97,7 +97,9 @@ extension TargetHandler {
             name: name,
             bundleID: "\(env.bundlePrefix).\(name.contains("Demo") ? "test" : "release")",
             infoPlist: InfoPlistProvider.forApp(name: name),
-            resources: [.glob(pattern: "Resources/**", excluding: [])],
+            resources: [
+                .glob(pattern: "Resources/**", excluding: [])
+            ],
             entitlements: "\(name).entitlements",
             dependencies: dependencies
         )
@@ -146,7 +148,9 @@ extension TargetHandler {
             targetType: targetType,
             name: name,
             bundleID: "\(env.bundlePrefix).\(name)",
-            resources: hasResources ? [.glob(pattern: "Resources/**", excluding: [])] : [],
+            resources: hasResources ? [
+                .glob(pattern: "Resources/**", excluding: [])
+            ] : [],
             dependencies: dependencies
         )
     }
