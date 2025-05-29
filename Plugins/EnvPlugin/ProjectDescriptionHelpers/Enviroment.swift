@@ -11,15 +11,16 @@
 
 public struct ProjectEnvironment : Sendable{
     public let workspaceName: String
-//    public let platform: Platform
+    public let deploymentTarget: DeploymentTargets
+    public let platform: Platform
     public let bundlePrefix: String
 }
 
 //TODO: 추후 환경에 맞게 변경해야 합니다. 다시 한번 체크하기
 public let env = ProjectEnvironment(
     workspaceName: "Heylets-iOS",
-//    platform: .iOS("16.4"),
+    deploymentTarget: DeploymentTargets.iOS("16.4"),
+    platform: .iOS,
     bundlePrefix: "com.heeom.Heylets-iOS"
 )
-
 

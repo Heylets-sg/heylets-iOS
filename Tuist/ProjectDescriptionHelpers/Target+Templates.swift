@@ -18,7 +18,7 @@ struct TargetHandler {
         package: [Package] = [],
         platform: Platform = env.platform,
         bundleID: String,
-        deploymentTarget: DeploymentTarget = env.deploymentTarget,
+        deploymentTarget: DeploymentTargets = env.deploymentTarget,
         infoPlist: InfoPlist = .default,
         resources: ResourceFileElements? = nil,
         entitlements: ProjectDescription.Path? = nil,
