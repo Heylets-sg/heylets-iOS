@@ -17,14 +17,13 @@ public struct ProjectEnvironment : Sendable{
     public let bundlePrefix: String
 }
 
-extension ProjectEnvironment {
-    public static let env = ProjectEnvironment(
-        workspaceName: "Heylets-iOS",
-        destinations: [.iPhone],
-        deploymentTarget: DeploymentTargets.iOS("16.4"),
-        platform: .iOS,
-        bundlePrefix: "com.heeom.Heylets-iOS"
-    )
-}
+public let env = ProjectEnvironment(
+    workspaceName: "Heylets-iOS",
+    destinations: [.iPhone],
+    deploymentTarget: DeploymentTargets.iOS("16.4"),
+    platform: .iOS,
+    bundlePrefix: "com.heeom.Heylets-iOS"
+)
+
 
 
