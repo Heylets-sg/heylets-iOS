@@ -9,7 +9,7 @@
 import Foundation
 
 extension TodoGroup {
-    static public var list: [TodoGroup] =  [
+    static nonisolated(unsafe) public var list: [TodoGroup] =  [
         .group_stub1,
         .group_stub2,
         .group_stub3,

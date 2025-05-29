@@ -55,6 +55,7 @@ public protocol AuthServiceType {
     ) -> NetworkVoidResponse
 }
 
+
 extension AuthService: AuthServiceType {
     public func checkUserName(
         _ name: String

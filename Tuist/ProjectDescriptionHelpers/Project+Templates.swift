@@ -26,6 +26,7 @@ public extension Project {
     ///    - hasResourcces: 리소스 파일 포함 여부
     static func makeModule(
         name: String,
+        workspaceName: String = env.workspaceName,
         targets: Set<FeatureTarget> = Set([.staticFramework, .unitTest, .demo]),
         packages: [Package] = [],
         internalDependencies: [TargetDependency] = [],
@@ -44,11 +45,13 @@ public extension Project {
             targets: targets
         )
         let projcetScheme: [Scheme] = SchemeProvider.makeProjectScheme(targets: targets, name: name)
-        let baseSettings: SettingsDictionary = .baseSettings.allowEntitlementsModification()
+        let baseSettings: SettingsDictionary = .baseSettings
+            .allowEntitlementsModification()
+            .setProvisioning()
         
         return Project(
             name: name,
-            organizationName: env.workspaceName,
+            organizationName: workspaceName,
             packages: packages,
             settings: .settings(
                 base: baseSettings,
@@ -61,6 +64,7 @@ public extension Project {
     
     static func makeSPMModule(
         name: String,
+        workspaceName: String = env.workspaceName,
         packages: [Package] = []
     ) -> Project {
         let projectTargets: [Target] = TargetHandler.makeProjectTargets(
@@ -77,7 +81,7 @@ public extension Project {
         
         return Project(
             name: name,
-            organizationName: env.workspaceName,
+            organizationName: workspaceName,
             packages: packages,
             settings: .settings(configurations: XCConfig.configurations),
             targets: projectTargets,

@@ -17,7 +17,7 @@ public enum Config {
         }
     }
     
-    private static let infoDictionary: [String: Any] = {
+    nonisolated(unsafe) private static let infoDictionary: [String: Any] = {
         guard let dict = Bundle.main.infoDictionary else {
             fatalError("plist cannot found.")
         }

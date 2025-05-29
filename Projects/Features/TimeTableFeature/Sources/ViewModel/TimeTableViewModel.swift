@@ -7,6 +7,7 @@ import Domain
 import DSKit
 import Core
 
+@MainActor
 public class TimeTableViewModel: ObservableObject {
     struct State {
         struct Alerts {

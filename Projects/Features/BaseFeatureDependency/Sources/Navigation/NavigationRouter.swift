@@ -19,7 +19,8 @@ public protocol NavigationRoutable {
     func popToRootView()
 }
 
-public class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
+@MainActor
+public class NavigationRouter: @preconcurrency NavigationRoutable, ObservableObjectSettable, @unchecked Sendable {
     public init() {}
     public var objectWillChange: ObservableObjectPublisher?
     

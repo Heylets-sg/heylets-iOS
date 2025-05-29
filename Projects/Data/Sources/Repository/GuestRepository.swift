@@ -13,7 +13,7 @@ import Domain
 import Networks
 import Core
 
-public struct GuestRepository: GuestRepositoryType {
+public struct GuestRepository: @preconcurrency GuestRepositoryType {
     public let userService: UserServiceType
     public let guestService: GuestServiceType
     
@@ -26,7 +26,7 @@ public struct GuestRepository: GuestRepositoryType {
     }
     
     public func checkGuestMode() -> AnyPublisher<Bool, Never> {
-        Just(UserDefaultsManager.isGuestMode)
+        Just(UserDefaultsManager.isGuestMode())
             .eraseToAnyPublisher()
     }
     
@@ -35,7 +35,7 @@ public struct GuestRepository: GuestRepositoryType {
             .asVoidWithGeneralError()
     }
     
-    public func startGuestMode(
+    @MainActor public func startGuestMode(
         university: String,
         agreements: [AgreementInfo]
     ) -> AnyPublisher<Auth, Error> {
@@ -43,19 +43,19 @@ public struct GuestRepository: GuestRepositoryType {
         return guestService.startGuestMode(university, request)
             .handleEvents(receiveOutput: { token in
                 UserDefaultsManager.setToken(token)
-                UserDefaultsManager.isGuestMode = true
+                UserDefaultsManager.setGuestMode(true)
             })
             .map { $0.toEntity() }
             .mapToGeneralError()
     }
     
-    public func convertToMember(_ user: User) -> AnyPublisher<Void, SignUpError> {
+    @MainActor public func convertToMember(_ user: User) -> AnyPublisher<Void, SignUpError> {
         let request: GuestSignUpRequest = user.toDTO()
         if Config.isDevEnvironment {
             return guestService.testConvertToMember(request)
                 .handleEvents(receiveOutput: { token in
                     UserDefaultsManager.clearToken()
-                    UserDefaultsManager.isGuestMode = false
+                    UserDefaultsManager.setGuestMode(false)
                 })
                 .mapError { error in
                     if let errorCode = error.isInvalidStatusCode() {
@@ -69,7 +69,7 @@ public struct GuestRepository: GuestRepositoryType {
             return guestService.convertToMember(request)
                 .handleEvents(receiveOutput: { token in
                     UserDefaultsManager.clearToken()
-                    UserDefaultsManager.isGuestMode = false
+                    UserDefaultsManager.setGuestMode(false)
                 })
                 .mapError { error in
                     if let errorCode = error.isInvalidStatusCode() {

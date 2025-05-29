@@ -13,19 +13,19 @@ import Domain
 import Networks
 import Core
 
-public struct AuthRepository: AuthRepositoryType {
+public struct AuthRepository: @preconcurrency AuthRepositoryType {
     public let authService: AuthServiceType
     
     public init(authService: AuthServiceType) {
         self.authService = authService
     }
     
-    public func isTokenExisted() -> AnyPublisher<Bool, Never> {
+    @MainActor public func isTokenExisted() -> AnyPublisher<Bool, Never> {
         return Just(UserDefaultsManager.isTokenExist())
             .eraseToAnyPublisher()
     }
     
-    public func tokenRefresh() -> AnyPublisher<Void, Error> {
+    @MainActor public func tokenRefresh() -> AnyPublisher<Void, Error> {
         authService.refreshToken()
             .handleEvents(receiveOutput: { token in
                 UserDefaultsManager.setToken(token)
@@ -91,7 +91,7 @@ public struct AuthRepository: AuthRepositoryType {
             .eraseToAnyPublisher()
     }
     
-    public func logout() -> AnyPublisher<Void, LogoutError> {
+    @MainActor public func logout() -> AnyPublisher<Void, LogoutError> {
         authService.logout()
             .handleEvents(receiveOutput: { _ in
                 UserDefaultsManager.clearToken()
@@ -106,7 +106,7 @@ public struct AuthRepository: AuthRepositoryType {
             .eraseToAnyPublisher()
     }
     
-    public func logIn(
+    @MainActor public func logIn(
         _ email: String,
         _ password: String
     ) -> AnyPublisher<Auth, LoginError> {
@@ -114,7 +114,7 @@ public struct AuthRepository: AuthRepositoryType {
         return authService.logIn(request)
             .handleEvents(receiveOutput: { token in
                 UserDefaultsManager.setToken(token)
-                UserDefaultsManager.isGuestMode = false
+                UserDefaultsManager.setGuestMode(false)
             })
             .map { $0.toEntity() }
             .mapError { error in
@@ -152,7 +152,7 @@ public struct AuthRepository: AuthRepositoryType {
             .eraseToAnyPublisher()
     }
     
-    public func deleteAccount(
+    @MainActor public func deleteAccount(
         _ password: String
     ) -> AnyPublisher<Void, Error> {
         let request: DeleteAccountRequest = .init(password)

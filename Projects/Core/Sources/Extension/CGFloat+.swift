@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 public extension Int {
     var adjusted: CGFloat {
         let screenWidth = UIScreen.main.bounds.width
@@ -27,6 +28,7 @@ public extension Int {
     }
 }
 
+@MainActor
 public extension CGFloat {
     var adjusted: CGFloat {
         let screenWidth = UIScreen.main.bounds.width

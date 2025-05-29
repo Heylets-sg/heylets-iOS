@@ -1,55 +1,34 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
 default_platform(:ios)
 
-desc "Build app and upload to TestFlight"
-lane :upload_testflight do
-  app_store_connect_api_key(
-    key_id: "{KEY_ID}",
-    issuer_id: "{ISSUER_ID}",
-    key_filepath: "fastlane/AuthKey_8F7ZA35DHY.p8"
-  )
-
-  match(type: "appstore")
-
-  # 최신 TestFlight 빌드 번호 가져오기
-  latest_build_number = latest_testflight_build_number(version: "{APP_VERSION}")
-
-  # 빌드 번호 증가
-  increment_build_number(
-    build_number: latest_build_number + 1,
-    xcodeproj: "{PATH}/{PROJECT_NAME}.xcodeproj"
-  )
-
-  # 앱 빌드
-  build_app(
-    workspace: "{WORKSPACE_NAME}.xcworkspace",
-    scheme: "{SCHEME_NAME}",
-    clean: true,
-    export_method: "app-store",
-    include_bitcode: false
-  )
-
-  # TestFlight 업로드
-  upload_to_testflight(
-    username: "{USER_EMAIL}",
-    app_identifier: "{APP_BUNDLE_ID}"
-  )
-
-  # Slack에 메시지 보내기
-  slack(
-    message: "TestFlight 배포 성공 🍀",
-    slack_url: "https://hooks.slack.com/services/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",
-    payload: {
-      "Build Date" => Time.now.to_s
-    },
-    success: true
-  )
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    increment_build_number(xcodeproj: "/Users/hellohidi/iOSProject/heylets-iOS/Projects/App/Heylets-iOS.xcodeproj")
+    build_app(scheme: "Heylets-iOS-DEV")
+    
+    api_key = app_store_connect_api_key(
+      key_id: "9C383R824M",
+      issuer_id: "1c043202-f6d3-487a-8236-0d70beae8b38",
+      key_filepath: "./fastlane/AuthKey_9C383R824M.p8",
+      in_house: false
+    )
+    
+    upload_to_testflight(api_key: api_key)
+  end
 end
 
-# 공통 에러 핸들링
-error do |lane, exception, _options|
-  slack(
-    message: "🚨 Fastlane 에러 발생: #{exception}",
-    success: false,
-    slack_url: "https://hooks.slack.com/services/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"
-  )
-end

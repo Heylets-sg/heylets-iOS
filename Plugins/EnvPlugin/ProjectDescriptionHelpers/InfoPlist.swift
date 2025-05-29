@@ -5,20 +5,18 @@
 //  Created by 류희재 on 12/17/24.
 //
 
-import ProjectDescription
-
-//TODO: 추후 환경에 맞게 InfoPlist 수정하기
-/// InfoPList를 정리해둔 파일이빈다
-import ProjectDescription
+@preconcurrency import ProjectDescription
 
 public extension Project {
-    static let appInfoPlist: [String: InfoPlist.Value] = [
-        "ENV": "$(ENV)",
+    static let appInfoPlist: InfoPlist = .dictionary([
+        "ENV": "dev",
         "BASE_URL": "$(BASE_URL)",
         "AMPLITUDE_API_KEY": "$(AMPLITUDE_API_KEY)",
         "NSAppTransportSecurity": .dictionary([
             "NSAllowsArbitraryLoads": .boolean(true)
         ]),
+        "CFBundleShortVersionString": "$(MARKETING_VERSION)",
+        "CFBundleVersion": "$(CURRENT_PROJECT_VERSION)",
         "CFBundleDisplayName": .string("HeyLets"),
         "UIBackgroundModes": .array([
             .string("fetch"),
@@ -41,11 +39,11 @@ public extension Project {
         "UISupportedInterfaceOrientations~ipad": .array([
             .string("UIInterfaceOrientationPortrait")
         ])
-    ]
+    ])
     
-    static let demoInfoPlist: [String: InfoPlist.Value] = [
+    static let demoInfoPlist: InfoPlist = .dictionary([
         "BASE_URL": .string("$(BASE_URL)"),
-        "AMPLITUDE_API_KEY": "$(AMPLITUDE_API_KEY)",
+        "AMPLITUDE_API_KEY": .string("$(AMPLITUDE_API_KEY)"),
         "NSAppTransportSecurity": .dictionary([
             "NSAllowsArbitraryLoads": .boolean(true)
         ]),
@@ -56,5 +54,5 @@ public extension Project {
             .string("NotoSansKR-Bold.ttf")
         ]),
         "UILaunchStoryboardName": .string("LaunchScreen")
-    ]
+    ])
 }

@@ -5,7 +5,7 @@
 //  Created by 류희재 on 12/17/24.
 //
 
-import ProjectDescription
+@preconcurrency import ProjectDescription
 
 public extension SourceFilesList {
     static let demoSources: SourceFilesList = "Demo/Sources/**/*.swift"

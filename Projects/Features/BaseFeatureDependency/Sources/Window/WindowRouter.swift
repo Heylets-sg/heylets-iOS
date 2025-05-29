@@ -17,7 +17,7 @@ public protocol WindowRoutable {
     func goBack()
 }
 
-final public class WindowRouter: WindowRoutable, ObservableObjectSettable {
+final public class WindowRouter: @preconcurrency WindowRoutable, ObservableObjectSettable {
     
     public init() {}
     

@@ -5,7 +5,7 @@
 //  Created by 류희재 on 12/17/24.
 //
 
-import ProjectDescription
+@preconcurrency import ProjectDescription
 import EnvPlugin
 
 struct SchemeProvider {
@@ -22,7 +22,7 @@ struct SchemeProvider {
 
 extension Scheme {
     static let appSchemes: [Scheme] = [
-        .init(
+        scheme(
             name: "\(env.workspaceName)-DEV",
             shared: true,
             buildAction: .buildAction(targets: ["\(env.workspaceName)"]),
@@ -36,7 +36,7 @@ extension Scheme {
             profileAction: .profileAction(configuration: "Development"),
             analyzeAction: .analyzeAction(configuration: "Development")
         ),
-        .init(
+        scheme(
             name: "\(env.workspaceName)-QA",
             shared: true,
             buildAction: .buildAction(targets: ["\(env.workspaceName)"]),
@@ -45,7 +45,7 @@ extension Scheme {
             profileAction: .profileAction(configuration: "QA"),
             analyzeAction: .analyzeAction(configuration: "QA")
         ),
-        .init(
+        scheme(
             name: "\(env.workspaceName)-PROD",
             shared: true,
             buildAction: .buildAction(targets: ["\(env.workspaceName)"]),
@@ -58,7 +58,7 @@ extension Scheme {
     
     // makeDemoScheme은 개발환경에서 release로 (demo앱이기때문에!)
     static func makeDemoScheme(name: String) -> Scheme { // 데모앱
-        return Scheme(
+        scheme(
             name: "\(name)Demo",
             shared: true,
             buildAction: .buildAction(targets: ["\(name)Demo"]),
@@ -76,7 +76,7 @@ extension Scheme {
     
     // makeScheme은 개발환경에서 debug (그냥 개발 빌드이기 때문에)
     static func makeScheme(name: String) -> Scheme { // 일반앱
-        return Scheme(
+        scheme(
             name: name,
             shared: true,
             buildAction: .buildAction(targets: ["\(name)"]),

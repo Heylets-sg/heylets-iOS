@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AnalyticsTaxonomy {
+public struct AnalyticsTaxonomy: @unchecked Sendable {
     public let eventName: String    
     public let channel: String
     public var properties: [String: Any?]

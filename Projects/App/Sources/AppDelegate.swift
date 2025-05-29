@@ -17,6 +17,7 @@ import Core
 import TimeTableFeature
 import BaseFeatureDependency
 
+@MainActor
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -176,7 +177,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     
     // Foreground(앱 켜진 상태)에서도 알림 오는 설정
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         // iOS 14 이상에서는 .banner, .list, .sound 사용
         if #available(iOS 14.0, *) {
             completionHandler([.banner, .list, .sound])
@@ -187,7 +189,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     
     // 사용자가 알림을 탭했을 때 처리 - 개선된 로직
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         print("Notification tapped: \(userInfo)")
         
@@ -224,7 +226,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 extension AppDelegate: MessagingDelegate {
     
     // 파이어베이스 MessagingDelegate 설정
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+    nonisolated func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("FCM 토큰 갱신: \(String(describing: fcmToken))")
 
         guard let fcmToken = fcmToken else { return }

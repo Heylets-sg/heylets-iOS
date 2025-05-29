@@ -5,9 +5,10 @@
 //  Created by 류희재 on 12/17/24.
 //
 
-import ProjectDescription
+@preconcurrency import ProjectDescription
 
 // 아직 여기의 필요성은 못 느끼는중 무슨 역할을 하게 될지 궁금하다!
+
 
 public extension SettingsDictionary {
     // allLoadSettings와 baseSettings는 빌드 설정 딕셔너리의 기본값을 정의
@@ -21,10 +22,14 @@ public extension SettingsDictionary {
     ///역할: Objective-C 카테고리 및 클래스를 정적으로 링크하도록 보장.
     ///사용 사례: Objective-C 기반 라이브러리를 사용할 때 기본적으로 필요.
     static let baseSettings: Self = [
+        "DEVELOPMENT_TEAM": "TMQVM68K2K",
         "OTHER_LDFLAGS" : [
             "$(inherited)",
             "-ObjC"
-        ]
+        ],
+        "VERSIONING_SYSTEM": "apple-generic",
+        "CURRENT_PROJECT_VERSION": "1",    // App Store에 등록된 마지막 빌드 번호
+        "MARKETING_VERSION": "1.5"        // App Store에 등록된 앱 버전
     ]
     
     ///번들 ID를 설정합니다.
