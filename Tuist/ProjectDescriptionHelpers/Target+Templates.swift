@@ -15,21 +15,20 @@ struct TargetHandler {
     static func makeTarget(
         targetType: FeatureTarget,
         name: String,
+        projectEnv: ProjectEnvironment = ProjectEnvironment.env,
         package: [Package] = [],
-        platform: Platform = env.platform,
         bundleID: String,
-        deploymentTarget: DeploymentTargets = env.deploymentTarget,
         infoPlist: InfoPlist = .default,
         resources: ResourceFileElements? = nil,
-        entitlements: ProjectDescription.Path? = nil,
+        entitlements: Entitlements? = nil,
         dependencies: [TargetDependency] = []
     ) -> Target {
-        .init(
+        Target.target(
             name: name,
-            platform: platform,
+            destinations: projectEnv.destinations,
             product: targetType.product,
             bundleId: bundleID,
-            deploymentTarget: deploymentTarget,
+            deploymentTargets: projectEnv.deploymentTarget,
             infoPlist: infoPlist,
             sources: targetType.sources,
             resources: resources,
