@@ -48,6 +48,7 @@ public class SelectNationalityViewModel: ObservableObject {
     }
     
     // MARK: - Methods
+    @MainActor
     func send(_ action: Action) {
         switch action {
         case .onAppear:
@@ -59,7 +60,7 @@ public class SelectNationalityViewModel: ObservableObject {
             
         case .closeButtonDidTap:
             navigationRouter.pop()
-            
+        
         case .nextButtonDidTap:
             guard let nationality else { return }
             Analytics.shared.track(.clickSelectCountry(country: nationality.rawValue))

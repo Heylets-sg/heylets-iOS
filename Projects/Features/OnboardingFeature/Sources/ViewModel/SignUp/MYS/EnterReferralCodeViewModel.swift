@@ -47,6 +47,7 @@ public class EnterReferralCodeViewModel: ObservableObject {
         observe()
     }
     
+    @MainActor
     func send(_ action: Action) {
         switch action {
         case .backButtonDidTap:

@@ -229,6 +229,7 @@ extension TodoViewModel {
         return useCase.isGuestMode
     }
     
+    @MainActor
     func send(_ action: WindowAction) {
         switch action {
         case .gotoTimeTable:

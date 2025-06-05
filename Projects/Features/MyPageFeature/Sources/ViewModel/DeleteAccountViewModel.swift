@@ -48,7 +48,7 @@ public class DeleteAccountViewModel: ObservableObject {
         
         observe()
     }
-    
+
     func send(_ action: Action) {
         switch action {
         case .backButtonDidTap:

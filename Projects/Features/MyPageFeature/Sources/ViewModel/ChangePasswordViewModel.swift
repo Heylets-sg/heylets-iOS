@@ -50,7 +50,7 @@ public class ChangePasswordViewModel: ObservableObject {
         observe()
         bindState()
     }
-    
+
     func send(_ action: Action) {
         switch action {
         case .backButtonDidTap:

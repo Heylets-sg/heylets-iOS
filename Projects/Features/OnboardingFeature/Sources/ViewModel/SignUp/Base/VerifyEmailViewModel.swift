@@ -52,7 +52,7 @@ public class VerifyEmailViewModel: ObservableObject {
         observe()
         bindState()
     }
-    
+
     func send(_ action: Action) {
         weak var owner = self
         guard let owner else { return }
