@@ -11,13 +11,15 @@ import Combine
 
 import Core
 
+@MainActor
 public protocol WindowRoutable {
     var destination: WindowDestination { get }
     func `switch`(to destination: WindowDestination)
     func goBack()
 }
 
-final public class WindowRouter: @preconcurrency WindowRoutable, ObservableObjectSettable {
+@MainActor
+final public class WindowRouter: WindowRoutable, ObservableObjectSettable {
     
     public init() {}
     
@@ -25,9 +27,9 @@ final public class WindowRouter: @preconcurrency WindowRoutable, ObservableObjec
     
     private var history: [WindowDestination] = [.splash]
     
-    public var destination: WindowDestination = .splash {
+    @Published public var destination: WindowDestination = .splash {
         didSet {
-            objectWillChange?.send()
+            notifyWillChange()
         }
     }
     

@@ -19,5 +19,9 @@ public extension ObservableObjectSettable {
     func setObjectWillChange(_ objectWillChange: ObservableObjectPublisher?) {
         self.objectWillChange = objectWillChange
     }
+    
+    func notifyWillChange() {
+        objectWillChange?.send()
+    }
 }
 

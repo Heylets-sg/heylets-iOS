@@ -20,12 +20,12 @@ public struct AuthRepository: @preconcurrency AuthRepositoryType {
         self.authService = authService
     }
     
-    @MainActor public func isTokenExisted() -> AnyPublisher<Bool, Never> {
+    public func isTokenExisted() -> AnyPublisher<Bool, Never> {
         return Just(UserDefaultsManager.isTokenExist())
             .eraseToAnyPublisher()
     }
     
-    @MainActor public func tokenRefresh() -> AnyPublisher<Void, Error> {
+    public func tokenRefresh() -> AnyPublisher<Void, Error> {
         authService.refreshToken()
             .handleEvents(receiveOutput: { token in
                 UserDefaultsManager.setToken(token)
@@ -91,7 +91,7 @@ public struct AuthRepository: @preconcurrency AuthRepositoryType {
             .eraseToAnyPublisher()
     }
     
-    @MainActor public func logout() -> AnyPublisher<Void, LogoutError> {
+    public func logout() -> AnyPublisher<Void, LogoutError> {
         authService.logout()
             .handleEvents(receiveOutput: { _ in
                 UserDefaultsManager.clearToken()

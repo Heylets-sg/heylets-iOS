@@ -11,6 +11,7 @@ import Combine
 
 import Core
 
+@MainActor
 public protocol NavigationRoutable {
     var destinations: [NavigationDestination] { get set }
     
@@ -20,15 +21,12 @@ public protocol NavigationRoutable {
 }
 
 @MainActor
-public class NavigationRouter: @preconcurrency NavigationRoutable, ObservableObjectSettable, @unchecked Sendable {
-    public init() {}
+public class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
     public var objectWillChange: ObservableObjectPublisher?
     
     public var destinations: [NavigationDestination] = [] {
         didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.objectWillChange?.send()
-            }
+            notifyWillChange()
         }
     }
     
