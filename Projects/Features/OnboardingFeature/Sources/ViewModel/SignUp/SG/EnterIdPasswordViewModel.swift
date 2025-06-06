@@ -50,7 +50,6 @@ public class EnterIdPasswordViewModel: ObservableObject {
         bindState()
     }
     
-    @MainActor
     func send(_ action: Action) {
         switch action {
         case .backButtonDidTap:

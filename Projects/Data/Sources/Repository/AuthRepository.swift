@@ -13,7 +13,7 @@ import Domain
 import Networks
 import Core
 
-public struct AuthRepository: @preconcurrency AuthRepositoryType {
+public struct AuthRepository: AuthRepositoryType {
     public let authService: AuthServiceType
     
     public init(authService: AuthServiceType) {
@@ -106,7 +106,7 @@ public struct AuthRepository: @preconcurrency AuthRepositoryType {
             .eraseToAnyPublisher()
     }
     
-    @MainActor public func logIn(
+    public func logIn(
         _ email: String,
         _ password: String
     ) -> AnyPublisher<Auth, LoginError> {
@@ -152,7 +152,7 @@ public struct AuthRepository: @preconcurrency AuthRepositoryType {
             .eraseToAnyPublisher()
     }
     
-    @MainActor public func deleteAccount(
+    public func deleteAccount(
         _ password: String
     ) -> AnyPublisher<Void, Error> {
         let request: DeleteAccountRequest = .init(password)

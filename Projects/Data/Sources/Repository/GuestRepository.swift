@@ -13,7 +13,7 @@ import Domain
 import Networks
 import Core
 
-public struct GuestRepository: @preconcurrency GuestRepositoryType {
+public struct GuestRepository: GuestRepositoryType {
     public let userService: UserServiceType
     public let guestService: GuestServiceType
     
@@ -35,7 +35,7 @@ public struct GuestRepository: @preconcurrency GuestRepositoryType {
             .asVoidWithGeneralError()
     }
     
-    @MainActor public func startGuestMode(
+    public func startGuestMode(
         university: String,
         agreements: [AgreementInfo]
     ) -> AnyPublisher<Auth, Error> {
@@ -49,7 +49,7 @@ public struct GuestRepository: @preconcurrency GuestRepositoryType {
             .mapToGeneralError()
     }
     
-    @MainActor public func convertToMember(_ user: User) -> AnyPublisher<Void, SignUpError> {
+    public func convertToMember(_ user: User) -> AnyPublisher<Void, SignUpError> {
         let request: GuestSignUpRequest = user.toDTO()
         if Config.isDevEnvironment {
             return guestService.testConvertToMember(request)
