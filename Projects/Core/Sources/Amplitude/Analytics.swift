@@ -20,14 +20,10 @@ public final class Analytics: @unchecked Sendable {
 
 extension Analytics: Analyzable {
     public func track(_ taxonomy: AnalyticsTaxonomy) {
-        Task { @MainActor in
-            AmplitudeAnalytics.shared.track(taxonomy)
-        }
+        AmplitudeAnalytics.shared.track(taxonomy)
     }
     
     func reset() {
-        Task { @MainActor in
-            AmplitudeAnalytics.shared.reset()
-        }
+        AmplitudeAnalytics.shared.reset()
     }
 }
