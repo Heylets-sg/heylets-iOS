@@ -16,7 +16,8 @@ let project = Project.makeModule(
     internalDependencies: [
         .data,
         .Features.RootFeature
-    ]
+    ],
+    hasResources: true
 )
 
 
