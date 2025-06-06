@@ -13,7 +13,7 @@ protocol Analyzable {
     func reset()
 }
 
-public final class Analytics: @unchecked Sendable {
+public final class Analytics {
     public static let shared = Analytics()
     private init() { }
 }
