@@ -17,7 +17,9 @@ import BaseFeatureDependency
 //    static public let `default` = Router()
 //}
 //
+
 extension HeyUseCase {
+    @MainActor
     static public let `default` = HeyUseCase(
         repository: HeyRepository(
             service: HeyService()

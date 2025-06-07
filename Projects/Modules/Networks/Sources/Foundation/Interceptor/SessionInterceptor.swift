@@ -28,7 +28,7 @@ public protocol RequestInterceptor: RequestAdapter, RequestRetrier {}
 // 세션 인터셉터 구현
 
 
-public class SessionInterceptor: NSObject, URLSessionTaskDelegate, RequestInterceptor, @unchecked Sendable {
+public class SessionInterceptor: NSObject, URLSessionTaskDelegate, RequestInterceptor {
     nonisolated(unsafe) private var retriers: [RequestRetrier] = []
     nonisolated(unsafe) private var adapters: [RequestAdapter] = []
     

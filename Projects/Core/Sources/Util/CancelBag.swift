@@ -9,7 +9,7 @@
 import Combine
 import Foundation
 
-public final class CancelBag: @unchecked Sendable {
+public final class CancelBag {
     private let lock = NSLock()
     public private(set) var subscriptions = Set<AnyCancellable>()
     

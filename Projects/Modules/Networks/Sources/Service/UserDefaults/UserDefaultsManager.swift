@@ -37,7 +37,7 @@ public struct UserDefaultWrapper<T> {
     }
 }
 
-public struct UserDefaultsManager: @unchecked Sendable {
+public struct UserDefaultsManager {
     public init() {}
     
     // 함수 기반 접근 - 프로퍼티 대신 함수 사용
