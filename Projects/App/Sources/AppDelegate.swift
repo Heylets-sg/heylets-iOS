@@ -167,6 +167,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
 }
 
+@MainActor
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
     // 백그라운드에서 푸시 알림을 탭했을 때 실행
@@ -223,6 +224,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 }
 
+@MainActor
 extension AppDelegate: MessagingDelegate {
     
     // 파이어베이스 MessagingDelegate 설정

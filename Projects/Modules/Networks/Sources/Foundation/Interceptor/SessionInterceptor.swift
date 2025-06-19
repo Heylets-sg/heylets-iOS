@@ -29,8 +29,8 @@ public protocol RequestInterceptor: RequestAdapter, RequestRetrier {}
 
 
 public class SessionInterceptor: NSObject, URLSessionTaskDelegate, RequestInterceptor {
-    nonisolated(unsafe) private var retriers: [RequestRetrier] = []
-    nonisolated(unsafe) private var adapters: [RequestAdapter] = []
+    private var retriers: [RequestRetrier] = []
+    private var adapters: [RequestAdapter] = []
     
     // 싱글톤 인스턴스
     public static let shared = SessionInterceptor()

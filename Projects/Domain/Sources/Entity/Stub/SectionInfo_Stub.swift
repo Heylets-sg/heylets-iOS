@@ -10,7 +10,7 @@ import Foundation
 
 
 extension SectionInfo {
-    static nonisolated(unsafe) public var timetable_stubList: [SectionInfo] =  [
+    static public var timetable_stubList: [SectionInfo] =  [
         .timetable_stub1,
         .timetable_stub1_1,
         .timetable_stub2,

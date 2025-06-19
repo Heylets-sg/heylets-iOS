@@ -31,7 +31,7 @@ public struct APIHeaders {
     static let OSVersion = AppService.getOSVersion()
     
     static let appVersionName = "App-Version"
-    nonisolated(unsafe) static let appVersion = AppService.getLocalAppVersion()
+    static let appVersion = AppService.getLocalAppVersion()
     
     static let xPlatform = "X-Platform"
     static let iOS = "IOS"
@@ -50,7 +50,7 @@ public struct APIHeaders {
     }
     
     static let pushTokenName = "Push-Token"
-    nonisolated(unsafe) static var pushToken = UserDefaultsManager.getFCMToken()
+    static var pushToken = UserDefaultsManager.getFCMToken()
 }
 
 public extension APIHeaders {
