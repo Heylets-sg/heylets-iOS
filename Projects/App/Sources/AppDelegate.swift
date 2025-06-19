@@ -19,43 +19,30 @@ import BaseFeatureDependency
 
 @MainActor
 class AppDelegate: NSObject, UIApplicationDelegate {
+    
+    private let firebaseManager: FirebaseManaging
+    private let notificationManager: NotificationManaging
+    
+    init(
+        firebaseManager: FirebaseManaging = FirebaseManager(),
+        notificationManager: NotificationManaging = NotificationManager()
+    ) {
+        self.firebaseManager = firebaseManager
+        self.notificationManager = notificationManager
+    }
+    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        // 파이어베이스 설정
-//        FirebaseApp.configure()
+        Task {
+            firebaseManager.configure()
+            await notificationManager.requestPermission()
+        }
+        
+        
         
         // 앱 실행 시 사용자에게 알림 허용 권한을 받음
         UNUserNotificationCenter.current().delegate = self
-        
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound] // 필요한 알림 권한을 설정
-        UNUserNotificationCenter.current().requestAuthorization(
-            options: authOptions,
-            completionHandler: { granted, error in
-                if granted {
-                    print("알림 권한 획득 성공")
-                } else {
-                    print("알림 권한 획득 실패: \(String(describing: error))")
-                }
-            }
-        )
-        
-        // UNUserNotificationCenterDelegate를 구현한 메서드를 실행시킴
-        application.registerForRemoteNotifications()
-        
-//        // 파이어베이스 Messaging 설정
-//        Messaging.messaging().delegate = self
-//        Messaging.messaging().isAutoInitEnabled = true // 백그라운드 콘텐츠 가용성 활성화
-        
-        // FCM 토큰 확인
-        Messaging.messaging().token { token, error in
-            if let error = error {
-                print("FCM 토큰 에러: \(error)")
-            } else if let token = token {
-                print("FCM 초기 토큰: \(token)")
-                UserDefaultsManager.setFCMTokne(token)
-            }
-        }
         
         // 알림 처리 옵저버 설정
         setupNotificationHandling()

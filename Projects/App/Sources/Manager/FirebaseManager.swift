@@ -11,14 +11,14 @@ import FirebaseCore
 import Networks
 import Foundation
 
+@MainActor
 protocol FirebaseManaging {
     func configure()
     func getFCMToken()
 }
 
-@MainActor
 final class FirebaseManager: NSObject, FirebaseManaging {
-    nonisolated func configure() {
+    func configure() {
         FirebaseApp.configure()
         
         Messaging.messaging().delegate = self
@@ -27,7 +27,7 @@ final class FirebaseManager: NSObject, FirebaseManaging {
         print("✅ Firebase 설정 완료")
     }
     
-    nonisolated func getFCMToken() {
+    func getFCMToken() {
         return Messaging.messaging().token { token, error in
             if let error = error {
                 print("FCM 토큰 에러: \(error)")
@@ -41,6 +41,7 @@ final class FirebaseManager: NSObject, FirebaseManaging {
 
 // MARK: - MessagingDelegate
 extension FirebaseManager: MessagingDelegate {
+    /// FCM 토큰 갱신 이벤트를 처리하기 위한 delegate 메서드
     nonisolated public func messaging(
         _ messaging: Messaging,
         didReceiveRegistrationToken fcmToken: String?
@@ -50,9 +51,9 @@ extension FirebaseManager: MessagingDelegate {
         guard let fcmToken = fcmToken else { return }
         
         // 🎯 Main Actor로 안전하게 전환해서 저장
-        Task { @MainActor in
-            await UserDefaultsManager.setFCMTokne(fcmToken)
-        }
+//        Task { @MainActor in
+//            await UserDefaultsManager.setFCMTokne(fcmToken)
+//        }
     }
 }
 
