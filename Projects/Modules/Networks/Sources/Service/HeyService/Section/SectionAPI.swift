@@ -51,7 +51,7 @@ extension SectionAPI: BaseAPI {
         }
     }
     
-    public var task: Task {
+    public var task: NetworkTask {
         switch self {
         case .deleteAllSection:
             return .requestPlain

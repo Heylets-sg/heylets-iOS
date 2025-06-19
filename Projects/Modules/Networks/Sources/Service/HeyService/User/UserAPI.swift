@@ -57,7 +57,7 @@ extension UserAPI: BaseAPI {
         }
     }
     
-    public var task: Task {
+    public var task: NetworkTask {
         switch self {
         case .deleteProfileImg:
             return .requestPlain

@@ -40,7 +40,7 @@ extension NotificationAPI: BaseAPI {
         }
     }
     
-    public var task: Task {
+    public var task: NetworkTask {
         switch self {
         case .deleteNotificationSetting:
             return .requestPlain

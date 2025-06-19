@@ -94,7 +94,7 @@ extension AuthAPI: BaseAPI {
         }
     }
     
-    public var task: Task {
+    public var task: NetworkTask {
         switch self {
         case .checkUserName(let name):
             return .requestParameters(["username": name])

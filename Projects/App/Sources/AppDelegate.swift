@@ -23,7 +23,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         // 파이어베이스 설정
-        FirebaseApp.configure()
+//        FirebaseApp.configure()
         
         // 앱 실행 시 사용자에게 알림 허용 권한을 받음
         UNUserNotificationCenter.current().delegate = self
@@ -43,9 +43,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // UNUserNotificationCenterDelegate를 구현한 메서드를 실행시킴
         application.registerForRemoteNotifications()
         
-        // 파이어베이스 Messaging 설정
-        Messaging.messaging().delegate = self
-        Messaging.messaging().isAutoInitEnabled = true // 백그라운드 콘텐츠 가용성 활성화
+//        // 파이어베이스 Messaging 설정
+//        Messaging.messaging().delegate = self
+//        Messaging.messaging().isAutoInitEnabled = true // 백그라운드 콘텐츠 가용성 활성화
         
         // FCM 토큰 확인
         Messaging.messaging().token { token, error in
@@ -181,12 +181,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         // iOS 14 이상에서는 .banner, .list, .sound 사용
-        if #available(iOS 14.0, *) {
-            completionHandler([.banner, .list, .sound])
-        } else {
-            // iOS 14 미만에서는 .alert 사용
-            completionHandler([.alert, .sound])
-        }
+        completionHandler([.banner, .list, .sound])
     }
     
     // 사용자가 알림을 탭했을 때 처리 - 개선된 로직
@@ -224,7 +219,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 }
 
-@MainActor
 extension AppDelegate: MessagingDelegate {
     
     // 파이어베이스 MessagingDelegate 설정
