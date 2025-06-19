@@ -57,6 +57,23 @@ extension FirebaseManager: MessagingDelegate {
     }
 }
 
+/*
+ extension AppDelegate: MessagingDelegate {
+     
+     // 파이어베이스 MessagingDelegate 설정
+     nonisolated func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+         print("FCM 토큰 갱신: \(String(describing: fcmToken))")
+         
+         guard let fcmToken = fcmToken else { return }
+         
+         DispatchQueue.main.async {
+             UserDefaultsManager.setFCMTokne(fcmToken)
+         }
+     }
+ }
+ 
+ */
+
 // MARK: - Error Types
 public enum FirebaseError: Error, LocalizedError {
     case tokenNotAvailable
