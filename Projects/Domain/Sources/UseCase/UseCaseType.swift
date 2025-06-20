@@ -8,7 +8,6 @@
 
 import Foundation
 
-@MainActor
 public protocol UseCaseType: ObservableObject {
     var myPageUseCase: MyPageUseCaseType { get }
     var signUpUseCase: SignUpUseCaseType { get }
@@ -18,7 +17,6 @@ public protocol UseCaseType: ObservableObject {
     var todoUseCase: TodoUsecaseType { get }
 }
 
-@MainActor
 public final class HeyUseCase: UseCaseType {
     
     var repository: RepositoryType

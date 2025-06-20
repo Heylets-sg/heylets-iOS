@@ -17,7 +17,7 @@ public protocol TimeTableViewTypeServiceType: ObservableObject {
 }
 
 public class TimeTableViewTypeService: TimeTableViewTypeServiceType {
-    nonisolated(unsafe) public static let shared = TimeTableViewTypeService()
+    public static let shared = TimeTableViewTypeService()
     
     @Published public private(set) var viewType: TimeTableViewType = .main
     

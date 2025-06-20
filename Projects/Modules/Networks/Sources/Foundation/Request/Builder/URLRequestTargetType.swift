@@ -14,7 +14,7 @@ public protocol URLRequestTargetType {
     var path: String? { get }
     var method: HTTPMethod { get }
     var headers : [String : String]? { get }
-    var task: Task { get }
+    var task: NetworkTask { get }
     var isWithInterceptor: Bool { get }
     var connectWebHook: Bool { get }
     

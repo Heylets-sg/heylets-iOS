@@ -43,7 +43,7 @@ extension LectureAPI: BaseAPI {
         return .get
     }
     
-    public var task: Task {
+    public var task: NetworkTask {
         switch self {
         case .getLectureDetailInfo:
             return .requestPlain

@@ -17,7 +17,9 @@ public extension Project {
         ]),
         "CFBundleShortVersionString": "$(MARKETING_VERSION)",
         "CFBundleVersion": "$(CURRENT_PROJECT_VERSION)",
+        "CFBundleIdentifier": .string("$(PRODUCT_BUNDLE_IDENTIFIER)"),
         "CFBundleDisplayName": .string("HeyLets"),
+        "CFBundleExecutable": .string("$(EXECUTABLE_NAME)"),
         "UIBackgroundModes": .array([
             .string("fetch"),
             .string("remote-notification")

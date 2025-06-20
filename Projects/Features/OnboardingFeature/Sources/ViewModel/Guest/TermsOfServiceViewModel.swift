@@ -72,7 +72,7 @@ public class TermsOfServiceViewModel: ObservableObject {
                     .sink(receiveValue: { [weak self] _ in
                         Analytics.shared.track(.guestModeStarted)
                         self?.windowRouter.switch(to: .timetable)
-                        self?.navigationRouter.destinations = []
+                        self?.navigationRouter.popToRootView()
                     })
                     .store(in: cancelBag)
             } else {

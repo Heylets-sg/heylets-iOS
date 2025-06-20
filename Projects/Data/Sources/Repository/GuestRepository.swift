@@ -13,7 +13,7 @@ import Domain
 import Networks
 import Core
 
-public struct GuestRepository: @preconcurrency GuestRepositoryType {
+public struct GuestRepository: GuestRepositoryType {
     public let userService: UserServiceType
     public let guestService: GuestServiceType
     
@@ -26,7 +26,7 @@ public struct GuestRepository: @preconcurrency GuestRepositoryType {
     }
     
     public func checkGuestMode() -> AnyPublisher<Bool, Never> {
-        Just(UserDefaultsManager.isGuestMode())
+        Just(AppSettingsStorage.isGuestMode())
             .eraseToAnyPublisher()
     }
     
@@ -35,27 +35,30 @@ public struct GuestRepository: @preconcurrency GuestRepositoryType {
             .asVoidWithGeneralError()
     }
     
-    @MainActor public func startGuestMode(
+    public func startGuestMode(
         university: String,
         agreements: [AgreementInfo]
     ) -> AnyPublisher<Auth, Error> {
         let request = GuestAgreementRequest(agreements: agreements.map { $0.toDTO() })
         return guestService.startGuestMode(university, request)
             .handleEvents(receiveOutput: { token in
-                UserDefaultsManager.setToken(token)
-                UserDefaultsManager.setGuestMode(true)
+                SecureTokenStorage.setAuthTokens(
+                    access: token.access_token,
+                    refresh: token.refresh_token
+                )
+                AppSettingsStorage.setGuestMode(true)
             })
             .map { $0.toEntity() }
             .mapToGeneralError()
     }
     
-    @MainActor public func convertToMember(_ user: User) -> AnyPublisher<Void, SignUpError> {
+    public func convertToMember(_ user: User) -> AnyPublisher<Void, SignUpError> {
         let request: GuestSignUpRequest = user.toDTO()
         if Config.isDevEnvironment {
             return guestService.testConvertToMember(request)
                 .handleEvents(receiveOutput: { token in
-                    UserDefaultsManager.clearToken()
-                    UserDefaultsManager.setGuestMode(false)
+                    SecureTokenStorage.clearAuthTokens()
+                    AppSettingsStorage.setGuestMode(false)
                 })
                 .mapError { error in
                     if let errorCode = error.isInvalidStatusCode() {
@@ -68,8 +71,8 @@ public struct GuestRepository: @preconcurrency GuestRepositoryType {
         } else {
             return guestService.convertToMember(request)
                 .handleEvents(receiveOutput: { token in
-                    UserDefaultsManager.clearToken()
-                    UserDefaultsManager.setGuestMode(false)
+                    SecureTokenStorage.clearAuthTokens()
+                    AppSettingsStorage.setGuestMode(false)
                 })
                 .mapError { error in
                     if let errorCode = error.isInvalidStatusCode() {

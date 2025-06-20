@@ -54,6 +54,7 @@ public class LogInViewModel: ObservableObject {
         bindState()
     }
     
+    @MainActor
     func send(_ action: Action) {
         switch action {
         case .onAppear:

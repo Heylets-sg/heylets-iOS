@@ -22,8 +22,8 @@ final public class Router: ObservableObject {
     public var windowRouter: WindowRoutableType
     
     public init(
-        navigationRouter: NavigationRoutableType = NavigationRouter(),
-        windowRouter: WindowRoutableType = WindowRouter()
+        navigationRouter: NavigationRoutableType,
+        windowRouter: WindowRoutableType
     ) {
         self.navigationRouter = navigationRouter
         self.windowRouter = windowRouter
@@ -34,7 +34,7 @@ final public class Router: ObservableObject {
 }
 
 extension Router {
-    static public let `default` = Router()
+    static public let `default` = Router(navigationRouter: NavigationRouter(), windowRouter: WindowRouter())
 }
 
 

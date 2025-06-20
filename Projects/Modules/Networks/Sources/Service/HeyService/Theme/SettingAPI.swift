@@ -50,7 +50,7 @@ extension SettingAPI: BaseAPI {
         
     }
     
-    public var task: Task {
+    public var task: NetworkTask {
         switch self {
         case .patchTimeTableSetting(let request):
             return .requestJSONEncodable(request)

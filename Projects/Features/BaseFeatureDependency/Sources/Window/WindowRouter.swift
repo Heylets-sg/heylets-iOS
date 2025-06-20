@@ -11,13 +11,16 @@ import Combine
 
 import Core
 
+@MainActor
 public protocol WindowRoutable {
     var destination: WindowDestination { get }
-    func `switch`(to destination: WindowDestination)
-    func goBack()
+    func getDestination() -> WindowDestination
+    nonisolated func `switch`(to destination: WindowDestination)
+    nonisolated func goBack()
 }
 
-final public class WindowRouter: @preconcurrency WindowRoutable, ObservableObjectSettable {
+@MainActor
+final public class WindowRouter: WindowRoutable, ObservableObjectSettable {
     
     public init() {}
     
@@ -25,31 +28,37 @@ final public class WindowRouter: @preconcurrency WindowRoutable, ObservableObjec
     
     private var history: [WindowDestination] = [.splash]
     
-    public var destination: WindowDestination = .splash {
+    @Published public var destination: WindowDestination = .splash {
         didSet {
-            objectWillChange?.send()
+            notifyWillChange()
         }
     }
     
-    public func `switch`(to destination: WindowDestination) {
-        if self.destination != destination {
-            history.append(self.destination)
+    nonisolated public func `switch`(to destination: WindowDestination) {
+        Task { @MainActor in
+            if self.destination != destination {
+                history.append(self.destination)
+            }
+            
+            Analytics.shared.track(.screenView(destination.screenName, .screen))
+            self.destination = destination
         }
         
-        Analytics.shared.track(.screenView(destination.screenName, .screen))
-        self.destination = destination
     }
     
-    public func goBack() {
-        // 히스토리가 비어있으면 이동할 수 없음
-        guard !history.isEmpty else { return }
+    nonisolated public func goBack() {
+        Task { @MainActor in
+            // 히스토리가 비어있으면 이동할 수 없음
+            guard !history.isEmpty else { return }
+            
+            // 히스토리에서 마지막 화면을 가져옴
+            let previousDestination = history.removeLast()
+            
+            // 이전 화면으로 이동
+            Analytics.shared.track(.screenView(previousDestination.screenName, .screen))
+            self.destination = previousDestination
+        }
         
-        // 히스토리에서 마지막 화면을 가져옴
-        let previousDestination = history.removeLast()
-        
-        // 이전 화면으로 이동
-        Analytics.shared.track(.screenView(previousDestination.screenName, .screen))
-        self.destination = previousDestination
     }
     
     /// 특정 화면까지 뒤로 이동하는 함수
@@ -75,6 +84,10 @@ final public class WindowRouter: @preconcurrency WindowRoutable, ObservableObjec
     /// 히스토리 초기화 함수
     public func resetHistory() {
         history = [.splash]
+    }
+    
+    public func getDestination() -> WindowDestination {
+        return destination
     }
 }
 

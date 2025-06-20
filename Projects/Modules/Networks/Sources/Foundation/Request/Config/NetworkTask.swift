@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-public enum Task {
+public enum NetworkTask {
     case requestPlain
     case requestParameters(
         Parameters,
@@ -28,7 +28,7 @@ public enum Task {
     )
 }
 
-extension Task {
+extension NetworkTask {
     public func buildRequest(
         baseURL: URL,
         method: HTTPMethod,

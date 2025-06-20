@@ -13,22 +13,25 @@ import Domain
 import Networks
 import Core
 
-public struct AuthRepository: @preconcurrency AuthRepositoryType {
+public struct AuthRepository: AuthRepositoryType {
     public let authService: AuthServiceType
     
     public init(authService: AuthServiceType) {
         self.authService = authService
     }
     
-    @MainActor public func isTokenExisted() -> AnyPublisher<Bool, Never> {
-        return Just(UserDefaultsManager.isTokenExist())
+    public func isTokenExisted() -> AnyPublisher<Bool, Never> {
+        return Just(SecureTokenStorage.isTokenExist())
             .eraseToAnyPublisher()
     }
     
-    @MainActor public func tokenRefresh() -> AnyPublisher<Void, Error> {
+    public func tokenRefresh() -> AnyPublisher<Void, Error> {
         authService.refreshToken()
             .handleEvents(receiveOutput: { token in
-                UserDefaultsManager.setToken(token)
+                SecureTokenStorage.setAuthTokens(
+                    access: token.access_token,
+                    refresh: token.refresh_token
+                )
             })
             .asVoidWithGeneralError()
     }
@@ -91,10 +94,10 @@ public struct AuthRepository: @preconcurrency AuthRepositoryType {
             .eraseToAnyPublisher()
     }
     
-    @MainActor public func logout() -> AnyPublisher<Void, LogoutError> {
+    public func logout() -> AnyPublisher<Void, LogoutError> {
         authService.logout()
             .handleEvents(receiveOutput: { _ in
-                UserDefaultsManager.clearToken()
+                SecureTokenStorage.clearAuthTokens()
             })
             .mapError { error in
                 if let errorCode = error.isInvalidStatusCode() {
@@ -106,15 +109,18 @@ public struct AuthRepository: @preconcurrency AuthRepositoryType {
             .eraseToAnyPublisher()
     }
     
-    @MainActor public func logIn(
+    public func logIn(
         _ email: String,
         _ password: String
     ) -> AnyPublisher<Auth, LoginError> {
         let request: SignInRequest = .init(email, password)
         return authService.logIn(request)
             .handleEvents(receiveOutput: { token in
-                UserDefaultsManager.setToken(token)
-                UserDefaultsManager.setGuestMode(false)
+                SecureTokenStorage.setAuthTokens(
+                    access: token.access_token,
+                    refresh: token.refresh_token
+                )
+                AppSettingsStorage.setGuestMode(false)
             })
             .map { $0.toEntity() }
             .mapError { error in
@@ -152,13 +158,13 @@ public struct AuthRepository: @preconcurrency AuthRepositoryType {
             .eraseToAnyPublisher()
     }
     
-    @MainActor public func deleteAccount(
+    public func deleteAccount(
         _ password: String
     ) -> AnyPublisher<Void, Error> {
         let request: DeleteAccountRequest = .init(password)
         return authService.deleteAccount(request)
             .handleEvents(receiveOutput: { _ in
-                UserDefaultsManager.clearToken()
+                SecureTokenStorage.clearAuthTokens()
             })
             .asVoidWithGeneralError()
     }

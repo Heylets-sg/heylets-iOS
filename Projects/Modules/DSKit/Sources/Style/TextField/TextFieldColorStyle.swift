@@ -15,11 +15,11 @@ public struct HeyTextFieldColorStyle {
 
 
 extension HeyTextFieldColorStyle {
-    static nonisolated(unsafe) public let white = HeyTextFieldColorStyle(
+    static public let white = HeyTextFieldColorStyle(
         background: .common.InputField.default,
         foreground: .common.Placeholder.default
     )
-    static nonisolated(unsafe) public let gray = HeyTextFieldColorStyle(
+    static public let gray = HeyTextFieldColorStyle(
         background: .common.InputField.default,
         foreground: .common.MainText.default
     )

@@ -11,39 +11,42 @@ import Combine
 
 import Core
 
+@MainActor
 public protocol NavigationRoutable {
     var destinations: [NavigationDestination] { get set }
     
-    func push(to view: NavigationDestination)
-    func pop()
-    func popToRootView()
+    nonisolated func push(to view: NavigationDestination)
+    nonisolated func pop()
+    nonisolated func popToRootView()
 }
 
 @MainActor
-public class NavigationRouter: @preconcurrency NavigationRoutable, ObservableObjectSettable, @unchecked Sendable {
-    public init() {}
+public class NavigationRouter: NavigationRoutable, ObservableObjectSettable {
     public var objectWillChange: ObservableObjectPublisher?
     
     public var destinations: [NavigationDestination] = [] {
         didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.objectWillChange?.send()
-            }
+            notifyWillChange()
         }
     }
     
-    public func push(to view: NavigationDestination) {
+    nonisolated public func push(to view: NavigationDestination) {
         Analytics.shared.track(.screenView(view.screenName, .screen))
-        destinations.append(view)
+        Task { @MainActor in
+            destinations.append(view)
+        }
+        
     }
     
-    
-    
-    public func pop() {
-        _ = destinations.popLast()
+    nonisolated public func pop() {
+        Task { @MainActor in
+            _ = destinations.popLast()
+        }
     }
     
-    public func popToRootView() {
-        destinations = []
+    nonisolated public func popToRootView() {
+        Task { @MainActor in
+            destinations = []
+        }
     }
 }

@@ -13,21 +13,17 @@ protocol Analyzable {
     func reset()
 }
 
-public final class Analytics: @unchecked Sendable {
+public final class Analytics {
     public static let shared = Analytics()
     private init() { }
 }
 
 extension Analytics: Analyzable {
     public func track(_ taxonomy: AnalyticsTaxonomy) {
-        Task { @MainActor in
-            AmplitudeAnalytics.shared.track(taxonomy)
-        }
+        AmplitudeAnalytics.shared.track(taxonomy)
     }
     
     func reset() {
-        Task { @MainActor in
-            AmplitudeAnalytics.shared.reset()
-        }
+        AmplitudeAnalytics.shared.reset()
     }
 }

@@ -19,13 +19,12 @@ struct MyPageNavigationRoutingView: View {
     
     var body: some View {
         switch destination {
-        case .myPage(let profileInfo):
+        case .myPage:
             MyPageView(
                 viewModel: .init(
                     navigationRouter: router.navigationRouter,
                     windowRouter: router.windowRouter,
                     useCase: useCase.myPageUseCase
-//                    profileInfo: profileInfo
                 )
             )
         case .changePassword:

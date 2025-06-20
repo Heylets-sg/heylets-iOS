@@ -10,7 +10,7 @@ import Foundation
 
 
 public final class WebHookHandler {
-    nonisolated(unsafe) static public let shared = WebHookHandler()
+    static public let shared = WebHookHandler()
     
     private init() {}
     

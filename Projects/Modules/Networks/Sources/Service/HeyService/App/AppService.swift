@@ -50,7 +50,7 @@ public struct Version: Comparable {
 //    static func getDeviceModelName() -> String
 //}
     
-public struct AppService: @unchecked Sendable {
+public struct AppService {
     public static let shared = AppService()
     private init() {}
     

@@ -96,7 +96,7 @@ extension TodoAPI: BaseAPI {
         }
     }
     
-    public var task: Task {
+    public var task: NetworkTask {
         switch self {
         case .deleteItem:
             return .requestPlain

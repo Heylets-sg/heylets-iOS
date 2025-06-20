@@ -216,9 +216,6 @@ public class TimeTableViewModel: ObservableObject {
         case .gotoMyPage:
             windowRouter.switch(to: .mypage)
         case .gotoInviteCodeView:
-            // Store current view type before navigating to invite code
-            let currentViewType = viewType
-            // Navigate to invite code
             navigationRouter.push(to: .inviteCode)
         }
     }

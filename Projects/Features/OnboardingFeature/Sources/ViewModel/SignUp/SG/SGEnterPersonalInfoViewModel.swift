@@ -43,6 +43,7 @@ public class SGEnterPersonalInfoViewModel: ObservableObject {
         observe()
     }
     
+    
     func send(_ action: Action) {
         switch action {
         case .backButtonDidTap:

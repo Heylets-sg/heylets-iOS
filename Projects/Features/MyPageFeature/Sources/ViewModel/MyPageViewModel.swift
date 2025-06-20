@@ -64,6 +64,7 @@ public class MyPageViewModel: ObservableObject {
     
     private let cancelBag = CancelBag()
     
+    @MainActor
     func send(_ action: Action) {
         switch action {
         case .onAppear:
