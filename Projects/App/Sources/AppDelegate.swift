@@ -6,8 +6,10 @@
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
-import FirebaseMessaging
 import UIKit
+import FirebaseMessaging
+
+import ThirdPartyLibs
 
 @MainActor
 class AppDelegate: NSObject, UIApplicationDelegate {
