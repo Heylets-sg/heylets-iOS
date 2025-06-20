@@ -91,7 +91,7 @@ public class TokenAdapter: @preconcurrency RequestAdapter {
         var request = urlRequest
         
         // 액세스 토큰이 있으면 헤더에 추가
-        if !UserDefaultsManager.getAccessToken().isEmpty {
+        if !SecureTokenStorage.getAccessToken().isEmpty {
             request.setValue(APIHeaders.accessToken, forHTTPHeaderField: APIHeaders.auth)
         }
         
@@ -179,16 +179,17 @@ public class TokenRetrier: @preconcurrency RequestRetrier {
             .handleEvents(
                 receiveOutput: { tokenResult in
                     // 새 토큰 저장
-                    UserDefaultsManager.setAccessToken(tokenResult.access_token)
-                    UserDefaultsManager.setRefreshToken(tokenResult.refresh_token ?? "")
+                    SecureTokenStorage.setAuthTokens(
+                        access: tokenResult.access_token,
+                        refresh: tokenResult.refresh_token
+                    )
                     self.isRefreshing = false
                     self.refreshPublisher = nil
                 },
                 receiveCompletion: { completion in
                     if case .failure = completion {
                         // 실패 시 토큰 초기화
-                        UserDefaultsManager.setAccessToken("")
-                        UserDefaultsManager.setRefreshToken("")
+                        SecureTokenStorage.clearAuthTokens()
                         self.isRefreshing = false
                         self.refreshPublisher = nil
                     }

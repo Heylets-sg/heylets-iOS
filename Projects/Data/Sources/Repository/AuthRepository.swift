@@ -21,14 +21,17 @@ public struct AuthRepository: AuthRepositoryType {
     }
     
     public func isTokenExisted() -> AnyPublisher<Bool, Never> {
-        return Just(UserDefaultsManager.isTokenExist())
+        return Just(SecureTokenStorage.isTokenExist())
             .eraseToAnyPublisher()
     }
     
     public func tokenRefresh() -> AnyPublisher<Void, Error> {
         authService.refreshToken()
             .handleEvents(receiveOutput: { token in
-                UserDefaultsManager.setToken(token)
+                SecureTokenStorage.setAuthTokens(
+                    access: token.access_token,
+                    refresh: token.refresh_token
+                )
             })
             .asVoidWithGeneralError()
     }
@@ -94,7 +97,7 @@ public struct AuthRepository: AuthRepositoryType {
     public func logout() -> AnyPublisher<Void, LogoutError> {
         authService.logout()
             .handleEvents(receiveOutput: { _ in
-                UserDefaultsManager.clearToken()
+                SecureTokenStorage.clearAuthTokens()
             })
             .mapError { error in
                 if let errorCode = error.isInvalidStatusCode() {
@@ -113,8 +116,11 @@ public struct AuthRepository: AuthRepositoryType {
         let request: SignInRequest = .init(email, password)
         return authService.logIn(request)
             .handleEvents(receiveOutput: { token in
-                UserDefaultsManager.setToken(token)
-                UserDefaultsManager.setGuestMode(false)
+                SecureTokenStorage.setAuthTokens(
+                    access: token.access_token,
+                    refresh: token.refresh_token
+                )
+                AppSettingsStorage.setGuestMode(false)
             })
             .map { $0.toEntity() }
             .mapError { error in
@@ -158,7 +164,7 @@ public struct AuthRepository: AuthRepositoryType {
         let request: DeleteAccountRequest = .init(password)
         return authService.deleteAccount(request)
             .handleEvents(receiveOutput: { _ in
-                UserDefaultsManager.clearToken()
+                SecureTokenStorage.clearAuthTokens()
             })
             .asVoidWithGeneralError()
     }

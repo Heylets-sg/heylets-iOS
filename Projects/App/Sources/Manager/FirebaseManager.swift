@@ -10,6 +10,7 @@ import FirebaseMessaging
 import FirebaseCore
 import Networks
 import Foundation
+import Core
 
 @MainActor
 protocol FirebaseManaging {
@@ -33,7 +34,7 @@ final class FirebaseManager: NSObject, FirebaseManaging {
                 print("FCM 토큰 에러: \(error)")
             } else if let token = token {
                 print("FCM 초기 토큰: \(token)")
-                UserDefaultsManager.setFCMTokne(token)
+                AppSettingsStorage.setFCMToken(token)
             }
         }
     }
@@ -49,30 +50,10 @@ extension FirebaseManager: MessagingDelegate {
         print("🔄 FCM 토큰 갱신: \(fcmToken ?? "nil")")
         
         guard let fcmToken = fcmToken else { return }
-        
-        // 🎯 Main Actor로 안전하게 전환해서 저장
-//        Task { @MainActor in
-//            await UserDefaultsManager.setFCMTokne(fcmToken)
-//        }
+        AppSettingsStorage.setFCMToken(fcmToken)
     }
 }
 
-/*
- extension AppDelegate: MessagingDelegate {
-     
-     // 파이어베이스 MessagingDelegate 설정
-     nonisolated func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-         print("FCM 토큰 갱신: \(String(describing: fcmToken))")
-         
-         guard let fcmToken = fcmToken else { return }
-         
-         DispatchQueue.main.async {
-             UserDefaultsManager.setFCMTokne(fcmToken)
-         }
-     }
- }
- 
- */
 
 // MARK: - Error Types
 public enum FirebaseError: Error, LocalizedError {

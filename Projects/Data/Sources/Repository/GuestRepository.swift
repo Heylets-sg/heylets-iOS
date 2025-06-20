@@ -26,7 +26,7 @@ public struct GuestRepository: GuestRepositoryType {
     }
     
     public func checkGuestMode() -> AnyPublisher<Bool, Never> {
-        Just(UserDefaultsManager.isGuestMode())
+        Just(AppSettingsStorage.isGuestMode())
             .eraseToAnyPublisher()
     }
     
@@ -42,8 +42,11 @@ public struct GuestRepository: GuestRepositoryType {
         let request = GuestAgreementRequest(agreements: agreements.map { $0.toDTO() })
         return guestService.startGuestMode(university, request)
             .handleEvents(receiveOutput: { token in
-                UserDefaultsManager.setToken(token)
-                UserDefaultsManager.setGuestMode(true)
+                SecureTokenStorage.setAuthTokens(
+                    access: token.access_token,
+                    refresh: token.refresh_token
+                )
+                AppSettingsStorage.setGuestMode(true)
             })
             .map { $0.toEntity() }
             .mapToGeneralError()
@@ -54,8 +57,8 @@ public struct GuestRepository: GuestRepositoryType {
         if Config.isDevEnvironment {
             return guestService.testConvertToMember(request)
                 .handleEvents(receiveOutput: { token in
-                    UserDefaultsManager.clearToken()
-                    UserDefaultsManager.setGuestMode(false)
+                    SecureTokenStorage.clearAuthTokens()
+                    AppSettingsStorage.setGuestMode(false)
                 })
                 .mapError { error in
                     if let errorCode = error.isInvalidStatusCode() {
@@ -68,8 +71,8 @@ public struct GuestRepository: GuestRepositoryType {
         } else {
             return guestService.convertToMember(request)
                 .handleEvents(receiveOutput: { token in
-                    UserDefaultsManager.clearToken()
-                    UserDefaultsManager.setGuestMode(false)
+                    SecureTokenStorage.clearAuthTokens()
+                    AppSettingsStorage.setGuestMode(false)
                 })
                 .mapError { error in
                     if let errorCode = error.isInvalidStatusCode() {

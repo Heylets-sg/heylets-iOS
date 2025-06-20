@@ -41,16 +41,16 @@ public struct APIHeaders {
     static let xadminkey = "heylets-183ba62c-c51e-4d03-967e-0a95fe01a9fa"
     
     static var accessToken: String {
-        return "Bearer \(UserDefaultsManager.getAccessToken())"
+        return "Bearer \(SecureTokenStorage.getAccessToken())"
     }
     
     static let refreshTokenName = "Refresh-Token"
     static var refreshToken: String {
-        return "Bearer \(UserDefaultsManager.getRefreshToken())"
+        return "Bearer \(SecureTokenStorage.getRefreshToken())"
     }
     
     static let pushTokenName = "Push-Token"
-    static var pushToken = UserDefaultsManager.getFCMToken()
+    static var pushToken = AppSettingsStorage.getFCMToken()
 }
 
 public extension APIHeaders {
