@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum GroupType: String {
+public enum GroupType: String, Sendable {
     case `default`
     case custom
     
@@ -17,7 +17,7 @@ public enum GroupType: String {
     }
 }
 
-public struct TodoGroup: Hashable {
+public struct TodoGroup: Hashable, Sendable {
     public let id: Int
     public let type: GroupType
     public let name: String
@@ -39,7 +39,7 @@ public struct TodoGroup: Hashable {
     }
 }
 
-public struct TodoItem: Hashable {
+public struct TodoItem: Hashable, Sendable {
     public let id: Int
     public let content: String
     public let completed: Bool

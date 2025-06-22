@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum ViewType: String {
+public enum ViewType: String, Sendable {
     case screen
     case modal
     case bottom_sheet

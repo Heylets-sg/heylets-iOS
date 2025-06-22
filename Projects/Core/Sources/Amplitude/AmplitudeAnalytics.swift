@@ -16,7 +16,7 @@ public actor AmplitudeAnalytics {
     private init() {}
 }
 
-extension AmplitudeAnalytics: Analyzable {
+extension AmplitudeAnalytics: @preconcurrency Analyzable {
     func track(_ taxonomy: AnalyticsTaxonomy) {
         let event = taxonomy.toAmplitudeEvent()
         amplitude.track(

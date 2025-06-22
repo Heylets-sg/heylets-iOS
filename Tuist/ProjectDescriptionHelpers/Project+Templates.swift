@@ -52,6 +52,9 @@ public extension Project {
         return Project(
             name: name,
             organizationName: workspaceName,
+            options: .options(
+                disableSynthesizedResourceAccessors: true
+            ),
             packages: packages,
             settings: .settings(
                 base: baseSettings,

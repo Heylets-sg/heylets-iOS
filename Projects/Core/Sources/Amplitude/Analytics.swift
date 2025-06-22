@@ -9,7 +9,7 @@
 import Foundation
 
 protocol Analyzable: Sendable {
-    func track(_ taxonomy: AnalyticsTaxonomy) async
+    func track(_ taxonomy: AnalyticsTaxonomy)
     func reset() async
 }
 
@@ -19,16 +19,13 @@ public actor Analytics {
 }
 
 extension Analytics: Analyzable {
-    public func track(_ taxonomy: AnalyticsTaxonomy) async {
+    public nonisolated func track(_ taxonomy: AnalyticsTaxonomy) {
         Task {
             await AmplitudeAnalytics.shared.track(taxonomy)
         }
-        
     }
     
     func reset() async {
-        Task {
-            await AmplitudeAnalytics.shared.reset()
-        }
+        await AmplitudeAnalytics.shared.reset()
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct ScheduleInfo: Hashable {
+public struct ScheduleInfo: Hashable, Sendable {
     public var id: Int?
     public var day: Week
     public var startHour: Int

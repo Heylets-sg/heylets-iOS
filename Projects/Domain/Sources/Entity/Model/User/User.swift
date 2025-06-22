@@ -59,7 +59,7 @@ public struct ProfileInfo: Hashable {
     }
 }
 
-public struct AgreementInfo: Hashable {
+public struct AgreementInfo: Hashable, Sendable {
     public var type: String
     public var agreed: Bool
     public var version: String
@@ -80,7 +80,7 @@ extension AgreementInfo {
     static public var privacyPolicy: Self { .init("PRIVACY_POLICY", true, "1.0.0") }
     static public var marketing: Self { .init("MARKETING", true, "1.0.0") }
     
-    static public var agreementList: [AgreementInfo] = [
+    static public let agreementList: [AgreementInfo] = [
         .termsOfService,
         .privacyPolicy,
         .marketing
