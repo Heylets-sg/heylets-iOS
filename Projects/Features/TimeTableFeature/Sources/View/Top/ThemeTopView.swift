@@ -29,7 +29,7 @@ struct ThemeTopView: View {
                             viewType = .main
                         }
                     } label: {
-                        Image(uiImage: .icClose)
+                        Image.icClose
                             .resizable()
                             .frame(width: 16, height: 16)
                             .tint(.common.ButtonClose.default)
@@ -132,7 +132,7 @@ struct ThemeInviteFriendView: View {
     let height: CGFloat
     var body: some View {
         HStack {
-            Image(uiImage: .icLocked2)
+            Image.icLocked2
                 .resizable()
                 .frame(width: 25, height: 28)
                 .padding(.trailing, 20)
@@ -147,7 +147,7 @@ struct ThemeInviteFriendView: View {
             
             Spacer()
             
-            Image(uiImage: .icNext)
+            Image.icNext
                 .resizable()
                 .frame(width: 8, height: 16)
         }
@@ -196,7 +196,7 @@ struct QuarterCircleView: View {
                 Circle()
                     .fill(Color.common.Background.opacity60)
                 
-                Image(uiImage: .icLocked)
+                Image.icLocked
                     .resizable()
                     .frame(width: 14, height: 16)
             }

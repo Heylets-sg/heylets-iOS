@@ -18,7 +18,7 @@ public struct SplashView: View {
                 Spacer()
                 
                 VStack {
-                    Image(uiImage: .logo)
+                    Image.logo
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(

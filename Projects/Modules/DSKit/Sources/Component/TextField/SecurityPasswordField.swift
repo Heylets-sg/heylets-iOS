@@ -38,9 +38,7 @@ public struct SecurityPasswordField: View {
             .heyTextFieldStyle()
             
             
-            if textFieldState.isValid() {
-                Image(uiImage: textFieldState.image!)
-            }
+            if textFieldState.isValid() { textFieldState.image! }
             
         }
         .padding(.horizontal, 16)

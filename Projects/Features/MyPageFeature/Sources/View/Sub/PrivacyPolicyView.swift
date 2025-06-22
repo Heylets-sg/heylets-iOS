@@ -23,7 +23,7 @@ public struct PrivacyPolicyView: View {
                         
                         Spacer()
                         
-                        Image(uiImage: .icLink)
+                        Image.icLink
                             .resizable()
                             .frame(width: 16, height: 16)
                             .tint(.common.Placeholder.default)

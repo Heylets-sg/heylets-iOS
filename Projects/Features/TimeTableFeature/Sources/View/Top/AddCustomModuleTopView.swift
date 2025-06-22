@@ -20,7 +20,7 @@ struct AddCustomModuleTopView: View {
                         viewType = .main
                     }
                 } label: {
-                    Image(uiImage: .icClose)
+                    Image.icClose
                         .resizable()
                         .frame(width: 16, height: 16)
                         .foregroundColor(.common.ButtonClose.default)

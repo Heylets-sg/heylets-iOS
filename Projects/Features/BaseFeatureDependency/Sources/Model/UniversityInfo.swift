@@ -6,14 +6,14 @@
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 import Domain
 import DSKit
 
 
 extension UniversityInfo {
-    public var icon: UIImage {
+    public var icon: Image {
         switch self {
         case .NUS: return .nus
         case .NTU: return .ntu
@@ -22,7 +22,7 @@ extension UniversityInfo {
         }
     }
     
-    public var badgeImage: UIImage {
+    public var badgeImage: Image {
         switch self {
         case .NUS: return .badgeNUS
         case .NTU: return .badgeNTU

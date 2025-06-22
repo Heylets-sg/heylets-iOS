@@ -103,7 +103,7 @@ struct CongratulationPopupView: View {
                     .padding(.top, 102)
                     
                     VStack {
-                        Image(uiImage: .congratulation)
+                        Image.congratulation
                             .resizable()
                             .frame(width: 167, height: 151)
                             .padding(.bottom, 200)

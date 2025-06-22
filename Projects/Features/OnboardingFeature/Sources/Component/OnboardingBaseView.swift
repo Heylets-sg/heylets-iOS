@@ -50,7 +50,7 @@ struct OnboardingBaseView<Content:View>: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(uiImage: .icBack)
+                        Image.icBack
                             .resizable()
                             .frame(width: 22, height: 18)
                             .tint(.common.ButtonBack.default)
@@ -62,7 +62,7 @@ struct OnboardingBaseView<Content:View>: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(uiImage: .icClose)
+                        Image.icClose
                             .resizable()
                             .frame(width: 18, height: 18)
                             .tint(.common.ButtonClose.default)

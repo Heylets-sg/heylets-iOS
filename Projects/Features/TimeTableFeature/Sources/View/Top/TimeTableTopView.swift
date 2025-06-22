@@ -23,7 +23,7 @@ public struct TopView: View {
         HStack {
             VStack(alignment: .leading) {
                 HStack {
-                    Image(uiImage: profileInfo.university.badgeImage)
+                    profileInfo.university.badgeImage
                         .resizable()
                         .frame(width: 36, height: 18)
                     
@@ -48,7 +48,7 @@ public struct TopView: View {
                         viewType = .search
                     }
                 } label: {
-                    Image(.icAdd)
+                    Image.icAdd
                         .resizable()
                         .frame(width: 17, height: 17)
                         .tint(.timeTableMain.TimeTableInfo.topIcon)
@@ -60,7 +60,7 @@ public struct TopView: View {
                         viewType = .setting
                     }
                 } label: {
-                    Image(uiImage: .icSetting)
+                    Image.icSetting
                         .resizable()
                         .frame(width: 18, height: 18)
                         .tint(.timeTableMain.TimeTableInfo.topIcon)

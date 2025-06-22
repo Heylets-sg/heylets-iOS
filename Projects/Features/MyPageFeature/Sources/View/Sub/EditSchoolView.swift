@@ -25,7 +25,7 @@ struct EditSchoolView: View {
                     Button {
                         viewModel.send(.closeButtonDidTap)
                     } label: {
-                        Image(uiImage: .icClose)
+                        Image.icClose
                             .resizable()
                             .frame(width: 18, height: 18)
                             .tint(.Common.ButtonClose.default)
@@ -46,12 +46,12 @@ struct EditSchoolView: View {
                     HStack(spacing: 0) {
                         VStack {
                             if isSelected {
-                                Image(uiImage: .icCheck)
+                                Image.icCheck
                                     .resizable()
                                     .frame(width: 24.adjusted, height: 24.adjusted)
                                     .foregroundColor(.heyMain)
                             } else {
-                                Image(uiImage: .icUnCheck)
+                                Image.icUnCheck
                                     .resizable()
                                     .frame(width: 24.adjusted, height: 24.adjusted)
                                     .foregroundColor(Color.init(hex: "#747474"))

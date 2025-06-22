@@ -104,7 +104,7 @@ public struct TodoView: View {
             Button {
                 viewModel.send(.addGroupButtonDidTap)
             } label: {
-                Image(uiImage: .icPlus)
+                Image.icPlus
                     .resizable()
                     .frame(width: 16, height: 16)
                     .tint(.timeTableMain.TimeTableInfo.topIcon)
@@ -120,7 +120,7 @@ public struct TodoView: View {
                 Spacer()
                     .frame(height: 132.adjusted)
                 
-                Image(uiImage: .todoEmpty)
+                Image.todoEmpty
                     .resizable()
                     .frame(width: 103.adjusted, height: 113.adjusted)
                     .padding(.bottom, 36.adjusted)
@@ -166,7 +166,7 @@ public struct TodoView: View {
                 Button {
                     viewModel.send(.addGroupButtonDidTap)
                 } label: {
-                    Image(uiImage: .icAddGroup)
+                    Image.icAddGroup
                         .resizable()
                         .frame(width: 28, height: 28)
                         .tint(.todo.addtodo)

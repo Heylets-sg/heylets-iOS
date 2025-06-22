@@ -32,7 +32,7 @@ public struct EnterReferralCodeView: View {
                     Button {
                         viewModel.send(.backButtonDidTap)
                     } label: {
-                        Image(uiImage: .icBack)
+                        Image.icBack
                             .resizable()
                             .frame(width: 22.adjusted, height: 18.adjusted)
                             .tint(.common.ButtonBack.default)

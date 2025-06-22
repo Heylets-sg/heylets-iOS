@@ -58,14 +58,14 @@ public struct CarouselView<Content: View>: View {
                             let threshold: CGFloat = 0.3
                             
                             withAnimation {
-                                    if progress > threshold {
-                                        // 오른쪽에서 왼쪽으로 이동 (다음 페이지로)
-                                        currentIndex = min(currentIndex + 1, pageCount - 1)
-                                    } else if progress < -threshold {
-                                        // 왼쪽에서 오른쪽으로 이동 (이전 페이지로)
-                                        currentIndex = max(currentIndex - 1, 0)
-                                    }
+                                if progress > threshold {
+                                    // 오른쪽에서 왼쪽으로 이동 (다음 페이지로)
+                                    currentIndex = min(currentIndex + 1, pageCount - 1)
+                                } else if progress < -threshold {
+                                    // 왼쪽에서 오른쪽으로 이동 (이전 페이지로)
+                                    currentIndex = max(currentIndex - 1, 0)
                                 }
+                            }
                         }
                 )
             }
@@ -114,12 +114,10 @@ enum OnboardingType {
         }
     }
     
-    var image: UIImage {
+    var image: Image {
         switch self {
-        case .timeTable:
-            return .timeTable
-        case .theme:
-            return .color
+        case .timeTable: return .timeTable
+        case .theme: return .color
         }
     }
 }
@@ -145,7 +143,7 @@ struct ContentView2: View {
                 Spacer()
                     .frame(height: 52)
                 
-                Image(uiImage: onboardingContent[index].image)
+                onboardingContent[index].image
                     .resizable()
                     .scaledToFit()
             }

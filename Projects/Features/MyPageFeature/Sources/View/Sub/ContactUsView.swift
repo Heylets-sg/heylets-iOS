@@ -34,7 +34,7 @@ public struct ContactUsView: View {
                     Button {
                         UIPasteboard.general.string = "jacobkwak1122@gmail.com"
                     } label: {
-                        Image(uiImage: .icCopy)
+                        Image.icCopy
                             .foregroundColor(.setting.copyIcon)
                     }
                 }

@@ -22,7 +22,7 @@ public struct AddCustomModuleView: View {
                                 .font(.regular_14)
                                 .foregroundColor(.common.MainText.default)
                             
-                            Image(uiImage: .icDown)
+                            Image.icDown
                                 .resizable()
                                 .frame(width: 9, height: 4)
                                 .foregroundColor(.heyMain)

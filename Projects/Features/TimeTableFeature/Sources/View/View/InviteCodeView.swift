@@ -37,7 +37,7 @@ public struct InviteCodeView: View {
                 Button {
                     viewModel.send(.backButtonDidTap)
                 } label: {
-                    Image(uiImage: .icBack)
+                    Image.icBack
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 22, height: 18)
@@ -79,7 +79,7 @@ public struct InviteCodeView: View {
                                 Button {
                                     viewModel.send(.copyButtonDidTap)
                                 } label: {
-                                    Image(uiImage: .icCopy)
+                                    Image.icCopy
                                         .resizable()
                                         .frame(width: 11, height: 11)
                                         .tint(Color.setting.copyIcon)
