@@ -14,25 +14,19 @@ enum TabType {
     case todo
     case my
     
-    var image: UIImage {
+    var image: Image {
         switch self {
-        case .timeTable:
-            return .tabTimeTable.withRenderingMode(.alwaysTemplate)
-        case .todo:
-            return .tabTodo.withRenderingMode(.alwaysTemplate)
-        case .my:
-            return .tabMypage.withRenderingMode(.alwaysTemplate)
+        case .timeTable: return .tabTimeTable
+        case .todo: return .tabTodo
+        case .my: return .tabMypage
         }
     }
     
     var title: String {
         switch self {
-        case .timeTable:
-            return "Timetable"
-        case .todo:
-            return "To do"
-        case .my:
-            return "My"
+        case .timeTable: return "Timetable"
+        case .todo: return "To do"
+        case .my: return "My"
         }
     }
     
@@ -114,15 +108,14 @@ struct TabItemView: View {
     
     var body: some View {
         VStack {
-            Image(uiImage: tabType.image)
-            .renderingMode(.template)
-            .resizable()
-            .frame(width: 23, height: 23)
-            .foregroundColor(
-                isFilled
-                ? .timeTableMain.Navigator.iconActive
-                : .timeTableMain.Navigator.iconUnActive
-            )
+            tabType.image
+                .resizable()
+                .frame(width: 23, height: 23)
+                .foregroundColor(
+                    isFilled
+                    ? .timeTableMain.Navigator.iconActive
+                    : .timeTableMain.Navigator.iconUnActive
+                )
             
             Text(tabType.title)
                 .font(.semibold_10)

@@ -31,9 +31,9 @@ public extension Image {
     static let icCheck = Image(.icCheck).renderingMode(.template)
     static let icUnCheck = Image(.icUnchecked).renderingMode(.template)
     
-    static let tabTimeTable = Image(.tabTimetable)
-    static let tabTodo = Image(.tabTodo)
-    static let tabMypage = Image(.tabMypage)
+    static let tabTimeTable = Image(.tabTimetable).renderingMode(.template)
+    static let tabTodo = Image(.tabTodo).renderingMode(.template)
+    static let tabMypage = Image(.tabMypage).renderingMode(.template)
     
     static let timeTable = Image(.graphicsTimeTable)
     static let color = Image(.graphicsTheme)

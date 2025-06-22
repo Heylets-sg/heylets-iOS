@@ -24,7 +24,7 @@ public enum TextFieldState {
         }
     }
     
-    var image: UIImage? {
+    var image: Image? {
         switch self {
         case .valid:
             return .icSuccess

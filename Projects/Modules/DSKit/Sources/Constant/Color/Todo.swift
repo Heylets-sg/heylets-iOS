@@ -11,8 +11,8 @@ import SwiftUI
 
 public extension Color {
     enum Todo {
-        public static let addtodo = Color(DSKitAsset.addTodoDefault.color)
-        public static let contents = Color(DSKitAsset.contentsDefault.color)
+        public static let addtodo = Color(.addTodoDefault)
+        public static let contents = Color(.contentsDefault)
     }
 
     static var todo: Todo.Type {

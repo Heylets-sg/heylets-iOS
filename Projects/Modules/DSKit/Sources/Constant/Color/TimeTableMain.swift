@@ -13,35 +13,35 @@ public extension Color {
     
     enum TimeTableMain {
         
-            public static let bottomSheet = Color(DSKitAsset.bottomsheetDefault.color)
+            public static let bottomSheet = Color(.bottomsheetDefault)
             
-            public static let tabNavigator = Color(DSKitAsset.tabNavigatorDefault.color)
+            public static let tabNavigator = Color(.tabNavigatorDefault)
             
             public enum Day {
-                public static let dayInfo = Color(DSKitAsset.dayInfoDefault.color)
-                public static let dayInfobox = Color(DSKitAsset.dayInfoboxDefault.color)
+                public static let dayInfo = Color(.dayInfoDefault)
+                public static let dayInfobox = Color(.dayInfoboxDefault)
             }
             
             public enum ModuleInfo {
-                public static let info = Color(DSKitAsset.moduleInfoDefault.color)
-                public static let delete = Color(DSKitAsset.moduleDeleteDefault.color)
+                public static let info = Color(.moduleInfoDefault)
+                public static let delete = Color(.moduleDeleteDefault)
             }
             
             public enum Navigator {
-                public static let iconActive = Color(DSKitAsset.navigatorIconActive.color)
-                public static let iconUnActive = Color(DSKitAsset.navigatorIconUnactive.color)
+                public static let iconActive = Color(.navigatorIconActive)
+                public static let iconUnActive = Color(.navigatorIconUnactive)
             }
             
             public enum Timeline {
-                public static let `default` = Color(DSKitAsset.timelineDefault.color)
-                public static let background = Color(DSKitAsset.timelineBackgroundDefault.color)
+                public static let `default` = Color(.timelineDefault)
+                public static let background = Color(.timelineBackgroundDefault)
             }
             
             public enum TimeTableInfo {
-                public static let semester = Color(DSKitAsset.semesterInfoDefault.color)
-                public static let tableName = Color(DSKitAsset.timetableNameDefault.color)
-                public static let topIcon = Color(DSKitAsset.topIconDefault.color)
-                public static let topNavi = Color(DSKitAsset.topNaviDefault.color)
+                public static let semester = Color(.semesterInfoDefault)
+                public static let tableName = Color(.timetableNameDefault)
+                public static let topIcon = Color(.topIconDefault)
+                public static let topNavi = Color(.topNaviDefault)
             }
         }
         

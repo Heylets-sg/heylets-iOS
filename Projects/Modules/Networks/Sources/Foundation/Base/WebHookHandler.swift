@@ -9,7 +9,7 @@
 import Foundation
 
 
-public final class WebHookHandler {
+public actor WebHookHandler {
     static public let shared = WebHookHandler()
     
     private init() {}

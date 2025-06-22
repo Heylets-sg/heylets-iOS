@@ -11,7 +11,7 @@ import SwiftUI
 
 public extension Color {
     enum Mypage {
-        public static let menubox = Color(DSKitAsset.menuBoxDefault.color)
+        public static let menubox = Color(.menuBoxDefault)
     }
     
     static var mypage: Mypage.Type {
@@ -19,8 +19,8 @@ public extension Color {
     }
     
     enum Toggle {
-        public static let `default` = Color(DSKitAsset.toggleDefault.color)
-        public static let swtich = Color(DSKitAsset.toggleSwitchDefault.color)
+        public static let `default` = Color(.toggleDefault)
+        public static let swtich = Color(.toggleSwitchDefault)
     }
     
     static var toggle: Toggle.Type {

@@ -12,22 +12,22 @@ import SwiftUI
 public extension Color {
     enum Filter {
         public enum Check {
-            public static let buttonActive = Color(DSKitAsset.filterCheckButtonActive.color)
-            public static let iconActive = Color(DSKitAsset.filterCheckIconActive.color)
-            public static let strokeUnActivew = Color(DSKitAsset.filterCheckStrokeUnactive.color)
+            public static let buttonActive = Color(.filterCheckButtonActive)
+            public static let iconActive = Color(.filterCheckIconActive)
+            public static let strokeUnActivew = Color(.filterCheckStrokeUnactive)
         }
         
         public enum Stroke {
-            public static let active = Color(DSKitAsset.filterStrokeActive.color)
-            public static let unActive = Color(DSKitAsset.filterStrokeUnactive.color)
+            public static let active = Color(.filterStrokeActive)
+            public static let unActive = Color(.filterStrokeUnactive)
         }
         
         public enum Text {
-            public static let active = Color(DSKitAsset.filterTextActive.color)
-            public static let unActive = Color(DSKitAsset.filterTextUnactive.color)
+            public static let active = Color(.filterTextActive)
+            public static let unActive = Color(.filterTextUnactive)
         }
         
-        public static let list = Color(DSKitAsset.filterListDefault.color)
+        public static let list = Color(.filterListDefault)
     }
     
     static var filter: Filter.Type {
@@ -36,14 +36,14 @@ public extension Color {
     
     enum Module {
         public enum Add {
-            public static let button = Color(DSKitAsset.moduleAddButtonDefault.color)
-            public static let text = Color(DSKitAsset.moduleAddTextDefault.color)
+            public static let button = Color(.moduleAddButtonDefault)
+            public static let text = Color(.moduleAddTextDefault)
         }
         
-        public static let info2 = Color(DSKitAsset.moduleInfo2Default.color)
-        public static let preview = Color(DSKitAsset.modulePreview.color)
-        public static let search = Color(DSKitAsset.moduleSearchDefault.color)
-        public static let select = Color(DSKitAsset.moduleSelectDefault.color)
+        public static let info2 = Color(.moduleInfo2Default)
+        public static let preview = Color(.modulePreview)
+        public static let search = Color(.moduleSearchDefault)
+        public static let select = Color(.moduleSelectDefault)
     }
     
     static var module: Module.Type {
@@ -51,11 +51,11 @@ public extension Color {
     }
     
     enum Setting {
-        public static let title = Color(DSKitAsset.infoSettingTitle.color)
-        public static let set = Color(DSKitAsset.infoSettingSet.color)
-        public static let inviteBox = Color(DSKitAsset.inviteBox.color)
-        public static let copyButton = Color(DSKitAsset.copyButton.color)
-        public static let copyIcon = Color(DSKitAsset.copyIcon.color)
+        public static let title = Color(.infoSettingTitle)
+        public static let set = Color(.infoSettingSet)
+        public static let inviteBox = Color(.inviteBox)
+        public static let copyButton = Color(.copyButton)
+        public static let copyIcon = Color(.copyIcon)
     }
     
     static var setting: Setting.Type {
@@ -63,12 +63,11 @@ public extension Color {
     }
     
     enum TimeTableSub {
-        public static let searchDelete = Color(DSKitAsset.searchDelete.color)
-        public static let addCustom = Color(DSKitAsset.addCustom.color)
+        public static let searchDelete = Color(.searchDelete)
+        public static let addCustom = Color(.addCustom)
     }
     
     static var timeTableSub: TimeTableSub.Type {
         return TimeTableSub.self
     }
 }
-
