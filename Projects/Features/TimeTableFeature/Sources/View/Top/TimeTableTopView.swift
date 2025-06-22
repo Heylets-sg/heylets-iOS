@@ -48,7 +48,7 @@ public struct TopView: View {
                         viewType = .search
                     }
                 } label: {
-                    Image(uiImage: .icAdd)
+                    Image(.icAdd)
                         .resizable()
                         .frame(width: 17, height: 17)
                         .tint(.timeTableMain.TimeTableInfo.topIcon)

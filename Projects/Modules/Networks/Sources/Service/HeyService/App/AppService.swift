@@ -50,7 +50,7 @@ public struct Version: Comparable {
 //    static func getDeviceModelName() -> String
 //}
     
-public struct AppService {
+public actor AppService {
     public static let shared = AppService()
     private init() {}
     
