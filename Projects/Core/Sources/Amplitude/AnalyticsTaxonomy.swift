@@ -9,14 +9,14 @@
 import Foundation
 
 public struct AnalyticsTaxonomy {
-    public let eventName: String    
+    public let eventName: String
     public let channel: String
-    public var properties: [String: Any?]
+    public var properties: [String: (any Sendable)?]
     
     public init(
         eventName: String,
         channel: String = "APP",
-        properties: [String: Any?] = [:]
+        properties: [String: (any Sendable)?] = [:]
     ) {
         self.eventName = eventName
         self.channel = channel
@@ -24,7 +24,7 @@ public struct AnalyticsTaxonomy {
     }
 
     @discardableResult
-    mutating func add(_ value: Any?, forKey key: String) -> Self {
+    mutating func add(_ value: (any Sendable)?, forKey key: String) -> Self {
         self.properties[key] = value
         return self
     }

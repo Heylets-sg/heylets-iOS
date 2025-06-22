@@ -9,7 +9,7 @@
 import Foundation
 import AmplitudeSwift
 
-public final class AmplitudeAnalytics {
+public actor AmplitudeAnalytics {
     static let shared = AmplitudeAnalytics()
     private let amplitude = Amplitude(configuration: Configuration(apiKey: Config.amplitudeAPIKey))
     
