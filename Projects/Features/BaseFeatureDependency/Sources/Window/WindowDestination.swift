@@ -10,7 +10,7 @@ import Foundation
 
 import Domain
 
-public enum WindowDestination {
+public enum WindowDestination: Sendable {
     case splash
     case login
     case onboarding

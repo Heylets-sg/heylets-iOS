@@ -133,7 +133,7 @@ public struct MyPageTopView: View {
                 Button {
                     router.windowRouter.goBack()
                 } label: {
-                    Image(uiImage: .icBack)
+                    Image.icBack
                         .resizable()
                         .frame(width: 24, height: 20)
                         .tint(.common.ButtonBack.else)
@@ -166,7 +166,7 @@ public struct MyReferalCodeView: View {
                 .foregroundColor(.common.Placeholder.default)
                 .padding(.trailing, 12)
                 
-                Image(uiImage: .icCopy)
+                Image.icCopy
                     .resizable()
                     .frame(width: 12, height: 12)
                     .tint(.common.MainText.default)

@@ -11,19 +11,19 @@ import SwiftUI
 
 public extension Color {
     enum Popup {
-        public static let `default` = Color(DSKitAsset.popupDefault.color)
+        public static let `default` = Color(.popupDefault)
         
         enum Text {
-            public static let `default` = Color(DSKitAsset.popupTextDefault.color)
+            public static let `default` = Color(.popupTextDefault)
         }
         
         enum Button {
-            public static let `default` = Color(DSKitAsset.popupButtonCtaDefault.color)
-            public static let expect = Color(DSKitAsset.popupButtonCtaExcept.color)
+            public static let `default` = Color(.popupButtonCtaDefault)
+            public static let expect = Color(.popupButtonCtaExcept)
         }
         
         enum Divider {
-            public static let review = Color(DSKitAsset.dividerReview.color)
+            public static let review = Color(.dividerReview)
         }
     }
     

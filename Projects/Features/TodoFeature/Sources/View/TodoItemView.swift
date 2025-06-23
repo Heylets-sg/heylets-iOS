@@ -42,7 +42,7 @@ public struct TodoItemView: View {
                     Button {
                         viewModel.send(.toggleItemCompletedButtonDidTap(item.id))
                     } label: {
-                        Image(uiImage: item.completed ? .icCompleted : .icBlank)
+                        (item.completed ? Image.icCompleted : Image.icBlank)
                             .frame(width: 16, height: 16)
                     }
                     .padding(.leading, 20)
@@ -153,7 +153,7 @@ public struct TodoAddItemView: View {
                 HStack(spacing: 0) {
                     Button {
                     } label: {
-                        Image(uiImage: .icBlank)
+                        Image.icBlank
                             .frame(width: 16, height: 16)
                     }
                     .padding(.leading, 20)
@@ -181,7 +181,7 @@ public struct TodoAddItemView: View {
                 .frame(height: 56)
             } else {
                 HStack {
-                    Image(uiImage: .icPlus)
+                    Image.icPlus
                         .frame(width: 10, height: 10)
                         .padding(.leading, 23)
                         .padding(.trailing, 12)

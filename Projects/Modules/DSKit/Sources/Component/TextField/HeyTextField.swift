@@ -11,8 +11,8 @@ import SwiftUI
 public struct HeyTextField: View {
     @Binding var text: String
     let placeHolder: String
-    let leftImage: UIImage?
-    let rightImage: UIImage?
+    let leftImage: Image?
+    let rightImage: Image?
     @Binding var textFieldState: TextFieldState
     let colorSystem: HeyTextFieldColorStyle
     let action: () -> Void
@@ -20,8 +20,8 @@ public struct HeyTextField: View {
     public init(
         text: Binding<String>,
         placeHolder: String,
-        leftImage: UIImage? = nil,
-        rightImage: UIImage? = nil,
+        leftImage: Image? = nil,
+        rightImage: Image? = nil,
         textFieldState: Binding<TextFieldState> = .constant(.idle),
         colorSystem: HeyTextFieldColorStyle = .white,
         action: @escaping () -> Void = {}
@@ -38,9 +38,7 @@ public struct HeyTextField: View {
     
     public var body: some View {
         HStack {
-            if let image = leftImage {
-                Image(uiImage: image)
-            }
+            if let image = leftImage { image }
             
             TextField(
                 "",
@@ -51,13 +49,9 @@ public struct HeyTextField: View {
             .heyTextFieldStyle()
             
             if let image = rightImage {
-                Button(action: self.action) {
-                    Image(uiImage: image)
-                }
+                Button(action: self.action) { image }
             } else {
-                if let image = textFieldState.image {
-                    Image(uiImage: image)
-                }
+                if let image = textFieldState.image { image }
             }
         }
         .padding(.horizontal, 16)

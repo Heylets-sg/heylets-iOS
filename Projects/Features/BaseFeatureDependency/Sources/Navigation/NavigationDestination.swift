@@ -10,7 +10,7 @@
 import Domain
 import SwiftUI
 
-public enum NavigationDestination: Hashable {
+public enum NavigationDestination: Hashable, Sendable {
     // MyPage
     case myPage(ProfileInfo)
     case changePassword

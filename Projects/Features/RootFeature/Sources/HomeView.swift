@@ -35,14 +35,11 @@ enum MainTabType: String, CaseIterable { // For Each를 위해서 CaseIterable �
         }
     }
     
-    func imageName(selected: Bool) -> UIImage {
+    func imageName(selected: Bool) -> Image {
         switch self {
-        case .timetable:
-            return .tabTimeTable
-        case .todo:
-            return .tabTodo
-        case .mypage:
-            return .tabMypage
+        case .timetable: return .tabTimeTable
+        case .todo: return .tabTodo
+        case .mypage: return .tabMypage
         }
     }
 }

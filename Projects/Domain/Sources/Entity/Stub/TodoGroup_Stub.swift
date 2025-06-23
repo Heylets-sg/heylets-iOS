@@ -9,7 +9,7 @@
 import Foundation
 
 extension TodoGroup {
-    static public var list: [TodoGroup] =  [
+    static public let list: [TodoGroup] =  [
         .group_stub1,
         .group_stub2,
         .group_stub3,

@@ -54,7 +54,7 @@ public struct TodoGroupView: View {
                         
                     } label: {
                         HStack {
-                            Image(uiImage: .icEtc)
+                            Image.icEtc
                                 .resizable()
                                 .frame(width: 13, height: 3)
                                 .foregroundColor(.common.Placeholder.default)

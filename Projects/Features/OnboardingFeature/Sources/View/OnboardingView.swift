@@ -40,14 +40,11 @@ enum OnboardingType {
         }
     }
     
-    var image: UIImage {
+    var image: Image {
         switch self {
-        case .timeTable:
-            return .timeTable
-        case .theme:
-            return .color
-        case .alarm:
-            return .alarm
+        case .timeTable: return .timeTable
+        case .theme: return .color
+        case .alarm: return .alarm
         }
     }
     
@@ -149,7 +146,7 @@ public struct OnboardingView: View {
                                 Spacer()
                                     .frame(height: onboardingContent[currentIndex].topPadding.adjusted)
                                 
-                                Image(uiImage: onboardingContent[currentIndex].image)
+                                onboardingContent[currentIndex].image
                                     .resizable()
                                     .padding(
                                         .horizontal,
@@ -213,7 +210,7 @@ public struct OnboardingView: View {
 //                                        .font(.medium_12)
 //                                        .foregroundColor(.common.MainText.else)
 //                                    
-//                                    Image(uiImage: .icNext)
+//                                    Image.icNext
 //                                        .resizable()
 //                                        .tint(.common.MainText.else)
 //                                        .frame(width: 3.5, height: 7)

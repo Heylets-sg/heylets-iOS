@@ -74,7 +74,7 @@ fileprivate struct SelectUniversityListCellView: View {
     
     var body: some View {
         HStack {
-            Image(uiImage: university.icon)
+            university.icon
                 .resizable()
                 .frame(width: 24.adjusted, height: 24.adjusted)
                 .padding(.leading, 16)

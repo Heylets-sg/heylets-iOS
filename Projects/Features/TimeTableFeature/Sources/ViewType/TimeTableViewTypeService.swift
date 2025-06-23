@@ -10,6 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 
+@MainActor
 public protocol TimeTableViewTypeServiceType: ObservableObject {
     var viewType: TimeTableViewType { get }
     func switchTo(_ viewType: TimeTableViewType)

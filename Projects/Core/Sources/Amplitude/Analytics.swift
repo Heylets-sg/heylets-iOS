@@ -8,22 +8,24 @@
 
 import Foundation
 
-protocol Analyzable {
+protocol Analyzable: Sendable {
     func track(_ taxonomy: AnalyticsTaxonomy)
-    func reset()
+    func reset() async
 }
 
-public final class Analytics {
+public actor Analytics {
     public static let shared = Analytics()
     private init() { }
 }
 
 extension Analytics: Analyzable {
-    public func track(_ taxonomy: AnalyticsTaxonomy) {
-        AmplitudeAnalytics.shared.track(taxonomy)
+    public nonisolated func track(_ taxonomy: AnalyticsTaxonomy) {
+        Task {
+            await AmplitudeAnalytics.shared.track(taxonomy)
+        }
     }
     
-    func reset() {
-        AmplitudeAnalytics.shared.reset()
+    func reset() async {
+        await AmplitudeAnalytics.shared.reset()
     }
 }

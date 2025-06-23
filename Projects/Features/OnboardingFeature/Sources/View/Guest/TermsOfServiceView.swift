@@ -24,7 +24,7 @@ struct TermsOfServiceView: View {
             VStack {
                 HStack {
                     VStack(alignment:. leading) {
-                        Image(uiImage: .logo)
+                        Image.logo
                             .resizable()
                             .frame(width: 95.adjusted, height: 49.adjusted)
                         
@@ -39,7 +39,7 @@ struct TermsOfServiceView: View {
                 .padding(.bottom, 41.adjusted)
                 
                 HStack(alignment: .center, spacing: 12) { // spacing 추가
-                    Image(uiImage: .icCheck)
+                    Image.icCheck
                         .resizable()
                         .frame(width: 24.adjusted, height: 24.adjusted)
                         .foregroundColor(viewModel.state.allAgree ? .heyMain : .common.MainText.default)
@@ -64,7 +64,7 @@ struct TermsOfServiceView: View {
                 
                 
                 HStack {
-                    Image(uiImage: .icSuccess)
+                    Image.icSuccess
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
                         .foregroundColor(
@@ -96,7 +96,7 @@ struct TermsOfServiceView: View {
                 
                 
                 HStack {
-                    Image(uiImage: .icSuccess)
+                    Image.icSuccess
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
                         .foregroundColor(
@@ -130,7 +130,7 @@ struct TermsOfServiceView: View {
                 
                 
                 HStack {
-                    Image(uiImage: .icSuccess)
+                    Image.icSuccess
                         .resizable()
                         .frame(width: 16.adjusted, height: 10.adjusted)
                         .foregroundColor(

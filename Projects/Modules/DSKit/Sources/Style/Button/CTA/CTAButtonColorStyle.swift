@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct HeyCTAButtonColorStyle {
+public struct HeyCTAButtonColorStyle: Sendable {
     let background: Color
     let foreground: Color
     let disabledForeground: Color

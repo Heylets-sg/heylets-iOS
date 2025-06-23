@@ -9,14 +9,14 @@
 import Foundation
 import AmplitudeSwift
 
-public final class AmplitudeAnalytics {
+public actor AmplitudeAnalytics {
     static let shared = AmplitudeAnalytics()
     private let amplitude = Amplitude(configuration: Configuration(apiKey: Config.amplitudeAPIKey))
     
     private init() {}
 }
 
-extension AmplitudeAnalytics: Analyzable {
+extension AmplitudeAnalytics: @preconcurrency Analyzable {
     func track(_ taxonomy: AnalyticsTaxonomy) {
         let event = taxonomy.toAmplitudeEvent()
         amplitude.track(

@@ -8,66 +8,65 @@
 
 import SwiftUI
 
-public extension UIImage {
-    static let icAdd = DSKitAsset.icAdd.image.withRenderingMode(.alwaysTemplate)
-    static let icArrow = DSKitAsset.icArrow.image.withRenderingMode(.alwaysTemplate)
-    static let icCamera = DSKitAsset.icCamera.image
-    static let icClose = DSKitAsset.icClose.image.withRenderingMode(.alwaysTemplate)
-    static let icError = DSKitAsset.icError.image
-    static let icHide = DSKitAsset.icHide.image
-    static let icMagic = DSKitAsset.icMagic.image
-    static let icRepeat = DSKitAsset.icRepeat.image
-    static let icSchool = DSKitAsset.icSchool.image
-    static let icSetting = DSKitAsset.icSetting.image.withRenderingMode(.alwaysTemplate)
-    static let icShow = DSKitAsset.icShow.image
-    static let icSuccess = DSKitAsset.icSuccess.image.withRenderingMode(.alwaysTemplate)
-    static let icBack = DSKitAsset.icBack.image.withRenderingMode(.alwaysTemplate)
-    static let icCopy = DSKitAsset.icCopy.image.withRenderingMode(.alwaysTemplate)
-    static let icPencil = DSKitAsset.icPencil.image.withRenderingMode(.alwaysTemplate)
-    static let icDown = DSKitAsset.icDown.image.withRenderingMode(.alwaysTemplate)
-    static let icPlus = DSKitAsset.icPlus.image
-    static let icNext = DSKitAsset.icNext.image.withRenderingMode(.alwaysTemplate)
-    static let icSelected = DSKitAsset.icSelected.image.withRenderingMode(.alwaysTemplate)
-    static let icCheck = DSKitAsset.icCheck.image.withRenderingMode(.alwaysTemplate)
-    static let icUnCheck = DSKitAsset.icUnchecked.image.withRenderingMode(.alwaysTemplate)
+public extension Image {
+    static let icAdd = Image(.icAdd).renderingMode(.template)
+    static let icArrow = Image(.icArrow).renderingMode(.template)
+    static let icCamera = Image(.icCamera)
+    static let icClose = Image(.icClose).renderingMode(.template)
+    static let icError = Image(.icError)
+    static let icHide = Image(.icHide)
+    static let icMagic = Image(.icMagic)
+    static let icRepeat = Image(.icRepeat)
+    static let icSchool = Image(.icSchool)
+    static let icSetting = Image(.icSetting).renderingMode(.template)
+    static let icShow = Image(.icShow)
+    static let icSuccess = Image(.icSuccess).renderingMode(.template)
+    static let icBack = Image(.icBack).renderingMode(.template)
+    static let icCopy = Image(.icCopy).renderingMode(.template)
+    static let icPencil = Image(.icPencil).renderingMode(.template)
+    static let icDown = Image(.icDown).renderingMode(.template)
+    static let icPlus = Image(.icPlus)
+    static let icNext = Image(.icNext).renderingMode(.template)
+    static let icSelected = Image(.icSelected).renderingMode(.template)
+    static let icCheck = Image(.icCheck).renderingMode(.template)
+    static let icUnCheck = Image(.icUnchecked).renderingMode(.template)
     
-    static let tabTimeTable = DSKitAsset.tabTimetable.image
-    static let tabTodo = DSKitAsset.tabTodo.image
-    static let tabMypage = DSKitAsset.tabMypage.image
+    static let tabTimeTable = Image(.tabTimetable).renderingMode(.template)
+    static let tabTodo = Image(.tabTodo).renderingMode(.template)
+    static let tabMypage = Image(.tabMypage).renderingMode(.template)
     
-    static let timeTable = DSKitAsset.graphicsTimeTable.image
-    static let color = DSKitAsset.graphicsTheme.image
-    static let alarm = DSKitAsset.graphicsAlarm.image
-    static let guest = DSKitAsset.graphicsGuest.image
-    static let congratulation = DSKitAsset.graphicsCongratulation.image
-    static let todoEmpty = DSKitAsset.graphicsTodoEmpty.image
+    static let timeTable = Image(.graphicsTimeTable)
+    static let color = Image(.graphicsTheme)
+    static let alarm = Image(.graphicsAlarm)
+    static let guest = Image(.graphicsGuest)
+    static let congratulation = Image(.graphicsCongratulation)
+    static let todoEmpty = Image(.graphicsTodoEmpty)
     
-    static let icEtc = DSKitAsset.icEtc.image.withRenderingMode(.alwaysTemplate)
-    static let icBlank = DSKitAsset.icBlank.image
-    static let icCompleted = DSKitAsset.icCompleted.image
-    static let icAddGroup = DSKitAsset.icAddGroup.image.withRenderingMode(.alwaysTemplate)
+    static let icEtc = Image(.icEtc).renderingMode(.template)
+    static let icBlank = Image(.icBlank)
+    static let icCompleted = Image(.icCompleted)
+    static let icAddGroup = Image(.icAddGroup).renderingMode(.template)
     
-    static let icLocked = DSKitAsset.icLocked.image
-    static let icLocked2 = DSKitAsset.icLocked2.image
-    static let icLink = DSKitAsset.icLink.image.withRenderingMode(.alwaysTemplate)
+    static let icLocked = Image(.icLocked)
+    static let icLocked2 = Image(.icLocked2)
+    static let icLink = Image(.icLink).renderingMode(.template)
     
+    static let logo = Image(.logo)
     
-    static let logo = DSKitAsset.logo.image
+    static let theme1 = Image(.theme1)
+    static let theme2 = Image(.theme2)
+    static let theme3 = Image(.theme3)
+    static let theme4 = Image(.theme4)
+    static let theme5 = Image(.theme5)
     
-    static let theme1 = DSKitAsset.theme1.image
-    static let theme2 = DSKitAsset.theme2.image
-    static let theme3 = DSKitAsset.theme3.image
-    static let theme4 = DSKitAsset.theme4.image
-    static let theme5 = DSKitAsset.theme5.image
+    static let nus = Image(.uniNus)
+    static let ntu = Image(.uniNtu)
+    static let smu = Image(.uniSmu)
     
-    static let nus = DSKitAsset.uniNus.image
-    static let ntu = DSKitAsset.uniNtu.image
-    static let smu = DSKitAsset.uniSmu.image
-    
-    static let badgeNUS = DSKitAsset.badgeNUS.image
-    static let badgeNTU = DSKitAsset.badgeNTU.image
-    static let badgeSMU = DSKitAsset.badgeSMU.image
-    static let badgeIIUM = DSKitAsset.badgeIIUM.image
-    static let badgeUiTM = DSKitAsset.badgeUiTM.image
-    static let badgeUM = DSKitAsset.badgeUM.image
+    static let badgeNUS = Image(.badgeNUS)
+    static let badgeNTU = Image(.badgeNTU)
+    static let badgeSMU = Image(.badgeSMU)
+    static let badgeIIUM = Image(.badgeIIUM)
+    static let badgeUiTM = Image(.badgeUiTM)
+    static let badgeUM = Image(.badgeUM)
 }

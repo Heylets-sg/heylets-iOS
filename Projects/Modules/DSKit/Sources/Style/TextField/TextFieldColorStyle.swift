@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct HeyTextFieldColorStyle {
+public struct HeyTextFieldColorStyle: Sendable {
     let background: Color
     let foreground: Color
 }

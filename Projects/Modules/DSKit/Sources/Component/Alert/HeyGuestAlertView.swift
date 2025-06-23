@@ -40,7 +40,7 @@ struct GuestAlertView: View {
             .padding(.bottom, 25)
             .padding(.leading, 24)
             
-            Image(uiImage: .guest)
+            Image.guest
                 .resizable()
                 .frame(width: 160, height: 120)
                 .padding(.leading, 76)
@@ -56,7 +56,7 @@ struct GuestAlertView: View {
                         .foregroundColor(.common.CTAText.active)
                         .padding(.trailing, 8)
                     
-                    Image(uiImage: .icArrow)
+                    Image.icArrow
                         .resizable()
                         .frame(width: 10, height: 9)
                         .tint(Color.common.CTAText.active)

@@ -17,12 +17,12 @@ public enum Config {
         }
     }
     
-    private static let infoDictionary: [String: Any] = {
+    private static var infoDictionary: [String: Any] {
         guard let dict = Bundle.main.infoDictionary else {
-            fatalError("plist cannot found.")
+            fatalError("Info.plist not found.")
         }
         return dict
-    }()
+    }
     
     static public let baseURL: String = {
         guard let key = Config.infoDictionary[Keys.Plist.baseURL] as? String else {

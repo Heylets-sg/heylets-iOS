@@ -51,7 +51,7 @@ public struct PasswordField: View {
             }
             
             Button(action: { self.showPassword.toggle() }) {
-                Image(uiImage: showPassword ? .icShow : .icHide)
+                Image(showPassword ? .icShow : .icHide)
                     .foregroundColor(.secondary)
             }
         }

@@ -29,7 +29,9 @@ public extension SettingsDictionary {
         ],
         "VERSIONING_SYSTEM": "apple-generic",
         "CURRENT_PROJECT_VERSION": "1",    // App Store에 등록된 마지막 빌드 번호
-        "MARKETING_VERSION": "1.5"        // App Store에 등록된 앱 버전
+        "MARKETING_VERSION": "1.5",    // App Store에 등록된 앱 버전
+        "SWIFT_VERSION": "6.0", // Swift Language Version 설정
+        "SWIFT_STRICT_CONCURRENCY": "complete" //Strict Concurrency Checking: complete로 설정
     ]
     
     ///번들 ID를 설정합니다.

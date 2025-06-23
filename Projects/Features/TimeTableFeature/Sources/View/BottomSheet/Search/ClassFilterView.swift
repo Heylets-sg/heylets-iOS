@@ -108,7 +108,7 @@ struct ClassFilterCapsuleView: View {
                         : .Filter.Text.unActive
                     )
                 
-                Image(uiImage: .icDown)
+                Image.icDown
                     .resizable()
                     .frame(width: 9, height: 4)
                     .foregroundColor(
@@ -233,7 +233,7 @@ struct ClassFilterCellView: View {
     
     var body: some View {
         HStack {
-            Image(uiImage: isSelected ? .icCompleted : .icBlank)
+            (isSelected ? Image.icCompleted : Image.icBlank)
                 .resizable()
                 .frame(width: 24, height: 24)
                 .padding(.trailing, 8)

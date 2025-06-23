@@ -36,7 +36,7 @@ public struct LogInView: View {
                     Button {
                         viewModel.send(.closeButtonDidTap)
                     } label: {
-                        Image(uiImage: .icClose)
+                        Image.icClose
                             .resizable()
                             .frame(width: 18, height: 18)
                             .tint(.Common.ButtonClose.default)
@@ -45,7 +45,7 @@ public struct LogInView: View {
                 }
                 .padding(.bottom, 10.adjusted)
                 
-                Image(uiImage: .logo)
+                Image.logo
                     .resizable()
                     .frame(height: 56)
                     .padding(.horizontal, 125)

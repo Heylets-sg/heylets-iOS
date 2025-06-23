@@ -47,7 +47,7 @@ public struct SearchModuleView: View {
                             .font(.regular_14)
                             .foregroundColor(.common.Placeholder.default)
                         
-                        Image(uiImage: .icNext)
+                        Image.icNext
                             .resizable()
                             .frame(width: 4, height: 9)
                             .tint(.common.MainText.else)

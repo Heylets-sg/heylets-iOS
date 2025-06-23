@@ -14,7 +14,7 @@ import Darwin
 import Domain
 
 // Version 및 AppStoreResponse 구현 (이전 코드에서 사용)
-public struct Version: Comparable {
+public struct Version: Comparable, Sendable {
     let major: Int
     let minor: Int
     let patch: Int
@@ -50,7 +50,7 @@ public struct Version: Comparable {
 //    static func getDeviceModelName() -> String
 //}
     
-public struct AppService {
+public actor AppService {
     public static let shared = AppService()
     private init() {}
     

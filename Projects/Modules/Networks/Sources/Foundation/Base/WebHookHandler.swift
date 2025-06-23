@@ -9,12 +9,12 @@
 import Foundation
 
 
-public final class WebHookHandler {
-    static public let shared = WebHookHandler()
+public struct WebHookHandler {
+//    static public let shared = WebHookHandler()
+//    
+//    private init() {}
     
-    private init() {}
-    
-    public func sendErrorToSlack(
+    static func sendErrorToSlack(
         error: HeyNetworkError,
         fullURL: String,
         method: String,
