@@ -50,7 +50,7 @@ public struct APIHeaders {
     }
     
     static let pushTokenName = "Push-Token"
-    static var pushToken = AppSettingsStorage.getFCMToken()
+    static let pushToken = AppSettingsStorage.getFCMToken()
 }
 
 public extension APIHeaders {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum UniversityInfo: String {
+public enum UniversityInfo: String, Sendable {
     //싱가포르
     case NUS
     case NTU

@@ -43,7 +43,7 @@ public struct User: Hashable, Equatable {
     }
 }
 
-public struct ProfileInfo: Hashable {
+public struct ProfileInfo: Hashable, Sendable {
     public var nickName: String
     public var university: UniversityInfo
     public var imageURL: String?

@@ -9,7 +9,7 @@
 import Foundation
 import Core
 
-public enum NationalityInfo: String {
+public enum NationalityInfo: String, Sendable {
     case Malaysia
     case Singapore
     case empty = ""

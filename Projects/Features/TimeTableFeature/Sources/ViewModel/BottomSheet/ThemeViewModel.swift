@@ -14,6 +14,7 @@ import Domain
 import DSKit
 import Core
 
+@MainActor
 public class ThemeViewModel: ObservableObject {
     struct State {
         var isShowingSelectInfoView: Bool = false

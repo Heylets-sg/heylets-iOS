@@ -7,8 +7,8 @@ public final class BaseService<Target: URLRequestTargetType> {
     
     public init() {
         // 인터셉터 등록
-        SessionInterceptor.shared.register(adapter: TokenAdapter())
-        SessionInterceptor.shared.register(retrier: TokenRetrier(session: session))
+        //        SessionInterceptor.shared.register(adapter: TokenAdapter())
+        //        SessionInterceptor.shared.register(retrier: TokenRetrier(session: session))
     }
     
     public typealias API = Target
@@ -17,7 +17,8 @@ public final class BaseService<Target: URLRequestTargetType> {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 10
         configuration.timeoutIntervalForResource = 10
-        return URLSession(configuration: configuration, delegate: SessionInterceptor.shared, delegateQueue: nil)
+        return URLSession(configuration: configuration)
+        //        return URLSession(configuration: configuration, delegate: SessionInterceptor.shared, delegateQueue: nil)
     }()
     
     // MARK: - Public Methods
@@ -29,7 +30,7 @@ public final class BaseService<Target: URLRequestTargetType> {
                     .map { _ in response.data! }
                     .mapError {
                         if target.connectWebHook {
-                            WebHookHandler.shared.sendErrorToSlack(
+                            WebHookHandler.sendErrorToSlack(
                                 error: $0,
                                 fullURL: "\(target.url)\(target.path ?? "")",
                                 method: target.method.rawValue,
@@ -54,7 +55,7 @@ public final class BaseService<Target: URLRequestTargetType> {
                     .map { _ in response.data! }
                     .mapError {
                         if target.connectWebHook {
-                            WebHookHandler.shared.sendErrorToSlack(
+                            WebHookHandler.sendErrorToSlack(
                                 error: $0,
                                 fullURL: "\(target.url)\(target.path ?? "")",
                                 method: target.method.rawValue,

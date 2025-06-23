@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import Core
 
-class TokenInterceptor {
+actor TokenInterceptor {
     
     private var retryCnt = 0
     private var retryLimit = 3
