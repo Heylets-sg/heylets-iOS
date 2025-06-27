@@ -21,7 +21,7 @@ public final class BaseService<Target: URLRequestTargetType> {
         //        return URLSession(configuration: configuration, delegate: SessionInterceptor.shared, delegateQueue: nil)
     }()
     
-    // MARK: - Public Methods
+    // MARK: - Public Methodsa
     
     func requestWithResult<T: Decodable>(_ target: API) -> AnyPublisher<T, HeyNetworkError> {
         return fetchResponse(with: target)
