@@ -28,7 +28,6 @@ public extension Project {
         name: String,
         workspaceName: String = env.workspaceName,
         targets: Set<FeatureTarget> = Set([.staticFramework, .unitTest, .demo]),
-        packages: [Package] = [],
         internalDependencies: [TargetDependency] = [],
         externalDependencies: [TargetDependency] = [],
         interfaceDependencies: [TargetDependency] = [],
@@ -55,7 +54,6 @@ public extension Project {
             options: .options(
                 disableSynthesizedResourceAccessors: true
             ),
-            packages: packages,
             settings: .settings(
                 base: baseSettings,
                 configurations: XCConfig.configurations
@@ -64,32 +62,4 @@ public extension Project {
             schemes: projcetScheme
         )
     }
-    
-    static func makeSPMModule(
-        name: String,
-        workspaceName: String = env.workspaceName,
-        packages: [Package] = []
-    ) -> Project {
-        let projectTargets: [Target] = TargetHandler.makeProjectTargets(
-            name: name,
-            hasResources: false,
-            externalDependencies: [
-                .package(product: "FirebaseMessaging"),
-                .package(product: "FirebaseCore"),
-                .package(product: "AmplitudeSwift")
-            ], targets: [.dynamicFramework]
-        )
-        
-        let projcetScheme: [Scheme] = SchemeProvider.makeProjectScheme(targets: [.dynamicFramework], name: name)
-        
-        return Project(
-            name: name,
-            organizationName: workspaceName,
-            packages: packages,
-            settings: .settings(configurations: XCConfig.configurations),
-            targets: projectTargets,
-            schemes: projcetScheme
-        )
-    }
 }
-

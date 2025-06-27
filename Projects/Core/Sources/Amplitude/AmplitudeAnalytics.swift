@@ -34,12 +34,12 @@ extension AmplitudeAnalytics: @preconcurrency Analyzable {
 extension AnalyticsTaxonomy {
     public func toAmplitudeEvent() -> BaseEvent {
         let eventType = self.eventName
-        var eventProperties: [String: Any?] = [
+        var eventProperties: [String: Any] = [
             "eventName" : self.eventName,
             "channel": self.channel,
         ]
         properties.forEach {
-            eventProperties.updateValue($0.value, forKey: $0.key)
+            eventProperties.updateValue($0.value as Any, forKey: $0.key)
         }
         
         return BaseEvent(

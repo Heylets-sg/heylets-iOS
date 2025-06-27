@@ -10,6 +10,10 @@
 //import Combine
 //import Core
 //
+
+import Alamofire
+
+
 //// 요청을 수정하는 Adapter 프로토콜
 //
 //public protocol RequestAdapter {
@@ -18,7 +22,7 @@
 //
 //// 실패한 요청을 재시도하는 Retrier 프로토콜
 //
-//public protocol RequestRetrier {
+//public protocol RequestRetrier: Sendable {
 //    func retry(_ request: URLRequest, dueTo error: Error, retryCount: Int) -> AnyPublisher<Bool, Never>
 //}
 //
@@ -27,8 +31,7 @@
 //
 //// 세션 인터셉터 구현
 //
-//
-//public class SessionInterceptor: NSObject, URLSessionTaskDelegate, RequestInterceptor {
+//public final class SessionInterceptor: NSObject, URLSessionTaskDelegate, RequestInterceptor {
 //    private var retriers: [RequestRetrier] = []
 //    private var adapters: [RequestAdapter] = []
 //    
