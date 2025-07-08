@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Domain
-
 public enum GuestAPI {
     case changeGuestUniversity(UniversityRequest)
     case startGuestMode(String, GuestAgreementRequest)

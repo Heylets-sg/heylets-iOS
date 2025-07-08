@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Domain
-
 public enum ReferralAPI {
     case getReferralCode
     case validateReferralCode(String)

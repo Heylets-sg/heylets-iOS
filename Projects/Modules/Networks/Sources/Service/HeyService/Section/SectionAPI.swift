@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Domain
-
 public enum SectionAPI {
     case deleteAllSection(Int)
     case deleteSection(Int, Int)

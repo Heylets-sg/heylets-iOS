@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Domain
-
 public enum ScheduleAPI {
     case deleteModule(Int, Int)
     case patchCustomModule(Int, Int, CustomModuleRequest)

@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Domain
-
 public enum SettingAPI {
     case getThemeDetailInfo(String)
     case getPreviewTheme

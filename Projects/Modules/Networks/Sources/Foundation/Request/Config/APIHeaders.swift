@@ -9,7 +9,6 @@
 import Foundation
 
 import Core
-import Domain
 
 public struct APIHeaders {
     static let contentType = "Content-Type"

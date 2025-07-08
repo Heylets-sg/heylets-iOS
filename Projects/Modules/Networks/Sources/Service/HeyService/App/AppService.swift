@@ -10,8 +10,8 @@ import Foundation
 import Combine
 import SystemConfiguration
 import Darwin
+import Core
 
-import Domain
 
 // Version 및 AppStoreResponse 구현 (이전 코드에서 사용)
 public struct Version: Comparable, Sendable {
@@ -97,12 +97,12 @@ public actor AppService {
     
     // 키체인에 저장된 디바이스 ID를 가져오거나 없으면 생성
     static public func getDeviceIdentifier() -> String {
-        if let savedID = KeychainHelper.load(key: "device_identifier") {
+        if let savedID = SecureTokenStorage.loadFromKeychain(key: "device_identifier") {
             return savedID
         }
         
         let newID = UUID().uuidString
-        KeychainHelper.save(newID, key: "device_identifier")
+        SecureTokenStorage.saveToKeychain(newID, key: "device_identifier")
         return newID
     }
     
@@ -171,43 +171,5 @@ public actor AppService {
         ]
         
         return modelMap[modelCode] ?? modelCode // 매핑이 없으면 모델 코드 그대로 반환
-    }
-}
-
-// KeychainHelper - 디바이스 ID 저장을 위한 유틸리티
-private struct KeychainHelper {
-    static func save(_ value: String, key: String) {
-        guard let data = value.data(using: .utf8) else { return }
-        
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key,
-            kSecValueData as String: data,
-            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock
-        ]
-        
-        // 기존 항목 삭제 후 새로 추가
-        SecItemDelete(query as CFDictionary)
-        SecItemAdd(query as CFDictionary, nil)
-    }
-    
-    static func load(key: String) -> String? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key,
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne
-        ]
-        
-        var result: AnyObject?
-        let status = SecItemCopyMatching(query as CFDictionary, &result)
-        
-        guard status == errSecSuccess,
-              let data = result as? Data,
-              let value = String(data: data, encoding: .utf8) else {
-            return nil
-        }
-        
-        return value
     }
 }

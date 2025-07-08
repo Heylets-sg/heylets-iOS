@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Domain
-
 public enum LectureAPI {
     case getLectureDetailInfo(Int)
     case getLectureList(Parameters)

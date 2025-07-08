@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Domain
-
 public enum UserAPI {
     case deleteProfileImg
     case getProfile

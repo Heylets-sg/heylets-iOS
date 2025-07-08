@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Domain
-
 public enum TimeTableAPI {
     case deleteTable(Int)
     case getTableList

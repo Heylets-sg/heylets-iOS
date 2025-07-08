@@ -8,10 +8,6 @@
 
 import Foundation
 
-import Foundation
-
-import Domain
-
 public enum TodoAPI {
     case deleteItem(Int)
     case deleteGroup(Int)
