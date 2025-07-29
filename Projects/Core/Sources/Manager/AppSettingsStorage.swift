@@ -16,7 +16,7 @@ public struct AppSettingsStorage {
     }
     
     public static func getFCMToken() -> String {
-        UserDefaults.standard.string(forKey: "fcmToken") ?? "none"
+        UserDefaults.standard.string(forKey: "fcmToken") ?? ""
     }
     
     // MARK: - 게스트 모드
