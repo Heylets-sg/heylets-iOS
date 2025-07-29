@@ -111,8 +111,8 @@ public extension APIHeaders {
             deviceModelName: deviceModel,
             OSVersionName: OSVersion,
             appVersionName: appVersion.versionString,
-            xPlatform: iOS,
-            pushTokenName: pushToken
+            xPlatform: iOS
+//            pushTokenName: pushToken
         ]
     }
     
@@ -125,8 +125,8 @@ public extension APIHeaders {
             appVersionName: appVersion.versionString,
             xPlatform: iOS,
             auth: accessToken,
-            refreshTokenName: refreshToken,
-            pushTokenName: pushToken
+            refreshTokenName: refreshToken
+//            pushTokenName: pushToken
         ]
     }
     
@@ -138,8 +138,8 @@ public extension APIHeaders {
             OSVersionName: OSVersion,
             appVersionName: appVersion.versionString,
             xPlatform: iOS,
-            refreshTokenName: refreshToken,
-            pushTokenName: pushToken
+            refreshTokenName: refreshToken
+//            pushTokenName: pushToken
         ]
     }
 }

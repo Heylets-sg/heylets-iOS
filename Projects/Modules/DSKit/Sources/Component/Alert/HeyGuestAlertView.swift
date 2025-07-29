@@ -56,7 +56,7 @@ struct GuestAlertView: View {
                         .foregroundColor(.common.CTAText.active)
                         .padding(.trailing, 8)
                     
-                    Image.icArrow
+                    Image.icNext
                         .resizable()
                         .frame(width: 10, height: 9)
                         .tint(Color.common.CTAText.active)
