@@ -66,12 +66,11 @@ public struct SearchModuleView: View {
                 ScrollView {
                     ForEach(viewModel.lectureList, id: \.self) { lecture in
                         ClassSearchListCellView(
-                            viewModel: viewModel,
                             isSelected: viewModel.state.selectedLecture == lecture,
-                            section: lecture
-                        ) {
-                            viewModel.send(.lectureCellDidTap(lecture))
-                        }
+                            section: lecture,
+                            cellDidTap: { viewModel.send(.lectureCellDidTap(lecture)) },
+                            addLectureDidTap: { viewModel.send(.addLectureButtonDidTap(lecture))}
+                        )
                         .padding(.bottom, 3)
                     }
                 }

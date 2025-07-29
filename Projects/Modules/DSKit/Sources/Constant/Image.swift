@@ -39,8 +39,8 @@ public extension Image {
     static let todoEmpty = Image(.graphicsTodoEmpty)
     
     static let icEtc = Image(.tabTodo).renderingMode(.template)
-    static let icBlank = Image(.tabTodo)
-    static let icCompleted = Image(.tabTodo)
+    static let icBlank = Image(.icUnCheck)
+    static let icCompleted = Image(.icCheck)
     static let icAddGroup = Image(.icAdd).renderingMode(.template)
     
     static let icLocked = Image(.tabTodo)
