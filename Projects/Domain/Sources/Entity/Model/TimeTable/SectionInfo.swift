@@ -11,7 +11,7 @@ import Foundation
 import Core
 import SwiftUI
 
-public struct SectionInfo: Hashable, Equatable, Sendable {
+public struct SectionInfo: Identifiable, Hashable, Equatable, Sendable {
     public var id: Int
     public var code: String?
     public var name: String
