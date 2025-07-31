@@ -13,15 +13,15 @@ import DSKit
 import BaseFeatureDependency
 
 public struct MainView: View {
-    @Binding var viewType: TimeTableViewType
+    public var coordinator: any PresentCoordinatorType
     @ObservedObject var viewModel: TimeTableViewModel
     
     init(
         viewModel: TimeTableViewModel,
-        viewType: Binding<TimeTableViewType>
+        coordinator: any PresentCoordinatorType
     ) {
         self.viewModel = viewModel
-        self._viewType = viewType
+        self.coordinator = coordinator
     }
     
     public var body: some View {
@@ -55,7 +55,7 @@ public struct MainView: View {
                                         TimeTableExsitedView(
                                             viewModel: viewModel,
                                             displayType: $viewModel.displayTypeInfo,
-                                            viewType: $viewType,
+                                            canTouch: !coordinator.isMain(),
                                             cellWidth: cellWidth
                                         )
                                         
@@ -70,7 +70,7 @@ public struct MainView: View {
                             }
                         }
                     }
-                    .padding(.bottom, viewType == .main ? 50 : 0)
+                    .padding(.bottom, coordinator.isMain() ? 50 : 0)
                 }
             }
             .loading(viewModel.state.isLoading)

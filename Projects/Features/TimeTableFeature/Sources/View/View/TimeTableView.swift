@@ -33,7 +33,7 @@ public struct TimeTableView: View {
 
                     MainView(
                         viewModel: viewModel,
-                        viewType: viewTypeService.binding
+                        coordinator: coordinator.presentCoordinator
                     )
 
                     Spacer(minLength: 0)
@@ -172,6 +172,7 @@ extension TimeTableView {
         switch viewType {
         case .search:
             SearchModuleTopView(
+                coordinator: coordinator.presentCoordinator,
                 addCustomModuleButtonDidTapEvent: {
                     viewModel.send(.addCustomModuleButtonDidTap)
                 },
@@ -179,18 +180,18 @@ extension TimeTableView {
                     viewModel.searchModuleViewModel.send(.closeButtonDidTap)
                 }
             )
-            .environmentObject(coordinator)
             .frame(height: viewType.topViewHeight.adjusted)
 
         case .theme:
             VStack {
-                ThemeTopView(viewModel: viewModel.themeViewModel)
-                    .environmentObject(coordinator)
-                    .frame(height: viewType.topViewHeight.adjusted)
-                    .padding(.bottom, 23.adjusted)
+                ThemeTopView(
+                    coordinator: coordinator.presentCoordinator,
+                    viewModel: viewModel.themeViewModel
+                )
+                .frame(height: viewType.topViewHeight.adjusted)
+                .padding(.bottom, 23.adjusted)
 
                 ThemeListTopView(viewModel: viewModel.themeViewModel)
-                    .environmentObject(coordinator)
             }
             .onAppear {
                 viewModel.themeViewModel.selectThemeClosure = { themeName in
@@ -200,9 +201,9 @@ extension TimeTableView {
 
         case .addCustom:
             AddCustomModuleTopView(
+                coordinator: coordinator.presentCoordinator,
                 viewModel: viewModel.addCustomModuleViewModel
             )
-            .environmentObject(coordinator)
             .frame(height: viewType.topViewHeight.adjusted)
 
         default:
@@ -213,7 +214,6 @@ extension TimeTableView {
                 onSetting: { coordinator.sheetCoordinator.sheet(to: .setting) }
             )
             .frame(height: viewType.topViewHeight.adjusted)
-            .environmentObject(container)
         }
     }
 }

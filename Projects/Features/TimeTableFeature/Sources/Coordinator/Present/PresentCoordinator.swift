@@ -16,6 +16,7 @@ public protocol PresentCoordinatable: ObservableObject {
     var viewType: TimeTableViewType { get }
     func switchTo(_ viewType: TimeTableViewType)
     func reset()
+    func isMain() -> Bool
 }
 
 public class PresentCoordinator: PresentCoordinatable, ObservableObjectSettable {
@@ -28,13 +29,9 @@ public class PresentCoordinator: PresentCoordinatable, ObservableObjectSettable 
     }
 
     
-    public func switchTo(_ viewType: TimeTableViewType) {
-        self.viewType = viewType
-    }
-    
-    public func reset() {
-        self.viewType = .main
-    }
+    public func switchTo(_ viewType: TimeTableViewType) { self.viewType = viewType }
+    public func reset() { self.viewType = .main }
+    public func isMain() -> Bool { return viewType == .main }
 }
 
 extension PresentCoordinator {

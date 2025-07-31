@@ -13,7 +13,7 @@ import DSKit
 import BaseFeatureDependency
 
 struct ThemeTopView: View {
-    @EnvironmentObject var coordinator: TimeTableCoordinator
+    public var coordinator: any PresentCoordinatorType
     @ObservedObject var viewModel: ThemeViewModel
     
     var body: some View {
@@ -26,7 +26,7 @@ struct ThemeTopView: View {
                 HStack {
                     Button {
                         withAnimation {
-                            coordinator.presentCoordinator.reset()
+                            coordinator.reset()
                         }
                     } label: {
                         Image.icClose
@@ -40,7 +40,7 @@ struct ThemeTopView: View {
                     Button {
                         viewModel.send(.saveButtonDidTap)
                         withAnimation {
-                            coordinator.presentCoordinator.reset()
+                            coordinator.reset()
                         }
                     } label: {
                         Text("Save")
@@ -57,11 +57,9 @@ struct ThemeTopView: View {
 }
 
 struct ThemeListTopView: View {
-    @EnvironmentObject var coordinator: TimeTableCoordinator
     @ObservedObject var viewModel: ThemeViewModel
     
     var body: some View {
-        
         VStack {
             if !viewModel.state.inviteCodeViewHidden {
                 ThemeInviteFriendView(height: 56.adjusted)
