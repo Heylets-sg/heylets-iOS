@@ -11,7 +11,7 @@ import SwiftUI
 import DSKit
 
 struct ReportMissingModuleView: View {
-    @Binding var reportMissingModuleAlertIsPresented: Bool
+//    @Binding var reportMissingModuleAlertIsPresented: Bool
     @State var text = ""
     var body: some View {
         VStack(alignment: .leading) {
@@ -33,7 +33,7 @@ struct ReportMissingModuleView: View {
             Spacer()
             
             Button("Back") {
-                reportMissingModuleAlertIsPresented = false
+//                reportMissingModuleAlertIsPresented = false
             }.heyCTAButtonStyle()
             
             Spacer()

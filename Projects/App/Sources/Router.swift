@@ -28,8 +28,8 @@ extension Router {
         windowRouter.switch(to: .timetable)
         
         // TimeTableViewTypeService를 사용하여 테마 화면으로 전환
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            TimeTableViewTypeService.shared.switchTo(.theme(true))
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//            TimeTableViewTypeService.shared.switchTo(.theme(true))
+//        }
     }
 }

@@ -13,7 +13,7 @@ import DSKit
 import BaseFeatureDependency
 
 struct ThemeTopView: View {
-    @Binding var viewType: TimeTableViewType
+    @EnvironmentObject var coordinator: TimeTableCoordinator
     @ObservedObject var viewModel: ThemeViewModel
     
     var body: some View {
@@ -26,7 +26,7 @@ struct ThemeTopView: View {
                 HStack {
                     Button {
                         withAnimation {
-                            viewType = .main
+                            coordinator.presentCoordinator.reset()
                         }
                     } label: {
                         Image.icClose
@@ -40,7 +40,7 @@ struct ThemeTopView: View {
                     Button {
                         viewModel.send(.saveButtonDidTap)
                         withAnimation {
-                            viewType = .main
+                            coordinator.presentCoordinator.reset()
                         }
                     } label: {
                         Text("Save")
@@ -57,7 +57,7 @@ struct ThemeTopView: View {
 }
 
 struct ThemeListTopView: View {
-    @Binding var viewType: TimeTableViewType
+    @EnvironmentObject var coordinator: TimeTableCoordinator
     @ObservedObject var viewModel: ThemeViewModel
     
     var body: some View {

@@ -56,6 +56,7 @@ public struct RootView: View {
                         router.navigationRouter
                     )
                 )
+                .environmentObject(TimeTableCoordinator.default)
             case .mypage:
                 MyPageView(
                     viewModel: MyPageViewModel(

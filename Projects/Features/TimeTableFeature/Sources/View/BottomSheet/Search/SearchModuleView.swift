@@ -14,8 +14,7 @@ import BaseFeatureDependency
 import Core
 
 public struct SearchModuleView: View {
-    @Binding var viewType: TimeTableViewType
-    @Binding var reportMissingModuleAlertIsPresented: TimeTableSheetType?
+//    @Binding var reportMissingModuleAlertIsPresented: TimeTableSheetType?
     @ObservedObject var viewModel: SearchModuleViewModel
     
     public var body: some View {
