@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-protocol TimeTableSettingUseCaseType {
+public protocol TimeTableSettingUseCaseType {
     //시간표 이름 바꾸기
     func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never>
     //테마 선택시 반영되도록 상세 색상 가져오기
@@ -53,7 +53,7 @@ final public class TimeTableSettingUseCase: TimeTableSettingUseCaseType {
     }
     
     
-    func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never> {
+    public func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never> {
         return timeTableRepository.patchTableName(store.tableId, name)
             .catch { [weak self] error in
                 if error.isGuestModeError { self?.store.guestModeError.send(()) }
@@ -64,7 +64,7 @@ final public class TimeTableSettingUseCase: TimeTableSettingUseCaseType {
             .eraseToAnyPublisher()
     }
     
-    func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never> {
+    public func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never> {
         return settingRepository.getThemeDetailInfo(themeName)
             .map { [$0.defaultColor] + $0.core + $0.gradient}
             .catch { _ in
@@ -73,7 +73,7 @@ final public class TimeTableSettingUseCase: TimeTableSettingUseCaseType {
             .eraseToAnyPublisher()
     }
     
-    func getThemeList() -> AnyPublisher<[Theme], Never> {
+    public func getThemeList() -> AnyPublisher<[Theme], Never> {
         return settingRepository.getThemeList()
             .catch { _ in
                 return Just([]).eraseToAnyPublisher()
@@ -81,13 +81,13 @@ final public class TimeTableSettingUseCase: TimeTableSettingUseCaseType {
             .eraseToAnyPublisher()
     }
     
-    func getSettingInfo() -> AnyPublisher<SettingInfo, Never> {
+    public func getSettingInfo() -> AnyPublisher<SettingInfo, Never> {
         return settingRepository.getTimeTableSettingInfo()
             .catch { _ in Empty() }
             .eraseToAnyPublisher()
     }
     
-    func patchSettingInfo(
+    public func patchSettingInfo(
         _ displayType: DisplayTypeInfo,
         _ theme: String
     ) -> AnyPublisher<Void, Never> {
@@ -101,7 +101,7 @@ final public class TimeTableSettingUseCase: TimeTableSettingUseCaseType {
             .eraseToAnyPublisher()
     }
     
-    func deleteAllSection() -> AnyPublisher<Void, Never> {
+    public func deleteAllSection() -> AnyPublisher<Void, Never> {
         return sectionRepository.deleteAllSection(store.tableId)
             .catch { [weak self] error in
                 self?.store.errMessage.send(error.description)
@@ -111,7 +111,7 @@ final public class TimeTableSettingUseCase: TimeTableSettingUseCaseType {
             .eraseToAnyPublisher()
     }
     
-    func handleInviteCodeView() -> AnyPublisher<Bool, Never> {
+    public func handleInviteCodeView() -> AnyPublisher<Bool, Never> {
         return guestRepository.checkGuestMode()
             .flatMap { [weak self] isGuest -> AnyPublisher<Bool, Never> in
                 guard let self = self, !isGuest else {

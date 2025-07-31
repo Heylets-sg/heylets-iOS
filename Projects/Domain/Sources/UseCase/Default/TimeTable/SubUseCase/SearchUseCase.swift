@@ -12,7 +12,8 @@ import Core
 
 //MARK: Serach
 
-protocol TimeTableSearchUseCaseType {
+public protocol TimeTableSearchUseCaseType {
+    //강의 목록 불러오기
     func getLectureList(
         _ filterInfo: FilterInfo
     ) -> AnyPublisher<[SectionInfo], Never>
@@ -37,7 +38,7 @@ final public class TimeTableSearchUseCase: TimeTableSearchUseCaseType {
         self.scheduleRepository = scheduleRepository
     }
     
-    func getLectureList(
+    public func getLectureList(
         _ filterInfo: FilterInfo
     ) -> AnyPublisher<[SectionInfo], Never> {
         return lectureRepository.getLectureList(filterInfo)
@@ -57,7 +58,7 @@ final public class TimeTableSearchUseCase: TimeTableSearchUseCaseType {
             .eraseToAnyPublisher()
     }
     
-    func addCustomModule(
+    public func addCustomModule(
         _ customModule: CustomModuleInfo
     ) -> AnyPublisher<Void, Never> {
         return scheduleRepository.addCustomModule(store.tableId, customModule)
@@ -70,7 +71,7 @@ final public class TimeTableSearchUseCase: TimeTableSearchUseCaseType {
             .eraseToAnyPublisher()
     }
     
-    func getLectureDepartment() -> AnyPublisher<[String], Never> {
+    public func getLectureDepartment() -> AnyPublisher<[String], Never> {
         lectureRepository.getLectureDepartment(store.profileInfo.value.university.rawValue)
             .map { $0 }
             .catch {  _ in Empty<[String], Never>() }

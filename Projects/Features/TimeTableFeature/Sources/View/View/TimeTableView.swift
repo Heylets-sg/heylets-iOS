@@ -242,19 +242,19 @@ extension TimeTableView {
     }
 }
 
-#Preview {
-    let useCase = StubHeyUseCase.stub.timeTableUseCase
-    return TimeTableView(
-        viewModel: .init(
-            SearchModuleViewModel(useCase),
-            AddCustomModuleViewModel(useCase),
-            ThemeViewModel(useCase, Router.default.navigationRouter),
-            TimeTableSettingViewModel(useCase),
-            Router.default.navigationRouter,
-            Router.default.windowRouter,
-            useCase
-        )
-    )
-    .environmentObject(Router.default)
-    .preferredColorScheme(.dark)
-}
+//#Preview {
+//    let useCase = StubHeyUseCase.stub.timeTableUseCase
+//    return TimeTableView(
+//        viewModel: .init(
+//            SearchModuleViewModel(useCase),
+//            AddCustomModuleViewModel(useCase),
+//            ThemeViewModel(useCase, Router.default.navigationRouter),
+//            TimeTableSettingViewModel(useCase),
+//            Router.default.navigationRouter,
+//            Router.default.windowRouter,
+//            useCase
+//        )
+//    )
+//    .environmentObject(Router.default)
+//    .preferredColorScheme(.dark)
+//}

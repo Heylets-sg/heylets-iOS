@@ -185,13 +185,13 @@ struct TermsOfServiceView: View {
     }
 }
 
-#Preview {
-    TermsOfServiceView(viewModel: .init(
-        navigationRouter: Router.default.navigationRouter,
-        windowRouter: Router.default.windowRouter, 
-        useCase: StubHeyUseCase.stub.signUpUseCase,
-        university: UniversityInfo.empty
-    ))
-    .environmentObject(Router.default)
-    .preferredColorScheme(.dark)
-}
+//#Preview {
+//    TermsOfServiceView(viewModel: .init(
+//        navigationRouter: Router.default.navigationRouter,
+//        windowRouter: Router.default.windowRouter, 
+//        useCase: StubHeyUseCase.stub.signUpUseCase,
+//        university: UniversityInfo.empty
+//    ))
+//    .environmentObject(Router.default)
+//    .preferredColorScheme(.dark)
+//}

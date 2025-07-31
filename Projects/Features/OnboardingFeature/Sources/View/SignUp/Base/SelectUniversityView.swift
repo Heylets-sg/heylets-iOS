@@ -98,14 +98,14 @@ fileprivate struct SelectUniversityListCellView: View {
         )
     }
 }
-
-#Preview {
-    SelectUniversityView(
-        viewModel: SelectUniversityViewModel(
-            navigationRouter: Router.default.navigationRouter,
-            useCase: StubHeyUseCase.stub.signUpUseCase
-        )
-    )
-    .environmentObject(Router.default)
-    .preferredColorScheme(.dark)
-}
+//
+//#Preview {
+//    SelectUniversityView(
+//        viewModel: SelectUniversityViewModel(
+//            navigationRouter: Router.default.navigationRouter,
+//            useCase: StubHeyUseCase.stub.signUpUseCase
+//        )
+//    )
+//    .environmentObject(Router.default)
+//    .preferredColorScheme(.dark)
+//}

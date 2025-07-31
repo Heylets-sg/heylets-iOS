@@ -138,27 +138,14 @@ fileprivate struct EmailDomainListCellView: View {
     }
 }
 
-#Preview {
-    VerifyEmailView(
-        viewModel: .init(
-            navigationRouter: Router.default.navigationRouter,
-            useCase: StubHeyUseCase.stub.signUpUseCase,
-            nationality: .Malaysia
-        )
-    )
-    .environmentObject(Router.default)
-    .preferredColorScheme(.dark)
-}
-
-
-#Preview {
-    VerifyEmailView(
-        viewModel: .init(
-            navigationRouter: Router.default.navigationRouter,
-            useCase: StubHeyUseCase.stub.signUpUseCase,
-            nationality: .Malaysia
-        )
-    )
-    .environmentObject(Router.default)
-    
-}
+//#Preview {
+//    VerifyEmailView(
+//        viewModel: .init(
+//            navigationRouter: Router.default.navigationRouter,
+//            useCase: StubHeyUseCase.stub.signUpUseCase,
+//            nationality: .Malaysia
+//        )
+//    )
+//    .environmentObject(Router.default)
+//    .preferredColorScheme(.dark)
+//}

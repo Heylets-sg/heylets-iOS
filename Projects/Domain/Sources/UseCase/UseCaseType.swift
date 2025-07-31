@@ -12,7 +12,11 @@ public protocol UseCaseType: ObservableObject {
     var myPageUseCase: MyPageUseCaseType { get }
     var signUpUseCase: SignUpUseCaseType { get }
     var signInUseCase: SignInUseCaseType { get }
-    var timeTableUseCase: TimeTableUseCaseType { get }
+    
+    var mainUseCase: TimeTableMainUseCaseType { get }
+    var searchUseCase: TimeTableSearchUseCaseType { get }
+    var settingUseCase: TimeTableSettingUseCaseType { get }
+    
     var splashUseCase: SplashUseCaseType { get }
     var todoUseCase: TodoUsecaseType { get }
 }
@@ -25,11 +29,16 @@ public final class HeyUseCase: UseCaseType {
     public var myPageUseCase: MyPageUseCaseType
     public var signUpUseCase: SignUpUseCaseType
     public var signInUseCase: SignInUseCaseType
-    public var timeTableUseCase: TimeTableUseCaseType
+    
+    public var mainUseCase: TimeTableMainUseCaseType
+    public var searchUseCase: TimeTableSearchUseCaseType
+    public var settingUseCase: TimeTableSettingUseCaseType
+    
     public var todoUseCase: TodoUsecaseType
     
     public init(repository: RepositoryType) {
         self.repository = repository
+        let store = TimeTableStore(timeTableRepository: repository.timeTableRepository)
         
         splashUseCase = SplashUseCase(
             authRepository: repository.authRepository
@@ -55,15 +64,31 @@ public final class HeyUseCase: UseCaseType {
             guestRepository: repository.guestRepository
         )
         
-        timeTableUseCase = TimeTableUseCase(
+        mainUseCase = TimeTableMainUseCase(
+            store: store,
             userRepository: repository.userRepository,
-            lectureRepository: repository.lectureRepository,
             scheduleRepository: repository.scheduleRepository,
             sectionRepository: repository.sectionRepository,
             settingRepository: repository.settingRepository,
-            timeTableRepository: repository.timeTableRepository,
-            guestRepository: repository.guestRepository
+            timeTableRepository: repository.timeTableRepository
         )
+        
+        searchUseCase = TimeTableSearchUseCase(
+            store: store,
+            lectureRepository: repository.lectureRepository,
+            scheduleRepository: repository.scheduleRepository
+        )
+        
+        settingUseCase = TimeTableSettingUseCase(
+            store: store,
+            userRepository: repository.userRepository,
+            sectionRepository: repository.sectionRepository,
+            guestRepository: repository.guestRepository,
+            timeTableRepository: repository.timeTableRepository,
+            settingRepository: repository.settingRepository
+        )
+        
+        
         
         todoUseCase = TodoUseCase(
             timeTableRepository: repository.timeTableRepository,
@@ -73,18 +98,18 @@ public final class HeyUseCase: UseCaseType {
     }
 }
 
-public final class StubHeyUseCase: UseCaseType {
-    public init() {}
-    
-    public var splashUseCase: SplashUseCaseType = StubSplashUseCase()
-    public var myPageUseCase: MyPageUseCaseType = StubMyPageUseCase()
-    public var signUpUseCase: SignUpUseCaseType = StubSignUpUseCase()
-    public var signInUseCase: SignInUseCaseType = StubSignInUseCase()
-    public var timeTableUseCase: TimeTableUseCaseType = StubTimeTableUseCase()
-    public var todoUseCase: TodoUsecaseType = StubTodoUseCase()
-}
-
-@MainActor
-extension StubHeyUseCase {
-    static public let `stub` = StubHeyUseCase()
-}
+//public final class StubHeyUseCase: UseCaseType {
+//    public init() {}
+//    
+//    public var splashUseCase: SplashUseCaseType = StubSplashUseCase()
+//    public var myPageUseCase: MyPageUseCaseType = StubMyPageUseCase()
+//    public var signUpUseCase: SignUpUseCaseType = StubSignUpUseCase()
+//    public var signInUseCase: SignInUseCaseType = StubSignInUseCase()
+////    public var timeTableUseCase: TimeTableUseCaseType = StubTimeTableUseCase()
+//    public var todoUseCase: TodoUsecaseType = StubTodoUseCase()
+//}
+//
+//@MainActor
+//extension StubHeyUseCase {
+//    static public let `stub` = StubHeyUseCase()
+//}

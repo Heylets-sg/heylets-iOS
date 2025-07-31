@@ -51,14 +51,14 @@ public struct ResetPasswordView: View {
     }
 }
 
-#Preview {
-    ResetPasswordView(
-        viewModel: .init(
-            navigationRouter: Router.default.navigationRouter,
-            useCase: StubHeyUseCase.stub.signInUseCase,
-            email: ""
-        )
-    )
-    .environmentObject(Router.default)
-    .preferredColorScheme(.dark)
-}
+//#Preview {
+//    ResetPasswordView(
+//        viewModel: .init(
+//            navigationRouter: Router.default.navigationRouter,
+//            useCase: StubHeyUseCase.stub.signInUseCase,
+//            email: ""
+//        )
+//    )
+//    .environmentObject(Router.default)
+//    .preferredColorScheme(.dark)
+//}
