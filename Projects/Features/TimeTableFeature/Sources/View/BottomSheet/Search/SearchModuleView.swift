@@ -30,38 +30,10 @@ public struct SearchModuleView: View {
                 .padding(.horizontal, 16)
             
             if viewModel.lectureList.isEmpty && !viewModel.filterInfo.keyword.isEmpty {
-                Text("We couldn't find a match for\n'\(viewModel.filterInfo.keyword)'.")
-                    .font(.regular_16)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.common.Placeholder.default)
-                    .padding(.bottom, 20)
-                    .onAppear {
-                        Analytics.shared.track(.screenView("missing_module", .modal))
-                    }
-                
-                Button {
-                    reportMissingModuleAlertIsPresented = true
-                } label: {
-                    HStack {
-                        Text("Report Missing Modules")
-                            .font(.regular_14)
-                            .foregroundColor(.common.Placeholder.default)
-                        
-                        Image.icNext
-                            .resizable()
-                            .frame(width: 4, height: 9)
-                            .tint(.common.MainText.else)
-                    }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 7)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 4)
-                            .stroke(Color.common.Placeholder.default, lineWidth: 1)
-                    )
-                }
-                
-                Spacer()
-                
+                MissingModuleView(
+                    keyword: viewModel.filterInfo.keyword,
+                    reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented
+                )
             } else {
                 ScrollView {
                     LazyVStack {
@@ -86,5 +58,44 @@ public struct SearchModuleView: View {
         .onAppear {
             viewModel.send(.onAppear)
         }
+    }
+}
+
+fileprivate struct MissingModuleView: View {
+    var keyword: String
+    @Binding var reportMissingModuleAlertIsPresented: Bool
+    
+    var body: some View {
+        Text("We couldn't find a match for\n'\(keyword)'.")
+            .font(.regular_16)
+            .multilineTextAlignment(.center)
+            .foregroundColor(.common.Placeholder.default)
+            .padding(.bottom, 20)
+            .onAppear {
+                Analytics.shared.track(.screenView("missing_module", .modal))
+            }
+        
+        Button {
+            reportMissingModuleAlertIsPresented = true
+        } label: {
+            HStack {
+                Text("Report Missing Modules")
+                    .font(.regular_14)
+                    .foregroundColor(.common.Placeholder.default)
+                
+                Image.icNext
+                    .resizable()
+                    .frame(width: 4, height: 9)
+                    .tint(.common.MainText.else)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 7)
+            .overlay(
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(Color.common.Placeholder.default, lineWidth: 1)
+            )
+        }
+        
+        Spacer()
     }
 }
