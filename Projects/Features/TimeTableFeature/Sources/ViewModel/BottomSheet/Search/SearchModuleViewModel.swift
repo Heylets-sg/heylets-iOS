@@ -23,11 +23,12 @@ public class SearchModuleViewModel: ObservableObject {
     
     enum Action {
         case onAppear
+        case loadMoreData
         case closeButtonDidTap
-        case lectureCellDidTap(SectionInfo)
+        case lectureCellDidTap(Int)
         case searchButtonDidTap
         case clearButtonDidTap
-        case addLectureButtonDidTap(SectionInfo)
+        case addLectureButtonDidTap(Int)
         case updateFilters
     }
     
@@ -53,14 +54,18 @@ public class SearchModuleViewModel: ObservableObject {
         case .onAppear:
             fetchLectures()
             
+        case .loadMoreData:
+            filterInfo.page += 1
+            fetchLectures()
+            
         case .closeButtonDidTap:
             state.selectedLecture = nil
             filterInfo = .init()
             
-        case .lectureCellDidTap(let lecture):
-            state.selectedLecture = lecture
+        case .lectureCellDidTap(let index):
+            state.selectedLecture = lectureList[index]
             guard let selectLecture = selectLectureClosure else { return }
-            selectLecture(lecture)
+            selectLecture(lectureList[index])
             
         case .searchButtonDidTap:
             fetchLectures()
@@ -70,9 +75,9 @@ public class SearchModuleViewModel: ObservableObject {
             state.selectedLecture = nil
             fetchLectures()
             
-        case .addLectureButtonDidTap(let lecture):
+        case .addLectureButtonDidTap(let index):
             guard let addLecture = addLectureClosure else { return }
-            addLecture(lecture)
+            addLecture(lectureList[index])
             state.selectedLecture = nil
             
         case .updateFilters:
@@ -89,7 +94,9 @@ public class SearchModuleViewModel: ObservableObject {
                     Analytics.shared.track(.moduleSearched)
                 }
             })
-            .assign(to: \.lectureList, on: self)
+            .sink(receiveValue: { [weak self] lectureList in
+                self?.lectureList += lectureList  
+            })
             .store(in: cancelBag)
     }
 }
@@ -100,14 +107,10 @@ extension SearchModuleViewModel {
             guard let self = self else { return }
             
             switch filterType {
-            case .department:
-                self.filterInfo.department = selectedItem
-            case .semester:
-                self.filterInfo.semester = selectedItem
-            case .level:
-                self.filterInfo.level = selectedItem
-            case .other:
-                self.filterInfo.keywordType = selectedItem
+                case .department: self.filterInfo.department = selectedItem
+                case .semester: self.filterInfo.semester = selectedItem
+                case .level: self.filterInfo.level = selectedItem
+                case .other: self.filterInfo.keywordType = selectedItem
             }
             self.send(.updateFilters)
         }
@@ -116,14 +119,10 @@ extension SearchModuleViewModel {
             guard let self = self else { return nil }
             
             switch filterType {
-            case .department:
-                return self.filterInfo.department
-            case .semester:
-                return self.filterInfo.semester
-            case .level:
-                return self.filterInfo.level
-            case .other:
-                return self.filterInfo.keywordType
+                case .department: return self.filterInfo.department
+                case .semester: return self.filterInfo.semester
+                case .level: return self.filterInfo.level
+                case .other: return self.filterInfo.keywordType
             }
         }
     }

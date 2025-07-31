@@ -37,15 +37,21 @@ public struct SearchModuleView: View {
             } else {
                 ScrollView {
                     LazyVStack {
-                        ForEach(viewModel.lectureList) { lecture in
+                        ForEach(viewModel.lectureList.indices, id: \.self) { index in
                             ClassSearchListCellView(
-                                isSelected: viewModel.state.selectedLecture == lecture,
-                                section: lecture,
-                                cellDidTap: { viewModel.send(.lectureCellDidTap(lecture)) },
-                                addLectureDidTap: { viewModel.send(.addLectureButtonDidTap(lecture))}
+                                isSelected: viewModel.state.selectedLecture == viewModel.lectureList[index],
+                                section: viewModel.lectureList[index],
+                                cellDidTap: { viewModel.send(.lectureCellDidTap(index)) },
+                                addLectureDidTap: { viewModel.send(.addLectureButtonDidTap(index))}
                             )
                             .equatable()
                             .padding(.bottom, 3)
+                            .onAppear {
+                                if index == viewModel.lectureList.count-1 {
+                                    viewModel.send(.loadMoreData)
+//                                    print("마지막 셀입니다!!!!")
+                                }
+                            }
                         }
                     }
                 }
