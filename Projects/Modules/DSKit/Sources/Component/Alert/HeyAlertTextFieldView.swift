@@ -53,7 +53,7 @@ public struct HeyAlertTextFieldView: View {
                     Button(primaryAction.title) {
                         primaryAction.action()
                     }
-                    .heyAlertButtonStyle(primaryAction.color)
+                    .heyAlertButtonStyle(primaryAction.style)
                     
                     Spacer()
                         .frame(width: 24.adjusted)
@@ -61,7 +61,7 @@ public struct HeyAlertTextFieldView: View {
                     Button(secondaryAction.title) {
                         secondaryAction.action()
                     }
-                    .heyAlertButtonStyle(secondaryAction.color)
+                    .heyAlertButtonStyle(secondaryAction.style)
                 }
                 .padding(.horizontal, 24.adjusted)
                 .padding(.bottom, 24.adjusted)

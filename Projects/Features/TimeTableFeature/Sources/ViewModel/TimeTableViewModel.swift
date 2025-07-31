@@ -11,11 +11,11 @@ import Core
 public class TimeTableViewModel: ObservableObject {
     struct State {
         struct Alerts {
-            var showDeleteAlert: Bool = false
-            var showReposrtMissingModuleAlert: Bool = false
+//            var showDeleteAlert: Bool = false
+            var showReportMissingModuleAlert: Bool = false
             var showAddCustomAlert: Bool = false
             var showGuestErrorAlert: Bool = false
-            var showEmptyScheduleErrorAlert: (Bool, String) = (false, "")
+//            var showEmptyScheduleErrorAlert: (Bool, String) = (false, "")
             var showSelectInfoView: Bool = false
         }
         
@@ -25,10 +25,11 @@ public class TimeTableViewModel: ObservableObject {
             var isScrollEnabled: Bool = true
         }
         
-        var alerts: Alerts = Alerts()
+        var alertType: HeyTimeTableAlertType? = nil
+        var sheetAlert: Alerts = Alerts()
         var timeTable: TimeTable = TimeTable()
         var profile: ProfileInfo = .init()
-        var error: (Bool, String) = (false, "")
+//        var error: (Bool, String) = (false, "")
         var isLoading: Bool = false
     }
     
@@ -74,9 +75,13 @@ public class TimeTableViewModel: ObservableObject {
     @Published var timeTableInfo: TimeTableInfo = .empty
     @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
     @Published var sectionList: [SectionInfo] = []
+    
     @Published var weekList: [Week] = Week.weekDay
     @Published var hourList: [Int] = Array(8...21)
     @Published var timeTable: [TimeTableCellInfo] = []
+    
+    
+    
     @Published var detailSectionInfo: SectionInfo = .empty
     
     @Published var selectLecture: [TimeTableCellInfo] = []
@@ -138,7 +143,8 @@ public class TimeTableViewModel: ObservableObject {
             if let detailInfo = sectionList.first(where: { $0.id == sectionId }) {
                 detailSectionInfo = detailInfo
             } else {
-                state.error = (true, "선택한 섹션 정보를 찾을 수 없습니다.")
+                state.alertType = .error("선택한 색션 정보를 찾을 수 없습니다.")
+//                state.error = (true, "선택한 섹션 정보를 찾을 수 없습니다.")
             }
             
         case .deleteModule:
@@ -151,20 +157,20 @@ public class TimeTableViewModel: ObservableObject {
             .handleEvents(receiveOutput: {
                 Analytics.shared.track(.moduleDeleted)
             })
-            .map { _ in false }
-            .assign(to: \.state.alerts.showDeleteAlert, on: self)
+            .map { _ in nil }
+            .assign(to: \.state.alertType, on: self)
             .store(in: cancelBag)
             
         case .deleteModuleAlertCloseButtonDidTap:
-            state.alerts.showDeleteAlert = false
+            state.alertType = nil
             
         case .errorAlertViewCloseButtonDidTap:
             viewTypeService.switchTo(.search)
-            state.error = (false, "")
+            state.alertType = nil
             
         case .emptyScheduleErrorAddButtonDidTap(let name):
             addCustomModuleViewModel.schedule = name
-            state.alerts.showEmptyScheduleErrorAlert = (false, "")
+            state.alertType = nil
             viewTypeService.switchTo(.addCustom)
             
         case .selectLecture(let lecture):
@@ -197,12 +203,12 @@ public class TimeTableViewModel: ObservableObject {
         case .addCustomModuleButtonDidTap:
             Analytics.shared.track(.screenView("add_custom_module", .bottom_sheet))
             viewTypeService.switchTo(.addCustom)
-            state.alerts.showAddCustomAlert = true
+            state.sheetAlert.showAddCustomAlert = true
             selectLecture = []
             
         case .notRightNowButtonDidTap:
             Analytics.shared.track(.clickGuestConfirmReject)
-            state.alerts.showGuestErrorAlert = false
+            state.sheetAlert.showGuestErrorAlert = false
             
         case .loginButtonDidTap:
             Analytics.shared.track(.clickGuestConfirmLogin)
@@ -284,8 +290,8 @@ public class TimeTableViewModel: ObservableObject {
                 // Clear selectLecture on error
                 self?.selectLecture = []
             })
-            .map { message in (true, message)}
-            .assign(to: \.state.error, on: self)
+            .map { message in .error(message)}
+            .assign(to: \.state.alertType, on: self)
             .store(in: cancelBag)
         
         store.guestModeError
@@ -297,7 +303,7 @@ public class TimeTableViewModel: ObservableObject {
                 self?.selectLecture = []
             })
             .map { _ in true }
-            .assign(to: \.state.alerts.showGuestErrorAlert, on: self)
+            .assign(to: \.state.sheetAlert.showGuestErrorAlert, on: self)
             .store(in: cancelBag)
         
         store.emptyScheduleError
@@ -308,8 +314,8 @@ public class TimeTableViewModel: ObservableObject {
                 // Clear selectLecture on empty schedule error
                 self?.selectLecture = []
             })
-            .map { name in (true, name)}
-            .assign(to: \.state.alerts.showEmptyScheduleErrorAlert, on: self)
+            .map { name in .emptyScheduleError(name)}
+            .assign(to: \.state.alertType, on: self)
             .store(in: cancelBag)
     }
 }

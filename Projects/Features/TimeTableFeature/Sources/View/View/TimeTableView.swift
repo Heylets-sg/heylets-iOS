@@ -49,46 +49,51 @@ public struct TimeTableView: View {
                         viewModel.send(.addLecture(lecture))
                     }
                 }
-                .heyAlert(
-                    isPresented: viewModel.state.error.0,
-                    title: viewModel.state.error.1,
-                    primaryButton: ("Close", .gray, {
-                        viewModel.send(.errorAlertViewCloseButtonDidTap)
-                    })
-                )
-                .heyAlert(
-                    isPresented: viewModel.state.alerts.showEmptyScheduleErrorAlert.0,
-                    title: "The section hasn't been registered yet",
-                    primaryButton: ("Add", .gray, {
-                        viewModel.send(.emptyScheduleErrorAddButtonDidTap(
-                            viewModel.state.alerts.showEmptyScheduleErrorAlert.1
-                        ))
-                    })
-                )
-                .heyAlert(
-                    isPresented: viewModel.state.alerts.showDeleteAlert,
-                    title: "Delete module?",
-                    primaryButton: ("Delete", .error, {
-                        viewModel.send(.deleteModule)
-                    }),
-                    secondaryButton: ("Close", .gray, {
-                        viewModel.send(.deleteModuleAlertCloseButtonDidTap)
-                    })
-                )
+                .heyAlert(viewModel.state.alertType, viewModel: viewModel)
+                
+                
+                
+                
+//                .heyAlert(
+//                    isPresented: viewModel.state.error.0,
+//                    title: viewModel.state.error.1,
+//                    primaryButton: ("Close", .gray, {
+//                        viewModel.send(.errorAlertViewCloseButtonDidTap)
+//                    })
+//                )
+//                .heyAlert(
+//                    isPresented: viewModel.state.sheetAlert.showEmptyScheduleErrorAlert.0,
+//                    title: "The section hasn't been registered yet",
+//                    primaryButton: ("Add", .gray, {
+//                        viewModel.send(.emptyScheduleErrorAddButtonDidTap(
+//                            viewModel.state.sheetAlert.showEmptyScheduleErrorAlert.1
+//                        ))
+//                    })
+//                )
+//                .heyAlert(
+//                    isPresented: viewModel.state.sheetAlert.showDeleteAlert,
+//                    title: "Delete module?",
+//                    primaryButton: ("Delete", .error, {
+//                        viewModel.send(.deleteModule)
+//                    }),
+//                    secondaryButton: ("Close", .gray, {
+//                        viewModel.send(.deleteModuleAlertCloseButtonDidTap)
+//                    })
+//                )
                 .onAppear {
                     Analytics.shared.track(.screenView("delete_module", .modal))
                 }
                 .heyAlert(
-                    isPresented: viewModel.state.alerts.showGuestErrorAlert,
+                    isPresented: viewModel.state.sheetAlert.showGuestErrorAlert,
                     loginButtonAction: {
                         viewModel.send(.loginButtonDidTap)
                     },
                     notRightNowButton: {
                         viewModel.send(.notRightNowButtonDidTap)
                     })
-                .sheet(isPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert) {
+                .sheet(isPresented: $viewModel.state.sheetAlert.showReportMissingModuleAlert) {
                     ReportMissingModuleView(
-                        reportMissingModuleAlertIsPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert
+                        reportMissingModuleAlertIsPresented: $viewModel.state.sheetAlert.showReportMissingModuleAlert
                     )
                     .transition(.move(edge: .trailing))
                     .presentationDetents([.fraction(0.95)])
@@ -103,16 +108,16 @@ public struct TimeTableView: View {
                     .presentationDragIndicator(.hidden)
                     .ignoresSafeArea(.container, edges: .bottom)
                 }
-                .sheet(isPresented: .constant(viewTypeService.viewType == .detail)) {
-                    DetailModuleInfoView(
-                        viewType: viewTypeService.binding,
-                        deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
-                        sectionInfo: viewModel.detailSectionInfo
-                    )
-                    .presentationDetents([.height(280)])
-                    .presentationDragIndicator(.hidden)
-                    .ignoresSafeArea(.container, edges: .bottom)
-                }
+//                .sheet(isPresented: .constant(viewTypeService.viewType == .detail)) {
+//                    DetailModuleInfoView(
+//                        viewType: viewTypeService.binding,
+//                        deleteModuleAlertIsPresented: $viewModel.state.sheetAlert.showDeleteAlert,
+//                        sectionInfo: viewModel.detailSectionInfo
+//                    )
+//                    .presentationDetents([.height(280)])
+//                    .presentationDragIndicator(.hidden)
+//                    .ignoresSafeArea(.container, edges: .bottom)
+//                }
                 
                 if viewTypeService.viewType == .main {
                     VStack {
@@ -169,7 +174,7 @@ extension TimeTableView {
         case .search:
             SearchModuleView(
                 viewType: viewTypeService.binding,
-                reportMissingModuleAlertIsPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert,
+                reportMissingModuleAlertIsPresented: $viewModel.state.sheetAlert.showReportMissingModuleAlert,
                 viewModel: viewModel.searchModuleViewModel
             )
             .bottomSheetTransition()
@@ -241,6 +246,10 @@ extension TimeTableView {
         }
     }
 }
+
+
+
+
 
 //#Preview {
 //    let useCase = StubHeyUseCase.stub.timeTableUseCase

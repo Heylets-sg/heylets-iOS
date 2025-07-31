@@ -38,7 +38,7 @@ public struct HeyAlertView: View {
             HStack {
                 Button(primaryAction.title) {
                     primaryAction.action()
-                }.heyAlertButtonStyle(primaryAction.color)
+                }.heyAlertButtonStyle(primaryAction.style)
                 
                 if let secondaryAction = secondaryAction {
                     Spacer()
@@ -46,7 +46,7 @@ public struct HeyAlertView: View {
                     
                     Button(secondaryAction.title) {
                         secondaryAction.action()
-                    }.heyAlertButtonStyle(secondaryAction.color)
+                    }.heyAlertButtonStyle(secondaryAction.style)
                 }
             }
             
