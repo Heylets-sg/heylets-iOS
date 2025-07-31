@@ -9,18 +9,58 @@
 import Foundation
 import Combine
 
-//import Core
+protocol TimeTableSettingUseCaseType {
+    //시간표 이름 바꾸기
+    func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never>
+    //테마 선택시 반영되도록 상세 색상 가져오기
+    func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never>
+    //테마 리스트 불러오기
+    func getThemeList() -> AnyPublisher<[Theme], Never>
+    //테마, display 불러오기
+    func getSettingInfo() -> AnyPublisher<SettingInfo, Never>
+    //테마, display 수정하기
+    func patchSettingInfo(_ displayType: DisplayTypeInfo,_ theme: String) -> AnyPublisher<Void, Never>
+    //시간표 삭제하기
+    func deleteAllSection() -> AnyPublisher<Void, Never>
+    //Invite Code 분기처리
+    func handleInviteCodeView() -> AnyPublisher<Bool, Never>
+}
 
 //MARK: Setting
-public extension TimeTableUseCase {
+final public class TimeTableSettingUseCase: TimeTableSettingUseCaseType {
+    private let store: TimeTableStore
+    
+    public let userRepository: UserRepositoryType
+    public let sectionRepository: SectionRepositoryType
+    public let guestRepository: GuestRepositoryType
+    public let timeTableRepository: TimeTableRepositoryType
+    public let settingRepository: SettingRepositoryType
+    
+    init(
+        store: TimeTableStore,
+        userRepository: UserRepositoryType,
+        sectionRepository: SectionRepositoryType,
+        guestRepository: GuestRepositoryType,
+        timeTableRepository: TimeTableRepositoryType,
+        settingRepository: SettingRepositoryType
+    ) {
+        self.store = store
+        self.userRepository = userRepository
+        self.sectionRepository = sectionRepository
+        self.guestRepository = guestRepository
+        self.timeTableRepository = timeTableRepository
+        self.settingRepository = settingRepository
+    }
+    
+    
     func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never> {
-        return timeTableRepository.patchTableName(tableId, name)
+        return timeTableRepository.patchTableName(store.tableId, name)
             .catch { [weak self] error in
-                if error.isGuestModeError { self?.guestModeError.send(()) }
-                else { self?.errMessage.send(error.description) }
+                if error.isGuestModeError { self?.store.guestModeError.send(()) }
+                else { self?.store.errMessage.send(error.description) }
                 return Empty<Void, Never>()
             }
-            .flatMap(getTableDetailInfo)
+            .flatMap(store.getTableDetailInfo)
             .eraseToAnyPublisher()
     }
     
@@ -53,21 +93,21 @@ public extension TimeTableUseCase {
     ) -> AnyPublisher<Void, Never> {
         return settingRepository.patchTimeTableSettingInfo(displayType, theme)
             .catch { [weak self] error in
-                if error.isGuestModeError { self?.guestModeError.send(()) }
-                else { self?.errMessage.send(error.description) }
+                if error.isGuestModeError { self?.store.guestModeError.send(()) }
+                else { self?.store.errMessage.send(error.description) }
                 return Empty<Void, Never>()
             }
-            .flatMap(getTableDetailInfo)
+            .flatMap(store.getTableDetailInfo)
             .eraseToAnyPublisher()
     }
     
     func deleteAllSection() -> AnyPublisher<Void, Never> {
-        return sectionRepository.deleteAllSection(tableId)
+        return sectionRepository.deleteAllSection(store.tableId)
             .catch { [weak self] error in
-                self?.errMessage.send(error.description)
+                self?.store.errMessage.send(error.description)
                 return Empty<Void, Never>()
             }
-            .flatMap(getTableDetailInfo)
+            .flatMap(store.getTableDetailInfo)
             .eraseToAnyPublisher()
     }
     
