@@ -13,10 +13,10 @@ import DSKit
 import Domain
 
 struct ClassSearchListCellView: View {
-    @ObservedObject var viewModel: SearchModuleViewModel
     var isSelected: Bool
     var section: SectionInfo
     var cellDidTap: () -> Void
+    var addLectureDidTap: () -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -46,7 +46,7 @@ struct ClassSearchListCellView: View {
             if isSelected {
                 HStack {
                     Button {
-                        viewModel.send(.addLectureButtonDidTap(section))
+                        addLectureDidTap()
                     } label: {
                         Text("Add")
                             .font(.regular_12)
@@ -68,5 +68,12 @@ struct ClassSearchListCellView: View {
         .onTapGesture {
             cellDidTap()
         }
+    }
+}
+
+extension ClassSearchListCellView: Equatable {
+    nonisolated static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.isSelected == rhs.isSelected &&
+        lhs.section.id == rhs.section.id
     }
 }

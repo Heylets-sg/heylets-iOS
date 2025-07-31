@@ -239,18 +239,20 @@ public class TimeTableViewModel: ObservableObject {
             .assign(to: \.displayTypeInfo, on: self)
             .store(in: cancelBag)
         
-        useCase.sectionList
+        let timeTableCellList = useCase.sectionList
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: {
                 owner.sectionList = $0
             })
             .map { $0.createTimeTableCellList() }
+            .share()
+            
+        
+        timeTableCellList
             .assign(to: \.timeTable, on: owner)
             .store(in: cancelBag)
         
-        useCase.sectionList
-            .receive(on: RunLoop.main)
-            .map { $0.createTimeTableCellList() }
+        timeTableCellList
             .flatMap(configWeekList)
             .sink(receiveValue: {
                 owner.weekList = $0
@@ -259,9 +261,7 @@ public class TimeTableViewModel: ObservableObject {
             })
             .store(in: cancelBag)
         
-        useCase.sectionList
-            .receive(on: RunLoop.main)
-            .map { $0.createTimeTableCellList() }
+        timeTableCellList
             .flatMap(configHourList)
             .sink(receiveValue: {
                 owner.hourList = $0

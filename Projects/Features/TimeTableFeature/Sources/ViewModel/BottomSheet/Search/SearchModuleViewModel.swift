@@ -15,19 +15,33 @@ import Domain
 import DSKit
 import Core
 
+private enum LectureFetchMode {
+    case loadMore
+    case fetch
+    
+    var isScrollToTop: Bool {
+        switch self {
+        case .loadMore: return false
+        case .fetch: return true
+        }
+    }
+}
+
 public class SearchModuleViewModel: ObservableObject {
     struct State {
         var selectedLecture: SectionInfo? = nil
         var isLoading: Bool = false
+        var isScrollToTop: Bool = false
     }
     
     enum Action {
         case onAppear
+        case loadMoreData
         case closeButtonDidTap
-        case lectureCellDidTap(SectionInfo)
+        case lectureCellDidTap(Int)
         case searchButtonDidTap
         case clearButtonDidTap
-        case addLectureButtonDidTap(SectionInfo)
+        case addLectureButtonDidTap(Int)
         case updateFilters
     }
     
@@ -53,14 +67,18 @@ public class SearchModuleViewModel: ObservableObject {
         case .onAppear:
             fetchLectures()
             
+        case .loadMoreData:
+            filterInfo.page += 1
+            fetchLectures(.loadMore)
+            
         case .closeButtonDidTap:
             state.selectedLecture = nil
             filterInfo = .init()
             
-        case .lectureCellDidTap(let lecture):
-            state.selectedLecture = lecture
+        case .lectureCellDidTap(let index):
+            state.selectedLecture = lectureList[index]
             guard let selectLecture = selectLectureClosure else { return }
-            selectLecture(lecture)
+            selectLecture(lectureList[index])
             
         case .searchButtonDidTap:
             fetchLectures()
@@ -70,26 +88,35 @@ public class SearchModuleViewModel: ObservableObject {
             state.selectedLecture = nil
             fetchLectures()
             
-        case .addLectureButtonDidTap(let lecture):
+        case .addLectureButtonDidTap(let index):
             guard let addLecture = addLectureClosure else { return }
-            addLecture(lecture)
+            addLecture(lectureList[index])
             state.selectedLecture = nil
             
         case .updateFilters:
+            filterInfo.page = 0
             fetchLectures()
         }
     }
     
-    private func fetchLectures() {
+    private func fetchLectures(_ mode: LectureFetchMode = .fetch) {
         useCase.getLectureList(filterInfo)
             .receive(on: RunLoop.main)
             .assignLoading(to: \.state.isLoading, on: self)
-            .handleEvents(receiveOutput: { [weak self] _ in
-                if self?.filterInfo.keyword.isEmpty == false {
+            .sink(receiveCompletion: { [weak self] _ in
+                guard let self else { return }
+                if !self.filterInfo.keyword.isEmpty {
                     Analytics.shared.track(.moduleSearched)
                 }
+                self.state.isScrollToTop = mode.isScrollToTop
+            }, receiveValue: { [weak self] lectureList in
+                switch mode {
+                case .loadMore:
+                    self?.lectureList += lectureList
+                case .fetch:
+                    self?.lectureList = lectureList
+                }
             })
-            .assign(to: \.lectureList, on: self)
             .store(in: cancelBag)
     }
 }
@@ -100,14 +127,10 @@ extension SearchModuleViewModel {
             guard let self = self else { return }
             
             switch filterType {
-            case .department:
-                self.filterInfo.department = selectedItem
-            case .semester:
-                self.filterInfo.semester = selectedItem
-            case .level:
-                self.filterInfo.level = selectedItem
-            case .other:
-                self.filterInfo.keywordType = selectedItem
+                case .department: self.filterInfo.department = selectedItem
+                case .semester: self.filterInfo.semester = selectedItem
+                case .level: self.filterInfo.level = selectedItem
+                case .other: self.filterInfo.keywordType = selectedItem
             }
             self.send(.updateFilters)
         }
@@ -116,14 +139,10 @@ extension SearchModuleViewModel {
             guard let self = self else { return nil }
             
             switch filterType {
-            case .department:
-                return self.filterInfo.department
-            case .semester:
-                return self.filterInfo.semester
-            case .level:
-                return self.filterInfo.level
-            case .other:
-                return self.filterInfo.keywordType
+                case .department: return self.filterInfo.department
+                case .semester: return self.filterInfo.semester
+                case .level: return self.filterInfo.level
+                case .other: return self.filterInfo.keywordType
             }
         }
     }

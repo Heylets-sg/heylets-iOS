@@ -15,7 +15,6 @@ import BaseFeatureDependency
 public struct MainView: View {
     @Binding var viewType: TimeTableViewType
     @ObservedObject var viewModel: TimeTableViewModel
-    @State private var scrollViewProxy: ScrollViewProxy?
     
     init(
         viewModel: TimeTableViewModel,
@@ -40,26 +39,33 @@ public struct MainView: View {
                         HStack(alignment: .top, spacing: 0) {
                             HourListView(viewModel.hourList)
                             
-                            TimeTableGridView(
-                                viewModel: viewModel,
-                                displayType: $viewModel.displayTypeInfo,
-                                viewType: $viewType,
-                                cellWidth: cellWidth
-                            )
-                            .onAppear {
-                                scrollViewProxy = proxy
-                            }
-                            .onChange(of: viewModel.selectLecture) { _ in
-                                if let firstSelectLecture = viewModel.selectLecture.first {
-                                    let offsetY: CGFloat = configButtonLayout(
-                                        viewModel.hourList[0],
-                                        for: firstSelectLecture,
-                                        cellHeight: 52
-                                    )
-                                    scrollToPosition(proxy: scrollViewProxy, position: offsetY)
-                                }
-                                else {
-                                    scrollToPosition(proxy: scrollViewProxy)
+                            GeometryReader { geometry in
+                                VStack {
+                                    let columnCount = viewModel.state.timeTable.columnCount
+                                    let rowCount = viewModel.state.timeTable.rowCount
+                                    
+                                    ZStack {
+                                        // 📌 빈 시간표 배치
+                                        TimeTableBlankView(
+                                            rowCount: rowCount,
+                                            columnCount: columnCount,
+                                            cellWidth: cellWidth
+                                        )
+                                        
+                                        TimeTableExsitedView(
+                                            viewModel: viewModel,
+                                            displayType: $viewModel.displayTypeInfo,
+                                            viewType: $viewType,
+                                            cellWidth: cellWidth
+                                        )
+                                        
+                                        TimeTableSelectedView(
+                                            selectLecture: $viewModel.selectLecture,
+                                            weekList: viewModel.weekList,
+                                            hourList: viewModel.hourList,
+                                            cellWidth: cellWidth
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -76,33 +82,6 @@ public struct MainView: View {
 }
 
 extension MainView {
-    private func scrollToPosition(proxy: ScrollViewProxy?, position: CGFloat? = nil) {
-        guard let proxy = proxy else { return }
-        
-        if let position = position {
-            // 정확한 스크롤 위치 계산
-            // 강의 시작 시간에 해당하는 행(row) ID를 찾습니다
-            let hourIndex = Int(position / 52)
-            
-            // viewModel.hourList의 인덱스 범위를 확인하여 유효한 인덱스만 사용
-            let safeHourIndex = max(0, min(hourIndex, viewModel.hourList.count - 1))
-            
-            // 해당 시간을 scrollTo의 ID로 사용하여 스크롤
-            DispatchQueue.main.async {
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    proxy.scrollTo(safeHourIndex, anchor: .top)
-                }
-            }
-        } else {
-            // position이 nil인 경우 맨 위로 스크롤
-            DispatchQueue.main.async {
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    proxy.scrollTo(0, anchor: .top)
-                }
-            }
-        }
-    }
-    
     private func configButtonLayout(
         _ firstTime: Int,
         for cell: TimeTableCellInfo,

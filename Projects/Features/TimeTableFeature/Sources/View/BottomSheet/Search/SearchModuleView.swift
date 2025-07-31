@@ -24,59 +24,49 @@ public struct SearchModuleView: View {
                 .padding(.vertical, 16)
                 .padding(.horizontal, 16)
             
-            ClassFilterView(viewModel: viewModel.filterViewModel, parentViewModel: viewModel)
-                .padding(.top, 5)
-                .padding(.bottom, 16)
-                .padding(.horizontal, 16)
+            ClassFilterView(
+                viewModel: viewModel.filterViewModel,
+                filterInfo: $viewModel.filterInfo
+            )
+            .padding(.top, 5)
+            .padding(.bottom, 16)
+            .padding(.horizontal, 16)
             
             if viewModel.lectureList.isEmpty && !viewModel.filterInfo.keyword.isEmpty {
-                Text("We couldn't find a match for\n'\(viewModel.filterInfo.keyword)'.")
-                    .font(.regular_16)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.common.Placeholder.default)
-                    .padding(.bottom, 20)
-                    .onAppear {
-                        Analytics.shared.track(.screenView("missing_module", .modal))
-                    }
-                
-                Button {
-                    reportMissingModuleAlertIsPresented = true
-                } label: {
-                    HStack {
-                        Text("Report Missing Modules")
-                            .font(.regular_14)
-                            .foregroundColor(.common.Placeholder.default)
-                        
-                        Image.icNext
-                            .resizable()
-                            .frame(width: 4, height: 9)
-                            .tint(.common.MainText.else)
-                    }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 7)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 4)
-                            .stroke(Color.common.Placeholder.default, lineWidth: 1)
-                    )
-                }
-                
-                Spacer()
-                
+                MissingModuleView(
+                    keyword: viewModel.filterInfo.keyword,
+                    reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented
+                )
             } else {
-                ScrollView {
-                    ForEach(viewModel.lectureList, id: \.self) { lecture in
-                        ClassSearchListCellView(
-                            viewModel: viewModel,
-                            isSelected: viewModel.state.selectedLecture == lecture,
-                            section: lecture
-                        ) {
-                            viewModel.send(.lectureCellDidTap(lecture))
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        LazyVStack {
+                            ForEach(viewModel.lectureList.indices, id: \.self) { index in
+                                ClassSearchListCellView(
+                                    isSelected: viewModel.state.selectedLecture == viewModel.lectureList[index],
+                                    section: viewModel.lectureList[index],
+                                    cellDidTap: { viewModel.send(.lectureCellDidTap(index)) },
+                                    addLectureDidTap: { viewModel.send(.addLectureButtonDidTap(index))}
+                                )
+                                .equatable()
+                                .padding(.bottom, 3)
+                                .onAppear {
+                                    if index == viewModel.lectureList.count-1 {
+                                        viewModel.send(.loadMoreData)
+                                    }
+                                }
+                            }
                         }
-                        .padding(.bottom, 3)
+                        .onChange(of: viewModel.state.isScrollToTop) {
+                            if $0 {
+                                proxy.scrollTo(0)
+                                viewModel.state.isScrollToTop = false
+                            }
+                        }
                     }
+                    .loading(viewModel.state.isLoading)
+                    .scrollIndicators(.hidden)
                 }
-                .loading(viewModel.state.isLoading)
-                .scrollIndicators(.hidden)
             }
         }
         .background(Color.common.Background.default)
@@ -86,3 +76,4 @@ public struct SearchModuleView: View {
         }
     }
 }
+
