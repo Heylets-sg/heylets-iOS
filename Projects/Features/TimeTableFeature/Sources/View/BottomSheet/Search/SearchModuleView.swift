@@ -57,6 +57,12 @@ public struct SearchModuleView: View {
                                 }
                             }
                         }
+                        .onChange(of: viewModel.state.isScrollToTop) {
+                            if $0 {
+                                proxy.scrollTo(0)
+                                viewModel.state.isScrollToTop = false
+                            }
+                        }
                     }
                     .loading(viewModel.state.isLoading)
                     .scrollIndicators(.hidden)

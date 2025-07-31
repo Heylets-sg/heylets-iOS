@@ -15,10 +15,23 @@ import Domain
 import DSKit
 import Core
 
+private enum LectureFetchMode {
+    case loadMore
+    case fetch
+    
+    var isScrollToTop: Bool {
+        switch self {
+        case .loadMore: return false
+        case .fetch: return true
+        }
+    }
+}
+
 public class SearchModuleViewModel: ObservableObject {
     struct State {
         var selectedLecture: SectionInfo? = nil
         var isLoading: Bool = false
+        var isScrollToTop: Bool = false
     }
     
     enum Action {
@@ -56,7 +69,7 @@ public class SearchModuleViewModel: ObservableObject {
             
         case .loadMoreData:
             filterInfo.page += 1
-            fetchLectures()
+            fetchLectures(.loadMore)
             
         case .closeButtonDidTap:
             state.selectedLecture = nil
@@ -86,17 +99,23 @@ public class SearchModuleViewModel: ObservableObject {
         }
     }
     
-    private func fetchLectures() {
+    private func fetchLectures(_ mode: LectureFetchMode = .fetch) {
         useCase.getLectureList(filterInfo)
             .receive(on: RunLoop.main)
             .assignLoading(to: \.state.isLoading, on: self)
-            .handleEvents(receiveOutput: { [weak self] _ in
-                if self?.filterInfo.keyword.isEmpty == false {
+            .sink(receiveCompletion: { [weak self] _ in
+                guard let self else { return }
+                if !self.filterInfo.keyword.isEmpty {
                     Analytics.shared.track(.moduleSearched)
                 }
-            })
-            .sink(receiveValue: { [weak self] lectureList in
-                self?.lectureList += lectureList
+                self.state.isScrollToTop = mode.isScrollToTop
+            }, receiveValue: { [weak self] lectureList in
+                switch mode {
+                case .loadMore:
+                    self?.lectureList += lectureList
+                case .fetch:
+                    self?.lectureList = lectureList
+                }
             })
             .store(in: cancelBag)
     }
