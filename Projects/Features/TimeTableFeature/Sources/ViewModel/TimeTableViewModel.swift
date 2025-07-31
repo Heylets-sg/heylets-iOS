@@ -11,12 +11,8 @@ import Core
 public class TimeTableViewModel: ObservableObject {
     struct State {
         struct Alerts {
-//            var showDeleteAlert: Bool = false
             var showReportMissingModuleAlert: Bool = false
-            var showAddCustomAlert: Bool = false
-            var showGuestErrorAlert: Bool = false
-//            var showEmptyScheduleErrorAlert: (Bool, String) = (false, "")
-            var showSelectInfoView: Bool = false
+//            var showAddCustomAlert: Bool = false
         }
         
         struct TimeTable {
@@ -26,10 +22,11 @@ public class TimeTableViewModel: ObservableObject {
         }
         
         var alertType: HeyTimeTableAlertType? = nil
-        var sheetAlert: Alerts = Alerts()
+        var showGuestErrorAlert: Bool = false
+        var sheetType: SheetType? = nil
+//        var sheetAlert: Alerts = Alerts()
         var timeTable: TimeTable = TimeTable()
         var profile: ProfileInfo = .init()
-//        var error: (Bool, String) = (false, "")
         var isLoading: Bool = false
     }
     
@@ -37,6 +34,7 @@ public class TimeTableViewModel: ObservableObject {
         case onAppear
         case tableCellDidTap(Int)
         case deleteModule
+        case deleteButtonDidTap
         case selectLecture(SectionInfo)
         case addLecture(SectionInfo)
         case selectedTheme(String)
@@ -140,12 +138,16 @@ public class TimeTableViewModel: ObservableObject {
         case .tableCellDidTap(let sectionId):
             Analytics.shared.track(.screenView("module_info", .bottom_sheet))
             viewTypeService.switchTo(.detail)
+            state.sheetType = .detail
+            
             if let detailInfo = sectionList.first(where: { $0.id == sectionId }) {
                 detailSectionInfo = detailInfo
             } else {
                 state.alertType = .error("선택한 색션 정보를 찾을 수 없습니다.")
-//                state.error = (true, "선택한 섹션 정보를 찾을 수 없습니다.")
             }
+        case .deleteButtonDidTap:
+            state.alertType = .deleteAlert
+            Analytics.shared.track(.screenView("delete_module", .modal))
             
         case .deleteModule:
             Analytics.shared.track(.clickDeleteModule)
@@ -203,12 +205,11 @@ public class TimeTableViewModel: ObservableObject {
         case .addCustomModuleButtonDidTap:
             Analytics.shared.track(.screenView("add_custom_module", .bottom_sheet))
             viewTypeService.switchTo(.addCustom)
-            state.sheetAlert.showAddCustomAlert = true
+            state.sheetType = .reportMissingModule
             selectLecture = []
             
         case .notRightNowButtonDidTap:
             Analytics.shared.track(.clickGuestConfirmReject)
-            state.sheetAlert.showGuestErrorAlert = false
             
         case .loginButtonDidTap:
             Analytics.shared.track(.clickGuestConfirmLogin)
@@ -303,7 +304,7 @@ public class TimeTableViewModel: ObservableObject {
                 self?.selectLecture = []
             })
             .map { _ in true }
-            .assign(to: \.state.sheetAlert.showGuestErrorAlert, on: self)
+            .assign(to: \.state.showGuestErrorAlert, on: self)
             .store(in: cancelBag)
         
         store.emptyScheduleError

@@ -12,17 +12,17 @@ import BaseFeatureDependency
 
 public struct DetailModuleInfoView: View {
     @Binding var viewType: TimeTableViewType
-    @Binding var deleteModuleAlertIsPresented: Bool
     private var sectionInfo: SectionInfo = .empty
+    var onDelete: () -> Void
     
     init(
         viewType: Binding<TimeTableViewType>,
-        deleteModuleAlertIsPresented: Binding<Bool>,
-        sectionInfo: SectionInfo
+        sectionInfo: SectionInfo,
+        onDelete: @escaping () -> Void
     ) {
         self._viewType = viewType
-        self._deleteModuleAlertIsPresented = deleteModuleAlertIsPresented
         self.sectionInfo = sectionInfo
+        self.onDelete = onDelete
     }
     
     public var body: some View {
@@ -70,7 +70,7 @@ public struct DetailModuleInfoView: View {
                 
                 Button {
                     viewType = .main
-                    deleteModuleAlertIsPresented.toggle()
+                    onDelete()
                 } label: {
                     Text("Delete")
                         .font(.regular_14)

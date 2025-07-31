@@ -12,21 +12,20 @@ import Domain
 import DSKit
 import BaseFeatureDependency
 
-public struct TopView: View {
-    @EnvironmentObject var container: Router
-    @Binding var timeTableInfo: TimeTableInfo
-    @Binding var viewType: TimeTableViewType
-    @Binding var profileInfo: ProfileInfo
+struct TopView: View {
+    let timeTableInfo: TimeTableInfo
+    let badgeImage: Image
+    var onSearch: () -> Void
+    var onSetting: () -> Void
     
     public var body: some View {
         
         HStack {
             VStack(alignment: .leading) {
                 HStack {
-                    profileInfo.university.badgeImage
+                    badgeImage
                         .resizable()
                         .frame(width: 36, height: 18)
-                    
                     
                     Text(timeTableInfo.fullSemester)
                         .font(.medium_12)
@@ -45,7 +44,7 @@ public struct TopView: View {
             HStack {
                 Button {
                     withAnimation {
-                        viewType = .search
+                        onSearch()
                     }
                 } label: {
                     Image.icAdd
@@ -57,7 +56,7 @@ public struct TopView: View {
                 
                 Button {
                     withAnimation {
-                        viewType = .setting
+                        onSetting()
                     }
                 } label: {
                     Image.icSetting

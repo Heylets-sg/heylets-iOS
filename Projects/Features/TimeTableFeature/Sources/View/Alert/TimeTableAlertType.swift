@@ -21,7 +21,6 @@ public enum HeyTimeTableAlertType {
         }
     }
     
-    // ✅ Action enum만 반환
     var primaryAction: TimeTableAlertAction {
         switch self {
         case .deleteAlert:

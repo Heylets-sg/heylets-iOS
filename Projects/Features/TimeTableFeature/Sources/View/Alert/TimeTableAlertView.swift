@@ -11,7 +11,6 @@ import SwiftUI
 import DSKit
 
 extension View {
-    @ViewBuilder
     func heyAlert(
         _ alert: HeyTimeTableAlertType?,
         viewModel: TimeTableViewModel
