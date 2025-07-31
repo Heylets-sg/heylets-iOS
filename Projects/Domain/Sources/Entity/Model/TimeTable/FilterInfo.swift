@@ -9,6 +9,7 @@
 import Foundation
 
 public struct FilterInfo {
+    public var page: Int
     public var keyword: String
     public var department: String?
     public var semester: String?
@@ -16,12 +17,14 @@ public struct FilterInfo {
     public var keywordType: String?
     
     public init(
+        _ page: Int = 0,
         _ keyword: String = "",
         _ department: String? = nil,
         _ semester: String? = nil,
         _ level: String? = nil,
         _ keywordType: String? = nil
     ) {
+        self.page = page
         self.keyword = keyword
         self.department = department
         self.semester = semester
@@ -42,7 +45,11 @@ public struct FilterInfo {
             params["semester"] = "TERM_2"
         }
         if let level = level { params["level"] = level }
-        params["size"] = "50"
+        
+//        params["size"] = "50"
+        
+        params["page"] = "\(page)"
+        
         
         return params
     }
