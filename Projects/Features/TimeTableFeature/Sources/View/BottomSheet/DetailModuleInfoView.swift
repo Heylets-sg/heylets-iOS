@@ -11,15 +11,16 @@ import Domain
 import BaseFeatureDependency
 
 public struct DetailModuleInfoView: View {
-    @EnvironmentObject var coordinator: TimeTableCoordinator
-    
+    private var coordinator: any PresentCoordinatorType
     private var sectionInfo: SectionInfo = .empty
     var onDelete: () -> Void
     
     init(
+        coordinator: any PresentCoordinatorType,
         sectionInfo: SectionInfo,
         onDelete: @escaping () -> Void
     ) {
+        self.coordinator = coordinator
         self.sectionInfo = sectionInfo
         self.onDelete = onDelete
     }
@@ -68,7 +69,7 @@ public struct DetailModuleInfoView: View {
                 Spacer()
                 
                 Button {
-                    coordinator.presentCoordinator.reset()
+                    coordinator.reset()
                     onDelete()
                 } label: {
                     Text("Delete")
@@ -81,8 +82,8 @@ public struct DetailModuleInfoView: View {
         .background(Color.timeTableMain.bottomSheet)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .onDisappear {
-            if coordinator.presentCoordinator.viewType == .detail {
-                coordinator.presentCoordinator.reset()
+            if coordinator.viewType == .detail {
+                coordinator.reset()
             }
         }
     }

@@ -13,15 +13,18 @@ import DSKit
 import BaseFeatureDependency
 
 public struct MainView: View {
-    public var coordinator: any PresentCoordinatorType
     @ObservedObject var viewModel: TimeTableViewModel
+    var presentCoordinator: any PresentCoordinatorType
+    var sheetCoordinator: any SheetCoordinatorType
     
     init(
         viewModel: TimeTableViewModel,
-        coordinator: any PresentCoordinatorType
+        presentCoordinator: any PresentCoordinatorType,
+        sheetCoordinator: SheetCoordinatorType
     ) {
         self.viewModel = viewModel
-        self.coordinator = coordinator
+        self.presentCoordinator = presentCoordinator
+        self.sheetCoordinator = sheetCoordinator
     }
     
     public var body: some View {
@@ -55,8 +58,8 @@ public struct MainView: View {
                                         TimeTableExsitedView(
                                             viewModel: viewModel,
                                             displayType: $viewModel.displayTypeInfo,
-                                            canTouch: !coordinator.isMain(),
-                                            cellWidth: cellWidth
+                                            cellWidth: cellWidth,
+                                            canTouch: presentCoordinator.isMain()
                                         )
                                         
                                         TimeTableSelectedView(
@@ -70,7 +73,7 @@ public struct MainView: View {
                             }
                         }
                     }
-                    .padding(.bottom, coordinator.isMain() ? 50 : 0)
+                    .padding(.bottom, presentCoordinator.isMain() ? 50 : 0)
                 }
             }
             .loading(viewModel.state.isLoading)

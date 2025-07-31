@@ -16,6 +16,7 @@ public protocol SheetCoordinatable {
     var sheetType: TimeTableSheetType? { get set }
     
     func sheet(to type: TimeTableSheetType)
+    func reset()
 }
 
 @MainActor
@@ -30,5 +31,9 @@ public class SheetCoordinator: SheetCoordinatable, ObservableObjectSettable {
     
     public func sheet(to type: TimeTableSheetType) {
         self.sheetType = type
+    }
+    
+    public func reset() {
+        self.sheetType = nil
     }
 }

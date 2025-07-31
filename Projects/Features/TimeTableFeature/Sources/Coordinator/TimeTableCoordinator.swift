@@ -19,11 +19,11 @@ public typealias PresentCoordinatorType = PresentCoordinatable & ObservableObjec
 @MainActor
 final public class TimeTableCoordinator: ObservableObject {
     public var sheetCoordinator: SheetCoordinatorType
-    public var presentCoordinator: PresentCoordinatorType
+    public var presentCoordinator: any PresentCoordinatorType
     
     public init(
         sheetCoordinator: SheetCoordinatorType,
-        presentCoordinator: PresentCoordinatorType
+        presentCoordinator: any PresentCoordinatorType
     ) {
         self.sheetCoordinator = sheetCoordinator
         self.presentCoordinator = presentCoordinator

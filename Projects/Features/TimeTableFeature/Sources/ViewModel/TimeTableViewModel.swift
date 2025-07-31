@@ -10,11 +10,6 @@ import Core
 @MainActor
 public class TimeTableViewModel: ObservableObject {
     struct State {
-        struct Alerts {
-            var showReportMissingModuleAlert: Bool = false
-//            var showAddCustomAlert: Bool = false
-        }
-        
         struct TimeTable {
             var columnCount: Int = 5
             var rowCount: Int = 17
@@ -23,8 +18,6 @@ public class TimeTableViewModel: ObservableObject {
         
         var alertType: HeyTimeTableAlertType? = nil
         var showGuestErrorAlert: Bool = false
-//        var sheetType: TimeTableSheetType? = nil
-//        var sheetAlert: Alerts = Alerts()
         var timeTable: TimeTable = TimeTable()
         var profile: ProfileInfo = .init()
         var isLoading: Bool = false
@@ -56,8 +49,6 @@ public class TimeTableViewModel: ObservableObject {
     @ObservedObject var searchModuleViewModel: SearchModuleViewModel
     @ObservedObject var addCustomModuleViewModel: AddCustomModuleViewModel
     @ObservedObject var themeViewModel: ThemeViewModel
-    // 싱글톤 사용
-//    @ObservedObject private var viewTypeService = TimeTableViewTypeService.shared
     
     @Published var state = State()
     private let cancelBag = CancelBag()
@@ -65,10 +56,12 @@ public class TimeTableViewModel: ObservableObject {
     private let store: TimeTableStoreType
     public var windowRouter: WindowRoutableType
     public var navigationRouter: NavigationRoutableType
+    
+    public var presentCoordinator: any PresentCoordinatorType
+    public var sheetCoordinator: SheetCoordinatorType
+    
     private let useCase: MainUseCaseType
     public var settingViewModel: TimeTableSettingViewModel
-    
-//    var viewType: TimeTableViewType { viewTypeService.viewType }
     
     @Published var timeTableInfo: TimeTableInfo = .empty
     @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
@@ -78,14 +71,10 @@ public class TimeTableViewModel: ObservableObject {
     @Published var hourList: [Int] = Array(8...21)
     @Published var timeTable: [TimeTableCellInfo] = []
     
-    
-    
     @Published var detailSectionInfo: SectionInfo = .empty
     
     @Published var selectLecture: [TimeTableCellInfo] = []
     @Published var selectedThemeColor: [String] = []
-    
-    private var viewTypeSubscription: AnyCancellable?
     
     public init(
         _ searchModuleViewModel: SearchModuleViewModel,
@@ -97,7 +86,10 @@ public class TimeTableViewModel: ObservableObject {
         _ useCase: MainUseCaseType,
         
         _ windowRouter: WindowRoutableType,
-        _ navigationRouter: NavigationRoutableType
+        _ navigationRouter: NavigationRoutableType,
+        
+        _ presentCoordinator: any PresentCoordinatorType,
+        _ sheetCoordinator: SheetCoordinatorType
     ) {
         self.searchModuleViewModel = searchModuleViewModel
         self.addCustomModuleViewModel = addCustomModuleViewModel
@@ -110,16 +102,12 @@ public class TimeTableViewModel: ObservableObject {
         self.windowRouter = windowRouter
         self.navigationRouter = navigationRouter
         
+        self.presentCoordinator = presentCoordinator
+        self.sheetCoordinator = sheetCoordinator
+        
         bindStore()
         
         timeTable = sectionList.createTimeTableCellList()
-        
-//        viewTypeSubscription = viewTypeService.$viewType
-//            .sink { [weak self] viewType in
-//                if viewType == .main {
-//                    self?.selectLecture = []
-//                }
-//            }
     }
     
     func send(_ action: Action) {
@@ -137,14 +125,11 @@ public class TimeTableViewModel: ObservableObject {
             
         case .tableCellDidTap(let sectionId):
             Analytics.shared.track(.screenView("module_info", .bottom_sheet))
-//            viewTypeService.switchTo(.detail)
-//            state.sheetType = .detail
-            
             if let detailInfo = sectionList.first(where: { $0.id == sectionId }) {
                 detailSectionInfo = detailInfo
-            } else {
-                state.alertType = .error("선택한 색션 정보를 찾을 수 없습니다.")
-            }
+                sheetCoordinator.sheet(to: .detail)
+            } else { state.alertType = .error("선택한 색션 정보를 찾을 수 없습니다.") }
+            
         case .deleteButtonDidTap:
             state.alertType = .deleteAlert
             Analytics.shared.track(.screenView("delete_module", .modal))
@@ -167,13 +152,13 @@ public class TimeTableViewModel: ObservableObject {
             state.alertType = nil
             
         case .errorAlertViewCloseButtonDidTap:
-//            viewTypeService.switchTo(.search)
+            presentCoordinator.switchTo(.search)
             state.alertType = nil
             
         case .emptyScheduleErrorAddButtonDidTap(let name):
             addCustomModuleViewModel.schedule = name
             state.alertType = nil
-//            viewTypeService.switchTo(.addCustom)
+            presentCoordinator.switchTo(.addCustom)
             
         case .selectLecture(let lecture):
             selectLecture = lecture.timeTableCellInfo
@@ -190,23 +175,21 @@ public class TimeTableViewModel: ObservableObject {
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
                     Analytics.shared.track(.moduleAdded)
-//                    self?.viewTypeService.switchTo(.search)
+                    self?.presentCoordinator.switchTo(.search)
                     self?.selectLecture = []
                 })
                 .store(in: cancelBag)
             
         case .initMainView:
-            break
-//            if !(viewType == .search || viewType == .theme(false) || viewType == .addCustom) {
-//                viewTypeService.reset()
-//                // Also clear selectLecture when manually resetting to main view
-//                selectLecture = []
-//            }
+            let viewType = presentCoordinator.viewType
+            if !(viewType == .search || viewType == .theme(false) || viewType == .addCustom) {
+                presentCoordinator.reset()
+                selectLecture = []
+            }
             
         case .addCustomModuleButtonDidTap:
             Analytics.shared.track(.screenView("add_custom_module", .bottom_sheet))
-//            viewTypeService.switchTo(.addCustom)
-//            state.sheetType = .reportMissingModule
+            presentCoordinator.switchTo(.addCustom)
             selectLecture = []
             
         case .notRightNowButtonDidTap:
@@ -287,9 +270,8 @@ public class TimeTableViewModel: ObservableObject {
         store.errMessage
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
-//                self?.viewTypeService.reset()
+                self?.presentCoordinator.reset()
                 self?.settingViewModel.settingAlertType = nil
-                // Clear selectLecture on error
                 self?.selectLecture = []
             })
             .map { message in .error(message)}
@@ -299,9 +281,8 @@ public class TimeTableViewModel: ObservableObject {
         store.guestModeError
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
-//                self?.viewTypeService.reset()
+                self?.presentCoordinator.reset()
                 self?.settingViewModel.settingAlertType = nil
-                // Clear selectLecture on guest mode error
                 self?.selectLecture = []
             })
             .map { _ in true }
@@ -311,9 +292,8 @@ public class TimeTableViewModel: ObservableObject {
         store.emptyScheduleError
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
-//                self?.viewTypeService.reset()
+                self?.presentCoordinator.reset()
                 self?.settingViewModel.settingAlertType = nil
-                // Clear selectLecture on empty schedule error
                 self?.selectLecture = []
             })
             .map { name in .emptyScheduleError(name)}

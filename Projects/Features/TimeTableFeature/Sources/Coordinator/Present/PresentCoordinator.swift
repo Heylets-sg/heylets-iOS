@@ -13,7 +13,7 @@ import SwiftUI
 
 @MainActor
 public protocol PresentCoordinatable: ObservableObject {
-    var viewType: TimeTableViewType { get }
+    var viewType: TimeTableViewType { get set }
     func switchTo(_ viewType: TimeTableViewType)
     func reset()
     func isMain() -> Bool
@@ -22,8 +22,9 @@ public protocol PresentCoordinatable: ObservableObject {
 public class PresentCoordinator: PresentCoordinatable, ObservableObjectSettable {
     public var objectWillChange: ObservableObjectPublisher?
     
-    @Published public private(set) var viewType: TimeTableViewType = .main {
+    public var viewType: TimeTableViewType = .main {
         didSet {
+            print("📌 viewType changed to \(viewType)")
             notifyWillChange()
         }
     }

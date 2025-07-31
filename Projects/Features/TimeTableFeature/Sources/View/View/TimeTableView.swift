@@ -27,13 +27,14 @@ public struct TimeTableView: View {
             ZStack {
                 VStack(alignment: .leading, spacing: 0) {
                     createTopView()
-                        .padding(.top, coordinator.presentCoordinator.viewType.topViewTopPadding.adjusted)
-                        .padding(.bottom, coordinator.presentCoordinator.viewType.topViewBottomPadding.adjusted)
+                        .padding(.top, viewModel.presentCoordinator.viewType.topViewTopPadding.adjusted)
+                        .padding(.bottom, viewModel.presentCoordinator.viewType.topViewBottomPadding.adjusted)
                         .background(Color.timeTableMain.TimeTableInfo.topNavi)
 
                     MainView(
                         viewModel: viewModel,
-                        coordinator: coordinator.presentCoordinator
+                        presentCoordinator: viewModel.presentCoordinator,
+                        sheetCoordinator: viewModel.sheetCoordinator
                     )
 
                     Spacer(minLength: 0)
@@ -58,41 +59,38 @@ public struct TimeTableView: View {
                     notRightNowButton: {
                         viewModel.send(.notRightNowButtonDidTap)
                     })
-//                .sheet(item: viewModel.state.sheetType) { _  in
-//                    switch type {
-//                    case .reportMissingModule:
-//                        ReportMissingModuleView(
-////                            reportMissingModuleAlertIsPresented: Binding(
-////                                get: { viewModel.state.sheetType != nil },
-////                                set: { if !$0 { viewModel.state.sheetType = nil } }
-////                            )
-//                        )
-//                        .transition(.move(edge: .trailing))
-//                        .presentationDetents([.fraction(0.95)])
-//                        .presentationDragIndicator(.visible)
-//
-//                    case .setting:
-//                        SettingTimeTableView(
-//                            settingAlertType: $viewModel.settingViewModel.settingAlertType
-//                        )
-//                        .presentationDetents([.height(267)])
-//                        .presentationDragIndicator(.hidden)
-//                        .ignoresSafeArea(.container, edges: .bottom)
-//                        .environmentObject(coordinator)
-//
-//                    case .detail:
-//                        DetailModuleInfoView(
-//                            sectionInfo: viewModel.detailSectionInfo,
-//                            onDelete: { viewModel.send(.deleteButtonDidTap) }
-//                        )
-//                        .presentationDetents([.height(280)])
-//                        .presentationDragIndicator(.hidden)
-//                        .ignoresSafeArea(.container, edges: .bottom)
-//                        .environmentObject(coordinator)
-//                    }
-//                }
+                .sheet(item: $viewModel.sheetCoordinator.sheetType) { type  in
+                    switch type {
+                    case .reportMissingModule:
+                        ReportMissingModuleView(
+                            onBack: { coordinator.sheetCoordinator.reset() }
+                        )
+                        .transition(.move(edge: .trailing))
+                        .presentationDetents([.fraction(0.95)])
+                        .presentationDragIndicator(.visible)
 
-                if coordinator.presentCoordinator.viewType == .main {
+                    case .setting:
+                        SettingTimeTableView(
+                            coordinator: coordinator,
+                            settingAlertType: $viewModel.settingViewModel.settingAlertType
+                        )
+                        .presentationDetents([.height(267)])
+                        .presentationDragIndicator(.hidden)
+                        .ignoresSafeArea(.container, edges: .bottom)
+
+                    case .detail:
+                        DetailModuleInfoView(
+                            coordinator: viewModel.presentCoordinator,
+                            sectionInfo: viewModel.detailSectionInfo,
+                            onDelete: { viewModel.send(.deleteButtonDidTap) }
+                        )
+                        .presentationDetents([.height(280)])
+                        .presentationDragIndicator(.hidden)
+                        .ignoresSafeArea(.container, edges: .bottom)
+                    }
+                }
+
+                if viewModel.presentCoordinator.viewType == .main {
                     VStack {
                         Spacer()
                         TabBarView(
@@ -109,14 +107,14 @@ public struct TimeTableView: View {
                 SettingTimeTableAlertView(viewModel: viewModel.settingViewModel)
 
                 let config = OverlayConfiguration.configure(
-                    viewType: coordinator.presentCoordinator.viewType,
+                    viewType: viewModel.presentCoordinator.viewType,
                     isThemeSelectInfoShowing: viewModel.themeViewModel.state.isShowingSelectInfoView
                 )
 
                 if config.shouldShow {
                     Color.common.Background.opacity60
                         .opacity(config.opacity)
-                        .animation(.easeInOut(duration: 0.3), value: coordinator.presentCoordinator.viewType)
+                        .animation(.easeInOut(duration: 0.3), value: viewModel.presentCoordinator.viewType)
                         .ignoresSafeArea()
                 }
 
@@ -124,9 +122,9 @@ public struct TimeTableView: View {
                     Spacer()
                     createBottomSheetView()
                         .onAppear {
-                            Analytics.shared.track(.screenView(coordinator.presentCoordinator.viewType.screenName, .bottom_sheet))
+                            Analytics.shared.track(.screenView(viewModel.presentCoordinator.viewType.screenName, .bottom_sheet))
                         }
-                        .frame(height: coordinator.presentCoordinator.viewType.bottomSheetHeight.adjusted)
+                        .frame(height: viewModel.presentCoordinator.viewType.bottomSheetHeight.adjusted)
                 }
             }
             .setTimeTableHeyNavigation()
@@ -143,12 +141,11 @@ public struct TimeTableView: View {
 extension TimeTableView {
     @ViewBuilder
     private func createBottomSheetView() -> some View {
-        let viewType = coordinator.presentCoordinator.viewType
-        switch viewType {
+        switch coordinator.presentCoordinator.viewType {
         case .search:
             SearchModuleView(
-//                reportMissingModuleAlertIsPresented: $viewModel.state.sheetType,
-                viewModel: viewModel.searchModuleViewModel
+                viewModel: viewModel.searchModuleViewModel,
+                onReport: { coordinator.sheetCoordinator.sheet(to: .reportMissingModule) }
             )
             .bottomSheetTransition()
 
@@ -168,11 +165,11 @@ extension TimeTableView {
 
     @ViewBuilder
     private func createTopView() -> some View {
-        let viewType = coordinator.presentCoordinator.viewType
+        let viewType = viewModel.presentCoordinator.viewType
         switch viewType {
         case .search:
             SearchModuleTopView(
-                coordinator: coordinator.presentCoordinator,
+                coordinator: viewModel.presentCoordinator,
                 addCustomModuleButtonDidTapEvent: {
                     viewModel.send(.addCustomModuleButtonDidTap)
                 },
@@ -185,7 +182,7 @@ extension TimeTableView {
         case .theme:
             VStack {
                 ThemeTopView(
-                    coordinator: coordinator.presentCoordinator,
+                    coordinator: viewModel.presentCoordinator,
                     viewModel: viewModel.themeViewModel
                 )
                 .frame(height: viewType.topViewHeight.adjusted)
@@ -201,7 +198,7 @@ extension TimeTableView {
 
         case .addCustom:
             AddCustomModuleTopView(
-                coordinator: coordinator.presentCoordinator,
+                coordinator: viewModel.presentCoordinator,
                 viewModel: viewModel.addCustomModuleViewModel
             )
             .frame(height: viewType.topViewHeight.adjusted)
@@ -210,8 +207,8 @@ extension TimeTableView {
             TopView(
                 timeTableInfo: viewModel.timeTableInfo,
                 badgeImage: viewModel.state.profile.university.badgeImage,
-                onSearch: { coordinator.presentCoordinator.switchTo(.search) },
-                onSetting: { coordinator.sheetCoordinator.sheet(to: .setting) }
+                onSearch: { viewModel.presentCoordinator.switchTo(.search) },
+                onSetting: { viewModel.sheetCoordinator.sheet(to: .setting) }
             )
             .frame(height: viewType.topViewHeight.adjusted)
         }

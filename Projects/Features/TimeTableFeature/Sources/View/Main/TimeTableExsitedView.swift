@@ -11,13 +11,13 @@ public struct TimeTableExsitedView: View {
     init(
         viewModel: TimeTableViewModel,
         displayType: Binding<DisplayTypeInfo>,
-        canTouch: Bool,
-        cellWidth: CGFloat
+        cellWidth: CGFloat,
+        canTouch: Bool
     ) {
         self.viewModel = viewModel
         self._displayType = displayType
-        self.canTouch = canTouch
         self.cellWidth = cellWidth
+        self.canTouch = canTouch
     }
     
     public var body: some View {
@@ -62,7 +62,7 @@ public struct TimeTableExsitedView: View {
                 .onTapGesture {
                     viewModel.send(.tableCellDidTap(cell.id))
                 }
-                .disabled(canTouch)
+                .disabled(!canTouch)
             }
         }
     }

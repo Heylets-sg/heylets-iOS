@@ -53,7 +53,9 @@ public struct RootView: View {
                         useCase.timeTableStore,
                         useCase.mainUseCase,
                         router.windowRouter,
-                        router.navigationRouter
+                        router.navigationRouter,
+                        TimeTableCoordinator.default.presentCoordinator,
+                        TimeTableCoordinator.default.sheetCoordinator
                     )
                 )
                 .environmentObject(TimeTableCoordinator.default)
