@@ -49,7 +49,6 @@ public struct SearchModuleView: View {
                             .onAppear {
                                 if index == viewModel.lectureList.count-1 {
                                     viewModel.send(.loadMoreData)
-//                                    print("마지막 셀입니다!!!!")
                                 }
                             }
                         }

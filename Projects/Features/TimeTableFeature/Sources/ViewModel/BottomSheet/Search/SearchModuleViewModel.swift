@@ -81,6 +81,7 @@ public class SearchModuleViewModel: ObservableObject {
             state.selectedLecture = nil
             
         case .updateFilters:
+            filterInfo.page = 0
             fetchLectures()
         }
     }
@@ -95,7 +96,7 @@ public class SearchModuleViewModel: ObservableObject {
                 }
             })
             .sink(receiveValue: { [weak self] lectureList in
-                self?.lectureList += lectureList  
+                self?.lectureList += lectureList
             })
             .store(in: cancelBag)
     }

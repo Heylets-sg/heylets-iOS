@@ -46,8 +46,7 @@ public struct FilterInfo {
         }
         if let level = level { params["level"] = level }
         
-//        params["size"] = "50"
-        
+        params["size"] = "30"
         params["page"] = "\(page)"
         
         
