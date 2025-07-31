@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-enum SheetType: Identifiable {
+public enum TimeTableSheetType: Identifiable {
     case reportMissingModule
     case setting
     case detail
     
-    var id: String {
+    public var id: String {
         switch self {
         case .reportMissingModule: return "reportMissingModule"
         case .setting: return "setting"

@@ -23,7 +23,7 @@ public class TimeTableViewModel: ObservableObject {
         
         var alertType: HeyTimeTableAlertType? = nil
         var showGuestErrorAlert: Bool = false
-        var sheetType: SheetType? = nil
+        var sheetType: TimeTableSheetType? = nil
 //        var sheetAlert: Alerts = Alerts()
         var timeTable: TimeTable = TimeTable()
         var profile: ProfileInfo = .init()

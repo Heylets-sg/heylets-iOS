@@ -15,8 +15,8 @@ import Core
 
 public struct TimeTableView: View {
     @EnvironmentObject var container: Router
+    @EnvironmentObject var transition: TimeTableTransitionHandlerType
     @ObservedObject var viewModel: TimeTableViewModel
-    @ObservedObject var viewTypeService = TimeTableViewTypeService.shared
 
     public init(viewModel: TimeTableViewModel) {
         self.viewModel = viewModel

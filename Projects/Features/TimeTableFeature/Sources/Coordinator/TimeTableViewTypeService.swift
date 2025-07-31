@@ -11,19 +11,24 @@ import Combine
 import SwiftUI
 
 @MainActor
-public protocol TimeTableViewTypeServiceType: ObservableObject {
+public protocol TimeTableTransitionHandlerType: ObservableObject {
+    var sheetType: TimeTableSheetType? { get }
     var viewType: TimeTableViewType { get }
     func switchTo(_ viewType: TimeTableViewType)
+    func sheetTo(_ sheetType: TimeTableSheetType)
     func reset()
 }
 
-public class TimeTableViewTypeService: TimeTableViewTypeServiceType {
-    public static let shared = TimeTableViewTypeService()
-    
+public class TransitionHandler: TimeTableTransitionHandlerType {
     @Published public private(set) var viewType: TimeTableViewType = .main
+    @Published public private(set) var sheetType: TimeTableSheetType? = nil
     
     public func switchTo(_ viewType: TimeTableViewType) {
         self.viewType = viewType
+    }
+    
+    public func sheetTo(_ viewType: TimeTableSheetType) {
+        self.sheetType = sheetType
     }
     
     public func reset() {
@@ -31,24 +36,7 @@ public class TimeTableViewTypeService: TimeTableViewTypeServiceType {
     }
 }
 
-// For preview and testing
-public class StubTimeTableViewTypeService: TimeTableViewTypeServiceType {
-    @Published public private(set) var viewType: TimeTableViewType = .main
-    
-    public init(initialViewType: TimeTableViewType = .main) {
-        self.viewType = initialViewType
-    }
-    
-    public func switchTo(_ viewType: TimeTableViewType) {
-        self.viewType = viewType
-    }
-    
-    public func reset() {
-        self.viewType = .main
-    }
-}
-
-extension TimeTableViewTypeServiceType {
+extension TimeTableTransitionHandler {
     public var binding: Binding<TimeTableViewType> {
         Binding(
             get: { self.viewType },
