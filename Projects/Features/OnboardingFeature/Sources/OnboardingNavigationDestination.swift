@@ -82,9 +82,9 @@ struct OnboardingNavigationRoutingView: View {
         case .login:
             LogInView(
                 viewModel: .init(
-                    navigationRouter: router.navigationRouter,
-                    windowRouter: router.windowRouter, 
-                    useCase: useCase.signInUseCase
+                    router.navigationRouter,
+                    router.windowRouter,
+                    useCase.signInUseCase
                 )
             )
         case .resetPWVerifyEmail:

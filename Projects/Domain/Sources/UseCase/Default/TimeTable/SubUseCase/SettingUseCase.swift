@@ -9,11 +9,9 @@
 import Foundation
 import Combine
 
-public protocol TimeTableSettingUseCaseType {
+public protocol SettingUseCaseType {
     //시간표 이름 바꾸기
     func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never>
-    //테마 선택시 반영되도록 상세 색상 가져오기
-    func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never>
     //테마 리스트 불러오기
     func getThemeList() -> AnyPublisher<[Theme], Never>
     //테마, display 불러오기
@@ -27,8 +25,8 @@ public protocol TimeTableSettingUseCaseType {
 }
 
 //MARK: Setting
-final public class TimeTableSettingUseCase: TimeTableSettingUseCaseType {
-    private let store: TimeTableStore
+final public class SettingUseCase: SettingUseCaseType {
+    private let store: TimeTableStoreType
     
     public let userRepository: UserRepositoryType
     public let sectionRepository: SectionRepositoryType
@@ -37,7 +35,7 @@ final public class TimeTableSettingUseCase: TimeTableSettingUseCaseType {
     public let settingRepository: SettingRepositoryType
     
     init(
-        store: TimeTableStore,
+        store: TimeTableStoreType,
         userRepository: UserRepositoryType,
         sectionRepository: SectionRepositoryType,
         guestRepository: GuestRepositoryType,
@@ -64,14 +62,7 @@ final public class TimeTableSettingUseCase: TimeTableSettingUseCaseType {
             .eraseToAnyPublisher()
     }
     
-    public func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never> {
-        return settingRepository.getThemeDetailInfo(themeName)
-            .map { [$0.defaultColor] + $0.core + $0.gradient}
-            .catch { _ in
-                return Just([]).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
+    
     
     public func getThemeList() -> AnyPublisher<[Theme], Never> {
         return settingRepository.getThemeList()

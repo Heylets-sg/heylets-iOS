@@ -12,7 +12,7 @@ import Core
 
 //MARK: Serach
 
-public protocol TimeTableSearchUseCaseType {
+public protocol SearchUseCaseType {
     //강의 목록 불러오기
     func getLectureList(
         _ filterInfo: FilterInfo
@@ -23,13 +23,13 @@ public protocol TimeTableSearchUseCaseType {
     func getLectureDepartment() -> AnyPublisher<[String], Never>
 }
 
-final public class TimeTableSearchUseCase: TimeTableSearchUseCaseType {
-    private let store: TimeTableStore
+final public class SearchUseCase: SearchUseCaseType {
+    private let store: TimeTableStoreType
     public let lectureRepository: LectureRepositoryType
     public let scheduleRepository: ScheduleRepositoryType
     
     init(
-        store: TimeTableStore,
+        store: TimeTableStoreType,
         lectureRepository: LectureRepositoryType,
         scheduleRepository: ScheduleRepositoryType
     ) {

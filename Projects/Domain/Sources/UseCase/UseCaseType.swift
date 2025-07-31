@@ -13,16 +13,16 @@ public protocol UseCaseType: ObservableObject {
     var signUpUseCase: SignUpUseCaseType { get }
     var signInUseCase: SignInUseCaseType { get }
     
-    var mainUseCase: TimeTableMainUseCaseType { get }
-    var searchUseCase: TimeTableSearchUseCaseType { get }
-    var settingUseCase: TimeTableSettingUseCaseType { get }
+    var timeTableStore: TimeTableStoreType { get }
+    var mainUseCase: MainUseCaseType { get }
+    var searchUseCase: SearchUseCaseType { get }
+    var settingUseCase: SettingUseCaseType { get }
     
     var splashUseCase: SplashUseCaseType { get }
     var todoUseCase: TodoUsecaseType { get }
 }
 
 public final class HeyUseCase: UseCaseType {
-    
     var repository: RepositoryType
     
     public var splashUseCase: SplashUseCaseType
@@ -30,15 +30,16 @@ public final class HeyUseCase: UseCaseType {
     public var signUpUseCase: SignUpUseCaseType
     public var signInUseCase: SignInUseCaseType
     
-    public var mainUseCase: TimeTableMainUseCaseType
-    public var searchUseCase: TimeTableSearchUseCaseType
-    public var settingUseCase: TimeTableSettingUseCaseType
+    public var timeTableStore: TimeTableStoreType
+    public var mainUseCase: MainUseCaseType
+    public var searchUseCase: SearchUseCaseType
+    public var settingUseCase: SettingUseCaseType
     
     public var todoUseCase: TodoUsecaseType
     
     public init(repository: RepositoryType) {
         self.repository = repository
-        let store = TimeTableStore(timeTableRepository: repository.timeTableRepository)
+        timeTableStore = TimeTableStore(timeTableRepository: repository.timeTableRepository)
         
         splashUseCase = SplashUseCase(
             authRepository: repository.authRepository
@@ -64,8 +65,8 @@ public final class HeyUseCase: UseCaseType {
             guestRepository: repository.guestRepository
         )
         
-        mainUseCase = TimeTableMainUseCase(
-            store: store,
+        mainUseCase = MainUseCase(
+            store: timeTableStore,
             userRepository: repository.userRepository,
             scheduleRepository: repository.scheduleRepository,
             sectionRepository: repository.sectionRepository,
@@ -73,14 +74,14 @@ public final class HeyUseCase: UseCaseType {
             timeTableRepository: repository.timeTableRepository
         )
         
-        searchUseCase = TimeTableSearchUseCase(
-            store: store,
+        searchUseCase = SearchUseCase(
+            store: timeTableStore,
             lectureRepository: repository.lectureRepository,
             scheduleRepository: repository.scheduleRepository
         )
         
-        settingUseCase = TimeTableSettingUseCase(
-            store: store,
+        settingUseCase = SettingUseCase(
+            store: timeTableStore,
             userRepository: repository.userRepository,
             sectionRepository: repository.sectionRepository,
             guestRepository: repository.guestRepository,

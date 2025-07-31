@@ -37,7 +37,7 @@ public class ThemeViewModel: ObservableObject {
     
     @Published var state = State()
     @Published var themeList: [Theme] = []
-    private let useCase: TimeTableUseCaseType
+    private let useCase: SettingUseCaseType
     @Published var displayType: DisplayTypeInfo = .MODULE_CODE
     @Published var theme: String = ""
     
@@ -54,7 +54,7 @@ public class ThemeViewModel: ObservableObject {
     private let cancelBag = CancelBag()
     
     public init(
-        _ useCase: TimeTableUseCaseType,
+        _ useCase: SettingUseCaseType,
         _ navigationRouter: NavigationRoutableType
     ) {
         self.useCase = useCase

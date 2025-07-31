@@ -11,26 +11,29 @@ import Combine
 
 import Core
 
-public protocol TimeTableMainUseCaseType {
+public protocol MainUseCaseType {
     // 시간표 상세조회 불러오기
     func fetchTableInfo() -> AnyPublisher<Void, Never>
     func getProfileInfo() -> AnyPublisher<Void, Never>
     func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never>
     func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never>
+    //테마 선택시 반영되도록 상세 색상 가져오기
+    func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never>
 }
 
-final public class TimeTableMainUseCase: TimeTableMainUseCaseType {
-    private let store: TimeTableStore
+final public class MainUseCase: MainUseCaseType {
+    private var store: TimeTableStoreType
     
     public let userRepository: UserRepositoryType
     public let scheduleRepository: ScheduleRepositoryType
     public let sectionRepository: SectionRepositoryType
     public let timeTableRepository: TimeTableRepositoryType
+    public let settingRepository: SettingRepositoryType
     
     private var cancelBag = CancelBag()
     
     public init(
-        store: TimeTableStore,
+        store: TimeTableStoreType,
         userRepository: UserRepositoryType,
         scheduleRepository: ScheduleRepositoryType,
         sectionRepository: SectionRepositoryType,
@@ -41,6 +44,7 @@ final public class TimeTableMainUseCase: TimeTableMainUseCaseType {
         self.userRepository = userRepository
         self.scheduleRepository = scheduleRepository
         self.sectionRepository = sectionRepository
+        self.settingRepository = settingRepository
         self.timeTableRepository = timeTableRepository
     }
     
@@ -96,9 +100,18 @@ final public class TimeTableMainUseCase: TimeTableMainUseCaseType {
                 .eraseToAnyPublisher()
         }
     }
+    
+    public func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never> {
+        return settingRepository.getThemeDetailInfo(themeName)
+            .map { [$0.defaultColor] + $0.core + $0.gradient}
+            .catch { _ in
+                return Just([]).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
 }
 
-extension TimeTableMainUseCase {
+extension MainUseCase {
     func getTableId() -> AnyPublisher<Int?, Never> {
         timeTableRepository.getTableList()
             .flatMap { tableId -> AnyPublisher<Int?, Never> in

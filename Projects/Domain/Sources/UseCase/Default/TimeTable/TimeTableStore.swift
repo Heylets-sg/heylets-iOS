@@ -11,7 +11,22 @@ import Combine
 
 import Core
 
-final public class TimeTableStore {
+public protocol TimeTableStoreType {
+    var tableId: Int { get set }
+    
+    var timeTableInfo: CurrentValueSubject<TimeTableInfo, Never> { get }
+    var sectionList: PassthroughSubject<[SectionInfo], Never> { get }
+    var displayInfo: PassthroughSubject<DisplayTypeInfo, Never> { get }
+    var profileInfo: CurrentValueSubject<ProfileInfo, Never> { get }
+    
+    var errMessage: PassthroughSubject<String, Never> { get }
+    var emptyScheduleError: PassthroughSubject<String, Never> { get }
+    var guestModeError: PassthroughSubject<Void, Never> { get }
+    
+    func getTableDetailInfo() -> AnyPublisher<Void, Never>
+}
+
+final public class TimeTableStore: TimeTableStoreType {
     public let timeTableRepository: TimeTableRepositoryType
     
     private var cancelBag = CancelBag()
@@ -31,7 +46,7 @@ final public class TimeTableStore {
     public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()
     public var profileInfo = CurrentValueSubject<ProfileInfo, Never>(.empty)
     
-    func getTableDetailInfo() -> AnyPublisher<Void, Never> {
+    public func getTableDetailInfo() -> AnyPublisher<Void, Never> {
         timeTableRepository.getTableDetailInfo(tableId)
             .handleEvents(receiveOutput: { [weak self] detailInfo in
                 self?.timeTableInfo.send(detailInfo.tableInfo)

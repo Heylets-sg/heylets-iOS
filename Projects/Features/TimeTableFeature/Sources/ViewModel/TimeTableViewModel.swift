@@ -62,9 +62,11 @@ public class TimeTableViewModel: ObservableObject {
     
     @Published var state = State()
     private let cancelBag = CancelBag()
+    
+    private let store: TimeTableStoreType
     public var windowRouter: WindowRoutableType
     public var navigationRouter: NavigationRoutableType
-    private let useCase: TimeTableUseCaseType
+    private let useCase: MainUseCaseType
     public var settingViewModel: TimeTableSettingViewModel
     
     var viewType: TimeTableViewType { viewTypeService.viewType }
@@ -87,20 +89,25 @@ public class TimeTableViewModel: ObservableObject {
         _ addCustomModuleViewModel: AddCustomModuleViewModel,
         _ themeViewModel: ThemeViewModel,
         _ settingViewModel: TimeTableSettingViewModel,
-        _ navigationRouter: NavigationRoutableType,
+        
+        _ store: TimeTableStoreType,
+        _ useCase: MainUseCaseType,
+        
         _ windowRouter: WindowRoutableType,
-        _ useCase: TimeTableUseCaseType
+        _ navigationRouter: NavigationRoutableType
     ) {
         self.searchModuleViewModel = searchModuleViewModel
         self.addCustomModuleViewModel = addCustomModuleViewModel
         self.themeViewModel = themeViewModel
         self.settingViewModel = settingViewModel
         
+        self.store = store
         self.useCase = useCase
+        
         self.windowRouter = windowRouter
         self.navigationRouter = navigationRouter
         
-        bindState()
+        bindStore()
         
         timeTable = sectionList.createTimeTableCellList()
         
@@ -220,26 +227,26 @@ public class TimeTableViewModel: ObservableObject {
         }
     }
     
-    private func bindState() {
+    private func bindStore() {
         weak var owner = self
         guard let owner else { return }
         
-        useCase.timeTableInfo
+        store.timeTableInfo
             .receive(on: RunLoop.main)
             .assign(to: \.timeTableInfo, on: self)
             .store(in: cancelBag)
         
-        useCase.profileInfo
+        store.profileInfo
             .receive(on: RunLoop.main)
             .assign(to: \.state.profile, on: self)
             .store(in: cancelBag)
         
-        useCase.displayInfo
+        store.displayInfo
             .receive(on: RunLoop.main)
             .assign(to: \.displayTypeInfo, on: self)
             .store(in: cancelBag)
         
-        let timeTableCellList = useCase.sectionList
+        let timeTableCellList = store.sectionList
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: {
                 owner.sectionList = $0
@@ -269,7 +276,7 @@ public class TimeTableViewModel: ObservableObject {
             })
             .store(in: cancelBag)
         
-        useCase.errMessage
+        store.errMessage
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.viewTypeService.reset()
@@ -281,7 +288,7 @@ public class TimeTableViewModel: ObservableObject {
             .assign(to: \.state.error, on: self)
             .store(in: cancelBag)
         
-        useCase.guestModeError
+        store.guestModeError
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.viewTypeService.reset()
@@ -293,7 +300,7 @@ public class TimeTableViewModel: ObservableObject {
             .assign(to: \.state.alerts.showGuestErrorAlert, on: self)
             .store(in: cancelBag)
         
-        useCase.emptyScheduleError
+        store.emptyScheduleError
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.viewTypeService.reset()
