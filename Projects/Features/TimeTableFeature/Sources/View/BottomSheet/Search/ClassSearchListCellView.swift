@@ -70,3 +70,10 @@ struct ClassSearchListCellView: View {
         }
     }
 }
+
+extension ClassSearchListCellView: Equatable {
+    nonisolated static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.isSelected == rhs.isSelected &&
+        lhs.section.id == rhs.section.id
+    }
+}

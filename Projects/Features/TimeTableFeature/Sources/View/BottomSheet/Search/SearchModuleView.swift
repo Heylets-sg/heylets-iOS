@@ -64,14 +64,17 @@ public struct SearchModuleView: View {
                 
             } else {
                 ScrollView {
-                    ForEach(viewModel.lectureList) { lecture in
-                        ClassSearchListCellView(
-                            isSelected: viewModel.state.selectedLecture == lecture,
-                            section: lecture,
-                            cellDidTap: { viewModel.send(.lectureCellDidTap(lecture)) },
-                            addLectureDidTap: { viewModel.send(.addLectureButtonDidTap(lecture))}
+                    LazyVStack {
+                        ForEach(viewModel.lectureList) { lecture in
+                            ClassSearchListCellView(
+                                isSelected: viewModel.state.selectedLecture == lecture,
+                                section: lecture,
+                                cellDidTap: { viewModel.send(.lectureCellDidTap(lecture)) },
+                                addLectureDidTap: { viewModel.send(.addLectureButtonDidTap(lecture))}
                             )
-                        .padding(.bottom, 3)
+                            .equatable()
+                            .padding(.bottom, 3)
+                        }
                     }
                 }
                 .loading(viewModel.state.isLoading)
