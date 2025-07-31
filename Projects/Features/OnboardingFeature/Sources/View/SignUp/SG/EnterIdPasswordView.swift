@@ -61,9 +61,8 @@ public struct EnterIdPasswordView: View {
     }
 }
 
-import Domain
-#Preview {
-    EnterIdPasswordView(viewModel: .init(navigationRouter: Router.default.navigationRouter, useCase: StubHeyUseCase().signUpUseCase))
-        .environmentObject(Router.default)
-        .preferredColorScheme(.dark)
-}
+//#Preview {
+//    EnterIdPasswordView(viewModel: .init(navigationRouter: Router.default.navigationRouter, useCase: StubHeyUseCase().signUpUseCase))
+//        .environmentObject(Router.default)
+//        .preferredColorScheme(.dark)
+//}

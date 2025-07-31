@@ -85,13 +85,13 @@ fileprivate struct GenderButton: View {
     }
 }
 
-#Preview {
-    SGEnterPersonalInfoView(
-        viewModel: .init(
-            navigationRouter: Router.default.navigationRouter,
-            useCase: StubHeyUseCase.stub.signUpUseCase
-        )
-    )
-    .environmentObject(Router.default)
-    .preferredColorScheme(.dark)
-}
+//#Preview {
+//    SGEnterPersonalInfoView(
+//        viewModel: .init(
+//            navigationRouter: Router.default.navigationRouter,
+//            useCase: StubHeyUseCase.stub.signUpUseCase
+//        )
+//    )
+//    .environmentObject(Router.default)
+//    .preferredColorScheme(.dark)
+//}

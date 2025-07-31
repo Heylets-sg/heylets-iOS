@@ -140,14 +140,14 @@ public struct LogInView: View {
     }
 }
 
-#Preview {
-    LogInView(
-        viewModel: .init(
-            navigationRouter: Router.default.navigationRouter,
-            windowRouter: Router.default.windowRouter,
-            useCase: StubHeyUseCase.stub.signInUseCase
-        )
-    )
-    .environmentObject(Router.default)
-    .preferredColorScheme(.dark)
-}
+//#Preview {
+//    LogInView(
+//        viewModel: .init(
+//            navigationRouter: Router.default.navigationRouter,
+//            windowRouter: Router.default.windowRouter,
+//            useCase: StubHeyUseCase.stub.signInUseCase
+//        )
+//    )
+//    .environmentObject(Router.default)
+//    .preferredColorScheme(.dark)
+//}

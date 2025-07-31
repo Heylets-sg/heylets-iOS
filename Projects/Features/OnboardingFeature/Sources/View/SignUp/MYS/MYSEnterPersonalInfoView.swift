@@ -136,12 +136,12 @@ fileprivate struct GenderButton: View {
     }
 }
 
-#Preview {
-    MYSEnterPersonalInfoView(
-        viewModel: .init(
-            navigationRouter: Router.default.navigationRouter,
-            useCase: StubHeyUseCase.stub.signUpUseCase
-        )
-    )
-    .environmentObject(Router.default)
-}
+//#Preview {
+//    MYSEnterPersonalInfoView(
+//        viewModel: .init(
+//            navigationRouter: Router.default.navigationRouter,
+//            useCase: StubHeyUseCase.stub.signUpUseCase
+//        )
+//    )
+//    .environmentObject(Router.default)
+//}

@@ -15,7 +15,7 @@ import Core
 
 struct MissingModuleView: View {
     var keyword: String
-    @Binding var reportMissingModuleAlertIsPresented: Bool
+//    @Binding var reportMissingModuleAlertIsPresented: Bool
     
     var body: some View {
         Text("We couldn't find a match for\n'\(keyword)'.")
@@ -28,7 +28,7 @@ struct MissingModuleView: View {
             }
         
         Button {
-            reportMissingModuleAlertIsPresented = true
+//            reportMissingModuleAlertIsPresented = true
         } label: {
             HStack {
                 Text("Report Missing Modules")

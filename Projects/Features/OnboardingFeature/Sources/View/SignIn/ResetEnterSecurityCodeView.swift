@@ -52,16 +52,16 @@ public struct ResetEnterSecurityCodeView: View {
     }
 }
 
-#Preview {
-    EnterSecurityCodeView(
-        viewModel: .init(
-            navigationRouter: Router.default.navigationRouter,
-            useCase: StubHeyUseCase.stub.signUpUseCase,
-            email: "",
-            nationality: .Malaysia
-        )
-    )
-    .environmentObject(Router.default)
-    .preferredColorScheme(.dark)
-}
+//#Preview {
+//    EnterSecurityCodeView(
+//        viewModel: .init(
+//            navigationRouter: Router.default.navigationRouter,
+//            useCase: StubHeyUseCase.stub.signUpUseCase,
+//            email: "",
+//            nationality: .Malaysia
+//        )
+//    )
+//    .environmentObject(Router.default)
+//    .preferredColorScheme(.dark)
+//}
 

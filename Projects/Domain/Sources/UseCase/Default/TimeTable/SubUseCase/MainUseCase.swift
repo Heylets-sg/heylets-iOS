@@ -9,44 +9,109 @@
 import Foundation
 import Combine
 
-public extension TimeTableUseCase {
+import Core
+
+public protocol MainUseCaseType {
     // 시간표 상세조회 불러오기
+    func fetchTableInfo() -> AnyPublisher<Void, Never>
+    func getProfileInfo() -> AnyPublisher<Void, Never>
+    func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never>
+    func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never>
+    //테마 선택시 반영되도록 상세 색상 가져오기
+    func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never>
+}
+
+final public class MainUseCase: MainUseCaseType {
+    private var store: TimeTableStoreType
     
-    func fetchTableInfo() -> AnyPublisher<Void, Never> {
+    public let userRepository: UserRepositoryType
+    public let scheduleRepository: ScheduleRepositoryType
+    public let sectionRepository: SectionRepositoryType
+    public let timeTableRepository: TimeTableRepositoryType
+    public let settingRepository: SettingRepositoryType
+    
+    private var cancelBag = CancelBag()
+    
+    public init(
+        store: TimeTableStoreType,
+        userRepository: UserRepositoryType,
+        scheduleRepository: ScheduleRepositoryType,
+        sectionRepository: SectionRepositoryType,
+        settingRepository: SettingRepositoryType,
+        timeTableRepository: TimeTableRepositoryType
+    ) {
+        self.store = store
+        self.userRepository = userRepository
+        self.scheduleRepository = scheduleRepository
+        self.sectionRepository = sectionRepository
+        self.settingRepository = settingRepository
+        self.timeTableRepository = timeTableRepository
+    }
+    
+    public func fetchTableInfo() -> AnyPublisher<Void, Never> {
         getTableId()
             .filter { $0 != nil}
             .map { $0! }
             .handleEvents(receiveOutput: { [weak self] id in
-                self?.tableId = id
+                self?.store.tableId = id
             })
             .map { _ in }
-            .flatMap(getTableDetailInfo)
+            .flatMap(store.getTableDetailInfo)
             .eraseToAnyPublisher()
     }
     
-    func getProfileInfo() -> AnyPublisher<Void, Never> {
+    public func getProfileInfo() -> AnyPublisher<Void, Never> {
         userRepository.getProfile()
             .handleEvents(receiveOutput: { [weak self] profileInfo in
-                self?.profileInfo.send(profileInfo)
+                self?.store.profileInfo.send(profileInfo)
             })
             .map { _ in }
             .catch {  _ in Empty() }
             .eraseToAnyPublisher()
     }
     
-    
-    func getTableDetailInfo() -> AnyPublisher<Void, Never> {
-        timeTableRepository.getTableDetailInfo(tableId)
-            .handleEvents(receiveOutput: { [weak self] detailInfo in
-                self?.timeTableInfo.send(detailInfo.tableInfo)
-                self?.displayInfo.send(detailInfo.tableInfo.displayType!)
-                self?.sectionList.send(detailInfo.sectionList)
-            })
-            .map { _ in }
-            .catch {  _ in Empty() }
-            .eraseToAnyPublisher()
+    public func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never> {
+        if scheduleIsEmpty {
+            store.emptyScheduleError.send(name)
+            return Empty<Void, Never>()
+                .eraseToAnyPublisher()
+        } else {
+            return sectionRepository.addSection(store.tableId, sectionId, "")
+                .catch { [weak self] error in
+                    if error.isGuestModeError { self?.store.guestModeError.send(()) }
+                    else { self?.store.errMessage.send(error.description) }
+                    return Empty<Void, Never>()
+                }
+                .flatMap(store.getTableDetailInfo)
+                .eraseToAnyPublisher()
+        }
     }
     
+    public func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never> {
+        if isCustom {
+            return scheduleRepository.deleteLectureModule(store.tableId, sectionId)
+                .catch { _ in Empty() }
+                .flatMap(store.getTableDetailInfo)
+                .eraseToAnyPublisher()
+        } else {
+            return sectionRepository.deleteSection(store.tableId, sectionId)
+                .catch { _ in Empty() }
+                .flatMap(store.getTableDetailInfo)
+                .eraseToAnyPublisher()
+        }
+    }
+    
+    public func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never> {
+        return settingRepository.getThemeDetailInfo(themeName)
+            .map { [$0.defaultColor] + $0.core + $0.gradient}
+            .catch { _ in
+                return Just([]).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+}
+
+extension MainUseCase {
     func getTableId() -> AnyPublisher<Int?, Never> {
         timeTableRepository.getTableList()
             .flatMap { tableId -> AnyPublisher<Int?, Never> in
@@ -66,37 +131,5 @@ public extension TimeTableUseCase {
                 Just(nil).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
-    }
-    
-    func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never> {
-        if scheduleIsEmpty {
-            emptyScheduleError.send(name)
-            return Empty<Void, Never>()
-                .eraseToAnyPublisher()
-        } else {
-            return sectionRepository.addSection(tableId, sectionId, "")
-                .catch { [weak self] error in
-                    if error.isGuestModeError { self?.guestModeError.send(()) }
-                    else { self?.errMessage.send(error.description) }
-                    return Empty<Void, Never>()
-                }
-                .flatMap(getTableDetailInfo)
-                .eraseToAnyPublisher()
-        }
-        
-    }
-    
-    func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never> {
-        if isCustom {
-            return scheduleRepository.deleteLectureModule(tableId, sectionId)
-                .catch { _ in Empty() }
-                .flatMap(getTableDetailInfo)
-                .eraseToAnyPublisher()
-        } else {
-            return sectionRepository.deleteSection(tableId, sectionId)
-                .catch { _ in Empty() }
-                .flatMap(getTableDetailInfo)
-                .eraseToAnyPublisher()
-        }
     }
 }

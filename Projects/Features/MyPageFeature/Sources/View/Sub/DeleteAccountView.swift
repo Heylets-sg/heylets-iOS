@@ -71,12 +71,12 @@ public struct DeleteAccountView: View {
     }
 }
 
-#Preview {
-    DeleteAccountView(
-        viewModel: .init(
-            useCase: StubHeyUseCase.stub.myPageUseCase, navigationRouter: Router.default.navigationRouter,
-            windowRouter: Router.default.windowRouter
-        )
-    )
-    .environmentObject(Router.default)
-}
+//#Preview {
+//    DeleteAccountView(
+//        viewModel: .init(
+//            useCase: StubHeyUseCase.stub.myPageUseCase, navigationRouter: Router.default.navigationRouter,
+//            windowRouter: Router.default.windowRouter
+//        )
+//    )
+//    .environmentObject(Router.default)
+//}

@@ -81,12 +81,12 @@ public struct ChangePasswordView: View {
     
 }
 
-#Preview {
-    ChangePasswordView(
-        viewModel: .init(
-            navigationRouter: Router.default.navigationRouter,
-            useCase: StubHeyUseCase.stub.myPageUseCase
-        )
-    )
-    .environmentObject(Router.default)
-}
+//#Preview {
+//    ChangePasswordView(
+//        viewModel: .init(
+//            navigationRouter: Router.default.navigationRouter,
+//            useCase: StubHeyUseCase.stub.myPageUseCase
+//        )
+//    )
+//    .environmentObject(Router.default)
+//}

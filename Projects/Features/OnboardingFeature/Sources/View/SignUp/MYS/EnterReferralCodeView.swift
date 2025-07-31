@@ -95,15 +95,15 @@ public struct EnterReferralCodeView: View {
     }
 }
 
-#Preview {
-    EnterReferralCodeView(
-        viewModel: .init(
-            navigationRouter: Router.default.navigationRouter,
-            windowRouter:  Router.default.windowRouter,
-            useCase: StubHeyUseCase.stub.signUpUseCase
-        )
-    )
-    .environmentObject(Router.default)
-    .preferredColorScheme(.dark)
-}
+//#Preview {
+//    EnterReferralCodeView(
+//        viewModel: .init(
+//            navigationRouter: Router.default.navigationRouter,
+//            windowRouter:  Router.default.windowRouter,
+//            useCase: StubHeyUseCase.stub.signUpUseCase
+//        )
+//    )
+//    .environmentObject(Router.default)
+//    .preferredColorScheme(.dark)
+//}
 

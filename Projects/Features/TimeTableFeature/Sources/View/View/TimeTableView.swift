@@ -49,71 +49,49 @@ public struct TimeTableView: View {
                         viewModel.send(.addLecture(lecture))
                     }
                 }
+                .heyAlert(viewModel.state.alertType, viewModel: viewModel)
                 .heyAlert(
-                    isPresented: viewModel.state.error.0,
-                    title: viewModel.state.error.1,
-                    primaryButton: ("Close", .gray, {
-                        viewModel.send(.errorAlertViewCloseButtonDidTap)
-                    })
-                )
-                .heyAlert(
-                    isPresented: viewModel.state.alerts.showEmptyScheduleErrorAlert.0,
-                    title: "The section hasn't been registered yet",
-                    primaryButton: ("Add", .gray, {
-                        viewModel.send(.emptyScheduleErrorAddButtonDidTap(
-                            viewModel.state.alerts.showEmptyScheduleErrorAlert.1
-                        ))
-                    })
-                )
-                .heyAlert(
-                    isPresented: viewModel.state.alerts.showDeleteAlert,
-                    title: "Delete module?",
-                    primaryButton: ("Delete", .error, {
-                        viewModel.send(.deleteModule)
-                    }),
-                    secondaryButton: ("Close", .gray, {
-                        viewModel.send(.deleteModuleAlertCloseButtonDidTap)
-                    })
-                )
-                .onAppear {
-                    Analytics.shared.track(.screenView("delete_module", .modal))
-                }
-                .heyAlert(
-                    isPresented: viewModel.state.alerts.showGuestErrorAlert,
+                    isPresented: viewModel.state.showGuestErrorAlert,
                     loginButtonAction: {
                         viewModel.send(.loginButtonDidTap)
                     },
                     notRightNowButton: {
                         viewModel.send(.notRightNowButtonDidTap)
                     })
-                .sheet(isPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert) {
-                    ReportMissingModuleView(
-                        reportMissingModuleAlertIsPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert
-                    )
-                    .transition(.move(edge: .trailing))
-                    .presentationDetents([.fraction(0.95)])
-                    .presentationDragIndicator(.visible)
+                .sheet(item: $viewModel.state.sheetType) { type in
+                    switch type {
+                    case .reportMissingModule:
+                        ReportMissingModuleView(
+                            reportMissingModuleAlertIsPresented: Binding(
+                                get: { viewModel.state.sheetType != nil },
+                                set: { if !$0 { viewModel.state.sheetType = nil } }
+                            )
+                        )
+                        .transition(.move(edge: .trailing))
+                        .presentationDetents([.fraction(0.95)])
+                        .presentationDragIndicator(.visible)
+
+                    case .setting:
+                        SettingTimeTableView(
+                            viewType: viewTypeService.binding,
+                            settingAlertType: $viewModel.settingViewModel.settingAlertType
+                        )
+                        .presentationDetents([.height(267)])
+                        .presentationDragIndicator(.hidden)
+                        .ignoresSafeArea(.container, edges: .bottom)
+
+                    case .detail:
+                        DetailModuleInfoView(
+                            viewType: viewTypeService.binding,
+                            sectionInfo: viewModel.detailSectionInfo,
+                            onDelete: { viewModel.send(.deleteButtonDidTap) }
+                        )
+                        .presentationDetents([.height(280)])
+                        .presentationDragIndicator(.hidden)
+                        .ignoresSafeArea(.container, edges: .bottom)
+                    }
                 }
-                .sheet(isPresented: .constant(viewTypeService.viewType == .setting)) {
-                    SettingTimeTableView(
-                        viewType: viewTypeService.binding,
-                        settingAlertType: $viewModel.settingViewModel.settingAlertType
-                    )
-                    .presentationDetents([.height(267)])
-                    .presentationDragIndicator(.hidden)
-                    .ignoresSafeArea(.container, edges: .bottom)
-                }
-                .sheet(isPresented: .constant(viewTypeService.viewType == .detail)) {
-                    DetailModuleInfoView(
-                        viewType: viewTypeService.binding,
-                        deleteModuleAlertIsPresented: $viewModel.state.alerts.showDeleteAlert,
-                        sectionInfo: viewModel.detailSectionInfo
-                    )
-                    .presentationDetents([.height(280)])
-                    .presentationDragIndicator(.hidden)
-                    .ignoresSafeArea(.container, edges: .bottom)
-                }
-                
+
                 if viewTypeService.viewType == .main {
                     VStack {
                         Spacer()
@@ -169,7 +147,7 @@ extension TimeTableView {
         case .search:
             SearchModuleView(
                 viewType: viewTypeService.binding,
-                reportMissingModuleAlertIsPresented: $viewModel.state.alerts.showReposrtMissingModuleAlert,
+                reportMissingModuleAlertIsPresented: $viewModel.state.sheetType,
                 viewModel: viewModel.searchModuleViewModel
             )
             .bottomSheetTransition()
@@ -232,9 +210,10 @@ extension TimeTableView {
 
         default:
             TopView(
-                timeTableInfo: $viewModel.timeTableInfo,
-                viewType: viewTypeService.binding,
-                profileInfo: $viewModel.state.profile
+                timeTableInfo: viewModel.timeTableInfo,
+                badgeImage: viewModel.state.profile.university.badgeImage,
+                onSearch: {  viewTypeService.switchTo(.search) },
+                onSetting: { viewModel.state.sheetType = .setting }
             )
             .frame(height: viewType.topViewHeight.adjusted)
             .environmentObject(container)
@@ -242,19 +221,23 @@ extension TimeTableView {
     }
 }
 
-#Preview {
-    let useCase = StubHeyUseCase.stub.timeTableUseCase
-    return TimeTableView(
-        viewModel: .init(
-            SearchModuleViewModel(useCase),
-            AddCustomModuleViewModel(useCase),
-            ThemeViewModel(useCase, Router.default.navigationRouter),
-            TimeTableSettingViewModel(useCase),
-            Router.default.navigationRouter,
-            Router.default.windowRouter,
-            useCase
-        )
-    )
-    .environmentObject(Router.default)
-    .preferredColorScheme(.dark)
-}
+
+
+
+
+//#Preview {
+//    let useCase = StubHeyUseCase.stub.timeTableUseCase
+//    return TimeTableView(
+//        viewModel: .init(
+//            SearchModuleViewModel(useCase),
+//            AddCustomModuleViewModel(useCase),
+//            ThemeViewModel(useCase, Router.default.navigationRouter),
+//            TimeTableSettingViewModel(useCase),
+//            Router.default.navigationRouter,
+//            Router.default.windowRouter,
+//            useCase
+//        )
+//    )
+//    .environmentObject(Router.default)
+//    .preferredColorScheme(.dark)
+//}

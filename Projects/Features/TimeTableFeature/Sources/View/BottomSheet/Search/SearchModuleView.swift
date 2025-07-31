@@ -15,7 +15,7 @@ import Core
 
 public struct SearchModuleView: View {
     @Binding var viewType: TimeTableViewType
-    @Binding var reportMissingModuleAlertIsPresented: Bool
+    @Binding var reportMissingModuleAlertIsPresented: SheetType?
     @ObservedObject var viewModel: SearchModuleViewModel
     
     public var body: some View {
@@ -35,7 +35,7 @@ public struct SearchModuleView: View {
             if viewModel.lectureList.isEmpty && !viewModel.filterInfo.keyword.isEmpty {
                 MissingModuleView(
                     keyword: viewModel.filterInfo.keyword,
-                    reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented
+//                    reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented
                 )
             } else {
                 ScrollViewReader { proxy in

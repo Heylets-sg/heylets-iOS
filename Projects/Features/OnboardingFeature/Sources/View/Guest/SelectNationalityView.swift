@@ -114,14 +114,14 @@ struct SelectNationalityView: View {
     }
 }
 
-#Preview {
-    SelectNationalityView(
-        viewModel: .init(
-            navigationRouter: Router.default.navigationRouter,
-            windowRouter: Router.default.windowRouter,
-            useCase: StubHeyUseCase.stub.signUpUseCase
-        )
-    )
-    .environmentObject(Router.default)
-}
+//#Preview {
+//    SelectNationalityView(
+//        viewModel: .init(
+//            navigationRouter: Router.default.navigationRouter,
+//            windowRouter: Router.default.windowRouter,
+//            useCase: StubHeyUseCase.stub.signUpUseCase
+//        )
+//    )
+//    .environmentObject(Router.default)
+//}
 

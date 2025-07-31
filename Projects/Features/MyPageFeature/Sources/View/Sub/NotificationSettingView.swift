@@ -314,12 +314,12 @@ struct ClassNotificationSection: View {
     }
 }
 
-#Preview {
-    NotificationSettingView(
-        viewModel: .init(
-            useCase: StubHeyUseCase.stub.myPageUseCase,
-            navigationRouter: Router.default.navigationRouter
-        )
-    )
-    .environmentObject(Router.default)
-}
+//#Preview {
+//    NotificationSettingView(
+//        viewModel: .init(
+//            useCase: StubHeyUseCase.stub.myPageUseCase,
+//            navigationRouter: Router.default.navigationRouter
+//        )
+//    )
+//    .environmentObject(Router.default)
+//}

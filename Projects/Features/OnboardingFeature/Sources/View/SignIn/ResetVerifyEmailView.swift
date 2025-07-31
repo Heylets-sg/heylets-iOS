@@ -49,12 +49,12 @@ public struct ResetVerifyEmailView: View {
     }
 }
 
-import Domain
-#Preview {
-    ResetVerifyEmailView(viewModel: .init(
-        navigationRouter: Router.default.navigationRouter,
-        useCase: StubHeyUseCase.stub.signInUseCase
-    )
-    )
-    .preferredColorScheme(.dark)
-}
+//import Domain
+//#Preview {
+//    ResetVerifyEmailView(viewModel: .init(
+//        navigationRouter: Router.default.navigationRouter,
+//        useCase: StubHeyUseCase.stub.signInUseCase
+//    )
+//    )
+//    .preferredColorScheme(.dark)
+//}

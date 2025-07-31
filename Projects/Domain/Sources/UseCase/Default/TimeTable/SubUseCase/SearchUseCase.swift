@@ -11,8 +11,34 @@ import Combine
 import Core
 
 //MARK: Serach
-public extension TimeTableUseCase {
+
+public protocol SearchUseCaseType {
+    //강의 목록 불러오기
     func getLectureList(
+        _ filterInfo: FilterInfo
+    ) -> AnyPublisher<[SectionInfo], Never>
+    //커스텀 모듈 추가하기
+    func addCustomModule(_ customModule: CustomModuleInfo) -> AnyPublisher<Void, Never>
+    //학과 찾기
+    func getLectureDepartment() -> AnyPublisher<[String], Never>
+}
+
+final public class SearchUseCase: SearchUseCaseType {
+    private let store: TimeTableStoreType
+    public let lectureRepository: LectureRepositoryType
+    public let scheduleRepository: ScheduleRepositoryType
+    
+    init(
+        store: TimeTableStoreType,
+        lectureRepository: LectureRepositoryType,
+        scheduleRepository: ScheduleRepositoryType
+    ) {
+        self.store = store
+        self.lectureRepository = lectureRepository
+        self.scheduleRepository = scheduleRepository
+    }
+    
+    public func getLectureList(
         _ filterInfo: FilterInfo
     ) -> AnyPublisher<[SectionInfo], Never> {
         return lectureRepository.getLectureList(filterInfo)
@@ -32,21 +58,21 @@ public extension TimeTableUseCase {
             .eraseToAnyPublisher()
     }
     
-    func addCustomModule(
+    public func addCustomModule(
         _ customModule: CustomModuleInfo
     ) -> AnyPublisher<Void, Never> {
-        return scheduleRepository.addCustomModule(tableId, customModule)
+        return scheduleRepository.addCustomModule(store.tableId, customModule)
             .catch { [weak self] error in
-                if error.isGuestModeError { self?.guestModeError.send(()) }
-                else { self?.errMessage.send(error.description) }
+                if error.isGuestModeError { self?.store.guestModeError.send(()) }
+                else { self?.store.errMessage.send(error.description) }
                 return Empty<Void, Never>()
             }
-            .flatMap(getTableDetailInfo)
+            .flatMap(store.getTableDetailInfo)
             .eraseToAnyPublisher()
     }
     
-    func getLectureDepartment() -> AnyPublisher<[String], Never> {
-        lectureRepository.getLectureDepartment(profileInfo.value.university.rawValue)
+    public func getLectureDepartment() -> AnyPublisher<[String], Never> {
+        lectureRepository.getLectureDepartment(store.profileInfo.value.university.rawValue)
             .map { $0 }
             .catch {  _ in Empty<[String], Never>() }
             .eraseToAnyPublisher()

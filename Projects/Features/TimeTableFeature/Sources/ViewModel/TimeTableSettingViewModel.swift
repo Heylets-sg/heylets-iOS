@@ -30,12 +30,12 @@ public class TimeTableSettingViewModel: ObservableObject {
     
     @Published var state = State()
     private let cancelBag = CancelBag()
-    private let useCase: TimeTableUseCaseType
+    private let useCase: SettingUseCaseType
     @Published var settingAlertType: TimeTableSettingAlertType? = nil
 
     var settingsUpdated: (() -> Void)?
     
-    public init(_ useCase: TimeTableUseCaseType) {
+    public init(_ useCase: SettingUseCaseType) {
         self.useCase = useCase
     }
     
