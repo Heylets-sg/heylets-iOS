@@ -18,7 +18,6 @@ import Core
 public class ThemeViewModel: ObservableObject {
     struct State {
         var isShowingSelectInfoView: Bool = false
-        var saveSettingInfoSucced: Bool = false
         var selectedTheme: Theme? = nil
         var inviteCodeViewHidden: Bool = true
         var isShowingPopup: Bool = false
@@ -38,21 +37,24 @@ public class ThemeViewModel: ObservableObject {
     @Published var state = State()
     @Published var themeList: [Theme] = []
     private let useCase: SettingUseCaseType
+    private let store: TimeTableStoreType
     @Published var displayType: DisplayTypeInfo = .MODULE_CODE
     @Published var theme: String = ""
     
     private let navigationRouter: NavigationRoutableType
     
-    var selectThemeClosure: ((String) -> Void)?
+//    var selectThemeClosure: ((String) -> Void)?
     var gotoInviteCodeClosure: (() -> Void)?
    
     private let cancelBag = CancelBag()
     
     public init(
         _ useCase: SettingUseCaseType,
+        _ store: TimeTableStoreType,
         _ navigationRouter: NavigationRoutableType
     ) {
         self.useCase = useCase
+        self.store = store
         self.navigationRouter = navigationRouter
     }
     
@@ -93,8 +95,12 @@ public class ThemeViewModel: ObservableObject {
         case .themeButtonDidTap(let selectedTheme):
             state.selectedTheme = selectedTheme
             theme = selectedTheme.name
-            guard let selectThemeClosure else { return }
-            selectThemeClosure(selectedTheme.name)
+//            useCase.getThemeDetailInfo(selectedTheme.name)
+//                .receive(on: RunLoop.main)
+////                .assign(to: \.store.selectedThemeColor, on: self)
+//                .store(in: cancelBag)
+//            guard let selectThemeClosure else { return }
+//            selectThemeClosure(selectedTheme.name)
             
         case .selectDisplayTypeButtonDidTap:
             state.isShowingSelectInfoView.toggle()

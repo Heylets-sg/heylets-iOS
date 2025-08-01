@@ -11,7 +11,11 @@ import Domain
 import DSKit
 
 public struct TimeTableSelectedView: View {
-    @Binding var selectLecture: [TimeTableCellInfo]
+    @Binding var selectLecture: [TimeTableCellInfo] {
+        didSet {
+            print("뷰에서 변경")
+        }
+    }
     var weekList: [Week]
     var hourList: [Int]
     var cellWidth: CGFloat

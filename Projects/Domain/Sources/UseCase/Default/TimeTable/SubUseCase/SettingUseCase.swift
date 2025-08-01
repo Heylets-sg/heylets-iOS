@@ -22,6 +22,8 @@ public protocol SettingUseCaseType {
     func deleteAllSection() -> AnyPublisher<Void, Never>
     //Invite Code 분기처리
     func handleInviteCodeView() -> AnyPublisher<Bool, Never>
+    // 테마 상세 불러오기
+    func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never>
 }
 
 //MARK: Setting
@@ -114,6 +116,15 @@ final public class SettingUseCase: SettingUseCaseType {
                     .map { $0 != .Malaysia }
                     .catch { _ in Just(true) }
                     .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never> {
+        return settingRepository.getThemeDetailInfo(themeName)
+            .map { [$0.defaultColor] + $0.core + $0.gradient}
+            .catch { _ in
+                return Just([]).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }

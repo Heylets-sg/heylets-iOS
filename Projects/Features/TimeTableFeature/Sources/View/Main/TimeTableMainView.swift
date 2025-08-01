@@ -14,17 +14,17 @@ import BaseFeatureDependency
 
 public struct MainView: View {
     @ObservedObject var viewModel: TimeTableViewModel
-    var presentCoordinator: any PresentCoordinatorType
-    var sheetCoordinator: any SheetCoordinatorType
+    @ObservedObject var state: TimeTableState
+    var coordinator: any PresentCoordinatorType
     
     init(
+        state: TimeTableState,
         viewModel: TimeTableViewModel,
-        presentCoordinator: any PresentCoordinatorType,
-        sheetCoordinator: SheetCoordinatorType
+        coordinator: any PresentCoordinatorType,
     ) {
+        self.state = state
         self.viewModel = viewModel
-        self.presentCoordinator = presentCoordinator
-        self.sheetCoordinator = sheetCoordinator
+        self.coordinator = coordinator
     }
     
     public var body: some View {
@@ -59,11 +59,11 @@ public struct MainView: View {
                                             viewModel: viewModel,
                                             displayType: $viewModel.displayTypeInfo,
                                             cellWidth: cellWidth,
-                                            canTouch: presentCoordinator.isMain()
+                                            canTouch: coordinator.isMain()
                                         )
                                         
                                         TimeTableSelectedView(
-                                            selectLecture: $viewModel.selectLecture,
+                                            selectLecture: $state.selectLecture,
                                             weekList: viewModel.weekList,
                                             hourList: viewModel.hourList,
                                             cellWidth: cellWidth
@@ -73,7 +73,7 @@ public struct MainView: View {
                             }
                         }
                     }
-                    .padding(.bottom, presentCoordinator.isMain() ? 50 : 0)
+                    .padding(.bottom, coordinator.isMain() ? 50 : 0)
                 }
             }
             .loading(viewModel.state.isLoading)

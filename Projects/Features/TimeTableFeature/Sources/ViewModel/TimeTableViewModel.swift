@@ -27,9 +27,6 @@ public class TimeTableViewModel: ObservableObject {
         case onAppear
         case tableCellDidTap(Int)
         case deleteButtonDidTap
-        case selectLecture(SectionInfo)
-        case addLecture(SectionInfo)
-        case selectedTheme(String)
         case addCustomModuleButtonDidTap
         case initMainView
     }
@@ -48,15 +45,11 @@ public class TimeTableViewModel: ObservableObject {
         case gotoMyPage
         case gotoInviteCodeView
     }
-    
-    let searchModuleViewModel: SearchModuleViewModel
-    let addCustomModuleViewModel: AddCustomModuleViewModel
-    let themeViewModel: ThemeViewModel
-    
+
     @Published var state = State()
     private let cancelBag = CancelBag()
     
-    private let store: TimeTableStoreType
+    public var store: TimeTableStoreType
     public var windowRouter: WindowRoutableType
     public var navigationRouter: NavigationRoutableType
     
@@ -76,16 +69,12 @@ public class TimeTableViewModel: ObservableObject {
     
     @Published var detailSectionInfo: SectionInfo = .empty
     
-    @Published var selectLecture: [TimeTableCellInfo] = []
-    @Published var selectedThemeColor: [String] = []
-    
+    public var coreState: TimeTableState
     public init(
-        _ searchModuleViewModel: SearchModuleViewModel,
-        _ addCustomModuleViewModel: AddCustomModuleViewModel,
-        _ themeViewModel: ThemeViewModel,
         _ settingViewModel: TimeTableSettingViewModel,
         
         _ store: TimeTableStoreType,
+        _ state: TimeTableState,
         _ useCase: MainUseCaseType,
         
         _ windowRouter: WindowRoutableType,
@@ -94,12 +83,10 @@ public class TimeTableViewModel: ObservableObject {
         _ presentCoordinator: any PresentCoordinatorType,
         _ sheetCoordinator: SheetCoordinatorType
     ) {
-        self.searchModuleViewModel = searchModuleViewModel
-        self.addCustomModuleViewModel = addCustomModuleViewModel
-        self.themeViewModel = themeViewModel
         self.settingViewModel = settingViewModel
         
         self.store = store
+        self.coreState = state
         self.useCase = useCase
         
         self.windowRouter = windowRouter
@@ -137,39 +124,16 @@ public class TimeTableViewModel: ObservableObject {
         case .deleteButtonDidTap:
             state.alertType = .deleteAlert
             Analytics.shared.track(.screenView("delete_module", .modal))
-        case .selectLecture(let lecture):
-            selectLecture = lecture.timeTableCellInfo
-        case .addLecture(let lecture):
-            Analytics.shared.track(.clickAddModule(
-                courseCode: lecture.code ?? "",
-                courseName: lecture.name,
-                sectionId: lecture.id,
-                professor: lecture.professor
-            )
-            )
-            useCase.addSection(lecture.id, lecture.name, lecture.schedule.isEmpty)
-                .receive(on: RunLoop.main)
-                .sink(receiveValue: { [weak self] _ in
-                    Analytics.shared.track(.moduleAdded)
-                    self?.presentCoordinator.switchTo(.search)
-                    self?.selectLecture = []
-                })
-                .store(in: cancelBag)
         case .initMainView:
             let viewType = presentCoordinator.viewType
             if !(viewType == .search || viewType == .theme(false) || viewType == .addCustom) {
                 presentCoordinator.reset()
-                selectLecture = []
+                coreState.selectLecture = []
             }
         case .addCustomModuleButtonDidTap:
             Analytics.shared.track(.screenView("add_custom_module", .bottom_sheet))
             presentCoordinator.switchTo(.addCustom)
-            selectLecture = []
-        case .selectedTheme(let themeName):
-            useCase.getThemeDetailInfo(themeName)
-                .receive(on: RunLoop.main)
-                .assign(to: \.selectedThemeColor, on: self)
-                .store(in: cancelBag)
+            coreState.selectLecture = []
         }
     }
     
@@ -193,10 +157,12 @@ public class TimeTableViewModel: ObservableObject {
         case .errorAlertViewCloseButtonDidTap:
             presentCoordinator.switchTo(.search)
             state.alertType = nil
+        //MARK: viewModel 리펙토링으로 인한 로직 처리 필요
         case .emptyScheduleErrorAddButtonDidTap(let name):
-            addCustomModuleViewModel.schedule = name
-            state.alertType = nil
-            presentCoordinator.switchTo(.addCustom)
+            break
+//            addCustomModuleViewModel.schedule = name
+//            state.alertType = nil
+//            presentCoordinator.switchTo(.addCustom)
         case .notRightNowButtonDidTap:
             Analytics.shared.track(.clickGuestConfirmReject)
         case .loginButtonDidTap:
@@ -270,7 +236,7 @@ public class TimeTableViewModel: ObservableObject {
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.presentCoordinator.reset()
                 self?.settingViewModel.settingAlertType = nil
-                self?.selectLecture = []
+                self?.coreState.selectLecture = []
             })
             .map { message in .error(message)}
             .assign(to: \.state.alertType, on: self)
@@ -281,7 +247,7 @@ public class TimeTableViewModel: ObservableObject {
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.presentCoordinator.reset()
                 self?.settingViewModel.settingAlertType = nil
-                self?.selectLecture = []
+                self?.coreState.selectLecture = []
             })
             .map { _ in true }
             .assign(to: \.state.showGuestErrorAlert, on: self)
@@ -292,7 +258,7 @@ public class TimeTableViewModel: ObservableObject {
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.presentCoordinator.reset()
                 self?.settingViewModel.settingAlertType = nil
-                self?.selectLecture = []
+                self?.coreState.selectLecture = []
             })
             .map { name in .emptyScheduleError(name)}
             .assign(to: \.state.alertType, on: self)

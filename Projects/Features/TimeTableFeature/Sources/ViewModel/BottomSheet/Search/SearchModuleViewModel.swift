@@ -27,6 +27,7 @@ private enum LectureFetchMode {
     }
 }
 
+@MainActor
 public class SearchModuleViewModel: ObservableObject {
     struct State {
         var selectedLecture: SectionInfo? = nil
@@ -46,22 +47,27 @@ public class SearchModuleViewModel: ObservableObject {
     }
     
     @Published var state = State()
-    var selectLectureClosure: ((SectionInfo) -> Void)?
-    var addLectureClosure: ((SectionInfo) -> Void)?
     public var filterViewModel: SearchFilterViewModel
+    
     @Published var lectureList: [SectionInfo] = []
     @Published var filterInfo: FilterInfo = .init()
     
     private let cancelBag = CancelBag()
     private let useCase: SearchUseCaseType
+    private let coordinator: any PresentCoordinatorType
     
-    public init(_ useCase: SearchUseCaseType) {
+    public init(
+        _ useCase: SearchUseCaseType,
+        _ coordinator: any PresentCoordinatorType
+    ) {
         self.useCase = useCase
+        self.coordinator = coordinator
         self.filterViewModel = .init(useCase)
         
         setupBindings()
     }
     
+    @MainActor
     func send(_ action: Action) {
         switch action {
         case .onAppear:
@@ -77,8 +83,6 @@ public class SearchModuleViewModel: ObservableObject {
             
         case .lectureCellDidTap(let index):
             state.selectedLecture = lectureList[index]
-            guard let selectLecture = selectLectureClosure else { return }
-            selectLecture(lectureList[index])
             
         case .searchButtonDidTap:
             fetchLectures()
@@ -89,9 +93,22 @@ public class SearchModuleViewModel: ObservableObject {
             fetchLectures()
             
         case .addLectureButtonDidTap(let index):
-            guard let addLecture = addLectureClosure else { return }
-            addLecture(lectureList[index])
-            state.selectedLecture = nil
+            let lecture = lectureList[index]
+            Analytics.shared.track(.clickAddModule(
+                courseCode: lecture.code ?? "",
+                courseName: lecture.name,
+                sectionId: lecture.id,
+                professor: lecture.professor
+            )
+            )
+            useCase.addSection(lecture.id, lecture.name, lecture.schedule.isEmpty)
+                .receive(on: RunLoop.main)
+                .sink(receiveValue: { [weak self] _ in
+                    Analytics.shared.track(.moduleAdded)
+                    self?.coordinator.switchTo(.search)
+//                    self?.coreState.selectLecture = []
+                })
+                .store(in: cancelBag)
             
         case .updateFilters:
             filterInfo.page = 0
@@ -122,6 +139,7 @@ public class SearchModuleViewModel: ObservableObject {
 }
 
 extension SearchModuleViewModel {
+    @MainActor
     private func setupBindings() {
         filterViewModel.updateSelectedFilter = { [weak self] filterType, selectedItem in
             guard let self = self else { return }
@@ -132,6 +150,7 @@ extension SearchModuleViewModel {
                 case .level: self.filterInfo.level = selectedItem
                 case .other: self.filterInfo.keywordType = selectedItem
             }
+            
             self.send(.updateFilters)
         }
         

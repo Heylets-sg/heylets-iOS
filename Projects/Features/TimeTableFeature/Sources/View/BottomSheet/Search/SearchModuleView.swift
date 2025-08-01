@@ -14,7 +14,11 @@ import BaseFeatureDependency
 import Core
 
 public struct SearchModuleView: View {
-//    @Binding var reportMissingModuleAlertIsPresented: TimeTableSheetType?
+    @ObservedObject var state: TimeTableState {
+        didSet {
+            print("TimeTable 바뀜")
+        }
+    }
     @ObservedObject var viewModel: SearchModuleViewModel
     var onReport: () -> Void
     
@@ -45,7 +49,10 @@ public struct SearchModuleView: View {
                                 ClassSearchListCellView(
                                     isSelected: viewModel.state.selectedLecture == viewModel.lectureList[index],
                                     section: viewModel.lectureList[index],
-                                    cellDidTap: { viewModel.send(.lectureCellDidTap(index)) },
+                                    cellDidTap: {
+                                        state.setLecture(viewModel.lectureList[index].timeTableCellInfo)
+                                        viewModel.send(.lectureCellDidTap(index))
+                                    },
                                     addLectureDidTap: { viewModel.send(.addLectureButtonDidTap(index))}
                                 )
                                 .equatable()

@@ -21,21 +21,26 @@ public protocol SearchUseCaseType {
     func addCustomModule(_ customModule: CustomModuleInfo) -> AnyPublisher<Void, Never>
     //학과 찾기
     func getLectureDepartment() -> AnyPublisher<[String], Never>
+    // 강의 추가하기
+    func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never>
 }
 
 final public class SearchUseCase: SearchUseCaseType {
     private let store: TimeTableStoreType
     public let lectureRepository: LectureRepositoryType
     public let scheduleRepository: ScheduleRepositoryType
+    public let sectionRepository: SectionRepositoryType
     
     init(
         store: TimeTableStoreType,
         lectureRepository: LectureRepositoryType,
-        scheduleRepository: ScheduleRepositoryType
+        scheduleRepository: ScheduleRepositoryType,
+        sectionRepository: SectionRepositoryType
     ) {
         self.store = store
         self.lectureRepository = lectureRepository
         self.scheduleRepository = scheduleRepository
+        self.sectionRepository = sectionRepository
     }
     
     public func getLectureList(
@@ -76,5 +81,22 @@ final public class SearchUseCase: SearchUseCaseType {
             .map { $0 }
             .catch {  _ in Empty<[String], Never>() }
             .eraseToAnyPublisher()
+    }
+    
+    public func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never> {
+        if scheduleIsEmpty {
+            store.emptyScheduleError.send(name)
+            return Empty<Void, Never>()
+                .eraseToAnyPublisher()
+        } else {
+            return sectionRepository.addSection(store.tableId, sectionId, "")
+                .catch { [weak self] error in
+                    if error.isGuestModeError { self?.store.guestModeError.send(()) }
+                    else { self?.store.errMessage.send(error.description) }
+                    return Empty<Void, Never>()
+                }
+                .flatMap(store.getTableDetailInfo)
+                .eraseToAnyPublisher()
+        }
     }
 }

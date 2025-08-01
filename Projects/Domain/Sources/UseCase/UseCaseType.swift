@@ -77,7 +77,8 @@ public final class HeyUseCase: UseCaseType {
         searchUseCase = SearchUseCase(
             store: timeTableStore,
             lectureRepository: repository.lectureRepository,
-            scheduleRepository: repository.scheduleRepository
+            scheduleRepository: repository.scheduleRepository,
+            sectionRepository: repository.sectionRepository
         )
         
         settingUseCase = SettingUseCase(
