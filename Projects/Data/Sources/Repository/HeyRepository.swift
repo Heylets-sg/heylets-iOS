@@ -33,7 +33,8 @@ public class HeyRepository: RepositoryType {
             authService: service.authService
         )
         timeTableRepository = TimeTableRepository(
-            service: service.timeTableService
+            service: service.timeTableService,
+            cacheManager: TimeTableCacheManager.shared
         )
         settingRepository = SettingRepository(
             service: service.themeService
