@@ -26,16 +26,19 @@ public class TimeTableViewModel: ObservableObject {
     enum Action {
         case onAppear
         case tableCellDidTap(Int)
-        case deleteModule
         case deleteButtonDidTap
         case selectLecture(SectionInfo)
         case addLecture(SectionInfo)
         case selectedTheme(String)
+        case addCustomModuleButtonDidTap
+        case initMainView
+    }
+    
+    enum AlertAction {
+        case deleteModule
         case deleteModuleAlertCloseButtonDidTap
         case errorAlertViewCloseButtonDidTap
         case emptyScheduleErrorAddButtonDidTap(String)
-        case addCustomModuleButtonDidTap
-        case initMainView
         case notRightNowButtonDidTap
         case loginButtonDidTap
     }
@@ -133,36 +136,8 @@ public class TimeTableViewModel: ObservableObject {
         case .deleteButtonDidTap:
             state.alertType = .deleteAlert
             Analytics.shared.track(.screenView("delete_module", .modal))
-            
-        case .deleteModule:
-            Analytics.shared.track(.clickDeleteModule)
-            useCase.deleteSection(
-                detailSectionInfo.isCustom,
-                detailSectionInfo.id
-            )
-            .receive(on: RunLoop.main)
-            .handleEvents(receiveOutput: {
-                Analytics.shared.track(.moduleDeleted)
-            })
-            .map { _ in nil }
-            .assign(to: \.state.alertType, on: self)
-            .store(in: cancelBag)
-            
-        case .deleteModuleAlertCloseButtonDidTap:
-            state.alertType = nil
-            
-        case .errorAlertViewCloseButtonDidTap:
-            presentCoordinator.switchTo(.search)
-            state.alertType = nil
-            
-        case .emptyScheduleErrorAddButtonDidTap(let name):
-            addCustomModuleViewModel.schedule = name
-            state.alertType = nil
-            presentCoordinator.switchTo(.addCustom)
-            
         case .selectLecture(let lecture):
             selectLecture = lecture.timeTableCellInfo
-            
         case .addLecture(let lecture):
             Analytics.shared.track(.clickAddModule(
                 courseCode: lecture.code ?? "",
@@ -179,31 +154,53 @@ public class TimeTableViewModel: ObservableObject {
                     self?.selectLecture = []
                 })
                 .store(in: cancelBag)
-            
         case .initMainView:
             let viewType = presentCoordinator.viewType
             if !(viewType == .search || viewType == .theme(false) || viewType == .addCustom) {
                 presentCoordinator.reset()
                 selectLecture = []
             }
-            
         case .addCustomModuleButtonDidTap:
             Analytics.shared.track(.screenView("add_custom_module", .bottom_sheet))
             presentCoordinator.switchTo(.addCustom)
             selectLecture = []
-            
-        case .notRightNowButtonDidTap:
-            Analytics.shared.track(.clickGuestConfirmReject)
-            
-        case .loginButtonDidTap:
-            Analytics.shared.track(.clickGuestConfirmLogin)
-            windowRouter.switch(to: .login)
-            
         case .selectedTheme(let themeName):
             useCase.getThemeDetailInfo(themeName)
                 .receive(on: RunLoop.main)
                 .assign(to: \.selectedThemeColor, on: self)
                 .store(in: cancelBag)
+        }
+    }
+    
+    func send(_ action: AlertAction) {
+        switch action {
+        case .deleteModule:
+            Analytics.shared.track(.clickDeleteModule)
+            useCase.deleteSection(
+                detailSectionInfo.isCustom,
+                detailSectionInfo.id
+            )
+            .receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: {
+                Analytics.shared.track(.moduleDeleted)
+            })
+            .map { _ in nil }
+            .assign(to: \.state.alertType, on: self)
+            .store(in: cancelBag)
+        case .deleteModuleAlertCloseButtonDidTap:
+            state.alertType = nil
+        case .errorAlertViewCloseButtonDidTap:
+            presentCoordinator.switchTo(.search)
+            state.alertType = nil
+        case .emptyScheduleErrorAddButtonDidTap(let name):
+            addCustomModuleViewModel.schedule = name
+            state.alertType = nil
+            presentCoordinator.switchTo(.addCustom)
+        case .notRightNowButtonDidTap:
+            Analytics.shared.track(.clickGuestConfirmReject)
+        case .loginButtonDidTap:
+            Analytics.shared.track(.clickGuestConfirmLogin)
+            windowRouter.switch(to: .login)
         }
     }
     
