@@ -128,7 +128,7 @@ extension NotificationManager {
         case .openTheme:
             Router.default.windowRouter.switch(to: .timetable)
             try? await Task.sleep(nanoseconds: 500_000_000)
-            TimeTableViewTypeService.shared.switchTo(.theme(true))
+//            TimeTableViewTypeService.shared.switchTo(.theme(true))
         default:
             print("알 수 없는 알림 액션: \(action)")
         }

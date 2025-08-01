@@ -6,7 +6,7 @@ import DSKit
 import Core
 
 struct SettingTimeTableView: View {
-    @Binding var viewType: TimeTableViewType
+    var coordinator: TimeTableCoordinator
     @Binding var settingAlertType: TimeTableSettingAlertType?
     
     var body: some View {
@@ -25,7 +25,8 @@ struct SettingTimeTableView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Button {
                     withAnimation {
-                        viewType = .theme(false)
+                        coordinator.presentCoordinator.switchTo(.theme(false))
+                        coordinator.sheetCoordinator.reset()
                     }
                 } label: {
                     Text("Theme")
@@ -36,7 +37,8 @@ struct SettingTimeTableView: View {
                 
                 Button {
                     settingAlertType = .editTimeTableName
-                    viewType = .main
+                    coordinator.presentCoordinator.reset()
+                    coordinator.sheetCoordinator.reset()
                 } label: {
                     Text("Timetable name")
                         .font(.medium_14)
@@ -46,7 +48,8 @@ struct SettingTimeTableView: View {
                 
                 Button {
                     settingAlertType = .saveImage
-                    viewType = .main
+                    coordinator.presentCoordinator.reset()
+                    coordinator.sheetCoordinator.reset()
                 } label: {
                     Text("Save image")
                         .font(.medium_14)
@@ -56,7 +59,8 @@ struct SettingTimeTableView: View {
                 
                 Button {
                     settingAlertType = .removeTimeTable
-                    viewType = .main
+                    coordinator.presentCoordinator.reset()
+                    coordinator.sheetCoordinator.reset()
                 } label: {
                     Text("Remove all")
                         .font(.medium_14)
@@ -66,10 +70,11 @@ struct SettingTimeTableView: View {
             .padding(.leading, 32)
             .padding(.trailing, 220)
         }
-        .animation(.easeInOut, value: viewType)
+        .animation(.easeInOut, value: coordinator.presentCoordinator.viewType)
         .onDisappear {
-            if viewType == .setting {
-                viewType = .main
+            if coordinator.presentCoordinator.viewType == .setting {
+                coordinator.presentCoordinator.reset()
+                coordinator.sheetCoordinator.reset()
             }
         }
     }

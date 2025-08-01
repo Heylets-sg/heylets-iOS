@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct AddCustomModuleTopView: View {
-    @Binding var viewType: TimeTableViewType
+    public var coordinator: any PresentCoordinatorType
     @ObservedObject var viewModel: AddCustomModuleViewModel
     
     var body: some View {
@@ -17,7 +17,7 @@ struct AddCustomModuleTopView: View {
             HStack {
                 Button {
                     withAnimation {
-                        viewType = .main
+                        coordinator.reset()
                     }
                 } label: {
                     Image.icClose
@@ -45,7 +45,7 @@ struct AddCustomModuleTopView: View {
             .padding(.bottom, 26)
         }
         .onChange(of: viewModel.state.isAddSuccess) {
-            if $0 { withAnimation { viewType = .main } }
+            if $0 { withAnimation { coordinator.reset() } }
         }
     }
 }

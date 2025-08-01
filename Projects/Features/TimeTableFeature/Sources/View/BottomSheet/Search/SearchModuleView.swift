@@ -14,9 +14,9 @@ import BaseFeatureDependency
 import Core
 
 public struct SearchModuleView: View {
-    @Binding var viewType: TimeTableViewType
-    @Binding var reportMissingModuleAlertIsPresented: SheetType?
+//    @Binding var reportMissingModuleAlertIsPresented: TimeTableSheetType?
     @ObservedObject var viewModel: SearchModuleViewModel
+    var onReport: () -> Void
     
     public var body: some View {
         VStack(spacing: 0) {
@@ -35,7 +35,7 @@ public struct SearchModuleView: View {
             if viewModel.lectureList.isEmpty && !viewModel.filterInfo.keyword.isEmpty {
                 MissingModuleView(
                     keyword: viewModel.filterInfo.keyword,
-//                    reportMissingModuleAlertIsPresented: $reportMissingModuleAlertIsPresented
+                    onReport: { onReport() }
                 )
             } else {
                 ScrollViewReader { proxy in

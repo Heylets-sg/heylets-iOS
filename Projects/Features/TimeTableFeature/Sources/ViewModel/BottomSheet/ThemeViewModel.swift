@@ -41,11 +41,11 @@ public class ThemeViewModel: ObservableObject {
     @Published var displayType: DisplayTypeInfo = .MODULE_CODE
     @Published var theme: String = ""
     
-    var viewType: TimeTableViewType { viewTypeService.viewType }
+//    var viewType: TimeTableViewType { viewTypeService.viewType }
     private var viewTypeSubscription: AnyCancellable?
     
     // 싱글톤 사용
-    private var viewTypeService: TimeTableViewTypeService  = TimeTableViewTypeService.shared
+//    private var viewTypeService: TimeTableViewTypeService  = TimeTableViewTypeService.shared
     private let navigationRouter: NavigationRoutableType
     
     var selectThemeClosure: ((String) -> Void)?
@@ -60,12 +60,12 @@ public class ThemeViewModel: ObservableObject {
         self.useCase = useCase
         self.navigationRouter = navigationRouter
         
-        viewTypeSubscription = viewTypeService.$viewType
-            .sink { [weak self] viewType in
-                if viewType == .theme(true) {
-                    self?.state.isShowingPopup = true
-                }
-            }
+//        viewTypeSubscription = viewTypeService.$viewType
+//            .sink { [weak self] viewType in
+//                if viewType == .theme(true) {
+//                    self?.state.isShowingPopup = true
+//                }
+//            }
     }
     
     func send(_ action: Action) {
@@ -98,7 +98,7 @@ public class ThemeViewModel: ObservableObject {
                 .receive(on: RunLoop.main)
                 .sink(receiveValue: { [weak self] _ in
                     Analytics.shared.track(.timetableSettingSaved)
-                    self?.viewTypeService.reset()
+//                    self?.viewTypeService.reset()
                 })
                 .store(in: cancelBag)
             

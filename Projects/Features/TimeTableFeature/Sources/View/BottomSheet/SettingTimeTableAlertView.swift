@@ -14,9 +14,7 @@ import Core
 public struct SettingTimeTableAlertView: View {
     @ObservedObject var viewModel: TimeTableSettingViewModel
     
-    public init(
-        viewModel: TimeTableSettingViewModel
-    ) {
+    public init(viewModel: TimeTableSettingViewModel) {
         self.viewModel = viewModel
     }
     

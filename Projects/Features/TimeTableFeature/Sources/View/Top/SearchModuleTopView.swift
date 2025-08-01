@@ -9,7 +9,7 @@
 import SwiftUI
 
 public struct SearchModuleTopView: View {
-    @Binding var viewType: TimeTableViewType
+    public var coordinator: any PresentCoordinatorType
     var addCustomModuleButtonDidTapEvent: (() -> Void)
     var closeButtonDidTapEvent: (() -> Void)
     
@@ -19,7 +19,7 @@ public struct SearchModuleTopView: View {
             Button {
                 withAnimation {
                     closeButtonDidTapEvent()
-                    viewType = .main
+                    coordinator.reset()
                 }
             } label: {
                 Image.icClose

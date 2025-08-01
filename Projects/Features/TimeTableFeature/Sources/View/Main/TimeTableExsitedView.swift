@@ -5,19 +5,19 @@ import DSKit
 public struct TimeTableExsitedView: View {
     @ObservedObject var viewModel: TimeTableViewModel
     @Binding var displayType: DisplayTypeInfo
-    @Binding var viewType: TimeTableViewType
+    var canTouch: Bool
     var cellWidth: CGFloat
     
     init(
         viewModel: TimeTableViewModel,
         displayType: Binding<DisplayTypeInfo>,
-        viewType: Binding<TimeTableViewType>,
-        cellWidth: CGFloat
+        cellWidth: CGFloat,
+        canTouch: Bool
     ) {
         self.viewModel = viewModel
         self._displayType = displayType
-        self._viewType = viewType
         self.cellWidth = cellWidth
+        self.canTouch = canTouch
     }
     
     public var body: some View {
@@ -62,7 +62,7 @@ public struct TimeTableExsitedView: View {
                 .onTapGesture {
                     viewModel.send(.tableCellDidTap(cell.id))
                 }
-                .disabled(viewType != .main)
+                .disabled(!canTouch)
             }
         }
     }

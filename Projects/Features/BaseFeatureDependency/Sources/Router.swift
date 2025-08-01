@@ -12,7 +12,6 @@ import SwiftUI
 import Core
 import Domain
 
-
 public typealias NavigationRoutableType = NavigationRoutable & ObservableObjectSettable
 public typealias WindowRoutableType = WindowRoutable & ObservableObjectSettable
 
