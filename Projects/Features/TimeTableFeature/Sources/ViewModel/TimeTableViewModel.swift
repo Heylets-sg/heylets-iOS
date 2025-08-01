@@ -49,9 +49,9 @@ public class TimeTableViewModel: ObservableObject {
         case gotoInviteCodeView
     }
     
-    @ObservedObject var searchModuleViewModel: SearchModuleViewModel
-    @ObservedObject var addCustomModuleViewModel: AddCustomModuleViewModel
-    @ObservedObject var themeViewModel: ThemeViewModel
+    let searchModuleViewModel: SearchModuleViewModel
+    let addCustomModuleViewModel: AddCustomModuleViewModel
+    let themeViewModel: ThemeViewModel
     
     @Published var state = State()
     private let cancelBag = CancelBag()

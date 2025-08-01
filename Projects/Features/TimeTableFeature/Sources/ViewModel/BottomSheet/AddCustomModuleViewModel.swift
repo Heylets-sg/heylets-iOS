@@ -15,18 +15,11 @@ import DSKit
 import Core
 
 public class AddCustomModuleViewModel: ObservableObject {
-    struct State {
-        var isMenuOpen = false
-        var isAddSuccess = false
-    }
-    
     enum Action {
         case weekPickerButtonDidTap(Week)
         case saveCustomModuleButtonDidTap
     }
     
-    
-    @Published var state = State()
     @Published var day: Week = .Mon
     @Published var startTime = "09:00"
     @Published var endTime = "10:00"
@@ -35,12 +28,18 @@ public class AddCustomModuleViewModel: ObservableObject {
     @Published var professor: String  = ""
     
     private let cancelBag = CancelBag()
+    private let coordinator: any PresentCoordinatorType
     private let useCase: SearchUseCaseType
     
-    public init(_ useCase: SearchUseCaseType) {
+    public init(
+        _ useCase: SearchUseCaseType,
+        _ coordinator: any PresentCoordinatorType
+    ) {
         self.useCase = useCase
+        self.coordinator = coordinator
     }
     
+    @MainActor
     func send(_ action: Action) {
         switch action {
         case .weekPickerButtonDidTap(let week):
@@ -69,7 +68,7 @@ public class AddCustomModuleViewModel: ObservableObject {
                 .sink(receiveValue: { [weak self] _ in
                     Analytics.shared.track(.customModuleAdded)
                     self?.initInfo()
-                    self?.state.isAddSuccess = true
+                    self?.coordinator.reset()
                 })
                 .store(in: cancelBag)
         }

@@ -47,7 +47,7 @@ public struct RootView: View {
                 TimeTableView(
                     viewModel: .init(
                         SearchModuleViewModel(useCase.searchUseCase),
-                        AddCustomModuleViewModel(useCase.searchUseCase),
+                        AddCustomModuleViewModel(useCase.searchUseCase, TimeTableCoordinator.default.presentCoordinator),
                         ThemeViewModel(useCase.settingUseCase, router.navigationRouter),
                         TimeTableSettingViewModel(useCase.settingUseCase),
                         useCase.timeTableStore,
