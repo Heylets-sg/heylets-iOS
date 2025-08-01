@@ -63,3 +63,17 @@ extension SectioninTableResult {
         )
     }
 }
+
+extension SectionInfoResult {
+    func toEntity() -> SectionInfo {
+        .init(
+            id: sectionId,
+            code: courseCode,
+            name: courseName,
+            schedule: schedules.map { $0.toEntity() },
+            professor: professor,
+            unit: schedules[0].credit != nil ?  Int(schedules[0].credit!) : nil
+        )
+    }
+}
+

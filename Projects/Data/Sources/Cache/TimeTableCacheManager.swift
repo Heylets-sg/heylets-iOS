@@ -12,8 +12,8 @@ import UIKit
 
 import Domain
 
-public final class TimeTableCacheManager {
-    nonisolated(unsafe) public static let shared = TimeTableCacheManager()
+public final class TimeTableCacheManager: @unchecked Sendable {
+    public static let shared = TimeTableCacheManager()
     
     // MARK: - Cache Storage
     private var cachedTableDetailInfo: [Int: CachedTimeTableDetailInfo] = [:]
@@ -36,9 +36,9 @@ public final class TimeTableCacheManager {
                     return
                 }
                 
-                #if DEBUG
+#if DEBUG
                 print("✅ Cache HIT for tableId: \(tableId)")
-                #endif
+#endif
                 
                 promise(.success(cachedInfo.data))
             }
@@ -84,9 +84,7 @@ public final class TimeTableCacheManager {
         )
         cachedTableDetailInfo[tableId] = cachedInfo
         
-        #if DEBUG
         print("✅ TimeTable cached for ID: \(tableId), SectionList count: \(tableDetailInfo.sectionList.count)")
-        #endif
     }
     
     private func removeOldestCache() {
@@ -95,16 +93,43 @@ public final class TimeTableCacheManager {
         }
         cachedTableDetailInfo.removeValue(forKey: oldestEntry.key)
         
-        #if DEBUG
         print("🗑️ Removed oldest cache for tableId: \(oldestEntry.key)")
-        #endif
+    }
+}
+
+extension TimeTableCacheManager {
+    /// 특정 시간표 - 섹션 추가
+    public func addSection(for tableId: Int, _ section: SectionInfo) {
+        cacheQueue.async(flags: .barrier) {
+            self.cachedTableDetailInfo[tableId]?.data.sectionList.append(section)
+        }
+    }
+    
+    /// 특정 시간표 - 섹션 제거
+    public func deleteSection(for tableId: Int, _ sectionId: Int) {
+        cacheQueue.async(flags: .barrier) {
+            guard var cached = self.cachedTableDetailInfo[tableId] else { return }
+            
+            cached.data.sectionList.removeAll { $0.id == sectionId }
+            self.cachedTableDetailInfo[tableId] = cached
+        }
+    }
+    
+    /// 특정 시간표 - 모든 섹션  제거
+    public func deleteAllSection(for tableId: Int) {
+        cacheQueue.async(flags: .barrier) {
+            guard var cached = self.cachedTableDetailInfo[tableId] else { return }
+            
+            cached.data.sectionList.removeAll()
+            self.cachedTableDetailInfo[tableId] = cached
+        }
     }
 }
 
 // MARK: - CachedTimeTableDetailInfo
 
 private struct CachedTimeTableDetailInfo: Sendable {
-    let data: TimeTableDetailInfo
+    var data: TimeTableDetailInfo
     let timestamp: Date
     
     var isExpired: Bool {

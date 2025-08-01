@@ -9,11 +9,11 @@
 import Foundation
 
 public struct SectionInfoResult: Decodable {
-    let sectionId: Int
-    let courseCode: String
-    let courseName: String
-    let credit: Int?
-    let professor: String
-    let sectionStatus: String
-    let schedules: [SchedulesResult]
+    public let sectionId: Int
+    public let courseCode: String
+    public let courseName: String
+    public let credit: Int?
+    public let professor: String
+    public let sectionStatus: String
+    public let schedules: [SchedulesResult]
 }

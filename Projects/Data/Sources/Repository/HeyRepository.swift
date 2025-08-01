@@ -40,7 +40,8 @@ public class HeyRepository: RepositoryType {
             service: service.themeService
         )
         sectionRepository =  SectionRepository(
-            service: service.sectionService
+            service: service.sectionService,
+            cacheManager: TimeTableCacheManager.shared
         )
         scheduleRepository = ScheduleRepository(
             service: service.scheduleService

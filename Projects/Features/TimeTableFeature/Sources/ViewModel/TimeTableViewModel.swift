@@ -117,6 +117,7 @@ public class TimeTableViewModel: ObservableObject {
         switch action {
         case .onAppear:
             useCase.getProfileInfo()
+                .receive(on: RunLoop.main)
                 .sink(receiveValue: {_ in })
                 .store(in: cancelBag)
             

@@ -10,7 +10,7 @@ import Foundation
 
 public struct TimeTableDetailInfo: Sendable {
     public var tableInfo: TimeTableInfo
-    public let sectionList: [SectionInfo]
+    public var sectionList: [SectionInfo]
     
     public init(
         tableInfo: TimeTableInfo,
