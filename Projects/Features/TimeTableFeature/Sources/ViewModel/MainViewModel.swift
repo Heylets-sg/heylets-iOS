@@ -8,7 +8,7 @@ import DSKit
 import Core
 
 @MainActor
-public class TimeTableViewModel: ObservableObject {
+public class MainViewModel: ObservableObject {
     struct State {
         struct TimeTable {
             var columnCount: Int = 5
@@ -264,7 +264,7 @@ public class TimeTableViewModel: ObservableObject {
 }
 
 // Rest of the functions remain the same
-extension TimeTableViewModel {
+extension MainViewModel {
     private func configHourList(
         _ timeTableCellList: [TimeTableCellInfo]
     ) -> AnyPublisher<[Int], Never> {
@@ -307,7 +307,7 @@ extension TimeTableViewModel {
     }
 }
 
-extension TimeTableViewModel {
+extension MainViewModel {
     func initState() {
         presentCoordinator.reset()
         settingViewModel.settingAlertType = nil

@@ -14,7 +14,7 @@ import BaseFeatureDependency
 import Core
 
 public struct SearchModuleView: View {
-    @ObservedObject var viewModel: SearchModuleViewModel
+    @ObservedObject var viewModel: SearchViewModel
     var onReport: () -> Void
     
     public var body: some View {

@@ -28,7 +28,7 @@ private enum LectureFetchMode {
 }
 
 @MainActor
-public class SearchModuleViewModel: ObservableObject {
+public class SearchViewModel: ObservableObject {
     struct State {
         var selectedLecture: SectionInfo? = nil
         var isLoading: Bool = false
@@ -144,7 +144,7 @@ public class SearchModuleViewModel: ObservableObject {
     }
 }
 
-extension SearchModuleViewModel {
+extension SearchViewModel {
     @MainActor
     private func setupBindings() {
         filterViewModel.updateSelectedFilter = { [weak self] filterType, selectedItem in

@@ -18,14 +18,14 @@ public struct TimeTableView: View {
     @EnvironmentObject var coordinator: TimeTableCoordinator
     
     @ObservedObject var state: TimeTableState
-    @ObservedObject var viewModel: TimeTableViewModel
-    @ObservedObject var searchViewModel: SearchModuleViewModel
+    @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var searchViewModel: SearchViewModel
     @ObservedObject var themeViewModel: ThemeViewModel
 
     public init(
         state: TimeTableState,
-        viewModel: TimeTableViewModel,
-        searchViewModel: SearchModuleViewModel,
+        viewModel: MainViewModel,
+        searchViewModel: SearchViewModel,
         themeViewModel: ThemeViewModel,
     ) {
         self.state = state

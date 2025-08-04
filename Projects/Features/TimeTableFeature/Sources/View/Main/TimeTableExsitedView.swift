@@ -3,13 +3,13 @@ import Domain
 import DSKit
 
 public struct TimeTableExsitedView: View {
-    @ObservedObject var viewModel: TimeTableViewModel
+    @ObservedObject var viewModel: MainViewModel
     @Binding var displayType: DisplayTypeInfo
     var canTouch: Bool
     var cellWidth: CGFloat
     
     init(
-        viewModel: TimeTableViewModel,
+        viewModel: MainViewModel,
         displayType: Binding<DisplayTypeInfo>,
         cellWidth: CGFloat,
         canTouch: Bool

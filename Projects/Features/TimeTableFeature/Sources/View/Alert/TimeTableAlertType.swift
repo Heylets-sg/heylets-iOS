@@ -61,10 +61,10 @@ public enum HeyTimeTableAlertType {
 public struct TimeTableAlertAction {
     let title: String
     let style: HeyAlertButtonColorStyle
-    let action: TimeTableViewModel.AlertAction
+    let action: MainViewModel.AlertAction
     
     @MainActor
-    func convert(on viewModel: TimeTableViewModel) -> HeyAlertButtonType {
+    func convert(on viewModel: MainViewModel) -> HeyAlertButtonType {
         return (title: title, style: style, { viewModel.send(action) })
     }
 }

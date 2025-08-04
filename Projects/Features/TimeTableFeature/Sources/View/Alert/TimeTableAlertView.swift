@@ -13,7 +13,7 @@ import DSKit
 extension View {
     func heyAlert(
         _ alert: HeyTimeTableAlertType?,
-        viewModel: TimeTableViewModel
+        viewModel: MainViewModel
     ) -> some View {
         self.overlay {
             if let alert {
