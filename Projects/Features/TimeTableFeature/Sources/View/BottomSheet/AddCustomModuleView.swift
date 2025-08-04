@@ -2,7 +2,7 @@ import SwiftUI
 import Domain
 
 public struct AddCustomModuleView: View {
-    @ObservedObject var viewModel: AddCustomModuleViewModel
+    @StateObject var viewModel: AddCustomModuleViewModel
     @State private var showingTimePicker = false
     
     public var body: some View {

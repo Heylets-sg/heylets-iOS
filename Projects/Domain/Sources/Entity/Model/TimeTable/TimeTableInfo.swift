@@ -8,9 +8,9 @@
 
 import Foundation
 
-public struct TimeTableDetailInfo {
+public struct TimeTableDetailInfo: Sendable {
     public var tableInfo: TimeTableInfo
-    public let sectionList: [SectionInfo]
+    public var sectionList: [SectionInfo]
     
     public init(
         tableInfo: TimeTableInfo,
@@ -21,7 +21,7 @@ public struct TimeTableDetailInfo {
     }
 }
 
-public struct TimeTableInfo {
+public struct TimeTableInfo: Sendable {
     public var id: Int
     public var name: String
     public var semester: String

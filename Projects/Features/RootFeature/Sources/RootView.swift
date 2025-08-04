@@ -44,21 +44,38 @@ public struct RootView: View {
                 )
                 )
             case .timetable:
+                let presentCoordinator = TimeTableCoordinator.default.presentCoordinator
+                let sheetCoordinator = TimeTableCoordinator.default.sheetCoordinator
+                let timeTableState = TimeTableState.default
                 TimeTableView(
+//                    state: timeTableState,
                     viewModel: .init(
-                        SearchModuleViewModel(useCase.searchUseCase),
-                        AddCustomModuleViewModel(useCase.searchUseCase),
-                        ThemeViewModel(useCase.settingUseCase, router.navigationRouter),
                         TimeTableSettingViewModel(useCase.settingUseCase),
                         useCase.timeTableStore,
+                        timeTableState,
                         useCase.mainUseCase,
                         router.windowRouter,
                         router.navigationRouter,
-                        TimeTableCoordinator.default.presentCoordinator,
-                        TimeTableCoordinator.default.sheetCoordinator
+                        presentCoordinator,
+                        sheetCoordinator
+                    ),
+                    searchViewModel: .init(
+                        useCase.searchUseCase,
+//                        timeTableState,
+                        presentCoordinator
+                    ),
+                    themeViewModel: .init(
+                        useCase.settingUseCase,
+                        useCase.timeTableStore,
+                        router.navigationRouter
+                    ),
+                    addCustomViewModel: .init(
+                        useCase.searchUseCase,
+                        presentCoordinator
                     )
                 )
                 .environmentObject(TimeTableCoordinator.default)
+                .environmentObject(timeTableState)
             case .mypage:
                 MyPageView(
                     viewModel: MyPageViewModel(

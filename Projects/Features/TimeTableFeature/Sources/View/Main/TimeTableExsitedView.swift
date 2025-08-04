@@ -32,9 +32,9 @@ public struct TimeTableExsitedView: View {
                     cellHeight: 52
                 )
                 
-                let backgroundColor: Color = viewModel.selectedThemeColor.isEmpty
+                let backgroundColor: Color = $viewModel.coreState.selectedThemeColor.isEmpty
                 ? cell.backgroundColor
-                : Color.init(hex: viewModel.selectedThemeColor.randomElement()!)
+                : Color.init(hex: viewModel.coreState.selectedThemeColor.randomElement()!)
                 
                 ZStack {
                     createClassButton(
@@ -46,9 +46,9 @@ public struct TimeTableExsitedView: View {
                         backgroundColor: backgroundColor
                     )
                     
-                    let textColor: Color = viewModel.selectedThemeColor.isEmpty
+                    let textColor: Color = $viewModel.coreState.selectedThemeColor.isEmpty
                     ? cell.textColor
-                    : Color.init(hex: viewModel.selectedThemeColor[0])
+                    : Color.init(hex: viewModel.coreState.selectedThemeColor[0])
                     
                     createClassInfoText(
                         for: cell,
@@ -62,7 +62,8 @@ public struct TimeTableExsitedView: View {
                 .onTapGesture {
                     viewModel.send(.tableCellDidTap(cell.id))
                 }
-                .disabled(!canTouch)
+                //MARK: viewModel 리펙토링으로 인한 로직 처리 필요
+                //.disabled(canTouch)
             }
         }
     }

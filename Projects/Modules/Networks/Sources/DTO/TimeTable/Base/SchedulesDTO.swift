@@ -15,14 +15,15 @@ public struct SchedulesResult: Decodable {
     public let classDay: String
     public let startTime: String?
     public let endTime: String?
-}
-
-public struct SchedulesinTableResult: Decodable {
-    public let scheduleId: Int?
-    public let location: String
-    public let professor: String?
-    public let classDay: String
-    public let startTime: String
-    public let endTime: String
     public let credit: Float?
 }
+//
+//public struct SchedulesinTableResult: Decodable {
+//    public let scheduleId: Int?
+//    public let location: String
+//    public let professor: String?
+//    public let classDay: String
+//    public let startTime: String
+//    public let endTime: String
+//    public let credit: Float?
+//}

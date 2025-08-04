@@ -18,7 +18,7 @@ public protocol MainUseCaseType {
     func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never>
     func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never>
     //테마 선택시 반영되도록 상세 색상 가져오기
-    func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never>
+//    func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never>
 }
 
 final public class MainUseCase: MainUseCaseType {
@@ -101,14 +101,14 @@ final public class MainUseCase: MainUseCaseType {
         }
     }
     
-    public func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never> {
-        return settingRepository.getThemeDetailInfo(themeName)
-            .map { [$0.defaultColor] + $0.core + $0.gradient}
-            .catch { _ in
-                return Just([]).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
+//    public func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never> {
+//        return settingRepository.getThemeDetailInfo(themeName)
+//            .map { [$0.defaultColor] + $0.core + $0.gradient}
+//            .catch { _ in
+//                return Just([]).eraseToAnyPublisher()
+//            }
+//            .eraseToAnyPublisher()
+//    }
 }
 
 extension MainUseCase {

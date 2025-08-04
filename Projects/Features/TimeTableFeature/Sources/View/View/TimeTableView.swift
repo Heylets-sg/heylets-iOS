@@ -16,10 +16,27 @@ import Core
 public struct TimeTableView: View {
     @EnvironmentObject var container: Router
     @EnvironmentObject var coordinator: TimeTableCoordinator
+    
+    @ObservedObject var state: TimeTableState = TimeTableState.default {
+        didSet {
+            print("TimeTable 바뀜")
+        }
+    }
     @ObservedObject var viewModel: TimeTableViewModel
+    @ObservedObject var searchViewModel: SearchModuleViewModel
+    @ObservedObject var themeViewModel: ThemeViewModel
+    @ObservedObject var addCustomViewModel: AddCustomModuleViewModel
 
-    public init(viewModel: TimeTableViewModel) {
+    public init(
+        viewModel: TimeTableViewModel,
+        searchViewModel: SearchModuleViewModel,
+        themeViewModel: ThemeViewModel,
+        addCustomViewModel: AddCustomModuleViewModel
+    ) {
         self.viewModel = viewModel
+        self.searchViewModel = searchViewModel
+        self.themeViewModel = themeViewModel
+        self.addCustomViewModel = addCustomViewModel
     }
 
     public var body: some View {
@@ -32,10 +49,11 @@ public struct TimeTableView: View {
                         .background(Color.timeTableMain.TimeTableInfo.topNavi)
 
                     MainView(
+                        state: state,
                         viewModel: viewModel,
-                        presentCoordinator: viewModel.presentCoordinator,
-                        sheetCoordinator: viewModel.sheetCoordinator
+                        coordinator: coordinator.presentCoordinator
                     )
+                    .environmentObject(state)
 
                     Spacer(minLength: 0)
                 }
@@ -43,12 +61,12 @@ public struct TimeTableView: View {
                 .ignoresSafeArea()
                 .onAppear {
                     viewModel.send(.onAppear)
-                    viewModel.searchModuleViewModel.selectLectureClosure = { lecture in
-                        viewModel.send(.selectLecture(lecture))
-                    }
-                    viewModel.searchModuleViewModel.addLectureClosure = { lecture in
-                        viewModel.send(.addLecture(lecture))
-                    }
+//                    viewModel.searchModuleViewModel.selectLectureClosure = { lecture in
+//                        viewModel.send(.selectLecture(lecture))
+//                    }
+//                    viewModel.searchModuleViewModel.addLectureClosure = { lecture in
+//                        viewModel.send(.addLecture(lecture))
+//                    }
                 }
                 .heyAlert(viewModel.state.alertType, viewModel: viewModel)
                 .heyAlert(
@@ -108,7 +126,7 @@ public struct TimeTableView: View {
 
                 let config = OverlayConfiguration.configure(
                     viewType: viewModel.presentCoordinator.viewType,
-                    isThemeSelectInfoShowing: viewModel.themeViewModel.state.isShowingSelectInfoView
+                    isThemeSelectInfoShowing: themeViewModel.state.isShowingSelectInfoView
                 )
 
                 if config.shouldShow {
@@ -144,17 +162,18 @@ extension TimeTableView {
         switch coordinator.presentCoordinator.viewType {
         case .search:
             SearchModuleView(
-                viewModel: viewModel.searchModuleViewModel,
+                state: state,
+                viewModel: searchViewModel,
                 onReport: { coordinator.sheetCoordinator.sheet(to: .reportMissingModule) }
             )
             .bottomSheetTransition()
 
         case .theme:
-            SettingTimeTableInfoView(viewModel: viewModel.themeViewModel)
+            SettingTimeTableInfoView(viewModel: themeViewModel)
                 .bottomSheetTransition()
 
         case .addCustom:
-            AddCustomModuleView(viewModel: viewModel.addCustomModuleViewModel)
+            AddCustomModuleView(viewModel: addCustomViewModel)
                 .bottomSheetTransition()
 
         default:
@@ -165,16 +184,16 @@ extension TimeTableView {
 
     @ViewBuilder
     private func createTopView() -> some View {
-        let viewType = viewModel.presentCoordinator.viewType
+        let viewType = coordinator.presentCoordinator.viewType
         switch viewType {
         case .search:
             SearchModuleTopView(
-                coordinator: viewModel.presentCoordinator,
+                coordinator: coordinator.presentCoordinator,
                 addCustomModuleButtonDidTapEvent: {
                     viewModel.send(.addCustomModuleButtonDidTap)
                 },
                 closeButtonDidTapEvent: {
-                    viewModel.searchModuleViewModel.send(.closeButtonDidTap)
+                    searchViewModel.send(.closeButtonDidTap)
                 }
             )
             .frame(height: viewType.topViewHeight.adjusted)
@@ -183,23 +202,23 @@ extension TimeTableView {
             VStack {
                 ThemeTopView(
                     coordinator: viewModel.presentCoordinator,
-                    viewModel: viewModel.themeViewModel
+                    viewModel: themeViewModel
                 )
                 .frame(height: viewType.topViewHeight.adjusted)
                 .padding(.bottom, 23.adjusted)
 
-                ThemeListTopView(viewModel: viewModel.themeViewModel)
+                ThemeListTopView(viewModel: themeViewModel)
             }
-            .onAppear {
-                viewModel.themeViewModel.selectThemeClosure = { themeName in
-                    viewModel.send(.selectedTheme(themeName))
-                }
-            }
+//            .onAppear {
+//                themeViewModel.selectThemeClosure = { themeName in
+//                    viewModel.send(.selectedTheme(themeName))
+//                }
+//            }
 
         case .addCustom:
             AddCustomModuleTopView(
                 coordinator: viewModel.presentCoordinator,
-                viewModel: viewModel.addCustomModuleViewModel
+                viewModel: addCustomViewModel
             )
             .frame(height: viewType.topViewHeight.adjusted)
 
@@ -207,8 +226,8 @@ extension TimeTableView {
             TopView(
                 timeTableInfo: viewModel.timeTableInfo,
                 badgeImage: viewModel.state.profile.university.badgeImage,
-                onSearch: { viewModel.presentCoordinator.switchTo(.search) },
-                onSetting: { viewModel.sheetCoordinator.sheet(to: .setting) }
+                onSearch: { coordinator.presentCoordinator.switchTo(.search) },
+                onSetting: { coordinator.sheetCoordinator.sheet(to: .setting) }
             )
             .frame(height: viewType.topViewHeight.adjusted)
         }

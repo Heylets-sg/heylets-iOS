@@ -14,9 +14,14 @@ import Networks
 
 public struct TimeTableRepository: TimeTableRepositoryType {
     private let service: TimeTableServiceType
+    private let cacheManager: TimeTableCacheManager
     
-    public init(service: TimeTableServiceType) {
+    public init(
+        service: TimeTableServiceType,
+        cacheManager: TimeTableCacheManager
+    ) {
         self.service = service
+        self.cacheManager = cacheManager
     }
     
     
@@ -35,12 +40,27 @@ public struct TimeTableRepository: TimeTableRepositoryType {
     }
     
     public func getTableDetailInfo(
-        _ tableId: Int
-    ) -> AnyPublisher<TimeTableDetailInfo, Error> {
-        service.getTableDetailInfo(tableId)
-            .map { $0.toEntity() }
-            .mapToGeneralError()
-    }
+            _ tableId: Int
+        ) -> AnyPublisher<TimeTableDetailInfo, Error> {
+            return cacheManager.getCachedTableDetailInfo(for: tableId)
+                .flatMap { [service, cacheManager] cachedInfo -> AnyPublisher<TimeTableDetailInfo, Error> in
+                    if let cachedInfo = cachedInfo {
+                        print("✅ Cache HIT for tableId: \(tableId)")
+                        return Just(cachedInfo)
+                            .setFailureType(to: Error.self)
+                            .eraseToAnyPublisher()
+                    } else {
+                        print("❌ Cache MISS for tableId: \(tableId) - Fetching from server")
+                        return service.getTableDetailInfo(tableId)
+                            .map { $0.toEntity() }
+                            .handleEvents(receiveOutput: {
+                                cacheManager.cache(tableDetailInfo: $0, for: tableId)
+                            })
+                            .mapToGeneralError()
+                    }
+                }
+                .eraseToAnyPublisher()
+        }
     
     public func patchTableName(
         _ tableId: Int,

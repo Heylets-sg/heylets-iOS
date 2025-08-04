@@ -14,9 +14,14 @@ import Networks
 
 public struct SectionRepository: SectionRepositoryType {
     private let service: SectionServiceType
+    private let cacheManager: TimeTableCacheManager
     
-    public init(service: SectionServiceType) {
+    public init(
+        service: SectionServiceType,
+        cacheManager: TimeTableCacheManager
+    ) {
         self.service = service
+        self.cacheManager = cacheManager
     }
     
     public func deleteAllSection(
@@ -24,6 +29,9 @@ public struct SectionRepository: SectionRepositoryType {
     ) -> AnyPublisher<Void, DeleteAllSectionError> {
         service.deleteAllSection(tableId)
             .asVoid()
+            .handleEvents(receiveOutput: {
+                cacheManager.deleteAllSection(for: tableId)
+            })
             .mapError { error in
                 if let statusCode = error.isInvalidStatusCode() {
                     return DeleteAllSectionError.error(with: statusCode)
@@ -39,6 +47,9 @@ public struct SectionRepository: SectionRepositoryType {
         _ sectionId: Int
     ) -> AnyPublisher<Void, Error> {
         service.deleteSection(tableId, sectionId)
+            .handleEvents(receiveOutput: {
+                cacheManager.deleteSection(for: tableId, sectionId)
+            })
             .asVoidWithGeneralError()
     }
     
@@ -49,6 +60,9 @@ public struct SectionRepository: SectionRepositoryType {
     ) -> AnyPublisher<Void, AddSectionError> {
         let request: AddSectionRequest = .init(sectionId, memo)
         return service.addSection(tableId, request)
+            .handleEvents(receiveOutput: {
+                cacheManager.addSection(for: tableId, $0.toEntity())
+            })
             .asVoid()
             .mapError { error in
                 if let errorCode = error.isInvalidStatusCodeWithMessage() {
