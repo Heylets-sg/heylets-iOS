@@ -81,7 +81,6 @@ public struct MainView: View {
             .scrollDisabled(!viewModel.state.timeTable.isScrollEnabled)
         }
     }
-    
 }
 
 extension MainView {

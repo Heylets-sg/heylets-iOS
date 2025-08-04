@@ -69,7 +69,8 @@ public class TimeTableViewModel: ObservableObject {
     
     @Published var detailSectionInfo: SectionInfo = .empty
     
-    public var coreState: TimeTableState
+    @Published var coreState: TimeTableState
+    
     public init(
         _ settingViewModel: TimeTableSettingViewModel,
         

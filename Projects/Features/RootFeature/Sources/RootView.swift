@@ -37,18 +37,19 @@ public struct RootView: View {
                     )
                 )
             case .login:
-                LogInView(viewModel: .init(
+                LogInView(
+                    viewModel: .init(
                     router.navigationRouter,
                     router.windowRouter,
                     useCase.signInUseCase
-                )
+                    )
                 )
             case .timetable:
                 let presentCoordinator = TimeTableCoordinator.default.presentCoordinator
                 let sheetCoordinator = TimeTableCoordinator.default.sheetCoordinator
                 let timeTableState = TimeTableState.default
                 TimeTableView(
-//                    state: timeTableState,
+                    state: timeTableState,
                     viewModel: .init(
                         TimeTableSettingViewModel(useCase.settingUseCase),
                         useCase.timeTableStore,
@@ -61,7 +62,7 @@ public struct RootView: View {
                     ),
                     searchViewModel: .init(
                         useCase.searchUseCase,
-//                        timeTableState,
+                        timeTableState,
                         presentCoordinator
                     ),
                     themeViewModel: .init(
@@ -75,7 +76,6 @@ public struct RootView: View {
                     )
                 )
                 .environmentObject(TimeTableCoordinator.default)
-                .environmentObject(timeTableState)
             case .mypage:
                 MyPageView(
                     viewModel: MyPageViewModel(

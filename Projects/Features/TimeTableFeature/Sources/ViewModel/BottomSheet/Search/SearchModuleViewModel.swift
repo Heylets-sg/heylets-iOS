@@ -56,11 +56,15 @@ public class SearchModuleViewModel: ObservableObject {
     private let useCase: SearchUseCaseType
     private let coordinator: any PresentCoordinatorType
     
+    public var timeTableState: TimeTableState
+    
     public init(
         _ useCase: SearchUseCaseType,
+        _ timeTableState: TimeTableState,
         _ coordinator: any PresentCoordinatorType
     ) {
         self.useCase = useCase
+        self.timeTableState = timeTableState
         self.coordinator = coordinator
         self.filterViewModel = .init(useCase)
         
@@ -80,9 +84,11 @@ public class SearchModuleViewModel: ObservableObject {
         case .closeButtonDidTap:
             state.selectedLecture = nil
             filterInfo = .init()
+            timeTableState.clearLecture()
             
         case .lectureCellDidTap(let index):
             state.selectedLecture = lectureList[index]
+            timeTableState.selecttLecture(lectureList[index].timeTableCellInfo)
             
         case .searchButtonDidTap:
             fetchLectures()
@@ -90,6 +96,7 @@ public class SearchModuleViewModel: ObservableObject {
         case .clearButtonDidTap:
             filterInfo.keyword = ""
             state.selectedLecture = nil
+            timeTableState.clearLecture()
             fetchLectures()
             
         case .addLectureButtonDidTap(let index):
@@ -106,12 +113,11 @@ public class SearchModuleViewModel: ObservableObject {
                 .sink(receiveValue: { [weak self] _ in
                     Analytics.shared.track(.moduleAdded)
                     self?.coordinator.switchTo(.search)
-//                    self?.coreState.selectLecture = []
+                    self?.timeTableState.clearLecture()
                 })
                 .store(in: cancelBag)
             
         case .updateFilters:
-            filterInfo.page = 0
             fetchLectures()
         }
     }
