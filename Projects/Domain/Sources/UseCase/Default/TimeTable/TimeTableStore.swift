@@ -23,8 +23,6 @@ public protocol TimeTableStoreType {
     var emptyScheduleError: PassthroughSubject<String, Never> { get }
     var guestModeError: PassthroughSubject<Void, Never> { get }
     
-//    var selectLecture: [TimeTableCellInfo] { get set }
-//    var selectedThemeColor: [String] { get set }
     func getTableDetailInfo() -> AnyPublisher<Void, Never>
 }
 

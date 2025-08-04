@@ -12,7 +12,7 @@ import DSKit
 import Domain
 
 public struct HourListView: View {
-    var hourList: [Int]
+    let hourList: [Int]
     
     init(_ hourList: [Int]) {
         self.hourList = hourList

@@ -11,7 +11,7 @@ import SwiftUI
 import Domain
 
 public struct WeeklyListView: View {
-    var weekList: [Week]
+    let weekList: [Week]
     let cellWidth: CGFloat
     
     init(_ weekList: [Week], cellWidth: CGFloat) {

@@ -107,7 +107,7 @@ extension Array where Element == SectionInfo {
             for schedule in section.schedule {
                 let timeTableCell: TimeTableCellInfo = .init(
                     id: section.id,
-                    code: section.code ?? section.name, //customModule일 경우 이름 표시
+                    code: section.code ?? section.name, 
                     name: section.name,
                     professor: section.professor,
                     unit: section.unit,

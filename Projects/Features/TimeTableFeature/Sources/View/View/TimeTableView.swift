@@ -21,20 +21,17 @@ public struct TimeTableView: View {
     @ObservedObject var viewModel: TimeTableViewModel
     @ObservedObject var searchViewModel: SearchModuleViewModel
     @ObservedObject var themeViewModel: ThemeViewModel
-    @ObservedObject var addCustomViewModel: AddCustomModuleViewModel
 
     public init(
         state: TimeTableState,
         viewModel: TimeTableViewModel,
         searchViewModel: SearchModuleViewModel,
         themeViewModel: ThemeViewModel,
-        addCustomViewModel: AddCustomModuleViewModel
     ) {
         self.state = state
         self.viewModel = viewModel
         self.searchViewModel = searchViewModel
         self.themeViewModel = themeViewModel
-        self.addCustomViewModel = addCustomViewModel
     }
 
     public var body: some View {
@@ -164,7 +161,7 @@ extension TimeTableView {
                     .bottomSheetTransition()
 
             case .addCustom:
-                AddCustomModuleView(viewModel: addCustomViewModel)
+                AddCustomModuleView(viewModel: viewModel.addCustomViewModel)
                     .bottomSheetTransition()
 
             default:
@@ -204,7 +201,7 @@ extension TimeTableView {
         case .addCustom:
             AddCustomModuleTopView(
                 coordinator: viewModel.presentCoordinator,
-                viewModel: addCustomViewModel
+                viewModel: viewModel.addCustomViewModel
             )
             .frame(height: viewType.topViewHeight.adjusted)
 

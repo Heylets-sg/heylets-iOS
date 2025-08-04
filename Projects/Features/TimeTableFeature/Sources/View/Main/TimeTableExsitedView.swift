@@ -32,9 +32,9 @@ public struct TimeTableExsitedView: View {
                     cellHeight: 52
                 )
                 
-                let backgroundColor: Color = $viewModel.coreState.selectedThemeColor.isEmpty
+                let backgroundColor: Color = $viewModel.timeTableState.selectedThemeColor.isEmpty
                 ? cell.backgroundColor
-                : Color.init(hex: viewModel.coreState.selectedThemeColor.randomElement()!)
+                : Color.init(hex: viewModel.timeTableState.selectedThemeColor.randomElement()!)
                 
                 ZStack {
                     createClassButton(
@@ -46,9 +46,9 @@ public struct TimeTableExsitedView: View {
                         backgroundColor: backgroundColor
                     )
                     
-                    let textColor: Color = $viewModel.coreState.selectedThemeColor.isEmpty
+                    let textColor: Color = $viewModel.timeTableState.selectedThemeColor.isEmpty
                     ? cell.textColor
-                    : Color.init(hex: viewModel.coreState.selectedThemeColor[0])
+                    : Color.init(hex: viewModel.timeTableState.selectedThemeColor[0])
                     
                     createClassInfoText(
                         for: cell,
