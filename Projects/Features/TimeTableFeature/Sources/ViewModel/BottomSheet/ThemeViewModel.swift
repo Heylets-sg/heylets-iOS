@@ -41,18 +41,20 @@ public class ThemeViewModel: ObservableObject {
     @Published var displayType: DisplayTypeInfo = .MODULE_CODE
     @Published var theme: String = ""
     
-    private let navigationRouter: NavigationRoutableType
+    public var timeTableState: TimeTableState
     
-//    var selectThemeClosure: ((String) -> Void)?
+    private let navigationRouter: NavigationRoutableType
     var gotoInviteCodeClosure: (() -> Void)?
    
     private let cancelBag = CancelBag()
     
     public init(
+        _ timeTableState: TimeTableState,
         _ useCase: SettingUseCaseType,
         _ store: TimeTableStoreType,
         _ navigationRouter: NavigationRoutableType
     ) {
+        self.timeTableState = timeTableState
         self.useCase = useCase
         self.store = store
         self.navigationRouter = navigationRouter
@@ -95,12 +97,10 @@ public class ThemeViewModel: ObservableObject {
         case .themeButtonDidTap(let selectedTheme):
             state.selectedTheme = selectedTheme
             theme = selectedTheme.name
-//            useCase.getThemeDetailInfo(selectedTheme.name)
-//                .receive(on: RunLoop.main)
-////                .assign(to: \.store.selectedThemeColor, on: self)
-//                .store(in: cancelBag)
-//            guard let selectThemeClosure else { return }
-//            selectThemeClosure(selectedTheme.name)
+            useCase.getThemeDetailInfo(selectedTheme.name)
+                .receive(on: RunLoop.main)
+                .assign(to: \.timeTableState.selectedThemeColor, on: self)
+                .store(in: cancelBag)
             
         case .selectDisplayTypeButtonDidTap:
             state.isShowingSelectInfoView.toggle()

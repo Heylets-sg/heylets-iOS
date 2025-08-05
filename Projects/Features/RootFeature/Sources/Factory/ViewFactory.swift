@@ -80,7 +80,7 @@ class TimeTableViewFactory: BaseViewFactory, ViewFactoryType {
             state: timeTableState,
             viewModel: .init(
                 AddCustomModuleViewModel(useCase.searchUseCase, presentCoordinator),
-                TimeTableSettingViewModel(useCase.settingUseCase),
+                SettingViewModel(useCase.settingUseCase),
                 useCase.timeTableStore,
                 timeTableState,
                 useCase.mainUseCase,
@@ -95,6 +95,7 @@ class TimeTableViewFactory: BaseViewFactory, ViewFactoryType {
                 presentCoordinator
             ),
             themeViewModel: .init(
+                timeTableState,
                 useCase.settingUseCase,
                 useCase.timeTableStore,
                 router.navigationRouter

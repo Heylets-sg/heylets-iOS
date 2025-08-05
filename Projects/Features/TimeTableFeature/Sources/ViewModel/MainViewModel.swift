@@ -58,7 +58,7 @@ public class MainViewModel: ObservableObject {
     
     private let useCase: MainUseCaseType
     public var addCustomViewModel: AddCustomModuleViewModel
-    public var settingViewModel: TimeTableSettingViewModel
+    public var settingViewModel: SettingViewModel
     
     @Published var timeTableInfo: TimeTableInfo = .empty
     @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
@@ -74,7 +74,7 @@ public class MainViewModel: ObservableObject {
     
     public init(
         _ addCustomViewModel: AddCustomModuleViewModel,
-        _ settingViewModel: TimeTableSettingViewModel,
+        _ settingViewModel: SettingViewModel,
         
         _ store: TimeTableStoreType,
         _ state: TimeTableState,
