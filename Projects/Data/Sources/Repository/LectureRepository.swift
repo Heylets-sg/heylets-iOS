@@ -25,23 +25,23 @@ public struct LectureRepository: LectureRepositoryType {
         self.cacheManager = cacheManager
     }
     
-    public func getLectureDetailInfo(
-        _ lectureId: Int
-    ) -> AnyPublisher<LectureInfo, Error> {
-        service.getLectureDetailInfo(lectureId)
-            .map { $0.toEntity() }
-            .mapToGeneralError()
-    }
+//    public func getLectureDetailInfo(
+//        _ lectureId: Int
+//    ) -> AnyPublisher<LectureInfo, Error> {
+//        service.getLectureDetailInfo(lectureId)
+//            .map { $0.toEntity() }
+//            .mapToGeneralError()
+//    }
     
     public func getLectureList(
         _ filterInfo: FilterInfo
-    ) -> AnyPublisher<[SectionInfo], Error> {
+    ) -> AnyPublisher<LectureListInfo, Error> {
         let cacheKey = cacheManager.makeLecturesCacheKey(department: filterInfo.department)
         
         return cacheManager.getCachedLectures(for: cacheKey, page: filterInfo.page)
-            .flatMap { [service, cacheManager] cachedInfo -> AnyPublisher<[SectionInfo], Error> in
+            .flatMap { [service, cacheManager] cachedInfo -> AnyPublisher<LectureListInfo, Error> in
                 if let cachedInfo = cachedInfo {
-                    print("✅ Cache HIT for cacheKey: \(cacheKey) page: 0 ~ \(filterInfo.page)")
+                    print("✅ Cache HIT for cacheKey: \(cacheKey) page: 0 ~ \(cachedInfo.pageNum)")
                     return Just(cachedInfo)
                         .setFailureType(to: Error.self)
                         .eraseToAnyPublisher()
@@ -50,6 +50,7 @@ public struct LectureRepository: LectureRepositoryType {
                     let params = filterInfo.toRequestParameters()
                     return service.getLectureList(params)
                         .map { $0.content.flatMap { $0.toEntity().sections } }
+                        .map { LectureListInfo(lectureList: $0, pageNum: filterInfo.page)}
                         .handleEvents(receiveOutput: {
                             cacheManager.appendLectures($0, for: cacheKey, page: filterInfo.page)
                         })

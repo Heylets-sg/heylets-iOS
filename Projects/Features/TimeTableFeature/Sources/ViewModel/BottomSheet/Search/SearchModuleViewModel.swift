@@ -132,12 +132,13 @@ public class SearchViewModel: ObservableObject {
                     Analytics.shared.track(.moduleSearched)
                 }
                 self.state.isScrollToTop = mode.isScrollToTop
-            }, receiveValue: { [weak self] lectureList in
+            }, receiveValue: { [weak self] data in
+                self?.filterInfo.page = data.pageNum
                 switch mode {
                 case .loadMore:
-                    self?.lectureList += lectureList
+                    self?.lectureList += data.lectureList
                 case .fetch:
-                    self?.lectureList = lectureList
+                    self?.lectureList = data.lectureList
                 }
             })
             .store(in: cancelBag)

@@ -27,7 +27,7 @@ public final class LectureCacheManager: @unchecked Sendable {
     // MARK: - Public Combine Methods
     
     /// 캐시된 강의 목록 조회 (특정 페이지)
-    public func getCachedLectures(for cacheKey: String, page: Int) -> AnyPublisher<[SectionInfo]?, Never> {
+    public func getCachedLectures(for cacheKey: String, page: Int) -> AnyPublisher<LectureListInfo?, Never> {
         return Future { [weak self] promise in
             self?.cacheQueue.async {
                 guard let self = self,
@@ -39,18 +39,31 @@ public final class LectureCacheManager: @unchecked Sendable {
                     return
                 }
                 
-                let pageData = self.cachedLectureData[cacheKey]
-                print("✅ Lecture Cache HIT for key: \(cacheKey), page: \(pageData?.recentPageNum), count: \(pageData?.lectures.count)")
-                promise(.success(pageData?.lectures))
+                
+                let lectureListData = LectureListInfo(
+                    lectureList: cachedData.lectures,
+                    pageNum: cachedData.recentPageNum
+                )
+                
+                print("✅ Lecture Cache HIT for key: \(cacheKey), page: \(lectureListData.pageNum), count: \(lectureListData.lectureList.count)")
+                promise(.success(lectureListData))
             }
         }
         .eraseToAnyPublisher()
     }
     
     /// 강의 목록 캐시에 저장 (페이지 단위 추가)
-    public func appendLectures(_ lectures: [SectionInfo], for cacheKey: String, page: Int) {
+    public func appendLectures(
+        _ data: LectureListInfo,
+        for cacheKey: String,
+        page: Int
+    ) {
         cacheQueue.async(flags: .barrier) {
-            self.performLecturesCacheOperation(lectures: lectures, cacheKey: cacheKey, page: page)
+            self.performLecturesCacheOperation(
+                lectures: data.lectureList,
+                cacheKey: cacheKey,
+                page: data.pageNum
+            )
         }
     }
     
