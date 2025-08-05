@@ -17,26 +17,21 @@ public struct TimeTableView: View {
     @EnvironmentObject var container: Router
     @EnvironmentObject var coordinator: TimeTableCoordinator
     
-    @ObservedObject var state: TimeTableState = TimeTableState.default {
-        didSet {
-            print("TimeTable 바뀜")
-        }
-    }
-    @ObservedObject var viewModel: TimeTableViewModel
-    @ObservedObject var searchViewModel: SearchModuleViewModel
+    @ObservedObject var state: TimeTableState
+    @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var searchViewModel: SearchViewModel
     @ObservedObject var themeViewModel: ThemeViewModel
-    @ObservedObject var addCustomViewModel: AddCustomModuleViewModel
 
     public init(
-        viewModel: TimeTableViewModel,
-        searchViewModel: SearchModuleViewModel,
+        state: TimeTableState,
+        viewModel: MainViewModel,
+        searchViewModel: SearchViewModel,
         themeViewModel: ThemeViewModel,
-        addCustomViewModel: AddCustomModuleViewModel
     ) {
+        self.state = state
         self.viewModel = viewModel
         self.searchViewModel = searchViewModel
         self.themeViewModel = themeViewModel
-        self.addCustomViewModel = addCustomViewModel
     }
 
     public var body: some View {
@@ -61,12 +56,6 @@ public struct TimeTableView: View {
                 .ignoresSafeArea()
                 .onAppear {
                     viewModel.send(.onAppear)
-//                    viewModel.searchModuleViewModel.selectLectureClosure = { lecture in
-//                        viewModel.send(.selectLecture(lecture))
-//                    }
-//                    viewModel.searchModuleViewModel.addLectureClosure = { lecture in
-//                        viewModel.send(.addLecture(lecture))
-//                    }
                 }
                 .heyAlert(viewModel.state.alertType, viewModel: viewModel)
                 .heyAlert(
@@ -158,29 +147,28 @@ public struct TimeTableView: View {
 
 extension TimeTableView {
     @ViewBuilder
-    private func createBottomSheetView() -> some View {
-        switch coordinator.presentCoordinator.viewType {
-        case .search:
-            SearchModuleView(
-                state: state,
-                viewModel: searchViewModel,
-                onReport: { coordinator.sheetCoordinator.sheet(to: .reportMissingModule) }
-            )
-            .bottomSheetTransition()
-
-        case .theme:
-            SettingTimeTableInfoView(viewModel: themeViewModel)
+        private func createBottomSheetView() -> some View {
+            switch coordinator.presentCoordinator.viewType {
+            case .search:
+                SearchModuleView(
+                    viewModel: searchViewModel,
+                    onReport: { coordinator.sheetCoordinator.sheet(to: .reportMissingModule) }
+                )
                 .bottomSheetTransition()
 
-        case .addCustom:
-            AddCustomModuleView(viewModel: addCustomViewModel)
-                .bottomSheetTransition()
+            case .theme:
+                SettingTimeTableInfoView(viewModel: themeViewModel)
+                    .bottomSheetTransition()
 
-        default:
-            EmptyView()
-                .frame(height: 0)
+            case .addCustom:
+                AddCustomModuleView(viewModel: viewModel.addCustomViewModel)
+                    .bottomSheetTransition()
+
+            default:
+                EmptyView()
+                    .frame(height: 0)
+            }
         }
-    }
 
     @ViewBuilder
     private func createTopView() -> some View {
@@ -209,16 +197,11 @@ extension TimeTableView {
 
                 ThemeListTopView(viewModel: themeViewModel)
             }
-//            .onAppear {
-//                themeViewModel.selectThemeClosure = { themeName in
-//                    viewModel.send(.selectedTheme(themeName))
-//                }
-//            }
 
         case .addCustom:
             AddCustomModuleTopView(
                 coordinator: viewModel.presentCoordinator,
-                viewModel: addCustomViewModel
+                viewModel: viewModel.addCustomViewModel
             )
             .frame(height: viewType.topViewHeight.adjusted)
 
@@ -233,24 +216,3 @@ extension TimeTableView {
         }
     }
 }
-
-
-
-
-
-//#Preview {
-//    let useCase = StubHeyUseCase.stub.timeTableUseCase
-//    return TimeTableView(
-//        viewModel: .init(
-//            SearchModuleViewModel(useCase),
-//            AddCustomModuleViewModel(useCase),
-//            ThemeViewModel(useCase, Router.default.navigationRouter),
-//            TimeTableSettingViewModel(useCase),
-//            Router.default.navigationRouter,
-//            Router.default.windowRouter,
-//            useCase
-//        )
-//    )
-//    .environmentObject(Router.default)
-//    .preferredColorScheme(.dark)
-//}

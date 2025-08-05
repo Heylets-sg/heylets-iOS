@@ -13,13 +13,13 @@ import DSKit
 import BaseFeatureDependency
 
 public struct MainView: View {
-    @ObservedObject var viewModel: TimeTableViewModel
+    @ObservedObject var viewModel: MainViewModel
     @ObservedObject var state: TimeTableState
     var coordinator: any PresentCoordinatorType
     
     init(
         state: TimeTableState,
-        viewModel: TimeTableViewModel,
+        viewModel: MainViewModel,
         coordinator: any PresentCoordinatorType,
     ) {
         self.state = state
@@ -81,7 +81,6 @@ public struct MainView: View {
             .scrollDisabled(!viewModel.state.timeTable.isScrollEnabled)
         }
     }
-    
 }
 
 extension MainView {

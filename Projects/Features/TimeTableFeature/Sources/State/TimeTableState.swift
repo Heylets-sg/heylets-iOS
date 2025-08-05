@@ -15,20 +15,9 @@ import Domain
 import DSKit
 import Core
 
-
-public class TimeTableState: ObservableObject, ObservableObjectSettable {
-    public var objectWillChange: ObservableObjectPublisher?
-    
-    public var selectLecture: [TimeTableCellInfo] = []  {
-        didSet {
-            notifyWillChange()
-        }
-    }
-    public var selectedThemeColor: [String] = [] {
-        didSet {
-            notifyWillChange()
-        }
-    }
+public final class TimeTableState: ObservableObject {
+    @Published public var selectLecture: [TimeTableCellInfo] = []
+    @Published public var selectedThemeColor: [String] = []
     
     public init(
         selectLecture: [TimeTableCellInfo] = [],
@@ -36,16 +25,18 @@ public class TimeTableState: ObservableObject, ObservableObjectSettable {
     ) {
         self.selectLecture = selectLecture
         self.selectedThemeColor = selectedThemeColor
-        
-        self.setObjectWillChange(objectWillChange)
     }
     
-    func setLecture(_ info: [TimeTableCellInfo]) {
+    public func selecttLecture(_ info: [TimeTableCellInfo]) {
         self.selectLecture = info
+    }
+    
+    public func clearLecture() {
+        self.selectLecture = []
     }
 }
 
+@MainActor
 extension TimeTableState {
     static public let `default` = TimeTableState()
 }
-

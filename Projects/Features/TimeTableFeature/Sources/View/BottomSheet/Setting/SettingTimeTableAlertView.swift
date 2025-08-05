@@ -12,9 +12,9 @@ import DSKit
 import Core
 
 public struct SettingTimeTableAlertView: View {
-    @ObservedObject var viewModel: TimeTableSettingViewModel
+    @ObservedObject var viewModel: SettingViewModel
     
-    public init(viewModel: TimeTableSettingViewModel) {
+    public init(viewModel: SettingViewModel) {
         self.viewModel = viewModel
     }
     

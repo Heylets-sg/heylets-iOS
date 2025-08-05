@@ -8,7 +8,7 @@ import DSKit
 import Core
 
 @MainActor
-public class TimeTableViewModel: ObservableObject {
+public class MainViewModel: ObservableObject {
     struct State {
         struct TimeTable {
             var columnCount: Int = 5
@@ -57,7 +57,8 @@ public class TimeTableViewModel: ObservableObject {
     public var sheetCoordinator: SheetCoordinatorType
     
     private let useCase: MainUseCaseType
-    public var settingViewModel: TimeTableSettingViewModel
+    public var addCustomViewModel: AddCustomModuleViewModel
+    public var settingViewModel: SettingViewModel
     
     @Published var timeTableInfo: TimeTableInfo = .empty
     @Published var displayTypeInfo: DisplayTypeInfo = .MODULE_CODE
@@ -69,9 +70,11 @@ public class TimeTableViewModel: ObservableObject {
     
     @Published var detailSectionInfo: SectionInfo = .empty
     
-    public var coreState: TimeTableState
+    @Published var timeTableState: TimeTableState
+    
     public init(
-        _ settingViewModel: TimeTableSettingViewModel,
+        _ addCustomViewModel: AddCustomModuleViewModel,
+        _ settingViewModel: SettingViewModel,
         
         _ store: TimeTableStoreType,
         _ state: TimeTableState,
@@ -83,10 +86,11 @@ public class TimeTableViewModel: ObservableObject {
         _ presentCoordinator: any PresentCoordinatorType,
         _ sheetCoordinator: SheetCoordinatorType
     ) {
+        self.addCustomViewModel = addCustomViewModel
         self.settingViewModel = settingViewModel
         
         self.store = store
-        self.coreState = state
+        self.timeTableState = state
         self.useCase = useCase
         
         self.windowRouter = windowRouter
@@ -122,18 +126,19 @@ public class TimeTableViewModel: ObservableObject {
             } else { state.alertType = .error("선택한 색션 정보를 찾을 수 없습니다.") }
             
         case .deleteButtonDidTap:
-            state.alertType = .deleteAlert
             Analytics.shared.track(.screenView("delete_module", .modal))
+            state.alertType = .deleteAlert
+            
         case .initMainView:
             let viewType = presentCoordinator.viewType
             if !(viewType == .search || viewType == .theme(false) || viewType == .addCustom) {
                 presentCoordinator.reset()
-                coreState.selectLecture = []
+                timeTableState.selectLecture = []
             }
         case .addCustomModuleButtonDidTap:
             Analytics.shared.track(.screenView("add_custom_module", .bottom_sheet))
             presentCoordinator.switchTo(.addCustom)
-            coreState.selectLecture = []
+            timeTableState.selectLecture = []
         }
     }
     
@@ -157,12 +162,10 @@ public class TimeTableViewModel: ObservableObject {
         case .errorAlertViewCloseButtonDidTap:
             presentCoordinator.switchTo(.search)
             state.alertType = nil
-        //MARK: viewModel 리펙토링으로 인한 로직 처리 필요
         case .emptyScheduleErrorAddButtonDidTap(let name):
-            break
-//            addCustomModuleViewModel.schedule = name
-//            state.alertType = nil
-//            presentCoordinator.switchTo(.addCustom)
+            addCustomViewModel.schedule = name
+            state.alertType = nil
+            presentCoordinator.switchTo(.addCustom)
         case .notRightNowButtonDidTap:
             Analytics.shared.track(.clickGuestConfirmReject)
         case .loginButtonDidTap:
@@ -234,20 +237,16 @@ public class TimeTableViewModel: ObservableObject {
         store.errMessage
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
-                self?.presentCoordinator.reset()
-                self?.settingViewModel.settingAlertType = nil
-                self?.coreState.selectLecture = []
+                self?.initState()
             })
-            .map { message in .error(message)}
+            .map { .error($0) }
             .assign(to: \.state.alertType, on: self)
             .store(in: cancelBag)
         
         store.guestModeError
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
-                self?.presentCoordinator.reset()
-                self?.settingViewModel.settingAlertType = nil
-                self?.coreState.selectLecture = []
+                self?.initState()
             })
             .map { _ in true }
             .assign(to: \.state.showGuestErrorAlert, on: self)
@@ -256,18 +255,16 @@ public class TimeTableViewModel: ObservableObject {
         store.emptyScheduleError
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
-                self?.presentCoordinator.reset()
-                self?.settingViewModel.settingAlertType = nil
-                self?.coreState.selectLecture = []
+                self?.initState()
             })
-            .map { name in .emptyScheduleError(name)}
+            .map { .emptyScheduleError($0) }
             .assign(to: \.state.alertType, on: self)
             .store(in: cancelBag)
     }
 }
 
 // Rest of the functions remain the same
-extension TimeTableViewModel {
+extension MainViewModel {
     private func configHourList(
         _ timeTableCellList: [TimeTableCellInfo]
     ) -> AnyPublisher<[Int], Never> {
@@ -307,5 +304,13 @@ extension TimeTableViewModel {
         }
         return Just(updatedWeekList)
             .eraseToAnyPublisher()
+    }
+}
+
+extension MainViewModel {
+    func initState() {
+        presentCoordinator.reset()
+        settingViewModel.settingAlertType = nil
+        timeTableState.selectLecture = []
     }
 }

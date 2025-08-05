@@ -7,15 +7,12 @@
 //
 
 import SwiftUI
+
 import Domain
 import DSKit
 
 public struct TimeTableSelectedView: View {
-    @Binding var selectLecture: [TimeTableCellInfo] {
-        didSet {
-            print("뷰에서 변경")
-        }
-    }
+    @Binding var selectLecture: [TimeTableCellInfo]
     var weekList: [Week]
     var hourList: [Int]
     var cellWidth: CGFloat
@@ -33,8 +30,8 @@ public struct TimeTableSelectedView: View {
     }
     
     public var body: some View {
-        
-        ForEach($selectLecture, id: \.self) { $cell in
+        ForEach(selectLecture.indices, id: \.self) { index in
+            let cell = selectLecture[index]
             if let dayIndex = weekList.firstIndex(of: cell.schedule.day) {
                 let rect: (
                     centerX: CGFloat,

@@ -23,8 +23,6 @@ public protocol TimeTableStoreType {
     var emptyScheduleError: PassthroughSubject<String, Never> { get }
     var guestModeError: PassthroughSubject<Void, Never> { get }
     
-//    var selectLecture: [TimeTableCellInfo] { get set }
-//    var selectedThemeColor: [String] { get set }
     func getTableDetailInfo() -> AnyPublisher<Void, Never>
 }
 
@@ -48,19 +46,8 @@ final public class TimeTableStore: TimeTableStoreType {
     public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()
     public var profileInfo = CurrentValueSubject<ProfileInfo, Never>(.empty)
     
-//    @Published public var selectLecture: [TimeTableCellInfo] = [] {
-//        didSet {
-//            print("셀 선택됨 \(selectLecture)")
-//        }
-//    }
-//    @Published public var selectedThemeColor: [String] = [] {
-//        didSet {
-//            print("색상 선택됨")
-//        }
-//    }
-    
     public func getTableDetailInfo() -> AnyPublisher<Void, Never> {
-        timeTableRepository.getTableDetailInfo(tableId)
+        return timeTableRepository.getTableDetailInfo(tableId)
             .handleEvents(receiveOutput: { [weak self] detailInfo in
                 self?.timeTableInfo.send(detailInfo.tableInfo)
                 self?.displayInfo.send(detailInfo.tableInfo.displayType!)

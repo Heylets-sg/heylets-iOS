@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 struct ClassSearchBarView: View {
-    @ObservedObject var viewModel: SearchModuleViewModel
+    @ObservedObject var viewModel: SearchViewModel
     
     var body: some View {
         HStack {

@@ -14,12 +14,7 @@ import BaseFeatureDependency
 import Core
 
 public struct SearchModuleView: View {
-    @ObservedObject var state: TimeTableState {
-        didSet {
-            print("TimeTable 바뀜")
-        }
-    }
-    @ObservedObject var viewModel: SearchModuleViewModel
+    @ObservedObject var viewModel: SearchViewModel
     var onReport: () -> Void
     
     public var body: some View {
@@ -50,7 +45,6 @@ public struct SearchModuleView: View {
                                     isSelected: viewModel.state.selectedLecture == viewModel.lectureList[index],
                                     section: viewModel.lectureList[index],
                                     cellDidTap: {
-                                        state.setLecture(viewModel.lectureList[index].timeTableCellInfo)
                                         viewModel.send(.lectureCellDidTap(index))
                                     },
                                     addLectureDidTap: { viewModel.send(.addLectureButtonDidTap(index))}
@@ -83,4 +77,3 @@ public struct SearchModuleView: View {
         }
     }
 }
-
