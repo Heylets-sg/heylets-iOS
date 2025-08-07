@@ -10,13 +10,13 @@ import Foundation
 import Combine
 
 public protocol LectureRepositoryType {
-    func getLectureDetailInfo(
-        _ lectureId: Int
-    ) -> AnyPublisher<LectureInfo, Error>
+//    func getLectureDetailInfo(
+//        _ lectureId: Int
+//    ) -> AnyPublisher<LectureInfo, Error>
     
     func getLectureList(
         _ filterInfo: FilterInfo
-    ) -> AnyPublisher<[SectionInfo], Error>
+    ) -> AnyPublisher<LectureListInfo, Error>
     
     func getLectureDepartment(
         _ university: String

@@ -8,7 +8,6 @@
 
 import Foundation
 import Combine
-import UIKit
 
 import Domain
 
@@ -35,10 +34,7 @@ public final class TimeTableCacheManager: @unchecked Sendable {
                     promise(.success(nil))
                     return
                 }
-                
-#if DEBUG
                 print("✅ Cache HIT for tableId: \(tableId)")
-#endif
                 
                 promise(.success(cachedInfo.data))
             }
@@ -125,8 +121,6 @@ extension TimeTableCacheManager {
         }
     }
 }
-
-// MARK: - CachedTimeTableDetailInfo
 
 private struct CachedTimeTableDetailInfo: Sendable {
     var data: TimeTableDetailInfo

@@ -13,12 +13,12 @@
 import ConfigPlugin
 
 let packageSettings = PackageSettings(
-    productTypes: [
-        "FirebaseCore": .staticFramework,
-        "FirebaseMessaging": .staticFramework,
-        "Alamofire": .framework,
-        "AmplitudeSwift": .staticFramework
-    ],
+//    productTypes: [
+//        "FirebaseCore": .staticFramework,
+//        "FirebaseMessaging": .staticFramework,
+//        "Alamofire": .framework,
+//        "AmplitudeSwift": .staticFramework
+//    ],
     baseSettings: Settings.settings(
         configurations: XCConfig.configurations
     )
@@ -26,10 +26,10 @@ let packageSettings = PackageSettings(
 #endif
 
 let package = Package(
-    name: "HeyletsDependencies",
-    dependencies: [
-        .package(url: "https://github.com/firebase/firebase-ios-sdk", from: "11.0.0"),
-        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.8.0"),
-        .package(url: "https://github.com/amplitude/Amplitude-Swift", from: "1.0.0")
-    ]
+    name: "HeyletsDependencies"
+//    dependencies: [
+//        .package(url: "https://github.com/firebase/firebase-ios-sdk", from: "11.0.0"),
+//        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.8.0"),
+//        .package(url: "https://github.com/amplitude/Amplitude-Swift", from: "1.0.0")
+//    ]
 )

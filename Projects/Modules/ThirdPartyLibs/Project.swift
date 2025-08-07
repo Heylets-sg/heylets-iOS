@@ -11,7 +11,7 @@ import DependencyPlugin
 
 let project = Project.makeModule(
     name: "ThirdPartyLibs",
-    targets: [.dynamicFramework],
+    targets: [.staticFramework],
     externalDependencies: [
         .SPM.Alamofire,
         .SPM.FirebaseCore,

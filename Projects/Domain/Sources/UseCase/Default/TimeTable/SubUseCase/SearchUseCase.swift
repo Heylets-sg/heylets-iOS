@@ -16,7 +16,7 @@ public protocol SearchUseCaseType {
     //강의 목록 불러오기
     func getLectureList(
         _ filterInfo: FilterInfo
-    ) -> AnyPublisher<[SectionInfo], Never>
+    ) -> AnyPublisher<LectureListInfo, Never>
     //커스텀 모듈 추가하기
     func addCustomModule(_ customModule: CustomModuleInfo) -> AnyPublisher<Void, Never>
     //학과 찾기
@@ -45,7 +45,7 @@ final public class SearchUseCase: SearchUseCaseType {
     
     public func getLectureList(
         _ filterInfo: FilterInfo
-    ) -> AnyPublisher<[SectionInfo], Never> {
+    ) -> AnyPublisher<LectureListInfo, Never> {
         return lectureRepository.getLectureList(filterInfo)
             .handleEvents(receiveRequest: {  _ in
                 Analytics.shared.track(.clickSearchModule(
@@ -58,7 +58,7 @@ final public class SearchUseCase: SearchUseCaseType {
                 )
             })
             .catch { _ in
-                return Just([]).eraseToAnyPublisher()
+                return Just(LectureListInfo()).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }

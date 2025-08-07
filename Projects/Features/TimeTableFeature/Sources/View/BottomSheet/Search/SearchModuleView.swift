@@ -52,9 +52,10 @@ public struct SearchModuleView: View {
                                 .equatable()
                                 .padding(.bottom, 3)
                                 .onAppear {
-                                    if index == viewModel.lectureList.count-1 {
-                                        viewModel.send(.loadMoreData)
-                                    }
+                                    if index == viewModel.lectureList.count - 1 &&
+                                           !viewModel.state.isLoading {
+                                            viewModel.send(.loadMoreData)
+                                        }
                                 }
                             }
                         }

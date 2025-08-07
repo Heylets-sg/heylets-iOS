@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseMessaging
+import FirebaseCore
 
 import ThirdPartyLibs
 
@@ -19,12 +20,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-//        
-//        Task {
-//            firebaseManager.configure()
-//            await notificationManager.requestPermission()
-//        }
-//        
+        Task {
+            firebaseManager.configure()
+            await notificationManager.requestPermission()
+        }
         return true
     }
     

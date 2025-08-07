@@ -48,7 +48,8 @@ public class HeyRepository: RepositoryType {
             cacheManager: TimeTableCacheManager.shared
         )
         lectureRepository = LectureRepository(
-            service: service.lectureService
+            service: service.lectureService,
+            cacheManager: LectureCacheManager.shared
         )
         userRepository = UserRepository(
             service: service.userService
