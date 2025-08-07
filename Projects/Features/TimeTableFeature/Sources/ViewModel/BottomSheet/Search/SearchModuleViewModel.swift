@@ -33,6 +33,7 @@ public class SearchViewModel: ObservableObject {
         var selectedLecture: SectionInfo? = nil
         var isLoading: Bool = false
         var isScrollToTop: Bool = false
+        var hasLoadedAll: Bool = false
     }
     
     enum Action {
