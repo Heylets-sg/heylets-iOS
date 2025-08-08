@@ -14,11 +14,11 @@ import Networks
 
 public struct SectionRepository: SectionRepositoryType {
     private let service: SectionServiceType
-    private let cacheManager: TimeTableCacheManager
+    private let cacheManager: TimeTableCacheManagerType
     
     public init(
         service: SectionServiceType,
-        cacheManager: TimeTableCacheManager
+        cacheManager: TimeTableCacheManagerType
     ) {
         self.service = service
         self.cacheManager = cacheManager
