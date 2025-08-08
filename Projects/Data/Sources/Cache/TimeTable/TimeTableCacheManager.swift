@@ -11,7 +11,9 @@ import Combine
 
 import Domain
 
-public protocol TimeTableCacheManagerType {
+public typealias TimeTableBaseCacheManager = BaseCacheManager<Int, TimeTableDetailInfo, CachedTimeTableDetailInfo>
+
+public protocol TimeTableCacheManagerType: TimeTableBaseCacheManager {
     func getCachedTableDetailInfo(for tableId: Int) -> AnyPublisher<TimeTableDetailInfo?, Never>
     func cache(tableDetailInfo: TimeTableDetailInfo, for tableId: Int)
     func deleteSection(for tableId: Int, _ sectionId: Int)
@@ -19,7 +21,7 @@ public protocol TimeTableCacheManagerType {
     func addSection(for tableId: Int, _ section: SectionInfo)
 }
 
-final public class TimeTableCacheManager: BaseCacheManager<Int, TimeTableDetailInfo, CachedTimeTableDetailInfo>, TimeTableCacheManagerType, @unchecked Sendable {
+final public class TimeTableCacheManager: TimeTableBaseCacheManager, TimeTableCacheManagerType, @unchecked Sendable {
     public static let shared = TimeTableCacheManager(.timeTable)
     
     public func getCachedTableDetailInfo(for tableId: Int) -> AnyPublisher<TimeTableDetailInfo?, Never> {

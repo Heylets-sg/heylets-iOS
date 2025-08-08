@@ -11,6 +11,8 @@ import Combine
 
 import Domain
 
+public typealias LectureBaseCacheManager = BaseCacheManager<String, LectureCacheValue, CachedLectureData>
+
 public protocol LectureCacheManagerType {
     func getCachedLectures(
         for department: String?,
@@ -24,7 +26,7 @@ public protocol LectureCacheManagerType {
     )
 }
 
-public final class LectureCacheManager: BaseCacheManager<String, LectureCacheValue, CachedLectureData>, LectureCacheManagerType,  @unchecked Sendable {
+public final class LectureCacheManager: LectureBaseCacheManager, LectureCacheManagerType,  @unchecked Sendable {
     public static let shared = LectureCacheManager(.lecture)
     
     public func getCachedLectures(
