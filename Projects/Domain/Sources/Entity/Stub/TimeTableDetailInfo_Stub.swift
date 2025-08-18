@@ -8,16 +8,16 @@
 
 import Foundation
 
-extension TimeTableDetailInfo {
-    static public var stub: Self {
-        .init(
-            tableInfo: .empty,
-            sectionList: [
-                .timetable_stub1,
-                .timetable_stub2,
-                .timetable_stub3,
-                .timetable_stub4
-            ]
-        )
-    }
-}
+//extension TimeTableDetailInfo {
+//    static public var stub: Self {
+//        .init(
+//            tableInfo: .empty,
+//            sectionList: [
+//                .timetable_stub1,
+//                .timetable_stub2,
+//                .timetable_stub3,
+//                .timetable_stub4
+//            ]
+//        )
+//    }
+//}

@@ -10,15 +10,9 @@ import Core
 @MainActor
 public class MainViewModel: ObservableObject {
     struct State {
-        struct TimeTable {
-            var columnCount: Int = 5
-            var rowCount: Int = 17
-            var isScrollEnabled: Bool = true
-        }
-        
         var alertType: HeyTimeTableAlertType? = nil
         var showGuestErrorAlert: Bool = false
-        var timeTable: TimeTable = TimeTable()
+        var isScrollEnabled: Bool = true
         var profile: ProfileInfo = .init()
         var isLoading: Bool = false
     }
@@ -100,8 +94,6 @@ public class MainViewModel: ObservableObject {
         self.sheetCoordinator = sheetCoordinator
         
         bindStore()
-        
-        timeTable = sectionList.createTimeTableCellList()
     }
     
     func send(_ action: Action) {
@@ -157,17 +149,22 @@ public class MainViewModel: ObservableObject {
             .map { _ in nil }
             .assign(to: \.state.alertType, on: self)
             .store(in: cancelBag)
+            
         case .deleteModuleAlertCloseButtonDidTap:
             state.alertType = nil
+            
         case .errorAlertViewCloseButtonDidTap:
             presentCoordinator.switchTo(.search)
             state.alertType = nil
+            
         case .emptyScheduleErrorAddButtonDidTap(let name):
             addCustomViewModel.schedule = name
             state.alertType = nil
             presentCoordinator.switchTo(.addCustom)
+            
         case .notRightNowButtonDidTap:
             Analytics.shared.track(.clickGuestConfirmReject)
+            
         case .loginButtonDidTap:
             Analytics.shared.track(.clickGuestConfirmLogin)
             windowRouter.switch(to: .login)
@@ -186,52 +183,22 @@ public class MainViewModel: ObservableObject {
     }
     
     private func bindStore() {
-        weak var owner = self
-        guard let owner else { return }
-        
-        store.timeTableInfo
+        store.timeTableDetailInfo
             .receive(on: RunLoop.main)
-            .assign(to: \.timeTableInfo, on: self)
+            .sink(receiveValue: { [weak self] detailInfo in
+                self?.sectionList = detailInfo.sectionList
+                self?.timeTableInfo = detailInfo.tableInfo
+                self?.displayTypeInfo = detailInfo.tableInfo.displayType!
+                self?.timeTable = detailInfo.timeTableCellList
+                self?.weekList = detailInfo.weekList
+                self?.hourList = detailInfo.hourList
+                self?.state.isScrollEnabled = detailInfo.weekList != Week.weekDay
+            })
             .store(in: cancelBag)
         
         store.profileInfo
             .receive(on: RunLoop.main)
             .assign(to: \.state.profile, on: self)
-            .store(in: cancelBag)
-        
-        store.displayInfo
-            .receive(on: RunLoop.main)
-            .assign(to: \.displayTypeInfo, on: self)
-            .store(in: cancelBag)
-        
-        let timeTableCellList = store.sectionList
-            .receive(on: RunLoop.main)
-            .handleEvents(receiveOutput: {
-                owner.sectionList = $0
-            })
-            .map { $0.createTimeTableCellList() }
-            .share()
-            
-        
-        timeTableCellList
-            .assign(to: \.timeTable, on: owner)
-            .store(in: cancelBag)
-        
-        timeTableCellList
-            .flatMap(configWeekList)
-            .sink(receiveValue: {
-                owner.weekList = $0
-                owner.state.timeTable.isScrollEnabled = $0 != Week.weekDay
-                owner.state.timeTable.columnCount = $0.count
-            })
-            .store(in: cancelBag)
-        
-        timeTableCellList
-            .flatMap(configHourList)
-            .sink(receiveValue: {
-                owner.hourList = $0
-                owner.state.timeTable.rowCount = $0.count
-            })
             .store(in: cancelBag)
         
         store.timeTableError
@@ -250,50 +217,6 @@ public class MainViewModel: ObservableObject {
                 }
             })
             .store(in: cancelBag)
-    }
-}
-
-// Rest of the functions remain the same
-extension MainViewModel {
-    private func configHourList(
-        _ timeTableCellList: [TimeTableCellInfo]
-    ) -> AnyPublisher<[Int], Never> {
-        var startTime = 8
-        var endTime = 21
-        var hourList: [Int] = []
-        
-        let allTimeList = Set(
-            timeTableCellList.map { $0.schedule.startHour } +
-            timeTableCellList.map { $0.schedule.endHour }
-        )
-        
-        if allTimeList.isEmpty {
-            hourList = Array(startTime...endTime)
-        } else {
-            startTime = min(allTimeList.min()!, startTime)
-            endTime = max(allTimeList.max()!, endTime)
-            hourList = Array(startTime...endTime)
-        }
-        
-        return Just(hourList)
-            .eraseToAnyPublisher()
-    }
-    
-    private func configWeekList(
-        _ timeTableCellList: [TimeTableCellInfo]
-    ) -> AnyPublisher<[Week], Never> {
-        var updatedWeekList = Week.weekDay
-        for cell in timeTableCellList {
-            if cell.schedule.day == .Sun {
-                updatedWeekList = Week.dayOfWeek
-                break
-            }
-            if cell.schedule.day == .Sat && !updatedWeekList.contains(.Sat) {
-                updatedWeekList.append(.Sat)
-            }
-        }
-        return Just(updatedWeekList)
-            .eraseToAnyPublisher()
     }
 }
 

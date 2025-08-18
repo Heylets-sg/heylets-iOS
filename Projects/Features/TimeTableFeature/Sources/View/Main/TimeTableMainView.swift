@@ -44,8 +44,8 @@ public struct MainView: View {
                             
                             GeometryReader { geometry in
                                 VStack {
-                                    let columnCount = viewModel.state.timeTable.columnCount
-                                    let rowCount = viewModel.state.timeTable.rowCount
+                                    let columnCount = viewModel.weekList.count
+                                    let rowCount = viewModel.hourList.count
                                     
                                     ZStack {
                                         // 📌 빈 시간표 배치
@@ -78,31 +78,8 @@ public struct MainView: View {
             }
             .loading(viewModel.state.isLoading)
             .scrollIndicators(.hidden)
-            .scrollDisabled(!viewModel.state.timeTable.isScrollEnabled)
+            .scrollDisabled(!viewModel.state.isScrollEnabled)
         }
-    }
-}
-
-extension MainView {
-    private func configButtonLayout(
-        _ firstTime: Int,
-        for cell: TimeTableCellInfo,
-        cellHeight: CGFloat
-    ) -> CGFloat {
-        let startHour = cell.schedule.startHour
-        let startMinute = cell.schedule.startMinute
-        
-        // 강의가 맨 위보다 위에 있는 경우 처리
-        if startHour < firstTime {
-            return 0 // 맨 위로 스크롤
-        }
-        
-        // 시작 시간과 분을 기준으로 정확한 시작 위치 계산
-        let hourOffset = CGFloat(startHour - firstTime) * cellHeight
-        let minuteOffset = CGFloat(startMinute) / 60.0 * cellHeight
-        
-        // 최종 위치 반환 (약간 위로 오프셋 적용하여 더 보기 좋게)
-        return max(0, hourOffset + minuteOffset - 20)
     }
 }
 

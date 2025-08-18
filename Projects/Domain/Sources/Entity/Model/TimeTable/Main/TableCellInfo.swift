@@ -10,7 +10,7 @@ import Foundation
 
 import SwiftUI
 
-public struct TimeTableCellInfo: Equatable, Hashable {
+public struct TimeTableCellInfo: Equatable, Hashable, Sendable {
     public var id: Int
     public var code: String
     public var name: String
