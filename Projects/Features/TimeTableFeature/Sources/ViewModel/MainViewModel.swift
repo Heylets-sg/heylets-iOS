@@ -234,31 +234,21 @@ public class MainViewModel: ObservableObject {
             })
             .store(in: cancelBag)
         
-        store.errMessage
+        store.timeTableError
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.initState()
             })
-            .map { .error($0) }
-            .assign(to: \.state.alertType, on: self)
-            .store(in: cancelBag)
-        
-        store.guestModeError
-            .receive(on: RunLoop.main)
-            .handleEvents(receiveOutput: { [weak self] _ in
-                self?.initState()
+            .sink(receiveValue: { [weak self] error in
+                switch error {
+                case .error(let message):
+                    self?.state.alertType = .error(message)
+                case .emptyScheduleError(let name):
+                    self?.state.alertType = .emptyScheduleError(name)
+                case .guestModeError:
+                    self?.state.showGuestErrorAlert = true
+                }
             })
-            .map { _ in true }
-            .assign(to: \.state.showGuestErrorAlert, on: self)
-            .store(in: cancelBag)
-        
-        store.emptyScheduleError
-            .receive(on: RunLoop.main)
-            .handleEvents(receiveOutput: { [weak self] _ in
-                self?.initState()
-            })
-            .map { .emptyScheduleError($0) }
-            .assign(to: \.state.alertType, on: self)
             .store(in: cancelBag)
     }
 }

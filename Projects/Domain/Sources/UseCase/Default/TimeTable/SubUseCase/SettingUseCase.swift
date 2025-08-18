@@ -56,8 +56,8 @@ final public class SettingUseCase: SettingUseCaseType {
     public func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never> {
         return timeTableRepository.patchTableName(store.tableId, name)
             .catch { [weak self] error in
-                if error.isGuestModeError { self?.store.guestModeError.send(()) }
-                else { self?.store.errMessage.send(error.description) }
+                if error.isGuestModeError { self?.store.timeTableError.send(.guestModeError) }
+                else { self?.store.timeTableError.send(.error(error.description)) }
                 return Empty<Void, Never>()
             }
             .flatMap(store.getTableDetailInfo)
@@ -86,8 +86,8 @@ final public class SettingUseCase: SettingUseCaseType {
     ) -> AnyPublisher<Void, Never> {
         return settingRepository.patchTimeTableSettingInfo(displayType, theme)
             .catch { [weak self] error in
-                if error.isGuestModeError { self?.store.guestModeError.send(()) }
-                else { self?.store.errMessage.send(error.description) }
+                if error.isGuestModeError { self?.store.timeTableError.send(.guestModeError) }
+                else { self?.store.timeTableError.send(.error(error.description)) }
                 return Empty<Void, Never>()
             }
             .flatMap(store.getTableDetailInfo)
@@ -97,7 +97,7 @@ final public class SettingUseCase: SettingUseCaseType {
     public func deleteAllSection() -> AnyPublisher<Void, Never> {
         return sectionRepository.deleteAllSection(store.tableId)
             .catch { [weak self] error in
-                self?.store.errMessage.send(error.description)
+                self?.store.timeTableError.send(.error(error.description))
                 return Empty<Void, Never>()
             }
             .flatMap(store.getTableDetailInfo)

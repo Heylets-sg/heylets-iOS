@@ -11,6 +11,12 @@ import Combine
 
 import Core
 
+public enum TimeTableError {
+    case error(String)
+    case guestModeError
+    case emptyScheduleError(String)
+}
+
 public protocol TimeTableStoreType {
     var tableId: Int { get set }
     
@@ -19,9 +25,13 @@ public protocol TimeTableStoreType {
     var displayInfo: PassthroughSubject<DisplayTypeInfo, Never> { get }
     var profileInfo: CurrentValueSubject<ProfileInfo, Never> { get }
     
-    var errMessage: PassthroughSubject<String, Never> { get }
-    var emptyScheduleError: PassthroughSubject<String, Never> { get }
-    var guestModeError: PassthroughSubject<Void, Never> { get }
+    var timeTableError: PassthroughSubject<TimeTableError, Never> { get }
+    
+    
+    
+//    var errMessage: PassthroughSubject<String, Never> { get }
+//    var emptyScheduleError: PassthroughSubject<String, Never> { get }
+//    var guestModeError: PassthroughSubject<Void, Never> { get }
     
     func getTableDetailInfo() -> AnyPublisher<Void, Never>
 }
@@ -38,9 +48,7 @@ final public class TimeTableStore: TimeTableStoreType {
     }
     
     public var tableId: Int = 0
-    public var errMessage = PassthroughSubject<String, Never>()
-    public var emptyScheduleError = PassthroughSubject<String, Never>()
-    public var guestModeError = PassthroughSubject<Void, Never>()
+    public var timeTableError = PassthroughSubject<TimeTableError, Never>()
     public var timeTableInfo = CurrentValueSubject<TimeTableInfo, Never>(.empty)
     public var sectionList = PassthroughSubject<[SectionInfo], Never>()
     public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()

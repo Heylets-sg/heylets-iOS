@@ -15,6 +15,7 @@ public extension Project {
         "NSAppTransportSecurity": .dictionary([
             "NSAllowsArbitraryLoads": .boolean(true)
         ]),
+        "CFBundlePackageType": .string("APPL"),
         "CFBundleShortVersionString": "$(MARKETING_VERSION)",
         "CFBundleVersion": "$(CURRENT_PROJECT_VERSION)",
         "CFBundleIdentifier": .string("$(PRODUCT_BUNDLE_IDENTIFIER)"),

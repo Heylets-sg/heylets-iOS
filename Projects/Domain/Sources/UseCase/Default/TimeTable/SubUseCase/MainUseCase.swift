@@ -72,14 +72,14 @@ final public class MainUseCase: MainUseCaseType {
     
     public func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never> {
         if scheduleIsEmpty {
-            store.emptyScheduleError.send(name)
+            store.timeTableError.send(.emptyScheduleError(name))
             return Empty<Void, Never>()
                 .eraseToAnyPublisher()
         } else {
             return sectionRepository.addSection(store.tableId, sectionId, "")
                 .catch { [weak self] error in
-                    if error.isGuestModeError { self?.store.guestModeError.send(()) }
-                    else { self?.store.errMessage.send(error.description) }
+                    if error.isGuestModeError { self?.store.timeTableError.send(.guestModeError) }
+                    else { self?.store.timeTableError.send(.error(error.description)) }
                     return Empty<Void, Never>()
                 }
                 .flatMap(store.getTableDetailInfo)
