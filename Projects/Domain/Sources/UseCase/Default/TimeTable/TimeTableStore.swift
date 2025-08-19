@@ -22,9 +22,6 @@ public protocol TimeTableStoreType {
     
     
     var timeTableDetailInfo: PassthroughSubject<TimeTableDetailInfo, Never> { get }
-//    var timeTableInfo: CurrentValueSubject<TimeTableInfo, Never> { get }
-//    var sectionList: PassthroughSubject<[SectionInfo], Never> { get }
-//    var displayInfo: PassthroughSubject<DisplayTypeInfo, Never> { get }
     var profileInfo: CurrentValueSubject<ProfileInfo, Never> { get }
     var timeTableError: PassthroughSubject<TimeTableError, Never> { get }
     func getTableDetailInfo() -> AnyPublisher<Void, Never>
@@ -44,9 +41,6 @@ final public class TimeTableStore: TimeTableStoreType {
     public var tableId: Int = 0
     public var timeTableError = PassthroughSubject<TimeTableError, Never>()
     public var timeTableDetailInfo = PassthroughSubject<TimeTableDetailInfo, Never>()
-//    public var timeTableInfo = CurrentValueSubject<TimeTableInfo, Never>(.empty)
-//    public var sectionList = PassthroughSubject<[SectionInfo], Never>()
-//    public var displayInfo = PassthroughSubject<DisplayTypeInfo, Never>()
     public var profileInfo = CurrentValueSubject<ProfileInfo, Never>(.empty)
     
     public func getTableDetailInfo() -> AnyPublisher<Void, Never> {

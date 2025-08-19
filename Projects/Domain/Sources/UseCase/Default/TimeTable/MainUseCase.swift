@@ -12,13 +12,10 @@ import Combine
 import Core
 
 public protocol MainUseCaseType {
-    // 시간표 상세조회 불러오기
     func fetchTableInfo() -> AnyPublisher<Void, Never>
     func getProfileInfo() -> AnyPublisher<Void, Never>
     func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never>
     func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never>
-    //테마 선택시 반영되도록 상세 색상 가져오기
-//    func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never>
 }
 
 final public class MainUseCase: MainUseCaseType {
