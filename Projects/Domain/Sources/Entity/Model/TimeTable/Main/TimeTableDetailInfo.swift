@@ -6,12 +6,6 @@
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
-//public struct  {
-//    @Published var weekList: [Week] = Week.weekDay
-//    @Published var hourList: [Int] = Array(8...21)
-//    @Published var timeTable: [TimeTableCellInfo] = []
-//}
-
 public struct TimeTableDetailInfo: Sendable {
     public var tableInfo: TimeTableInfo
     public var sectionList: [SectionInfo]

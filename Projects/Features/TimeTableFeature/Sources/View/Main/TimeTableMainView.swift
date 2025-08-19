@@ -11,6 +11,7 @@ import SwiftUI
 import Domain
 import DSKit
 import BaseFeatureDependency
+import Core
 
 public struct MainView: View {
     @ObservedObject var viewModel: MainViewModel
@@ -61,20 +62,22 @@ public struct MainView: View {
                                             cellWidth: cellWidth,
                                             canTouch: coordinator.isMain()
                                         )
-                                        
-                                        TimeTableSelectedView(
-                                            selectLecture: $state.selectLecture,
-                                            weekList: viewModel.weekList,
-                                            hourList: viewModel.hourList,
-                                            cellWidth: cellWidth
-                                        )
+//                                        
+//                                        TimeTableSelectedView(
+//                                            selectLecture: $state.selectLecture,
+//                                            weekList: viewModel.weekList,
+//                                            hourList: viewModel.hourList,
+//                                            cellWidth: cellWidth
+//                                        )
                                     }
                                 }
                             }
                         }
                     }
+                    
                     .padding(.bottom, coordinator.isMain() ? 50 : 0)
                 }
+                
             }
             .loading(viewModel.state.isLoading)
             .scrollIndicators(.hidden)
@@ -83,17 +86,4 @@ public struct MainView: View {
     }
 }
 
-//#Preview {
-//    let useCase = StubHeyUseCase.stub.timeTableUseCase
-//    return TimeTableView(
-//        viewModel: .init(
-//            .init(useCase),
-//            .init(useCase),
-//            .init(useCase, Router.default.navigationRouter),
-//            .init(useCase),
-//            Router.default.navigationRouter,
-//            Router.default.windowRouter,
-//            useCase)
-//    )
-//    .environmentObject(Router.default)
-//}
+
