@@ -17,7 +17,7 @@ public struct ScheduleInfo: Hashable, Sendable {
     public var endMinute: Int
     public var location: String
     
-    var startTime: String {
+    public var startTime: String {
         return String(format: "%02d", startHour) + ":" + String(format: "%02d", startMinute)
     }
     
