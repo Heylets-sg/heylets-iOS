@@ -8,18 +8,7 @@
 
 import Foundation
 
-public struct TimeTableDetailInfo: Sendable {
-    public var tableInfo: TimeTableInfo
-    public var sectionList: [SectionInfo]
-    
-    public init(
-        tableInfo: TimeTableInfo,
-        sectionList: [SectionInfo]
-    ) {
-        self.tableInfo = tableInfo
-        self.sectionList = sectionList
-    }
-}
+
 
 public struct TimeTableInfo: Sendable {
     public var id: Int

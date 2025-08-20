@@ -6,20 +6,9 @@
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
-import Foundation
 import Combine
 
 import Core
-
-public protocol MainUseCaseType {
-    // 시간표 상세조회 불러오기
-    func fetchTableInfo() -> AnyPublisher<Void, Never>
-    func getProfileInfo() -> AnyPublisher<Void, Never>
-    func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never>
-    func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never>
-    //테마 선택시 반영되도록 상세 색상 가져오기
-//    func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never>
-}
 
 final public class MainUseCase: MainUseCaseType {
     private var store: TimeTableStoreType
@@ -72,14 +61,14 @@ final public class MainUseCase: MainUseCaseType {
     
     public func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never> {
         if scheduleIsEmpty {
-            store.emptyScheduleError.send(name)
+            store.timeTableError.send(.emptyScheduleError(name))
             return Empty<Void, Never>()
                 .eraseToAnyPublisher()
         } else {
             return sectionRepository.addSection(store.tableId, sectionId, "")
                 .catch { [weak self] error in
-                    if error.isGuestModeError { self?.store.guestModeError.send(()) }
-                    else { self?.store.errMessage.send(error.description) }
+                    if error.isGuestModeError { self?.store.timeTableError.send(.guestModeError) }
+                    else { self?.store.timeTableError.send(.error(error.description)) }
                     return Empty<Void, Never>()
                 }
                 .flatMap(store.getTableDetailInfo)
@@ -100,15 +89,6 @@ final public class MainUseCase: MainUseCaseType {
                 .eraseToAnyPublisher()
         }
     }
-    
-//    public func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never> {
-//        return settingRepository.getThemeDetailInfo(themeName)
-//            .map { [$0.defaultColor] + $0.core + $0.gradient}
-//            .catch { _ in
-//                return Just([]).eraseToAnyPublisher()
-//            }
-//            .eraseToAnyPublisher()
-//    }
 }
 
 extension MainUseCase {

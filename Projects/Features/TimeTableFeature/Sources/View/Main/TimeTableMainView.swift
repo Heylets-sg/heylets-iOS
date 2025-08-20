@@ -11,6 +11,7 @@ import SwiftUI
 import Domain
 import DSKit
 import BaseFeatureDependency
+import Core
 
 public struct MainView: View {
     @ObservedObject var viewModel: MainViewModel
@@ -42,81 +43,90 @@ public struct MainView: View {
                         HStack(alignment: .top, spacing: 0) {
                             HourListView(viewModel.hourList)
                             
-                            GeometryReader { geometry in
-                                VStack {
-                                    let columnCount = viewModel.state.timeTable.columnCount
-                                    let rowCount = viewModel.state.timeTable.rowCount
+                            VStack {
+                                let columnCount = viewModel.weekList.count
+                                let rowCount = viewModel.hourList.count
+                                
+                                ZStack {
+                                    // 📌 빈 시간표 배치
+                                    TimeTableBlankView(
+                                        rowCount: rowCount,
+                                        columnCount: columnCount,
+                                        cellWidth: cellWidth,
+                                        timeTableState: state
+                                    )
                                     
-                                    ZStack {
-                                        // 📌 빈 시간표 배치
-                                        TimeTableBlankView(
-                                            rowCount: rowCount,
-                                            columnCount: columnCount,
-                                            cellWidth: cellWidth
-                                        )
-                                        
-                                        TimeTableExsitedView(
-                                            viewModel: viewModel,
-                                            displayType: $viewModel.displayTypeInfo,
-                                            cellWidth: cellWidth,
-                                            canTouch: coordinator.isMain()
-                                        )
-                                        
-                                        TimeTableSelectedView(
-                                            selectLecture: $state.selectLecture,
-                                            weekList: viewModel.weekList,
-                                            hourList: viewModel.hourList,
-                                            cellWidth: cellWidth
-                                        )
-                                    }
+                                    TimeTableExsitedView(
+                                        viewModel: viewModel,
+                                        displayType: $viewModel.displayTypeInfo,
+                                        cellWidth: cellWidth,
+                                        canTouch: coordinator.isMain()
+                                    )
+                                    
+                                    TimeTableSelectedView(
+                                        selectLecture: $state.selectLecture,
+                                        weekList: viewModel.weekList,
+                                        hourList: viewModel.hourList,
+                                        cellWidth: cellWidth
+                                    )
+                                }
+                                
+                                if isBottomSheetPresented() {
+                                    Spacer()
+                                        .frame(height: getBottomSheetHeight() + 100) // 여유 공간 추가
+                                        .id("bottom-spacer")
                                 }
                             }
+                            
                         }
                     }
                     .padding(.bottom, coordinator.isMain() ? 50 : 0)
+                    .onChange(of: state.selectLecture) { lecture in
+                        guard let schedule = lecture.first?.schedule else { return }
+                        
+                        let targetRow = calculateRowFromTime(viewModel.hourList[0], schedule.startTime)
+                        let targetColumn = schedule.day.index
+                        let targetId = "grid-cell-\(targetRow)-\(targetColumn)"
+                        
+                        withAnimation(.easeInOut(duration: 0.6)) {
+                            proxy.scrollTo(targetId, anchor: .center)
+                        }
+                    }
                 }
             }
             .loading(viewModel.state.isLoading)
             .scrollIndicators(.hidden)
-            .scrollDisabled(!viewModel.state.timeTable.isScrollEnabled)
+            .scrollDisabled(!viewModel.state.isScrollEnabled)
         }
     }
 }
+
+
 
 extension MainView {
-    private func configButtonLayout(
-        _ firstTime: Int,
-        for cell: TimeTableCellInfo,
-        cellHeight: CGFloat
-    ) -> CGFloat {
-        let startHour = cell.schedule.startHour
-        let startMinute = cell.schedule.startMinute
+    private func calculateRowFromTime(_ baseHour: Int, _ timeString: String) -> Int {
+        // 시간 파싱 로직
+        let components = timeString.split(separator: ":")
+        guard let hour = Int(components[0]), let minute = Int(components[1]) else { return 0 }
         
-        // 강의가 맨 위보다 위에 있는 경우 처리
-        if startHour < firstTime {
-            return 0 // 맨 위로 스크롤
+        // 8시를 기준(0)으로 계산
+        let baseHour = 8
+        let rowIndex = (hour - baseHour) * 2 + (minute >= 30 ? 1 : 0)
+        
+        return max(0, min(rowIndex, viewModel.hourList.count - 1))
+    }
+    
+    private func isBottomSheetPresented() -> Bool {
+        let currentViewType = coordinator.viewType
+        let isPresented = currentViewType != .main
+        return isPresented
+    }
+    
+    private func getBottomSheetHeight() -> CGFloat {
+        if isBottomSheetPresented() {
+            let height = coordinator.viewType.bottomSheetHeight.adjusted
+            return height
         }
-        
-        // 시작 시간과 분을 기준으로 정확한 시작 위치 계산
-        let hourOffset = CGFloat(startHour - firstTime) * cellHeight
-        let minuteOffset = CGFloat(startMinute) / 60.0 * cellHeight
-        
-        // 최종 위치 반환 (약간 위로 오프셋 적용하여 더 보기 좋게)
-        return max(0, hourOffset + minuteOffset - 20)
+        return 0
     }
 }
-
-//#Preview {
-//    let useCase = StubHeyUseCase.stub.timeTableUseCase
-//    return TimeTableView(
-//        viewModel: .init(
-//            .init(useCase),
-//            .init(useCase),
-//            .init(useCase, Router.default.navigationRouter),
-//            .init(useCase),
-//            Router.default.navigationRouter,
-//            Router.default.windowRouter,
-//            useCase)
-//    )
-//    .environmentObject(Router.default)
-//}

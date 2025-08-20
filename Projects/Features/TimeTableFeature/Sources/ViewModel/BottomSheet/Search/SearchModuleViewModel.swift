@@ -27,7 +27,6 @@ private enum LectureFetchMode {
     }
 }
 
-@MainActor
 public class SearchViewModel: ObservableObject {
     struct State {
         var selectedLecture: SectionInfo? = nil
@@ -59,6 +58,7 @@ public class SearchViewModel: ObservableObject {
     
     public var timeTableState: TimeTableState
     
+    @MainActor
     public init(
         _ useCase: SearchUseCaseType,
         _ timeTableState: TimeTableState,

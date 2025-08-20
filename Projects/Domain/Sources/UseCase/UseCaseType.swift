@@ -90,8 +90,6 @@ public final class HeyUseCase: UseCaseType {
             settingRepository: repository.settingRepository
         )
         
-        
-        
         todoUseCase = TodoUseCase(
             timeTableRepository: repository.timeTableRepository,
             todoRepository: repository.todoRepository,
@@ -100,18 +98,23 @@ public final class HeyUseCase: UseCaseType {
     }
 }
 
-//public final class StubHeyUseCase: UseCaseType {
-//    public init() {}
-//    
-//    public var splashUseCase: SplashUseCaseType = StubSplashUseCase()
-//    public var myPageUseCase: MyPageUseCaseType = StubMyPageUseCase()
-//    public var signUpUseCase: SignUpUseCaseType = StubSignUpUseCase()
-//    public var signInUseCase: SignInUseCaseType = StubSignInUseCase()
-////    public var timeTableUseCase: TimeTableUseCaseType = StubTimeTableUseCase()
-//    public var todoUseCase: TodoUsecaseType = StubTodoUseCase()
-//}
-//
-//@MainActor
-//extension StubHeyUseCase {
-//    static public let `stub` = StubHeyUseCase()
-//}
+public final class StubHeyUseCase: UseCaseType {
+    public init() {}
+    
+    public var splashUseCase: SplashUseCaseType = StubSplashUseCase()
+    public var myPageUseCase: MyPageUseCaseType = StubMyPageUseCase()
+    public var signUpUseCase: SignUpUseCaseType = StubSignUpUseCase()
+    public var signInUseCase: SignInUseCaseType = StubSignInUseCase()
+    
+    public var timeTableStore: TimeTableStoreType = StubTimeTableStore()
+    public var mainUseCase: MainUseCaseType = StubMainUseCase()
+    public var searchUseCase: SearchUseCaseType = StubSearchUseCase()
+    public var settingUseCase: SettingUseCaseType = StubSettingUseCase()
+    
+    public var todoUseCase: TodoUsecaseType = StubTodoUseCase()
+}
+
+@MainActor
+extension StubHeyUseCase {
+    static public let `stub` = StubHeyUseCase()
+}

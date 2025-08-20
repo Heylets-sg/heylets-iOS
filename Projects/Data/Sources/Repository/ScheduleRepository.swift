@@ -14,11 +14,11 @@ import Networks
 
 public struct ScheduleRepository: ScheduleRepositoryType {
     private let service: ScheduleServiceType
-    private let cacheManager: TimeTableCacheManager
+    private let cacheManager: TimeTableCacheManagerType
     
     public init(
         service: ScheduleServiceType,
-        cacheManager: TimeTableCacheManager
+        cacheManager: TimeTableCacheManagerType
     ) {
         self.service = service
         self.cacheManager = cacheManager

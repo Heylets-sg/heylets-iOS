@@ -15,52 +15,54 @@ import Networks
 public struct LectureRepository: LectureRepositoryType {
 
     private let service: LectureServiceType
-    private let cacheManager: LectureCacheManager
+    private let cacheManager: LectureCacheManagerType
     
     public init(
         service: LectureServiceType,
-        cacheManager: LectureCacheManager
+        cacheManager: LectureCacheManagerType
     ) {
         self.service = service
         self.cacheManager = cacheManager
     }
     
-//    public func getLectureDetailInfo(
-//        _ lectureId: Int
-//    ) -> AnyPublisher<LectureInfo, Error> {
-//        service.getLectureDetailInfo(lectureId)
-//            .map { $0.toEntity() }
-//            .mapToGeneralError()
-//    }
+    public func getLectureDetailInfo(
+        _ lectureId: Int
+    ) -> AnyPublisher<LectureInfo, Error> {
+        service.getLectureDetailInfo(lectureId)
+            .map { $0.toEntity() }
+            .mapToGeneralError()
+    }
     
     public func getLectureList(
         _ filterInfo: FilterInfo
     ) -> AnyPublisher<LectureListInfo, Error> {
-        let cacheKey = cacheManager.makeLecturesCacheKey(department: filterInfo.department)
-        
-        return cacheManager.getCachedLectures(for: cacheKey, page: filterInfo.page)
-            .flatMap { [service, cacheManager] cachedInfo -> AnyPublisher<LectureListInfo, Error> in
+        return cacheManager.getCachedLectures(
+            for: filterInfo.department,
+            page: filterInfo.page
+        )
+        .flatMap { [service, cacheManager] cachedInfo -> AnyPublisher<LectureListInfo, Error> in
                 if let cachedInfo = cachedInfo {
-                    print("✅ Cache HIT for cacheKey: \(cacheKey) page: 0 ~ \(cachedInfo.pageNum)")
+                    print("✅ Cache HIT for cacheKey: \(filterInfo) page: 0 ~ \(cachedInfo.pageNum)")
                     return Just(cachedInfo)
                         .setFailureType(to: Error.self)
                         .eraseToAnyPublisher()
                 } else {
-                    print("❌ Cache MISS for cacheKey: \(cacheKey) - Fetching from server")
+                    print("❌ Cache MISS for cacheKey: \(filterInfo) - Fetching from server")
                     let params = filterInfo.toRequestParameters()
                     return service.getLectureList(params)
                         .map { $0.content.flatMap { $0.toEntity().sections } }
                         .map { LectureListInfo(lectureList: $0, pageNum: filterInfo.page)}
                         .handleEvents(receiveOutput: {
-                            cacheManager.appendLectures($0, for: cacheKey, page: filterInfo.page)
+                            cacheManager.appendLectures(
+                                $0,
+                                for: filterInfo.department,
+                                page: filterInfo.page
+                            )
                         })
                         .mapToGeneralError()
                 }
             }
             .eraseToAnyPublisher()
-        
-        
-        
     }
     
     public func getLectureDepartment(

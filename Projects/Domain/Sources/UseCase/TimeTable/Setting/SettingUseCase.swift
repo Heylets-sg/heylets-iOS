@@ -6,27 +6,8 @@
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
-import Foundation
 import Combine
 
-public protocol SettingUseCaseType {
-    //시간표 이름 바꾸기
-    func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never>
-    //테마 리스트 불러오기
-    func getThemeList() -> AnyPublisher<[Theme], Never>
-    //테마, display 불러오기
-    func getSettingInfo() -> AnyPublisher<SettingInfo, Never>
-    //테마, display 수정하기
-    func patchSettingInfo(_ displayType: DisplayTypeInfo,_ theme: String) -> AnyPublisher<Void, Never>
-    //시간표 삭제하기
-    func deleteAllSection() -> AnyPublisher<Void, Never>
-    //Invite Code 분기처리
-    func handleInviteCodeView() -> AnyPublisher<Bool, Never>
-    // 테마 상세 불러오기
-    func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never>
-}
-
-//MARK: Setting
 final public class SettingUseCase: SettingUseCaseType {
     private let store: TimeTableStoreType
     
@@ -56,8 +37,8 @@ final public class SettingUseCase: SettingUseCaseType {
     public func changeTimeTableName(_ name: String) -> AnyPublisher<Void, Never> {
         return timeTableRepository.patchTableName(store.tableId, name)
             .catch { [weak self] error in
-                if error.isGuestModeError { self?.store.guestModeError.send(()) }
-                else { self?.store.errMessage.send(error.description) }
+                if error.isGuestModeError { self?.store.timeTableError.send(.guestModeError) }
+                else { self?.store.timeTableError.send(.error(error.description)) }
                 return Empty<Void, Never>()
             }
             .flatMap(store.getTableDetailInfo)
@@ -86,8 +67,8 @@ final public class SettingUseCase: SettingUseCaseType {
     ) -> AnyPublisher<Void, Never> {
         return settingRepository.patchTimeTableSettingInfo(displayType, theme)
             .catch { [weak self] error in
-                if error.isGuestModeError { self?.store.guestModeError.send(()) }
-                else { self?.store.errMessage.send(error.description) }
+                if error.isGuestModeError { self?.store.timeTableError.send(.guestModeError) }
+                else { self?.store.timeTableError.send(.error(error.description)) }
                 return Empty<Void, Never>()
             }
             .flatMap(store.getTableDetailInfo)
@@ -97,7 +78,7 @@ final public class SettingUseCase: SettingUseCaseType {
     public func deleteAllSection() -> AnyPublisher<Void, Never> {
         return sectionRepository.deleteAllSection(store.tableId)
             .catch { [weak self] error in
-                self?.store.errMessage.send(error.description)
+                self?.store.timeTableError.send(.error(error.description))
                 return Empty<Void, Never>()
             }
             .flatMap(store.getTableDetailInfo)

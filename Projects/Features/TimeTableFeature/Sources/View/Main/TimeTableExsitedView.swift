@@ -86,7 +86,7 @@ extension TimeTableExsitedView {
                 .fill(backgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: 2))
                 .frame(width: cellWidth-1, height: cellHeight-1)
-                .position(x: centerX, y: centerY)
+                .position(x: centerX+1, y: centerY+0.5)
         }
         .buttonStyle(PlainButtonStyle())
     }
@@ -146,10 +146,10 @@ extension TimeTableExsitedView {
         
         // 종료 시간과 분을 기준으로 높이 계산
         let height = CGFloat(endHour - startHour) * cellHeight +
-        CGFloat(endMinute - startMinute) / 60 * cellHeight
+        CGFloat(endMinute - startMinute) / (60 * cellHeight)
         
         let centerX = x + cellWidth / 2
-        let centerY =  y + height / 2 + cellHeight / 2
+        let centerY =  y + (height / 2) + (cellHeight / 2)
         return (centerX, centerY, height)
     }
 }
