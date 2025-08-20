@@ -32,9 +32,7 @@ final public class TimeTableStore: TimeTableStoreType {
     
     private var cancelBag = CancelBag()
     
-    public init(
-        timeTableRepository: TimeTableRepositoryType,
-    ) {
+    public init(timeTableRepository: TimeTableRepositoryType) {
         self.timeTableRepository = timeTableRepository
     }
     
@@ -51,5 +49,16 @@ final public class TimeTableStore: TimeTableStoreType {
             .map { _ in }
             .catch {  _ in Empty() }
             .eraseToAnyPublisher()
+    }
+}
+
+final public class StubTimeTableStore: TimeTableStoreType {
+    public var tableId: Int = 0
+    public var timeTableError = PassthroughSubject<TimeTableError, Never>()
+    public var timeTableDetailInfo = PassthroughSubject<TimeTableDetailInfo, Never>()
+    public var profileInfo = CurrentValueSubject<ProfileInfo, Never>(.empty)
+    
+    public func getTableDetailInfo() -> AnyPublisher<Void, Never> {
+        return Just(()).eraseToAnyPublisher()
     }
 }

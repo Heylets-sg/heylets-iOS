@@ -6,17 +6,9 @@
 //  Copyright © 2025 Heylets-iOS. All rights reserved.
 //
 
-import Foundation
 import Combine
 
 import Core
-
-public protocol MainUseCaseType {
-    func fetchTableInfo() -> AnyPublisher<Void, Never>
-    func getProfileInfo() -> AnyPublisher<Void, Never>
-    func addSection(_ sectionId: Int, _ name: String, _ scheduleIsEmpty: Bool) -> AnyPublisher<Void, Never>
-    func deleteSection(_ isCustom: Bool, _ sectionId: Int) -> AnyPublisher<Void, Never>
-}
 
 final public class MainUseCase: MainUseCaseType {
     private var store: TimeTableStoreType
@@ -97,15 +89,6 @@ final public class MainUseCase: MainUseCaseType {
                 .eraseToAnyPublisher()
         }
     }
-    
-//    public func getThemeDetailInfo(_ themeName: String) -> AnyPublisher<[String], Never> {
-//        return settingRepository.getThemeDetailInfo(themeName)
-//            .map { [$0.defaultColor] + $0.core + $0.gradient}
-//            .catch { _ in
-//                return Just([]).eraseToAnyPublisher()
-//            }
-//            .eraseToAnyPublisher()
-//    }
 }
 
 extension MainUseCase {
